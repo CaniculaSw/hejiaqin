@@ -51,6 +51,7 @@ public abstract class AbsHttpManager extends NetOptionWithToken {
         if (properties == null) {
             properties = new ArrayList<NameValuePair>();
         }
+
         //增加IMEI值(使用IMEI+MAC地址)
         properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_IMEI, SysInfoUtil.getAppUniqueId(getContext())));
         //增加类型
