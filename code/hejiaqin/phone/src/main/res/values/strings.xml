@@ -1,0 +1,292 @@
+<resources>
+    <string name="app_name">和家亲</string>
+    <string name="network_error_tip">请检查你的网络连接</string>
+    <string name="last_page">最后一页</string>
+
+    <!-- 登录 -->
+    <string name="login_header_title">登录</string>
+    <string name="prompt_account">请输入手机号码</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_forget_pwd">忘记密码 ?</string>
+    <string name="app_introduce">康兮您的私人健康教练</string>
+    <string name="app_copyright">2016 Copyright</string>
+    <string name="action_faster_register">注册</string>
+
+    <string name="error_mark">*\u0020\u0020</string>
+    <string name="account_null">手机号码不能为空</string>
+    <string name="password_null">密码不能为空</string>
+    <string name="account_illegal">你输入的手机号码不正确</string>
+    <string name="login_failed">你输入的手机号码和密码不正确</string>
+
+    <!--退出-->
+    <string name="exit_dialog_title">退出</string>
+    <string name="exit_dialog_content">确定退出应用吗?</string>
+
+    <!--注册-->
+    <string name="register_title">注册</string>
+    <string name="register_detail_title">详细信息</string>
+    <string name="register_interest_title">运动偏好(可跳过)</string>
+    <string name="prompt_nick_name">请输入昵称</string>
+    <string name="gender">选择性别</string>
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+    <string name="birthday">请选择出生年月</string>
+    <string name="send_verify_code">获取验证码</string>
+    <string name="resend_verify_code_unit">s</string>
+    <string name="resend_verify_code">重获验证码</string>
+    <string name="prompt_height">请输入身高(cm)</string>
+    <string name="prompt_weight">请输入体重(kg)</string>
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+
+    <string name="action_next">下一步</string>
+    <string name="action_register">注册</string>
+    <string-array name="interestDesc">
+        <item>健身走</item>
+        <item>健身跑</item>
+        <item>减肥</item>
+        <item>塑形</item>
+        <item>瑜伽</item>
+        <item>太极</item>
+        <item>养生气功</item>
+    </string-array>
+    <string-array name="interestId">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string name="action_register_start">开始康兮</string>
+
+    <string name="get_verify_code_success">验证码已发送</string>
+    <string name="verify_code_null">验证码不能为空</string>
+    <string name="nick_name_null">昵称不能为空</string>
+    <string name="has_registered">该手机号码已注册</string>
+    <string name="verify_other_error">验证码发送失败,请稍后重试</string>
+    <string name="check_verify_code_diff">验证码错误</string>
+    <string name="check_verify_code_disable">验证码已失效</string>
+    <string name="height_null">身高不能为空</string>
+    <string name="weight_null">体重不能为空</string>
+    <string name="has_registered_forbidden">该手机号码已注册并被禁用</string>
+    <string name="register_fail">注册失败</string>
+    <string name="start_failed">登录失败</string>
+
+    <!-- 重设/修改密码-->
+    <string name="reset_password_title">重设密码</string>
+    <string name="prompt_phone_no">请输入手机号码</string>
+    <string name="prompt_verify_code">请输入验证码</string>
+    <string name="prompt_new_password">请输入新密码</string>
+    <string name="prompt_confirm_password">请重复新密码</string>
+    <string name="reset_pwd_action_submit">提交</string>
+    <string name="update_password_title">修改密码</string>
+    <string name="prompt_original_password">请输入原密码</string>
+
+    <string name="original_pwd_required">请输入原密码</string>
+    <string name="new_pwd_required">请输入新密码</string>
+    <string name="confirm_pwd_required">请输入确认密码</string>
+    <string name="password_not_match">两次输入的密码不一致</string>
+    <string name="reset_success">重置成功</string>
+    <string name="update_password_success">修改密码成功</string>
+
+    <!-- 生理数据 -->
+    <string name="physical_data_change_success">保存成功</string>
+    <string name="physical_data_change_fail">保存失败</string>
+    <string name="physical_data_tizhi_confirm_to_modify">保存</string>
+    <string name="physical_data_tizhi">体制指标</string>
+    <string name="physical_data_weight">体重</string>
+    <string name="physical_data_tizhi_height">身高</string>
+    <string name="physical_data_shenghua">生化指标</string>
+    <string name="physical_data_xuetang">血糖</string>
+    <string name="physical_data_haoshen">XXML</string>
+    <string name="physical_data_danguchun">胆固醇</string>
+    <string name="physical_data_xx">XX</string>
+
+    <!--使用帮助-->
+    <string name="use_help_title">使用帮助</string>
+    <string name="use_help_back">返回键</string>
+    <string name="use_help_feed_back">需求反馈</string>
+    <string name="use_help_main_content">问题正文</string>
+    <string name="use_help_confirm_submit">确认提交</string>
+    <!--个人信息-->修改成功
+    <string name="person_information_prefer">偏好选择</string>
+    <string name="person_information_prefer_success">修改成功</string>
+    <string name="person_information_prefer_fail">修改失败</string>
+    <string name="person_information_dialog_confirm">确认</string>
+    <string name="person_information_dialog_cancel">取消</string>
+    <string name="person_information_dialog_sex_setting">性别设置</string>
+    <string name="person_information_sex_male">男</string>
+    <string name="person_information_sex_female">女</string>
+    <string name="person_information_prefer_choose">确认选择</string>
+    <string name="person_information_date_picker">日期选择</string>
+    <string name="person_information">个人资料</string>
+    <string name="person_information_confirm_to_modify">保存</string>
+    <string name="person_information_modify_success">保存成功</string>
+    <string name="person_information_modify_fail">保存失败</string>
+    <string name="person_information_nickname">昵称: </string>
+    <string name="person_information_gender">性别: </string>
+    <string name="person_information_birthday">出生日期:</string>
+    <string name="person_information_time">1989/8</string>
+    <string name="person_information_interest">偏好:</string>
+    <string name="person_information_interest_name">羽毛球</string>
+    <string name="person_information_signature">健康签名:</string>
+    <string name="person_information_signature_name">我爱跑步</string>
+    <string name="person_update_header_fail">上传头像失败</string>
+    <string name="no_sdcard_update_header">未找到存储卡，无法存储照片！</string>
+    <!--我-->
+    <string name="me_title">康兮</string>
+    <string name="person_info">个人资料</string>
+    <string name="physical_data">生理数据</string>
+    <string name="my_setting">我的设置</string>
+    <string name="my_message">我的消息</string>
+    <string name="help_feed_back">帮助与反馈</string>
+    <string name="about_me">关于</string>
+    <string name="login_out">退出</string>
+    <string name="sucess_to_delete">删除消息成功</string>
+    <string name="fail_to_delete">删除消息失败</string>
+    <!--我的消息详情-->
+    <string name="my_message_detial">消息详情</string>
+    <!--关于-->
+    <string name="about">关于</string>
+    <string name="about_kanxi">关于康兮</string>
+    <string name="about_degree">服务协议</string>
+    <string name="about_version">版本更新</string>
+    <string name="about_email_cooperation">合作邮箱:</string>
+    <string name="about_phone_connection">联系电话:</string>
+    <string name="about_data_fail">获取数据失败</string>
+    <string name="about_version_update">版本更新</string>
+    <string name="about_version_new_to_update">检查到有新的版本，马上下载！</string>
+    <string name="about_kanxi_new_version">当前版本</string>
+    <string name="about_kanxi_update"> 下载</string>
+    <string name="about_kanxi_no_address_to_update"> 抱歉，没有更新地址</string>
+    <string name="about_kanxi_exception_update"> 更新出现异常</string>
+    <string name="about_kanxi_later_to_update"> 以后再说</string>
+    <string name="about_kanxi_version_warming"> 由于你的版本过低，需要更新，否则无法正常使用！</string>
+    <string name="about_kanxi_update_now"> 马上更新</string>
+    <string name="about_kanxi_progress_quit"> 退出程序</string>
+    <!--关于-->
+    <string name="help_title">使用帮助</string>
+    <string name="help_feedback_button">需求反馈</string>
+    <string name="help_feedback_main_content">问题正文</string>
+    <!--康兮用户服务协议-->
+    <string name="kanxi_service_agreement">康兮用户服务协议</string>
+    <string name="kanxi_service_agreement_content">服务协议文本、隐私协议、运动知情书</string>
+    <!--需求反馈-->
+    <string name="feedback_header_title">需求反馈</string>
+    <string name="prompt_feedback_tips">请输入您的需求</string>
+    <string name="feedback_submit">确认提交</string>
+    <string name="submit_feedback_success">需求反馈提交成功</string>
+    <!--关于康兮-->
+    <string name="about_kanxi_product_introduce">关于康兮产品介绍</string>
+    <string name="about_kanxi_main">关于康兮</string>
+    <string name="about_kanxi_tel">联系电话: 13058117958</string>
+    <string name="about_kanxi_company">所属公司: 南京雅步信息有限公司</string>
+    <string name="about_kanxi_email">合作邮箱: 464251889@qq.com</string>
+    <string name="about_kanxi_version">当前版本: V1:1.0</string>
+    <!--填写基本信息-->
+    <string name="basic_info">填写基本信息</string>
+    <string name="basic_height">身高</string>
+    <string name="basic_weight">体重</string>
+    <string name="basic_prefrence">运动偏好</string>
+    <string name="basic_ball">球类</string>
+    <string name="basic_yujia">瑜伽</string>
+    <string name="basic_sure">确认</string>
+    <string name="basic_skip">跳过</string>
+
+    <!--我的消息-->
+    <string name="my_message_all">全部</string>
+    <string name="my_message_read_yes">已读</string>
+    <string name="my_message_read_no">未读</string>
+    <string name="my_message_nickname">昵称</string>
+    <string name="my_message_read_time">时间</string>
+
+    <!-- 设置 -->
+    <string name="wifi_continue_load">Wifi环境下继续课程下载</string>
+    <string name="accept_msg">接受康兮消息</string>
+    <string name="demonstration_coach">示范教练</string>
+    <string name="modify_password">修改密码</string>
+    <string name="not_person_info">获取个人信息失败</string>
+    <string name="demonstration_dialog_title">修改示范教练</string>
+
+    <!--main framgent-->
+    <string name="navigation_homepage">首页</string>
+    <string name="navigation_courses">康兮课程</string>
+    <string name="navigation_bank">健康银行</string>
+    <string name="navigation_me">我</string>
+
+
+    <!-- 首页 -->
+    <string name="home_page_title">首页</string>
+    <string name="home_practice_recommend_title">推荐练习</string>
+    <string name="home_care_recommend_title">推荐保健</string>
+    <string name="home_practice_my_title">我的练习</string>
+    <string name="home_care_my_title">我的保健</string>
+    <string name="header_msg_num_more">...</string>
+    <string name="health_growup_ranking_desc_one">你的健康指数</string>
+    <string name="health_growup_ranking_desc_two">，已经击败</string>
+    <string name="health_growup_ranking_desc_three">的康兮达人</string>
+    <string name="health_exec_num_desc_one">本周练习了</string>
+    <string name="health_exec_num_desc_two">次，今日</string>
+    <string name="health_exec_num_desc_three">次</string>
+
+    <string name="week_num_desc">本周训练</string>
+    <string name="week_num_unit_desc">次</string>
+    <string name="score_label_desc">上次得分</string>
+    <string name="join_num_desc">人已参加</string>
+    <string name="recommended_mark_desc">荐</string>
+
+    <string name="num_desc">练习次数</string>
+
+    <string name="times_desc">时长\u0020</string>
+    <string name="times_unit_desc">min</string>
+    <string name="create_time_desc">发布时间</string>
+    <string name="view_num_desc">已点播</string>
+    <string name="view_num_unit_desc">次</string>
+
+    <string name="top_desc">置顶</string>
+    <string name="cancel_top_desc">取消置顶</string>
+
+    <!--康兮课程-->
+    <string-array name="course_practice_list">
+        <item>全部练习</item>
+        <item>推荐练习</item>
+        <item>有氧练习</item>
+        <item>瑜伽</item>
+        <item>形体练习</item>
+        <item>中华国术</item>
+    </string-array>
+
+    <string-array name="course_healthcare_list">
+        <item>全部练习</item>
+        <item>推荐练习</item>
+    </string-array>
+
+    <string name="courses_navigation1">练习课程</string>
+    <string name="courses_navigation2">保健康复</string>
+    <string name="courses_navigation3">康兮讲堂</string>
+    <string name="all_practice">全部练习</string>
+    <string name="course_forum_time">时长</string>
+    <string name="course_forum_min">min</string>
+    <string name="course_forum_publish_time">发布时间</string>
+    <string name="course_forum_has_brocast">已播放</string>
+    <string name="course_forum_brocast_num">次</string>
+
+    <!--康兮讲堂-->
+    <string name="course_exercise_body_position">部位:</string>
+    <string name="course_exercise_equipment">器材:</string>
+    <string name="course_exercise_equipment_non">无</string>
+    <string name="course_exercise_people_takepart_in"> 人已参加</string>
+    <string name="course_exercise_message_introduce">内容介绍</string>
+    <!--健康银行-->
+    <string name="bank_title">健康银行</string>
+    <string name="nickname">昵称</string>
+    <string name="sex">性别</string>
+    <string name="age">年龄</string>
+    <string name="preference">偏好</string>
+    <string name="kangxi_num">康兮号</string>
+
+</resources>

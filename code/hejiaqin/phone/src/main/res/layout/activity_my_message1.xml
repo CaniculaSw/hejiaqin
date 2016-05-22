@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_color_gray"
+    android:orientation="vertical">
+
+    <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
+        android:id="@+id/header_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/bord_normal_padding">
+
+        <LinearLayout
+            android:id="@+id/line_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_message_all"
+                android:textColor="@color/white"
+                android:textSize="@dimen/normal_font" />
+
+            <ImageView
+                android:id="@+id/iamg_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bord_small_padding"
+                android:src="@mipmap/bottom_line" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line_read_yes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_read_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_message_read_yes"
+                android:textColor="@color/navigation_unselected"
+                android:textSize="@dimen/normal_font" />
+
+            <ImageView
+                android:id="@+id/iamg_read_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bord_small_padding"></ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line_read_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_read_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_message_read_no"
+                android:textColor="@color/navigation_unselected"
+                android:textSize="@dimen/normal_font" />
+
+            <ImageView
+                android:id="@+id/iamg_read_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bord_small_padding"></ImageView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/search_button_bg"
+        android:drawableLeft="@mipmap/search_button"
+        android:textSize="@dimen/normal_font" />
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" />
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+
+    android:orientation="vertical">
+
+    <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
+        android:id="@+id/header_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/feedback_content_edit_tx"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/bord_normal_padding"
+            android:layout_marginBottom="@dimen/bord_normal_padding"
+            android:padding="@dimen/bord_normal_padding"
+            android:inputType="textMultiLine"
+            android:background="@drawable/linear_layout_bg"
+            android:gravity="top"
+            android:hint="@string/prompt_feedback_tips"
+            android:maxLength="500"
+            android:scrollbars="vertical"/>
+
+        <Button
+            android:id="@+id/submit_action_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bord_normal_padding"
+            android:text="@string/use_help_confirm_submit"
+            android:gravity="center"
+            android:textSize="@dimen/normal_font"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_bg"
+            android:layout_gravity="center_horizontal" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/register_content_bottom" />
+
+    </LinearLayout>
+
+</LinearLayout>

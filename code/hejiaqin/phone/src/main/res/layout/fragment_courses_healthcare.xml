@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_div_courses_select"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/courses_select_height"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_courses_healthcare_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部练习"
+            android:textColor="@color/black"
+            android:textSize="@dimen/normal_font" />
+
+        <ImageView
+            android:id="@+id/iv_courses_healthcare_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/ic_down" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_line_course_healthcare"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size"
+        android:background="@color/backgroud_color_gray" />
+
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

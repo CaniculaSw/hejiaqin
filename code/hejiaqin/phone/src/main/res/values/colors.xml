@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="black">#000000</color>
+    <color name="maincolor">#ffd500</color>
+    <color name="white">#ffffffff</color>
+    <color name="clear_color">#00000000</color>
+    <color name="blue">#ff1e90ff</color>
+    <color name="transparent">#00000000</color>
+    <color name="navigation_unselected">#a0a0a0</color>
+    <color name="navigation_selected">#ffd80c</color>
+    <color name="backgroud_color">#ffd401</color>
+    <color name="button_disable_color">#9b9b9b</color>
+    <color name="button_normal_color">#fed600</color>
+
+    <!--登录、注册-->
+    <color name="error_info_text_color">#fda264</color>
+
+    <!-- 灰色字体颜色 -->
+    <color name="text_color_gray">#a7aaa6</color>
+
+    <!-- 灰色背景或线条颜色 -->
+    <color name="backgroud_color_gray">#ebebeb</color>
+
+    <color name="switch_button_off">#a7aaa6</color>
+
+    <!--main framgent-->
+    <color name="main_navigation_line_color">#d8d8d8</color>
+
+    <!-- 首页 -->
+    <color name="homepage_practice_color">#ff9c00</color>
+    <color name="homepage_care_color">#7fd70f</color>
+    <color name="homepage_forum_color">#ffd400</color>
+    <color name="homepage_list_split_color">#ffd400</color>
+    <color name="homepage_forum_list_split_color">#d8d8d8</color>
+    <color name="homepage_forum_more_text_color">#a8a8a8</color>
+    <color name="homepage_sub_text_color">#9b9a9a</color>
+    <color name="homepage_practice_num_text_color">#ff9c00</color>
+    <color name="homepage_care_num_text_color">#7fd70f</color>
+    <color name="homepage_forum_list_bg_color">#60000000</color>
+
+</resources>

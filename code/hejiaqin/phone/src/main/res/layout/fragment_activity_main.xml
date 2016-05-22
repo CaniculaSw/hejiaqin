@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/main_navigation_line_color">
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_navigation_height"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/home_page_layout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_content_height"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/home_page_image"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="@dimen/main_navigation_home_image_width"
+                    android:layout_height="@dimen/main_navigation_home_image_height"
+                    android:background="@mipmap/main_navigation_unselected_home" />
+
+                <TextView
+                    android:id="@+id/home_page_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/navigation_homepage"
+                    android:textSize="@dimen/main_navigation_text_size"
+                    android:textColor="@color/navigation_unselected" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/courses_layout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_content_height"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/courses_image"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="@dimen/main_navigation_courses_image_width"
+                    android:layout_height="@dimen/main_navigation_courses_image_height"
+                    android:background="@mipmap/main_navigation_unselected_courses" />
+
+                <TextView
+                    android:id="@+id/courses_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/navigation_courses"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/main_navigation_text_size"
+                    android:textColor="@color/navigation_unselected" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/health_blank_layout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_content_height"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/health_blank_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="@dimen/main_navigation_bank_image_width"
+                    android:layout_height="@dimen/main_navigation_bank_image_height"
+                    android:background="@mipmap/main_navigation_unselected_bank" />
+
+                 <TextView
+                    android:id="@+id/health_blank_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/navigation_bank"
+                     android:layout_centerHorizontal="true"
+                     android:layout_alignParentBottom="true"
+                    android:textSize="@dimen/main_navigation_text_size"
+                    android:textColor="@color/navigation_unselected" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_layout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_content_height"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+
+                <ImageView
+                    android:id="@+id/setting_image"
+                    android:layout_width="@dimen/main_navigation_me_image_width"
+                    android:layout_height="@dimen/main_navigation_me_image_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/main_navigation_unselected_me" />
+
+                <TextView
+                    android:id="@+id/setting_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/navigation_me"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/main_navigation_text_size"
+                    android:textColor="@color/navigation_unselected" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
+

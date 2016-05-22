@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_layout"
+    android:layout_width="@dimen/home_page_pop_width"
+    android:layout_height="@dimen/home_page_pop_height"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/pop_tv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/top_desc"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:background="@drawable/home_page_popup_bg"
+        />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:src="@mipmap/popup_arrow"
+        android:layout_gravity="center_horizontal"
+        />
+</LinearLayout>

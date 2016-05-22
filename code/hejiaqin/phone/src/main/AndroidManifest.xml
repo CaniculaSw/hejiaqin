@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chinamobile.hejiaqin">
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:windowSoftInputMode="adjustPan">
+
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--欢迎页-->
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light">
+
+        </activity>
+        <!--登录、注册相关-->
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterInterestActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.ResetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <!--登录后的主页-->
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--首页-->
+
+        <!--康兮课程-->
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.courses.ForumDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--健康银行-->
+
+        <!--设置相关-->
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.person.ChoosePreferActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.KanxiIntroduceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.HelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.serviceAgreement.ServiceAgreementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.AboutKanxiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.person.PersonActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.person.PhysiologyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.myMesage.MyMessageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.myMesage.MyMessageDetialActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>
