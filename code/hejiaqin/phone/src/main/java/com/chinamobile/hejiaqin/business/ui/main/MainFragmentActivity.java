@@ -180,7 +180,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initLogics() {
-        
+
     }
 
 
@@ -204,7 +204,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         BusProvider.getUIBusInstance().unregister(this);
     }
 
-   
+
     @Override
     protected void doNetWorkConnect() {
         //通知Fragment网络已经连接

@@ -1,7 +1,11 @@
 package com.chinamobile.hejiaqin.business.ui.basic;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
@@ -21,6 +25,8 @@ public abstract class BasicFragment extends BaseFragment {
 
     protected BackListener mListener;
 
+    private boolean isCreateView = false;
+
     @Override
     protected void initSystem(Context context) {
         Logger.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
@@ -33,15 +39,29 @@ public abstract class BasicFragment extends BaseFragment {
         return LogicBuilder.getInstance(context);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        int resId = getLayoutResId();
+        if (resId <= 0) {
+            return null;
+        }
+        View view = inflater.inflate(resId, container, false);
+        initView(view);
+        initData();
+        isCreateView = true;
+        return view;
+    }
+
+
     /**
      * 初始化logic的方法，由子类实现<BR>
      * 在该方法里通过getLogicByInterfaceClass获取logic对象
      */
     @Override
-    protected void initLogics()
-    {
+    protected void initLogics() {
 
     }
+
     /**
      * 回调至父类(FragmentActivity或者BaseFragment)
      */
@@ -52,7 +72,31 @@ public abstract class BasicFragment extends BaseFragment {
     /**
      * 接收父类(FragmentActivity或者BaseFragment)的消息
      */
-    public abstract void recieveMsg(Message msg);
+    public void recieveMsg(Message msg) {
+        if (!isCreateView) {
+            return;
+        }
+        handleFragmentMsg(msg);
+    }
+
+    @Override
+    public void handleStateMessage(Message msg) {
+        if (!isCreateView) {
+            return;
+        }
+        handleLogicMsg(msg);
+    }
+
+    protected abstract void handleFragmentMsg(Message msg);
+
+    protected abstract void handleLogicMsg(Message msg);
+
+    protected abstract int getLayoutResId();
+
+    protected abstract void initView(View view);
+
+    protected abstract void initData();
+
 
     public void setActivityListener(BackListener listener) {
         this.mListener = listener;

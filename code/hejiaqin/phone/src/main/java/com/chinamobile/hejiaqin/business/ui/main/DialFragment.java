@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.os.Message;
+import android.view.View;
 
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 
@@ -9,7 +10,27 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
  */
 public class DialFragment extends BasicFragment {
     @Override
-    public void recieveMsg(Message msg) {
+    protected void handleFragmentMsg(Message msg) {
+
+    }
+
+    @Override
+    protected void handleLogicMsg(Message msg) {
+
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return 0;
+    }
+
+    @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 }
