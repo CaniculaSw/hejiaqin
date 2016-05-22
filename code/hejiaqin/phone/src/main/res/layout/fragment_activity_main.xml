@@ -75,31 +75,6 @@
                     android:textColor="@color/navigation_unselected" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/health_blank_layout"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/main_navigation_content_height"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/health_blank_image"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_width="@dimen/main_navigation_bank_image_width"
-                    android:layout_height="@dimen/main_navigation_bank_image_height"
-                    android:background="@mipmap/main_navigation_unselected_bank" />
-
-                 <TextView
-                    android:id="@+id/health_blank_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/navigation_bank"
-                     android:layout_centerHorizontal="true"
-                     android:layout_alignParentBottom="true"
-                    android:textSize="@dimen/main_navigation_text_size"
-                    android:textColor="@color/navigation_unselected" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/setting_layout"

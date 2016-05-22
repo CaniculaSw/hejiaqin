@@ -2,18 +2,8 @@ package com.chinamobile.hejiaqin.business.logic;
 
 import android.content.Context;
 
-import com.chinamobile.hejiaqin.business.logic.courses.CoursesLogic;
-import com.chinamobile.hejiaqin.business.logic.courses.ICoursesLogic;
-import com.chinamobile.hejiaqin.business.logic.healthBank.HealthBankLogic;
-import com.chinamobile.hejiaqin.business.logic.healthBank.IHealthBankLogic;
-import com.chinamobile.hejiaqin.business.logic.homePage.HomePageLogic;
-import com.chinamobile.hejiaqin.business.logic.homePage.IHomePageLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.login.LoginLogic;
-import com.chinamobile.hejiaqin.business.logic.person.IPersonLogic;
-import com.chinamobile.hejiaqin.business.logic.person.PersonLogic;
-import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
-import com.chinamobile.hejiaqin.business.logic.setting.SettingLogic;
 import com.customer.framework.logic.BuilderImp;
 
 /**
@@ -55,10 +45,5 @@ public class LogicBuilder extends BuilderImp {
     protected void init(Context context) {
         //注册LoginLogic
         super.registerLogic(ILoginLogic.class, new LoginLogic());
-        super.registerLogic(IHomePageLogic.class, new HomePageLogic());
-        super.registerLogic(ICoursesLogic.class, new CoursesLogic());
-        super.registerLogic(IHealthBankLogic.class, new HealthBankLogic());
-        super.registerLogic(ISettingLogic.class, new SettingLogic());
-        super.registerLogic(IPersonLogic.class, new PersonLogic());
     }
 }

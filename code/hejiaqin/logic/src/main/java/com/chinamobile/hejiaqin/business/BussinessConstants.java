@@ -35,9 +35,9 @@ public class BussinessConstants {
      */
     public interface ServerInfo {
 
-        String HTTP_ADDRESS = "http://service.pop121.com";
+        String HTTP_ADDRESS = "http://service.XXX.com";
 
-        String HTTPS_ADDRESS = "https://service.pop121.com";
+        String HTTPS_ADDRESS = "https://service.XXX.com";
     }
 
     /**
@@ -203,122 +203,54 @@ public class BussinessConstants {
     }
 
     /**
-     * 首页模块常量
+     * 联系人模块常量
      */
-    public interface HomePage {
+    public interface Contact {
 
 
     }
 
     /**
-     * 首页模块网络接口错误码
+     * 联系人模块网络接口错误码
      */
-    public interface HomePageHttpErrorCode {
+    public interface ContactHttpErrorCode {
 
 
     }
 
     /**
-     * 首页模块消息ID
+     * 联系人模块消息ID
      */
-    public interface HomePageMsgID {
+    public interface ContactMsgID {
 
         int BASE_MSG_ID = 30001000;
 
-        int GET_MY_HEALTH_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
 
-        int GET_MY_HEALTH_FAIL_MSG_ID = BASE_MSG_ID + 2;
+    }
 
-        int GET_MY_PRACTICE_SUCCESS_MSG_ID = BASE_MSG_ID + 3;
-
-        int GET_MY_PRACTICE_FAIL_MSG_ID = BASE_MSG_ID + 4;
-
-        int GET_MY_CARE_SUCCESS_MSG_ID = BASE_MSG_ID + 5;
-
-        int GET_MY_CARE_FAIL_MSG_ID = BASE_MSG_ID + 6;
-
-        int GET_INDEX_LECTURE_SUCCESS_MSG_ID = BASE_MSG_ID + 7;
-
-        int GET_INDEX_LECTURE_FAIL_MSG_ID = BASE_MSG_ID + 8;
-
-        int DO_TOP_COURSE_SUCCESS_MSG_ID = BASE_MSG_ID + 9;
-
-        int DO_TOP_COURSE_FAIL_MSG_ID = BASE_MSG_ID + 10;
+    /**
+     * 拨号模块常量
+     */
+    public interface Dial {
 
 
     }
 
     /**
-     * 康兮课程模块常量
+     * 拨号模块网络接口错误码
      */
-    public interface Courses {
-
-        String COURSE_PRACTICE_SELECT_INDEX = "course_practice_select_index";
-
-        String COURSE_PRACTICE_SELECT_TEXT = "course_practice_select_text";
-
-        String COURSE_HEALTHCARE_SELECT_INDEX = "course_healthcare_select_index";
-
-        String COURSE_HEALTHCARE_SELECT_TEXT = "course_healthcare_select_text";
-    }
-
-    /**
-     * 康兮课程模块网络接口错误码
-     */
-    public interface CoursesHttpErrorCode {
+    public interface DialHttpErrorCode {
         int BASE_ACTION_ID = 40002000;
-        //最后一页
-        int COURSE_LAST_PAGE_ACTION_ID = BASE_ACTION_ID + 1;
-
-        //我的练习
-        int COURSE_PRACTICE_ACTION_ID = BASE_ACTION_ID + 2;
-
-        //我的练习，显示加载框
-        int COURSE_PRACTICE_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 3;
-
-        //全部保健
-        int COURSE_HEALTHCARE_ALL_ACTION_ID = BASE_ACTION_ID + 4;
-
-        //全部保健，显示加载框
-        int COURSE_HEALTHCARE_ALL_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 5;
-
-        //推荐保健
-        int COURSE_HEALTHCARE_RECOMMEND_ACTION_ID = BASE_ACTION_ID + 6;
-
-        //推荐保健，显示加载框
-        int COURSE_HEALTHCARE_RECOMMEND_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 7;
-
-        //康兮讲堂
-        int COURSE_FORUM_ACTION_ID = BASE_ACTION_ID + 8;
-
-        //康兮讲堂，显示加载框
-        int COURSE_FORUM_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 9;
     }
 
     /**
-     * 康兮课程模块消息ID
+     * 拨号模块消息ID
      */
-    public interface CoursesMsgID {
+    public interface DialMsgID {
 
         int BASE_MSG_ID = 40001000;
 
-        //练习课程
-        int FIND_ALL_TRAINING_COURSE_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
-        int FIND_ALL_TRAINING_COURSE_FAILED_MSG_ID = BASE_MSG_ID + 2;
-        int FIND_RECOMMEND_TRAINING_COURSE_SUCCESS_MSG_ID = BASE_MSG_ID + 3;
-        int FIND_RECOMMEND_TRAINING_COURSE_FAILED_MSG_ID = BASE_MSG_ID + 4;
 
-        //康复课程
-        int FIND_ALL_REHABILITATION_COURSE_SUCCESS_MSG_ID = BASE_MSG_ID + 5;
-        int FIND_ALL_REHABILITATION_COURSE_FAILED_MSG_ID = BASE_MSG_ID + 6;
-        int FIND_RECOMMEND_REHABILITATION_COURSE_SUCCESS_MSG_ID = BASE_MSG_ID + 7;
-        int FIND_RECOMMEND_REHABILITATION_COURSE_FAILED_MSG_ID = BASE_MSG_ID + 8;
-
-        //康兮讲堂
-        int FIND_ALL_LECTURE_COURSE_SUCCESS_MSG_ID = BASE_MSG_ID + 9;
-        int FIND_ALL_LECTURE_COURSE_FAILED_MSG_ID = BASE_MSG_ID + 10;
-        int FIND_LECTURE_COURSE_DETAIL_SUCCESS_MSG_ID = BASE_MSG_ID + 11;
-        int FIND_LECTURE_COURSE_DETAIL_FAILED_MSG_ID = BASE_MSG_ID + 12;
     }
 
     /**
@@ -370,26 +302,6 @@ public class BussinessConstants {
 
         int BASE_ACTION_ID = 50002000;
 
-        //我的全部消息
-        int MESSAGE_FRAGMENT_ALL_ACTION_ID = BASE_ACTION_ID + 1;
-
-        //我的已读消息
-        int MESSAGE_FRAGMENT_READ_YES_ACTION_ID = BASE_ACTION_ID + 2;
-
-        //我的未读消息
-        int MESSAGE_FRAGMENT_READ_NO_ACTION_ID = BASE_ACTION_ID + 3;
-
-        //最后一页
-        int MESSAGE_FRAGMENT_LAST_PAGE_ACTION_ID = BASE_ACTION_ID + 4;
-
-        //我的全部消息，显示加载框
-        int MESSAGE_FRAGMENT_ALL_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 5;
-
-        //我的已读消息，显示加载框
-        int MESSAGE_FRAGMENT_READ_YES_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 6;
-
-        //我的未读消息，显示加载框
-        int MESSAGE_FRAGMENT_READ_NO_SHOW_LOADING_ACTION_ID = BASE_ACTION_ID + 7;
     }
 
 
@@ -400,114 +312,10 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 50001000;
 
-        //登录后获取最新版本信息
-        int GET_VERSION_AFTER_LOGIN_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
-
-        //登录后获取最新版本信息
-        int GET_VERSION_AFTER_LOGIN_FAIL_MSG_ID = BASE_MSG_ID + 2;
-
-        //设置后获取最新版本信息
-        int GET_VERSION_SUCCESS_MSG_ID = BASE_MSG_ID + 3;
-
-        //设置后获取最新版本信息
-        int GET_VERSION_FAIL_MSG_ID = BASE_MSG_ID + 4;
-
-        //获取关于信息成功的消息ID
-        int GET_ABOUT_SUCCESS_MSG_ID = BASE_MSG_ID + 5;
-
-        //获取关于信息失败的消息ID
-        int GET_ABOUT_FAIL_MSG_ID = BASE_MSG_ID + 6;
-
-        //获取关于信息失败的消息ID
-        int GET_ABOUT_NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 7;
-        int GET_SERVICE_CONTENT_SUCCESS_MSG_ID = BASE_MSG_ID + 8;
-        int GET_SERVICE_FAIL_CONTENT_MSG_ID = BASE_MSG_ID + 9;
-
-        //获取关于信息成功的消息ID
-        int GET_MESSAGE_SUCCESS_MSG_ID = BASE_MSG_ID + 10;
-
-        //获取关于信息失败的消息ID
-        int GET_MESSAGE_FAIL_MSG_ID = BASE_MSG_ID + 11;
-
-        //获取关于信息失败的消息ID
-        int GET_MESSAGE_NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 12;
-
-        //获取帮助问题信息成功的消息ID
-        int HELP_QUESTION_LIST_SUCCESS_MSG_ID = BASE_MSG_ID + 13;
-        //获取帮助问题信息失败的消息ID
-        int HELP_QUESTION_LIST_FAIL_MSG_ID = BASE_MSG_ID + 14;
-
-        //获取用户设置信息的消息ID
-        int LOAD_USER_SETTING_SUCCESS_MSG_ID = BASE_MSG_ID + 15;
-        int LOAD_USER_SETTING_FAIL_MSG_ID = BASE_MSG_ID + 16;
-
-        //修改用户设置信息的消息ID
-        int AMEND_USER_SETTING_SUCCESS_MSG_ID = BASE_MSG_ID + 17;
-
-        int AMEND_USER_SETTING_FAIL_MSG_ID = BASE_MSG_ID + 18;
-
-        //提交用户反馈信息
-        int SUBMIT_USER_FEEDBACK_SUCCESS_MSG_ID = BASE_MSG_ID + 19;
-        int SUBMIT_USER_FEEDBACK_FAIL_MSG_ID = BASE_MSG_ID + 20;
-
-        int GET_MESSAGE_DETAIL_SUCCESS_MSG_ID = BASE_MSG_ID + 21;
-        int GET_MESSAGE_DETAIL_FAIL_MSG_ID = BASE_MSG_ID + 22;
-
-        //获取关于信息成功的消息ID
-        int DEL_MESSAGE_SUCCESS_MSG_ID = BASE_MSG_ID + 23;
-
-        //获取关于信息失败的消息ID
-        int DEL_MESSAGE_FAIL_MSG_ID = BASE_MSG_ID + 24;
     }
 
 
-    /**
-     * 个人资料模块常量（注：测试MgsID，后期请zhanggj调整修改或者删除）
-     */
-    public interface Person {
 
-        String INTENT_CHECKED_PREFER_IDS = "checkedPreferIds";
-
-        String INTENT_CHECKED_PREFERS = "checkedPrefers";
-    }
-
-    /**
-     * 个人资料消息ID（注：测试MgsID，后期请zhanggj调整修改或者删除）
-     */
-    public interface PersonMsgID {
-
-        int BASE_MSG_ID = 60001000;
-
-        //获取个人资料成功的消息ID
-        int GET_PERSON_INFO_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
-
-        //获取个人资料失败的消息ID
-        int GET_PERSON_INFO_FAIL_MSG_ID = BASE_MSG_ID + 2;
-
-        //获取个人资料失败的消息ID（网络错误）
-        int GET_PERSON_INFO_NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 3;
-
-        //获取生理数据成功的消息ID
-        int GET_PHYSIOLOGY_INFO_SUCCESS_MSG_ID = BASE_MSG_ID + 4;
-
-        //获取生理数据失败的消息ID
-        int GET_PHYSIOLOGY_INFO_FAIL_MSG_ID = BASE_MSG_ID + 5;
-
-        //获取生理数据失败的消息ID（网络错误）
-        int GET_PHYSIOLOGY_INFO_NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 6;
-        int CHANGE_PERSONAL_DOC_SUCCESS_MSG_ID = BASE_MSG_ID + 7;
-        int CHANGE_PERSONAL_DOC_FAIL_MSG_ID = BASE_MSG_ID + 8;
-        //修改生理数据
-        int CHANGE_PHYSIOLOGICAL_INFO_SUCCESS_MSG_ID = BASE_MSG_ID + 9;
-        int CHANGE_PHYSIOLOGICAL_INFO_FAIL_MSG_ID = BASE_MSG_ID + 10;
-
-        //上传用户图像
-        int UPLOAD_USER_AVATAR_IMAGE_SUCCESS_MSG_ID = BASE_MSG_ID + 11;
-        int UPLOAD_USER_AVATAR_IMAGE_FAIL_MSG_ID = BASE_MSG_ID + 12;
-        int CHANGE_SPORTS_PREFER_SUCCESS_MSG_ID= BASE_MSG_ID+13;
-        int CHANGE_SPORTS_PREFER_FAIL_MSG_ID=BASE_MSG_ID+14;
-
-    }
 
     public interface FragmentActionId {
         int BASE_ACTION_ID = 70001000;

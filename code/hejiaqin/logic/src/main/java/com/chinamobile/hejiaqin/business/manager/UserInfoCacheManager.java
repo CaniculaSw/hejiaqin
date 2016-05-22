@@ -7,8 +7,6 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
-import com.chinamobile.hejiaqin.business.model.person.PersonInfo;
-import com.chinamobile.hejiaqin.business.model.person.PersonalDocument;
 import com.customer.framework.component.storage.StorageMgr;
 
 import java.util.HashMap;
@@ -89,44 +87,5 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }
 
-    public static void updateUserInfo(Context context,PersonInfo personInfo)
-    {
-        UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-        String userInfoAvatar = userInfo.getAvatar() == null ? "" : userInfo.getAvatar();
-        String userInfoName = userInfo.getName() == null ? "" : userInfo.getName();
-        String userInfoPhone = userInfo.getPhone() == null ? "" : userInfo.getPhone();
-        if (userInfoAvatar.equals(personInfo.getAvatar()) && userInfoName.equals(personInfo.getName()) && userInfoPhone.equals(personInfo.getPhone())) {
-            return;
-        }
-        //同步到内存userInfo中
-        userInfo.setAvatar(personInfo.getAvatar());
-        userInfo.setName(personInfo.getName());
-        userInfo.setPhone(personInfo.getPhone());
-        //同步到本地缓存
-        HashMap map = new HashMap();
-        Gson gson = new Gson();
-        map.put(BussinessConstants.Login.USER_INFO_KEY, gson.toJson(userInfo));
-        StorageMgr.getInstance().getSharedPStorage(context).save(map);
 
-        LoginHistory history = new LoginHistory();
-        history.setLoginid(personInfo.getLoginid());
-        history.setAvatar(personInfo.getAvatar());
-        updateHistory(context,history);
-    }
-
-    public static void updateUserInfo(Context context,PersonalDocument personalDocument)
-    {
-        UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-        String userInfoName = userInfo.getName() == null ? "" : userInfo.getName();
-        if (userInfoName.equals(personalDocument.getName())) {
-            return;
-        }
-        //同步到内存userInfo中
-        userInfo.setName(personalDocument.getName());
-        //同步到本地缓存
-        HashMap map = new HashMap();
-        Gson gson = new Gson();
-        map.put(BussinessConstants.Login.USER_INFO_KEY, gson.toJson(userInfo));
-        StorageMgr.getInstance().getSharedPStorage(context).save(map);
-    }
 }
