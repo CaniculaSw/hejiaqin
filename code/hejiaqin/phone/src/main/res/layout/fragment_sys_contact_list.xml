@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     tools:context="com.chinamobile.hejiaqin.business.ui.contact.fragment.AppContactListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="true"
+        android:overScrollMode="never"
+        android:padding="0dp"
+        android:scrollbarStyle="outsideOverlay" />
 
 </FrameLayout>
