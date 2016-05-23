@@ -47,6 +47,8 @@
     <color name="green">#40c875</color>
 
     <!-- 联系人 -->
+    <color name="contact_list_navigator_text_selected">#ffffffff</color>
+    <color name="contact_list_navigator_text_unselected">#80ffffff</color>
     <color name="contact_list_divider_bg_color">#e0e1e1</color>
     <color name="contact_list_username_text_color">#404040</color>
     <color name="contact_list_head_text_color">#404040</color>

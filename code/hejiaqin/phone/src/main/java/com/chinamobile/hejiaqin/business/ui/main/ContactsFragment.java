@@ -23,7 +23,7 @@ import java.util.List;
  * author: tonghui
  * Created: 2016/4/22.
  */
-public class ContactsFragment extends BasicFragment {
+public class ContactsFragment extends BasicFragment implements View.OnClickListener {
 
     /**
      * 作为页面容器的ViewPager.
@@ -44,6 +44,8 @@ public class ContactsFragment extends BasicFragment {
 
     private TextView[] mTextView = new TextView[2];
     private ImageView[] mImageView = new ImageView[2];
+    private ImageView addContactIv;
+
     private final int mAppContactsIndex = 0;
     private final int mSysContactsIndex = 1;
     //当前选中的项
@@ -73,11 +75,15 @@ public class ContactsFragment extends BasicFragment {
     @Override
     protected void initView(View view) {
         mAppContactsLay = view.findViewById(R.id.app_contact_layout);
+        mAppContactsLay.setOnClickListener(this);
         mSysContactsLay = view.findViewById(R.id.sys_contact_layout);
+        mSysContactsLay.setOnClickListener(this);
         mTextView[0] = (TextView) view.findViewById(R.id.app_contact_text);
         mTextView[1] = (TextView) view.findViewById(R.id.sys_contact_text);
         mImageView[0] = (ImageView) view.findViewById(R.id.app_contact_img);
         mImageView[1] = (ImageView) view.findViewById(R.id.sys_contact_img);
+        addContactIv = (ImageView) view.findViewById(R.id.app_contact_add_img);
+        addContactIv.setOnClickListener(this);
         mViewPager = (ViewPager) view.findViewById(R.id.contact_viewpager);
 
         fragmentList = new ArrayList<Fragment>();
@@ -95,6 +101,32 @@ public class ContactsFragment extends BasicFragment {
     @Override
     protected void initData() {
 
+    }
+
+    //手动设置ViewPager要显示的视图
+    private void switchFragment(int toIndex) {
+        mViewPager.setCurrentItem(toIndex, true);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.app_contact_layout:
+                if (currentIndex != mAppContactsIndex) {
+                    switchFragment(mAppContactsIndex);
+                }
+                break;
+            case R.id.sys_contact_layout:
+                if (currentIndex != mSysContactsIndex) {
+                    switchFragment(mSysContactsIndex);
+                }
+                break;
+        }
     }
 
     /**
@@ -127,11 +159,14 @@ public class ContactsFragment extends BasicFragment {
             if (currentItem == currentIndex) {
                 return;
             }
-            mTextView[currentItem].setTextColor(getResources().getColor(R.color.navigation_selected));
-            // mImageView[currentItem].setImageResource(R.mipmap.bottom_line);
+
+            mTextView[currentItem].setTextColor(getResources().getColor(R.color.contact_list_navigator_text_selected));
+            mImageView[currentItem].setVisibility(View.VISIBLE);
+            addContactIv.setVisibility((currentItem == mAppContactsIndex) ? View.VISIBLE : View.GONE);
+
             if (currentIndex != -1) {
-                mTextView[currentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
-                mImageView[currentIndex].setImageDrawable(null);
+                mTextView[currentIndex].setTextColor(getResources().getColor(R.color.contact_list_navigator_text_unselected));
+                mImageView[currentIndex].setVisibility(View.GONE);
             }
             currentIndex = mViewPager.getCurrentItem();
         }
