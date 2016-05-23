@@ -10,12 +10,11 @@
         android:background="@color/green"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/app_contact_layout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -23,21 +22,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_navigation_app_contacts"
-                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:textColor="@color/contact_list_navigator_text_selected"
                 android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/app_contact_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_width="54dp"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:background="@color/contact_list_navigator_text_selected"/>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/sys_contact_layout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -45,14 +48,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_navigation_sys_contacts"
-                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:textColor="@color/contact_list_navigator_text_unselected"
                 android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/sys_contact_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_width="54dp"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:background="@color/contact_list_navigator_text_selected"/>
+
+            <ImageView
+                android:id="@+id/app_contact_add_img"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:visibility="gone"
+                android:src="@drawable/contact_add_normal_icon"/>
+        </RelativeLayout>
+
+
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

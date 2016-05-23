@@ -294,6 +294,7 @@
     <!-- 联系人 -->
     <string name="contact_navigation_app_contacts">合家亲</string>
     <string name="contact_navigation_sys_contacts">通讯录</string>
+    <string name="contact_search_hint_text">在%s个人中搜索</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
