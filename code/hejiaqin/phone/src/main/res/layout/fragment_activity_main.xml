@@ -90,13 +90,13 @@
                     android:layout_height="@dimen/main_navigation_me_image_height"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:background="@mipmap/main_navigation_unselected_me" />
+                    android:background="@mipmap/main_navigation_unselected_more" />
 
                 <TextView
                     android:id="@+id/setting_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/navigation_me"
+                    android:text="@string/more_tab_name"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:textSize="@dimen/main_navigation_text_size"

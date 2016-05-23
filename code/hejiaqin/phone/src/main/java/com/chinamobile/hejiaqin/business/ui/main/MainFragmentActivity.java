@@ -95,11 +95,11 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         mImageSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_selected_home;
         mImageSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_selected_courses;
-        mImageSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_selected_me;
+        mImageSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_selected_more;
 
         mImageUnSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_unselected_home;
         mImageUnSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_unselected_courses;
-        mImageUnSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_unselected_me;
+        mImageUnSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_unselected_more;
 
         mFm = getSupportFragmentManager();
         mFragments[mContactsIndex] = new ContactsFragment();

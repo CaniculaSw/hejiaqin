@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,11 +23,10 @@ import com.chinamobile.hejiaqin.R;
  */
 public class HeaderView extends RelativeLayout
 {
-    public LinearLayout backLayout;
     public View headerView;
     public RelativeLayout headerLayout;
     public LinearLayout middleLayout;
-    public Button rightBtn;
+    public ImageView rightBtn;
     public ImageView rightImageView;
     public ImageView backImageView;
     public LinearLayout setadd;
@@ -54,10 +54,9 @@ public class HeaderView extends RelativeLayout
     {
         this.headerView = LayoutInflater.from(getContext()).inflate(R.layout.header_view, this);
         this.headerLayout = ((RelativeLayout)this.headerView.findViewById(R.id.headerLayout));
-        this.rightBtn = ((Button)this.headerView.findViewById(R.id.right_btn));
+        this.rightBtn = ((ImageView)this.headerView.findViewById(R.id.right_btn));
         this.middleLayout = ((LinearLayout)this.headerView.findViewById(R.id.middleLayout));
         this.title = ((TextView)this.headerView.findViewById(R.id.headertitle));
-        this.backLayout = ((LinearLayout)this.headerView.findViewById(R.id.backLayout));
         this.setadd = ((LinearLayout)this.headerView.findViewById(R.id.setadd));
         this.tvRight = ((TextView)this.headerView.findViewById(R.id.tvRight));
         this.rightImageView = ((ImageView)this.headerView.findViewById(R.id.right_imageView));

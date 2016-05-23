@@ -42,4 +42,8 @@
     <color name="homepage_care_num_text_color">#7fd70f</color>
     <color name="homepage_forum_list_bg_color">#60000000</color>
 
+    <!-- MORE-->
+    <color name="white_f4f4f4">#f4f4f4</color>
+    <color name="sep_line">#e0e1e1</color>
+    <color name="black_404040">#404040</color>
 </resources>
