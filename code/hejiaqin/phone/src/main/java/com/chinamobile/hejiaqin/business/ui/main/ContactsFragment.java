@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
+import android.content.Intent;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.AppContactListFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.SysContactListFragment;
 
@@ -125,6 +127,10 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
                 if (currentIndex != mSysContactsIndex) {
                     switchFragment(mSysContactsIndex);
                 }
+                break;
+            case R.id.app_contact_add_img:
+                Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
+                getActivity().startActivity(intent);
                 break;
         }
     }
