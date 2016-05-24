@@ -78,17 +78,16 @@
     <dimen name="verify_code_button_text_size">13dp</dimen>
 
     <!--主页面-->
-    <dimen name="main_navigation_height">54dp</dimen>
-    <dimen name="main_navigation_content_height">42dp</dimen>
-    <dimen name="main_navigation_home_image_width">23dp</dimen>
-    <dimen name="main_navigation_home_image_height">22dp</dimen>
-    <dimen name="main_navigation_courses_image_width">21dp</dimen>
-    <dimen name="main_navigation_courses_image_height">22dp</dimen>
-    <dimen name="main_navigation_bank_image_width">49dp</dimen>
-    <dimen name="main_navigation_bank_image_height">24dp</dimen>
-    <dimen name="main_navigation_me_image_width">21dp</dimen>
-    <dimen name="main_navigation_me_image_height">22dp</dimen>
-    <dimen name="main_navigation_text_size">14dp</dimen>
+    <dimen name="main_navigation_height">49dp</dimen>
+    <dimen name="main_navigation_margin">10.5dp</dimen>
+    <dimen name="main_navigation_image_margin_top">3.5dp</dimen>
+    <dimen name="main_navigation_contact_image_width">25dp</dimen>
+    <dimen name="main_navigation_contact_image_height">25dp</dimen>
+    <dimen name="main_navigation_dial_image_width">25dp</dimen>
+    <dimen name="main_navigation_dial_image_height">25dp</dimen>
+    <dimen name="main_navigation_more_image_width">25dp</dimen>
+    <dimen name="main_navigation_more_image_height">25dp</dimen>
+    <dimen name="main_navigation_text_size">10sp</dimen>
     <!--首页-->
     <dimen name="home_page_pop_width">70dp</dimen>
     <dimen name="home_page_pop_height">40dp</dimen>

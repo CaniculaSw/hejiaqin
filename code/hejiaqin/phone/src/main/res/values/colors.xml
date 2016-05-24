@@ -8,8 +8,8 @@
     <color name="clear_color">#00000000</color>
     <color name="blue">#ff1e90ff</color>
     <color name="transparent">#00000000</color>
-    <color name="navigation_unselected">#a0a0a0</color>
-    <color name="navigation_selected">#ffd80c</color>
+    <color name="navigation_unselected">#b8b8b8</color>
+    <color name="navigation_selected">#40c875</color>
     <color name="backgroud_color">#ffd401</color>
     <color name="button_disable_color">#9b9b9b</color>
     <color name="button_normal_color">#fed600</color>

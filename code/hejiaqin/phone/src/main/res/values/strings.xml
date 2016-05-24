@@ -213,10 +213,9 @@
     <string name="demonstration_dialog_title">修改示范教练</string>
 
     <!--main framgent-->
-    <string name="navigation_homepage">首页</string>
-    <string name="navigation_courses">康兮课程</string>
-    <string name="navigation_bank">健康银行</string>
-    <string name="navigation_me">我</string>
+    <string name="navigation_contact">联系人</string>
+    <string name="navigation_dial">拨号</string>
+    <string name="navigation_more">更多</string>
 
 
     <!-- 首页 -->

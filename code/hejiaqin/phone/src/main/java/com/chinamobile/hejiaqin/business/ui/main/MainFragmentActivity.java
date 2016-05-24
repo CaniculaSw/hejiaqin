@@ -81,24 +81,24 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initView() {
-        mContactsLay = findViewById(R.id.home_page_layout);
-        mDialLay = findViewById(R.id.courses_layout);
-        mSettingLay = findViewById(R.id.setting_layout);
+        mContactsLay = findViewById(R.id.contact_layout);
+        mDialLay = findViewById(R.id.dial_layout);
+        mSettingLay = findViewById(R.id.more_layout);
 
-        mTextView[mContactsIndex] = (TextView) findViewById(R.id.home_page_text);
-        mTextView[mDialIndex] = (TextView) findViewById(R.id.courses_text);
-        mTextView[mSettingIndex] = (TextView) findViewById(R.id.setting_text);
+        mTextView[mContactsIndex] = (TextView) findViewById(R.id.contact_text);
+        mTextView[mDialIndex] = (TextView) findViewById(R.id.dial_text);
+        mTextView[mSettingIndex] = (TextView) findViewById(R.id.more_text);
 
-        mImageViewView[mContactsIndex] = (ImageView) findViewById(R.id.home_page_image);
-        mImageViewView[mDialIndex] = (ImageView) findViewById(R.id.courses_image);
-        mImageViewView[mSettingIndex] = (ImageView) findViewById(R.id.setting_image);
+        mImageViewView[mContactsIndex] = (ImageView) findViewById(R.id.contact_image);
+        mImageViewView[mDialIndex] = (ImageView) findViewById(R.id.dial_image);
+        mImageViewView[mSettingIndex] = (ImageView) findViewById(R.id.more_image);
 
-        mImageSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_selected_home;
-        mImageSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_selected_courses;
+        mImageSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_selected_contact;
+        mImageSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_selected_dial;
         mImageSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_selected_more;
 
-        mImageUnSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_unselected_home;
-        mImageUnSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_unselected_courses;
+        mImageUnSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_unselected_contact;
+        mImageUnSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_unselected_dial;
         mImageUnSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_unselected_more;
 
         mFm = getSupportFragmentManager();
