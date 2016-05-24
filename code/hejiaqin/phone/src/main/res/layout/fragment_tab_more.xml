@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_f4f4f4"
+    android:background="@color/more_white_f4f4f4"
     android:orientation="vertical">
 
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <LinearLayout
         android:id="@+id/more_item_user"
@@ -36,7 +36,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="13776570335"
-            android:textColor="@color/black_404040"
+            android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -59,13 +59,13 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <LinearLayout
         android:id="@+id/more_item_send_to_tv"
@@ -86,7 +86,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:text="@string/more_send_to_tv"
-            android:textColor="@color/black_404040"
+            android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -107,13 +107,13 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <LinearLayout
         android:id="@+id/more_item_more_fun"
@@ -135,7 +135,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:text="@string/more_more_fun"
-            android:textColor="@color/black_404040"
+            android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -156,7 +156,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <LinearLayout
         android:id="@+id/more_item_share_app"
@@ -177,7 +177,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:text="@string/more_share_app"
-            android:textColor="@color/black_404040"
+            android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
 
 
@@ -200,7 +200,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <LinearLayout
         android:id="@+id/more_item_about"
@@ -221,7 +221,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:text="@string/more_about"
-            android:textColor="@color/black_404040"
+            android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -242,13 +242,13 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 
     <LinearLayout
         android:id="@+id/more_item_quit"
@@ -269,12 +269,12 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:text="@string/more_quit"
-            android:textColor="@color/black_404040"
+            android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/sep_line" />
+        android:background="@color/more_sep_line" />
 </LinearLayout>

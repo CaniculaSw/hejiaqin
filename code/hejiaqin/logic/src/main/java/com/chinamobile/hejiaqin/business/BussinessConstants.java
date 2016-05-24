@@ -293,6 +293,7 @@ public class BussinessConstants {
 
         String APP_SAVE_PATH = "/kangxi_app/";                  //头像保存路径
         String APP_IMG_DEFAULT_NAME = "kangxi_app_default_img.jpg"; //头像图片默认名字
+        String MORE_SHARE_APP_URL = "http://www.baidu.com";
     }
 
     /**

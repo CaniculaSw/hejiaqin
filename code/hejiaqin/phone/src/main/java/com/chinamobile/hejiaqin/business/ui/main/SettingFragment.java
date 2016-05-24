@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 
+import android.content.Intent;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
+import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
 
 
 /**
@@ -114,8 +117,12 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     private void jumpToSendToTv(){
     }
     private void jumpToMoreFun(){
+        Intent intent = new Intent(getContext(),MoreFunActivity.class);
+        this.startActivity(intent);
     }
     private void jumpToShareApp(){
+        Intent intent = new Intent(getContext(),ShareAppActivity.class);
+        this.startActivity(intent);
     }
     private void jumpToAbout(){
     }

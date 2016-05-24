@@ -57,6 +57,8 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".business.ui.contact.ContactInfoActivity"></activity>
+        <activity android:name=".business.ui.more.MoreFunActivity"></activity>
+        <activity android:name=".business.ui.more.ShareAppActivity"></activity>
     </application>
 
 </manifest>

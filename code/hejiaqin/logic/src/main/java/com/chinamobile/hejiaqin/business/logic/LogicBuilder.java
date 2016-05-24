@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.login.LoginLogic;
+import com.chinamobile.hejiaqin.business.logic.more.IMoreLogic;
+import com.chinamobile.hejiaqin.business.logic.more.MoreLogic;
 import com.customer.framework.logic.BuilderImp;
 
 /**
@@ -45,5 +47,6 @@ public class LogicBuilder extends BuilderImp {
     protected void init(Context context) {
         //注册LoginLogic
         super.registerLogic(ILoginLogic.class, new LoginLogic());
+        super.registerLogic(IMoreLogic.class, new MoreLogic());
     }
 }

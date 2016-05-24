@@ -308,4 +308,9 @@
     <string name="more_more_fun">更多精彩</string>
     <string name="more_about">关于</string>
     <string name="more_quit">退出登陆</string>
+    <string name="more_more_fun_tv_tv">电视-电视互连</string>
+    <string name="more_more_fun_tv_tv_description">在家, 畅享亲人间的电视高清视频通话</string>
+    <string name="more_more_fun_tv_phone">电视-手机互通</string>
+    <string name="more_more_fun_tv_phone_description">在外, 也能面对面与家人聊天</string>
+    <string name="more_scan_the_qr_code">扫一扫上面二维码, 下载APP</string>
 </resources>
