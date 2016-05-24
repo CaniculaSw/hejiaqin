@@ -4,7 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/contact_list_head_bg_color">
 
+    <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
+        android:layout_below="@+id/title"
         android:id="@+id/contact_head_layout"
         android:layout_width="match_parent"
         android:layout_height="86dp"
@@ -96,8 +102,8 @@
             android:id="@+id/contact_number_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
             android:text="@string/contact_modify_number_text"
             android:textColor="@color/contact_list_username_text_color"
             android:textSize="16sp" />
@@ -107,8 +113,8 @@
             android:layout_width="9dp"
             android:layout_height="16dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
             android:src="@drawable/contact_modify_arrow_icon" />
 
         <TextView

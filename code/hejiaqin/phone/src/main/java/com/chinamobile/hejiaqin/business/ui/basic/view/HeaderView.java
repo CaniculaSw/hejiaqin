@@ -60,6 +60,6 @@ public class HeaderView extends RelativeLayout
         this.setadd = ((LinearLayout)this.headerView.findViewById(R.id.setadd));
         this.tvRight = ((TextView)this.headerView.findViewById(R.id.tvRight));
         this.rightImageView = ((ImageView)this.headerView.findViewById(R.id.right_imageView));
-        this.backImageView = (ImageView)this.headerView.findViewById(R.id.back);
+        this.backImageView = (ImageView)this.headerView.findViewById(R.id.back_btn);
     }
 }
