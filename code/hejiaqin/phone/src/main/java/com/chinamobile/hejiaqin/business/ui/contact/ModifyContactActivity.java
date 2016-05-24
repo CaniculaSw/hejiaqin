@@ -1,13 +1,22 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+
+import java.io.File;
 
 public class ModifyContactActivity extends BasicActivity implements View.OnClickListener {
 
@@ -20,6 +29,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     private HeaderView titleLayout;
 
     private View headView;
+    private ImageView headImg;
 
     private View nameView;
 
@@ -55,7 +65,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
 
         // 头像
         headView = findViewById(R.id.contact_head_layout);
-
+        headImg = (ImageView) findViewById(R.id.contact_head_img);
 
         // 姓名
         nameView = findViewById(R.id.contact_name_layout);
@@ -66,7 +76,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
 
     @Override
     protected void initDate() {
-
+        PhotoManage.getInstance(this).setPhotoListener(mPhotoChangeListener);
     }
 
     @Override
@@ -105,12 +115,42 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case PhotoManage.IMAGE_CODE:
+                PhotoManage.getInstance(this).startPhotoZoom(data.getData());
+                break;
+            case PhotoManage.CAMERA_CODE:
+                if (CommonUtils.hasSdcard()) {
+                    File tempFile = new File(Environment.getExternalStorageDirectory() + BussinessConstants.Setting.APP_SAVE_PATH + BussinessConstants.Setting.APP_IMG_DEFAULT_NAME);
+                    PhotoManage.getInstance(this).startPhotoZoom(Uri.fromFile(tempFile));
+                } else {
+                    showToast(R.string.no_sdcard_update_header, 1, null);
+                }
+                break;
+            case PhotoManage.CROP_CODE:
+                if (data != null) {
+                    PhotoManage.getInstance(this).sendPhotoEnd(data);
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PhotoManage.getInstance(this).setPhotoListener(null);
+        PhotoManage.getInstance(this).removeContext();
+    }
+
     private void doClickSubmit() {
 
     }
 
     private void doClickHeadLayout() {
-
+        PhotoManage.getInstance(this).showDialog();
     }
 
     private void doClickNameLayout() {
@@ -122,4 +162,19 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         Intent intent = new Intent(this, InputInfoActivity.class);
         startActivityForResult(intent, REQUEST_CODE_INPUT_NUMBER);
     }
+
+
+    /**
+     * 监听拍摄后得到照片信息
+     */
+    private PhotoManage.PhotoChangeListener mPhotoChangeListener = new PhotoManage.PhotoChangeListener() {
+
+        @Override
+        public void end(String url, Bitmap bitmap) {
+            if (bitmap != null) {
+                headImg.setImageBitmap(bitmap);
+            }
+            // TODO 上传头像
+        }
+    };
 }
