@@ -40,7 +40,7 @@ public abstract class BasicActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager connectMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo activeInfo = connectMgr.getActiveNetworkInfo();
-            if (activeInfo!=null && activeInfo.isConnected()) {
+            if (activeInfo != null && activeInfo.isConnected()) {
                 doNetWorkConnect();
             } else {
                 doNetworkDisConnect();
@@ -131,11 +131,15 @@ public abstract class BasicActivity extends BaseActivity {
         MyActivityManager.getInstance().finishActivitys(needFinishActivityNames);
     }
 
+    protected void doBack() {
+        this.finish();
+    }
+
     protected void showWaitDailog() {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new KangxiProgressDialog(this,null);
+        waitDialog = new KangxiProgressDialog(this, null);
         waitDialog.show();
     }
 

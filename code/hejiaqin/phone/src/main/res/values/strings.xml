@@ -295,6 +295,13 @@
     <string name="contact_navigation_app_contacts">合家亲</string>
     <string name="contact_navigation_sys_contacts">通讯录</string>
     <string name="contact_search_hint_text">在%s个人中搜索</string>
+    <string name="contact_modify_title_add_text">新建联系人</string>
+    <string name="contact_modify_title_edit_text">编辑联系人</string>
+    <string name="contact_modify_head_text">头像</string>
+    <string name="contact_modify_name_text">姓名</string>
+    <string name="contact_modify_number_text">号码</string>
+    <string name="contact_modify_name_hint_text">请输入姓名</string>
+    <string name="contact_modify_number_hint_text">请输入号码</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

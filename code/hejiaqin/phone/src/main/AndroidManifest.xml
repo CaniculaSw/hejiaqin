@@ -55,8 +55,9 @@
             android:name=".business.ui.main.MainFragmentActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".business.ui.contact.ContactInfoActivity"></activity>
+        <activity android:name=".business.ui.contact.ContactInfoActivity" />
+        <activity android:name=".business.ui.contact.ModifyContactActivity" />
+        <activity android:name=".business.ui.contact.InputInfoActivity"></activity>
         <activity android:name=".business.ui.more.MoreFunActivity"></activity>
         <activity android:name=".business.ui.more.ShareAppActivity"></activity>
     </application>
