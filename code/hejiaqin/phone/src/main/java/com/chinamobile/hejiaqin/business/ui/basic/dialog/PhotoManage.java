@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.basic.dialog;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
@@ -55,6 +56,10 @@ public class PhotoManage {
         return mPhotoManage;
     }
 
+    public void removeContext() {
+        mPhotoManage.mContext = null;
+    }
+
     public void setFragmentActivity(FragmentActivity fragment) {
         this.mContext2 = fragment;
     }
@@ -80,7 +85,7 @@ public class PhotoManage {
     }
 
     /*选择头像自定义dialog*/
-    public void showDialog(){
+    public void showDialog() {
         //创建一个AlertDialog对象
         final PhotoDialog photoDialog = new PhotoDialog(mContext, R.style.CalendarDialog);
         Window window = photoDialog.getWindow();
@@ -103,6 +108,7 @@ public class PhotoManage {
 
     /**
      * 裁剪图片方法实现
+     *
      * @param uri
      */
     public void startPhotoZoom(Uri uri) {
@@ -133,6 +139,7 @@ public class PhotoManage {
         startActivity(intent, CROP_CODE);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
