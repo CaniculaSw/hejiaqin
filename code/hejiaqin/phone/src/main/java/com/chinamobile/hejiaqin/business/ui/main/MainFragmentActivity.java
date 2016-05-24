@@ -26,6 +26,12 @@ import com.chinamobile.hejiaqin.business.utils.BusProvider;
  */
 public class MainFragmentActivity extends BasicFragmentActivity {
 
+    private static final int DIAL_STATUS_NORMAL =1;
+
+    private static final int DIAL_STATUS_SHOW_KEYBORD =2;
+
+    private static final int DIAL_STATUS_CALL =3;
+
     FragmentManager mFm;
 
     View mContactsLay;
@@ -36,9 +42,11 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     BasicFragment[] mFragments = new BasicFragment[3];
 
-    TextView[] mTextView = new TextView[3];
+    TextView[] mTextViews = new TextView[3];
 
-    ImageView[] mImageViewView = new ImageView[3];
+    ImageView[] mImageViews = new ImageView[3];
+
+    ImageView mDialCallImage;
 
     int[] mImageSelectedBgResId = new int[3];
 
@@ -51,8 +59,10 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     final int mDialIndex = 1;
 
     final int mSettingIndex = 2;
-//
-//    int testValue = 1;
+
+    private boolean mDialSeleted =false;
+
+    private int mDialStatus = DIAL_STATUS_NORMAL;
 
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
@@ -62,13 +72,17 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     MainFragmentActivity.this.startActivity(intent);
                     MainFragmentActivity.this.finishAllActivity(LoginActivity.class.getName());
                     break;
-                case BussinessConstants.FragmentActionId.COURSES_SWITCH_RECOMMEND_PRACTICE_ID:
-                case BussinessConstants.FragmentActionId.COURSES_SWITCH_RECOMMEND_CARE_ID:
-                case BussinessConstants.FragmentActionId.COURSES_SWITCH_FORUM_ID:
-                    Message msg = new Message();
-                    msg.what = actionId;
-                    switchFragment(mDialIndex);
-                    mFragments[mDialIndex].recieveMsg(msg);
+                case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID:
+                    mImageViews[mDialIndex].setVisibility(View.GONE);
+                    mTextViews[mDialIndex].setVisibility(View.GONE);
+                    mDialCallImage.setVisibility(View.VISIBLE);
+                    mDialStatus = DIAL_STATUS_CALL;
+                    break;
+                case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID:
+                    mDialCallImage.setVisibility(View.GONE);
+                    mImageViews[mDialIndex].setVisibility(View.VISIBLE);
+                    mTextViews[mDialIndex].setVisibility(View.VISIBLE);
+                    mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
                     break;
             }
         }
@@ -85,13 +99,13 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         mDialLay = findViewById(R.id.dial_layout);
         mSettingLay = findViewById(R.id.more_layout);
 
-        mTextView[mContactsIndex] = (TextView) findViewById(R.id.contact_text);
-        mTextView[mDialIndex] = (TextView) findViewById(R.id.dial_text);
-        mTextView[mSettingIndex] = (TextView) findViewById(R.id.more_text);
+        mTextViews[mContactsIndex] = (TextView) findViewById(R.id.contact_text);
+        mTextViews[mDialIndex] = (TextView) findViewById(R.id.dial_text);
+        mTextViews[mSettingIndex] = (TextView) findViewById(R.id.more_text);
 
-        mImageViewView[mContactsIndex] = (ImageView) findViewById(R.id.contact_image);
-        mImageViewView[mDialIndex] = (ImageView) findViewById(R.id.dial_image);
-        mImageViewView[mSettingIndex] = (ImageView) findViewById(R.id.more_image);
+        mImageViews[mContactsIndex] = (ImageView) findViewById(R.id.contact_image);
+        mImageViews[mDialIndex] = (ImageView) findViewById(R.id.dial_image);
+        mImageViews[mSettingIndex] = (ImageView) findViewById(R.id.more_image);
 
         mImageSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_selected_contact;
         mImageSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_selected_dial;
@@ -101,14 +115,16 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         mImageUnSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_unselected_dial;
         mImageUnSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_unselected_more;
 
+        mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
+
         mFm = getSupportFragmentManager();
         mFragments[mContactsIndex] = new ContactsFragment();
         mFragments[mContactsIndex].setActivityListener(listener);
         FragmentTransaction ft = mFm.beginTransaction();
         ft.add(R.id.content, mFragments[mContactsIndex]);
         ft.commit();
-        mTextView[mContactsIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
-        mImageViewView[mContactsIndex].setBackgroundResource(mImageSelectedBgResId[mContactsIndex]);
+        mTextViews[mContactsIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
+        mImageViews[mContactsIndex].setBackgroundResource(mImageSelectedBgResId[mContactsIndex]);
         mCurrentIndex = mContactsIndex;
 
     }
@@ -128,8 +144,36 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         mDialLay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                switchFragment(mDialIndex);
-            }
+                if(!mDialSeleted) {
+                    switchFragment(mDialIndex);
+                }else{
+                    Message msg;
+                    switch (mDialStatus) {
+                        case DIAL_STATUS_NORMAL:
+                            mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial_show);
+                            mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
+                            //TODO:显示拨号盘
+                            msg = new Message();
+                            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
+                            mFragments[mDialIndex].recieveMsg(msg);
+                            break;
+                        case DIAL_STATUS_SHOW_KEYBORD:
+                            mImageViews[mDialIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
+                            mDialStatus = DIAL_STATUS_NORMAL;
+                            //TODO:收起拨号盘
+                            msg = new Message();
+                            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
+                            mFragments[mDialIndex].recieveMsg(msg);
+                            break;
+                        case DIAL_STATUS_CALL:
+                            //TODO:呼叫电话
+                            msg = new Message();
+                            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID;
+                            mFragments[mDialIndex].recieveMsg(msg);
+                            break;
+                        }
+                    }
+                }
         });
 
         mSettingLay.setOnClickListener(new View.OnClickListener() {
@@ -171,10 +215,40 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         }
         Log.d("MainFragmentActivity", "commit:" + mFragments[toIndex].getClass());
         ft.commit();
-        mTextView[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
-        mTextView[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
-        mImageViewView[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
-        mImageViewView[toIndex].setBackgroundResource(mImageSelectedBgResId[toIndex]);
+        mTextViews[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
+        mImageViews[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
+        if(toIndex != mDialIndex) {
+            mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
+            mImageViews[toIndex].setBackgroundResource(mImageSelectedBgResId[toIndex]);
+        }
+        if(mCurrentIndex == mDialIndex)
+        {
+            mDialSeleted = false;
+            if(mDialStatus == DIAL_STATUS_SHOW_KEYBORD)
+            {
+                mDialStatus = DIAL_STATUS_NORMAL;
+            }
+        }
+        else if(toIndex == mDialIndex)
+        {
+            mDialSeleted = true;
+            switch (mDialStatus)
+            {
+                case DIAL_STATUS_NORMAL:
+                    mDialCallImage.setVisibility(View.GONE);
+                    mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
+                    mImageViews[toIndex].setBackgroundResource(mImageSelectedBgResId[toIndex]);
+                    mImageViews[toIndex].setVisibility(View.VISIBLE);
+                    mTextViews[toIndex].setVisibility(View.VISIBLE);
+                    break;
+                case DIAL_STATUS_CALL:
+                    mImageViews[toIndex].setVisibility(View.GONE);
+                    mTextViews[toIndex].setVisibility(View.GONE);
+                    mDialCallImage.setVisibility(View.VISIBLE);
+                    break;
+
+            }
+        }
         mCurrentIndex = toIndex;
     }
 
