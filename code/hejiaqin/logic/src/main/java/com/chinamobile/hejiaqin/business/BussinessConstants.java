@@ -23,11 +23,10 @@ public class BussinessConstants {
 
     }
 
-    public interface ActivityRequestCode
-    {
+    public interface ActivityRequestCode {
         int BASE_QEUEST_CODE = 1000;
         //选择偏好的RequestCode
-        int CHOOSE_PREFER_REQUEST_CODE = BASE_QEUEST_CODE+1;
+        int CHOOSE_PREFER_REQUEST_CODE = BASE_QEUEST_CODE + 1;
     }
 
     /**
@@ -57,10 +56,10 @@ public class BussinessConstants {
         String PRACTICE_TYPE_RECOMMOND = "2";
 
         //1置顶，0不置顶
-        String PLACE_TOP ="1";
+        String PLACE_TOP = "1";
 
         //1置顶，0不置顶
-        String CANCEL_PLACE_TOP ="0";
+        String CANCEL_PLACE_TOP = "0";
 
         // 1有氧
         String MOVEMENT_TYPE_AEROBICS = "1";
@@ -225,7 +224,8 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 30001000;
 
-
+        //获取验证码成功的消息ID
+        int GET_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
     }
 
     /**
@@ -314,8 +314,6 @@ public class BussinessConstants {
         int BASE_MSG_ID = 50001000;
 
     }
-
-
 
 
     public interface FragmentActionId {

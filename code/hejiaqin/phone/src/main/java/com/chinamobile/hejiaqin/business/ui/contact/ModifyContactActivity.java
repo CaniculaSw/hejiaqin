@@ -100,7 +100,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
             case R.id.right_btn:
                 doClickSubmit();
                 break;
-            case R.id.back_btn:
+            case R.id.back_iv:
                 doBack();
                 break;
             case R.id.contact_head_layout:

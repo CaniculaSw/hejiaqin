@@ -2,6 +2,8 @@ package com.chinamobile.hejiaqin.business.logic;
 
 import android.content.Context;
 
+import com.chinamobile.hejiaqin.business.logic.contacts.ContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.login.LoginLogic;
 import com.chinamobile.hejiaqin.business.logic.more.IMoreLogic;
@@ -48,5 +50,6 @@ public class LogicBuilder extends BuilderImp {
         //注册LoginLogic
         super.registerLogic(ILoginLogic.class, new LoginLogic());
         super.registerLogic(IMoreLogic.class, new MoreLogic());
+        super.registerLogic(IContactsLogic.class, new ContactsLogic());
     }
 }
