@@ -60,6 +60,8 @@
         <activity android:name=".business.ui.contact.InputInfoActivity"></activity>
         <activity android:name=".business.ui.more.MoreFunActivity"></activity>
         <activity android:name=".business.ui.more.ShareAppActivity"></activity>
+        <activity android:name=".business.ui.more.MoreMessageActivity"></activity>
+        <activity android:name=".business.ui.more.AboutActivity"></activity>
     </application>
 
 </manifest>

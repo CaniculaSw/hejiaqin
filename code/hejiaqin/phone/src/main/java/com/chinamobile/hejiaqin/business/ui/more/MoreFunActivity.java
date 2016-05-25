@@ -19,7 +19,7 @@ public class MoreFunActivity extends BasicActivity  implements View.OnClickListe
     @Override
     protected void initView() {
         headerView = (HeaderView) findViewById(R.id.more_fun_header);
-        headerView.title.setText("更多精彩");
+        headerView.title.setText(R.string.more_more_fun);
         headerView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
         headerView.backImageView.setClickable(true);
         headerView.backImageView.setOnClickListener(this);
@@ -43,7 +43,7 @@ public class MoreFunActivity extends BasicActivity  implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back_iv:
+            case R.id.back_btn:
                 finish();
                 break;
             default:

@@ -55,7 +55,7 @@ public class ShareAppActivity extends BasicActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back_iv:
+            case R.id.back_btn:
                 finish();
                 break;
             default:
