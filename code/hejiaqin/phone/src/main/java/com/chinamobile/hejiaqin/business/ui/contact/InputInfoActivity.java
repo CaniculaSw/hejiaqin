@@ -83,7 +83,7 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
             case R.id.right_btn:
                 doClickSubmit();
                 break;
-            case R.id.back_btn:
+            case R.id.back_iv:
                 doBack();
                 break;
             case R.id.delete:

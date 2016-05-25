@@ -1,5 +1,7 @@
 package com.customer.framework.utils;
 
+import com.customer.framework.utils.string.Hanzi2Pinyin;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -383,9 +385,27 @@ public class StringUtil {
         return sb.toString();
     }
 
-    public static boolean isMobileNO(String paramString)
-    {
+    public static boolean isMobileNO(String paramString) {
         return Pattern.compile("^((13[0-9])|(17[0-9])|(14[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$").matcher(paramString).matches();
     }
+
+    /**
+     * 汉字转为拼音
+     */
+    public static String hanzi2Pinyin(String input) {
+        ArrayList<Hanzi2Pinyin.Token> tokens = Hanzi2Pinyin.getInstance().get(input);
+        StringBuilder sb = new StringBuilder();
+        if (tokens != null && tokens.size() > 0) {
+            for (Hanzi2Pinyin.Token token : tokens) {
+                if (Hanzi2Pinyin.Token.PINYIN == token.type) {
+                    sb.append(token.target);
+                } else {
+                    sb.append(token.source);
+                }
+            }
+        }
+        return sb.toString().toUpperCase();
+    }
+
 
 }

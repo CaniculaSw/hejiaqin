@@ -23,11 +23,10 @@ public class BussinessConstants {
 
     }
 
-    public interface ActivityRequestCode
-    {
+    public interface ActivityRequestCode {
         int BASE_QEUEST_CODE = 1000;
         //选择偏好的RequestCode
-        int CHOOSE_PREFER_REQUEST_CODE = BASE_QEUEST_CODE+1;
+        int CHOOSE_PREFER_REQUEST_CODE = BASE_QEUEST_CODE + 1;
     }
 
     /**
@@ -57,10 +56,10 @@ public class BussinessConstants {
         String PRACTICE_TYPE_RECOMMOND = "2";
 
         //1置顶，0不置顶
-        String PLACE_TOP ="1";
+        String PLACE_TOP = "1";
 
         //1置顶，0不置顶
-        String CANCEL_PLACE_TOP ="0";
+        String CANCEL_PLACE_TOP = "0";
 
         // 1有氧
         String MOVEMENT_TYPE_AEROBICS = "1";
@@ -225,7 +224,8 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 30001000;
 
-
+        //获取验证码成功的消息ID
+        int GET_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
     }
 
     /**
@@ -316,18 +316,21 @@ public class BussinessConstants {
     }
 
 
-
-
     public interface FragmentActionId {
         int BASE_ACTION_ID = 70001000;
 
         int SETTING_FRAGMENT_LOGOUT_ACTION_ID = BASE_ACTION_ID + 1;
 
-        int COURSES_SWITCH_RECOMMEND_PRACTICE_ID = BASE_ACTION_ID + 2;
+        int DAIL_FRAGMENT_SHOW_CALL_ACTION_ID = BASE_ACTION_ID + 2;
 
-        int COURSES_SWITCH_RECOMMEND_CARE_ID = BASE_ACTION_ID + 3;
+        int DAIL_FRAGMENT_HIDE_CALL_ACTION_ID = BASE_ACTION_ID + 3;
 
-        int COURSES_SWITCH_FORUM_ID = BASE_ACTION_ID + 4;
+        int DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID = BASE_ACTION_ID + 4;
+
+        int DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID = BASE_ACTION_ID + 5;
+
+        int DAIL_FRAGMENT_CALL_MSG_ID = BASE_ACTION_ID + 6;
+
     }
 
 }
