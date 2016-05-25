@@ -1,7 +1,7 @@
 package com.chinamobile.hejiaqin.business.logic.contacts;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.manager.LocalContactsManager;
+import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
@@ -18,7 +18,8 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-                List<ContactsInfo> contactsInfoList = LocalContactsManager.getInstance().getLocalContactLst(getContext());
+                List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance().getLocalContactLst(getContext());
+                ContactsInfoManager.getInstance().sortContactsInfoLst(contactsInfoList);
                 sendMessage(BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID, contactsInfoList);
             }
         });

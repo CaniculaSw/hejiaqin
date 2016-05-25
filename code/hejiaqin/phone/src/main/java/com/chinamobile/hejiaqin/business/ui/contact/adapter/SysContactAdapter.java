@@ -78,7 +78,8 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = (HeaderViewHolder) convertView.getTag();
         }
         //set header text as first char in name
-        String headerText = position >= headerArray.length ? headerArray[0] : headerArray[position];
+        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        String headerText = contactsInfo.getGroupName();
         holder.text.setText(headerText);
         return convertView;
     }
@@ -86,7 +87,8 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
     @Override
     public long getHeaderId(int position) {
         //return the first character of the country as ID because this is what headers are based upon
-        return position >= headerArray.length ? headerArray[0].charAt(0) : headerArray[position].charAt(0) ;
+        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        return contactsInfo.getGroupName().charAt(0);
     }
 
     public void setData(List<ContactsInfo> contactsInfoList) {
