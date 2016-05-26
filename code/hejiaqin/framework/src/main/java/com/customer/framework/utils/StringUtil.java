@@ -1,6 +1,8 @@
 package com.customer.framework.utils;
 
-import com.customer.framework.utils.string.Hanzi2Pinyin;
+import android.content.Context;
+
+import com.customer.framework.utils.string.HanziToPinyin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -392,19 +394,23 @@ public class StringUtil {
     /**
      * 汉字转为拼音
      */
-    public static String hanzi2Pinyin(String input) {
-        ArrayList<Hanzi2Pinyin.Token> tokens = Hanzi2Pinyin.getInstance().get(input);
-        StringBuilder sb = new StringBuilder();
-        if (tokens != null && tokens.size() > 0) {
-            for (Hanzi2Pinyin.Token token : tokens) {
-                if (Hanzi2Pinyin.Token.PINYIN == token.type) {
-                    sb.append(token.target);
-                } else {
-                    sb.append(token.source);
-                }
+    public static String hanzi2Pinyin(Context context, String input) {
+        if (null == input || null == context) {
+            return input;
+        }
+
+        char[] chars = input.toCharArray();
+        StringBuffer fullPinyinLetters = new StringBuffer();
+        for (int i = 0, len = chars.length; i < len; i++) {
+            String curChar = String.valueOf(chars[i]);
+            // 获取字符对应的拼音
+            String pinyin =
+                    HanziToPinyin.getInstance(context).hanziToPinyin(curChar);
+            if (pinyin.length() > 0) {
+                fullPinyinLetters.append(pinyin);
             }
         }
-        return sb.toString().toUpperCase();
+        return fullPinyinLetters.toString().toUpperCase();
     }
 
 

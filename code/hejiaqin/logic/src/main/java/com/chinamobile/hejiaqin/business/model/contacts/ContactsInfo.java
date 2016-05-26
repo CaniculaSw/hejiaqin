@@ -2,15 +2,16 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 
 import com.customer.framework.utils.StringUtil;
 
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by yupeng on 5/24/16.
+ * è”ç³»äººè¯¦æƒ…
  */
 public class ContactsInfo {
     private String name;
 
-    private String number;
+    private List<NumberInfo> numberLst = new ArrayList<NumberInfo>();
 
     private String nameInPinyin;
 
@@ -22,12 +23,15 @@ public class ContactsInfo {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
+    public List<NumberInfo> getNumberLst() {
+        return numberLst;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void addNumber(NumberInfo numberInfo) {
+        if (null == numberInfo) {
+            return;
+        }
+        this.numberLst.add(numberInfo);
     }
 
     public String getNameInPinyin() {
@@ -39,7 +43,7 @@ public class ContactsInfo {
     }
 
     /**
-     * »ñÈ¡·Ö×éÃû³Æ£¬Ä¿Ç°´óĞ´×ÖÄ¸A-Z·Ö×é
+     * è·å–åˆ†ç»„çš„åç§°ï¼Œç›®å‰æ˜¯ä»¥A-Zçš„è§„åˆ™è¿›è¡Œåˆ†ç»„
      *
      * @return
      */
@@ -59,7 +63,7 @@ public class ContactsInfo {
     public String toString() {
         return "ContactsInfo{" +
                 "name='" + name + '\'' +
-                ", number='" + number + '\'' +
+                ", numberLst='" + numberLst + '\'' +
                 ", nameInPinyin='" + nameInPinyin + '\'' +
                 '}';
     }
