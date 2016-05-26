@@ -55,7 +55,7 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
                 break;
             case R.id.about_contract:
                 break;
-            case R.id.back_btn:
+            case R.id.back_iv:
                 finish();
                 break;
             default:

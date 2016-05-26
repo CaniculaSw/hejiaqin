@@ -39,7 +39,7 @@ public class ContactsInfo {
     }
 
     /**
-     * 获取分组名称，目前大写字母A-Z分组
+     * 鑾峰彇鍒嗙粍鍚嶇О锛岀洰鍓嶅ぇ鍐欏瓧姣岮-Z鍒嗙粍
      *
      * @return
      */
