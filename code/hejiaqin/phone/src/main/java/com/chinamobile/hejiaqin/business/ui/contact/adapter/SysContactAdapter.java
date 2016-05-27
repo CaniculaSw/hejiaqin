@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
+import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +21,18 @@ import java.util.List;
  */
 public class SysContactAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
-
+    private Context mContext;
     private LayoutInflater inflater;
-
-    public SysContactAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
-    }
 
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
 
     private String[] headerArray = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
             "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
+
+    public SysContactAdapter(Context context) {
+        mContext = context;
+        inflater = LayoutInflater.from(context);
+    }
 
     @Override
     public int getCount() {
@@ -59,11 +62,21 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = (ViewHolder) convertView.getTag();
         }
 
-
-        ContactsInfo contactsInfo = contactsInfoList.get(position);
-        holder.text.setText(contactsInfo.getName());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+        initView(position, holder);
 
         return convertView;
+    }
+
+    private void initView(int position, ViewHolder holder) {
+        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        holder.text.setText(contactsInfo.getName());
     }
 
     @Override

@@ -2,7 +2,7 @@
 <resources>
 
     <declare-styleable name="StickyListHeadersListView">
-        <attr name="stickyListHeadersListViewStyle" format="reference"/>
+        <attr name="stickyListHeadersListViewStyle" format="reference" />
 
         <!-- View attributes -->
         <attr name="android:clipToPadding" />
