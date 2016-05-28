@@ -65,6 +65,7 @@
         <activity android:name=".business.ui.more.ShareAppActivity"></activity>
         <activity android:name=".business.ui.more.MoreMessageActivity"></activity>
         <activity android:name=".business.ui.more.AboutActivity"></activity>
+        <activity android:name=".business.ui.more.SysMessageDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.more.fragment;
 
-import android.content.Intent;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
      */
     View mSysMessageLay;
 
-    private List<Fragment> fragmentList;
+    private List<BasicFragment> fragmentList;
 
     private TextView[] mTextView = new TextView[2];
     private ImageView[] mImageView = new ImageView[2];
@@ -45,6 +44,10 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
 
     private final int mMissCallLayIndex = 0;
     private final int mSysMessageLayIndex = 1;
+    private BasicFragment missCallListFragment;
+    private BasicFragment sysMessageListFragment;
+    private ImageView mBackButton;
+
     //当前选中的项
     int currentIndex = -1;
 
@@ -53,6 +56,10 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
 
         }
     };
+
+    @Override
+    protected void initLogics() {
+    }
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -83,16 +90,19 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
         editTv.setOnClickListener(this);
         mViewPager = (ViewPager) view.findViewById(R.id.more_msg_viewpager);
 
-        fragmentList = new ArrayList<Fragment>();
-        BasicFragment missCallListFragment = new MissCallListFragment();
+        fragmentList = new ArrayList<BasicFragment>();
+        missCallListFragment = new MissCallListFragment();
         missCallListFragment.setActivityListener(listener);
         fragmentList.add(missCallListFragment);
 
-        BasicFragment sysMessageListFragment = new SystemMessageListFragment();
+        sysMessageListFragment = new SystemMessageListFragment();
         sysMessageListFragment.setActivityListener(listener);
         fragmentList.add(sysMessageListFragment);
 
         mViewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
+
+        mBackButton = (ImageView) view.findViewById(R.id.more_sys_msg_back_btn);
+        mBackButton.setOnClickListener(this);
     }
 
     @Override
@@ -109,6 +119,9 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.more_sys_msg_miss_call_layout:
                 if (currentIndex != mMissCallLayIndex) {
+                    Message msg = new Message();
+                    msg.what = BussinessConstants.SettingMsgID.CLEAN_MESSAGES_SELECTED_STATE;
+                    missCallListFragment.recieveMsg(msg);
                     switchFragment(mMissCallLayIndex);
                 }
                 break;
@@ -118,8 +131,14 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
                 }
                 break;
             case R.id.more_sys_msg_edit:
-                Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
-                getActivity().startActivity(intent);
+                editTv.setText(editTv.getText().equals(getResources().getString(R.string.more_edit))? getResources().getString(R.string.more_cancel): getResources().getString(R.string.more_edit));
+                Message msg = new Message();
+                msg.what = BussinessConstants.SettingMsgID.EDIT_BUTTON_PRESSED;
+                (fragmentList.get(currentIndex)).recieveMsg(msg);
+                break;
+            case R.id.more_sys_msg_back_btn:
+                getActivity().finish();
+            default:
                 break;
         }
     }
@@ -154,13 +173,16 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
             if (currentItem == currentIndex) {
                 return;
             }
-
+            editTv.setText(getString(R.string.more_edit));
             mTextView[currentItem].setTextColor(getResources().getColor(R.color.more_sys_msg_navigator_text_selected));
             mImageView[currentItem].setVisibility(View.VISIBLE);
 
             if (currentIndex != -1) {
                 mTextView[currentIndex].setTextColor(getResources().getColor(R.color.more_sys_msg_navigator_text_unselected));
                 mImageView[currentIndex].setVisibility(View.GONE);
+                Message msg = new Message();
+                msg.what = BussinessConstants.SettingMsgID.MESSAGE_FRAGMENT_SWITCH_OFF;
+                (fragmentList.get(currentIndex)).recieveMsg(msg);
             }
             currentIndex = mViewPager.getCurrentItem();
         }
