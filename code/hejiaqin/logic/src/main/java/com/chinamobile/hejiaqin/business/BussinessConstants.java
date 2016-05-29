@@ -205,7 +205,8 @@ public class BussinessConstants {
      * 联系人模块常量
      */
     public interface Contact {
-
+        // 联系人详情key值
+        String INTENT_CONTACTSINFO_KEY = "INTENT_CONTACTSINFO_KEY";
 
     }
 
@@ -323,7 +324,7 @@ public class BussinessConstants {
         //消息页面,编辑按钮被按下
         int EDIT_BUTTON_PRESSED = BASE_MSG_ID + 1;
         int CLEAN_MESSAGES_SELECTED_STATE = BASE_MSG_ID + 2;
-        int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID +3;
+        int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID + 3;
 
     }
 

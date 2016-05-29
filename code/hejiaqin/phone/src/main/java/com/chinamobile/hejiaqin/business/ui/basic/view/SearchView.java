@@ -45,7 +45,7 @@ public class SearchView extends RelativeLayout {
     }
 
     private void initView() {
-        this.searchView = LayoutInflater.from(getContext()).inflate(R.layout.activity_contact_search, this);
+        this.searchView = LayoutInflater.from(getContext()).inflate(R.layout.layout_contact_search, this);
 
         // 设置搜索显示的文字
         searchInput = (EditText) findViewById(R.id.search_input);

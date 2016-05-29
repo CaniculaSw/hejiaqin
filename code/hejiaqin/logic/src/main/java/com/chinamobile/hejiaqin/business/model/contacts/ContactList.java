@@ -23,7 +23,7 @@ public class ContactList {
         contactsInfoMap.clear();
     }
 
-    public void add(String name, NumberInfo numberInfo) {
+    public void addLocalContact(String name, NumberInfo numberInfo) {
         if (StringUtil.isNullOrEmpty(name) || null == numberInfo || null == numberInfo.getNumber()) {
             return;
         }
@@ -33,6 +33,7 @@ public class ContactList {
             tmpContactsInfo = new ContactsInfo();
             tmpContactsInfo.setName(name);
             tmpContactsInfo.addNumber(numberInfo);
+            tmpContactsInfo.setContactMode(ContactsInfo.ContactMode.system);
             contactsInfoMap.put(name, tmpContactsInfo);
             return;
         }

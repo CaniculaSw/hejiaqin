@@ -4,6 +4,7 @@ import android.os.Message;
 import android.view.View;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 
 /**
@@ -44,5 +45,9 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
+    }
+
+    public void setContactsInfo(ContactsInfo contactsInfo) {
+        
     }
 }

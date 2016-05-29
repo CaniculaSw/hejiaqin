@@ -4,11 +4,13 @@ import android.provider.ContactsContract;
 
 import com.customer.framework.utils.StringUtil;
 
+import java.io.Serializable;
+
 /**
  * 号码详情
  * Created by Administrator on 2016/5/26 0026.
  */
-public class NumberInfo {
+public class NumberInfo implements Serializable {
     /**
      * 号码
      */

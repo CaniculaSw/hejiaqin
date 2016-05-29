@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
@@ -55,26 +57,32 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.adapter_contact_app_view, parent, false);
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
+            holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
+
         initView(position, holder);
 
         return convertView;
     }
 
     private void initView(int position, ViewHolder holder) {
-        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.text.setText(contactsInfo.getName());
+
+        holder.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -116,6 +124,7 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
 
     class ViewHolder {
         TextView text;
+        View convertView;
     }
 
 }

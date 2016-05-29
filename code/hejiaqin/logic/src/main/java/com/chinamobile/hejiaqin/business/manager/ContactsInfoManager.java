@@ -11,9 +11,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -54,7 +52,7 @@ public class ContactsInfoManager {
                     // 得到号码类型
                     numberInfo.setType(cur.getInt(cur
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
-                    contactList.add(contactName, numberInfo);
+                    contactList.addLocalContact(contactName, numberInfo);
                 }
             }
         } catch (Exception e) {

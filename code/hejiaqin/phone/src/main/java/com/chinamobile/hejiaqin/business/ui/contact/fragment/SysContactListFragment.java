@@ -42,7 +42,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
                 searchView.setHint(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
-                searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), "100"));
+                searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
                 break;
             case BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID:
                 searchView.setData((List<ContactsInfo>) msg.obj);
