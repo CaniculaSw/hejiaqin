@@ -59,4 +59,5 @@
     <color name="contact_list_head_text_color">#404040</color>
     <color name="contact_list_head_bg_color">#f4f4f4</color>
     <color name="contact_list_search_text_color">#9a9a9a</color>
+    <color name="contact_list_search_mask_bg_color">#60000000</color>
 </resources>

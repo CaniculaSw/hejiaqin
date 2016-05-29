@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.AppContactListFragment;
@@ -31,6 +32,11 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
      * 作为页面容器的ViewPager.
      */
     ViewPager mViewPager;
+
+    /**
+     * 联系人title
+     */
+    View mContactTitleLay;
 
     /**
      * 应用内联系人布局
@@ -55,7 +61,16 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
 
     private BackListener listener = new BackListener() {
         public void onAction(int actionId, Object obj) {
-
+            switch (actionId) {
+                case BussinessConstants.ContactMsgID.UI_HIDE_CCONTACT_LIST_TITLE_ID:
+                    mContactTitleLay.setVisibility(View.GONE);
+                    mListener.onAction(BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID, null);
+                    break;
+                case BussinessConstants.ContactMsgID.UI_SHOW_CCONTACT_LIST_TITLE_ID:
+                    mContactTitleLay.setVisibility(View.VISIBLE);
+                    mListener.onAction(BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID, null);
+                    break;
+            }
         }
     };
 
@@ -76,6 +91,7 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
 
     @Override
     protected void initView(View view) {
+        mContactTitleLay = view.findViewById(R.id.contact_title_layout);
         mAppContactsLay = view.findViewById(R.id.app_contact_layout);
         mAppContactsLay.setOnClickListener(this);
         mSysContactsLay = view.findViewById(R.id.sys_contact_layout);

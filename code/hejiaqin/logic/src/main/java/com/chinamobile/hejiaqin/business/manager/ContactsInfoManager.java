@@ -21,6 +21,7 @@ import java.util.List;
 public class ContactsInfoManager {
     private static final String TAG = "ContactsInfoManager";
     private static ContactsInfoManager instance = new ContactsInfoManager();
+    List<ContactsInfo> mLocalContactsInfoList = new ArrayList<>();
 
     private ContactsInfoManager() {
 
@@ -80,13 +81,6 @@ public class ContactsInfoManager {
         Collections.sort(contactsInfoList, new Comparator<ContactsInfo>() {
             @Override
             public int compare(ContactsInfo lContactsInfo, ContactsInfo rContactsInfo) {
-//                char lFirstNameChar = (lContactsInfo == null) ? 255 :
-//                        (StringUtil.isNullOrEmpty(lContactsInfo.getNameInPinyin()) ? 255 : lContactsInfo.getNameInPinyin().charAt(0));
-//                char rFirstNameChar = (rContactsInfo == null) ? 255 :
-//                        (StringUtil.isNullOrEmpty(rContactsInfo.getNameInPinyin()) ? 255 : rContactsInfo.getNameInPinyin().charAt(0));
-//
-//                return (lFirstNameChar - rFirstNameChar);
-
                 String lNameInPinyin = lContactsInfo == null ? "" : lContactsInfo.getNameInPinyin();
                 String rNameInPinyin = rContactsInfo == null ? "" : rContactsInfo.getNameInPinyin();
 
@@ -105,5 +99,38 @@ public class ContactsInfoManager {
             }
         });
         Logger.d(TAG, "sortContactsInfoLst: " + contactsInfoList);
+    }
+
+    public void cacheLocalContactInfo(List<ContactsInfo> localContactsInfoList) {
+        mLocalContactsInfoList.clear();
+        if (null != localContactsInfoList) {
+            mLocalContactsInfoList.addAll(localContactsInfoList);
+        }
+    }
+
+    public List<ContactsInfo> getCachedLocalContactInfo() {
+        List<ContactsInfo> localContactInfos = new ArrayList<>();
+        localContactInfos.addAll(mLocalContactsInfoList);
+        return localContactInfos;
+    }
+
+    public List<ContactsInfo> searchContactsInfoLst(List<ContactsInfo> contactsInfoList, String input) {
+        List<ContactsInfo> matchedContactsInfoList = new ArrayList<>();
+
+        if (null == contactsInfoList) {
+            return matchedContactsInfoList;
+        }
+
+        if (StringUtil.isNullOrEmpty(input)) {
+            matchedContactsInfoList.addAll(contactsInfoList);
+            return matchedContactsInfoList;
+        }
+
+        for (ContactsInfo contactsInfo : contactsInfoList) {
+            if (contactsInfo.isMatch(input)) {
+                matchedContactsInfoList.add(contactsInfo);
+            }
+        }
+        return matchedContactsInfoList;
     }
 }

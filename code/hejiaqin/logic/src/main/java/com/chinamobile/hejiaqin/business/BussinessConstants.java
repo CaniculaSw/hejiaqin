@@ -224,8 +224,16 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 30001000;
 
-        //获取验证码成功的消息ID
+        // 获取验证码成功的消息ID
         int GET_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
+        // 搜索本地联系人成功的消息ID
+        int SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 2;
+
+        // handleFragmentMessage
+        // 隐藏联系人列表的title
+        int UI_HIDE_CCONTACT_LIST_TITLE_ID = BASE_MSG_ID + 100;
+        // 显示联系人列表的title
+        int UI_SHOW_CCONTACT_LIST_TITLE_ID = BASE_MSG_ID + 101;
     }
 
     /**
@@ -331,6 +339,9 @@ public class BussinessConstants {
 
         int DAIL_FRAGMENT_CALL_MSG_ID = BASE_ACTION_ID + 6;
 
+        int CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID = BASE_ACTION_ID + 7;
+
+        int CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID = BASE_ACTION_ID + 8;
     }
 
 }

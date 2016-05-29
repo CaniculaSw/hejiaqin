@@ -2,6 +2,8 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 
 import android.provider.ContactsContract;
 
+import com.customer.framework.utils.StringUtil;
+
 /**
  * 号码详情
  * Created by Administrator on 2016/5/26 0026.
@@ -40,6 +42,17 @@ public class NumberInfo {
             return "移动电话";
         }
         return "";
+    }
+
+    public boolean isMatch(String input) {
+        if (StringUtil.isNullOrEmpty(input)) {
+            return true;
+        }
+
+        if (number.contains(input)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

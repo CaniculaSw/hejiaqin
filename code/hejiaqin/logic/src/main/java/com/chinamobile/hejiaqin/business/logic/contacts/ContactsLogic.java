@@ -20,8 +20,20 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             public void run() {
                 List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance().getLocalContactLst(getContext());
                 ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(), contactsInfoList);
+                ContactsInfoManager.getInstance().cacheLocalContactInfo(contactsInfoList);
                 sendMessage(BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID, contactsInfoList);
             }
         });
+    }
+
+    @Override
+    public List<ContactsInfo> getCacheLocalContactLst() {
+        return ContactsInfoManager.getInstance().getCachedLocalContactInfo();
+    }
+
+    @Override
+    public void searchLocalContactLst(String input) {
+        List<ContactsInfo> contactsInfoList = getCacheLocalContactLst();
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input));
     }
 }

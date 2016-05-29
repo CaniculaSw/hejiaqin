@@ -13,8 +13,7 @@ import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
 import com.customer.framework.component.log.Logger;
 
 /**
- *
- *
+ * 应用联系人列表界面
  */
 public class AppContactListFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "AppContactListFragment";

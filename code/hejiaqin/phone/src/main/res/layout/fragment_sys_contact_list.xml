@@ -15,4 +15,10 @@
         android:padding="0dp"
         android:scrollbarStyle="outsideOverlay" />
 
+    <com.chinamobile.hejiaqin.business.ui.basic.view.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
 </FrameLayout>

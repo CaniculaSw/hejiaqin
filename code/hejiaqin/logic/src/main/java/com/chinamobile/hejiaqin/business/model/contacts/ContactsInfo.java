@@ -59,6 +59,27 @@ public class ContactsInfo {
         return "#";
     }
 
+    public boolean isMatch(String input) {
+        if (StringUtil.isNullOrEmpty(input)) {
+            return true;
+        }
+
+        if (name.contains(input)) {
+            return true;
+        }
+
+        if (nameInPinyin.contains(input.toUpperCase())) {
+            return true;
+        }
+
+        for (NumberInfo numberInfo : numberLst) {
+            if (numberInfo.isMatch(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "ContactsInfo{" +
