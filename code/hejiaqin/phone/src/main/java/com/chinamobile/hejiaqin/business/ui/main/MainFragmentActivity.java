@@ -26,13 +26,15 @@ import com.chinamobile.hejiaqin.business.utils.BusProvider;
  */
 public class MainFragmentActivity extends BasicFragmentActivity {
 
-    private static final int DIAL_STATUS_NORMAL =1;
+    private static final int DIAL_STATUS_NORMAL = 1;
 
-    private static final int DIAL_STATUS_SHOW_KEYBORD =2;
+    private static final int DIAL_STATUS_SHOW_KEYBORD = 2;
 
-    private static final int DIAL_STATUS_CALL =3;
+    private static final int DIAL_STATUS_CALL = 3;
 
     FragmentManager mFm;
+
+    View mNavigatorLay;
 
     View mContactsLay;
 
@@ -60,7 +62,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     final int mSettingIndex = 2;
 
-    private boolean mDialSeleted =false;
+    private boolean mDialSeleted = false;
 
     private int mDialStatus = DIAL_STATUS_NORMAL;
 
@@ -84,6 +86,14 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mTextViews[mDialIndex].setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
                     break;
+                 // 显示导航栏
+                case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID:
+                    mNavigatorLay.setVisibility(View.VISIBLE);
+                    break;
+                // 隐藏导航栏
+                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID:
+                    mNavigatorLay.setVisibility(View.GONE);
+                    break;
             }
         }
     };
@@ -95,6 +105,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initView() {
+        mNavigatorLay = findViewById(R.id.main_bottom);
         mContactsLay = findViewById(R.id.contact_layout);
         mDialLay = findViewById(R.id.dial_layout);
         mSettingLay = findViewById(R.id.more_layout);
@@ -144,9 +155,9 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         mDialLay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!mDialSeleted) {
+                if (!mDialSeleted) {
                     switchFragment(mDialIndex);
-                }else{
+                } else {
                     Message msg;
                     switch (mDialStatus) {
                         case DIAL_STATUS_NORMAL:
@@ -171,9 +182,9 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID;
                             mFragments[mDialIndex].recieveMsg(msg);
                             break;
-                        }
                     }
                 }
+            }
         });
 
         mSettingLay.setOnClickListener(new View.OnClickListener() {
@@ -217,23 +228,18 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         ft.commit();
         mTextViews[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
         mImageViews[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
-        if(toIndex != mDialIndex) {
+        if (toIndex != mDialIndex) {
             mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
             mImageViews[toIndex].setBackgroundResource(mImageSelectedBgResId[toIndex]);
         }
-        if(mCurrentIndex == mDialIndex)
-        {
+        if (mCurrentIndex == mDialIndex) {
             mDialSeleted = false;
-            if(mDialStatus == DIAL_STATUS_SHOW_KEYBORD)
-            {
+            if (mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
                 mDialStatus = DIAL_STATUS_NORMAL;
             }
-        }
-        else if(toIndex == mDialIndex)
-        {
+        } else if (toIndex == mDialIndex) {
             mDialSeleted = true;
-            switch (mDialStatus)
-            {
+            switch (mDialStatus) {
                 case DIAL_STATUS_NORMAL:
                     mDialCallImage.setVisibility(View.GONE);
                     mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
@@ -282,9 +288,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     protected void doNetWorkConnect() {
         //通知Fragment网络已经连接
-       if(mFragments[mContactsIndex]!=null)
-       {
-           mFragments[mContactsIndex].doNetWorkConnect();
-       }
+        if (mFragments[mContactsIndex] != null) {
+            mFragments[mContactsIndex].doNetWorkConnect();
+        }
     }
 }
