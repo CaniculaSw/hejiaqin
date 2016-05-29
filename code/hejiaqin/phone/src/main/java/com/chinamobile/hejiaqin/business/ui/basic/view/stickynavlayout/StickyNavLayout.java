@@ -154,8 +154,8 @@ public class StickyNavLayout extends LinearLayout {
                 if (Math.abs(dy) > mTouchSlop) {
                     mDragging = true;
                     if (mInnerScrollView instanceof ScrollView) {
-                        // Èç¹ûtopViewÃ»ÓÐÒþ²Ø
-                        // »òscµÄscrollY = 0 && topViewÒþ²Ø && ÏÂÀ­£¬ÔòÀ¹½Ø
+                        // ï¿½ï¿½ï¿½topViewÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        // ï¿½ï¿½scï¿½ï¿½scrollY = 0 && topViewï¿½ï¿½ï¿½ï¿½ && ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         if (!isTopHidden
                                 || (mInnerScrollView.getScrollY() == 0
                                 && isTopHidden && dy > 0)) {
@@ -169,8 +169,8 @@ public class StickyNavLayout extends LinearLayout {
 
                         ListView lv = (ListView) mInnerScrollView;
                         View c = lv.getChildAt(lv.getFirstVisiblePosition());
-                        // Èç¹ûtopViewÃ»ÓÐÒþ²Ø
-                        // »òscµÄlistViewÔÚ¶¥²¿ && topViewÒþ²Ø && ÏÂÀ­£¬ÔòÀ¹½Ø
+                        // ï¿½ï¿½ï¿½topViewÃ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        // ï¿½ï¿½scï¿½ï¿½listViewï¿½Ú¶ï¿½ï¿½ï¿½ && topViewï¿½ï¿½ï¿½ï¿½ && ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
                         if (!isTopHidden || //
                                 (c != null //
@@ -248,7 +248,7 @@ public class StickyNavLayout extends LinearLayout {
                 if (mDragging) {
                     scrollBy(0, (int) -dy);
 
-                    // Èç¹ûtopViewÒþ²Ø£¬ÇÒÉÏ»¬¶¯Ê±£¬Ôò¸Ä±äµ±Ç°ÊÂ¼þÎªACTION_DOWN
+                    // ï¿½ï¿½ï¿½topViewï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½Ï»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ä±äµ±Ç°ï¿½Â¼ï¿½ÎªACTION_DOWN
                     if (getScrollY() == mTopViewHeight && dy < 0) {
                         event.setAction(MotionEvent.ACTION_DOWN);
                         dispatchTouchEvent(event);

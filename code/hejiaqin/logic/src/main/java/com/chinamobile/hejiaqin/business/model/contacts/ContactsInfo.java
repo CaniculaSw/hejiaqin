@@ -43,7 +43,7 @@ public class ContactsInfo {
     }
 
     /**
-     * 获取分组的名称，目前是以A-Z的规则进行分组
+     * 获取分组名称，目前大写字母A-Z分组
      *
      * @return
      */

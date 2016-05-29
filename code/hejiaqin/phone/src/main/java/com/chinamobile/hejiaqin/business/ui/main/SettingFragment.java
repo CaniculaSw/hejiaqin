@@ -3,6 +3,8 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.content.Intent;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,8 +13,11 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.more.AboutActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
+import com.chinamobile.hejiaqin.business.ui.more.MoreMessageActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
+import com.chinamobile.hejiaqin.business.ui.more.fragment.MessageFragment;
 
 
 /**
@@ -32,6 +37,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     LinearLayout itemAboutLl;
     LinearLayout itemQuitLl;
     HeaderView   moreHeader;
+
     @Override
     protected void handleFragmentMsg(Message msg) {
     }
@@ -107,6 +113,9 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
             case R.id.more_item_quit:
                 jumpToQuit();
                 break;
+            case R.id.right_btn:
+                jumpToMessage();
+                break;
             default:
                 break;
         }
@@ -125,7 +134,14 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         this.startActivity(intent);
     }
     private void jumpToAbout(){
+        Intent intent = new Intent(getContext(),AboutActivity.class);
+        this.startActivity(intent);
     }
     private void jumpToQuit(){
     }
+    private void jumpToMessage(){
+        Intent intent = new Intent(getContext(),MoreMessageActivity.class);
+        this.startActivity(intent);
+    }
+
 }

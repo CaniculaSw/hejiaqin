@@ -22,7 +22,7 @@
             <ImageView
                 android:layout_width="189dp"
                 android:layout_height="189dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="31dp"
                 android:src="@mipmap/more_mobile_pic" />
 
@@ -52,7 +52,7 @@
             <ImageView
                 android:layout_width="189dp"
                 android:layout_height="189dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:src="@mipmap/more_tv_pic" />
 
             <LinearLayout
