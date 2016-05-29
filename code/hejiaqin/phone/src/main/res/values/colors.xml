@@ -32,7 +32,8 @@
     <color name="more_sep_line">#e0e1e1</color>
     <color name="more_black_404040">#404040</color>
     <color name="more_text_gray_9a9a9a">#9a9a9a</color>
-
+    <color name="more_sys_msg_navigator_text_selected">#ffffffff</color>
+    <color name="more_sys_msg_navigator_text_unselected">#80ffffff</color>
     <!-- 新增-->
     <!-- 公共-->
     <color name="white">#ffffffff</color>

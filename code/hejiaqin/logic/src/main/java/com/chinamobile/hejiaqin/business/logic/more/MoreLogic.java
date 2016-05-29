@@ -1,7 +1,9 @@
 package com.chinamobile.hejiaqin.business.logic.more;
 
 import android.graphics.Bitmap;
+import android.os.Message;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.customer.framework.component.qrcode.QRCodeWriter;
 import com.customer.framework.component.qrcode.lib.BarcodeFormat;
 import com.customer.framework.component.qrcode.lib.EncodeHintType;

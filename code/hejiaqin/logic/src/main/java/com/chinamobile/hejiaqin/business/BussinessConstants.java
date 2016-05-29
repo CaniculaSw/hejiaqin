@@ -312,6 +312,10 @@ public class BussinessConstants {
     public interface SettingMsgID {
 
         int BASE_MSG_ID = 50001000;
+        //消息页面,编辑按钮被按下
+        int EDIT_BUTTON_PRESSED = BASE_MSG_ID + 1;
+        int CLEAN_MESSAGES_SELECTED_STATE = BASE_MSG_ID + 2;
+        int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID +3;
 
     }
 
