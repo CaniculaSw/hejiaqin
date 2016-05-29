@@ -61,4 +61,5 @@
     <color name="input_number_below_line_color">#e0e1e1</color>
 
 
+    <color name="contact_list_search_mask_bg_color">#60000000</color>
 </resources>

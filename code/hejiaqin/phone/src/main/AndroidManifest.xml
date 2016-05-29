@@ -57,6 +57,7 @@
         <activity
             android:name=".business.ui.main.MainFragmentActivity"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity android:name=".business.ui.contact.ContactInfoActivity" />
         <activity android:name=".business.ui.contact.ModifyContactActivity" />

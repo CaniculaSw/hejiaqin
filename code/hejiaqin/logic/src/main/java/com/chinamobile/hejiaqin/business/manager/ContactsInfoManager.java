@@ -11,9 +11,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +19,7 @@ import java.util.List;
 public class ContactsInfoManager {
     private static final String TAG = "ContactsInfoManager";
     private static ContactsInfoManager instance = new ContactsInfoManager();
+    List<ContactsInfo> mLocalContactsInfoList = new ArrayList<>();
 
     private ContactsInfoManager() {
 
@@ -53,7 +52,7 @@ public class ContactsInfoManager {
                     // 得到号码类型
                     numberInfo.setType(cur.getInt(cur
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
-                    contactList.add(contactName, numberInfo);
+                    contactList.addLocalContact(contactName, numberInfo);
                 }
             }
         } catch (Exception e) {
@@ -80,13 +79,6 @@ public class ContactsInfoManager {
         Collections.sort(contactsInfoList, new Comparator<ContactsInfo>() {
             @Override
             public int compare(ContactsInfo lContactsInfo, ContactsInfo rContactsInfo) {
-//                char lFirstNameChar = (lContactsInfo == null) ? 255 :
-//                        (StringUtil.isNullOrEmpty(lContactsInfo.getNameInPinyin()) ? 255 : lContactsInfo.getNameInPinyin().charAt(0));
-//                char rFirstNameChar = (rContactsInfo == null) ? 255 :
-//                        (StringUtil.isNullOrEmpty(rContactsInfo.getNameInPinyin()) ? 255 : rContactsInfo.getNameInPinyin().charAt(0));
-//
-//                return (lFirstNameChar - rFirstNameChar);
-
                 String lNameInPinyin = lContactsInfo == null ? "" : lContactsInfo.getNameInPinyin();
                 String rNameInPinyin = rContactsInfo == null ? "" : rContactsInfo.getNameInPinyin();
 
@@ -105,5 +97,38 @@ public class ContactsInfoManager {
             }
         });
         Logger.d(TAG, "sortContactsInfoLst: " + contactsInfoList);
+    }
+
+    public void cacheLocalContactInfo(List<ContactsInfo> localContactsInfoList) {
+        mLocalContactsInfoList.clear();
+        if (null != localContactsInfoList) {
+            mLocalContactsInfoList.addAll(localContactsInfoList);
+        }
+    }
+
+    public List<ContactsInfo> getCachedLocalContactInfo() {
+        List<ContactsInfo> localContactInfos = new ArrayList<>();
+        localContactInfos.addAll(mLocalContactsInfoList);
+        return localContactInfos;
+    }
+
+    public List<ContactsInfo> searchContactsInfoLst(List<ContactsInfo> contactsInfoList, String input) {
+        List<ContactsInfo> matchedContactsInfoList = new ArrayList<>();
+
+        if (null == contactsInfoList) {
+            return matchedContactsInfoList;
+        }
+
+        if (StringUtil.isNullOrEmpty(input)) {
+            matchedContactsInfoList.addAll(contactsInfoList);
+            return matchedContactsInfoList;
+        }
+
+        for (ContactsInfo contactsInfo : contactsInfoList) {
+            if (contactsInfo.isMatch(input)) {
+                matchedContactsInfoList.add(contactsInfo);
+            }
+        }
+        return matchedContactsInfoList;
     }
 }

@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
+import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -7,10 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
 
@@ -19,6 +24,9 @@ import java.util.List;
 
 
 public class ContactInfoActivity extends BasicFragmentActivity implements View.OnClickListener {
+    private HeaderView titleLayout;
+    private TextView mContactNameText;
+    private ImageView mContactHeadImg;
 
     private View mContactInfoLay;
 
@@ -49,6 +57,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     //当前选中的项
     int currentIndex = -1;
 
+    private ContactsInfo mContactsInfo;
+
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
 
@@ -67,6 +77,15 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     @Override
     protected void initView() {
+        // title
+        titleLayout = (HeaderView) findViewById(R.id.title);
+        titleLayout.title.setText(R.string.contact_modify_title_add_text);
+        titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
+
+        // 联系人姓名
+        mContactNameText = (TextView) findViewById(R.id.contact_name_text);
+        // 联系人头像
+        mContactHeadImg = (ImageView) findViewById(R.id.contact_head_img);
 
         mContactInfoLay = findViewById(R.id.contact_info_layout);
         mContactInfoLay.setOnClickListener(this);
@@ -82,30 +101,65 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         mViewPager = (ViewPager) findViewById(R.id.id_stickynavlayout_viewpager);
 
-        fragmentList = new ArrayList<Fragment>();
-        BasicFragment contactInfoFragment = new ContactInfoFragment();
-        contactInfoFragment.setActivityListener(listener);
-        fragmentList.add(contactInfoFragment);
-
-        BasicFragment dialInfoFragment = new DialInfoFragment();
-        dialInfoFragment.setActivityListener(listener);
-        fragmentList.add(dialInfoFragment);
-
-        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        ImageView dialImg = (ImageView) findViewById(R.id.dial_img);
+        dialImg.setOnClickListener(this);
     }
 
     @Override
     protected void initDate() {
+        mContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
 
+        mContactNameText.setText(mContactsInfo.getName());
+
+        fragmentList = new ArrayList<Fragment>();
+        BasicFragment contactInfoFragment = new ContactInfoFragment();
+        contactInfoFragment.setActivityListener(listener);
+        ((ContactInfoFragment) contactInfoFragment).setContactsInfo(mContactsInfo);
+        fragmentList.add(contactInfoFragment);
+
+        BasicFragment dialInfoFragment = new DialInfoFragment();
+        dialInfoFragment.setActivityListener(listener);
+        ((DialInfoFragment) dialInfoFragment).setContactsInfo(mContactsInfo);
+        fragmentList.add(dialInfoFragment);
+
+        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        showViewByCurIndex(mViewPager.getCurrentItem());
     }
 
     @Override
     protected void initListener() {
+        titleLayout.rightBtn.setOnClickListener(this);
+        titleLayout.backImageView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.right_btn:
+                // TODO
+                break;
+            case R.id.back_iv:
+                this.finish();
+                break;
+            case R.id.contact_info_layout:
+                if (currentIndex != CONTACT_INFO_INDEX) {
+                    switchFragment(CONTACT_INFO_INDEX);
+                }
+                break;
+            case R.id.dial_info_layout:
+                if (currentIndex != DIAL_INFO_INDEX) {
+                    switchFragment(DIAL_INFO_INDEX);
+                }
+                break;
+            case R.id.dial_img:
+                // TODO
+                break;
+        }
+    }
 
+    //手动设置ViewPager要显示的视图
+    private void switchFragment(int toIndex) {
+        mViewPager.setCurrentItem(toIndex, true);
     }
 
     /**
@@ -139,23 +193,30 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 return;
             }
 
-            if (currentItem == CONTACT_INFO_INDEX) {
-                mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_pre);
-                mContactInfoSelected.setVisibility(View.VISIBLE);
-                mContactInfoUnSelected.setVisibility(View.GONE);
-                mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_nor);
-                mDialInfoSelected.setVisibility(View.GONE);
-                mDialInfoUnSelected.setVisibility(View.VISIBLE);
-            } else if (currentItem == DIAL_INFO_INDEX) {
-                mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_nor);
-                mContactInfoSelected.setVisibility(View.GONE);
-                mContactInfoUnSelected.setVisibility(View.VISIBLE);
-                mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_pre);
-                mDialInfoSelected.setVisibility(View.VISIBLE);
-                mDialInfoUnSelected.setVisibility(View.GONE);
-            }
+            showViewByCurIndex(currentItem);
             currentIndex = mViewPager.getCurrentItem();
         }
 
+    }
+
+    private void showViewByCurIndex(int currentItem) {
+        if (currentItem == CONTACT_INFO_INDEX) {
+            mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_pre);
+            mContactInfoSelected.setVisibility(View.VISIBLE);
+            mContactInfoUnSelected.setVisibility(View.GONE);
+            mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_nor);
+            mDialInfoSelected.setVisibility(View.GONE);
+            mDialInfoUnSelected.setVisibility(View.VISIBLE);
+            titleLayout.rightBtn.setImageResource(mContactsInfo.getContactMode() == ContactsInfo.ContactMode.system
+                    ? R.mipmap.title_icon_add_nor : R.mipmap.title_icon_more_nor);
+        } else if (currentItem == DIAL_INFO_INDEX) {
+            mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_nor);
+            mContactInfoSelected.setVisibility(View.GONE);
+            mContactInfoUnSelected.setVisibility(View.VISIBLE);
+            mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_pre);
+            mDialInfoSelected.setVisibility(View.VISIBLE);
+            mDialInfoUnSelected.setVisibility(View.GONE);
+            titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_delete_dis);
+        }
     }
 }
