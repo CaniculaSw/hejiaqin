@@ -306,6 +306,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- 拨号 -->
+    <string name ="dial_title">全部</string>
+    <string name ="dial_save_contact">保存至和家亲</string>
 
     <!-- 更多 -->
     <string name="more_tab_name">更多</string>

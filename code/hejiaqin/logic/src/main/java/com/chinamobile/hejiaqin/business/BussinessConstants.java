@@ -249,7 +249,7 @@ public class BussinessConstants {
     public interface DialMsgID {
 
         int BASE_MSG_ID = 40001000;
-
+        int CALL_RECORD_START_SERTCH_CONTACT = BASE_MSG_ID+1;
 
     }
 
