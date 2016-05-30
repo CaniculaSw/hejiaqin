@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database version="1.00.006" name="eplus" dataPath="db">
+	<table name="DBVer">
+		<field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT" />
+		<field name="dbVer" type="TEXT" obligatory="" />
+		<field name="desc" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+	</table>
+
+	<!-- 用户配置表 -->
+	<table name="UserConfig">
+		<field name="key" type="TEXT" obligatory="PRIMARY KEY NOT NULL DEFAULT ''" />
+		<field name="value" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+	</table>
+
+	<!-- 通话记录表结构 -->
+	<table name="CallRecord">
+		<field name="_ID" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
+		<field name="ownerUserId" type="TEXT" obligatory=" NOT NULL" />
+		<field name="recordId" type="TEXT" obligatory=" NOT NULL" />
+		<field name="callId" type="TEXT" obligatory="" />
+		<field name="remoteUserId" type="TEXT" obligatory="" />
+		<field name="remoteMsisdn" type="TEXT" obligatory="" />
+		<field name="remoteURI" type="TEXT" obligatory="" />
+		<field name="remoteDisplayName" type="TEXT" obligatory="" />
+		<field name="callType" type="INTEGER" obligatory=" DEFAULT 1" />
+		<field name="callDirection" type="INTEGER" obligatory="" />
+		<field name="avatarURI" type="TEXT" obligatory="" />
+		<field name="readFlag" type="INTEGER" obligatory="" />
+		<field name="callTime" type="TEXT" obligatory="" />
+		<field name="startTime" type="TEXT" obligatory="" />
+		<field name="period" type="INTEGER" obligatory="" />
+	</table>
+
+	<!-- 联系人基本信息表 -->
+	<table name="ContactInfo">
+		<field name="_id" type="INTEGER" obligatory=" NOT NULL DEFAULT -1" />
+		<field name="contactID" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
+		<field name="name" type="TEXT" obligatory="" />
+		<field name="ringID" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+		<field name="ringPhotoUrl" type="TEXT" obligatory="" />
+		<field name="primaryMobile" type="TEXT" obligatory="" />
+		<field name="firstNormalMobile" type="TEXT" obligatory="" />
+		<field name="avatarURL" type="TEXT" obligatory="" />
+		<field name="listID" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+		<field name="littleAvatar" type="TEXT" obligatory="" />
+		<field name="middleAvatar" type="TEXT" obligatory="" />
+		<field name="largeAvatar" type="TEXT" obligatory="" />
+		<field name="avatar" type="TEXT" obligatory="" />
+		<field name="sectionKey" type="TEXT" obligatory="" />
+		<field name="sectionContent" type="TEXT" obligatory="" />
+		<field name="searchKey1" type="TEXT" obligatory="" />
+		<field name="searchKey2" type="TEXT" obligatory="" />
+		<field name="searchKey3" type="TEXT" obligatory="" />
+		<field name="version" type="TEXT" obligatory="" />
+		<field name="uploadFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+		<field name="pfsVersion" type="TEXT" obligatory="" />
+	</table>
+
+	<!-- 联系人联系人方式表 -->
+	<table name="ContactCommunicationInfo">
+		<field name="_id" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
+		<field name="contactID" type="TEXT" obligatory="NOT NULL" />
+		<field name="type" type="INTEGER" obligatory="" />
+		<field name="primaryFlag" type="INTEGER" obligatory="" />
+		<field name="commInfo" type="TEXT" obligatory="" />
+		<field name="commInfoFmt1" type="TEXT" obligatory="" />
+		<field name="linkFlag" type="INTEGER" obligatory="" />
+		<field name="linkInfo" type="TEXT" obligatory="" />
+	</table>
+
+	<!-- Ring联系人个人信息表 -->
+	<table name="ProfileInfo">
+		<field name="_id" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+		<field name="userID" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
+		<field name="name" type="TEXT" obligatory="" />
+		<field name="uuid" type="TEXT" obligatory="" />
+		<field name="littleAvatar" type="TEXT" obligatory="" />
+		<field name="middleAvatar" type="TEXT" obligatory="" />
+		<field name="largeAvatar" type="TEXT" obligatory="" />
+		<field name="avatar" type="TEXT" obligatory="" />
+		<field name="avatarURL" type="TEXT" obligatory="" />
+		<field name="lastUpdate" type="TEXT" obligatory="" />
+		<field name="littleAvatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+		<field name="middleAvatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+		<field name="largeAvatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+		<field name="avatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+	</table>
+</database>

@@ -2,8 +2,7 @@ package com.customer.framework.component.db;
 
 import java.util.List;
 
-public class DatabaseInfo
-{
+public class DatabaseInfo {
 
     /**
      * 数据库的版本号
@@ -24,33 +23,27 @@ public class DatabaseInfo
      */
     private List<Table> listTable;
 
-    public String getVersion()
-    {
+    public String getVersion() {
         return version;
     }
 
-    public List<Table> getListTable()
-    {
+    public List<Table> getListTable() {
         return listTable;
     }
 
-    public void setListTable(List<Table> listTable)
-    {
+    public void setListTable(List<Table> listTable) {
         this.listTable = listTable;
     }
 
-    public void setVersion(String version)
-    {
+    public void setVersion(String version) {
         this.version = version;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -59,8 +52,7 @@ public class DatabaseInfo
      * 用于定义数据库表结构
      * name = "table"
      */
-    public static class Table
-    {
+    public static class Table {
 
         /**
          * 数据库表名称
@@ -73,23 +65,19 @@ public class DatabaseInfo
          */
         private List<Field> listFiled;
 
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
-        public void setName(String name)
-        {
+        public void setName(String name) {
             this.name = name;
         }
 
-        public List<Field> getListFiled()
-        {
+        public List<Field> getListFiled() {
             return listFiled;
         }
 
-        public void setListFiled(List<Field> listFiled)
-        {
+        public void setListFiled(List<Field> listFiled) {
             this.listFiled = listFiled;
         }
 
@@ -99,8 +87,7 @@ public class DatabaseInfo
      * 用于描述数据库表结构中的字段
      * name = "field"
      */
-    public static class Field
-    {
+    public static class Field {
         /**
          * 字段名称
          * name = "name"
@@ -123,33 +110,27 @@ public class DatabaseInfo
          */
         private String obligatory;
 
-        public String getObligatory()
-        {
+        public String getObligatory() {
             return obligatory;
         }
 
-        public void setObligatory(String obligatory)
-        {
+        public void setObligatory(String obligatory) {
             this.obligatory = obligatory;
         }
 
-        public String getType()
-        {
+        public String getType() {
             return type;
         }
 
-        public void setType(String type)
-        {
+        public void setType(String type) {
             this.type = type;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
-        public void setName(String name)
-        {
+        public void setName(String name) {
             this.name = name;
         }
     }
@@ -158,9 +139,8 @@ public class DatabaseInfo
     /**
      * 数据库版本号表 列名字段描述
      */
-    public interface GlobalDbVer
-    {
-        public static final String TABLE_NAME = "commondbVer";
+    public interface GlobalDbVer {
+        public static final String TABLE_NAME = "DBVer";
         /**
          * 唯一标识
          */
@@ -176,4 +156,42 @@ public class DatabaseInfo
          */
         public static final String TABLE_DESC = "desc";
     }
+
+    public interface UserConfig {
+        public static final String TABLE_NAME = "UserConfig";
+        /**
+         * 关键key
+         */
+        public static final String KEY = "key";
+
+        /**
+         * 值
+         */
+        public static final String VALUE = "value";
+
+    }
+
+    public interface CallRecord {
+        public static final String TABLE_NAME = "CallRecord";
+        /**
+         * 唯一标识
+         */
+        public static final String TABLE_ID = "_ID";
+        public static final String OWNER_USERID = "ownerUserId";
+        public static final String RECORD_ID = "recordId";
+        public static final String CALL_ID = "callId";
+        public static final String REMOTE_USERID = "remoteUserId";
+        public static final String REMOTE_MSISDN = "remoteMsisdn";
+        public static final String REMOTE_URI = "remoteURI";
+        public static final String REMOTE_DISPLAYNAME = "remoteDisplayName";
+        public static final String CALL_TYPE = "callType";
+        public static final String CALL_DIRECTION = "callDirection";
+        public static final String AVATAR_URI = "avatarURI";
+        public static final String READ_FLAG = "readFlag";
+        public static final String CALL_TIME = "callTime";
+        public static final String START_TIME = "startTime";
+        public static final String PERIOD = "period";
+    }
+
+
 }
