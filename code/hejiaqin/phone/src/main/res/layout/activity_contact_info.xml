@@ -124,4 +124,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.chinamobile.hejiaqin.business.ui.basic.view.stickynavlayout.StickyNavLayout>
+
+    <ImageView
+        android:id="@+id/dial_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp"
+        android:src="@mipmap/video" />
+
 </RelativeLayout>

@@ -212,7 +212,7 @@ public class CustomDialog extends Dialog {
                 ((TextView) layout.findViewById(R.id.message)).setText(message);
             } else if (contentView != null) {
                 // if no message set
-                // add the contentView to the dialog body
+                // addLocalContact the contentView to the dialog body
                 ((LinearLayout) layout.findViewById(R.id.content))
                         .removeAllViews();
                 ((LinearLayout) layout.findViewById(R.id.content))

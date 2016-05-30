@@ -205,7 +205,8 @@ public class BussinessConstants {
      * 联系人模块常量
      */
     public interface Contact {
-
+        // 联系人详情key值
+        String INTENT_CONTACTSINFO_KEY = "INTENT_CONTACTSINFO_KEY";
 
     }
 
@@ -224,8 +225,16 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 30001000;
 
-        //获取验证码成功的消息ID
+        // 获取验证码成功的消息ID
         int GET_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
+        // 搜索本地联系人成功的消息ID
+        int SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 2;
+
+        // handleFragmentMessage
+        // 隐藏联系人列表的title
+        int UI_HIDE_CCONTACT_LIST_TITLE_ID = BASE_MSG_ID + 100;
+        // 显示联系人列表的title
+        int UI_SHOW_CCONTACT_LIST_TITLE_ID = BASE_MSG_ID + 101;
     }
 
     /**
@@ -249,7 +258,7 @@ public class BussinessConstants {
     public interface DialMsgID {
 
         int BASE_MSG_ID = 40001000;
-
+        int CALL_RECORD_START_SERTCH_CONTACT = BASE_MSG_ID+1;
 
     }
 
@@ -315,7 +324,7 @@ public class BussinessConstants {
         //消息页面,编辑按钮被按下
         int EDIT_BUTTON_PRESSED = BASE_MSG_ID + 1;
         int CLEAN_MESSAGES_SELECTED_STATE = BASE_MSG_ID + 2;
-        int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID +3;
+        int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID + 3;
 
     }
 
@@ -335,6 +344,9 @@ public class BussinessConstants {
 
         int DAIL_FRAGMENT_CALL_MSG_ID = BASE_ACTION_ID + 6;
 
+        int CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID = BASE_ACTION_ID + 7;
+
+        int CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID = BASE_ACTION_ID + 8;
     }
 
 }
