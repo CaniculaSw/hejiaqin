@@ -331,4 +331,7 @@
     <string name="more_cancel">取消</string>
     <string name="more_msg_delete">删除</string>
     <string name="more_miss_call_message_greeting">尊敬的用户:</string>
+    <string name="more_avatar">头像</string>
+    <string name="more_account">账户</string>
+    <string name="more_user_info">个人信息</string>
 </resources>

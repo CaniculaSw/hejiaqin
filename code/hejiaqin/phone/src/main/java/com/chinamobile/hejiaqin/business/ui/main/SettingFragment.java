@@ -2,9 +2,10 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +18,7 @@ import com.chinamobile.hejiaqin.business.ui.more.AboutActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreMessageActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
-import com.chinamobile.hejiaqin.business.ui.more.fragment.MessageFragment;
+import com.chinamobile.hejiaqin.business.ui.more.UserInfoActivity;
 
 
 /**
@@ -27,16 +28,16 @@ import com.chinamobile.hejiaqin.business.ui.more.fragment.MessageFragment;
  * author: zhanggj
  * Created: 2016/4/22.
  */
-public class SettingFragment extends BasicFragment implements View.OnClickListener{
+public class SettingFragment extends BasicFragment implements View.OnClickListener {
     LinearLayout itemUserLl;
-    ImageView    userAvatarIv;
-    TextView     userPhoneNumTv;
+    ImageView userAvatarIv;
+    TextView userAccountTv;
     LinearLayout itemSendToTvLl;
     LinearLayout itemMoreFunLl;
     LinearLayout itemShareAppLl;
     LinearLayout itemAboutLl;
     LinearLayout itemQuitLl;
-    HeaderView   moreHeader;
+    HeaderView moreHeader;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -58,14 +59,14 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         itemUserLl.setClickable(true);
         itemUserLl.setOnClickListener(this);
 
-        userAvatarIv = (ImageView)  view.findViewById(R.id.more_user_avatar_iv);
-        userPhoneNumTv = (TextView) view.findViewById(R.id.more_user_phone_num_tv);
+        userAvatarIv = (ImageView) view.findViewById(R.id.more_user_avatar_iv);
+        userAccountTv = (TextView) view.findViewById(R.id.more_user_phone_num_tv);
 
         itemSendToTvLl = (LinearLayout) view.findViewById(R.id.more_item_send_to_tv);
         itemSendToTvLl.setClickable(true);
         itemSendToTvLl.setOnClickListener(this);
 
-        itemMoreFunLl = (LinearLayout)  view.findViewById(R.id.more_item_more_fun);
+        itemMoreFunLl = (LinearLayout) view.findViewById(R.id.more_item_more_fun);
         itemMoreFunLl.setClickable(true);
         itemMoreFunLl.setOnClickListener(this);
 
@@ -89,12 +90,13 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-
+        userAccountTv.setText("13776570335");
+        userAvatarIv.setImageResource(R.drawable.contact_photo_default);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.more_item_user:
                 jumpToDetailUserProfile();
                 break;
@@ -121,27 +123,37 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         }
     }
 
-    private void jumpToDetailUserProfile(){
-    }
-    private void jumpToSendToTv(){
-    }
-    private void jumpToMoreFun(){
-        Intent intent = new Intent(getContext(),MoreFunActivity.class);
+    private void jumpToDetailUserProfile() {
+        Intent intent = new Intent(getContext(), UserInfoActivity.class);
+        intent.putExtra("account", userAccountTv.getText().toString());
         this.startActivity(intent);
     }
-    private void jumpToShareApp(){
-        Intent intent = new Intent(getContext(),ShareAppActivity.class);
+
+    private void jumpToSendToTv() {
+    }
+
+    private void jumpToMoreFun() {
+        Intent intent = new Intent(getContext(), MoreFunActivity.class);
         this.startActivity(intent);
     }
-    private void jumpToAbout(){
-        Intent intent = new Intent(getContext(),AboutActivity.class);
+
+    private void jumpToShareApp() {
+        Intent intent = new Intent(getContext(), ShareAppActivity.class);
         this.startActivity(intent);
     }
-    private void jumpToQuit(){
-    }
-    private void jumpToMessage(){
-        Intent intent = new Intent(getContext(),MoreMessageActivity.class);
+
+    private void jumpToAbout() {
+        Intent intent = new Intent(getContext(), AboutActivity.class);
         this.startActivity(intent);
     }
+
+    private void jumpToQuit() {
+    }
+
+    private void jumpToMessage() {
+        Intent intent = new Intent(getContext(), MoreMessageActivity.class);
+        this.startActivity(intent);
+    }
+
 
 }
