@@ -15,7 +15,6 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
-import com.chinamobile.hejiaqin.business.utils.BusProvider;
 
 /**
  * desc: main
@@ -285,18 +284,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         dismissWaitDailog();
         switch (msg.what) {
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        BusProvider.getUIBusInstance().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        BusProvider.getUIBusInstance().unregister(this);
     }
 
 
