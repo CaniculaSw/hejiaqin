@@ -15,6 +15,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.more.AboutActivity;
+import com.chinamobile.hejiaqin.business.ui.more.BindTVBoxActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreMessageActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
@@ -130,6 +131,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     }
 
     private void jumpToSendToTv() {
+        Intent intent = new Intent(getContext(), BindTVBoxActivity.class);
+        this.startActivity(intent);
     }
 
     private void jumpToMoreFun() {

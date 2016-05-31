@@ -307,8 +307,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- 拨号 -->
-    <string name ="dial_title">全部</string>
-    <string name ="dial_save_contact">保存至和家亲</string>
+    <string name="dial_title">全部</string>
+    <string name="dial_save_contact">保存至和家亲</string>
 
     <!-- 更多 -->
     <string name="more_tab_name">更多</string>
@@ -337,4 +337,12 @@
     <string name="more_avatar">头像</string>
     <string name="more_account">账户</string>
     <string name="more_user_info">个人信息</string>
+    <string name="more_bind_tv_and_enjoye">绑定机顶盒, 即可享受</string>
+    <string name="more_send_the_contact">发送联系人</string>
+    <string name="more_add_contact">机顶盒添加联系人, 轻松搞定</string>
+    <string name="more_bind_tv_btn_text">绑定机顶盒</string>
+    <string name="more_bind_tv_dialog_choose_bind_method">请选择一种绑定机顶盒的方式</string>
+    <string name="more_bind_tv_dialog_by_scan">扫一扫</string>
+    <string name="more_bind_tv_dialog_by_input">手动输入账号</string>
+    <string name="more_bind_tv_dialog_by_contact">从联系人中选择</string>
 </resources>

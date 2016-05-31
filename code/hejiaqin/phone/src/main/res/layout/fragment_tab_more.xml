@@ -7,8 +7,9 @@
 
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
         android:id="@+id/more_tab_header"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -26,8 +27,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:src="@mipmap/more_btn" />
+            android:layout_marginLeft="16dp" />
 
         <TextView
             android:id="@+id/more_user_phone_num_tv"
