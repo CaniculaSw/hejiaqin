@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.fragment;
+package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
+import com.chinamobile.hejiaqin.business.ui.more.fragment.MissCallListFragment;
+import com.chinamobile.hejiaqin.business.ui.more.fragment.SystemMessageListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ import java.util.List;
 /**
  * Created by eshaohu on 16/5/25.
  */
-public class MessageFragment extends BasicFragment implements View.OnClickListener {
+public class MessageActivity extends BasicFragmentActivity implements View.OnClickListener {
     /**
      * 作为页面容器的ViewPager.
      */
@@ -51,44 +54,29 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
     //当前选中的项
     int currentIndex = -1;
 
-    private BackListener listener = new BackListener() {
+    private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
 
         }
     };
-
     @Override
-    protected void initLogics() {
+    protected int getLayoutId() {
+        return R.layout.activity_more_message;
     }
 
     @Override
-    protected void handleFragmentMsg(Message msg) {
-
-    }
-
-    @Override
-    protected void handleLogicMsg(Message msg) {
-
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_sys_message;
-    }
-
-    @Override
-    protected void initView(View view) {
-        mMissCallLay = view.findViewById(R.id.more_sys_msg_miss_call_layout);
+    protected void initView() {
+        mMissCallLay = findViewById(R.id.more_sys_msg_miss_call_layout);
         mMissCallLay.setOnClickListener(this);
-        mSysMessageLay = view.findViewById(R.id.more_sys_msg_sys_message_layout);
+        mSysMessageLay = findViewById(R.id.more_sys_msg_sys_message_layout);
         mSysMessageLay.setOnClickListener(this);
-        mTextView[0] = (TextView) view.findViewById(R.id.more_sys_msg_miss_call_tv);
-        mTextView[1] = (TextView) view.findViewById(R.id.more_sys_msg_sys_message_tv);
-        mImageView[0] = (ImageView) view.findViewById(R.id.more_sys_msg_miss_call_iv);
-        mImageView[1] = (ImageView) view.findViewById(R.id.more_sys_msg_sys_message_iv);
-        editTv = (TextView) view.findViewById(R.id.more_sys_msg_edit);
+        mTextView[0] = (TextView) findViewById(R.id.more_sys_msg_miss_call_tv);
+        mTextView[1] = (TextView) findViewById(R.id.more_sys_msg_sys_message_tv);
+        mImageView[0] = (ImageView) findViewById(R.id.more_sys_msg_miss_call_iv);
+        mImageView[1] = (ImageView) findViewById(R.id.more_sys_msg_sys_message_iv);
+        editTv = (TextView) findViewById(R.id.more_sys_msg_edit);
         editTv.setOnClickListener(this);
-        mViewPager = (ViewPager) view.findViewById(R.id.more_msg_viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.more_msg_viewpager);
 
         fragmentList = new ArrayList<BasicFragment>();
         missCallListFragment = new MissCallListFragment();
@@ -99,14 +87,24 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
         sysMessageListFragment.setActivityListener(listener);
         fragmentList.add(sysMessageListFragment);
 
-        mViewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
+        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 
-        mBackButton = (ImageView) view.findViewById(R.id.more_sys_msg_back_btn);
+        mBackButton = (ImageView) findViewById(R.id.more_sys_msg_back_btn);
         mBackButton.setOnClickListener(this);
     }
 
     @Override
-    protected void initData() {
+    protected void initDate() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initLogics() {
 
     }
     //手动设置ViewPager要显示的视图
@@ -137,7 +135,7 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
                 (fragmentList.get(currentIndex)).recieveMsg(msg);
                 break;
             case R.id.more_sys_msg_back_btn:
-                getActivity().finish();
+                finish();
             default:
                 break;
         }
@@ -186,6 +184,5 @@ public class MessageFragment extends BasicFragment implements View.OnClickListen
             }
             currentIndex = mViewPager.getCurrentItem();
         }
-
     }
 }

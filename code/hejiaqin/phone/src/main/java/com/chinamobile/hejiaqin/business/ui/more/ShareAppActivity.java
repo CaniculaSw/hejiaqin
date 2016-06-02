@@ -1,24 +1,27 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.logic.more.IMoreLogic;
-import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+
+import cn.bingoogolapple.qrcode.core.DisplayUtils;
+import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 
 /**
  * Created by eshaohu on 16/5/24.
  */
-public class ShareAppActivity extends BasicActivity implements View.OnClickListener{
+public class ShareAppActivity extends BasicActivity implements View.OnClickListener {
     ImageView qrCodeIv;
     HeaderView headerView;
-    IMoreLogic moreLogic;
-    Bitmap qrCode;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_share_app;
@@ -36,10 +39,7 @@ public class ShareAppActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initDate() {
-        qrCode = moreLogic.createQRImage(BussinessConstants.Setting.MORE_SHARE_APP_URL,200,200);
-        if(qrCode != null){
-            qrCodeIv.setImageBitmap(qrCode);
-        }
+        createQRCode(BussinessConstants.Setting.MORE_SHARE_APP_URL, 150);
     }
 
     @Override
@@ -49,17 +49,30 @@ public class ShareAppActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initLogics() {
-        moreLogic = (IMoreLogic) this.getLogicByInterfaceClass(IMoreLogic.class);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back_iv:
                 finish();
                 break;
             default:
                 break;
         }
+    }
+
+    private void createQRCode(String url, int size) {
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(ShareAppActivity.this, size), Color.parseColor("#000000"),  new QRCodeEncoder.Delegate() {
+            @Override
+            public void onEncodeQRCodeSuccess(Bitmap qrCode) {
+                qrCodeIv.setImageBitmap(qrCode);
+            }
+
+            @Override
+            public void onEncodeQRCodeFailure() {
+                showToast("生成中文二维码失败", Toast.LENGTH_SHORT, null);
+            }
+        });
     }
 }

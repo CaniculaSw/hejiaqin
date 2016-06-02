@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.ui.more.ScanActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 
 import java.io.File;
@@ -65,6 +66,11 @@ public class BindTVDialog extends Dialog {
                 case R.id.more_bind_tv_dialog_cancle:
                     //取消键
                     dismiss();
+                    break;
+                case R.id.more_bind_tv_dialog_scan:
+                    dismiss();
+                    Intent intent = new Intent(mContext, ScanActivity.class);
+                    mContext.startActivity(intent);
                     break;
                 default:
                     break;

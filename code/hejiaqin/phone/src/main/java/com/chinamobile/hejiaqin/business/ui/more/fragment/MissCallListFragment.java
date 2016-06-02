@@ -57,7 +57,7 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_sys_message_miss_call_list;
+        return R.layout.fragment_message_miss_call_list;
     }
 
     @Override

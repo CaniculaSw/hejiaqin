@@ -345,4 +345,6 @@
     <string name="more_bind_tv_dialog_by_scan">扫一扫</string>
     <string name="more_bind_tv_dialog_by_input">手动输入账号</string>
     <string name="more_bind_tv_dialog_by_contact">从联系人中选择</string>
+    <string name="more_where_to_find_the_qrcode">请扫描机顶盒"设置"-"账号"中的二维码</string>
+    <string name="more_scan_hint">将取景框对准二维码, 即可自动扫描</string>
 </resources>
