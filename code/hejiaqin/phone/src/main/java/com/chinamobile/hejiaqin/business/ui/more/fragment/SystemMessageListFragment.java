@@ -59,7 +59,7 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_sys_message_sys_msg_list;
+        return R.layout.fragment_message_sys_msg_list;
     }
 
     @Override

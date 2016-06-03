@@ -2,10 +2,7 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Message;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +14,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.more.AboutActivity;
 import com.chinamobile.hejiaqin.business.ui.more.BindTVBoxActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
-import com.chinamobile.hejiaqin.business.ui.more.MoreMessageActivity;
+import com.chinamobile.hejiaqin.business.ui.more.MessageActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
 import com.chinamobile.hejiaqin.business.ui.more.UserInfoActivity;
 
@@ -154,7 +151,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     }
 
     private void jumpToMessage() {
-        Intent intent = new Intent(getContext(), MoreMessageActivity.class);
+        Intent intent = new Intent(getContext(), MessageActivity.class);
         this.startActivity(intent);
     }
 

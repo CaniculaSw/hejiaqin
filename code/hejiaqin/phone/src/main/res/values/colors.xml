@@ -35,6 +35,8 @@
     <color name="more_sys_msg_navigator_text_selected">#ffffffff</color>
     <color name="more_sys_msg_navigator_text_unselected">#80ffffff</color>
     <color name="more_text_blue_74bbfe">#74bbfe</color>
+
+    <color name="more_scan_text_color">#b8b8b8</color>
     <!-- 新增-->
     <!-- 公共-->
     <color name="white">#ffffffff</color>

@@ -69,6 +69,9 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null){
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case PhotoManage.IMAGE_CODE:

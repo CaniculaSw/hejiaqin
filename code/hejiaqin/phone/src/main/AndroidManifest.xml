@@ -14,7 +14,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- 访问联系人的权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
@@ -64,11 +66,12 @@
         <activity android:name=".business.ui.contact.InputInfoActivity"></activity>
         <activity android:name=".business.ui.more.MoreFunActivity"></activity>
         <activity android:name=".business.ui.more.ShareAppActivity"></activity>
-        <activity android:name=".business.ui.more.MoreMessageActivity"></activity>
+        <activity android:name=".business.ui.more.MessageActivity"></activity>
         <activity android:name=".business.ui.more.AboutActivity"></activity>
         <activity android:name=".business.ui.more.SysMessageDetailActivity"></activity>
         <activity android:name=".business.ui.more.UserInfoActivity"></activity>
         <activity android:name=".business.ui.more.BindTVBoxActivity"></activity>
+        <activity android:name=".business.ui.more.ScanActivity"></activity>
     </application>
 
 </manifest>

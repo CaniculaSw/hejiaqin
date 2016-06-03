@@ -3,19 +3,12 @@ package com.chinamobile.hejiaqin.business.ui.more.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.widget.RelativeLayout;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
-
-import java.io.File;
+import com.chinamobile.hejiaqin.business.ui.more.ScanActivity;
 
 /**
  * Created by eshaohu on 16/5/31.
@@ -23,7 +16,7 @@ import java.io.File;
 public class BindTVDialog extends Dialog {
     private Context mContext;
     private ClickListener mClickListener;
-    private TextView mByScanTv, mByInputTv, mByContactTv,mByCancleTv;
+    private TextView mByScanTv, mByInputTv, mByContactTv, mByCancleTv;
 
     public BindTVDialog(Context context) {
         super(context);
@@ -46,9 +39,9 @@ public class BindTVDialog extends Dialog {
         setContentView(R.layout.dialog_bind_tv);
         mClickListener = new ClickListener();
         mByScanTv = (TextView) findViewById(R.id.more_bind_tv_dialog_scan);
-        mByInputTv = (TextView)findViewById(R.id.more_bind_tv_dialog_input);
+        mByInputTv = (TextView) findViewById(R.id.more_bind_tv_dialog_input);
         mByContactTv = (TextView) findViewById(R.id.more_bind_tv_dialog_contact);
-        mByCancleTv = (TextView)  findViewById(R.id.more_bind_tv_dialog_cancle);
+        mByCancleTv = (TextView) findViewById(R.id.more_bind_tv_dialog_cancle);
 
         mByCancleTv.setOnClickListener(mClickListener);
         mByContactTv.setOnClickListener(mClickListener);
@@ -57,14 +50,19 @@ public class BindTVDialog extends Dialog {
 
     }
 
-    class ClickListener implements View.OnClickListener{
+    class ClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.more_bind_tv_dialog_cancle:
                     //取消键
                     dismiss();
+                    break;
+                case R.id.more_bind_tv_dialog_scan:
+                    dismiss();
+                    Intent intent = new Intent(mContext, ScanActivity.class);
+                    mContext.startActivity(intent);
                     break;
                 default:
                     break;
