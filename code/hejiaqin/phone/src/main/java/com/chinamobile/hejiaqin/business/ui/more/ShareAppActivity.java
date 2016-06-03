@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,9 +10,8 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-
-import cn.bingoogolapple.qrcode.core.DisplayUtils;
-import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
+import com.customer.framework.component.qrCode.QRCodeEncoder;
+import com.customer.framework.component.qrCode.core.DisplayUtils;
 
 /**
  * Created by eshaohu on 16/5/24.

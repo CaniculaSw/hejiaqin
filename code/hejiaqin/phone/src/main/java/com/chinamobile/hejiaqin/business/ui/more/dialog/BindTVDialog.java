@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.more.ScanActivity;
 
+
 /**
  * Created by eshaohu on 16/5/31.
  */

@@ -22,7 +22,7 @@
         android:textColor="@color/more_scan_text_color"
         android:textSize="14sp" />
 
-    <cn.bingoogolapple.qrcode.zxing.ZXingView
+    <com.customer.framework.component.qrCode.ZXingView
         android:id="@+id/more_zxingview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
