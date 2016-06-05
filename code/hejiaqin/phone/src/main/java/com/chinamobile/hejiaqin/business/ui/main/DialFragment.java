@@ -11,15 +11,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.BaseDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText;
 import com.customer.framework.utils.StringUtil;
+import com.huawei.rcs.login.LoginApi;
+import com.huawei.rcs.login.LoginCfg;
+import com.huawei.rcs.login.UserInfo;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,6 +69,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
      *  搜索字符串
      */
     private String mSearchString;
+
+    private IVoipLogic mVoipLogic;
 
 
     @Override
@@ -223,8 +231,18 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     }
 
     @Override
-    protected void initData() {
+    protected void initLogics()
+    {
+        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
+    }
 
+    @Override
+    protected void initData() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.countryCode="+86";
+        userInfo.username = "2886544005";
+        userInfo.password = "Vconf2015!";
+        mVoipLogic.login(userInfo,null,null);
     }
 
     /**
