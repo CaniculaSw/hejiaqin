@@ -1,0 +1,178 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@mipmap/login_bg"
+    tools:context="LoginActivity">
+
+    <LinearLayout
+        android:layout_width="@dimen/login_logo_width"
+        android:layout_height="@dimen/login_logo_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/login_logo_margin_top"
+        android:layout_marginRight="@dimen/login_logo_margin_right"
+        android:background="@mipmap/login_kangxi"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:id="@+id/login_content_layout"
+        android:layout_marginTop="@dimen/login_content_margin_top"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/login_register_edit_row_height"
+            android:layout_marginTop="@dimen/login_content_account_margin_top"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom">
+
+            <EditText
+                android:id="@+id/account_edit_tv"
+                android:layout_width="@dimen/login_register_edit_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_account"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="@dimen/normal_font"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/login_register_edit_row_height"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom">
+
+            <EditText
+                android:id="@+id/password_edit_tv"
+                android:layout_width="@dimen/login_register_edit_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="@dimen/normal_font"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/error_info_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/error_info_height"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:textColor="@color/error_info_text_color"
+            android:textSize="@dimen/error_info_text_size"
+            android:visibility="invisible"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_register_button_height"
+            android:layout_marginTop="@dimen/login_button_margin_top"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sign_in_button"
+                android:layout_width="@dimen/login_register_button_width"
+                android:layout_height="fill_parent"
+                android:background="@drawable/selector_button_bg"
+                android:text="@string/action_sign_in"
+                android:textSize="@dimen/normal_font"
+                android:textColor="@color/white"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="@dimen/login_register_button_width"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/login_button_margin_left"
+                android:layout_toRightOf="@id/sign_in_button"
+                android:background="@drawable/button_disable_bg"
+                android:text="@string/action_faster_register"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/normal_font" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/forget_pwd_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/forget_pwd_margin_top"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:text="@string/action_forget_pwd"
+            android:textColor="@color/error_info_text_color"
+            android:textSize="@dimen/error_info_text_size"
+            android:paddingTop="@dimen/forget_pwd_padding_top"
+            android:paddingLeft="@dimen/forget_pwd_padding_left"
+            android:paddingRight="@dimen/forget_pwd_padding_left"
+            android:paddingBottom="@dimen/forget_pwd_padding_top"
+            android:gravity="center" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/login_content_bottom" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_content_layout"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/app_introduce_margin_top"
+        android:layout_marginRight="@dimen/app_introduce_margin_right"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/app_introduce"
+        android:textColor="@color/white"
+        android:textSize="@dimen/app_introduce_text_size" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/app_copyright_margin_bottom"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@string/app_copyright"
+            android:textColor="@color/white"
+            android:textSize="@dimen/app_copyright_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_header_margin_top"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/login_avatar_image_view"
+            android:layout_width="@dimen/login_header_size"
+            android:layout_height="@dimen/login_header_size"
+            android:src="@mipmap/default_avatar"
+            app:civ_border_width="@dimen/login_header_border_size"
+            app:civ_border_color="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

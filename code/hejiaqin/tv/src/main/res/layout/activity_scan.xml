@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.chinamobile.hejiaqin.tv.business.ui.basic.view.HeaderView
+        android:id="@+id/more_scan_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/more_scan_tips_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/more_scan_header"
+        android:layout_marginTop="64dp"
+        android:gravity="center_horizontal"
+        android:text="@string/more_where_to_find_the_qrcode"
+        android:textColor="@color/more_scan_text_color"
+        android:textSize="14sp" />
+
+    <com.customer.framework.component.qrCode.ZXingView
+        android:id="@+id/more_zxingview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/more_scan_tips_tv"
+        app:qrcv_animTime="1000"
+        app:qrcv_borderColor="@color/more_white_f4f4f4"
+        app:qrcv_borderSize="1dp"
+        app:qrcv_cornerColor="@color/colorPrimaryDark"
+        app:qrcv_cornerLength="0dp"
+        app:qrcv_cornerSize="0dp"
+        app:qrcv_maskColor="@color/black"
+        app:qrcv_rectWidth="240dp"
+        app:qrcv_scanLineColor="@color/colorPrimaryDark"
+        app:qrcv_scanLineSize="1dp"
+        app:qrcv_topOffset="1dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_alignTop="@+id/more_zxingview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="257dp"
+        android:text="@string/more_scan_hint"
+        android:textColor="@color/more_scan_text_color"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>
