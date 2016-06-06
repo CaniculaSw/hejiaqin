@@ -26,8 +26,8 @@
         android:id="@+id/more_zxingview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="19dp"
         android:layout_below="@+id/more_scan_tips_tv"
+        android:layout_marginTop="19dp"
         app:qrcv_animTime="1000"
         app:qrcv_borderColor="@color/more_white_f4f4f4"
         app:qrcv_borderSize="1dp"
@@ -41,15 +41,14 @@
         app:qrcv_topOffset="1dp" />
 
     <TextView
+        android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
         android:layout_alignTop="@+id/more_zxingview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="257dp"
         android:text="@string/more_scan_hint"
         android:textColor="@color/more_scan_text_color"
         android:textSize="14sp" />
-
 
 </RelativeLayout>

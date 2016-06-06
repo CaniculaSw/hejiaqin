@@ -154,7 +154,6 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
         } else {
             bm = BitmapFactory.decodeFile(photoPath);
         }
-
         QRCodeDecoder.decodeQRCode(bm, this);
     }
 
