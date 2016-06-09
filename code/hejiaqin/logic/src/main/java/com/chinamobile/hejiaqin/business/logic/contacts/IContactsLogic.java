@@ -14,4 +14,5 @@ public interface IContactsLogic {
 
     void searchLocalContactLst(String input);
 
+    void fetchAppContactLst();
 }

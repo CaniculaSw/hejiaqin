@@ -193,5 +193,21 @@ public class DatabaseInfo {
         public static final String PERIOD = "period";
     }
 
+    public interface ContactsInfo {
+        public static final String TABLE_NAME = "ContactsInfo";
+        /**
+         * 唯一标识
+         */
+        public static final String TABLE_ID = "_ID";
+        public static final String CONTACT_ID = "contactId";
+        public static final String NAME = "name";
+        public static final String CONTACT_MODE = "contact_mode";
+        public static final String NAME_IN_PINYIN = "name_in_pinyin";
+        public static final String NUMBER = "number";
+        public static final String NUMBER_TYPE = "number_type";
+        public static final String NUMBER_DESC = "number_desc";
 
+        public static final String SQL_SElECT_ALL = new StringBuffer("select * from ")
+                .append(TABLE_NAME).toString();
+    }
 }

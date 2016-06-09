@@ -225,10 +225,15 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 30001000;
 
-        // 获取验证码成功的消息ID
+        // 获取本地联系人成功的消息ID
         int GET_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 1;
         // 搜索本地联系人成功的消息ID
         int SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 2;
+
+        // 获取应用联系人成功的消息ID
+        int GET_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 3;
+        // 搜索应用联系人成功的消息ID
+        int SEARCH_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 4;
 
         // handleFragmentMessage
         // 隐藏联系人列表的title

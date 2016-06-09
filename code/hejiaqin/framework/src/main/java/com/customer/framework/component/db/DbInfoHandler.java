@@ -20,8 +20,7 @@ import com.customer.framework.component.log.Logger;
 /**
  * Created by Administrator on 2016/3/3.
  */
-public class DbInfoHandler extends DefaultHandler
-{
+public class DbInfoHandler extends DefaultHandler {
     private String strXmlTag = null;
 
     private DatabaseInfo databaseInfo;
@@ -35,8 +34,7 @@ public class DbInfoHandler extends DefaultHandler
     private DatabaseInfo.Field field;
 
     public void doParse(DatabaseInfo inDatabaseInfo, String inStrToParse)
-            throws ParserConfigurationException, SAXException, IOException
-    {
+            throws ParserConfigurationException, SAXException, IOException {
 
         Logger.i("DbInfoHandler", "DbInfoHandler : \n" + inStrToParse);
         this.databaseInfo = inDatabaseInfo;
@@ -57,8 +55,7 @@ public class DbInfoHandler extends DefaultHandler
      * @see DefaultHandler#startDocument()
      */
     @Override
-    public void startDocument() throws SAXException
-    {
+    public void startDocument() throws SAXException {
         tableList = new ArrayList<DatabaseInfo.Table>();
         databaseInfo.setListTable(tableList);
         super.startDocument();
@@ -71,8 +68,7 @@ public class DbInfoHandler extends DefaultHandler
      * @throws SAXException XML异常
      * @see DefaultHandler#endDocument()
      */
-    public void endDocument() throws SAXException
-    {
+    public void endDocument() throws SAXException {
     }
 
     /**
@@ -86,19 +82,20 @@ public class DbInfoHandler extends DefaultHandler
      * @throws SAXException XML异常
      */
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
-            throws SAXException
-    {
+            throws SAXException {
         strXmlTag = localName;
-        if (localName.equals("table"))
-        {
+        if (localName.equals("table")) {
             table = new DatabaseInfo.Table();
             tableList.add(table);
             fileList = new ArrayList<DatabaseInfo.Field>();
             table.setListFiled(fileList);
+            table.setName(atts.getValue("name"));
         }
-        if (localName.equals("field"))
-        {
+        if (localName.equals("field")) {
             field = new DatabaseInfo.Field();
+            field.setName(atts.getValue("name"));
+            field.setType(atts.getValue("type"));
+            field.setObligatory(atts.getValue("obligatory"));
             fileList.add(field);
         }
     }
@@ -112,8 +109,7 @@ public class DbInfoHandler extends DefaultHandler
      * @param qName        名
      * @throws SAXException XML异常
      */
-    public void endElement(String namespaceURI, String localName, String qName) throws SAXException
-    {
+    public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
         strXmlTag = null;
     }
 
@@ -126,36 +122,24 @@ public class DbInfoHandler extends DefaultHandler
      * @param length 长度
      * @see DefaultHandler#characters(char[], int, int)
      */
-    public void characters(char[] ch, int start, int length)
-    {
-        if (strXmlTag != null)
-        {
-            String data = new String(ch, start, length);
-
-            if (strXmlTag.equals("dversion"))
-            {
-                this.databaseInfo.setVersion(data);
-            }
-            else if (strXmlTag.equals("dname"))
-            {
-                this.databaseInfo.setName(data);
-            }
-            else if (strXmlTag.equals("tname"))
-            {
-                this.table.setName(data);
-            }
-            else if (strXmlTag.equals("fname"))
-            {
-                this.field.setName(data);
-            }
-            else if (strXmlTag.equals("ftype"))
-            {
-                this.field.setType(data);
-            }
-            else if (strXmlTag.equals("fobligatory"))
-            {
-                this.field.setObligatory(data);
-            }
-        }
+    public void characters(char[] ch, int start, int length) {
+//        if (strXmlTag != null) {
+//            String data = new String(ch, start, length);
+//            Logger.i("DbInfoHandler", "characters is: " + data);
+//
+//            if (strXmlTag.equals("version")) {
+//                this.databaseInfo.setVersion(data);
+//            } else if (strXmlTag.equals("database")) {
+//                this.databaseInfo.setName(data);
+//            } else if (strXmlTag.equals("table")) {
+//                this.table.setName(data);
+//            } else if (strXmlTag.equals("field")) {
+//                this.field.setName(data);
+//            } else if (strXmlTag.equals("type")) {
+//                this.field.setType(data);
+//            } else if (strXmlTag.equals("obligatory")) {
+//                this.field.setObligatory(data);
+//            }
+//        }
     }
 }

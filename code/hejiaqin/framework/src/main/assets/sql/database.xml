@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<database version="1.00.006" name="eplus" dataPath="db">
+<database version="1.00.000" name="hejiaqin" dataPath="db">
 	<table name="DBVer">
 		<field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT" />
 		<field name="dbVer" type="TEXT" obligatory="" />
@@ -32,57 +32,14 @@
 	</table>
 
 	<!-- 联系人基本信息表 -->
-	<table name="ContactInfo">
-		<field name="_id" type="INTEGER" obligatory=" NOT NULL DEFAULT -1" />
-		<field name="contactID" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
+	<table name="ContactsInfo">
+		<field name="_ID" type="INTEGER" obligatory=" NOT NULL DEFAULT -1" />
+		<field name="contactId" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
 		<field name="name" type="TEXT" obligatory="" />
-		<field name="ringID" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
-		<field name="ringPhotoUrl" type="TEXT" obligatory="" />
-		<field name="primaryMobile" type="TEXT" obligatory="" />
-		<field name="firstNormalMobile" type="TEXT" obligatory="" />
-		<field name="avatarURL" type="TEXT" obligatory="" />
-		<field name="listID" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
-		<field name="littleAvatar" type="TEXT" obligatory="" />
-		<field name="middleAvatar" type="TEXT" obligatory="" />
-		<field name="largeAvatar" type="TEXT" obligatory="" />
-		<field name="avatar" type="TEXT" obligatory="" />
-		<field name="sectionKey" type="TEXT" obligatory="" />
-		<field name="sectionContent" type="TEXT" obligatory="" />
-		<field name="searchKey1" type="TEXT" obligatory="" />
-		<field name="searchKey2" type="TEXT" obligatory="" />
-		<field name="searchKey3" type="TEXT" obligatory="" />
-		<field name="version" type="TEXT" obligatory="" />
-		<field name="uploadFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
-		<field name="pfsVersion" type="TEXT" obligatory="" />
-	</table>
-
-	<!-- 联系人联系人方式表 -->
-	<table name="ContactCommunicationInfo">
-		<field name="_id" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
-		<field name="contactID" type="TEXT" obligatory="NOT NULL" />
-		<field name="type" type="INTEGER" obligatory="" />
-		<field name="primaryFlag" type="INTEGER" obligatory="" />
-		<field name="commInfo" type="TEXT" obligatory="" />
-		<field name="commInfoFmt1" type="TEXT" obligatory="" />
-		<field name="linkFlag" type="INTEGER" obligatory="" />
-		<field name="linkInfo" type="TEXT" obligatory="" />
-	</table>
-
-	<!-- Ring联系人个人信息表 -->
-	<table name="ProfileInfo">
-		<field name="_id" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
-		<field name="userID" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
-		<field name="name" type="TEXT" obligatory="" />
-		<field name="uuid" type="TEXT" obligatory="" />
-		<field name="littleAvatar" type="TEXT" obligatory="" />
-		<field name="middleAvatar" type="TEXT" obligatory="" />
-		<field name="largeAvatar" type="TEXT" obligatory="" />
-		<field name="avatar" type="TEXT" obligatory="" />
-		<field name="avatarURL" type="TEXT" obligatory="" />
-		<field name="lastUpdate" type="TEXT" obligatory="" />
-		<field name="littleAvatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
-		<field name="middleAvatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
-		<field name="largeAvatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
-		<field name="avatarFlag" type="INTEGER" obligatory=" NOT NULL DEFAULT 1" />
+		<field name="contact_mode" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+		<field name="name_in_pinyin" type="TEXT" obligatory="" />
+		<field name="number" type="TEXT" obligatory="" />
+		<field name="number_type" type="TEXT" obligatory="" />
+		<field name="number_desc" type="TEXT" obligatory="" />
 	</table>
 </database>

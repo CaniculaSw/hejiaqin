@@ -89,13 +89,13 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     }
 
     @Override
-    protected void initData() {
-        contactsLogic.fetchLocalContactLst();
+    protected void initLogics() {
+        contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
-    protected void initLogics() {
-        contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
+    protected void initData() {
+        contactsLogic.fetchLocalContactLst();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,190 +10,38 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
+import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yupeng on 5/23/16.
  */
 public class AppContactAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
-    private String[] countries = {"Afghanistan", "Albania", "Algeria",
-            "Andorra", "Angola", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Australia",
-            "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
-            "Belarus", "Belgium", "Belize", "Benin",  "Bhutan", "Bolivia", "Bosnia and Herzegovina",
-            "Botswana",  "Brazil",  "Brunei", "Bulgaria", "Burkina Faso", "Burma",
-            "Burundi",  "Cambodia",  "Cameroon",  "Canada",  "Cape Verde",   "Central African Republic",
-            "Chad", "Chile",
-            "China",
-            "Colombia",
-            "Comoros",
-            "Congo, Democratic Republic of the",
-            "Congo, Republic of the",
-            "Costa Rica",
-            "Cote d\'voire",
-            "Croatia",
-            "Cuba",
-            "Cyprus",
-            "Czech Republic",
+    private Context mContext;
 
-            "Denmark",
-            "Djibouti",
-            "Dominica",
-            "Dominican Republic",
-
-            "Ecuador",
-            "Egypt",
-            "El Salvador",
-            "Equatorial Guinea",
-            "Eritrea",
-            "Estonia",
-            "Ethiopia",
-
-            "Fiji",
-            "Finland",
-            "France",
-
-            "Gabon",
-            "Gambia, The",
-            "Georgia",
-            "Ghana",
-            "Greece",
-            "Grenada",
-            "Guatemala",
-            "Guinea",
-            "Guinea-Bissau",
-            "Guyana",
-
-            "Haiti",
-            "Holy See",
-            "Honduras",
-            "Hong Kong",
-            "Hungary",
-            "Iceland",
-            "India",
-            "Indonesia",
-            "Iran",
-            "Iraq",
-            "Ireland",
-            "Israel",
-            "Italy",
-            "Jamaica",
-            "Japan",
-            "Jordan",
-            "Kazakhstan",
-            "Kenya",
-            "Kiribati",
-            "Korea, North",
-            "Korea, South",
-            "Kosovo",
-            "Kuwait",
-            "Kyrgyzstan",
-            "Laos",
-            "Latvia",
-            "Lebanon",
-            "Lesotho",
-            "Liberia",
-            "Libya",
-            "Liechtenstein",
-            "Lithuania",
-            "Luxembourg",
-            "Macau",
-            "Macedonia",
-            "Madagascar",
-            "Malawi",
-            "Malaysia",
-            "Maldives",
-            "Mali",
-            "Malta",
-            "Marshall Islands",
-            "Mauritania",
-            "Mauritius",
-            "Mexico",
-            "Micronesia",
-            "Moldova",
-            "Monaco",
-            "Mongolia",
-            "Montenegro",
-            "Morocco",
-            "Mozambique",
-            "Namibia",
-            "Nauru",
-            "Nepal",
-            "Netherlands",
-            "Netherlands Antilles",
-            "New Zealand",
-            "Nicaragua",
-            "Niger",
-            "Nigeria",
-            "North Korea",
-            "Norway",
-
-            "Oman",
-
-            "Pakistan",
-            "Palau",
-            "Palestinian Territories",
-            "Panama",
-            "Papua New Guinea",
-            "Paraguay",
-            "Peru",
-            "Philippines",
-            "Poland",
-            "Portugal",
-
-            "Qatar",
-
-            "Romania",
-            "Russia",
-            "Rwanda",
-
-            "Saint Kitts and Nevis",
-            "Saint Lucia",
-            "Saint Vincent and the Grenadines",
-            "Samoa",
-            "San Marino",
-            "Sao Tome and Principe",
-            "Saudi Arabia",
-            "Senegal",
-            "Serbia",
-            "Seychelles",
-            "Sierra Leone",
-            "Singapore",
-            "Slovakia",
-            "Slovenia",
-            "Solomon Islands",
-            "Somalia",
-            "South Africa",
-            "South Korea",
-            "South Sudan",
-            "Spain",
-            "Sri Lanka",
-            "Sudan",
-            "Suriname",
-            "Swaziland",
-            "Sweden",
-            "Switzerland",
-            "Syria",
-            "Taiwan",
-            "Tajikistan",
-            "Tanzania", "Thailand ", "Timor-Leste", "Togo",  "Tonga",  "Trinidad and Tobago",
-            "Tunisia", "Turkey",
-            "Turkmenistan", "Tuvalu",  "Uganda", "Ukraine", "United Arab Emirates",  "United Kingdom",
-            "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen",  "Zambia",  "Zimbabwe",};
     private LayoutInflater inflater;
 
+    private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
+
     public AppContactAdapter(Context context) {
+        mContext = context;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return countries.length;
+        return contactsInfoList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return countries[position];
+        return contactsInfoList.get(position);
     }
 
     @Override
@@ -207,14 +57,30 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.adapter_contact_app_view, parent, false);
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
+            holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.text.setText(countries[position]);
-
+        initView(position, holder);
         return convertView;
+    }
+
+    private void initView(int position, ViewHolder holder) {
+        final ContactsInfo contactsInfo = contactsInfoList.get(position);
+        holder.text.setText(contactsInfo.getName());
+
+        holder.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -229,7 +95,8 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = (HeaderViewHolder) convertView.getTag();
         }
         //set header text as first char in name
-        String headerText = "" + countries[position].subSequence(0, 1).charAt(0);
+        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        String headerText = contactsInfo.getGroupName();
         holder.text.setText(headerText);
         return convertView;
     }
@@ -237,7 +104,17 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
     @Override
     public long getHeaderId(int position) {
         //return the first character of the country as ID because this is what headers are based upon
-        return countries[position].subSequence(0, 1).charAt(0);
+        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        return contactsInfo.getGroupName().charAt(0);
+    }
+
+
+    public void setData(List<ContactsInfo> contactsInfoList) {
+        this.contactsInfoList.clear();
+        if (null != contactsInfoList) {
+            this.contactsInfoList.addAll(contactsInfoList);
+        }
+        notifyDataSetChanged();
     }
 
     class HeaderViewHolder {
@@ -246,6 +123,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
 
     class ViewHolder {
         TextView text;
+        View convertView;
     }
 
 }
