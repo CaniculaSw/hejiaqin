@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.StringUtil;
@@ -18,31 +19,21 @@ import com.huawei.rcs.login.UserInfo;
 /**
  * Created by zhanggj on 2016/6/5.
  */
-public class VoipLogic extends LogicImp implements IVoipLogic{
+public class VoipLogic extends LogicImp implements IVoipLogic {
 
     public static final String TAG = VoipLogic.class.getSimpleName();
 
-    private static final String DEFAULT_IP ="223.87.12.235";
+    private static final String DEFAULT_IP = "223.87.12.235";
 
-    private static final String DEFAULT_PORT ="443";
+    private static final String DEFAULT_PORT = "443";
 
     private static VoipLogic instance;
 
-    private BroadcastReceiver mCallInvitationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+    //当前call session
+    private CallSession mCallSession;
 
-            if (session.getType() == CallSession.TYPE_VIDEO_SHARE) {
-                return;
-            }
-
-//            Intent newIntent = new Intent(context, ACT_DemoCallIncoming.class);
-//            newIntent.putExtra("session_id", session.getSessionId());
-//            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(newIntent);
-        }
-    };
+    //当前通话类型
+    private boolean isIncoming;
 
     private BroadcastReceiver mLoginStatusChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -51,27 +42,60 @@ public class VoipLogic extends LogicImp implements IVoipLogic{
             int new_status = intent.getIntExtra(LoginApi.PARAM_NEW_STATUS, -1);
             int reason = intent.getIntExtra(LoginApi.PARAM_REASON, -1);
             Logger.d(VoipLogic.TAG, "the status is " + new_status);
-            switch (new_status)
-            {
+            switch (new_status) {
                 case LoginApi.STATUS_CONNECTED:
                     break;
                 case LoginApi.STATUS_CONNECTING:
                     break;
                 case LoginApi.STATUS_DISCONNECTED:
+                    if (reason == LoginApi.REASON_SRV_FORCE_LOGOUT) {
+                        //TODO 服务器强制注销 如：同一账号在多终端上登录
+                    } else if (reason == LoginApi.REASON_NET_UNAVAILABLE) {
+                        //TODO 网络不可用
+                    }
+
                     break;
                 case LoginApi.STATUS_DISCONNECTING:
                     break;
+
                 case LoginApi.STATUS_IDLE:
                     break;
             }
         }
     };
 
+    private BroadcastReceiver mCallInvitationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mCallSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
 
-    private VoipLogic(Context context)
-    {
+            if (mCallSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
+                return;
+            }
+            if (mCallSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+                return;
+            }
+            if (mCallSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_VIDEO_INCOMING_MSG_ID, mCallSession);
+            }
+            //TODO 保存通话记录
+        }
+    };
+
+    private BroadcastReceiver mCallStatusChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mCallSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+
+            //TODO 修改通话记录
+        }
+    };
+
+
+    private VoipLogic(Context context) {
         init(context.getApplicationContext());
     }
+
     /**
      * 获取单例对象
      *
@@ -88,31 +112,32 @@ public class VoipLogic extends LogicImp implements IVoipLogic{
         }
         return instance;
     }
-    public void registerVoipReceiver()
-    {
+
+    public void registerVoipReceiver() {
+        LocalBroadcastManager.getInstance(getContext())
+                .registerReceiver(mLoginStatusChangedReceiver, new IntentFilter(LoginApi.EVENT_LOGIN_STATUS_CHANGED));
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mCallInvitationReceiver, new IntentFilter(CallApi.EVENT_CALL_INVITATION));
         LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mLoginStatusChangedReceiver, new IntentFilter(LoginApi.EVENT_LOGIN_STATUS_CHANGED));
-
+                .registerReceiver(mCallStatusChangedReceiver, new IntentFilter(CallApi.EVENT_CALL_STATUS_CHANGED));
     }
 
-    public void unRegisterVoipReceiver(){
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallInvitationReceiver);
+    public void unRegisterVoipReceiver() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mLoginStatusChangedReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallInvitationReceiver);
     }
 
     @Override
     public void login(UserInfo userInfo, String ip, String port) {
-        if(!StringUtil.isNullOrEmpty(ip) && !StringUtil.isNullOrEmpty(port))
-        {
+        if (!StringUtil.isNullOrEmpty(ip) && !StringUtil.isNullOrEmpty(port)) {
             LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, ip);
             LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, port);
-        }else {
+        } else {
             LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_IP);
             LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_PORT);
         }
         LoginCfg loginCfg = new LoginCfg();
+        //断网SDK自动重连设置
         loginCfg.isAutoLogin = true;
         loginCfg.isRememberPassword = true;
         loginCfg.isVerified = false;
@@ -120,8 +145,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic{
     }
 
     @Override
-    public void logout()
-    {
+    public void logout() {
+        LoginApi.logout();
+    }
+
+    public void call(String calleeNumber,boolean isVideo) {
         LoginApi.logout();
     }
 

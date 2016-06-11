@@ -23,8 +23,8 @@ public class HeApplication extends RCSApplication {
         HmeAudio.setup(this);
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
-        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_PREFER_SIZE,
-                CallApi.CONFIG_MINOR_TYPE_DEFAULT, "2");
+//        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_PREFER_SIZE,
+//                CallApi.CONFIG_MINOR_TYPE_DEFAULT, "2");
         SysApi.loadTls(new DefaultTlsHelper());
         SysApi.loadStg(new NatStgHelper());
 //        SysApi.loadStg(new SvnStgHelper());

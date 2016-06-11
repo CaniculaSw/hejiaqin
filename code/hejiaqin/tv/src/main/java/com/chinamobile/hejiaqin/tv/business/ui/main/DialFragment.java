@@ -15,15 +15,12 @@ import android.widget.RelativeLayout;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.keypad.BaseDigitKeypadView;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.keypad.DialDigitKeypadView;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.keypad.DigitsEditText;
 import com.customer.framework.utils.StringUtil;
-import com.huawei.rcs.login.LoginApi;
-import com.huawei.rcs.login.LoginCfg;
 import com.huawei.rcs.login.UserInfo;
 
 import java.util.regex.Matcher;
@@ -92,7 +89,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     @Override
     protected void handleLogicMsg(Message msg) {
         switch (msg.what) {
-            case BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT:
+            case BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID:
                 //TODO：开始查询
                 dialSaveContactLayout.setVisibility(View.VISIBLE);
         }
@@ -265,7 +262,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         if (null != handle)
         {
             int what =
-                    BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT;
+                    BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID;
             if (handle.hasMessages(what))
             {
                 handle.removeMessages(what);

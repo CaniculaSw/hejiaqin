@@ -50,26 +50,6 @@ public class BussinessConstants {
         //女
         String SEX_FEMALE = "0";
 
-        //我的
-        String PRACTICE_TYPE_MY = "1";
-        //推荐
-        String PRACTICE_TYPE_RECOMMOND = "2";
-
-        //1置顶，0不置顶
-        String PLACE_TOP = "1";
-
-        //1置顶，0不置顶
-        String CANCEL_PLACE_TOP = "0";
-
-        // 1有氧
-        String MOVEMENT_TYPE_AEROBICS = "1";
-        // 2力量
-        String MOVEMENT_TYPE_STRENGTH = "2";
-        //3瑜伽
-        String MOVEMENT_TYPE_YOGA = "3";
-        //4国术；
-        String MOVEMENT_TYPE_KUNGFU = "4";
-
     }
 
     /**
@@ -263,35 +243,12 @@ public class BussinessConstants {
     public interface DialMsgID {
 
         int BASE_MSG_ID = 40001000;
-        int CALL_RECORD_START_SERTCH_CONTACT = BASE_MSG_ID+1;
+        int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID+1;
+        int CALL_AUDIO_INCOMING_MSG_ID = BASE_MSG_ID+2;
+        int CALL_VIDEO_INCOMING_MSG_ID = BASE_MSG_ID+3;
 
     }
 
-    /**
-     * 健康银行模块常量
-     */
-    public interface HealthBank {
-
-
-    }
-
-    /**
-     * 健康银行模块网络接口错误码
-     */
-    public interface HealthBankHttpErrorCode {
-
-
-    }
-
-    /**
-     * 健康银行模块消息ID
-     */
-    public interface HealthBankMsgID {
-
-        int BASE_MSG_ID = 50001000;
-
-
-    }
 
     /**
      * 设置模块常量
