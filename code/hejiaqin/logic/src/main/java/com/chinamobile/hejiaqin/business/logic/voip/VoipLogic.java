@@ -29,12 +29,6 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     private static VoipLogic instance;
 
-    //当前call session
-    private CallSession mCallSession;
-
-    //当前通话类型
-    private boolean isIncoming;
-
     private BroadcastReceiver mLoginStatusChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -67,16 +61,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private BroadcastReceiver mCallInvitationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mCallSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
 
-            if (mCallSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
+            if (callSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
                 return;
             }
-            if (mCallSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+            if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
                 return;
             }
-            if (mCallSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_VIDEO_INCOMING_MSG_ID, mCallSession);
+            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_VIDEO_INCOMING_MSG_ID, callSession);
             }
             //TODO 保存通话记录
         }
@@ -85,8 +79,18 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private BroadcastReceiver mCallStatusChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mCallSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
-
+            CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            int newStatus = intent.getIntExtra(CallApi.PARAM_NEW_STATUS, CallSession.STATUS_IDLE);
+            switch (newStatus) {
+                case CallSession.STATUS_CONNECTED:
+                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
+                    break;
+                case CallSession.STATUS_IDLE:
+                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID, callSession);
+                    break;
+                default:
+                    break;
+            }
             //TODO 修改通话记录
         }
     };
@@ -125,6 +129,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     public void unRegisterVoipReceiver() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mLoginStatusChangedReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallInvitationReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallStatusChangedReceiver);
     }
 
     @Override
@@ -149,8 +154,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         LoginApi.logout();
     }
 
-    public void call(String calleeNumber,boolean isVideo) {
-        LoginApi.logout();
+    @Override
+    public CallSession call(String calleeNumber,boolean isVideoCall) {
+        CallSession callSession = null;
+        if (isVideoCall) {
+            callSession = CallApi.initiateVideoCall(calleeNumber);
+        } else {
+            callSession = CallApi.initiateAudioCall(calleeNumber);
+        }
+        //TODO 保存通话记录
+        return callSession;
     }
 
 }
