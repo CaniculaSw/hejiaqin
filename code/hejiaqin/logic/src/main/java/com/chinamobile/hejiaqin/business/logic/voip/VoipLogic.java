@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
@@ -35,7 +35,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             int old_status = intent.getIntExtra(LoginApi.PARAM_OLD_STATUS, -1);
             int new_status = intent.getIntExtra(LoginApi.PARAM_NEW_STATUS, -1);
             int reason = intent.getIntExtra(LoginApi.PARAM_REASON, -1);
-            Logger.d(VoipLogic.TAG, "the status is " + new_status);
+            LogUtil.d(VoipLogic.TAG, "the status is " + new_status);
             switch (new_status) {
                 case LoginApi.STATUS_CONNECTED:
                     break;

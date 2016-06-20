@@ -8,7 +8,7 @@ import android.provider.ContactsContract;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class ContactsInfoManager {
         for (ContactsInfo contactsInfo : contactsInfoList) {
             contactsInfo.setNameInPinyin(StringUtil.hanzi2Pinyin(context, contactsInfo.getName()));
         }
-        Logger.d(TAG, "sortContactsInfoLst, after set pinyin name:  " + contactsInfoList);
+        LogUtil.d(TAG, "sortContactsInfoLst, after set pinyin name:  " + contactsInfoList);
 
         Collections.sort(contactsInfoList, new Comparator<ContactsInfo>() {
             @Override
@@ -96,7 +96,7 @@ public class ContactsInfoManager {
                 return lNameInPinyin.compareTo(rNameInPinyin);
             }
         });
-        Logger.d(TAG, "sortContactsInfoLst: " + contactsInfoList);
+        LogUtil.d(TAG, "sortContactsInfoLst: " + contactsInfoList);
     }
 
     public void cacheLocalContactInfo(List<ContactsInfo> localContactsInfoList) {

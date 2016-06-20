@@ -14,7 +14,7 @@ import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.net.NameValuePair;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
@@ -221,7 +221,7 @@ public class LoginHttpManager extends AbsHttpManager {
                     break;
             }
         } catch (JSONException e) {
-            Logger.e(TAG, e.toString());
+            LogUtil.e(TAG, e.toString());
         }
        }
         return obj;
