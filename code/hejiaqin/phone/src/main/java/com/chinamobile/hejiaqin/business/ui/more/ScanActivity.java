@@ -15,7 +15,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.qrCode.QRCodeDecoder;
 import com.customer.framework.component.qrCode.ZXingView;
 import com.customer.framework.component.qrCode.core.QRCodeView;
@@ -113,9 +113,9 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                     if (photoPath == null) {
                         photoPath = PhotoManage.getPath(getApplicationContext(),
                                 data.getData());
-                        Logger.i(TAG, photoPath);
+                        LogUtil.i(TAG, photoPath);
                     }
-                    Logger.i(TAG, photoPath);
+                    LogUtil.i(TAG, photoPath);
 
                 }
 
@@ -145,7 +145,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
             try {
                 is = new FileInputStream(photoPath);
             } catch (FileNotFoundException e) {
-                Logger.e(TAG, "File not found", e);
+                LogUtil.e(TAG, "File not found", e);
             }
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = false;

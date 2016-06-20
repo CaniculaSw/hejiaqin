@@ -10,7 +10,7 @@ import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.tv.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * 应用联系人列表界面
@@ -70,7 +70,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
         switch (v.getId()) {
             case R.id.contact_search_layout:
                 // TODO
-                Logger.d(TAG, "start search");
+                LogUtil.d(TAG, "start search");
                 break;
         }
     }

@@ -21,7 +21,6 @@ import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.component.log.Logger;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
 import com.customer.framework.utils.LogUtil;
@@ -91,7 +90,6 @@ public abstract class BasicActivity extends BaseActivity {
         LogUtil.setContext(getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
-        Logger.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }

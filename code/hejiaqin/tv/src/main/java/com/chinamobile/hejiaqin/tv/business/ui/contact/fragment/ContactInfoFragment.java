@@ -11,7 +11,7 @@ import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.BasicFragment;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
 

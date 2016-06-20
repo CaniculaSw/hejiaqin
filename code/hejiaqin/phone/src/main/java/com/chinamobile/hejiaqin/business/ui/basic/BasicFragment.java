@@ -12,10 +12,9 @@ import com.chinamobile.hejiaqin.BuildConfig;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragment;
-import com.customer.framework.utils.LogUtil;
 
 /**
  * desc:

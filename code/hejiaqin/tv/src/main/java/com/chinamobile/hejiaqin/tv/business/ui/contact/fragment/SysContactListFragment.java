@@ -14,7 +14,7 @@ import com.chinamobile.hejiaqin.tv.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.SearchView;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.tv.business.ui.contact.adapter.SysContactAdapter;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
 
@@ -102,7 +102,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         switch (v.getId()) {
             case R.id.contact_search_layout:
                 // TODO
-                Logger.d(TAG, "start search");
+                LogUtil.d(TAG, "start search");
                 enterSearchView();
                 break;
         }

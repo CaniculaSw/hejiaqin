@@ -3,7 +3,7 @@ package com.chinamobile.hejiaqin.tv.business.ui.basic;
 
 import android.app.Activity;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,22 +45,22 @@ public class MyActivityManager {
 
     public void finishAllActivity(String execptActivityName) {
         for (Activity activity : ActivityList) {
-            Logger.d("MyActivityManager", activity.getClass().getName());
+            LogUtil.d("MyActivityManager", activity.getClass().getName());
             if (execptActivityName == null || !execptActivityName.equals(activity.getClass().getName())) {
                 activity.finish();
-                Logger.d("MyActivityManager finish", activity.getClass().getName());
+                LogUtil.d("MyActivityManager finish", activity.getClass().getName());
             }
         }
     }
 
     public void finishActivitys(String[] needFinishActivityNames) {
         for (Activity activity : ActivityList) {
-            Logger.d("MyActivityManager", activity.getClass().getName());
+            LogUtil.d("MyActivityManager", activity.getClass().getName());
             for(int i=0;i<needFinishActivityNames.length;i++)
             {
                 if (needFinishActivityNames[i] != null && needFinishActivityNames[i].equals(activity.getClass().getName())) {
                     activity.finish();
-                    Logger.d("MyActivityManager finish", activity.getClass().getName());
+                    LogUtil.d("MyActivityManager finish", activity.getClass().getName());
                 }
             }
 

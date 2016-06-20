@@ -14,17 +14,15 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
-import com.chinamobile.hejiaqin.BuildConfig;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
 
 /**
@@ -39,8 +37,6 @@ public abstract class BasicActivity extends BaseActivity {
     private MyToast myToast;
 
     private Dialog waitDialog;
-
-    protected boolean networkConnected = true;
 
     private boolean mIsNecessaryPermission;
 
@@ -88,8 +84,6 @@ public abstract class BasicActivity extends BaseActivity {
 
     @Override
     protected void initSystem(Context context) {
-        LogUtil.setContext(getApplicationContext());
-        LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
@@ -197,11 +191,11 @@ public abstract class BasicActivity extends BaseActivity {
     }
 
     protected void doNetWorkConnect() {
-        this.networkConnected = true;
+
     }
 
     protected void doNetworkDisConnect() {
-        this.networkConnected = false;
+
     }
 
 }

@@ -21,7 +21,6 @@ import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.tv.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.component.log.Logger;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragmentActivity;
 import com.customer.framework.utils.LogUtil;
