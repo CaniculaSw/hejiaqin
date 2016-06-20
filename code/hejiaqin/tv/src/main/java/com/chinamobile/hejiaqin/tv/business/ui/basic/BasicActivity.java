@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.tv.business.ui.basic;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,11 +8,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
+import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
@@ -21,6 +24,8 @@ import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
+import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.PermissionsChecker;
 
 /**
  * desc:Basic Actity,处理系统初始化以及将LogicBuilder传入底层框架
@@ -34,6 +39,10 @@ public abstract class BasicActivity extends BaseActivity {
     private MyToast myToast;
 
     private Dialog waitDialog;
+
+    protected boolean networkConnected = true;
+
+    private boolean mIsNecessaryPermission;
 
     BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
         @Override
@@ -79,9 +88,50 @@ public abstract class BasicActivity extends BaseActivity {
 
     @Override
     protected void initSystem(Context context) {
+        LogUtil.setContext(getApplicationContext());
+        LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
+        LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         Logger.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
+    }
+
+    @TargetApi(23)
+    protected boolean checkPermissions(String[] needPermissions, boolean isNecessary) {
+        mIsNecessaryPermission = isNecessary;
+        if (Build.VERSION.SDK_INT >= 23 && needPermissions != null && needPermissions.length != 0) {
+            if (PermissionsChecker.lacksPermissions(getApplicationContext(), needPermissions)) {
+                startPermissionsActivity(needPermissions);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }else
+        {
+            return true;
+        }
+    }
+
+    private void startPermissionsActivity(String[] needPermissions) {
+        Intent intent = new Intent(BasicActivity.this, PermissionsActivity.class);
+        intent.putExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS, needPermissions);
+        startActivityForResult(intent, BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        switch (requestCode)
+        {
+            case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
+                if(resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission)
+                {
+                    finish();
+                }
+                break;
+        }
     }
 
     @Override
@@ -150,11 +200,11 @@ public abstract class BasicActivity extends BaseActivity {
     }
 
     protected void doNetWorkConnect() {
-
+        this.networkConnected = true;
     }
 
     protected void doNetworkDisConnect() {
-
+        this.networkConnected = false;
     }
 
 }

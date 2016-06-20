@@ -21,12 +21,17 @@ public class BussinessConstants {
 
         String APP_UNIQUE_ID = "appUniqueId";
 
+        String INTENT_EXTRA_PERMISSIONS = "intent_extra_permissions";
+
+        int PERMISSIONS_GRANTED = 0; // 权限授权
+        int PERMISSIONS_DENIED = 1; // 权限拒绝
+
     }
 
     public interface ActivityRequestCode {
         int BASE_QEUEST_CODE = 1000;
-        //选择偏好的RequestCode
-        int CHOOSE_PREFER_REQUEST_CODE = BASE_QEUEST_CODE + 1;
+        //权限申请的RequestCode
+        int PERMISSIONS_REQUEST_CODE = BASE_QEUEST_CODE + 1;
     }
 
     /**

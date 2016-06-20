@@ -11,9 +11,10 @@ import android.view.inputmethod.InputMethodManager;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.component.log.Logger;
+import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragment;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * desc:
@@ -28,9 +29,14 @@ public abstract class BasicFragment extends BaseFragment {
 
     private boolean isCreateView = false;
 
+    protected boolean networkConnected = true;
+
     @Override
     protected void initSystem(Context context) {
-        Logger.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
+        //根据build.gradle设置日志级别
+        LogUtil.setContext(getActivity().getApplicationContext());
+        LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
+        LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }
@@ -104,11 +110,12 @@ public abstract class BasicFragment extends BaseFragment {
     }
 
     public void doNetWorkConnect() {
+        this.networkConnected = true;
 
     }
 
     public void doNetworkDisConnect() {
-
+        this.networkConnected = false;
     }
 
 }

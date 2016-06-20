@@ -12,8 +12,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            buildConfigField "int", "LOG_LEVEL", "5"
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            buildConfigField "int", "LOG_LEVEL", "2"
         }
     }
     productFlavors {
@@ -31,6 +35,5 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.kyleduo.switchbutton:library:1.4.0'
-    compile 'fm.jiecao:jiecaovideoplayer:2.0'
     compile project(':logic')
 }

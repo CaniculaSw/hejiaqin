@@ -86,6 +86,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- android 6.0权限申请页面 -->
+        <activity
+            android:name=".business.ui.basic.PermissionsActivity"
+            android:screenOrientation="portrait"></activity>
         <!-- 登录、注册相关 -->
         <activity
             android:name=".business.ui.login.LoginActivity"
