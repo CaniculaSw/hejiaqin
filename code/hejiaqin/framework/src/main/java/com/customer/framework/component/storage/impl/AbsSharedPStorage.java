@@ -2,7 +2,7 @@ package com.customer.framework.component.storage.impl;
 
 import android.content.SharedPreferences;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.storage.ISharedPStorage;
 import com.customer.framework.utils.FileUtil;
 import com.customer.framework.utils.StringUtil;
@@ -94,9 +94,9 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
             os = new ObjectOutputStream(bos);
             os.writeObject(value);
         } catch (IOException e) {
-            Logger.w(TAG, "save serializable object failed. IOException: ", e);
+            LogUtil.w(TAG, "save serializable object failed. IOException: ", e);
         } catch (Exception e) {
-            Logger.w(TAG, "save serializable object failed. Exception: ", e);
+            LogUtil.w(TAG, "save serializable object failed. Exception: ", e);
         } finally {
             FileUtil.closeStream(os);
             FileUtil.closeStream(bos);
@@ -199,11 +199,11 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
             is = new ObjectInputStream(bis);
             readObject = (Serializable)is.readObject();
         } catch (ClassNotFoundException e) {
-            Logger.w(TAG, "get object failed. ClassNotFoundException: ", e);
+            LogUtil.w(TAG, "get object failed. ClassNotFoundException: ", e);
         } catch (IOException e) {
-            Logger.w(TAG, "get object failed. IOException: ", e);
+            LogUtil.w(TAG, "get object failed. IOException: ", e);
         } catch (Exception e) {
-            Logger.w(TAG, "get object failed. Exception: ", e);
+            LogUtil.w(TAG, "get object failed. Exception: ", e);
         } finally {
             FileUtil.closeStream(is);
             FileUtil.closeStream(bis);

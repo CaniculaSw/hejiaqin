@@ -13,7 +13,7 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 public abstract class BaseContentProvider extends ContentProvider implements
         SQLiteTransactionListener
@@ -51,7 +51,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
     @Override
     public boolean onCreate()
     {
-        Logger.d(TAG, "BaseContentProvider create");
+        LogUtil.d(TAG, "BaseContentProvider create");
         Context context = getContext();
         mOpenHelper = getDatabaseHelper(context);
         return true;

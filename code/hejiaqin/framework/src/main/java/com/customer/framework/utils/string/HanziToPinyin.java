@@ -3,7 +3,7 @@ package com.customer.framework.utils.string;
 import android.content.Context;
 
 import com.customer.framework.R;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -220,7 +220,7 @@ public class HanziToPinyin {
                 try {
                     inputStream.close();
                 } catch (IOException e1) {
-                    Logger.e(TAG, e1.getMessage());
+                    LogUtil.e(TAG, e1.getMessage());
                 }
             }
             inputStream = null;

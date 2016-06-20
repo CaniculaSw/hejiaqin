@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (Build.VERSION.SDK_INT >= 11) {
             getWritableDatabase().enableWriteAheadLogging();
         }
-        Logger.i(TAG, "init DatabaseHelper()");
+        LogUtil.i(TAG, "init DatabaseHelper()");
     }
 
     /**
@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (Build.VERSION.SDK_INT >= 11) {
             getWritableDatabase().enableWriteAheadLogging();
         }
-        Logger.i(TAG, "init DatabaseHelper()  userSysId : " + userId);
+        LogUtil.i(TAG, "init DatabaseHelper()  userSysId : " + userId);
     }
 
     /**
@@ -103,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return DatabaseHelper对象
      */
     public static synchronized DatabaseHelper getInstance(Context context, String userId) {
-        Logger.d(TAG, "new DatabaseHelper");
+        LogUtil.d(TAG, "new DatabaseHelper");
         mUpgradeDbutil = UpgradeDbUtil.getInstance(context);
         if (sSingleton != null) {
             if (currentUserID.equals(userId)) {
@@ -125,12 +125,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Logger.d(TAG, "DatabaseHelper on Create()");
+        LogUtil.d(TAG, "DatabaseHelper on Create()");
         try {
             mUpgradeDbutil.createTableFromXml(DB_FILE_NAME, db);
 
         } catch (Exception e) {
-            Logger.e(TAG, "Create table : ", e);
+            LogUtil.e(TAG, "Create table : ", e);
         }
     }
 

@@ -2,7 +2,7 @@ package com.customer.framework.utils.cryptor;
 
 import android.text.TextUtils;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -52,10 +52,10 @@ public class DigestUtil {
 			md5MessageDigest.update(data.getBytes(ENCODE_TYPE));
 			res = md5MessageDigest.digest();
 		} catch (NoSuchAlgorithmException e) {
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
 		}
 
@@ -83,10 +83,10 @@ public class DigestUtil {
 			shaMessageDigest.update(data.getBytes(ENCODE_TYPE));
 			res = shaMessageDigest.digest();
 		} catch (NoSuchAlgorithmException e) {
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
 		} catch (UnsupportedEncodingException e) {
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
 		}
 
@@ -163,13 +163,13 @@ public class DigestUtil {
             }
             return hash.toString() ;
         } catch (UnsupportedEncodingException e) {
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
         } catch(InvalidKeyException e){
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
-			Logger.e(TAG, e);
+			LogUtil.e(TAG, e);
             throw new RuntimeException(e);
         }
     }

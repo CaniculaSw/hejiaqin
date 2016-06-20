@@ -3,7 +3,7 @@ package com.customer.framework.utils.cryptor;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 
 /**
@@ -24,7 +24,7 @@ public final class SHA256 {
             md.update(input);
             return md.digest(input);
         } catch (NoSuchAlgorithmException e) {
-            Logger.w(TAG, "encrypt, no SHA-256 method");
+            LogUtil.w(TAG, "encrypt, no SHA-256 method");
         }
         return null;
     }

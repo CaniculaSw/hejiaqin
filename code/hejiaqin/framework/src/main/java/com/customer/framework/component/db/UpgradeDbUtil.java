@@ -9,7 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 public class UpgradeDbUtil
 {
@@ -69,7 +69,7 @@ public class UpgradeDbUtil
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Logger.i(TAG, "==创建数据库失败==" + ex.toString());
+            LogUtil.i(TAG, "==创建数据库失败==" + ex.toString());
         }
         return isSuccess;
     }
@@ -103,7 +103,7 @@ public class UpgradeDbUtil
             catch (Exception ex)
             {
                 isSuccess = false;
-                Logger.i(TAG, "==创建数据库失败==" + ex.toString());
+                LogUtil.i(TAG, "==创建数据库失败==" + ex.toString());
             }
         }
         else
@@ -111,7 +111,7 @@ public class UpgradeDbUtil
             if (version.equals(oldVersion))
             {
                 isSuccess = true;
-                Logger.i(TAG, "数据库版本一致或者当前的数据库存版本号比之前的低不需要升级");
+                LogUtil.i(TAG, "数据库版本一致或者当前的数据库存版本号比之前的低不需要升级");
             }
             // ***END***  [修改数据库存的版本号比对] zhouxin 2012-9-6 modify
             else
@@ -119,7 +119,7 @@ public class UpgradeDbUtil
                 String snsDataXml;
                 try
                 {
-                    Logger.i(TAG, "数据库升级开始时间:" + System.currentTimeMillis());
+                    LogUtil.i(TAG, "数据库升级开始时间:" + System.currentTimeMillis());
                     String dbxml = DBUtils.getFromAssets(XML_DIR + fileName, mContext);
                     DatabaseInfo info = new DatabaseInfo();
                     DbInfoHandler handler = new DbInfoHandler();
@@ -129,13 +129,13 @@ public class UpgradeDbUtil
                     compareDbInfo(oldinfo, info, db);
                     db.update(DatabaseInfo.GlobalDbVer.TABLE_NAME, setValues(version, dbxml), DatabaseInfo.GlobalDbVer.TABLE_ID + "=?", new String[]{String.valueOf(oldId)});
                     isSuccess = true;
-                    Logger.i(TAG, "数据库升级结束时间:" + System.currentTimeMillis());
+                    LogUtil.i(TAG, "数据库升级结束时间:" + System.currentTimeMillis());
                 }
                 catch (Exception ex)
                 {
                     ex.printStackTrace();
                     isSuccess = false;
-                    Logger.i(TAG, "==数据版本升级失败：==" + ex.toString());
+                    LogUtil.i(TAG, "==数据版本升级失败：==" + ex.toString());
                 }
             }
         }

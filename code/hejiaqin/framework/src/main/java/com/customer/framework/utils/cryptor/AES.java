@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * AES加解密
@@ -57,17 +57,17 @@ public final class AES {
             String resultString = parseByte2HexStr(result);
             return resultString; // 加密
         } catch (NoSuchAlgorithmException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (NoSuchPaddingException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (InvalidKeyException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (UnsupportedEncodingException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (IllegalBlockSizeException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (BadPaddingException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         }
         return null;
     }
@@ -94,15 +94,15 @@ public final class AES {
             String resultString = new String(result);
             return resultString;
         } catch (NoSuchAlgorithmException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (NoSuchPaddingException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (InvalidKeyException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (IllegalBlockSizeException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         } catch (BadPaddingException e) {
-            Logger.e(TAG, e);
+            LogUtil.e(TAG, e);
         }
         return null;
     }

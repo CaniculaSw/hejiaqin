@@ -25,7 +25,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.net.NetRequest.RequestMethod;
 import com.customer.framework.component.net.NetResponse.ResponseCode;
 
@@ -71,7 +71,7 @@ public class NetUrlConnection
         OutputStream os = null;
         try
         {
-            Logger.i(TAG, "request url : " + request.getUrl());
+            LogUtil.i(TAG, "request url : " + request.getUrl());
             URL url = new URL(request.getUrl());
             if (!url.getProtocol().toLowerCase().equals("https"))
             {
@@ -90,7 +90,7 @@ public class NetUrlConnection
             httpConn.setReadTimeout(request.getReadTOut());
             if (request.getBody() != null)
             {
-                Logger.i(TAG, "request body : \n" + request.getBody());
+                LogUtil.i(TAG, "request body : \n" + request.getBody());
                 byte[] data = request.getBody().getBytes("UTF-8");
 
                 os = httpConn.getOutputStream();
@@ -118,7 +118,7 @@ public class NetUrlConnection
                 case HttpURLConnection.HTTP_OK:
                 case HttpURLConnection.HTTP_CREATED:
                     setResponseData(request, response, httpConn, false);
-                    Logger.w(TAG, "Response Code:" + responseCode + ",URL=" + request.getUrl());
+                    LogUtil.w(TAG, "Response Code:" + responseCode + ",URL=" + request.getUrl());
                     break;
                 default:
                     response.setResponseCode(ResponseCode.Failed);
@@ -133,7 +133,7 @@ public class NetUrlConnection
         }
         catch (ConnectException e)
         {
-            Logger.e(TAG, "HttpConnector exception!");
+            LogUtil.e(TAG, "HttpConnector exception!");
             response.setResponseCode(ResponseCode.NetworkError);
         }
         catch (SocketException se)
@@ -155,7 +155,7 @@ public class NetUrlConnection
                     {
                         setResponseData(request, response, httpConn, true);
                     }
-                    Logger.i(TAG, "IOException getrespCode:" + responseCode);
+                    LogUtil.i(TAG, "IOException getrespCode:" + responseCode);
                 }
                 catch (IOException ex)
                 {
@@ -165,7 +165,7 @@ public class NetUrlConnection
                 {
                     httpConn.disconnect();
                 }
-                Logger.i(TAG, "HttpConnector IOException ......!");
+                LogUtil.i(TAG, "HttpConnector IOException ......!");
             }
         }
         finally
@@ -178,7 +178,7 @@ public class NetUrlConnection
                 }
                 catch (Exception e)
                 {
-                    Logger.e(TAG, "httpConn disconnect exception!");
+                    LogUtil.e(TAG, "httpConn disconnect exception!");
                 }
             }
             if (os != null)
@@ -189,7 +189,7 @@ public class NetUrlConnection
                 }
                 catch (Exception e)
                 {
-                    Logger.e(TAG, "  os.close(); exception!");
+                    LogUtil.e(TAG, "  os.close(); exception!");
                 }
             }
             if (gzos != null)
@@ -200,11 +200,11 @@ public class NetUrlConnection
                 }
                 catch (Exception e)
                 {
-                    Logger.e(TAG, "  gzos.close(); exception!");
+                    LogUtil.e(TAG, "  gzos.close(); exception!");
                 }
             }
         }
-        Logger.i(TAG, "Response Code :  " + response.getResponseCode());
+        LogUtil.i(TAG, "Response Code :  " + response.getResponseCode());
         return response;
     }
 
@@ -277,11 +277,11 @@ public class NetUrlConnection
 
             if (!request.isNeedByte())
             {
-                Logger.i(TAG, "response data : " + response.getData());
+                LogUtil.i(TAG, "response data : " + response.getData());
             }
             else
             {
-                Logger.i(TAG, "response data : [ is byte data ]");
+                LogUtil.i(TAG, "response data : [ is byte data ]");
             }
         }
         catch (IOException e)
@@ -338,7 +338,7 @@ public class NetUrlConnection
             throws IOException
     {
         int responseCode = httpConn.getResponseCode();
-        Logger.i(TAG, "Response Code[" + responseCode + "]");
+        LogUtil.i(TAG, "Response Code[" + responseCode + "]");
         switch (responseCode)
         {
             case HttpURLConnection.HTTP_OK:
@@ -400,7 +400,7 @@ public class NetUrlConnection
         {
             for (NameValuePair nameValuePair : request.getRequestProperties())
             {
-                Logger.i(TAG, nameValuePair.getName() + ":" + nameValuePair.getValue());
+                LogUtil.i(TAG, nameValuePair.getName() + ":" + nameValuePair.getValue());
                 httpConn.setRequestProperty(nameValuePair.getName(), nameValuePair.getValue());
             }
         }

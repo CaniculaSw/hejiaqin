@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * Created by Administrator on 2016/3/29 0029.
@@ -82,12 +82,12 @@ public final class FileUtil {
             int count = 0;
             while ((count = in.read(buffer)) != -1) {
                 out.write(buffer, 0, count);
-                Logger.i(TAG, "count=" + count);
+                LogUtil.i(TAG, "count=" + count);
             }
             out.flush();
             return true;
         } catch (Exception e) {
-            Logger.e(TAG, "fileCopy failed", e);
+            LogUtil.e(TAG, "fileCopy failed", e);
         } finally {
             closeStream(in);
             closeStream(out);
@@ -97,7 +97,7 @@ public final class FileUtil {
 
     public static boolean fileCopy(String srcFilePath, String dstFilePath) {
         if (srcFilePath == null || dstFilePath == null) {
-            Logger.w(TAG, "[copyFile] file path is null");
+            LogUtil.w(TAG, "[copyFile] file path is null");
             return false;
         }
         File originFile = new File(srcFilePath);
@@ -114,7 +114,7 @@ public final class FileUtil {
             OutputStream os = context.openFileOutput(destFileName, Context.MODE_PRIVATE);
             return copyStream(is, os);
         } catch (FileNotFoundException e) {
-            Logger.e(TAG, "ring file not exists");
+            LogUtil.e(TAG, "ring file not exists");
         }
 
         return false;
@@ -125,13 +125,13 @@ public final class FileUtil {
             return false;
         }
         if (!srcFile.exists()) {
-            Logger.i(TAG, "origin File is not exsit");
+            LogUtil.i(TAG, "origin File is not exsit");
             return false;
         }
         File destParent = destFile.getParentFile();
         if (destParent != null && !destParent.exists()) {
             if (!destParent.mkdirs()) {
-                Logger.i(TAG, "fileCopy failed when make dest dir: " + destParent.getPath());
+                LogUtil.i(TAG, "fileCopy failed when make dest dir: " + destParent.getPath());
                 return false;
             }
         }
@@ -143,7 +143,7 @@ public final class FileUtil {
             FileOutputStream out = new FileOutputStream(destFile);
             return copyStream(in, out);
         } catch (FileNotFoundException e) {
-            Logger.e(TAG, "fileCopy failed", e);
+            LogUtil.e(TAG, "fileCopy failed", e);
         }
         return false;
     }
@@ -153,13 +153,13 @@ public final class FileUtil {
             return false;
         }
         if (!origin.exists()) {
-            Logger.i(TAG, "origin File is not exsit");
+            LogUtil.i(TAG, "origin File is not exsit");
             return false;
         }
         File parentFile = dest.getParentFile();
         if (parentFile != null && !parentFile.exists()) {
             if (!parentFile.mkdirs()) {
-                Logger.i(TAG, "copyFile failed, cause mkdirs return false");
+                LogUtil.i(TAG, "copyFile failed, cause mkdirs return false");
                 return false;
             }
         }
@@ -168,7 +168,7 @@ public final class FileUtil {
         }
         boolean isSuc = origin.renameTo(dest);
         if (!isSuc) {
-            Logger.i(TAG, "origin.renameTo fail");
+            LogUtil.i(TAG, "origin.renameTo fail");
             if (fileCopy(origin, dest)) {
                 return deleteFile(origin);
             }
@@ -189,7 +189,7 @@ public final class FileUtil {
                 try {
                     return file.delete();
                 } catch (Exception e) {
-                    Logger.e(TAG, "delete file error", e);
+                    LogUtil.e(TAG, "delete file error", e);
                     file.deleteOnExit();
                 }
             }
@@ -226,7 +226,7 @@ public final class FileUtil {
 
     public static boolean isFileExists(String filePath) {
         if (filePath == null) {
-            Logger.w(TAG, "[isFileExists]filePath is null");
+            LogUtil.w(TAG, "[isFileExists]filePath is null");
             return false;
         }
         File file = getFileByPath(filePath);
@@ -249,7 +249,7 @@ public final class FileUtil {
 
     public static File getFileByPath(String filePath) {
         if (filePath == null) {
-            Logger.w(TAG, "[getFileByPath]filePath is null");
+            LogUtil.w(TAG, "[getFileByPath]filePath is null");
             return null;
         }
         filePath = filePath.replaceAll("\\\\", File.separator);
@@ -405,7 +405,7 @@ public final class FileUtil {
         try {
             return fileToByte(new File(fileName));
         } catch (IOException e) {
-            Logger.e(TAG, "fileToByte error", e);
+            LogUtil.e(TAG, "fileToByte error", e);
         }
         return new byte[] {};
     }
@@ -431,10 +431,10 @@ public final class FileUtil {
             buffer.flush();
             return buffer.toByteArray();
         } catch (OutOfMemoryError e) {
-            Logger.e(TAG, "", e);
+            LogUtil.e(TAG, "", e);
             return null;
         } catch (IOException e) {
-            Logger.e(TAG, "", e);
+            LogUtil.e(TAG, "", e);
             return null;
         } finally {
             closeStream(buffer);
@@ -447,7 +447,7 @@ public final class FileUtil {
         FileOutputStream fos = null;
         File file = null;
         FileLock fileLock = null;
-        Logger.d(TAG, "byteToFile: fileName = " + fileName);
+        LogUtil.d(TAG, "byteToFile: fileName = " + fileName);
         try {
             file = new File(fileName);
             if (!file.exists()) {
@@ -468,13 +468,13 @@ public final class FileUtil {
                 file.delete();
                 file = null;
             }
-            Logger.e(TAG, "byteToFile error", e);
+            LogUtil.e(TAG, "byteToFile error", e);
         } finally {
             if (fileLock != null) {
                 try {
                     fileLock.release();
                 } catch (IOException e) {
-                    Logger.e(TAG, "fileLock.release() error", e);
+                    LogUtil.e(TAG, "fileLock.release() error", e);
                 }
             }
             closeStream(bos);
@@ -488,7 +488,7 @@ public final class FileUtil {
             try {
                 beCloseStream.close();
             } catch (IOException e) {
-                Logger.w(TAG, "close stream error", e);
+                LogUtil.w(TAG, "close stream error", e);
             }
         }
     }
@@ -557,7 +557,7 @@ public final class FileUtil {
                 ois = new ObjectInputStream(fis);
                 obj = ois.readObject();
             } catch (Exception e) {
-                Logger.e(TAG, "unserialize", e);
+                LogUtil.e(TAG, "unserialize", e);
             } finally {
                 closeStream(ois);
                 closeStream(fis);
@@ -579,7 +579,7 @@ public final class FileUtil {
             oos.writeObject(obj);
             oos.flush();
         } catch (Exception e) {
-            Logger.e(TAG, "serialize", e);
+            LogUtil.e(TAG, "serialize", e);
         } finally {
             closeStream(oos);
             closeStream(fos);
@@ -588,7 +588,7 @@ public final class FileUtil {
 
     public static boolean setNoMediaFlag(File dir) {
         if (dir == null) {
-            Logger.e(TAG, "setNoMediaFlag dir is null");
+            LogUtil.e(TAG, "setNoMediaFlag dir is null");
             return false;
         }
         if (!dir.exists()) {
@@ -599,7 +599,7 @@ public final class FileUtil {
             try {
                 return noMediaFile.createNewFile();
             } catch (IOException e) {
-                Logger.e(TAG, "setNoMediaFlag", e);
+                LogUtil.e(TAG, "setNoMediaFlag", e);
                 return false;
             }
         }
@@ -626,7 +626,7 @@ public final class FileUtil {
             builder.start();
             return true;
         } catch (IOException e) {
-            Logger.e(TAG, "changeFileMode failed", e);
+            LogUtil.e(TAG, "changeFileMode failed", e);
         }
         return false;
     }
@@ -645,7 +645,7 @@ public final class FileUtil {
                 long nSDFreeSize = nBlockSize * nAvailaBlock / 1024 / 1024;
                 return nSDFreeSize > minSize;
             } catch (Exception e) {
-                Logger.e(TAG, "check sdcard avalible size failed.", e);
+                LogUtil.e(TAG, "check sdcard avalible size failed.", e);
             }
         }
         return false;

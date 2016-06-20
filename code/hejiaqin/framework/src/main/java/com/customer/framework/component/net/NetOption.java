@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
-import  com.customer.framework.component.log.Logger;
+import  com.customer.framework.utils.LogUtil;
 
 
 /**
@@ -59,7 +59,7 @@ public abstract class NetOption
                         if (response.getResponseCode() == NetResponse.ResponseCode.Succeed)
                         {
                             parserResultCode(response);
-                            Logger.e(TAG, "handleResponse()");
+                            LogUtil.e(TAG, "handleResponse()");
                             response.setObj(handleResponse(response));
                         }
                         break;
@@ -203,7 +203,7 @@ public abstract class NetOption
                 }
                 catch (JSONException e)
                 {
-                    Logger.e(TAG, e.toString());
+                    LogUtil.e(TAG, e.toString());
                 }
             }
         }

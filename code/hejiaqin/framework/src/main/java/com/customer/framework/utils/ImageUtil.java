@@ -3,7 +3,7 @@ package com.customer.framework.utils;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * Created by yupeng on 4/6/16.
@@ -44,7 +44,7 @@ public class ImageUtil
         }
         catch (OutOfMemoryError e)
         {
-            Logger.w(TAG, "zoom image failed, Out of memory error.", e);
+            LogUtil.w(TAG, "zoom image failed, Out of memory error.", e);
             return srcBitmap;
         }
     }
@@ -99,7 +99,7 @@ public class ImageUtil
         }
         catch (OutOfMemoryError e)
         {
-            Logger.w(TAG, "crop image failed, Out of memory error.", e);
+            LogUtil.w(TAG, "crop image failed, Out of memory error.", e);
             return srcBitmap;
         }
         finally

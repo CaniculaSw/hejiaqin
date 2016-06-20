@@ -1,5 +1,7 @@
 package com.customer.framework.component.db;
 
+import com.customer.framework.utils.LogUtil;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -15,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import com.customer.framework.component.log.Logger;
 
 /**
  * Created by Administrator on 2016/3/3.
@@ -36,7 +37,7 @@ public class DbInfoHandler extends DefaultHandler {
     public void doParse(DatabaseInfo inDatabaseInfo, String inStrToParse)
             throws ParserConfigurationException, SAXException, IOException {
 
-        Logger.i("DbInfoHandler", "DbInfoHandler : \n" + inStrToParse);
+        LogUtil.i("DbInfoHandler", "DbInfoHandler : \n" + inStrToParse);
         this.databaseInfo = inDatabaseInfo;
         StringReader read = new StringReader(inStrToParse);
         InputSource source = new InputSource(read);
@@ -125,7 +126,7 @@ public class DbInfoHandler extends DefaultHandler {
     public void characters(char[] ch, int start, int length) {
 //        if (strXmlTag != null) {
 //            String data = new String(ch, start, length);
-//            Logger.i("DbInfoHandler", "characters is: " + data);
+//            LogUtil.i("DbInfoHandler", "characters is: " + data);
 //
 //            if (strXmlTag.equals("version")) {
 //                this.databaseInfo.setVersion(data);

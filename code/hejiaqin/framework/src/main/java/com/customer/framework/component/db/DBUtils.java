@@ -5,7 +5,7 @@ import android.database.Cursor;
 
 import java.io.InputStream;
 
-import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * 读取数据库表结构文件
@@ -25,7 +25,7 @@ public class DBUtils
      */
     public static void printException(Exception e)
     {
-        Logger.e(TAG, "DatabaseException: ", e);
+        LogUtil.e(TAG, "DatabaseException: ", e);
     }
 
     /**
