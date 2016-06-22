@@ -9,12 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.more.AboutActivity;
 import com.chinamobile.hejiaqin.business.ui.more.BindTVBoxActivity;
-import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MessageActivity;
+import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
 import com.chinamobile.hejiaqin.business.ui.more.UserInfoActivity;
 
@@ -36,6 +38,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     LinearLayout itemAboutLl;
     LinearLayout itemQuitLl;
     HeaderView moreHeader;
+    private ILoginLogic loginLogic;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -111,7 +114,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
                 jumpToAbout();
                 break;
             case R.id.more_item_quit:
-                jumpToQuit();
+                doQuit();
                 break;
             case R.id.right_btn:
                 jumpToMessage();
@@ -119,6 +122,11 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void initLogics() {
+        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
     }
 
     private void jumpToDetailUserProfile() {
@@ -147,7 +155,11 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         this.startActivity(intent);
     }
 
-    private void jumpToQuit() {
+    private void doQuit() {
+        loginLogic.logout();
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        this.startActivity(intent);
+        getActivity().finish();
     }
 
     private void jumpToMessage() {

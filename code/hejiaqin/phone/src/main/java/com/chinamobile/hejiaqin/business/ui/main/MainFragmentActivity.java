@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -288,7 +287,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
 
     @Override
-    protected void doNetWorkConnect() {
+    public void doNetWorkConnect() {
         //通知Fragment网络已经连接
         if (mFragments[mContactsIndex] != null) {
             mFragments[mContactsIndex].doNetWorkConnect();

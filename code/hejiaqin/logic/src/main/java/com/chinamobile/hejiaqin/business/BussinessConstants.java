@@ -39,7 +39,7 @@ public class BussinessConstants {
      */
     public interface ServerInfo {
 
-        String HTTP_ADDRESS = "http://service.XXX.com";
+        String HTTP_ADDRESS = "http://218.205.115.220:8099/hjq";
 
         String HTTPS_ADDRESS = "https://service.XXX.com";
     }
@@ -81,7 +81,7 @@ public class BussinessConstants {
      */
     public interface HttpCommonCode {
         //通用成功的ResultCode
-        String COMMON_SUCCESS_CODE = "1";
+        String COMMON_SUCCESS_CODE = "0";
     }
 
     /**
@@ -111,9 +111,9 @@ public class BussinessConstants {
 
         String TOKEN_DATE = "token_data";
 
-        String INTENT_REGISTER_FIRST_INFO = "registerFirstInfo";
+        String REGISTER_SECOND_STEP_INFO_KEY = "registerSecondInfo";
 
-        String INTENT_REGISTER_SECOND_INFO = "registerSecondInfo";
+        String PASSWORD_INFO_KEY = "passwordInfo";
 
         String INTENT_LOGIN_ID = "registerLoginId";
 
@@ -179,10 +179,12 @@ public class BussinessConstants {
         int RESET_GET_VERIFY_CDOE_FAIL_MSG_ID = BASE_MSG_ID + 17;
         //重置密码获取验证码网络失败消息ID
         int RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID = BASE_MSG_ID + 18;
-        //重置密码成功的消息ID
-        int RESET_PWD_SUCCESS_MSG_ID = BASE_MSG_ID + 19;
-        //重置密码失败的消息ID
-        int RESET_PWD_FAIL_MSG_ID = BASE_MSG_ID + 20;
+
+
+        //检查验证码成功的消息ID
+        int RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID = BASE_MSG_ID + 21;
+        //检查验证码失败的消息ID
+        int RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID = BASE_MSG_ID + 22;
 
     }
 
@@ -293,6 +295,7 @@ public class BussinessConstants {
         int EDIT_BUTTON_PRESSED = BASE_MSG_ID + 1;
         int CLEAN_MESSAGES_SELECTED_STATE = BASE_MSG_ID + 2;
         int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID + 3;
+        int CONTACT_CHECKED_STATED_CHANGED = BASE_MSG_ID + 4;
 
     }
 

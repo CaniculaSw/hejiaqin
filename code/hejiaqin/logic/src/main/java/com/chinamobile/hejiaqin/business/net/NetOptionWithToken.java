@@ -8,8 +8,11 @@ import com.customer.framework.component.net.NetOption;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.component.net.message.BasicNameValuePair;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.cryptor.AES;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.UUID;
  */
 public abstract class NetOptionWithToken extends NetOption {
 
+    private static final String TAG = "NetOptionWithToken";
     private static boolean isRefreshTokening = false;
 
     @Override
@@ -66,7 +70,7 @@ public abstract class NetOptionWithToken extends NetOption {
         if (isNeedToken()) {
             properties = new ArrayList<NameValuePair>();
             UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-            if(info!=null && info.getToken()!=null) {
+            if (info != null && info.getToken() != null) {
                 String unique = UUID.randomUUID().toString();
                 properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_TOKENID, AES.encrypt(info.getToken(), unique.substring(0, 8))));
                 properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_UNIQ, unique));
@@ -82,22 +86,30 @@ public abstract class NetOptionWithToken extends NetOption {
         if (info == null) {
             return false;
         }
-        long expire = info.getExpire();
+        String tokenExpire = info.getTokenExpire();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        long expire = 0;
+        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
+        try {
+            expire = sdf.parse(tokenExpire).getTime() - tokenDate;
+        } catch (ParseException e) {
+            LogUtil.e(TAG, e);
+        }
         //永不过期
         if (expire == -1) {
             return false;
         }
-        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
+
         if (tokenDate != Long.MIN_VALUE) {
             Date now = new Date();
             long value = now.getTime() - tokenDate;
             //在有效期内一半时间内刷新TOKEN
-            if (value > expire / 2 && value< expire) {
+            if (value > expire / 2 && value < expire) {
                 return true;
             }
         }
         return false;
     }
-
 
 }

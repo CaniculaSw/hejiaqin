@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 
 public class MainActivity extends BasicActivity {
@@ -16,8 +17,11 @@ public class MainActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent;
-            //TODO:自动登录后跳转至主Activity
+        if (loginLogic.hasLogined()) {
             intent = new Intent(MainActivity.this, MainFragmentActivity.class);
+        } else {
+            intent = new Intent(MainActivity.this, LoginActivity.class);
+        }
         this.startActivity(intent);
         this.finish();
     }
@@ -44,6 +48,6 @@ public class MainActivity extends BasicActivity {
 
     @Override
     protected void initLogics() {
-        loginLogic =(ILoginLogic)super.getLogicByInterfaceClass(ILoginLogic.class);
+        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
     }
 }

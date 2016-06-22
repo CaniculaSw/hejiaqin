@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;

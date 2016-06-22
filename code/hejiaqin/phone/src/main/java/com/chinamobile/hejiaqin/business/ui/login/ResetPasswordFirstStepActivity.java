@@ -14,29 +14,32 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.model.login.req.RegisterFirstStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.customer.framework.utils.StringUtil;
 import com.chinamobile.hejiaqin.business.ui.basic.MyCountDownTimer;
+import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.customer.framework.utils.StringUtil;
 
 /**
- * Created by Xiadong on 2016/4/27
+ * Created by eshaohu on 16/6/22.
  */
-public class RegisterActivity extends BasicActivity implements View.OnClickListener {
+public class ResetPasswordFirstStepActivity extends BasicActivity implements View.OnClickListener {
 
     private EditText accountEditTx;
-    private EditText passwordEditTx;
+
     private EditText verifyCodeEditTx;
-    private EditText nicknameEditTx;
-    private Button sendVerifyCodeBtn;
+
+    private TextView sendVerifyCodeTv;
     private Button nextActionBtn;
+
+    private HeaderView mHeaderView;
 
     private ILoginLogic loginLogic;
 
     private VerifyCodeCountDownTimer countDownTimer;
-    private TextView errorInfoTv;
-    private int errorFromViewId;
+
+
     private boolean getVerifyRequestFailed;
     private boolean checkVerifyRequestFailed;
     private boolean continueCountDown;
@@ -48,26 +51,24 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_register;
+        return R.layout.activity_reset_password_first_step;
     }
 
     @Override
     protected void initView() {
-        TextView headerTitleTx = (TextView) findViewById(R.id.headertitle);
-        headerTitleTx.setText(R.string.register_title);
+        mHeaderView  = (HeaderView) findViewById(R.id.header);
+        mHeaderView.title.setText(R.string.reset_password_title);
+        mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
-        accountEditTx = (EditText) findViewById(R.id.account_edit_tx);
-        passwordEditTx = (EditText) findViewById(R.id.password_edit_tx);
-        verifyCodeEditTx = (EditText) findViewById(R.id.verify_code_edit_tx);
-        nicknameEditTx = (EditText) findViewById(R.id.nickname_edit_tx);
-        sendVerifyCodeBtn = (Button) findViewById(R.id.send_verify_code_button);
+        accountEditTx = (EditText) findViewById(R.id.phone_no_et);
+        verifyCodeEditTx = (EditText) findViewById(R.id.verify_code_et);
+        sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
-        errorInfoTv = (TextView) findViewById(R.id.error_info_tv);
         //如果上次计数还没有结束，则重新进入页面后继续
         if(MyCountDownTimer.getMyMillisUntilFinished()!=0)
         {
-            sendVerifyCodeBtn.setEnabled(false);
-            sendVerifyCodeBtn.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
+            sendVerifyCodeTv.setEnabled(false);
+            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
             countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
             countDownTimer.start();
             continueCountDown =true;
@@ -81,8 +82,9 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initListener() {
-        sendVerifyCodeBtn.setOnClickListener(this);
+        sendVerifyCodeTv.setOnClickListener(this);
         nextActionBtn.setOnClickListener(this);
+        mHeaderView.backImageView.setOnClickListener(this);
         accountEditTx.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -100,23 +102,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 hideErrorInfo(accountEditTx);
             }
         });
-        passwordEditTx.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                hideErrorInfo(passwordEditTx);
-            }
-        });
         verifyCodeEditTx.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -134,33 +120,20 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 hideErrorInfo(verifyCodeEditTx);
             }
         });
-        nicknameEditTx.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                hideErrorInfo(nicknameEditTx);
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.send_verify_code_button:
+            case R.id.get_verify_code:
                 sendVerifyCodeToPhone();
                 break;
             case R.id.next_action_button:
                 next();
+                break;
+            case R.id.back_iv:
+                doBack();
                 break;
         }
     }
@@ -188,7 +161,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         }
         countDownTimer.start();
         hideErrorInfo(null);
-        loginLogic.getVerifyCode(userAccountId);
+        loginLogic.getResetPasswordCode(userAccountId);
     }
 
     //校验验证码
@@ -213,60 +186,27 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
             accountEditTx.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(passwordEditTx.getText().toString())) {
-            displayErrorInfo(R.string.password_null, passwordEditTx);
-            passwordEditTx.requestFocus();
-            return;
-        }
-        if (TextUtils.isEmpty(nicknameEditTx.getText().toString())) {
-            displayErrorInfo(R.string.nick_name_null, nicknameEditTx);
-            nicknameEditTx.requestFocus();
-            return;
-        }
+
         VerifyInfo info = new VerifyInfo();
         info.setPhone(userAccountId);
         info.setVerifyCode(verifyCode);
         hideErrorInfo(null);
         super.showWaitDailog();
-        loginLogic.checkVerifyCode(info);
+        loginLogic.checkResetPasswordCode(info);
     }
 
     private void displayErrorInfo(int stringId, View view) {
-        errorInfoTv.setText(getResources().getString(R.string.error_mark) + getResources().getString(stringId));
-        errorInfoTv.setVisibility(View.VISIBLE);
-        errorFromViewId = view.getId();
         getVerifyRequestFailed = false;
         checkVerifyRequestFailed = false;
     }
 
 
     private void hideErrorInfo(View view) {
-        if (view != null && errorFromViewId == view.getId()) {
-            errorFromViewId = 0;
-            errorInfoTv.setVisibility(View.INVISIBLE);
-            errorInfoTv.setText("");
-        } else if ((view == null || view.getId() == accountEditTx.getId()) && getVerifyRequestFailed) {
-            getVerifyRequestFailed = false;
-            errorInfoTv.setVisibility(View.INVISIBLE);
-            errorInfoTv.setText("");
-        } else if ((view == null || view.getId() == accountEditTx.getId() || view.getId() == verifyCodeEditTx.getId()) && checkVerifyRequestFailed) {
-            checkVerifyRequestFailed = false;
-            errorInfoTv.setVisibility(View.INVISIBLE);
-            errorInfoTv.setText("");
-        }
+
     }
 
     private void displayRequestErrorInfo(int stringId, boolean isGet) {
-        errorInfoTv.setText(getResources().getString(R.string.error_mark) + getResources().getString(stringId));
-        errorInfoTv.setVisibility(View.VISIBLE);
-        errorFromViewId=0;
-        if (isGet) {
-            getVerifyRequestFailed = true;
-            checkVerifyRequestFailed = false;
-        } else {
-            getVerifyRequestFailed = false;
-            checkVerifyRequestFailed = true;
-        }
+
     }
 
 
@@ -285,15 +225,15 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         @Override
         public void onTick(long millisUntilFinished) {
             super.onTick(millisUntilFinished);
-            sendVerifyCodeBtn.setEnabled(false);
-            sendVerifyCodeBtn.setText(millisUntilFinished / 1000 + RegisterActivity.this.getResources().getString(R.string.resend_verify_code_unit));
+            sendVerifyCodeTv.setEnabled(false);
+            sendVerifyCodeTv.setText(millisUntilFinished / 1000 + ResetPasswordFirstStepActivity.this.getResources().getString(R.string.resend_verify_code_unit));
         }
 
         @Override
         public void onFinish() {
             super.onFinish();
-            sendVerifyCodeBtn.setEnabled(true);
-            sendVerifyCodeBtn.setText(R.string.resend_verify_code);
+            sendVerifyCodeTv.setEnabled(true);
+            sendVerifyCodeTv.setText(R.string.resend_verify_code);
         }
     }
 
@@ -302,18 +242,18 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         super.handleStateMessage(msg);
         String code = "";
         switch (msg.what) {
-            case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID:
+            case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_SUCCESS_MSG_ID:
                 super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT,null);
                 break;
-            case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID:
+            case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID:
                 if(countDownTimer!=null)
                 {
                     countDownTimer.stop();
-                    sendVerifyCodeBtn.setEnabled(true);
-                    sendVerifyCodeBtn.setText(R.string.resend_verify_code);
+                    sendVerifyCodeTv.setEnabled(true);
+                    sendVerifyCodeTv.setText(R.string.resend_verify_code);
                 }
                 break;
-            case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID:
+            case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID:
                 if (msg.obj != null) {
                     code = (String) msg.obj;
                 }
@@ -325,26 +265,24 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 if(countDownTimer!=null)
                 {
                     countDownTimer.stop();
-                    sendVerifyCodeBtn.setEnabled(true);
-                    sendVerifyCodeBtn.setText(R.string.resend_verify_code);
+                    sendVerifyCodeTv.setEnabled(true);
+                    sendVerifyCodeTv.setText(R.string.resend_verify_code);
                 }
                 break;
-            case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_SUCCESS_MSG_ID:
+            case BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID:
                 super.dismissWaitDailog();
                 if(countDownTimer!=null)
                 {
                     countDownTimer.stop();
+                    sendVerifyCodeTv.setEnabled(true);
+                    sendVerifyCodeTv.setText(R.string.send_verify_code);
                 }
-                RegisterFirstStepInfo registerFirstStepInfo = new RegisterFirstStepInfo();
-                registerFirstStepInfo.setName(nicknameEditTx.getText().toString());
-                registerFirstStepInfo.setLoginid(accountEditTx.getText().toString());
-                registerFirstStepInfo.setPwd(passwordEditTx.getText().toString());
-                registerFirstStepInfo.setPhone(accountEditTx.getText().toString());
-                Intent intent = new Intent(RegisterActivity.this, RegisterDetailActivity.class);
-                intent.putExtra(BussinessConstants.Login.INTENT_REGISTER_FIRST_INFO, registerFirstStepInfo);
+                PasswordInfo passwordInfo = (PasswordInfo) msg.obj;
+                Intent intent = new Intent(ResetPasswordFirstStepActivity.this, ResetPasswordSecondStepActivity.class);
+                intent.putExtra(BussinessConstants.Login.PASSWORD_INFO_KEY, passwordInfo);
                 startActivity(intent);
                 break;
-            case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID:
+            case BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID:
                 super.dismissWaitDailog();
                 if (msg.obj != null) {
                     code = (String) msg.obj;

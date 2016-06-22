@@ -1,13 +1,13 @@
 package com.customer.framework.component.net;
 
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.utils.LogUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
-import  com.customer.framework.utils.LogUtil;
 
 
 /**
@@ -59,13 +59,13 @@ public abstract class NetOption
                         if (response.getResponseCode() == NetResponse.ResponseCode.Succeed)
                         {
                             parserResultCode(response);
-                            LogUtil.e(TAG, "handleResponse()");
+                            LogUtil.i(TAG, "handleResponse()");
                             response.setObj(handleResponse(response));
                         }
                         break;
                     default:
                         // 不可解析的情况，设置结果值是-1
-                        response.setResultCode("-1");
+                        response.setResultCode("-100");
                         break;
                 }
                 // 5.回调
@@ -186,16 +186,17 @@ public abstract class NetOption
         if (data != null)
         {
             // JSON
-            if (getContentType() == NetRequest.ContentType.JSON && !isNeedByte())
+            if (response.getResponseContentType() != null && response.getResponseContentType() == NetRequest.ContentType.JSON && !isNeedByte())
             {
+                LogUtil.d(TAG, "Parser the result code with JSON format.");
                 try
                 {
                     JSONObject rootJsonObj = new JSONObject(data);
                     // 仅解析Result
-                    if (rootJsonObj.has("resultCode"))
+                    if (rootJsonObj.has("code"))
                     {
-                        String resultCode = rootJsonObj.getString("resultCode");
-                        String resultDesc = rootJsonObj.getString("resultMsg");
+                        String resultCode = rootJsonObj.getString("code");
+                        String resultDesc = rootJsonObj.getString("msg");
 
                         response.setResultCode(resultCode);
                         response.setResultDesc(resultDesc);

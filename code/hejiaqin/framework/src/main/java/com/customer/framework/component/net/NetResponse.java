@@ -100,6 +100,12 @@ public class NetResponse
      */
     private String resultDesc;
 
+
+    /**
+     * 服务器正常返回时的Content Type
+     */
+    private NetRequest.ContentType responseContentType;
+
     /**
      * 获取与响应匹配的请求
      * @return 请求对象
@@ -225,5 +231,13 @@ public class NetResponse
     {
         this.resultDesc = resultDesc;
     }
-    
+
+
+    public NetRequest.ContentType getResponseContentType() {
+        return responseContentType;
+    }
+
+    public void setResponseContentType(NetRequest.ContentType responseContentType) {
+        this.responseContentType = responseContentType;
+    }
 }

@@ -1,11 +1,11 @@
 package com.customer.framework.component.net;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.customer.framework.component.net.message.BasicNameValuePair;
 import com.customer.framework.utils.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NetRequest
 {
@@ -41,7 +41,10 @@ public class NetRequest
     public enum ContentType
     {
         XML,
-        JSON
+        JSON,
+        FORM_URLENCODED,
+        FORM_DATA,
+        UNKNOWN
     }
 
     /**

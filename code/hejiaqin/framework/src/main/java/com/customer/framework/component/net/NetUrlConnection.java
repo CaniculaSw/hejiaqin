@@ -1,6 +1,10 @@
 package com.customer.framework.component.net;
 
 
+import com.customer.framework.component.net.NetRequest.RequestMethod;
+import com.customer.framework.component.net.NetResponse.ResponseCode;
+import com.customer.framework.utils.LogUtil;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,10 +28,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
-import com.customer.framework.utils.LogUtil;
-import com.customer.framework.component.net.NetRequest.RequestMethod;
-import com.customer.framework.component.net.NetResponse.ResponseCode;
 
 public class NetUrlConnection
 {
@@ -226,6 +226,7 @@ public class NetUrlConnection
         InputStream is = null;
         InputStream bis = null;
         InputStream gzis = null;
+        String contentType = null;
         try
         {
             if (isError)
@@ -277,6 +278,10 @@ public class NetUrlConnection
 
             if (!request.isNeedByte())
             {
+                contentType = httpConn.getContentType();
+                if (null != contentType){
+                    response.setResponseContentType(stringToContentType(contentType));
+                }
                 LogUtil.i(TAG, "response data : " + response.getData());
             }
             else
@@ -385,6 +390,12 @@ public class NetUrlConnection
         else if (request.getContentType() == NetRequest.ContentType.JSON)
         {
             httpConn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+        }
+        else if (request.getContentType() == NetRequest.ContentType.FORM_URLENCODED){
+            httpConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+        }
+        else if (request.getContentType() == NetRequest.ContentType.FORM_DATA){
+            httpConn.setRequestProperty("Content-Type", "multipart/form-data;charset=UTF-8");
         }
 
         if (request.isGZip())
@@ -495,4 +506,20 @@ public class NetUrlConnection
         }
     }
 
+    private static NetRequest.ContentType stringToContentType(String contentType){
+        if (contentType.contains("application/json")){
+           return NetRequest.ContentType.JSON;
+        }
+        else if (contentType.contains("application/xml")){
+            return NetRequest.ContentType.XML;
+        }
+        else if (contentType.contains("application/x-www-form-urlencoded")){
+            return NetRequest.ContentType.FORM_URLENCODED;
+        }
+        else if (contentType.contains("multipart/form-data")){
+            return NetRequest.ContentType.FORM_DATA;
+        }
+        LogUtil.e(TAG,"Unhandle content type string: "+contentType);
+        return NetRequest.ContentType.UNKNOWN;
+    }
 }

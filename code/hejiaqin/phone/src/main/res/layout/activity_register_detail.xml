@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/maincolor"
-    tools:context=".business.ui.login.RegisterDetailActivity">
+    tools:context=".business.ui.login.RegisterSecondStepActivity">
 
     <include layout="@layout/header_view" />
 

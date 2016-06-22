@@ -1,6 +1,6 @@
 package com.chinamobile.hejiaqin.business.model.login.req;
 
-import com.google.gson.Gson;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 
 /**
@@ -33,7 +33,10 @@ public class VerifyInfo implements ReqBody {
     }
     @Override
     public String toBody() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        NVPReqBody reqBody = new NVPReqBody();
+        reqBody.add("phone",getPhone());
+        reqBody.add("code",getVerifyCode());
+
+        return reqBody.toBody();
     }
 }

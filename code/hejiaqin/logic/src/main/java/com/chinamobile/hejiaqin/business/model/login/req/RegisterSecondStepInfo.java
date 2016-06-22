@@ -4,7 +4,7 @@ package com.chinamobile.hejiaqin.business.model.login.req;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 
 /**
@@ -15,11 +15,12 @@ import com.chinamobile.hejiaqin.business.net.ReqBody;
  */
 public class RegisterSecondStepInfo implements ReqBody, Parcelable {
 
-    //用户ID
-    private String loginid;
+    private String phone;
+    private String code;
+    //用户密码
+    private String pwd;
 
-    //偏好
-    private String prefer;
+
 
     // 必须要创建一个名叫CREATOR的常量。
     public static final Parcelable.Creator<RegisterSecondStepInfo> CREATOR = new Parcelable.Creator<RegisterSecondStepInfo>() {
@@ -37,35 +38,44 @@ public class RegisterSecondStepInfo implements ReqBody, Parcelable {
     public RegisterSecondStepInfo() {
     }
 
-
     // 带参构造器方法私用化，本构造器仅供类的方法createFromParcel调用
     private RegisterSecondStepInfo(Parcel source) {
-        loginid = source.readString();
-        prefer =  source.readString();
-    }
-
-
-    public String getLoginid() {
-        return loginid;
-    }
-
-
-    public String getPrefer() {
-        return prefer;
-    }
-
-    public void setPrefer(String prefer) {
-        this.prefer = prefer;
-    }
-
-    public void setLoginid(String loginid) {
-        this.loginid = loginid;
+        pwd = source.readString();
+        phone = source.readString();
+        code = source.readString();
     }
 
     @Override
     public String toBody() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        NVPReqBody reqBody = new NVPReqBody();
+        reqBody.add("phone",getPhone());
+        reqBody.add("code",getCode());
+        reqBody.add("password",getPwd());
+        return reqBody.toBody();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     @Override
@@ -75,8 +85,8 @@ public class RegisterSecondStepInfo implements ReqBody, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(loginid);
-        dest.writeString(prefer);
-
+        dest.writeString(pwd);
+        dest.writeString(phone);
+        dest.writeString(code);
     }
 }

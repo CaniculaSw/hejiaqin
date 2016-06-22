@@ -9,52 +9,40 @@ package com.chinamobile.hejiaqin.business.model.login;
  */
 public class UserInfo {
 
-    private String id;
+    private String userId;
 
-    private String loginid;
-
-    private String name;
-
-    private String avatar;
+    private String userName;
 
     private String phone;
 
-    private String userType;
+    private String sdkAccount;
+
+    private String sdkPassword;
+
+    private String imAccount;
+
+    private String imPassword;
 
     private String token;
 
-    private long expire;
+    private String tokenExpire;
 
-    public String getId() {
-        return id;
+    private String type;
+
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getLoginid() {
-        return loginid;
-    }
-
-    public void setLoginid(String loginid) {
-        this.loginid = loginid;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPhone() {
@@ -65,12 +53,36 @@ public class UserInfo {
         this.phone = phone;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getSdkAccount() {
+        return sdkAccount;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setSdkAccount(String sdkAccount) {
+        this.sdkAccount = sdkAccount;
+    }
+
+    public String getSdkPassword() {
+        return sdkPassword;
+    }
+
+    public void setSdkPassword(String sdkPassword) {
+        this.sdkPassword = sdkPassword;
+    }
+
+    public String getImAccount() {
+        return imAccount;
+    }
+
+    public void setImAccount(String imAccount) {
+        this.imAccount = imAccount;
+    }
+
+    public String getImPassword() {
+        return imPassword;
+    }
+
+    public void setImPassword(String imPassword) {
+        this.imPassword = imPassword;
     }
 
     public String getToken() {
@@ -81,11 +93,19 @@ public class UserInfo {
         this.token = token;
     }
 
-    public long getExpire() {
-        return expire;
+    public String getTokenExpire() {
+        return tokenExpire;
     }
 
-    public void setExpire(long expire) {
-        this.expire = expire;
+    public void setTokenExpire(String tokenExpire) {
+        this.tokenExpire = tokenExpire;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

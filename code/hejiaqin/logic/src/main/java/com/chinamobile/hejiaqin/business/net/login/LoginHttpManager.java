@@ -2,22 +2,21 @@ package com.chinamobile.hejiaqin.business.net.login;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
-import com.chinamobile.hejiaqin.business.model.login.req.RegisterFirstStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
-import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.net.NameValuePair;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
+import com.customer.framework.utils.LogUtil;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +75,26 @@ public class LoginHttpManager extends AbsHttpManager {
     private final int update_pwd_action = action_base + 7;
 
     /**
+     * 注册用户请求
+     */
+    private final int regist_action = action_base + 8;
+
+    /**
+     * 忘记密码-获取短信验证码
+     */
+    private final int forget_password_code_action = action_base + 9;
+
+    /**
+     * 忘记密码-验证短信验证码
+     */
+    private final int check_forget_password_code_action = action_base + 10;
+
+    /**
+     * 忘记密码-重置
+     */
+    private final int reset_password_action = action_base + 11;
+
+    /**
      * 请求action
      */
     private int mAction;
@@ -98,25 +117,28 @@ public class LoginHttpManager extends AbsHttpManager {
         String url = null;
         switch (this.mAction) {
             case get_verify_code_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/app/reg/getVerifyCode";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/registCode";
                 break;
             case check_verify_code_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/app/reg/verifyPhone";
-                break;
-            case register_firstStep_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/app/reg/step1";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkRegistCode";
                 break;
             case register_secondStep_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/app/reg/step2";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/regist";
                 break;
             case login_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/app/login";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/login";
                 break;
             case logout_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/appuc/logout";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/logout";
+                break;
+            case forget_password_code_action:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/forgetPasswordCode";
+                break;
+            case check_forget_password_code_action:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkForgetPasswordCode";
                 break;
             case update_pwd_action:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/s/appuc/user/changePassword";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/resetPassword";
                 break;
             default:
                 break;
@@ -143,9 +165,11 @@ public class LoginHttpManager extends AbsHttpManager {
         switch (this.mAction) {
             case get_verify_code_action:
             case check_verify_code_action:
-            case register_firstStep_action:
             case register_secondStep_action:
+            case logout_action:
             case login_action:
+            case forget_password_code_action:
+            case check_forget_password_code_action:
             case update_pwd_action:
                 method = NetRequest.RequestMethod.POST;
                 break;
@@ -161,8 +185,11 @@ public class LoginHttpManager extends AbsHttpManager {
         switch (this.mAction) {
             case get_verify_code_action:
             case check_verify_code_action:
-            case register_firstStep_action:
+            case register_secondStep_action:
             case login_action:
+            case forget_password_code_action:
+            case check_forget_password_code_action:
+            case update_pwd_action:
                 flag = false;
                 break;
             default:
@@ -181,9 +208,11 @@ public class LoginHttpManager extends AbsHttpManager {
         switch (this.mAction) {
             case get_verify_code_action:
             case check_verify_code_action:
-            case register_firstStep_action:
             case register_secondStep_action:
             case login_action:
+            case forget_password_code_action:
+            case check_forget_password_code_action:
+            case update_pwd_action:
                 //TODO；添加属性
             default:
                 break;
@@ -192,38 +221,52 @@ public class LoginHttpManager extends AbsHttpManager {
     }
 
     @Override
+    protected NetRequest.ContentType getContentType() {
+        return NetRequest.ContentType.FORM_URLENCODED;
+    }
+
+    @Override
     protected Object handleResponse(NetResponse response) {
         Object obj = null;
-       if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())) {
-        try {
-            JSONObject rootJsonObj = new JSONObject(response.getData());
-            String data = rootJsonObj.get("data").toString();
-            Gson gson = new Gson();
-            switch (this.mAction) {
-                case get_verify_code_action:
-                    break;
-                case check_verify_code_action:
-                    break;
-                case register_firstStep_action:
-                    obj = gson.fromJson(data, UserInfo.class);
-                    break;
-                case register_secondStep_action:
-                    obj = gson.fromJson(data, UserInfo.class);
-                    break;
-                case login_action:
-                    obj = gson.fromJson(data, UserInfo.class);
-                    break;
-                case logout_action:
-                    break;
-                case update_pwd_action:
-                    break;
-                default:
-                    break;
+        if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())) {
+            try {
+                String data = "";
+                JSONObject rootJsonObj = new JSONObject(response.getData());
+                if (rootJsonObj.has("data")){
+                    data = rootJsonObj.get("data").toString();
+                }
+
+                Gson gson = new Gson();
+                switch (this.mAction) {
+                    case get_verify_code_action:
+                        break;
+                    case check_verify_code_action:
+                        break;
+                    case forget_password_code_action:
+                        break;
+                    case check_forget_password_code_action:
+                        obj = gson.fromJson(data, PasswordInfo.class);
+                        break;
+                    case register_firstStep_action:
+                        obj = gson.fromJson(data, UserInfo.class);
+                        break;
+                    case register_secondStep_action:
+                        break;
+                    case login_action:
+                        obj = gson.fromJson(data, UserInfo.class);
+                        break;
+                    case logout_action:
+                        break;
+                    case update_pwd_action:
+                        break;
+                    default:
+                        break;
+                }
+
+            } catch (JSONException e) {
+                LogUtil.e(TAG, e.toString());
             }
-        } catch (JSONException e) {
-            LogUtil.e(TAG, e.toString());
         }
-       }
         return obj;
     }
 
@@ -234,8 +277,21 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param phoneReqBody 用户id 手机号码
      * @param callBack     回调监听
      */
-    public void getVerifyCode(final Object invoker, final MapStrReqBody phoneReqBody, final IHttpCallBack callBack) {
+    public void getVerifyCode(final Object invoker, final NVPReqBody phoneReqBody, final IHttpCallBack callBack) {
         this.mAction = get_verify_code_action;
+        this.mData = phoneReqBody;
+        send(invoker, callBack);
+    }
+
+    /**
+     * 获取验证码--reset
+     *
+     * @param invoker      调用者(用来区分不同的调用场景，差异化实现回调逻辑)
+     * @param phoneReqBody 用户id 手机号码
+     * @param callBack     回调监听
+     */
+    public void getResetPasswordCode(final Object invoker, final NVPReqBody phoneReqBody, final IHttpCallBack callBack) {
+        this.mAction = forget_password_code_action;
         this.mData = phoneReqBody;
         send(invoker, callBack);
     }
@@ -253,17 +309,16 @@ public class LoginHttpManager extends AbsHttpManager {
         send(invoker, callBack);
     }
 
-
     /**
-     * 注册方法
+     * 检查验证码--reset
      *
-     * @param invoker      调用者(用来区分不同的调用场景，差异化实现回调逻辑)
-     * @param registerInfo 注册信息
-     * @param callBack     回调监听
+     * @param invoker    调用者(用来区分不同的调用场景，差异化实现回调逻辑)
+     * @param verifyInfo 用户id 手机号码
+     * @param callBack   回调监听
      */
-    public void registerFirstStep(final Object invoker, final RegisterFirstStepInfo registerInfo, final IHttpCallBack callBack) {
-        this.mAction = register_firstStep_action;
-        this.mData = registerInfo;
+    public void checkResetPasswordCode(final Object invoker, final VerifyInfo verifyInfo, final IHttpCallBack callBack) {
+        this.mAction = check_forget_password_code_action;
+        this.mData = verifyInfo;
         send(invoker, callBack);
     }
 
@@ -301,6 +356,7 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     public void logout(final Object invoker, final IHttpCallBack callBack) {
         this.mAction = logout_action;
+        NVPReqBody reqBody = new NVPReqBody();
         send(invoker, callBack);
     }
 

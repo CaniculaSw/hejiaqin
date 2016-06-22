@@ -10,17 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.StringUtil;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class LoginActivity extends BasicActivity implements View.OnClickListener {
@@ -31,11 +27,6 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     private Button signBtn;
     private TextView forgetPwdTv;
     private Button registerBtn;
-    private TextView errorInfoTv;
-    private int errorFromViewId;
-    private boolean loginRequestFailed;
-    private boolean disPlayAvatar;
-    private CircleImageView avatarImageView;
 
     @Override
     protected void initLogics() {
@@ -54,8 +45,6 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         signBtn = (Button) findViewById(R.id.sign_in_button);
         forgetPwdTv = (TextView) findViewById(R.id.forget_pwd_tv);
         registerBtn = (Button) findViewById(R.id.register_button);
-        errorInfoTv = (TextView) findViewById(R.id.error_info_tv);
-        avatarImageView = (CircleImageView)findViewById(R.id.login_avatar_image_view);
     }
 
     @Override
@@ -82,25 +71,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
 
             @Override
             public void afterTextChanged(Editable s) {
-                hideErrorInfo(accountEditTv);
-                //手机号码11位，获取历史的头像
-                if(accountEditTv.getText().length()==11)
-                {
-                    LoginHistory history = loginLogic.getLoginHistory(accountEditTv.getText().toString());
-                    if(history!=null && history.getAvatar()!=null)
-                    {
-                        disPlayAvatar = true;
-                        //加载网络图片
-                        //先做一次头像的刷新
-                        Picasso.with(LoginActivity.this.getApplicationContext()).invalidate(history.getAvatar());
-                        Picasso.with(LoginActivity.this.getApplicationContext()).load(history.getAvatar()).placeholder(R.mipmap.default_avatar).into(avatarImageView);
-                    }
-                }
-                else if(disPlayAvatar && accountEditTv.getText().length()!=11)
-                {
-                    avatarImageView.setImageResource(R.mipmap.default_avatar);
-                    disPlayAvatar =false;
-                }
+
             }
         });
         passwdEditTv.addTextChangedListener(new TextWatcher(){
@@ -117,7 +88,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
 
             @Override
             public void afterTextChanged(Editable s) {
-                hideErrorInfo(passwdEditTv);
+
             }
         });
     }
@@ -129,11 +100,11 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 login();
                 break;
             case R.id.forget_pwd_tv:
-                Intent forgetIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                Intent forgetIntent = new Intent(LoginActivity.this, ResetPasswordFirstStepActivity.class);
                 startActivity(forgetIntent);
                 break;
             case R.id.register_button:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterFirstStepActivity.class);
                 passwdEditTv.setText("");
                 startActivity(registerIntent);
                 break;
@@ -159,41 +130,24 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             return;
         }
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setLoginid(accountEditTv.getText().toString());
-        loginInfo.setPwd(passwdEditTv.getText().toString());
+        loginInfo.setPhone(accountEditTv.getText().toString());
+        loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
         hideErrorInfo(null);
-        super.showWaitDailog();
+        //super.showWaitDailog();
         loginLogic.login(loginInfo);
     }
 
     private void displayErrorInfo(int stringId,View view) {
-        errorInfoTv.setText(getResources().getString(R.string.error_mark) + getResources().getString(stringId));
-        errorInfoTv.setVisibility(View.VISIBLE);
-        errorFromViewId = view.getId();
-        loginRequestFailed = false;
+
     }
 
 
     private void hideErrorInfo(View view) {
-        if(view!=null && errorFromViewId == view.getId())
-        {
-            errorFromViewId =0;
-            errorInfoTv.setVisibility(View.INVISIBLE);
-            errorInfoTv.setText("");
-        }
-        if(loginRequestFailed)
-        {
-            loginRequestFailed =false;
-            errorInfoTv.setVisibility(View.INVISIBLE);
-            errorInfoTv.setText("");
-        }
+
     }
 
     private void displayRequestErrorInfo() {
-        errorInfoTv.setText(getResources().getString(R.string.error_mark) + getResources().getString(R.string.login_failed));
-        errorInfoTv.setVisibility(View.VISIBLE);
-        loginRequestFailed = true;
-        errorFromViewId =0;
+
     }
 
     @Override

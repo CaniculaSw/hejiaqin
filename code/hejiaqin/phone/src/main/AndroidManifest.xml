@@ -95,19 +95,15 @@
             android:name=".business.ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.ui.login.RegisterActivity"
+            android:name=".business.ui.login.RegisterFirstStepActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.ui.login.RegisterDetailActivity"
+            android:name=".business.ui.login.RegisterSecondStepActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.ui.login.RegisterInterestActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".business.ui.login.ResetPasswordActivity"
+            android:name=".business.ui.login.ResetPasswordSecondStepActivity"
             android:screenOrientation="portrait" />
 
         <!-- 登录后的主页 -->
@@ -128,6 +124,8 @@
         <activity android:name=".business.ui.more.BindTVBoxActivity"></activity>
         <activity android:name=".business.ui.more.ScanActivity"></activity>
         <activity android:name=".business.ui.more.InputAcountActivity"></activity>
+        <activity android:name=".business.ui.more.SelectableContactActivity"></activity>
+        <activity android:name=".business.ui.login.ResetPasswordFirstStepActivity"></activity>
     </application>
 
 </manifest>

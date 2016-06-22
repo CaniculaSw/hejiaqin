@@ -1,6 +1,6 @@
 package com.chinamobile.hejiaqin.business.model.login.req;
 
-import com.google.gson.Gson;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 
 /**
@@ -9,33 +9,35 @@ import com.chinamobile.hejiaqin.business.net.ReqBody;
  * author: zhanggj
  * Created: 2016/4/8.
  */
-public class LoginInfo implements ReqBody{
+public class LoginInfo implements ReqBody {
 
     //登录ID  手机号码
-    private String loginid;
+    private String phone;
 
     //用户密码
-    private String pwd;
+    private String password;
 
-    public String getLoginid() {
-        return loginid;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setLoginid(String loginid) {
-        this.loginid = loginid;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toBody() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        NVPReqBody reqBody = new NVPReqBody();
+        reqBody.add("phone", getPhone());
+        reqBody.add("password", getPassword());
+        return reqBody.toBody();
     }
 }
