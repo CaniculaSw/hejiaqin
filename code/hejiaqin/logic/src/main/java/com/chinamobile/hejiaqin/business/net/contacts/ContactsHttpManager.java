@@ -3,12 +3,19 @@ package com.chinamobile.hejiaqin.business.net.contacts;
 import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.Data;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.DataList;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
+import com.customer.framework.utils.LogUtil;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by yupeng on 6/9/16.
@@ -119,7 +126,47 @@ public class ContactsHttpManager extends AbsHttpManager {
      */
     @Override
     protected Object handleResponse(NetResponse response) {
-        return null;
+        Object obj = null;
+        if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())) {
+            try {
+                String data = "";
+                JSONObject rootJsonObj = new JSONObject(response.getData());
+                Gson gson = new Gson();
+                switch (this.mAction) {
+                    case list:
+                        if (rootJsonObj.has("dataList")) {
+                            data = rootJsonObj.get("dataList").toString();
+                        }
+
+                        obj = gson.toJson(data, DataList.class);
+                        break;
+                    case add:
+                        if (rootJsonObj.has("data")) {
+                            data = rootJsonObj.get("data").toString();
+                        }
+
+                        obj = gson.toJson(data, Data.class);
+                        break;
+                    case batchAdd:
+                        break;
+                    case update:
+                        if (rootJsonObj.has("data")) {
+                            data = rootJsonObj.get("data").toString();
+                        }
+
+                        obj = gson.toJson(data, Data.class);
+                        break;
+                    case delete:
+                        break;
+                    default:
+                        break;
+                }
+
+            } catch (JSONException e) {
+                LogUtil.e(TAG, e.toString());
+            }
+        }
+        return obj;
     }
 
     // 查询联系人列表
