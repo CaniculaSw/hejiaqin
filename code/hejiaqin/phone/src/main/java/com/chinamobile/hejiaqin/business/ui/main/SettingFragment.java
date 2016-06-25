@@ -84,6 +84,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         itemQuitLl.setOnClickListener(this);
 
         moreHeader = (HeaderView) view.findViewById(R.id.more_tab_header);
+        moreHeader.logoIv.setImageResource(R.mipmap.logo_small);
         moreHeader.title.setText("更多");
         moreHeader.rightBtn.setImageResource(R.mipmap.title_icon_message_nor);
         moreHeader.rightBtn.setOnClickListener(this);

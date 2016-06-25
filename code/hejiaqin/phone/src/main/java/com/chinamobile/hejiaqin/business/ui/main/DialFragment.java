@@ -104,6 +104,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     @Override
     protected void initView(View view) {
         headerView = (HeaderView) view.findViewById(R.id.header_view_id);
+        headerView.logoIv.setImageResource(R.mipmap.logo_small);
         headerView.title.setText(R.string.dial_title);
         headerView.rightBtn.setImageResource(R.drawable.selector_title_icon_delete);
 

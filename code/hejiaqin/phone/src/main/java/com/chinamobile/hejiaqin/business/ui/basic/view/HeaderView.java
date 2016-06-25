@@ -30,6 +30,7 @@ public class HeaderView extends RelativeLayout
     public LinearLayout setadd;
     public TextView title;
     public TextView tvRight;
+    public ImageView logoIv;
 
     public HeaderView(Context paramContext)
     {
@@ -59,5 +60,6 @@ public class HeaderView extends RelativeLayout
         this.tvRight = ((TextView)this.headerView.findViewById(R.id.tvRight));
         this.rightImageView = ((ImageView)this.headerView.findViewById(R.id.right_imageView));
         this.backImageView = (ImageView)this.headerView.findViewById(R.id.back_iv);
+        this.logoIv = (ImageView)this.headerView.findViewById(R.id.logo_iv);
     }
 }
