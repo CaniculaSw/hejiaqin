@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business;
 
 import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
+import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.RCSApplication;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.hme.HmeAudio;
@@ -13,7 +14,8 @@ import com.huawei.rcs.upgrade.UpgradeApi;
 /**
  * Created by zhanggj on 2016/6/5.
  */
-public class HeApplication extends RCSApplication {
+public class HeApplication extends RCSApplication implements
+        Thread.UncaughtExceptionHandler{
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,7 +44,8 @@ public class HeApplication extends RCSApplication {
 	   see detail in Developer's Guide*/
         // SysApi.setTrustCaFilePath("/rootcert.pem");
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
-
+        //设置Thread Exception Handler
+        Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
 
@@ -52,4 +55,10 @@ public class HeApplication extends RCSApplication {
         VoipLogic.getInstance(getApplicationContext()).unRegisterVoipReceiver();
     }
 
+    @Override
+    public void uncaughtException(Thread thread, Throwable ex) {
+        LogUtil.e("GobalException", ex);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
 }

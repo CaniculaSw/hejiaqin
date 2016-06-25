@@ -4,16 +4,21 @@ import android.content.Intent;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * desc: main
@@ -64,6 +69,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     private int mDialStatus = DIAL_STATUS_NORMAL;
 
+
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
             switch (actionId) {
@@ -95,6 +101,9 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 // 隐藏导航栏
                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID:
                     mNavigatorLay.setVisibility(View.GONE);
+                    break;
+                case BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID:
+                    showPopupWindow();
                     break;
             }
         }
@@ -226,7 +235,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             }
             ft.add(R.id.content, mFragments[toIndex]);
         }
-        Log.d("MainFragmentActivity", "commit:" + mFragments[toIndex].getClass());
+        LogUtil.d("MainFragmentActivity", "commit:" + mFragments[toIndex].getClass());
         ft.commit();
         mTextViews[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
         mImageViews[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
@@ -273,6 +282,46 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initLogics() {
+
+    }
+
+    private void showPopupWindow() {
+
+        if(mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
+            mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+            mDialStatus = DIAL_STATUS_NORMAL;
+            //TODO:收起拨号盘
+            Message msg = new Message();
+            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
+            mFragments[mDialIndex].recieveMsg(msg);
+        }
+
+        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this, R.style.CalendarDialog);
+        Window window = delCallRecordDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.FILL_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        delCallRecordDialog.setCancelable(true);
+        delCallRecordDialog.show();
+
+        // 设置按钮的点击事件
+        delCallRecordDialog.delLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 删除通话记录
+                delCallRecordDialog.dismiss();
+            }
+        });
+        delCallRecordDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                delCallRecordDialog.dismiss();
+            }
+        });
 
     }
 

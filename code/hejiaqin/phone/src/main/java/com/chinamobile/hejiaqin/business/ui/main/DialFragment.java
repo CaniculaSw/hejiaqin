@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
+
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
@@ -138,8 +139,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String editable = inputNumber.getText().toString();
                 String str = stringFilter(editable);
-                if (!editable.equals(str))
-                {
+                if (!editable.equals(str)) {
                     inputNumber.setText(str);
                 }
             }
@@ -147,18 +147,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable s) {
                 String txt = s.toString();
-                if (!txt.equals(mLastText))
-                {
+                if (!txt.equals(mLastText)) {
                     mLastText = txt;
                     textChanged(txt);
                 }
-                if (txt.length() > 0)
-                {
-                     DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID,null);
+                if (txt.length() > 0) {
+                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID, null);
                     callRecordRecyclerView.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID, null);
                     dialSaveContactLayout.setVisibility(View.GONE);
                     dialContactRecyclerView.setVisibility(View.GONE);
@@ -198,7 +194,16 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 return true;
             }
         });
-
+        headerView.rightBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(inputNumber.length()>0)
+                {
+                    return;
+                }
+                mListener.onAction(BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID,null);
+            }
+        });
     }
 
     private String stringFilter(String str)
@@ -305,4 +310,5 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
        }
     }
+
 }
