@@ -11,9 +11,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
@@ -69,6 +71,9 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     private int mDialStatus = DIAL_STATUS_NORMAL;
 
+    private long exitTime = 0;
+
+    private IVoipLogic mVoipLogic;
 
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
@@ -153,7 +158,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initDate() {
-
+        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -341,5 +346,16 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         if (mFragments[mContactsIndex] != null) {
             mFragments[mContactsIndex].doNetWorkConnect();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            showToast(R.string.quit_app_toast_msg, Toast.LENGTH_SHORT,null);
+            exitTime = System.currentTimeMillis();
+            return;
+        }
+        mVoipLogic.logout();
+        super.onBackPressed();
     }
 }

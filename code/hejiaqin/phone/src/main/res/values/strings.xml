@@ -6,14 +6,11 @@
     <string name="permission_necessary_help_content">当前应用缺少必要权限。\n请点击“设置”-“权限”打开所需权限。</string>
     <string name="permission_settings">设置</string>
     <string name="permission_cancel">取消</string>
+    <string name="quit_app_toast_msg">再按一次退出程序</string>
 
     <!-- 登录 -->
     <string name="login_header_title">登录</string>
 
-
-
-    <string name="app_introduce">康兮您的私人健康教练</string>
-    <string name="app_copyright">2016 Copyright</string>
     <string name="action_faster_register">注册</string>
 
     <string name="error_mark">*\u0020\u0020</string>
@@ -29,37 +26,10 @@
     <!--注册-->
 
     <string name="register_detail_title">详细信息</string>
-    <string name="register_interest_title">运动偏好(可跳过)</string>
     <string name="prompt_nick_name">请输入昵称</string>
     <string name="gender">选择性别</string>
-    <string name="gender_male">男</string>
-    <string name="gender_female">女</string>
-    <string name="birthday">请选择出生年月</string>
 
     <string name="resend_verify_code">重获验证码</string>
-    <string name="prompt_height">请输入身高(cm)</string>
-    <string name="prompt_weight">请输入体重(kg)</string>
-
-
-    <string-array name="interestDesc">
-        <item>健身走</item>
-        <item>健身跑</item>
-        <item>减肥</item>
-        <item>塑形</item>
-        <item>瑜伽</item>
-        <item>太极</item>
-        <item>养生气功</item>
-    </string-array>
-    <string-array name="interestId">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-    </string-array>
-    <string name="action_register_start">开始康兮</string>
 
     <string name="get_verify_code_success">验证码已发送</string>
     <string name="verify_code_null">验证码不能为空</string>
@@ -89,19 +59,6 @@
     <string name="password_not_match">两次输入的密码不一致</string>
     <string name="reset_success">重置成功</string>
     <string name="update_password_success">修改密码成功</string>
-
-    <!-- 生理数据 -->
-    <string name="physical_data_change_success">保存成功</string>
-    <string name="physical_data_change_fail">保存失败</string>
-    <string name="physical_data_tizhi_confirm_to_modify">保存</string>
-    <string name="physical_data_tizhi">体制指标</string>
-    <string name="physical_data_weight">体重</string>
-    <string name="physical_data_tizhi_height">身高</string>
-    <string name="physical_data_shenghua">生化指标</string>
-    <string name="physical_data_xuetang">血糖</string>
-    <string name="physical_data_haoshen">XXML</string>
-    <string name="physical_data_danguchun">胆固醇</string>
-    <string name="physical_data_xx">XX</string>
 
     <!--使用帮助-->
     <string name="use_help_title">使用帮助</string>
