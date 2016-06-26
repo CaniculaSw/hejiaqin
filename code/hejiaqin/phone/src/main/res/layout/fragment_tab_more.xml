@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/more_white_f4f4f4"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
@@ -22,12 +23,21 @@
         android:layout_height="90dp"
         android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/more_user_avatar_iv"
+        <!--<ImageView-->
+            <!--android:id="@+id/more_user_avatar_ci"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginLeft="16dp" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/more_user_avatar_ci"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp" />
+            android:layout_marginLeft="16dp"
+            app:civ_border_width="0dp"
+            app:civ_border_color="@color/more_white_f4f4f4" />
 
         <TextView
             android:id="@+id/more_user_phone_num_tv"

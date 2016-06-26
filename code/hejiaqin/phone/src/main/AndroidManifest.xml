@@ -126,6 +126,7 @@
         <activity android:name=".business.ui.more.InputAcountActivity"></activity>
         <activity android:name=".business.ui.more.SelectableContactActivity"></activity>
         <activity android:name=".business.ui.login.ResetPasswordFirstStepActivity"></activity>
+        <activity android:name=".business.ui.more.FeedBackActivity"></activity>
     </application>
 
 </manifest>

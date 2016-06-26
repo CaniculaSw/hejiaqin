@@ -19,11 +19,16 @@ public class UserInfo {
 
     private String sdkPassword;
 
+
     private String imAccount;
 
     private String imPassword;
 
     private String token;
+
+    private String photoLg;
+
+    private String photoSm;
 
     private String tokenExpire;
 
@@ -108,4 +113,21 @@ public class UserInfo {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getPhotoLg() {
+        return photoLg;
+    }
+
+    public void setPhotoLg(String photoLg) {
+        this.photoLg = photoLg;
+    }
+
+    public String getPhotoSm() {
+        return photoSm;
+    }
+
+    public void setPhotoSm(String photoSm) {
+        this.photoSm = photoSm;
+    }
+
 }

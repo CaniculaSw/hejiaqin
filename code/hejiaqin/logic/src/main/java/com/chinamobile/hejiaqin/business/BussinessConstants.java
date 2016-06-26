@@ -74,6 +74,8 @@ public class BussinessConstants {
 
         String HEADER_UNIQ = "UNIQ";
 
+        String HEADER_BOUNDARY="----hejiaqinapplicationrequestboundary";
+
     }
 
     /**

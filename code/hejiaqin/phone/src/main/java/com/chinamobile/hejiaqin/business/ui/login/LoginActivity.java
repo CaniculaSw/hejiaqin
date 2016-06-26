@@ -114,18 +114,15 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     private void login() {
         String account = accountEditTv.getText().toString();
         if (TextUtils.isEmpty(account)) {
-            displayErrorInfo(R.string.account_null,accountEditTv);
             accountEditTv.requestFocus();
             return;
         }
         String password = passwdEditTv.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            displayErrorInfo(R.string.password_null,passwdEditTv);
             passwdEditTv.requestFocus();
             return;
         }
         if (!StringUtil.isMobileNO(account)) {
-            displayErrorInfo(R.string.account_illegal,accountEditTv);
             accountEditTv.requestFocus();
             return;
         }

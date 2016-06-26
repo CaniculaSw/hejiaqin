@@ -3,29 +3,36 @@ package com.chinamobile.hejiaqin.business.ui.more;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.customer.framework.component.storage.StorageMgr;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by eshaohu on 16/5/29.
  */
 public class UserInfoActivity extends BasicActivity implements View.OnClickListener {
-    private ImageView mUserAvatarIv;
+    private CircleImageView mUserAvatarIv;
     private TextView mUserAccountTv;
+    private UserInfo userInfo;
+    private ILoginLogic loginLogic;
     HeaderView header;
 
     @Override
@@ -35,7 +42,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initView() {
-        mUserAvatarIv = (ImageView) findViewById(R.id.more_user_avatar_iv);
+        mUserAvatarIv = (CircleImageView) findViewById(R.id.more_user_avatar_ci);
         mUserAccountTv = (TextView) findViewById(R.id.more_user_account_tv);
         header = (HeaderView) findViewById(R.id.more_user_info_header);
 
@@ -50,21 +57,25 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initDate() {
-        PhotoManage.getInstance(this).setPhotoListener(mPhotoChangeListener);
-        //TODO
-        Intent intent = getIntent();
-        String account = intent.getStringExtra("account");
-        mUserAccountTv.setText(account);
+        userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        if (null != userInfo){
+            mUserAccountTv.setText(userInfo.getUserName());
+            Picasso.with(UserInfoActivity.this.getApplicationContext())
+                    .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm())
+                    .placeholder(R.drawable.contact_photo_default)
+                    .error(R.drawable.contact_photo_default).into(mUserAvatarIv);
+            //userAvatarIv.setImageResource(R.drawable.contact_photo_default);
+        }
     }
 
     @Override
     protected void initListener() {
-
+        PhotoManage.getInstance(this).setPhotoListener(mPhotoChangeListener);
     }
 
     @Override
     protected void initLogics() {
-
+        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
     }
 
     @Override
@@ -106,7 +117,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
             case R.id.back_iv:
                 finish();
                 break;
-            case R.id.more_user_avatar_iv:
+            case R.id.more_user_avatar_ci:
                 changeAvatar();
             default:
                 break;
@@ -151,7 +162,10 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
             if (bitmap != null) {
                 mUserAvatarIv.setImageBitmap(bitmap);
             }
-            // TODO 上传头像
+            UpdatePhotoReq req = new UpdatePhotoReq();
+            req.setToken(userInfo.getToken());
+            req.setFileName(url);
+            loginLogic.updatePhoto(req);
         }
     };
 }

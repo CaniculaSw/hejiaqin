@@ -4,12 +4,13 @@ package com.chinamobile.hejiaqin.business.ui.main;
 import android.content.Intent;
 import android.os.Message;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
@@ -19,6 +20,10 @@ import com.chinamobile.hejiaqin.business.ui.more.MessageActivity;
 import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
 import com.chinamobile.hejiaqin.business.ui.more.UserInfoActivity;
+import com.customer.framework.component.storage.StorageMgr;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -30,7 +35,7 @@ import com.chinamobile.hejiaqin.business.ui.more.UserInfoActivity;
  */
 public class SettingFragment extends BasicFragment implements View.OnClickListener {
     LinearLayout itemUserLl;
-    ImageView userAvatarIv;
+    CircleImageView userAvatarIv;
     TextView userAccountTv;
     LinearLayout itemSendToTvLl;
     LinearLayout itemMoreFunLl;
@@ -39,6 +44,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     LinearLayout itemQuitLl;
     HeaderView moreHeader;
     private ILoginLogic loginLogic;
+    private UserInfo userInfo;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -60,7 +66,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         itemUserLl.setClickable(true);
         itemUserLl.setOnClickListener(this);
 
-        userAvatarIv = (ImageView) view.findViewById(R.id.more_user_avatar_iv);
+        userAvatarIv = (CircleImageView) view.findViewById(R.id.more_user_avatar_ci);
         userAccountTv = (TextView) view.findViewById(R.id.more_user_phone_num_tv);
 
         itemSendToTvLl = (LinearLayout) view.findViewById(R.id.more_item_send_to_tv);
@@ -92,8 +98,15 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-        userAccountTv.setText("13776570335");
-        userAvatarIv.setImageResource(R.drawable.contact_photo_default);
+        userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        if (null != userInfo){
+            userAccountTv.setText(userInfo.getUserName());
+            Picasso.with(SettingFragment.this.getContext())
+                    .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm())
+                    .placeholder(R.drawable.contact_photo_default)
+                    .error(R.drawable.contact_photo_default).into(userAvatarIv);
+            //userAvatarIv.setImageResource(R.drawable.contact_photo_default);
+        }
     }
 
     @Override
@@ -132,7 +145,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     private void jumpToDetailUserProfile() {
         Intent intent = new Intent(getContext(), UserInfoActivity.class);
-        intent.putExtra("account", userAccountTv.getText().toString());
+        //intent.putExtra("account", userAccountTv.getText().toString());
         this.startActivity(intent);
     }
 

@@ -83,6 +83,7 @@ public class NetUrlConnection
             }
             httpConn.setInstanceFollowRedirects(IS_FOLLOW_REDIRECTS);
             httpConn.setDoInput(true);
+            httpConn.setDoOutput(true);
             httpConn.setUseCaches(false);
             setRequestMethod(request, httpConn);
             setRequestProperty(request, httpConn);
@@ -395,7 +396,8 @@ public class NetUrlConnection
             httpConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         }
         else if (request.getContentType() == NetRequest.ContentType.FORM_DATA){
-            httpConn.setRequestProperty("Content-Type", "multipart/form-data;charset=UTF-8");
+            httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=----hejiaqinapplicationrequestboundary");
+
         }
 
         if (request.isGZip())
