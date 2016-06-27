@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
@@ -49,13 +51,9 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     private final int check_verify_code_action = action_base + 2;
 
-    /**
-     * 注册网络请求第一步创建账户
-     */
-    private final int register_firstStep_action = action_base + 3;
 
     /**
-     * 注册网络请求第二步偏好选填
+     * 注册网络请求第二步
      */
     private final int register_secondStep_action = action_base + 4;
 
@@ -74,10 +72,16 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     private final int update_pwd_action = action_base + 7;
 
+
     /**
-     * 注册用户请求
+     * 修改用户头像
      */
-    private final int regist_action = action_base + 8;
+    private final int update_photo = action_base + 11 ;
+
+    /**
+     * 用户反馈
+     */
+    private final int feed_back = action_base + 12 ;
 
     /**
      * 忘记密码-获取短信验证码
@@ -89,10 +93,6 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     private final int check_forget_password_code_action = action_base + 10;
 
-    /**
-     * 忘记密码-重置
-     */
-    private final int reset_password_action = action_base + 11;
 
     /**
      * 请求action
@@ -140,6 +140,12 @@ public class LoginHttpManager extends AbsHttpManager {
             case update_pwd_action:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/resetPassword";
                 break;
+            case update_photo:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/updatePhoto";
+                break;
+            case feed_back:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/feedback";
+                break;
             default:
                 break;
         }
@@ -171,6 +177,8 @@ public class LoginHttpManager extends AbsHttpManager {
             case forget_password_code_action:
             case check_forget_password_code_action:
             case update_pwd_action:
+            case update_photo:
+            case feed_back:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -190,6 +198,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case forget_password_code_action:
             case check_forget_password_code_action:
             case update_pwd_action:
+            case feed_back:
                 flag = false;
                 break;
             default:
@@ -214,6 +223,9 @@ public class LoginHttpManager extends AbsHttpManager {
             case check_forget_password_code_action:
             case update_pwd_action:
                 //TODO；添加属性
+                break;
+            case update_photo:
+//                properties.add(new BasicNameValuePair("doOutput","true"));
             default:
                 break;
         }
@@ -222,6 +234,10 @@ public class LoginHttpManager extends AbsHttpManager {
 
     @Override
     protected NetRequest.ContentType getContentType() {
+        switch (this.mAction){
+            case update_photo:
+                return NetRequest.ContentType.FORM_DATA;
+        }
         return NetRequest.ContentType.FORM_URLENCODED;
     }
 
@@ -247,9 +263,6 @@ public class LoginHttpManager extends AbsHttpManager {
                     case check_forget_password_code_action:
                         obj = gson.fromJson(data, PasswordInfo.class);
                         break;
-                    case register_firstStep_action:
-                        obj = gson.fromJson(data, UserInfo.class);
-                        break;
                     case register_secondStep_action:
                         break;
                     case login_action:
@@ -258,6 +271,8 @@ public class LoginHttpManager extends AbsHttpManager {
                     case logout_action:
                         break;
                     case update_pwd_action:
+                        break;
+                    case feed_back:
                         break;
                     default:
                         break;
@@ -371,5 +386,18 @@ public class LoginHttpManager extends AbsHttpManager {
         this.mData = info;
         send(invoker, callBack);
     }
+
+    public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto, final IHttpCallBack callBack){
+        this.mAction = update_photo;
+        this.mData = updatePhoto;
+        send(invoker, callBack);
+    }
+
+    public void feedBack(final Object invoker, final FeedBackReq feedBackReq, final IHttpCallBack callBack){
+        this.mAction = feed_back;
+        this.mData = feedBackReq;
+        send(invoker, callBack);
+    }
+
 
 }

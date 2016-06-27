@@ -1,5 +1,9 @@
 package com.chinamobile.hejiaqin.business.logic.more;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
+import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
+import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 
 /**
@@ -47,4 +51,23 @@ public class MoreLogic extends LogicImp implements IMoreLogic {
 //        }
 //        return null;
 //    }
+
+    public void checkVersion() {
+        new SettingHttpmanager(getContext()).checkVersion(null, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                MoreLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                MoreLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, desc);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                MoreLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+            }
+        });
+    }
 }

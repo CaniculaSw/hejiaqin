@@ -65,7 +65,8 @@ public abstract class NetOption
                         break;
                     default:
                         // 不可解析的情况，设置结果值是-1
-                        response.setResultCode("-100");
+                        response.setResultCode("-1001");
+
                         break;
                 }
                 // 5.回调

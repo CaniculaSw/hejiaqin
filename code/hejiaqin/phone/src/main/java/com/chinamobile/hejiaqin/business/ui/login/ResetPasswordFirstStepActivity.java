@@ -143,13 +143,13 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         String userAccountId = accountEditTx.getText().toString();
 
         if (TextUtils.isEmpty(userAccountId)) {
-            displayErrorInfo(R.string.account_null, accountEditTx);
+            //displayErrorInfo(R.string.account_null, accountEditTx);
             accountEditTx.requestFocus();
             return;
         }
 
         if (!StringUtil.isMobileNO(userAccountId)) {
-            displayErrorInfo(R.string.account_illegal, accountEditTx);
+            //displayErrorInfo(R.string.account_illegal, accountEditTx);
             accountEditTx.requestFocus();
             return;
         }
@@ -170,13 +170,13 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         String userAccountId = accountEditTx.getText().toString();
 
         if (TextUtils.isEmpty(userAccountId)) {
-            displayErrorInfo(R.string.account_null, accountEditTx);
+           // displayErrorInfo(R.string.account_null, accountEditTx);
             accountEditTx.requestFocus();
             return;
         }
 
         if (!StringUtil.isMobileNO(userAccountId)) {
-            displayErrorInfo(R.string.account_illegal, accountEditTx);
+            //displayErrorInfo(R.string.account_illegal, accountEditTx);
             accountEditTx.requestFocus();
             return;
         }

@@ -1,9 +1,11 @@
 package com.chinamobile.hejiaqin.business.logic.login;
 
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
+import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 
 /**
@@ -71,6 +73,11 @@ public interface ILoginLogic {
     void loadUserFromLocal();
 
     void loadHistoryFromLocal();
+
+
+    void updatePhoto(UpdatePhotoReq updatePhoto);
+
+    void feedBack(FeedBackReq feedBackReq);
 
     String encryPassword(String password);
 

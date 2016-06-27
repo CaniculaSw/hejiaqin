@@ -5,9 +5,11 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
@@ -286,6 +288,47 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     @Override
     public void updatePassword(PasswordInfo pwdInfo) {
         new LoginHttpManager(getContext()).updatePassword(null, pwdInfo, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, desc);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+            }
+        });
+    }
+
+
+    @Override
+    public void updatePhoto(UpdatePhotoReq updatePhoto) {
+        new LoginHttpManager(getContext()).updatePhoto(null, updatePhoto, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, desc);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+            }
+        });
+    }
+
+    @Override
+    public void feedBack(FeedBackReq feedBackReq) {
+        new LoginHttpManager(getContext()).feedBack(null, feedBackReq, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);

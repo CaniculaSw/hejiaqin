@@ -11,19 +11,37 @@
     <!-- 登录 -->
     <string name="login_header_title">登录</string>
 
-    <string name="action_faster_register">注册</string>
 
-    <string name="error_mark">*\u0020\u0020</string>
-    <string name="account_null">手机号码不能为空</string>
-    <string name="password_null">密码不能为空</string>
-    <string name="account_illegal">你输入的手机号码不正确</string>
-    <string name="login_failed">你输入的手机号码和密码不正确</string>
+    <string name="app_introduce">康兮您的私人健康教练</string>
+    <string name="app_copyright">2016 Copyright</string>
 
-    <!--注册-->
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+    <string name="birthday">请选择出生年月</string>
 
-    <string name="register_detail_title">详细信息</string>
-    <string name="prompt_nick_name">请输入昵称</string>
-    <string name="gender">选择性别</string>
+    <string name="prompt_height">请输入身高(cm)</string>
+    <string name="prompt_weight">请输入体重(kg)</string>
+
+
+    <string-array name="interestDesc">
+        <item>健身走</item>
+        <item>健身跑</item>
+        <item>减肥</item>
+        <item>塑形</item>
+        <item>瑜伽</item>
+        <item>太极</item>
+        <item>养生气功</item>
+    </string-array>
+    <string-array name="interestId">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string name="action_register_start">开始康兮</string>
 
     <string name="resend_verify_code">重获验证码</string>
 
@@ -39,6 +57,7 @@
     <string name="start_failed">登录失败</string>
 
     <!-- 重设/修改密码-->
+
     <string name="prompt_new_password">请输入新密码</string>
     <string name="reset_pwd_action_submit">提交</string>
     <string name="update_password_title">修改密码</string>
@@ -50,6 +69,25 @@
     <string name="password_not_match">两次输入的密码不一致</string>
     <string name="reset_success">重置成功</string>
     <string name="update_password_success">修改密码成功</string>
+
+    <!-- 生理数据 -->
+    <string name="physical_data_change_success">保存成功</string>
+    <string name="physical_data_change_fail">保存失败</string>
+    <string name="physical_data_tizhi_confirm_to_modify">保存</string>
+    <string name="physical_data_tizhi">体制指标</string>
+    <string name="physical_data_weight">体重</string>
+    <string name="physical_data_tizhi_height">身高</string>
+    <string name="physical_data_shenghua">生化指标</string>
+    <string name="physical_data_xuetang">血糖</string>
+    <string name="physical_data_haoshen">XXML</string>
+    <string name="physical_data_danguchun">胆固醇</string>
+    <string name="physical_data_xx">XX</string>
+
+    <!--使用帮助-->
+    <string name="use_help_title">使用帮助</string>
+    <string name="use_help_back">返回键</string>
+
+
     <!--个人信息-->修改成功
     <string name="no_sdcard_update_header">未找到存储卡，无法存储照片！</string>
 
@@ -122,8 +160,8 @@
     <string name="more_msg_delete">删除</string>
     <string name="more_miss_call_message_greeting">尊敬的用户:</string>
     <string name="more_avatar">头像</string>
-    <string name="more_account">账户</string>
-    <string name="more_user_info">个人信息</string>
+    <string name="more_account">账号</string>
+    <string name="more_user_info">编辑联系人</string>
     <string name="more_bind_tv_and_enjoye">绑定机顶盒, 即可享受</string>
     <string name="more_send_the_contact">发送联系人</string>
     <string name="more_add_contact">机顶盒添加联系人, 轻松搞定</string>
@@ -139,4 +177,9 @@
     <string name="more_select_all">全选</string>
     <string name="more_cancle_select_all">取消全选</string>
     <string name="more_chosen">已选择 (%s)</string>
+    <string name="use_help_feed_back">意见反馈</string>
+    <string name="use_help_main_content_hint">请输入您的意见与建议, 最多可输入200字</string>
+    <string name="feed_back_word_count">%s/200</string>
+    <string name="use_help_confirm_submit">提交</string>
+
 </resources>
