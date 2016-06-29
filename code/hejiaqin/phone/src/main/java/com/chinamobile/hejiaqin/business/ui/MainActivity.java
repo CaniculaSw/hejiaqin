@@ -22,6 +22,7 @@ public class MainActivity extends BasicActivity {
         } else {
             intent = new Intent(MainActivity.this, LoginActivity.class);
         }
+       // intent = new Intent(MainActivity.this, MainFragmentActivity.class);
         this.startActivity(intent);
         this.finish();
     }

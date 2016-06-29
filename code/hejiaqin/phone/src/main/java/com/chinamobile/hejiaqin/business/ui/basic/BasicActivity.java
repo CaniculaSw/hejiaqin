@@ -20,9 +20,9 @@ import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
 
 /**
@@ -88,6 +88,7 @@ public abstract class BasicActivity extends BaseActivity {
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }
+
     @TargetApi(23)
     protected boolean checkPermissions(String[] needPermissions, boolean isNecessary) {
         mIsNecessaryPermission = isNecessary;
@@ -95,13 +96,10 @@ public abstract class BasicActivity extends BaseActivity {
             if (PermissionsChecker.lacksPermissions(getApplicationContext(), needPermissions)) {
                 startPermissionsActivity(needPermissions);
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
-        }else
-        {
+        } else {
             return true;
         }
     }
@@ -115,16 +113,15 @@ public abstract class BasicActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
-                if(resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission)
-                {
+                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
                     finish();
                 }
                 break;
         }
     }
+
     @Override
     protected BuilderImp createLogicBuilder(Context context) {
         return LogicBuilder.getInstance(context);
@@ -147,6 +144,11 @@ public abstract class BasicActivity extends BaseActivity {
 
     protected void showToast(int resId, int duration, MyToast.Position pos) {
         myToast.showToast(resId, duration, pos);
+    }
+
+    protected void showToast(int resId) {
+        MyToast.Position position = myToast.new Position();
+        showToast(resId, Toast.LENGTH_SHORT, position);
     }
 
     protected void showToast(String text, int duration, MyToast.Position pos) {
@@ -196,6 +198,18 @@ public abstract class BasicActivity extends BaseActivity {
 
     protected void doNetworkDisConnect() {
 
+    }
+
+    public void startActivityForResult(Intent intent, int requestCode) {
+        intent.putExtra("requestCode", requestCode);
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    public int getRequestCode() {
+        if (null != getIntent()) {
+            return getIntent().getIntExtra("requestCode", 0);
+        }
+        return 0;
     }
 
 }

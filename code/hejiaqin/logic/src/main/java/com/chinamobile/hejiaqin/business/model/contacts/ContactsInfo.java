@@ -17,6 +17,8 @@ public class ContactsInfo implements Serializable {
         app
     }
 
+    private String contactId;
+
     private String name;
 
     private List<NumberInfo> numberLst = new ArrayList<NumberInfo>();
@@ -24,6 +26,14 @@ public class ContactsInfo implements Serializable {
     private String nameInPinyin;
 
     private ContactMode contactMode;
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
 
     public String getName() {
         return name;

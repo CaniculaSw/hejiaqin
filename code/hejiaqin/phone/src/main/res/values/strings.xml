@@ -122,9 +122,11 @@
     <string name="contact_modify_head_text">头像</string>
     <string name="contact_modify_name_text">姓名</string>
     <string name="contact_modify_number_text">号码</string>
-    <string name="contact_modify_name_hint_text">请输入姓名</string>
-    <string name="contact_modify_number_hint_text">请输入号码</string>
+    <string name="contact_modify_name_hint_text">输入姓名</string>
+    <string name="contact_modify_number_hint_text">输入手机号码</string>
     <string name="contact_info_title_text">详情</string>
+    <string name="contact_name_input_empty_toast">姓名不能为空</string>
+    <string name="contact_number_input_empty_toast">手机号码不能为空</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

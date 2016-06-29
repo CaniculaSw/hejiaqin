@@ -3,15 +3,18 @@ package com.chinamobile.hejiaqin.business.logic.contacts;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.ContactsDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
 import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -86,10 +89,12 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 ContactsDbAdapter.getInstance(getContext(), "aaa").add(contactsInfoList);
 
                 List<ContactsInfo> newContactsInfoList = ContactsDbAdapter.getInstance(getContext(), "aaa").queryAll();
+                ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(), newContactsInfoList);
                 sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, newContactsInfoList);
             }
         });
     }
+
 
     @Override
     public List<ContactsInfo> getCacheLocalContactLst() {
@@ -101,4 +106,79 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         List<ContactsInfo> contactsInfoList = getCacheLocalContactLst();
         sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input));
     }
+
+    @Override
+    public void addAppContact(final String name, final String number, final byte[] photo) {
+        ThreadPoolUtil.execute(new ThreadTask() {
+            @Override
+            public void run() {
+
+                MapStrReqBody reqBody = new MapStrReqBody();
+                reqBody.add("token", UserInfoCacheManager.getToken(getContext()));
+                reqBody.add("file", String.valueOf(photo));
+                reqBody.add("name", name);
+                reqBody.add("phone", number);
+
+                new ContactsHttpManager(getContext()).add(null, reqBody, new IHttpCallBack() {
+
+                    @Override
+                    public void onSuccessful(Object invoker, Object obj) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Object invoker, String code, String desc) {
+
+                    }
+
+                    @Override
+                    public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
+                    }
+                });
+
+            }
+        });
+    }
+
+    @Override
+    public void batchAddAppContacts() {
+
+    }
+
+    @Override
+    public void updateAppContact(final String contactId, final String name, final String number, final byte[] photo) {
+        ThreadPoolUtil.execute(new ThreadTask() {
+            @Override
+            public void run() {
+
+                MapStrReqBody reqBody = new MapStrReqBody();
+                reqBody.add("token", UserInfoCacheManager.getToken(getContext()));
+                reqBody.add("contactId", String.valueOf(contactId));
+                reqBody.add("file", String.valueOf(photo));
+                reqBody.add("name", name);
+                reqBody.add("phone", number);
+
+                new ContactsHttpManager(getContext()).update(null, reqBody, new IHttpCallBack() {
+
+                    @Override
+                    public void onSuccessful(Object invoker, Object obj) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Object invoker, String code, String desc) {
+
+                    }
+
+                    @Override
+                    public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
+                    }
+                });
+
+            }
+        });
+    }
+
 }

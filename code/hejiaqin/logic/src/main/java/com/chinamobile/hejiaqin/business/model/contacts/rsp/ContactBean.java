@@ -3,7 +3,7 @@ package com.chinamobile.hejiaqin.business.model.contacts.rsp;
 /**
  * Created by Administrator on 2016/6/24 0024.
  */
-public class Data {
+public class ContactBean {
     private String contactId;
 
     private String name;

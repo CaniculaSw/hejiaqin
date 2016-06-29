@@ -2,29 +2,36 @@ package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.customer.framework.utils.StringUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class ModifyContactActivity extends BasicActivity implements View.OnClickListener {
 
-    private static final int REQUEST_CODE_INPUT_NAME = 10001;
+    public static final int REQUEST_CODE_INPUT_NAME = 10001;
 
-    private static final int REQUEST_CODE_INPUT_NUMBER = 10002;
+    public static final int REQUEST_CODE_INPUT_NUMBER = 10002;
 
-    private static final int REQUEST_CODE_INPUT_PHOTO = 10003;
+    public static final int REQUEST_CODE_INPUT_PHOTO = 10003;
+
+    public static final String INTENT_DATA_INPUT_INFO = "intent_data_input_info";
 
     private HeaderView titleLayout;
 
@@ -32,8 +39,12 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     private ImageView headImg;
 
     private View nameView;
+    private TextView nameText;
+    String newName;
 
     private View numberView;
+    private TextView numberText;
+    String newNumber;
 
     /**
      * 当前支持两种模式:新增联系人和修改联系人;
@@ -41,13 +52,17 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
      */
     private boolean addContactMode = true;
 
+    private IContactsLogic contactsLogic;
+
+    private boolean hasNewPhoto = false;
+
     /**
      * 初始化logic的方法，由子类实现<BR>
      * 在该方法里通过getLogicByInterfaceClass获取logic对象
      */
     @Override
     protected void initLogics() {
-
+        contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
@@ -69,9 +84,11 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
 
         // 姓名
         nameView = findViewById(R.id.contact_name_layout);
+        nameText = (TextView) findViewById(R.id.contact_name_hint);
 
         // 号码
         numberView = findViewById(R.id.contact_number_layout);
+        numberText = (TextView) findViewById(R.id.contact_number_hint);
     }
 
     @Override
@@ -135,6 +152,18 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                     PhotoManage.getInstance(this).sendPhotoEnd(data);
                 }
                 break;
+            case REQUEST_CODE_INPUT_NAME:
+                newName = data.getStringExtra(INTENT_DATA_INPUT_INFO);
+                if (!StringUtil.isNullOrEmpty(newName)) {
+                    nameText.setText(newName);
+                }
+                break;
+            case REQUEST_CODE_INPUT_NUMBER:
+                newNumber = data.getStringExtra(INTENT_DATA_INPUT_INFO);
+                if (!StringUtil.isNullOrEmpty(newNumber)) {
+                    numberText.setText(newNumber);
+                }
+                break;
         }
     }
 
@@ -146,7 +175,35 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     }
 
     private void doClickSubmit() {
+        byte[] photo = null;
+        if (hasNewPhoto) {
+            try {
+                Bitmap bitmap = ((BitmapDrawable) headImg.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                photo = baos.toByteArray();
+            } catch (Exception e) {
+            } catch (OutOfMemoryError e) {
+            }
+        }
 
+
+        if (addContactMode) {
+            if (StringUtil.isNullOrEmpty(newName)) {
+                // TODO
+                showToast(R.string.contact_name_input_empty_toast);
+                return;
+            }
+
+            if (StringUtil.isNullOrEmpty(newNumber)) {
+                // TODO
+                showToast(R.string.contact_number_input_empty_toast);
+                return;
+            }
+            contactsLogic.addAppContact(newName, newNumber, photo);
+        } else {
+            contactsLogic.updateAppContact("contactId", newName, newName, photo);
+        }
     }
 
     private void doClickHeadLayout() {
@@ -173,8 +230,9 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         public void end(String url, Bitmap bitmap) {
             if (bitmap != null) {
                 headImg.setImageBitmap(bitmap);
+                hasNewPhoto = true;
+                // TODO 上传头像
             }
-            // TODO 上传头像
         }
     };
 }
