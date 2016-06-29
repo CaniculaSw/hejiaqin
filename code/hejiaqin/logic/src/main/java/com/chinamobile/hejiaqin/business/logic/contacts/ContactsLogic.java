@@ -5,6 +5,8 @@ import com.chinamobile.hejiaqin.business.dbApdater.ContactsDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
 import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
@@ -113,17 +115,27 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             @Override
             public void run() {
 
-                MapStrReqBody reqBody = new MapStrReqBody();
-                reqBody.add("token", UserInfoCacheManager.getToken(getContext()));
-                reqBody.add("file", String.valueOf(photo));
-                reqBody.add("name", name);
-                reqBody.add("phone", number);
+                AddContactReq request = new AddContactReq();
+                request.setToken(UserInfoCacheManager.getToken(getContext()));
+                request.setName(name);
+                request.setPhone(number);
 
-                new ContactsHttpManager(getContext()).add(null, reqBody, new IHttpCallBack() {
+                new ContactsHttpManager(getContext()).add(null, request, new IHttpCallBack() {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
+                        // 联系人信息添加到数据库
+                        ContactBean contactBean = (ContactBean) obj;
+                        if(null == contactBean)
+                        {
 
+                        }
+
+                        // 获取当前所有联系人列表
+
+
+                        // 发送消息给界面刷新
+                        sendMessage(BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID, obj);
                     }
 
                     @Override
