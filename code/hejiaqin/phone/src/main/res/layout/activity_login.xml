@@ -24,53 +24,53 @@
     </LinearLayout>
 
     <Button
-    android:id="@+id/register_button"
-    android:layout_width="75dp"
-    android:layout_height="30dp"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_gravity="center"
-    android:layout_marginBottom="20dp"
-    android:background="@drawable/button_border_style"
-    android:text="@string/register"
-    android:textColor="@color/green_37c972"
-    android:textSize="14sp" />
+        android:id="@+id/register_button"
+        android:layout_width="75dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/border_button_style"
+        android:text="@string/register"
+        android:textColor="@color/green_37c972"
+        android:textSize="14sp" />
 
     <View
-    android:id="@+id/user_divider"
-    android:layout_width="match_parent"
-    android:layout_height="0.5dp"
-    android:layout_below="@+id/login_header_layout"
-    android:layout_marginTop="94dp"
-    android:background="@color/hint_text_color_gray" />
+        android:id="@+id/user_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/login_header_layout"
+        android:layout_marginTop="94dp"
+        android:background="@color/hint_text_color_gray" />
 
     <LinearLayout
+        android:id="@+id/account_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/account_ll"
-        android:orientation="horizontal"
-        android:layout_marginBottom="18dp"
         android:layout_alignBottom="@+id/user_divider"
-        >
+        android:layout_marginBottom="18dp"
+        android:orientation="horizontal">
 
         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:src="@mipmap/user" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/user" />
 
         <EditText
-        android:id="@+id/account_edit_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:background="@null"
-        android:hint="@string/prompt_account"
-        android:inputType="number"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textColor="@color/hint_text_color_gray"
-        android:textSize="16sp" />
+            android:id="@+id/account_edit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:hint="@string/prompt_account"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint_text_color_gray"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <View
@@ -83,13 +83,12 @@
 
 
     <LinearLayout
+        android:id="@+id/password_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password_ll"
-        android:orientation="horizontal"
-        android:layout_marginBottom="18dp"
         android:layout_alignBottom="@+id/password_divider"
-        >
+        android:layout_marginBottom="18dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -107,35 +106,36 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/hint_text_color_gray"
+            android:textColorHint="@color/hint_text_color_gray"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
 
     <Button
-    android:id="@+id/sign_in_button"
-    android:layout_width="355dp"
-    android:layout_height="54dp"
-    android:layout_below="@+id/password_divider"
-    android:layout_marginTop="20dp"
-    android:background="@drawable/button_login_bg"
-    android:layout_centerHorizontal="true"
-    android:gravity="center"
-    android:text="@string/action_sign_in"
-    android:textColor="@color/white"
-    android:textSize="18sp" />
+        android:id="@+id/sign_in_button"
+        android:layout_width="274dp"
+        android:layout_height="54dp"
+        android:layout_below="@+id/password_divider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_login_bg"
+        android:gravity="center"
+        android:text="@string/action_sign_in"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <TextView
-    android:id="@+id/forget_pwd_tv"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginTop="24dp"
-    android:layout_below="@+id/sign_in_button"
-    android:gravity="center"
-    android:layout_centerHorizontal="true"
-    android:maxLines="1"
-    android:singleLine="true"
-    android:text="@string/action_forget_pwd"
-    android:textColor="@color/green_37c972"
-    android:textSize="14sp" />
+        android:id="@+id/forget_pwd_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/action_forget_pwd"
+        android:textColor="@color/green_37c972"
+        android:textSize="14sp" />
 </RelativeLayout>

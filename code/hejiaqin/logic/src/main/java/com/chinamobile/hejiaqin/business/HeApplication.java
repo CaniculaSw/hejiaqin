@@ -10,6 +10,7 @@ import com.huawei.rcs.stg.NatStgHelper;
 import com.huawei.rcs.system.SysApi;
 import com.huawei.rcs.tls.DefaultTlsHelper;
 import com.huawei.rcs.upgrade.UpgradeApi;
+import com.littlec.sdk.manager.CMIMHelper;
 
 /**
  * Created by zhanggj on 2016/6/5.
@@ -33,7 +34,7 @@ public class HeApplication extends RCSApplication implements
 
 //        ConferenceApi.initiateApi(getApplicationContext());
 
-//        CaasOmp.init();
+//        CaasOmp.initCMIMSdk();
 //        CaasOmpCfg.setString(CaasOmpCfg.EN_OMP_CFG_SERVER_IP, "205.177.226.80");
 //        CaasOmpCfg.setUint(CaasOmpCfg.EN_OMP_CFG_SERVER_PORT, 8543);
 
@@ -46,6 +47,11 @@ public class HeApplication extends RCSApplication implements
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
         //设置Thread Exception Handler
         Thread.setDefaultUncaughtExceptionHandler(this);
+
+        /**
+         * 初始化小溪推送SDK
+         */
+        CMIMHelper.getCmAccountManager().init(getApplicationContext(),BussinessConstants.CommonInfo.LITTLEC_APP_KEY);
     }
 
 
@@ -53,6 +59,7 @@ public class HeApplication extends RCSApplication implements
     public void onTerminate() {
         super.onTerminate();
         VoipLogic.getInstance(getApplicationContext()).unRegisterVoipReceiver();
+        CMIMHelper.getCmAccountManager().doLogOut();
     }
 
     @Override

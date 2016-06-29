@@ -21,20 +21,24 @@ public interface ILoginLogic {
      * @param userLoginId 用户id 手机号码
      */
     void getVerifyCode(String userLoginId);
+
     /**
      * 获取验证码---重置密码
      *
      * @param phone 手机号码
      */
     public void getResetPasswordCode(String phone);
+
     /**
      * 检查验证码
+     *
      * @param verifyInfo 验证信息
      */
     void checkVerifyCode(VerifyInfo verifyInfo);
 
     /**
      * 检查验证码---重置密码
+     *
      * @param verifyInfo 验证信息
      */
     void checkResetPasswordCode(VerifyInfo verifyInfo);
@@ -74,6 +78,7 @@ public interface ILoginLogic {
 
     void loadHistoryFromLocal();
 
+    void initCMIMSdk();
 
     void updatePhoto(UpdatePhotoReq updatePhoto);
 

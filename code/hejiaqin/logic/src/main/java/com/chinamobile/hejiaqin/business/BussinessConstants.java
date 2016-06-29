@@ -26,6 +26,8 @@ public class BussinessConstants {
         int PERMISSIONS_GRANTED = 0; // 权限授权
         int PERMISSIONS_DENIED = 1; // 权限拒绝
 
+        String LITTLEC_APP_KEY = "027336cw";
+
     }
 
     public interface ActivityRequestCode {
@@ -95,6 +97,8 @@ public class BussinessConstants {
 
         //网络错误消息ID
         int NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 1;
+
+        int SERVER_SIDE_ERROR = BASE_MSG_ID + 2;
 
     }
 
@@ -187,6 +191,8 @@ public class BussinessConstants {
         int RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID = BASE_MSG_ID + 21;
         //检查验证码失败的消息ID
         int RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID = BASE_MSG_ID + 22;
+
+        int SHOW_LAUNCH_PAGE_FINISHED = BASE_MSG_ID + 23;
 
     }
 

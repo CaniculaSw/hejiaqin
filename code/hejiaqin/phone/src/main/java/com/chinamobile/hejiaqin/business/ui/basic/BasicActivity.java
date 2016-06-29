@@ -136,6 +136,10 @@ public abstract class BasicActivity extends BaseActivity {
                     dismissWaitDailog();
                     showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                     break;
+                case BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR:
+                    dismissWaitDailog();
+                    showToast(R.string.server_side_error, Toast.LENGTH_SHORT, null);
+                    break;
                 default:
                     break;
             }
