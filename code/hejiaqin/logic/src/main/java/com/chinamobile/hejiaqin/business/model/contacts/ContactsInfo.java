@@ -27,6 +27,10 @@ public class ContactsInfo implements Serializable {
 
     private ContactMode contactMode;
 
+    private String photoLg;
+
+    private String photoSm;
+
     public String getContactId() {
         return contactId;
     }
@@ -53,6 +57,22 @@ public class ContactsInfo implements Serializable {
 
     public List<NumberInfo> getNumberLst() {
         return numberLst;
+    }
+
+    public String getPhotoLg() {
+        return photoLg;
+    }
+
+    public void setPhotoLg(String photoLg) {
+        this.photoLg = photoLg;
+    }
+
+    public String getPhotoSm() {
+        return photoSm;
+    }
+
+    public void setPhotoSm(String photoSm) {
+        this.photoSm = photoSm;
     }
 
     public void addNumber(NumberInfo numberInfo) {

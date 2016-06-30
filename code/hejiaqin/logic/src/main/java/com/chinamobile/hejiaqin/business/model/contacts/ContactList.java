@@ -1,5 +1,8 @@
 package com.chinamobile.hejiaqin.business.model.contacts;
 
+import android.provider.ContactsContract;
+
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -41,4 +44,34 @@ public class ContactList {
         tmpContactsInfo.addNumber(numberInfo);
         contactsInfoMap.put(name, tmpContactsInfo);
     }
+
+    public void addAppContact(ContactBean contactBean) {
+        if (null == contactBean || StringUtil.isNullOrEmpty(contactBean.getName()) || StringUtil.isNullOrEmpty(contactBean.getPhone())) {
+            return;
+        }
+
+        ContactsInfo tmpContactsInfo = contactsInfoMap.get(contactBean.getName());
+        if (null == tmpContactsInfo) {
+            tmpContactsInfo = new ContactsInfo();
+            tmpContactsInfo.setName(contactBean.getName());
+
+            NumberInfo numberInfo = new NumberInfo();
+            numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+            numberInfo.setNumber(contactBean.getPhone());
+            tmpContactsInfo.addNumber(numberInfo);
+
+            tmpContactsInfo.setContactMode(ContactsInfo.ContactMode.app);
+            tmpContactsInfo.setPhotoLg(contactBean.getPhotoLg());
+            tmpContactsInfo.setPhotoSm(contactBean.getPhotoSm());
+            contactsInfoMap.put(contactBean.getName(), tmpContactsInfo);
+            return;
+        }
+
+        NumberInfo numberInfo = new NumberInfo();
+        numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+        numberInfo.setNumber(contactBean.getPhone());
+        tmpContactsInfo.addNumber(numberInfo);
+        contactsInfoMap.put(contactBean.getName(), tmpContactsInfo);
+    }
+
 }

@@ -5,18 +5,21 @@ import android.content.Context;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
-import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBeanList;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.utils.LogUtil;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by yupeng on 6/9/16.
@@ -121,7 +124,11 @@ public class ContactsHttpManager extends AbsHttpManager {
 
     @Override
     protected NetRequest.ContentType getContentType() {
-        return NetRequest.ContentType.FORM_DATA;
+        switch (this.mAction) {
+            case add:
+                return NetRequest.ContentType.FORM_DATA;
+        }
+        return NetRequest.ContentType.FORM_URLENCODED;
     }
 
     /**
@@ -144,7 +151,8 @@ public class ContactsHttpManager extends AbsHttpManager {
                             data = rootJsonObj.get("dataList").toString();
                         }
 
-                        obj = gson.fromJson(data, ContactBeanList.class);
+                        obj = gson.fromJson(data, new TypeToken<List<ContactBean>>() {
+                        }.getType());
                         break;
                     case add:
                         if (rootJsonObj.has("data")) {
@@ -176,7 +184,7 @@ public class ContactsHttpManager extends AbsHttpManager {
     }
 
     // 查询联系人列表
-    public void list(final Object invoker, final MapStrReqBody reqBody, final IHttpCallBack callBack) {
+    public void list(final Object invoker, final NVPReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.list;
         this.mData = reqBody;
         send(invoker, callBack);
