@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,6 +17,8 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
 
     private View cancel;
 
+    private String inputText;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_input_info;
@@ -25,12 +28,16 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
     protected void initView() {
         // title
         titleLayout = (HeaderView) findViewById(R.id.title);
-        titleLayout.title.setText(R.string.contact_modify_title_add_text);
+        int requestCode = getRequestCode();
+        if (requestCode == ModifyContactActivity.REQUEST_CODE_INPUT_NAME) {
+            titleLayout.title.setText(R.string.contact_modify_name_text);
+        } else {
+            titleLayout.title.setText(R.string.contact_modify_number_text);
+        }
         titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
         titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
         input = (EditText) findViewById(R.id.input);
-
         cancel = findViewById(R.id.delete);
     }
 
@@ -57,6 +64,7 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 cancel.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
+                inputText = s.toString();
             }
         });
 
@@ -93,10 +101,15 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
     }
 
     private void doClickSubmit() {
-
+        Intent intent = new Intent();
+        intent.putExtra(ModifyContactActivity.INTENT_DATA_INPUT_INFO, inputText);
+        setResult(getRequestCode(), intent);
+        this.finish();
     }
 
     private void doClickDelete() {
         input.setText("");
     }
+
+
 }

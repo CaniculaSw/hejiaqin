@@ -85,6 +85,7 @@ public class NetUrlConnection
             httpConn.setDoInput(true);
             httpConn.setDoOutput(true);
             httpConn.setUseCaches(false);
+            httpConn.setRequestProperty("Charset","UTF-8");
             setRequestMethod(request, httpConn);
             setRequestProperty(request, httpConn);
             httpConn.setConnectTimeout(request.getConnectionTimeOut());

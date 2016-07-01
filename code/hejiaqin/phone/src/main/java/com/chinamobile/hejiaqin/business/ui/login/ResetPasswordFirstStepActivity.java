@@ -5,7 +5,10 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,11 +17,13 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.MyCountDownTimer;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.customer.framework.utils.StringUtil;
 
 /**
@@ -39,9 +44,6 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
 
     private VerifyCodeCountDownTimer countDownTimer;
 
-
-    private boolean getVerifyRequestFailed;
-    private boolean checkVerifyRequestFailed;
     private boolean continueCountDown;
 
     @Override
@@ -143,13 +145,13 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         String userAccountId = accountEditTx.getText().toString();
 
         if (TextUtils.isEmpty(userAccountId)) {
-            //displayErrorInfo(R.string.account_null, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_phone_no));
             accountEditTx.requestFocus();
             return;
         }
 
         if (!StringUtil.isMobileNO(userAccountId)) {
-            //displayErrorInfo(R.string.account_illegal, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
             accountEditTx.requestFocus();
             return;
         }
@@ -170,20 +172,25 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         String userAccountId = accountEditTx.getText().toString();
 
         if (TextUtils.isEmpty(userAccountId)) {
-           // displayErrorInfo(R.string.account_null, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_phone_no));
             accountEditTx.requestFocus();
             return;
         }
 
         if (!StringUtil.isMobileNO(userAccountId)) {
-            //displayErrorInfo(R.string.account_illegal, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
             accountEditTx.requestFocus();
             return;
         }
         String verifyCode = verifyCodeEditTx.getText().toString();
         if (TextUtils.isEmpty(verifyCode)) {
-            displayErrorInfo(R.string.verify_code_null, accountEditTx);
-            accountEditTx.requestFocus();
+            displayErrorInfo(getString(R.string.prompt_verify_code));
+            verifyCodeEditTx.requestFocus();
+            return;
+        }
+        if (!StringUtil.isVerifyCode(verifyCode)) {
+            displayErrorInfo(getString(R.string.prompt_wrong_verify_code_format));
+            verifyCodeEditTx.requestFocus();
             return;
         }
 
@@ -195,9 +202,16 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         loginLogic.checkResetPasswordCode(info);
     }
 
-    private void displayErrorInfo(int stringId, View view) {
-        getVerifyRequestFailed = false;
-        checkVerifyRequestFailed = false;
+    private void displayErrorInfo(String errorText) {
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+        dialog.show();
     }
 
 
@@ -240,7 +254,7 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
-        String code = "";
+        FailResponse response;
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_SUCCESS_MSG_ID:
                 super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT,null);
@@ -254,13 +268,9 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
                 }
                 break;
             case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID:
-                if (msg.obj != null) {
-                    code = (String) msg.obj;
-                }
-                if (BussinessConstants.LoginHttpErrorCode.HAS_REGISTER.equals(code)) {
-                    displayRequestErrorInfo(R.string.has_registered, true);
-                } else {
-                    displayRequestErrorInfo(R.string.verify_other_error, true);
+                response = (FailResponse) msg.obj;
+                if (response.getCode().equals("1")){
+                    displayErrorInfo(response.getMsg());
                 }
                 if(countDownTimer!=null)
                 {
@@ -283,14 +293,9 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
                 startActivity(intent);
                 break;
             case BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID:
-                super.dismissWaitDailog();
-                if (msg.obj != null) {
-                    code = (String) msg.obj;
-                }
-                if (BussinessConstants.LoginHttpErrorCode.VERIFY_CODE_DISABLE.equals(code)) {
-                    displayRequestErrorInfo(R.string.check_verify_code_disable, false);
-                } else {
-                    displayRequestErrorInfo(R.string.check_verify_code_diff, false);
+                response = (FailResponse) msg.obj;
+                if (response.getCode().equals("1")){
+                    displayErrorInfo(response.getMsg());
                 }
                 break;
             default:

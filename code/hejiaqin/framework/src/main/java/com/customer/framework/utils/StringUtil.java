@@ -391,6 +391,14 @@ public class StringUtil {
         return Pattern.compile("^((13[0-9])|(17[0-9])|(14[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$").matcher(paramString).matches();
     }
 
+    public static boolean isVerifyCode(String paramString) {
+        return Pattern.compile("\\d{4}").matcher(paramString).matches();
+    }
+
+    public static boolean isPassword(String paramString) {
+
+        return Pattern.compile("^(?=.*?[^\\\\s])[!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~A-Za-z0-9]{6,32}$").matcher(paramString).matches();
+    }
     /**
      * 汉字转为拼音
      */

@@ -26,6 +26,8 @@ public class BussinessConstants {
         int PERMISSIONS_GRANTED = 0; // 权限授权
         int PERMISSIONS_DENIED = 1; // 权限拒绝
 
+        String LITTLEC_APP_KEY = "027336cw";
+
     }
 
     public interface ActivityRequestCode {
@@ -74,7 +76,7 @@ public class BussinessConstants {
 
         String HEADER_UNIQ = "UNIQ";
 
-        String HEADER_BOUNDARY="----hejiaqinapplicationrequestboundary";
+        String HEADER_BOUNDARY = "----hejiaqinapplicationrequestboundary";
 
     }
 
@@ -95,6 +97,8 @@ public class BussinessConstants {
 
         //网络错误消息ID
         int NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 1;
+
+        int SERVER_SIDE_ERROR = BASE_MSG_ID + 2;
 
     }
 
@@ -188,6 +192,8 @@ public class BussinessConstants {
         //检查验证码失败的消息ID
         int RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID = BASE_MSG_ID + 22;
 
+        int SHOW_LAUNCH_PAGE_FINISHED = BASE_MSG_ID + 23;
+
     }
 
     /**
@@ -224,6 +230,11 @@ public class BussinessConstants {
         // 搜索应用联系人成功的消息ID
         int SEARCH_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 4;
 
+        // 添加应用联系人成功的消息ID
+        int ADD_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 5;
+        // 添加应用联系人失败的消息ID
+        int ADD_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 6;
+
         // handleFragmentMessage
         // 隐藏联系人列表的title
         int UI_HIDE_CCONTACT_LIST_TITLE_ID = BASE_MSG_ID + 100;
@@ -252,10 +263,10 @@ public class BussinessConstants {
     public interface DialMsgID {
 
         int BASE_MSG_ID = 40001000;
-        int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID+1;
-        int CALL_VIDEO_INCOMING_MSG_ID = BASE_MSG_ID+2;
-        int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID+3;
-        int CALL_CLOSED_MSG_ID = BASE_MSG_ID+4;
+        int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID + 1;
+        int CALL_VIDEO_INCOMING_MSG_ID = BASE_MSG_ID + 2;
+        int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 3;
+        int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 4;
 
     }
 

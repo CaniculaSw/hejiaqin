@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.logic.login;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
@@ -13,6 +14,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
+import com.chinamobile.hejiaqin.business.net.login.CMIMHelperManager;
 import com.chinamobile.hejiaqin.business.net.login.LoginHttpManager;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.component.storage.StorageMgr;
@@ -21,6 +23,7 @@ import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.customer.framework.utils.cryptor.DigestUtil;
 import com.google.gson.Gson;
+import com.littlec.sdk.manager.CMIMHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +39,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void getVerifyCode(String phone) {
-        NVPReqBody reqBody = new NVPReqBody();
+        final NVPReqBody reqBody = new NVPReqBody();
         reqBody.add("phone", phone);
         new LoginHttpManager(getContext()).getVerifyCode(null, reqBody, new IHttpCallBack() {
 
@@ -47,7 +50,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, code);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -71,7 +80,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID, code);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -94,7 +109,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID, code);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -105,17 +126,23 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     }
 
     @Override
-    public void checkResetPasswordCode(VerifyInfo verifyInfo){
+    public void checkResetPasswordCode(VerifyInfo verifyInfo) {
         new LoginHttpManager(getContext()).checkResetPasswordCode(null, verifyInfo, new IHttpCallBack() {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID,obj);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID, obj);
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID, code);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -135,7 +162,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_FAIL_MSG_ID, code);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -153,13 +186,20 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 UserInfo userInfo = (UserInfo) obj;
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
+                initCMIMSdk();
                 LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
                 UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID, code);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -171,7 +211,6 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void logout() {
-        UserInfoCacheManager.clearUserInfo(getContext());
         new LoginHttpManager(getContext()).logout(null, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
@@ -185,6 +224,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
             }
         });
+        clean();
     }
 
     /**
@@ -295,7 +335,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, desc);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -303,6 +349,20 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
             }
         });
+    }
+
+    public void initCMIMSdk() {
+        Object obj = StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        if (obj == null) {
+            return;
+        }
+        UserInfo userInfo = (UserInfo) obj;
+        CMIMHelperManager.doLogin(userInfo);
+    }
+
+    private void clean() {
+        UserInfoCacheManager.clearUserInfo(getContext());
+        CMIMHelper.getCmAccountManager().doLogOut();
     }
 
 
@@ -316,7 +376,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, desc);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID,response);
             }
 
             @Override
@@ -336,7 +402,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, desc);
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, response);
             }
 
             @Override
@@ -346,4 +418,11 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         });
     }
 
+    private boolean isCommonFailRes(String code, String desc) {
+        if (code.equals("-4") || code.equals("-5")) {
+            LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
+            return true;
+        }
+        return false;
+    }
 }

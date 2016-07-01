@@ -15,4 +15,10 @@ public interface IContactsLogic {
     void searchLocalContactLst(String input);
 
     void fetchAppContactLst();
+
+    void addAppContact(String name, String number, byte[] photo);
+
+    void batchAddAppContacts();
+
+    void updateAppContact(String contactId, String name, String number, byte[] photo);
 }

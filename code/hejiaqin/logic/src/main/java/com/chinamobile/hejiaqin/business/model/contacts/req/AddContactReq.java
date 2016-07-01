@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.model.login.req;
+package com.chinamobile.hejiaqin.business.model.contacts.req;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
@@ -8,27 +8,17 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by eshaohu on 16/6/23.
+ * Created by Administrator on 2016/6/29 0029.
  */
-public class UpdatePhotoReq implements ReqBody {
-    String fileName;
-    String token;
+public class AddContactReq implements ReqBody {
 
-    public String getFileName() {
-        return fileName;
-    }
+    private String token;
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+    private String file;
 
-    public String getToken() {
-        return token;
-    }
+    private String phone;
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    private String name;
 
     @Override
     public String toBody() {
@@ -37,8 +27,8 @@ public class UpdatePhotoReq implements ReqBody {
         StringBuffer requestBody = new StringBuffer();
 
         String contentDisposition = null;
-        if (null != getFileName()) {
-            File file = new File(getFileName());
+        if (null != getFile()) {
+            File file = new File(getFile());
             contentDisposition = "Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getName() + "\"";
             String contentType = "Content-Type: " + FileUtil.getMIMEType(file.getName());
 
@@ -56,6 +46,22 @@ public class UpdatePhotoReq implements ReqBody {
             requestBody.append("\r\n");
         }
 
+        contentDisposition = "Content-Disposition: form-data; name=\"phone\"";
+        requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
+        requestBody.append("\r\n");
+        requestBody.append(contentDisposition);
+        requestBody.append("\r\n\r\n");
+        requestBody.append(getPhone());
+        requestBody.append("\r\n");
+
+        contentDisposition = "Content-Disposition: form-data; name=\"name\"";
+        requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
+        requestBody.append("\r\n");
+        requestBody.append(contentDisposition);
+        requestBody.append("\r\n\r\n");
+        requestBody.append(getName());
+        requestBody.append("\r\n");
+
         contentDisposition = "Content-Disposition: form-data; name=\"token\"";
         requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
         requestBody.append("\r\n");
@@ -68,7 +74,37 @@ public class UpdatePhotoReq implements ReqBody {
         requestBody.append("\r\n\r\n");
 
         return requestBody.toString();
-
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

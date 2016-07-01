@@ -5,7 +5,10 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,11 +17,13 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.MyCountDownTimer;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.customer.framework.utils.StringUtil;
 
 /**
@@ -56,7 +61,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
 
     @Override
     protected void initView() {
-        mHeaderView  = (HeaderView) findViewById(R.id.header);
+        mHeaderView = (HeaderView) findViewById(R.id.header);
         mHeaderView.title.setText(R.string.register_title);
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
@@ -65,13 +70,12 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
         //如果上次计数还没有结束，则重新进入页面后继续
-        if(MyCountDownTimer.getMyMillisUntilFinished()!=0)
-        {
+        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
             sendVerifyCodeTv.setEnabled(false);
             sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
             countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
             countDownTimer.start();
-            continueCountDown =true;
+            continueCountDown = true;
         }
     }
 
@@ -143,13 +147,13 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         String userAccountId = accountEditTx.getText().toString();
 
         if (TextUtils.isEmpty(userAccountId)) {
-            //displayErrorInfo(R.string.account_null, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_phone_no));
             accountEditTx.requestFocus();
             return;
         }
 
         if (!StringUtil.isMobileNO(userAccountId)) {
-           // displayErrorInfo(R.string.account_illegal, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
             accountEditTx.requestFocus();
             return;
         }
@@ -160,7 +164,6 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
             continueCountDown = false;
         }
         countDownTimer.start();
-        hideErrorInfo(null);
         loginLogic.getVerifyCode(userAccountId);
     }
 
@@ -170,34 +173,45 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         String userAccountId = accountEditTx.getText().toString();
 
         if (TextUtils.isEmpty(userAccountId)) {
-           // displayErrorInfo(R.string.account_null, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_phone_no));
             accountEditTx.requestFocus();
             return;
         }
 
         if (!StringUtil.isMobileNO(userAccountId)) {
-            //displayErrorInfo(R.string.account_illegal, accountEditTx);
+            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
             accountEditTx.requestFocus();
             return;
         }
         String verifyCode = verifyCodeEditTx.getText().toString();
         if (TextUtils.isEmpty(verifyCode)) {
-            displayErrorInfo(R.string.verify_code_null, accountEditTx);
-            accountEditTx.requestFocus();
+            displayErrorInfo(getString(R.string.prompt_verify_code));
+            verifyCodeEditTx.requestFocus();
             return;
         }
 
+        if (!StringUtil.isVerifyCode(verifyCode)) {
+            displayErrorInfo(getString(R.string.prompt_wrong_verify_code_format));
+            verifyCodeEditTx.requestFocus();
+            return;
+        }
         VerifyInfo info = new VerifyInfo();
         info.setPhone(userAccountId);
         info.setVerifyCode(verifyCode);
         hideErrorInfo(null);
-        super.showWaitDailog();
         loginLogic.checkVerifyCode(info);
     }
 
-    private void displayErrorInfo(int stringId, View view) {
-        getVerifyRequestFailed = false;
-        checkVerifyRequestFailed = false;
+    private void displayErrorInfo(String errorText) {
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+        dialog.show();
     }
 
 
@@ -216,7 +230,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
     private class VerifyCodeCountDownTimer extends MyCountDownTimer {
 
         /**
-         * @param millisInFuture    总的时间
+         * @param millisInFuture 总的时间
          */
         public VerifyCodeCountDownTimer(long millisInFuture) {
             super(millisInFuture);
@@ -240,39 +254,31 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
-        String code = "";
+        FailResponse response;
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID:
-                super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT,null);
+                super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT, null);
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID:
-                if(countDownTimer!=null)
-                {
+                if (countDownTimer != null) {
                     countDownTimer.stop();
                     sendVerifyCodeTv.setEnabled(true);
                     sendVerifyCodeTv.setText(R.string.resend_verify_code);
                 }
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID:
-                if (msg.obj != null) {
-                    code = (String) msg.obj;
+                response = (FailResponse) msg.obj;
+                if (response.getCode().equals("1")){
+                    displayErrorInfo(response.getMsg());
                 }
-                if (BussinessConstants.LoginHttpErrorCode.HAS_REGISTER.equals(code)) {
-                    displayRequestErrorInfo(R.string.has_registered, true);
-                } else {
-                    displayRequestErrorInfo(R.string.verify_other_error, true);
-                }
-                if(countDownTimer!=null)
-                {
+                if (countDownTimer != null) {
                     countDownTimer.stop();
                     sendVerifyCodeTv.setEnabled(true);
                     sendVerifyCodeTv.setText(R.string.resend_verify_code);
                 }
                 break;
             case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_SUCCESS_MSG_ID:
-                super.dismissWaitDailog();
-                if(countDownTimer!=null)
-                {
+                if (countDownTimer != null) {
                     countDownTimer.stop();
                     sendVerifyCodeTv.setEnabled(true);
                     sendVerifyCodeTv.setText(R.string.send_verify_code);
@@ -285,14 +291,9 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
                 startActivity(intent);
                 break;
             case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID:
-                super.dismissWaitDailog();
-                if (msg.obj != null) {
-                    code = (String) msg.obj;
-                }
-                if (BussinessConstants.LoginHttpErrorCode.VERIFY_CODE_DISABLE.equals(code)) {
-                    displayRequestErrorInfo(R.string.check_verify_code_disable, false);
-                } else {
-                    displayRequestErrorInfo(R.string.check_verify_code_diff, false);
+                 response = (FailResponse) msg.obj;
+                if (response.getCode().equals("1")){
+                    displayErrorInfo(response.getMsg());
                 }
                 break;
             default:

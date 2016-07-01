@@ -3,8 +3,9 @@ package com.chinamobile.hejiaqin.business.net.contacts;
 import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.model.contacts.rsp.Data;
-import com.chinamobile.hejiaqin.business.model.contacts.rsp.DataList;
+import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBeanList;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
@@ -118,6 +119,11 @@ public class ContactsHttpManager extends AbsHttpManager {
         return method;
     }
 
+    @Override
+    protected NetRequest.ContentType getContentType() {
+        return NetRequest.ContentType.FORM_DATA;
+    }
+
     /**
      * 处理响应
      *
@@ -138,14 +144,14 @@ public class ContactsHttpManager extends AbsHttpManager {
                             data = rootJsonObj.get("dataList").toString();
                         }
 
-                        obj = gson.toJson(data, DataList.class);
+                        obj = gson.fromJson(data, ContactBeanList.class);
                         break;
                     case add:
                         if (rootJsonObj.has("data")) {
                             data = rootJsonObj.get("data").toString();
                         }
 
-                        obj = gson.toJson(data, Data.class);
+                        obj = gson.fromJson(data, ContactBean.class);
                         break;
                     case batchAdd:
                         break;
@@ -154,7 +160,7 @@ public class ContactsHttpManager extends AbsHttpManager {
                             data = rootJsonObj.get("data").toString();
                         }
 
-                        obj = gson.toJson(data, Data.class);
+                        obj = gson.fromJson(data, ContactBean.class);
                         break;
                     case delete:
                         break;
@@ -177,7 +183,7 @@ public class ContactsHttpManager extends AbsHttpManager {
     }
 
     // 添加联系人
-    public void add(final Object invoker, final MapStrReqBody reqBody, final IHttpCallBack callBack) {
+    public void add(final Object invoker, final AddContactReq reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.add;
         this.mData = reqBody;
         send(invoker, callBack);
