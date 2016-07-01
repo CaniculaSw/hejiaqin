@@ -142,6 +142,13 @@
     <string name="dial_save_contact">保存至和家亲</string>
     <string name="del_all_call_record">删除所有通讯记录</string>
     <string name="del_call_record_cancel">取消</string>
+    <string name="call_outing">正在拨号...</string>
+    <string name="call_mute">静音</string>
+    <string name="call_hangup">挂断</string>
+    <string name="call_switch_camera">切换摄像头</string>
+    <string name="call_coming">邀你视频...</string>
+    <string name="call_answer">接听</string>
+    <string name="call_reject">挂断</string>
 
     <!-- 更多 -->
     <string name="more_tab_name">更多</string>
