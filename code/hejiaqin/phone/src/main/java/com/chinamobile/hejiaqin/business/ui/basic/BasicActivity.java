@@ -14,6 +14,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
+import com.chinamobile.hejiaqin.BuildConfig;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
@@ -84,6 +85,9 @@ public abstract class BasicActivity extends BaseActivity {
 
     @Override
     protected void initSystem(Context context) {
+        //根据build.gradle设置日志级别
+        LogUtil.setContext(getApplicationContext());
+        LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();

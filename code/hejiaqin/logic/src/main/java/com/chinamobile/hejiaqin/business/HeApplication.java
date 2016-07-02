@@ -15,8 +15,7 @@ import com.littlec.sdk.manager.CMIMHelper;
 /**
  * Created by zhanggj on 2016/6/5.
  */
-public class HeApplication extends RCSApplication implements
-        Thread.UncaughtExceptionHandler{
+public class HeApplication extends RCSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -45,9 +44,6 @@ public class HeApplication extends RCSApplication implements
 	   see detail in Developer's Guide*/
         // SysApi.setTrustCaFilePath("/rootcert.pem");
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
-        //设置Thread Exception Handler
-        Thread.setDefaultUncaughtExceptionHandler(this);
-
         /**
          * 初始化小溪推送SDK
          */
@@ -62,10 +58,4 @@ public class HeApplication extends RCSApplication implements
         CMIMHelper.getCmAccountManager().doLogOut();
     }
 
-    @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
-        LogUtil.e("GobalException", ex);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(0);
-    }
 }
