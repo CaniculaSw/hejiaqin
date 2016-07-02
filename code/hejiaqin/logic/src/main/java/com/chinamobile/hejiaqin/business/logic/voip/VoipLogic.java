@@ -69,10 +69,14 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
                 return;
             }
-            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_VIDEO_INCOMING_MSG_ID, callSession);
-            }
             //TODO 保存通话记录
+            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                Intent inComingIntent = new Intent();
+                inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
+                inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
+                inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, callSession.getSessionId());
+                getContext().startActivity(inComingIntent);
+            }
         }
     };
 

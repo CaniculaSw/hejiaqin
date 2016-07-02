@@ -128,7 +128,14 @@
         <activity android:name=".business.ui.more.SelectableContactActivity"></activity>
         <activity android:name=".business.ui.login.ResetPasswordFirstStepActivity"></activity>
         <activity android:name=".business.ui.more.FeedBackActivity"></activity>
-        <activity android:name=".business.ui.dial.VideoCallActivity"></activity>
+        <activity
+            android:name=".business.ui.dial.VideoCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.hejiaqin.dial.videocall" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

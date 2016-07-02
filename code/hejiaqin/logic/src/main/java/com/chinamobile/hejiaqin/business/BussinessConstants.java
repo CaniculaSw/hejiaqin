@@ -247,6 +247,13 @@ public class BussinessConstants {
      */
     public interface Dial {
 
+        String CALL_ACTION = "android.intent.action.hejiaqin.dial.videocall";
+
+        String INTENT_CALLEE_NUMBER ="intent_callee_number";
+
+        String INTENT_CALL_INCOMING ="intent_call_incoming";
+
+        String INTENT_INCOMING_SESSION_ID ="intent_incoming_session_id";
 
     }
 
@@ -264,9 +271,8 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 40001000;
         int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID + 1;
-        int CALL_VIDEO_INCOMING_MSG_ID = BASE_MSG_ID + 2;
-        int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 3;
-        int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 4;
+        int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 2;
+        int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 3;
 
     }
 
