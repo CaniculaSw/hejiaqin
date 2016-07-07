@@ -11,12 +11,12 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_photo"
+            android:id="@+id/rl_camera"
             android:layout_width="fill_parent"
             android:layout_height="44dp">
 
             <TextView
-                android:id="@+id/tv_photo"
+                android:id="@+id/tv_camera"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -31,12 +31,12 @@
             android:background="#e0e1e1" />
 
         <RelativeLayout
-            android:id="@+id/rl_camera"
+            android:id="@+id/rl_photo"
             android:layout_width="fill_parent"
             android:layout_height="44dp">
 
             <TextView
-                android:id="@+id/tv_camera"
+                android:id="@+id/tv_photo"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

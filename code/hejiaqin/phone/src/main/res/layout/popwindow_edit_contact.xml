@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/edit_contact_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="42dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/contact_info_edit_contact_text"
+            android:textColor="#404040"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#e0e1e1" />
+
+    <LinearLayout
+        android:id="@+id/del_contact_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="42dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/contact_info_del_contact_text"
+            android:textColor="#404040"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="#f4f4f4" />
+
+    <LinearLayout
+        android:id="@+id/cancel_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="42dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="@string/del_call_record_cancel"
+            android:textColor="#404040"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

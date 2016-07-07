@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dial_group_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="今天"
+        android:textColor="#404040"
+        android:textSize="16dp" />
+
+    <RelativeLayout
+        android:id="@+id/dial_info_item_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="24dp"
+        android:layout_below="@+id/dial_group_name_text"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/dial_type_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/icon_missed_call" />
+
+        <TextView
+            android:id="@+id/dial_type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/dial_type_icon"
+            android:text="@string/contact_info_dial_incoming_text"
+            android:textColor="#404040"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/dial_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="15:30"
+            android:textColor="#404040"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/dial_duration_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:text="18分20秒"
+            android:textColor="#404040"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+</RelativeLayout>
