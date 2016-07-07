@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/video_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/large_video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#404040"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/small_video_layout"
+            android:layout_width="87dp"
+            android:layout_height="116dp"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="34dp"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/contact_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="包宏浩"
+            android:textSize="23sp"
+            android:layout_marginTop="34dp"
+            android:textColor="@color/white"
+            />
+        <LinearLayout
+            android:id="@+id/call_status_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/call_status_iv"
+                android:layout_width="17dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/icon_dial_videocall"/>
+            <TextView
+                android:id="@+id/call_status_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_outing"
+                android:textSize="13sp"
+                android:layout_marginLeft="9dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/talking_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:text="00:00"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/mute_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/mute_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9.5dp"
+                android:layout_marginRight="9.5dp"
+                android:src="@drawable/selector_mute"/>
+            <TextView
+                android:id="@+id/mute_lable_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_mute"
+                android:textSize="12sp"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hangup_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="15.5dp"
+            android:layout_marginRight="15.5dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/hangup_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/border_btn_hangupcall_bg">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_dial_videocall"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/hangup_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_hangup"
+                android:textSize="12sp"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/camera_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/camera_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9.5dp"
+                android:layout_marginRight="9.5dp"
+                android:src="@drawable/selector_camera_switch"/>
+            <TextView
+                android:id="@+id/camera_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_switch_camera"
+                android:textSize="12sp"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/incoming_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#404040">
+        <LinearLayout
+            android:id="@+id/comging_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/caller_iv"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_marginTop="60dp"
+                android:src="@mipmap/pic180"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#8c8c8c" />
+
+            <TextView
+                android:id="@+id/caller_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="包宏浩"
+                android:textSize="23sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:id="@+id/incoming_status_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_coming"
+                android:textSize="13sp"
+                android:layout_marginTop="18dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/coming_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="56dp"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/coming_answer_call_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="50dp"
+                android:text="@string/call_answer"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:background="@drawable/border_btn_answercall_bg"/>
+
+            <Button
+                android:id="@+id/coming_reject_call_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/call_reject"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:background="@drawable/border_btn_hangupcall_bg"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

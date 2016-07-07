@@ -26,6 +26,8 @@ public class BussinessConstants {
         int PERMISSIONS_GRANTED = 0; // 权限授权
         int PERMISSIONS_DENIED = 1; // 权限拒绝
 
+        String LITTLEC_APP_KEY = "027336cw";
+
     }
 
     public interface ActivityRequestCode {
@@ -95,6 +97,8 @@ public class BussinessConstants {
 
         //网络错误消息ID
         int NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 1;
+
+        int SERVER_SIDE_ERROR = BASE_MSG_ID + 2;
 
     }
 
@@ -188,6 +192,8 @@ public class BussinessConstants {
         //检查验证码失败的消息ID
         int RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID = BASE_MSG_ID + 22;
 
+        int SHOW_LAUNCH_PAGE_FINISHED = BASE_MSG_ID + 23;
+
     }
 
     /**
@@ -241,6 +247,13 @@ public class BussinessConstants {
      */
     public interface Dial {
 
+        String CALL_ACTION = "android.intent.action.hejiaqin.dial.videocall";
+
+        String INTENT_CALLEE_NUMBER ="intent_callee_number";
+
+        String INTENT_CALL_INCOMING ="intent_call_incoming";
+
+        String INTENT_INCOMING_SESSION_ID ="intent_incoming_session_id";
 
     }
 
@@ -258,9 +271,8 @@ public class BussinessConstants {
 
         int BASE_MSG_ID = 40001000;
         int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID + 1;
-        int CALL_VIDEO_INCOMING_MSG_ID = BASE_MSG_ID + 2;
-        int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 3;
-        int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 4;
+        int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 2;
+        int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 3;
 
     }
 

@@ -5,7 +5,10 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.StringUtil;
 
@@ -74,7 +78,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
 
             }
         });
-        passwdEditTv.addTextChangedListener(new TextWatcher(){
+        passwdEditTv.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -115,51 +119,55 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         String account = accountEditTv.getText().toString();
         if (TextUtils.isEmpty(account)) {
             accountEditTv.requestFocus();
+            displayErrorInfo(getString(R.string.prompt_phone_no));
             return;
         }
         String password = passwdEditTv.getText().toString();
         if (TextUtils.isEmpty(password)) {
             passwdEditTv.requestFocus();
+            displayErrorInfo(getString(R.string.prompt_password));
             return;
         }
         if (!StringUtil.isMobileNO(account)) {
             accountEditTv.requestFocus();
+            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
+            return;
+        }
+        if (!StringUtil.isPassword(password)) {
+            passwdEditTv.requestFocus();
+            displayErrorInfo(getString(R.string.prompt_wrong_password_format));
             return;
         }
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone(accountEditTv.getText().toString());
         loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
-        hideErrorInfo(null);
-        //super.showWaitDailog();
         loginLogic.login(loginInfo);
     }
 
-    private void displayErrorInfo(int stringId,View view) {
-
+    private void displayErrorInfo(String errorText) {
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+        dialog.show();
     }
 
-
-    private void hideErrorInfo(View view) {
-
-    }
-
-    private void displayRequestErrorInfo() {
-
-    }
 
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-                super.dismissWaitDailog();
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
-                super.dismissWaitDailog();
-                displayRequestErrorInfo();
+                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
                 accountEditTv.requestFocus();
                 break;
             default:

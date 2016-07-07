@@ -3,16 +3,21 @@ package com.chinamobile.hejiaqin.business.ui.login;
 import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.customer.framework.utils.StringUtil;
 
 /**
@@ -83,24 +88,41 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
     private void next()
     {
         if (TextUtils.isEmpty(passwordEt.getText().toString())) {
+            displayErrorInfo(getString(R.string.prompt_password));
             passwordEt.requestFocus();
             return;
         }
         if (TextUtils.isEmpty(confirmPwdEt.getText().toString())) {
+            displayErrorInfo(getString(R.string.prompt_empty_confirm_password));
             confirmPwdEt.requestFocus();
             return;
         }
         if (! StringUtil.equals(passwordEt.getText().toString(),confirmPwdEt.getText().toString())){
+            displayErrorInfo(getString(R.string.prompt_password_not_the_same));
             confirmPwdEt.requestFocus();
+            return;
+        }
+        if (!StringUtil.isPassword(passwordEt.getText().toString())) {
+            displayErrorInfo(getString(R.string.prompt_wrong_password_format));
+            passwordEt.requestFocus();
             return;
         }
         passwordInfo.setPassword(passwordEt.getText().toString());
         loginLogic.updatePassword(passwordInfo);
     }
 
-    private void displayErrorInfo(int stringId, View view) {
-
+    private void displayErrorInfo(String errorText) {
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+        dialog.show();
     }
+
 
 
     private void hideErrorInfo(View view) {
@@ -114,7 +136,6 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
-        String code="";
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID:
                 super.dismissWaitDailog();
@@ -123,16 +144,9 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
                 this.finishAllActivity(LoginActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID:
-                super.dismissWaitDailog();
-                if (msg.obj != null) {
-                    code = (String) msg.obj;
-                }
-                if (BussinessConstants.LoginHttpErrorCode.HAS_REGISTER.equals(code)) {
-                    displayRequestErrorInfo(R.string.has_registered);
-                } else if (BussinessConstants.LoginHttpErrorCode.HAS_REGISTER_FORBIDDEN.equals(code)) {
-                    displayRequestErrorInfo(R.string.has_registered_forbidden);
-                } else {
-                    displayRequestErrorInfo(R.string.register_fail);
+                FailResponse response = (FailResponse) msg.obj;
+                if (response.equals("1")) {
+                    displayErrorInfo(response.getMsg());
                 }
                 break;
             default:

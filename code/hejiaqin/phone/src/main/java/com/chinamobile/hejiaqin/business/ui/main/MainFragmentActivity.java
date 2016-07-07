@@ -179,7 +179,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                         case DIAL_STATUS_NORMAL:
                             mImageViews[mDialIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
                             mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
-                            //TODO:显示拨号盘
+                            //显示拨号盘
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
                             mFragments[mDialIndex].recieveMsg(msg);
@@ -187,13 +187,13 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                         case DIAL_STATUS_SHOW_KEYBORD:
                             mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
                             mDialStatus = DIAL_STATUS_NORMAL;
-                            //TODO:收起拨号盘
+                            //收起拨号盘
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
                             mFragments[mDialIndex].recieveMsg(msg);
                             break;
                         case DIAL_STATUS_CALL:
-                            //TODO:呼叫电话
+                            //呼叫电话
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID;
                             mFragments[mDialIndex].recieveMsg(msg);

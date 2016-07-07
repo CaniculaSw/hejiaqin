@@ -8,41 +8,6 @@
     <string name="permission_cancel">取消</string>
     <string name="quit_app_toast_msg">再按一次退出程序</string>
 
-    <!-- 登录 -->
-    <string name="login_header_title">登录</string>
-
-
-    <string name="app_introduce">康兮您的私人健康教练</string>
-    <string name="app_copyright">2016 Copyright</string>
-
-    <string name="gender_male">男</string>
-    <string name="gender_female">女</string>
-    <string name="birthday">请选择出生年月</string>
-
-    <string name="prompt_height">请输入身高(cm)</string>
-    <string name="prompt_weight">请输入体重(kg)</string>
-
-
-    <string-array name="interestDesc">
-        <item>健身走</item>
-        <item>健身跑</item>
-        <item>减肥</item>
-        <item>塑形</item>
-        <item>瑜伽</item>
-        <item>太极</item>
-        <item>养生气功</item>
-    </string-array>
-    <string-array name="interestId">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-    </string-array>
-    <string name="action_register_start">开始康兮</string>
-
     <string name="resend_verify_code">重获验证码</string>
 
     <string name="get_verify_code_success">验证码已发送</string>
@@ -70,23 +35,6 @@
     <string name="reset_success">重置成功</string>
     <string name="update_password_success">修改密码成功</string>
 
-    <!-- 生理数据 -->
-    <string name="physical_data_change_success">保存成功</string>
-    <string name="physical_data_change_fail">保存失败</string>
-    <string name="physical_data_tizhi_confirm_to_modify">保存</string>
-    <string name="physical_data_tizhi">体制指标</string>
-    <string name="physical_data_weight">体重</string>
-    <string name="physical_data_tizhi_height">身高</string>
-    <string name="physical_data_shenghua">生化指标</string>
-    <string name="physical_data_xuetang">血糖</string>
-    <string name="physical_data_haoshen">XXML</string>
-    <string name="physical_data_danguchun">胆固醇</string>
-    <string name="physical_data_xx">XX</string>
-
-    <!--使用帮助-->
-    <string name="use_help_title">使用帮助</string>
-    <string name="use_help_back">返回键</string>
-
 
     <!--个人信息-->修改成功
     <string name="no_sdcard_update_header">未找到存储卡，无法存储照片！</string>
@@ -104,6 +52,8 @@
     <string name="prompt_account">请输入账号</string>
     <string name="prompt_password">请输入密码</string>
     <string name="prompt_confirm_password">请再次输入密码</string>
+    <string name="prompt_empty_confirm_password">请输入确认密码</string>
+    <string name="prompt_password_not_the_same">密码和确认密码不一致</string>
     <string name="send_verify_code">获取验证码</string>
     <string name="login">登录</string>
     <string name="prompt_phone_no">请输入手机号码</string>
@@ -111,7 +61,11 @@
     <string name="action_register">提交</string>
     <string name="prompt_verify_code">请输入验证码</string>
     <string name="resend_verify_code_unit">s</string>
-
+    <string name="prompt_return">重新输入</string>
+    <string name="prompt_wrong_phone_no">手机号码格式错误</string>
+    <string name="prompt_wrong_password_format">密码格式错误</string>
+    <string name="prompt_wrong_verify_code_format">验证码格式错误</string>
+    <string name="prompt_wrong_password_or_phone_no">手机号码或密码输入错误</string>
     <string name="reset_password_title">忘记密码</string>
     <!-- 联系人 -->
     <string name="contact_navigation_app_contacts">合家亲</string>
@@ -136,6 +90,14 @@
     <string name="dial_save_contact">保存至和家亲</string>
     <string name="del_all_call_record">删除所有通讯记录</string>
     <string name="del_call_record_cancel">取消</string>
+    <string name="call_outing">正在拨号...</string>
+    <string name="call_mute">静音</string>
+    <string name="call_hangup">挂断</string>
+    <string name="call_switch_camera">切换摄像头</string>
+    <string name="call_coming">邀你视频...</string>
+    <string name="call_answer">接听</string>
+    <string name="call_reject">挂断</string>
+    <string name="call_outing_error">呼叫失败，请稍后重试</string>
 
     <!-- 更多 -->
     <string name="more_tab_name">更多</string>
@@ -183,5 +145,5 @@
     <string name="use_help_main_content_hint">请输入您的意见与建议, 最多可输入200字</string>
     <string name="feed_back_word_count">%s/200</string>
     <string name="use_help_confirm_submit">提交</string>
-
+    <string name="server_side_error">系统异常</string>
 </resources>

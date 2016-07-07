@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
@@ -82,7 +83,13 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 hideKeyPad();
                 break;
             case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID:
-                //TODO CALL
+                // CALL
+                if(inputNumber.length()>0) {
+                    Intent outingIntent = new Intent();
+                    outingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
+                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText());
+                    getContext().startActivity(outingIntent);
+                }
                 break;
         }
     }
@@ -240,6 +247,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     @Override
     protected void initData() {
+        //TODO test
         UserInfo userInfo = new UserInfo();
         userInfo.countryCode="+86";
         userInfo.username = "2886544005";

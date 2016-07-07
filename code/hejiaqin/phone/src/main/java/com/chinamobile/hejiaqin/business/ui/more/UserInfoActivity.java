@@ -18,6 +18,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.LogUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -34,6 +35,8 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
     private UserInfo userInfo;
     private ILoginLogic loginLogic;
     HeaderView header;
+
+    private static final String TAG = "UserInfoActivity";
 
     @Override
     protected int getLayoutId() {
@@ -162,6 +165,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
             if (bitmap != null) {
                 mUserAvatarIv.setImageBitmap(bitmap);
             }
+            LogUtil.i(TAG,"Avatar file is: "+ url);
             UpdatePhotoReq req = new UpdatePhotoReq();
             req.setToken(userInfo.getToken());
             req.setFileName(url);
