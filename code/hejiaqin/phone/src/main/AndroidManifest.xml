@@ -130,6 +130,7 @@
         <activity android:name=".business.ui.more.SelectableContactActivity"></activity>
         <activity android:name=".business.ui.login.ResetPasswordFirstStepActivity"></activity>
         <activity android:name=".business.ui.more.FeedBackActivity"></activity>
+        <activity android:name=".business.ui.more.ShowContractActivity"></activity>
         <activity
             android:name=".business.ui.dial.VideoCallActivity"
             android:launchMode="singleTask"

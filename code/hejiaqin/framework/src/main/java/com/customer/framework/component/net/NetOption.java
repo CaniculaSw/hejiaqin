@@ -78,6 +78,62 @@ public abstract class NetOption
     }
 
     /**
+     * 上传文件
+     *
+     * @param httpCallback 回调对象
+     */
+    protected void uploadDirect(final INetCallBack httpCallback)
+    {
+        ThreadTask runnable = new ThreadTask()
+        {
+            @Override
+            public void run()
+            {
+                //0.网络是否连接，如果网络不是连接之间返回
+
+
+                NetRequest request = buildUploadRequest();
+
+                NetResponse response = NetConnector.uploadDirect(request);
+
+                if (response.getResponseCode() == null)
+                {
+                    response.setResponseCode(NetResponse.ResponseCode.Failed);
+                }
+
+                // 4.在联网正常的情况下，解析数据
+                switch (response.getResponseCode())
+                {
+                    case Succeed:
+                    case BadRequest:
+                    case UnAuthorized:
+                    case Forbidden:
+                    case NotFound:
+                    case Conflict:
+                    case InternalError:
+
+                        if (response.getResponseCode() == NetResponse.ResponseCode.Succeed)
+                        {
+                            parserResultCode(response);
+                            LogUtil.i(TAG, "handleResponse()");
+                            response.setObj(handleResponse(response));
+                        }
+                        break;
+                    default:
+                        // 不可解析的情况，设置结果值是-1
+                        response.setResultCode("-1001");
+
+                        break;
+                }
+                // 5.回调
+                httpCallback.onResult(response);
+            }
+        };
+        //加入线程池运行
+        ThreadPoolUtil.execute(runnable);
+    }
+
+    /**
      * 获取请求的URL
      *
      * @return 返回请求URL
@@ -217,6 +273,22 @@ public abstract class NetOption
      * @return Request 返回请求对象
      */
     protected NetRequest buildRequest()
+    {
+        NetRequest request = new NetRequest();
+        request.setUrl(getUrl());
+        request.setBody(getBody());
+        request.setRequestMethod(getRequestMethod());
+        request.setContentType(getContentType());
+        request.setRequestProperties(getRequestProperties());
+        request.setNeedByte(isNeedByte());
+        request.setGZip(isGZip());
+        request.setConnectionTimeOut(getConnectionTimeOut());
+        request.setReadTOut(getReadTimeOut());
+        request.setTrustAll(isTrustAll());
+        return request;
+    }
+
+    protected NetRequest buildUploadRequest()
     {
         NetRequest request = new NetRequest();
         request.setUrl(getUrl());

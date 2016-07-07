@@ -40,6 +40,15 @@ public abstract class NetOptionWithToken extends NetOption {
         }
     }
 
+    @Override
+    public void uploadDirect(final INetCallBack httpCallback) {
+        if (isNeedToken()) {
+            uploadWithToken(httpCallback);
+        } else {
+            super.uploadDirect(httpCallback);
+        }
+    }
+
     /**
      * 发送Http请求
      *
@@ -61,6 +70,25 @@ public abstract class NetOptionWithToken extends NetOption {
             });
         } else {
             super.send(httpCallback);
+        }
+    }
+
+    private synchronized void uploadWithToken(final INetCallBack httpCallback) {
+        //TODO:如果没有即将超期并且没有正在发送刷新TOKEN请求，直接发送网络请求
+        if (needRefresh() && !isRefreshTokening) {
+            isRefreshTokening = true;
+            new TokenRefreshNetOption().send(new INetCallBack() {
+                @Override
+                public void onResult(NetResponse response) {
+                    //保存token
+                    isRefreshTokening = false;
+                    //TODO 成功了则刷新本地Token数据
+                    //无论是否成功都不影响业务请求的发送
+                    NetOptionWithToken.super.uploadDirect(httpCallback);
+                }
+            });
+        } else {
+            super.uploadDirect(httpCallback);
         }
     }
 

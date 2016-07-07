@@ -81,6 +81,8 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null){
@@ -168,7 +170,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
             LogUtil.i(TAG,"Avatar file is: "+ url);
             UpdatePhotoReq req = new UpdatePhotoReq();
             req.setToken(userInfo.getToken());
-            req.setFileName(url);
+            req.setFile(url);
             loginLogic.updatePhoto(req);
         }
     };

@@ -194,6 +194,11 @@ public class BussinessConstants {
 
         int SHOW_LAUNCH_PAGE_FINISHED = BASE_MSG_ID + 23;
 
+        //修改密码成功的消息ID
+        int UPDATE_PHOTO_SUCCESS_MSG_ID = BASE_MSG_ID + 24;
+        //修改密码失败的消息ID
+        int UPDATE_PHOTO_FAIL_MSG_ID = BASE_MSG_ID + 25;
+
     }
 
     /**
@@ -262,11 +267,11 @@ public class BussinessConstants {
 
         String CALL_ACTION = "android.intent.action.hejiaqin.dial.videocall";
 
-        String INTENT_CALLEE_NUMBER ="intent_callee_number";
+        String INTENT_CALLEE_NUMBER = "intent_callee_number";
 
-        String INTENT_CALL_INCOMING ="intent_call_incoming";
+        String INTENT_CALL_INCOMING = "intent_call_incoming";
 
-        String INTENT_INCOMING_SESSION_ID ="intent_incoming_session_id";
+        String INTENT_INCOMING_SESSION_ID = "intent_incoming_session_id";
 
     }
 
@@ -301,8 +306,8 @@ public class BussinessConstants {
         //登录后获取版本
         String GET_VERSION_AFTER_LOGIN = "getVersionAfterLogin";
 
-
-        String APP_SAVE_PATH = "/kangxi_app/";                  //头像保存路径
+        String VERSION_INFO_KEY = "versionInfoKey";
+        String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
         String APP_IMG_DEFAULT_NAME = "kangxi_app_default_img.jpg"; //头像图片默认名字
         String MORE_SHARE_APP_URL = "http://www.baidu.com";
     }
@@ -328,6 +333,9 @@ public class BussinessConstants {
         int CLEAN_MESSAGES_SELECTED_STATE = BASE_MSG_ID + 2;
         int MESSAGE_FRAGMENT_SWITCH_OFF = BASE_MSG_ID + 3;
         int CONTACT_CHECKED_STATED_CHANGED = BASE_MSG_ID + 4;
+        int SEND_FEED_BACK_SUCCESS = BASE_MSG_ID + 5;
+        int NEW_VERSION_AVAILABLE = BASE_MSG_ID + 6;
+        int NO_NEW_VERSION_AVAILABLE = BASE_MSG_ID + 7;
 
     }
 

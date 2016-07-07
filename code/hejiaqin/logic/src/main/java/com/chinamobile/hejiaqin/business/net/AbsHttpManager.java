@@ -40,6 +40,25 @@ public abstract class AbsHttpManager extends NetOptionWithToken {
         });
     }
 
+
+    protected void uploadDirect(final Object invoker, final IHttpCallBack callBack) {
+
+        super.uploadDirect(new INetCallBack() {
+            @Override
+            public void onResult(NetResponse response) {
+                if (response.getResponseCode() == NetResponse.ResponseCode.Succeed) {
+                    if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())) {
+                        callBack.onSuccessful(invoker, response.getObj());
+                    } else {
+                        callBack.onFailure(invoker, response.getResultCode(), response.getResultDesc());
+                    }
+                } else {
+                    callBack.onNetWorkError(response.getResponseCode());
+                }
+            }
+        });
+    }
+
     @Override
     protected boolean isNeedToken() {
         return true;

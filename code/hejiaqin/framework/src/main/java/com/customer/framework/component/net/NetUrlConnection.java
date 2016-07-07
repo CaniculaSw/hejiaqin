@@ -3,10 +3,14 @@ package com.customer.framework.component.net;
 
 import com.customer.framework.component.net.NetRequest.RequestMethod;
 import com.customer.framework.component.net.NetResponse.ResponseCode;
+import com.customer.framework.utils.FileUtil;
 import com.customer.framework.utils.LogUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,7 +39,7 @@ public class NetUrlConnection
      * 打印日志标示
      */
     private static final String TAG = "HttpUrlConnection";
-
+    private static final String BOUNDARY="----hejiaqinapplicationrequestboundary";
     /**
      * 是否自动重定向
      */
@@ -209,6 +213,197 @@ public class NetUrlConnection
         LogUtil.i(TAG, "Response Code :  " + response.getResponseCode());
         return response;
     }
+
+    /**
+     * 通过HttpURLConnection进行连接建立
+     *
+     * @param request 请求对象
+     * @return 响应对象
+     */
+    public static NetResponse upload(NetRequest request)
+    {
+       final String LINE_FEED = "\r\n";
+       final String TWO_HYPHENS = "--";
+        //创建返回对象
+        NetResponse response = new NetResponse();
+        response.setRequest(request);
+
+        HttpURLConnection httpConn = null;
+
+//        System.setProperty("http.keepAlive", "false");
+        GZIPOutputStream gzos = null;
+        DataOutputStream os = null;
+        try
+        {
+            LogUtil.i(TAG, "request url : " + request.getUrl());
+            URL url = new URL(request.getUrl());
+            if (!url.getProtocol().toLowerCase().equals("https"))
+            {
+                httpConn = (HttpURLConnection) url.openConnection();
+            }
+            else
+            {
+                httpConn = getHttpsConn(url, request);
+            }
+            httpConn.setInstanceFollowRedirects(IS_FOLLOW_REDIRECTS);
+            httpConn.setDoInput(true);
+            httpConn.setDoOutput(true);
+            httpConn.setUseCaches(false);
+            httpConn.setRequestProperty("Connection", "Keep-Alive");
+            httpConn.setRequestProperty("Charset", "UTF-8");
+            setRequestMethod(request, httpConn);
+            setRequestProperty(request, httpConn);
+            httpConn.setConnectTimeout(request.getConnectionTimeOut());
+            httpConn.setReadTimeout(request.getReadTOut());
+            if (request.getBody() != null)
+            {
+                os =new DataOutputStream(httpConn.getOutputStream());
+                LogUtil.i(TAG, "request body : \n" + request.getBody());
+                String[] bodyParameter = request.getBody().split("&");
+                for (String body : bodyParameter){
+                    String[] map = body.split("=");
+                    LogUtil.i(TAG,"Handle body parameter: "+map[0] + "= "+ map[1]);
+                    if (map[0].equals("file")){
+                        File file = FileUtil.getFileByPath(map[1]);
+                        os.writeBytes(TWO_HYPHENS + BOUNDARY + LINE_FEED);
+                        os.writeBytes("Content-Disposition: form-data; name=\"" + map[0] + "\"; filename=\"" + file.getName() + LINE_FEED);
+//                        os.writeBytes("Content-Type: " +  FileUtil.getMIMEType(file.getName()) + LINE_FEED);
+                        os.writeBytes("Content-Type: application/octet-stream"+ LINE_FEED);
+//                        os.writeBytes("Content-Transfer-Encoding: binary" + LINE_FEED);
+                        os.writeBytes(LINE_FEED);
+
+                        FileInputStream inputStream = new FileInputStream(file);
+                        int bytesAvailable = inputStream.available();
+                        int maxBufferSize = 1024;
+                        int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        byte[] buffer = new byte[bufferSize];
+                        int count = 0;
+                        // read file and write it into form...
+                        int bytesRead = inputStream.read(buffer, 0, bufferSize);
+                        while (bytesRead > 0) {
+                            count+=bytesRead;
+                            os.write(buffer, 0, bufferSize);
+                            bytesAvailable = inputStream.available();
+                            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                            bytesRead = inputStream.read(buffer, 0, bufferSize);
+                        }
+                        inputStream.close();
+                        inputStream = null;
+                        LogUtil.i(TAG,"Writted byte is: "+count);
+                        LogUtil.i(TAG,"The length of file is: "+file.length());
+                        os.writeBytes(LINE_FEED);
+                    }else {
+                        os.writeBytes(TWO_HYPHENS + BOUNDARY + LINE_FEED);
+                        os.writeBytes("Content-Disposition: form-data; name=\"" + map[0] + "\"" + LINE_FEED);
+                        os.writeBytes(LINE_FEED);
+                        os.writeBytes(map[1] + LINE_FEED);
+                    }
+                }
+                os.writeBytes(TWO_HYPHENS + BOUNDARY + TWO_HYPHENS + LINE_FEED);
+                os.writeBytes(LINE_FEED);
+                os.flush();
+            }
+            int responseCode = initResponseCode(response, httpConn);
+            switch (responseCode)
+            {
+                case HttpURLConnection.HTTP_BAD_REQUEST:
+                case HttpURLConnection.HTTP_FORBIDDEN:
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                case HttpURLConnection.HTTP_CONFLICT:
+                case HttpURLConnection.HTTP_INTERNAL_ERROR:
+                case HttpURLConnection.HTTP_OK:
+                case HttpURLConnection.HTTP_CREATED:
+                    setResponseData(request, response, httpConn, false);
+                    LogUtil.w(TAG, "Response Code:" + responseCode + ",URL=" + request.getUrl());
+                    break;
+                default:
+                    response.setResponseCode(ResponseCode.Failed);
+                    response.setData(Integer.toString(responseCode));
+                    break;
+            }
+        }
+        catch (SocketTimeoutException e)
+        {
+            e.printStackTrace();
+            response.setResponseCode(ResponseCode.Timeout);
+        }
+        catch (ConnectException e)
+        {
+            LogUtil.e(TAG, "HttpConnector exception!");
+            response.setResponseCode(ResponseCode.NetworkError);
+        }
+        catch (SocketException se)
+        {
+            response.setResponseCode(ResponseCode.NetworkError);
+        }
+        catch (MalformedURLException e)
+        {
+            response.setResponseCode(ResponseCode.ParamError);
+        }
+        catch (IOException e)
+        {
+            if (httpConn != null)
+            {
+                try
+                {
+                    int responseCode = initResponseCode(response, httpConn);
+                    if (HttpURLConnection.HTTP_UNAUTHORIZED == responseCode || HttpURLConnection.HTTP_FORBIDDEN == responseCode || HttpURLConnection.HTTP_BAD_REQUEST == responseCode || HttpURLConnection.HTTP_NOT_FOUND == responseCode || HttpURLConnection.HTTP_CONFLICT == responseCode || HttpURLConnection.HTTP_INTERNAL_ERROR == responseCode)
+                    {
+                        setResponseData(request, response, httpConn, true);
+                    }
+                    LogUtil.i(TAG, "IOException getrespCode:" + responseCode);
+                }
+                catch (IOException ex)
+                {
+                    response.setResponseCode(ResponseCode.Failed);
+                }
+                finally
+                {
+                    httpConn.disconnect();
+                }
+                LogUtil.i(TAG, "HttpConnector IOException ......!");
+            }
+        }
+        finally
+        {
+            if (httpConn != null)
+            {
+                try
+                {
+                    httpConn.disconnect();
+                }
+                catch (Exception e)
+                {
+                    LogUtil.e(TAG, "httpConn disconnect exception!");
+                }
+            }
+            if (os != null)
+            {
+                try
+                {
+                    os.close();
+                }
+                catch (Exception e)
+                {
+                    LogUtil.e(TAG, "  os.close(); exception!");
+                }
+            }
+            if (gzos != null)
+            {
+                try
+                {
+                    gzos.close();
+                }
+                catch (Exception e)
+                {
+                    LogUtil.e(TAG, "  gzos.close(); exception!");
+                }
+            }
+        }
+        LogUtil.i(TAG, "Response Code :  " + response.getResponseCode());
+        return response;
+    }
+
 
     /**
      * 读取http响应的数据
@@ -397,7 +592,7 @@ public class NetUrlConnection
             httpConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         }
         else if (request.getContentType() == NetRequest.ContentType.FORM_DATA){
-            httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=----hejiaqinapplicationrequestboundary");
+            httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary="+BOUNDARY);
 
         }
 

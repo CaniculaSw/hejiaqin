@@ -76,12 +76,12 @@ public class LoginHttpManager extends AbsHttpManager {
     /**
      * 修改用户头像
      */
-    private final int update_photo = action_base + 11 ;
+    private final int update_photo = action_base + 11;
 
     /**
      * 用户反馈
      */
-    private final int feed_back = action_base + 12 ;
+    private final int feed_back = action_base + 12;
 
     /**
      * 忘记密码-获取短信验证码
@@ -234,7 +234,7 @@ public class LoginHttpManager extends AbsHttpManager {
 
     @Override
     protected NetRequest.ContentType getContentType() {
-        switch (this.mAction){
+        switch (this.mAction) {
             case update_photo:
                 return NetRequest.ContentType.FORM_DATA;
         }
@@ -248,7 +248,7 @@ public class LoginHttpManager extends AbsHttpManager {
             try {
                 String data = "";
                 JSONObject rootJsonObj = new JSONObject(response.getData());
-                if (rootJsonObj.has("data")){
+                if (rootJsonObj.has("data")) {
                     data = rootJsonObj.get("data").toString();
                 }
 
@@ -273,6 +273,9 @@ public class LoginHttpManager extends AbsHttpManager {
                     case update_pwd_action:
                         break;
                     case feed_back:
+                        break;
+                    case update_photo:
+                        obj = gson.fromJson(data, UserInfo.class);
                         break;
                     default:
                         break;
@@ -387,13 +390,13 @@ public class LoginHttpManager extends AbsHttpManager {
         send(invoker, callBack);
     }
 
-    public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto, final IHttpCallBack callBack){
+    public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto, final IHttpCallBack callBack) {
         this.mAction = update_photo;
         this.mData = updatePhoto;
-        send(invoker, callBack);
+        uploadDirect(invoker, callBack);
     }
 
-    public void feedBack(final Object invoker, final FeedBackReq feedBackReq, final IHttpCallBack callBack){
+    public void feedBack(final Object invoker, final FeedBackReq feedBackReq, final IHttpCallBack callBack) {
         this.mAction = feed_back;
         this.mData = feedBackReq;
         send(invoker, callBack);

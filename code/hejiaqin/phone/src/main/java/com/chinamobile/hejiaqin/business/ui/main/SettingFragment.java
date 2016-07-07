@@ -21,6 +21,7 @@ import com.chinamobile.hejiaqin.business.ui.more.MoreFunActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ShareAppActivity;
 import com.chinamobile.hejiaqin.business.ui.more.UserInfoActivity;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,6 +46,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     HeaderView moreHeader;
     private ILoginLogic loginLogic;
     private UserInfo userInfo;
+
+    private static final String TAG = "SettingFragment";
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -99,7 +102,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     @Override
     protected void initData() {
         userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-        if (null != userInfo){
+        if (null != userInfo) {
             userAccountTv.setText(userInfo.getUserName());
             Picasso.with(SettingFragment.this.getContext())
                     .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm())
@@ -142,6 +145,24 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
     }
+
+    @Override
+    public void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+        switch (msg.what) {
+            case BussinessConstants.LoginMsgID.UPDATE_PHOTO_SUCCESS_MSG_ID:
+                userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                if (null != userInfo && !StringUtil.isNullOrEmpty(userInfo.getPhotoSm())) {
+                    Picasso.with(SettingFragment.this.getActivity().getApplicationContext())
+                            .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm()).into(userAvatarIv);
+                }
+
+                break;
+            default:
+                break;
+        }
+    }
+
 
     private void jumpToDetailUserProfile() {
         Intent intent = new Intent(getContext(), UserInfoActivity.class);

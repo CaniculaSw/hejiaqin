@@ -19,4 +19,15 @@ public class NetConnector
         }
         return NetUrlConnection.connect(request);
     }
+
+    public static NetResponse uploadDirect(NetRequest request)
+    {
+        if (StringUtil.isNullOrEmpty(request.getUrl()))
+        {
+            NetResponse response = new NetResponse();
+            response.setResponseCode(NetResponse.ResponseCode.ParamError);
+            return response;
+        }
+        return NetUrlConnection.upload(request);
+    }
 }

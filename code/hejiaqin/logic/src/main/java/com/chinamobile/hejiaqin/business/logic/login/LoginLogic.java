@@ -371,7 +371,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).updatePhoto(null, updatePhoto, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
+                UserInfo userInfo = (UserInfo) obj;
+                UserInfo oldUserInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                oldUserInfo.setPhotoLg(userInfo.getPhotoLg());
+                oldUserInfo.setPhotoSm(userInfo.getPhotoSm());
+                UserInfoCacheManager.saveUserToLoacl(getContext(), oldUserInfo, StorageMgr.getInstance().getSharedPStorage(getContext()).getLong(BussinessConstants.Login.TOKEN_DATE));
+                loadUserFromLocal();
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -382,7 +388,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID,response);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_FAIL_MSG_ID,response);
             }
 
             @Override
@@ -397,18 +403,19 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).feedBack(null, feedBackReq, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                if (isCommonFailRes(code, desc)) {
-                    return;
-                }
-                FailResponse response = new FailResponse();
-                response.setCode(code);
-                response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, response);
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
+//                if (isCommonFailRes(code, desc)) {
+//                    return;
+//                }
+//                FailResponse response = new FailResponse();
+//                response.setCode(code);
+//                response.setMsg(desc);
+//                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, response);
             }
 
             @Override

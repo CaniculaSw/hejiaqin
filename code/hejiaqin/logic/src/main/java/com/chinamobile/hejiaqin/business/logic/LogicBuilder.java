@@ -6,8 +6,8 @@ import com.chinamobile.hejiaqin.business.logic.contacts.ContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.login.LoginLogic;
-import com.chinamobile.hejiaqin.business.logic.more.IMoreLogic;
-import com.chinamobile.hejiaqin.business.logic.more.MoreLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.SettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.customer.framework.logic.BuilderImp;
@@ -51,7 +51,7 @@ public class LogicBuilder extends BuilderImp {
     protected void init(Context context) {
         //注册LoginLogic
         super.registerLogic(ILoginLogic.class, new LoginLogic());
-        super.registerLogic(IMoreLogic.class, new MoreLogic());
+        super.registerLogic(ISettingLogic.class, new SettingLogic());
         super.registerLogic(IContactsLogic.class, new ContactsLogic());
         VoipLogic voipLogic = VoipLogic.getInstance(context);
         super.registerLogic(IVoipLogic.class, voipLogic);

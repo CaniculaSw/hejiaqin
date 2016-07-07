@@ -133,7 +133,6 @@ public class SettingHttpmanager extends AbsHttpManager {
                 if (rootJsonObj.has("data")){
                     data = rootJsonObj.get("data").toString();
                 }
-
                 Gson gson = new Gson();
                 switch (this.mAction) {
                     case check_android_version:

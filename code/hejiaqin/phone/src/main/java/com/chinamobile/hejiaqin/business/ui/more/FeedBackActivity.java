@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
+import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -114,6 +116,19 @@ public class FeedBackActivity extends BasicActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+        switch (msg.what){
+            case BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS:
+                showToast(getString(R.string.prompt_feedback_ok),Toast.LENGTH_SHORT,null);
+                doBack();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void feedback() {
         if (feedBackContentEt.getText().length() > 0) {
             FeedBackReq reqBody = new FeedBackReq();
@@ -121,6 +136,8 @@ public class FeedBackActivity extends BasicActivity implements View.OnClickListe
             reqBody.setToken(userInfo.getToken());
             reqBody.setContent(feedBackContentEt.getText().toString());
             loginLogic.feedBack(reqBody);
+        }else {
+            showToast(getString(R.string.prompt_empty_feedback_content), Toast.LENGTH_LONG,null);
         }
     }
 }

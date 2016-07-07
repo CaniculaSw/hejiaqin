@@ -112,7 +112,7 @@ public class CommonUtils {
 
             f.createNewFile();
             fOut = new FileOutputStream(f);
-            mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
             fOut.flush();
         } catch (Exception e) {
             e.printStackTrace();

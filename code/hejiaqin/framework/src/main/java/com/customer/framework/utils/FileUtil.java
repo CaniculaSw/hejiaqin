@@ -698,4 +698,21 @@ public final class FileUtil {
     public static String getAppPackagePath(Context context) {
         return context.getFilesDir().getParent();
     }
+
+    public static String getFileFromAssets(String fileName, Context context) {
+        String result = "";
+        InputStream inputStream = null;
+        try {
+            inputStream = context.getResources().getAssets().open(fileName);
+            int length = inputStream.available();
+            byte[] buffer = new byte[length];
+            int len = inputStream.read(buffer);
+            result = new String(buffer, "UTF-8");
+        } catch (Exception e) {
+            LogUtil.e(TAG, "getFileFromAssets", e);
+        } finally {
+            closeStream(inputStream);
+        }
+        return result;
+    }
 }

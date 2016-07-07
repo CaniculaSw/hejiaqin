@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.logic.more.IMoreLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.customer.framework.utils.SystemUtil;
@@ -19,7 +19,8 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
     private HeaderView headerView;
     private LinearLayout feedBackLL;
     private LinearLayout checkUpdateLL;
-    private IMoreLogic settingLogic;
+    private LinearLayout showContract;
+    private ISettingLogic settingLogic;
 
     @Override
     protected int getLayoutId() {
@@ -36,6 +37,7 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
 
         feedBackLL = (LinearLayout) findViewById(R.id.about_feedback);
         checkUpdateLL = (LinearLayout) findViewById(R.id.about_check_update);
+        showContract = (LinearLayout) findViewById(R.id.about_contract);
     }
 
     @Override
@@ -46,6 +48,8 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         feedBackLL.setOnClickListener(this);
         checkUpdateLL.setClickable(true);
         checkUpdateLL.setOnClickListener(this);
+        showContract.setClickable(true);
+        showContract.setOnClickListener(this);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
 
     @Override
     protected void initLogics() {
-        settingLogic = (IMoreLogic) getLogicByInterfaceClass(IMoreLogic.class);
+        settingLogic = (ISettingLogic) getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -68,6 +72,7 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
                 settingLogic.checkVersion();
                 break;
             case R.id.about_contract:
+                jumpToShowContract();
                 break;
             case R.id.back_iv:
                 doBack();
@@ -79,6 +84,11 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
 
     private void jumpToFeedBack() {
         Intent intent = new Intent(AboutActivity.this, FeedBackActivity.class);
+        startActivity(intent);
+    }
+
+    private void jumpToShowContract() {
+        Intent intent = new Intent(AboutActivity.this, ShowContractActivity.class);
         startActivity(intent);
     }
 
