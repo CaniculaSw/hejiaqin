@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,8 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.view.SearchView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
+import com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.SysContactAdapter;
 import com.customer.framework.utils.LogUtil;
 
@@ -26,7 +27,6 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     private static final String TAG = "SysContactListFragment";
     private IContactsLogic contactsLogic;
     private SysContactAdapter adapter;
-    private SearchView searchView;
     private TextView searchText;
 
     @Override
@@ -40,11 +40,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
             case BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
-                searchView.setHint(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
                 searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
-                break;
-            case BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID:
-                searchView.setData((List<ContactsInfo>) msg.obj);
                 break;
         }
     }
@@ -69,19 +65,6 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         searchText = (TextView) searchLayout.findViewById(R.id.contact_search_text);
         // 添加点击事件
         searchLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
-
-        searchView = (SearchView) view.findViewById(R.id.search_view);
-        searchView.setListener(new SearchView.ISearchListener() {
-            @Override
-            public void search(String input) {
-                contactsLogic.searchLocalContactLst(input);
-            }
-
-            @Override
-            public void cancel() {
-                enterNormalView();
-            }
-        });
 
         adapter = new SysContactAdapter(this.getContext());
         contactListView.setAdapter(adapter);
@@ -109,16 +92,10 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     }
 
     private void enterSearchView() {
-        // 隐藏title
-        this.mListener.onAction(BussinessConstants.ContactMsgID.UI_HIDE_CCONTACT_LIST_TITLE_ID, null);
-        // 显示searchView
-        searchView.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(getContext(), ContactSearchActivity.class);
+        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
+                , ContactSearchActivity.Constant.CONTACT_TYPE_SYS);
+        startActivity(intent);
     }
 
-    private void enterNormalView() {
-        // 显示title
-        this.mListener.onAction(BussinessConstants.ContactMsgID.UI_SHOW_CCONTACT_LIST_TITLE_ID, null);
-        // 隐藏searchView
-        searchView.setVisibility(View.GONE);
-    }
 }

@@ -71,6 +71,7 @@
     <string name="contact_navigation_app_contacts">合家亲</string>
     <string name="contact_navigation_sys_contacts">通讯录</string>
     <string name="contact_search_hint_text">在%s个人中搜索</string>
+    <string name="contact_search_content_head_text">联系人</string>
     <string name="contact_modify_title_add_text">新增联系人</string>
     <string name="contact_modify_title_edit_text">编辑联系人</string>
     <string name="contact_modify_head_text">头像</string>
