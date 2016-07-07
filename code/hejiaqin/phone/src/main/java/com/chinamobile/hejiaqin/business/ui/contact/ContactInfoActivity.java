@@ -23,6 +23,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.AddContactDialog;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
@@ -192,7 +193,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         return dialInfoList;
     }
 
-    private void showData() {
+    private void showContactData() {
 
         // TODO 修改联系人头像
 
@@ -201,6 +202,14 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACT_INFO_INDEX);
         contactInfoFragment.setContactsInfo(mContactsInfo);
         contactInfoFragment.refreshView();
+    }
+
+    private void showDialData() {
+        DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIAL_INFO_INDEX);
+        dialInfoFragment.setDialInfo(new ArrayList<DialInfoGroup>());
+        dialInfoFragment.refreshView();
+
+        showViewByCurIndex(currentIndex);
     }
 
     @Override
@@ -237,6 +246,12 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     private void doClickTitleRight() {
         // 拨号详情tab页
         if (currentIndex == DIAL_INFO_INDEX) {
+            if (!isDialInfoHasData()) {
+                return;
+            }
+
+            showDeleteDialDialog();
+
             return;
         }
 
@@ -250,6 +265,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         showAddContactDialog();
 
     }
+
 
     @Override
     protected void handleStateMessage(Message msg) {
@@ -273,6 +289,39 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_failed_toast);
         }
+    }
+
+    private void showDeleteDialDialog() {
+
+        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this, R.style.CalendarDialog);
+        Window window = delCallRecordDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        delCallRecordDialog.setCancelable(true);
+        delCallRecordDialog.show();
+
+        delCallRecordDialog.delLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 拨号逻辑接口删除通话记录 TODO
+
+                // 这里先删除测试数据
+                showDialData();
+
+                delCallRecordDialog.dismiss();
+            }
+        });
+
+        delCallRecordDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delCallRecordDialog.dismiss();
+            }
+        });
     }
 
     private void showAddContactDialog() {
@@ -353,7 +402,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                     ContactsInfo newContactsInfo = (ContactsInfo) data.getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
                     if (null != newContactsInfo) {
                         mContactsInfo = newContactsInfo;
-                        showData();
+                        showContactData();
                     }
                 }
                 break;
@@ -423,7 +472,13 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_pre);
             mDialInfoSelected.setVisibility(View.VISIBLE);
             mDialInfoUnSelected.setVisibility(View.GONE);
-            titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_delete_dis);
+            titleLayout.rightBtn.setImageResource(isDialInfoHasData() ? R.mipmap.title_icon_delete_nor
+                    : R.mipmap.title_icon_delete_dis);
         }
+    }
+
+    private boolean isDialInfoHasData() {
+        DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIAL_INFO_INDEX);
+        return dialInfoFragment.hasData();
     }
 }

@@ -88,4 +88,5 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             contactInfoLayout.addView(contactNumberView);
         }
     }
+
 }

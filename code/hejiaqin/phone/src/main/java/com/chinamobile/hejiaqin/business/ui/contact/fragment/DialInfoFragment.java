@@ -112,6 +112,10 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
         }
     }
 
+    public boolean hasData() {
+        return null != mDialInfoGroupList && !mDialInfoGroupList.isEmpty();
+    }
+
     private int getIconResIdByDialType(DialInfo.Type type) {
         if (null == type) {
             return R.mipmap.icon_incoming;
