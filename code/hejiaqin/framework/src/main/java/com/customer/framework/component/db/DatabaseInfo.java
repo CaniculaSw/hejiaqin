@@ -206,6 +206,8 @@ public class DatabaseInfo {
         public static final String NUMBER = "number";
         public static final String NUMBER_TYPE = "number_type";
         public static final String NUMBER_DESC = "number_desc";
+        public static final String PHOTO_LG = "photo_lg";
+        public static final String PHOTO_SM = "photo_sm";
 
         public static final String SQL_SElECT_ALL = new StringBuffer("select * from ")
                 .append(TABLE_NAME).toString();

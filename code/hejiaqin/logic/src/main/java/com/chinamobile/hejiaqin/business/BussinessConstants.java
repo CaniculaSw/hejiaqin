@@ -227,13 +227,26 @@ public class BussinessConstants {
 
         // 获取应用联系人成功的消息ID
         int GET_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 3;
+        // 获取应用联系人失败消息ID
+        int GET_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 4;
         // 搜索应用联系人成功的消息ID
-        int SEARCH_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 4;
+        int SEARCH_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 5;
 
         // 添加应用联系人成功的消息ID
-        int ADD_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 5;
+        int ADD_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 6;
         // 添加应用联系人失败的消息ID
-        int ADD_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 6;
+        int ADD_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 7;
+
+        // 修改应用联系人成功的消息ID
+        int EDIT_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 8;
+        // 修改应用联系人失败的消息ID
+        int EDIT_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 9;
+
+
+        // 删除应用联系人成功的消息ID
+        int DEL_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 10;
+        // 删除应用联系人失败的消息ID
+        int DEL_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 11;
 
         // handleFragmentMessage
         // 隐藏联系人列表的title

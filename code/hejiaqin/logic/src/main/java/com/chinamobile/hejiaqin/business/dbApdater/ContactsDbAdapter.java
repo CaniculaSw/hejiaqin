@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.customer.framework.component.db.DatabaseHelper;
 import com.customer.framework.component.db.DatabaseInfo;
 import com.customer.framework.component.db.operation.BaseDbAdapter;
@@ -48,9 +49,35 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         List<DbOperation> operationList = new ArrayList<DbOperation>();
         for (ContactsInfo contactsInfo : contactsInfoList) {
             List<ContentValues> contentValuesList = getCVByContactsInfo(contactsInfo);
-            for (ContentValues contentValues : contentValuesList) {
-                operationList.add(DbOperation.newInsert(DatabaseInfo.ContactsInfo.TABLE_NAME).withValues(contentValues).build());
+            if (null == contentValuesList || contentValuesList.isEmpty()) {
+                continue;
             }
+
+            for (ContentValues contentValues : contentValuesList) {
+                operationList.add(DbOperation.newInsert(DatabaseInfo.ContactsInfo.TABLE_NAME)
+                        .withValues(contentValues).build());
+            }
+        }
+        super.applyBatch(operationList);
+    }
+
+    public void update(ContactsInfo contactsInfo) {
+        if (null == contactsInfo) {
+            return;
+        }
+
+        List<ContentValues> contentValuesList = getCVByContactsInfo(contactsInfo);
+        if (null == contentValuesList || contentValuesList.isEmpty()) {
+            return;
+        }
+
+        String selection = DatabaseInfo.ContactsInfo.CONTACT_ID + " = ? ";
+        String[] selectionArgs = {contactsInfo.getContactId()};
+
+        List<DbOperation> operationList = new ArrayList<DbOperation>();
+        for (ContentValues contentValues : contentValuesList) {
+            operationList.add(DbOperation.newUpdate(DatabaseInfo.ContactsInfo.TABLE_NAME)
+                    .withSelection(selection, selectionArgs).withValues(contentValues).build());
         }
         super.applyBatch(operationList);
     }
@@ -64,36 +91,38 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
 
         while (cursor.moveToNext()) {
+            ContactBean contactBean = new ContactBean();
+            contactBean.setContactId(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.ContactsInfo.CONTACT_ID)));
             // 得到联系人姓名
-            String contactName = cursor.getString(cursor
-                    .getColumnIndex(DatabaseInfo.ContactsInfo.NAME));
-
-            NumberInfo numberInfo = new NumberInfo();
+            contactBean.setName(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.ContactsInfo.NAME)));
             // 得到手机号码
-            numberInfo.setNumber(cursor.getString(cursor
+            contactBean.setPhone(cursor.getString(cursor
                     .getColumnIndex(DatabaseInfo.ContactsInfo.NUMBER)));
-            // 得到号码类型
-            numberInfo.setType(cursor.getInt(cursor
-                    .getColumnIndex(DatabaseInfo.ContactsInfo.NUMBER_TYPE)));
-            contactList.addLocalContact(contactName, numberInfo);
+            contactBean.setPhotoLg(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.ContactsInfo.PHOTO_LG)));
+            contactBean.setPhotoSm(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.ContactsInfo.PHOTO_SM)));
+            contactList.addAppContact(contactBean);
         }
         return contactList.get();
     }
 
 
     /**
-     * 根据ids删除
+     * 根据conntactId删除
      *
-     * @param ids
+     * @param conntactId
      */
-    public void delById(String[] ids) {
-        if (ids == null || ids.length == 0) {
+    public void delByContactId(String conntactId) {
+        if (conntactId == null) {
             return;
         }
         List<DbOperation> operationList = new ArrayList<DbOperation>();
-        for (int i = 0; i < ids.length; i++) {
-            operationList.add(DbOperation.newDelete(DatabaseInfo.ContactsInfo.TABLE_NAME).withSelection(DatabaseInfo.CallRecord.TABLE_ID + " = ? ", new String[]{ids[i]}).build());
-        }
+        operationList.add(DbOperation.newDelete(DatabaseInfo.ContactsInfo.TABLE_NAME)
+                .withSelection(DatabaseInfo.ContactsInfo.CONTACT_ID + " = ? ", new String[]{conntactId})
+                .build());
         super.applyBatch(operationList);
     }
 
@@ -120,7 +149,9 @@ public class ContactsDbAdapter extends BaseDbAdapter {
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER, numberInfo.getNumber());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_DESC, numberInfo.getDesc());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_TYPE, numberInfo.getType());
-            contentValues.put(DatabaseInfo.ContactsInfo.CONTACT_ID, contactsInfo.getName() + numberInfo.getNumber());
+            contentValues.put(DatabaseInfo.ContactsInfo.CONTACT_ID, contactsInfo.getContactId());
+            contentValues.put(DatabaseInfo.ContactsInfo.PHOTO_LG, contactsInfo.getPhotoLg());
+            contentValues.put(DatabaseInfo.ContactsInfo.PHOTO_SM, contactsInfo.getPhotoSm());
             contentValuesList.add(contentValues);
         }
         return contentValuesList;

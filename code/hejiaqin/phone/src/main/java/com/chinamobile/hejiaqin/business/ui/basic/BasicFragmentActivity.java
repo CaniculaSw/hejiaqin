@@ -152,6 +152,10 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         return LogicBuilder.getInstance(context);
     }
 
+    protected void showToast(int resId) {
+        myToast.showToast(resId, Toast.LENGTH_SHORT, null);
+    }
+
     protected void showToast(int resId, int duration, MyToast.Position pos) {
         myToast.showToast(resId, duration, pos);
     }

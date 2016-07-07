@@ -1,20 +1,29 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
-import android.media.Image;
+import android.content.Intent;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.AddContactDialog;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
@@ -24,6 +33,8 @@ import java.util.List;
 
 
 public class ContactInfoActivity extends BasicFragmentActivity implements View.OnClickListener {
+    public static final int REQUEST_CODE_EDIT_CONTACT = 10001;
+
     private HeaderView titleLayout;
     private TextView mContactNameText;
     private ImageView mContactHeadImg;
@@ -59,6 +70,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private ContactsInfo mContactsInfo;
 
+    private IContactsLogic contactsLogic;
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
 
@@ -67,7 +79,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     @Override
     protected void initLogics() {
-
+        contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
@@ -79,7 +91,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     protected void initView() {
         // title
         titleLayout = (HeaderView) findViewById(R.id.title);
-        titleLayout.title.setText(R.string.contact_modify_title_add_text);
+        titleLayout.title.setText(R.string.contact_info_title_text);
         titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
         // 联系人姓名
@@ -119,11 +131,76 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         BasicFragment dialInfoFragment = new DialInfoFragment();
         dialInfoFragment.setActivityListener(listener);
-        ((DialInfoFragment) dialInfoFragment).setContactsInfo(mContactsInfo);
+        ((DialInfoFragment) dialInfoFragment).setDialInfo(genDialInfoGroup());
         fragmentList.add(dialInfoFragment);
 
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         showViewByCurIndex(mViewPager.getCurrentItem());
+    }
+
+    private List<DialInfoGroup> genDialInfoGroup() {
+        List<DialInfoGroup> dialInfoGroupList = new ArrayList<>();
+
+
+        DialInfoGroup group1 = new DialInfoGroup();
+        group1.setGroupName("今天");
+        group1.setDialInfoList(genDialInfoList());
+        dialInfoGroupList.add(group1);
+
+        DialInfoGroup group2 = new DialInfoGroup();
+        group2.setGroupName("周一");
+        group2.setDialInfoList(genDialInfoList());
+        dialInfoGroupList.add(group2);
+
+
+        DialInfoGroup group3 = new DialInfoGroup();
+        group3.setGroupName("周日");
+        group3.setDialInfoList(genDialInfoList());
+        dialInfoGroupList.add(group3);
+        return dialInfoGroupList;
+    }
+
+    private List<DialInfo> genDialInfoList() {
+        List<DialInfo> dialInfoList = new ArrayList<>();
+        DialInfo dialInfo1 = new DialInfo();
+        dialInfo1.setType(DialInfo.Type.in);
+        dialInfoList.add(dialInfo1);
+
+        DialInfo dialInfo2 = new DialInfo();
+        dialInfo2.setType(DialInfo.Type.in);
+        dialInfoList.add(dialInfo2);
+
+        DialInfo dialInfo3 = new DialInfo();
+        dialInfo3.setType(DialInfo.Type.out);
+        dialInfoList.add(dialInfo3);
+
+        DialInfo dialInfo4 = new DialInfo();
+        dialInfo4.setType(DialInfo.Type.missed);
+        dialInfoList.add(dialInfo4);
+
+        DialInfo dialInfo5 = new DialInfo();
+        dialInfo5.setType(DialInfo.Type.reject);
+        dialInfoList.add(dialInfo5);
+
+        DialInfo dialInfo6 = new DialInfo();
+        dialInfo6.setType(DialInfo.Type.in);
+        dialInfoList.add(dialInfo6);
+
+        DialInfo dialInfo7 = new DialInfo();
+        dialInfo7.setType(DialInfo.Type.out);
+        dialInfoList.add(dialInfo7);
+        return dialInfoList;
+    }
+
+    private void showData() {
+
+        // TODO 修改联系人头像
+
+        mContactNameText.setText(mContactsInfo.getName());
+
+        ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACT_INFO_INDEX);
+        contactInfoFragment.setContactsInfo(mContactsInfo);
+        contactInfoFragment.refreshView();
     }
 
     @Override
@@ -136,7 +213,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.right_btn:
-                // TODO
+                doClickTitleRight();
                 break;
             case R.id.back_iv:
                 this.finish();
@@ -155,6 +232,125 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 // TODO
                 break;
         }
+    }
+
+    private void doClickTitleRight() {
+        // 拨号详情tab页
+        if (currentIndex == DIAL_INFO_INDEX) {
+            return;
+        }
+
+        // 联系人信息页
+        // 合家亲联系人
+        if (isAppContact()) {
+            showEditContactDialog();
+            return;
+        }
+        // 通讯录联系人
+        showAddContactDialog();
+
+    }
+
+    @Override
+    protected void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+        switch (msg.what) {
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_add_contact_success_toast);
+                break;
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_add_contact_failed_toast);
+                break;
+        }
+    }
+
+    private void showAddContactDialog() {
+        final AddContactDialog addContactDialog = new AddContactDialog(this, R.style.CalendarDialog);
+        Window window = addContactDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        addContactDialog.setCancelable(true);
+        addContactDialog.show();
+
+        addContactDialog.addLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contactsLogic.addAppContact(mContactsInfo);
+                addContactDialog.dismiss();
+            }
+        });
+
+        addContactDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addContactDialog.dismiss();
+            }
+        });
+    }
+
+
+    private void showEditContactDialog() {
+        final EditContactDialog editContactDialog = new EditContactDialog(this, R.style.CalendarDialog);
+        Window window = editContactDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        editContactDialog.setCancelable(true);
+        editContactDialog.show();
+
+        editContactDialog.editLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editContactDialog.dismiss();
+                Intent intent = new Intent(ContactInfoActivity.this, ModifyContactActivity.class);
+                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mContactsInfo);
+                startActivityForResult(intent, REQUEST_CODE_EDIT_CONTACT);
+            }
+        });
+
+        editContactDialog.delLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editContactDialog.dismiss();
+                contactsLogic.deleteAppContact(mContactsInfo.getContactId());
+            }
+        });
+
+        editContactDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editContactDialog.dismiss();
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_EDIT_CONTACT:
+                if (null != data) {
+                    ContactsInfo newContactsInfo = (ContactsInfo) data.getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+                    if (null != newContactsInfo) {
+                        mContactsInfo = newContactsInfo;
+                        showData();
+                    }
+                }
+                break;
+        }
+    }
+
+    private boolean isAppContact() {
+        return mContactsInfo.getContactMode() == ContactsInfo.ContactMode.app;
     }
 
     //手动设置ViewPager要显示的视图
@@ -207,8 +403,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_nor);
             mDialInfoSelected.setVisibility(View.GONE);
             mDialInfoUnSelected.setVisibility(View.VISIBLE);
-            titleLayout.rightBtn.setImageResource(mContactsInfo.getContactMode() == ContactsInfo.ContactMode.system
-                    ? R.mipmap.title_icon_add_nor : R.mipmap.title_icon_more_nor);
+            titleLayout.rightBtn.setImageResource(isAppContact()
+                    ? R.mipmap.title_icon_more_nor : R.mipmap.title_icon_add_nor);
         } else if (currentItem == DIAL_INFO_INDEX) {
             mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_nor);
             mContactInfoSelected.setVisibility(View.GONE);

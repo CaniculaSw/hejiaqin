@@ -50,20 +50,13 @@ public class ContactList {
             return;
         }
 
-        ContactsInfo tmpContactsInfo = contactsInfoMap.get(contactBean.getName());
+        ContactsInfo tmpContactsInfo = contactsInfoMap.get(contactBean.getContactId());
         if (null == tmpContactsInfo) {
-            tmpContactsInfo = new ContactsInfo();
-            tmpContactsInfo.setName(contactBean.getName());
-
-            NumberInfo numberInfo = new NumberInfo();
-            numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
-            numberInfo.setNumber(contactBean.getPhone());
-            tmpContactsInfo.addNumber(numberInfo);
-
-            tmpContactsInfo.setContactMode(ContactsInfo.ContactMode.app);
-            tmpContactsInfo.setPhotoLg(contactBean.getPhotoLg());
-            tmpContactsInfo.setPhotoSm(contactBean.getPhotoSm());
-            contactsInfoMap.put(contactBean.getName(), tmpContactsInfo);
+            tmpContactsInfo = convert(contactBean);
+            if (null == tmpContactsInfo) {
+                return;
+            }
+            contactsInfoMap.put(contactBean.getContactId(), tmpContactsInfo);
             return;
         }
 
@@ -71,7 +64,28 @@ public class ContactList {
         numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
         numberInfo.setNumber(contactBean.getPhone());
         tmpContactsInfo.addNumber(numberInfo);
-        contactsInfoMap.put(contactBean.getName(), tmpContactsInfo);
+        contactsInfoMap.put(contactBean.getContactId(), tmpContactsInfo);
+    }
+
+    public static ContactsInfo convert(ContactBean contactBean) {
+        if (null == contactBean || null == contactBean.getContactId()
+                || null == contactBean.getName() || null == contactBean.getPhone()) {
+            return null;
+        }
+
+        ContactsInfo tmpContactsInfo = new ContactsInfo();
+        tmpContactsInfo.setContactId(contactBean.getContactId());
+        tmpContactsInfo.setName(contactBean.getName());
+
+        NumberInfo numberInfo = new NumberInfo();
+        numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+        numberInfo.setNumber(contactBean.getPhone());
+        tmpContactsInfo.addNumber(numberInfo);
+
+        tmpContactsInfo.setContactMode(ContactsInfo.ContactMode.app);
+        tmpContactsInfo.setPhotoLg(contactBean.getPhotoLg());
+        tmpContactsInfo.setPhotoSm(contactBean.getPhotoSm());
+        return tmpContactsInfo;
     }
 
 }

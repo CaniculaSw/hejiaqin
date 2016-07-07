@@ -18,7 +18,11 @@ public interface IContactsLogic {
 
     void addAppContact(String name, String number, byte[] photo);
 
-    void batchAddAppContacts();
+    void addAppContact(ContactsInfo contactsInfo);
+    
+    void batchAddAppContacts(List<ContactsInfo> contactsInfoList);
 
     void updateAppContact(String contactId, String name, String number, byte[] photo);
+
+    void deleteAppContact(String contactId);
 }

@@ -59,6 +59,13 @@ public class ContactsInfo implements Serializable {
         return numberLst;
     }
 
+    public String getPhone() {
+        if (null == numberLst || numberLst.isEmpty()) {
+            return null;
+        }
+        return numberLst.get(0).getNumber();
+    }
+
     public String getPhotoLg() {
         return photoLg;
     }
@@ -132,6 +139,7 @@ public class ContactsInfo implements Serializable {
     public String toString() {
         return "ContactsInfo{" +
                 "name='" + name + '\'' +
+                "contactMode='" + contactMode + '\'' +
                 ", numberLst='" + numberLst + '\'' +
                 ", nameInPinyin='" + nameInPinyin + '\'' +
                 '}';

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
@@ -32,6 +34,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     public static final int REQUEST_CODE_INPUT_PHOTO = 10003;
 
     public static final String INTENT_DATA_INPUT_INFO = "intent_data_input_info";
+
+    public static final String INTENT_DATA_EDIT_INFO = "intent_data_edit_info";
 
     private HeaderView titleLayout;
 
@@ -57,6 +61,11 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     private boolean hasNewPhoto = false;
 
     /**
+     * 待编辑的联系人信息
+     */
+    private ContactsInfo editContactsInfo;
+
+    /**
      * 初始化logic的方法，由子类实现<BR>
      * 在该方法里通过getLogicByInterfaceClass获取logic对象
      */
@@ -74,7 +83,6 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     protected void initView() {
         // title
         titleLayout = (HeaderView) findViewById(R.id.title);
-        titleLayout.title.setText(R.string.contact_modify_title_add_text);
         titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
         titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
@@ -94,6 +102,15 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     @Override
     protected void initDate() {
         PhotoManage.getInstance(this).setPhotoListener(mPhotoChangeListener);
+
+        editContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+        addContactMode = (null == editContactsInfo);
+        titleLayout.title.setText(addContactMode ? R.string.contact_modify_title_add_text : R.string.contact_modify_title_edit_text);
+        if (!addContactMode) {
+            // TODO headImg 使用实际头像
+            nameText.setText(editContactsInfo.getName());
+            numberText.setText(editContactsInfo.getPhone());
+        }
     }
 
     @Override
@@ -133,6 +150,35 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     }
 
     @Override
+    protected void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+
+        switch (msg.what) {
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_add_contact_success_toast);
+                finish();
+                break;
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_add_contact_failed_toast);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_success_toast);
+                ContactsInfo newContactsInfo = (ContactsInfo) msg.obj;
+                if (null == newContactsInfo) {
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, newContactsInfo);
+                setResult(0, intent);
+                finish();
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_failed_toast);
+                break;
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -148,20 +194,24 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                 }
                 break;
             case PhotoManage.CROP_CODE:
-                if (data != null) {
+                if (null != data) {
                     PhotoManage.getInstance(this).sendPhotoEnd(data);
                 }
                 break;
             case REQUEST_CODE_INPUT_NAME:
-                newName = data.getStringExtra(INTENT_DATA_INPUT_INFO);
-                if (!StringUtil.isNullOrEmpty(newName)) {
-                    nameText.setText(newName);
+                if (null != data) {
+                    newName = data.getStringExtra(INTENT_DATA_INPUT_INFO);
+                    if (!StringUtil.isNullOrEmpty(newName)) {
+                        nameText.setText(newName);
+                    }
                 }
                 break;
             case REQUEST_CODE_INPUT_NUMBER:
-                newNumber = data.getStringExtra(INTENT_DATA_INPUT_INFO);
-                if (!StringUtil.isNullOrEmpty(newNumber)) {
-                    numberText.setText(newNumber);
+                if (null != data) {
+                    newNumber = data.getStringExtra(INTENT_DATA_INPUT_INFO);
+                    if (!StringUtil.isNullOrEmpty(newNumber)) {
+                        numberText.setText(newNumber);
+                    }
                 }
                 break;
         }
@@ -202,7 +252,14 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
             }
             contactsLogic.addAppContact(newName, newNumber, photo);
         } else {
-            contactsLogic.updateAppContact("contactId", newName, newName, photo);
+            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)) {
+                return;
+            }
+
+            contactsLogic.updateAppContact(editContactsInfo.getContactId()
+                    , StringUtil.isNullOrEmpty(newName) ? editContactsInfo.getName() : newName
+                    , StringUtil.isNullOrEmpty(newNumber) ? editContactsInfo.getPhone() : newNumber
+                    , photo);
         }
     }
 
@@ -212,11 +269,20 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
 
     private void doClickNameLayout() {
         Intent intent = new Intent(this, InputInfoActivity.class);
+
+        if (!addContactMode) {
+            intent.putExtra(INTENT_DATA_EDIT_INFO, editContactsInfo.getName());
+        }
         startActivityForResult(intent, REQUEST_CODE_INPUT_NAME);
+
     }
 
     private void doClickNumberLayout() {
         Intent intent = new Intent(this, InputInfoActivity.class);
+
+        if (!addContactMode) {
+            intent.putExtra(INTENT_DATA_EDIT_INFO, editContactsInfo.getNumberLst().get(0).getNumber());
+        }
         startActivityForResult(intent, REQUEST_CODE_INPUT_NUMBER);
     }
 

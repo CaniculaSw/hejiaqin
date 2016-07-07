@@ -28,12 +28,7 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
     protected void initView() {
         // title
         titleLayout = (HeaderView) findViewById(R.id.title);
-        int requestCode = getRequestCode();
-        if (requestCode == ModifyContactActivity.REQUEST_CODE_INPUT_NAME) {
-            titleLayout.title.setText(R.string.contact_modify_name_text);
-        } else {
-            titleLayout.title.setText(R.string.contact_modify_number_text);
-        }
+
         titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
         titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
@@ -43,6 +38,13 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected void initDate() {
+        int requestCode = getRequestCode();
+        if (requestCode == ModifyContactActivity.REQUEST_CODE_INPUT_NAME) {
+            titleLayout.title.setText(R.string.contact_input_name_hint_text);
+        } else {
+            titleLayout.title.setText(R.string.contact_input_number_hint_text);
+        }
+        // String editData = getIntent().getStringExtra(ModifyContactActivity.INTENT_DATA_EDIT_INFO);
     }
 
     @Override

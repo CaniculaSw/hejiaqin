@@ -7,63 +7,63 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="101dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_photo"
             android:layout_width="fill_parent"
-            android:layout_height="50dp">
+            android:layout_height="44dp">
 
             <TextView
                 android:id="@+id/tv_photo"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="相  册"
-                android:textColor="#000000"
-                android:textSize="15dp" />
+                android:text="@string/contact_modify_head_take_photo_text"
+                android:textColor="#404040"
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#f4f4f4" />
+            android:background="#e0e1e1" />
 
         <RelativeLayout
             android:id="@+id/rl_camera"
             android:layout_width="fill_parent"
-            android:layout_height="50dp">
+            android:layout_height="44dp">
 
             <TextView
                 android:id="@+id/tv_camera"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="照相机"
-                android:textColor="#000000"
-                android:textSize="15dp" />
+                android:text="@string/contact_modify_head_open_album_text"
+                android:textColor="#404040"
+                android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="5dp"
-        android:background="#f4f4f4" />
+        android:layout_height="10dp"
+        android:background="#e0e1e1" />
 
     <RelativeLayout
         android:id="@+id/rl_dismiss"
         android:layout_width="fill_parent"
-        android:layout_height="50dp">
+        android:layout_height="44dp">
 
         <TextView
             android:id="@+id/tv_dismiss"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="取 消"
-            android:textColor="#000000"
-            android:textSize="15dp" />
+            android:text="@string/del_call_record_cancel"
+            android:textColor="#404040"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </LinearLayout>

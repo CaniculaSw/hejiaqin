@@ -41,5 +41,7 @@
 		<field name="number" type="TEXT" obligatory="" />
 		<field name="number_type" type="TEXT" obligatory="" />
 		<field name="number_desc" type="TEXT" obligatory="" />
+		<field name="photo_lg" type="TEXT" obligatory="" />
+		<field name="photo_sm" type="TEXT" obligatory="" />
 	</table>
 </database>

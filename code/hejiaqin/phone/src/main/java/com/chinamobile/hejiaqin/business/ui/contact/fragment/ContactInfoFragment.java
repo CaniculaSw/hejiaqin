@@ -18,12 +18,8 @@ import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
 
-/**
- *
- *
- */
 public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
-    private static final String TAG = "AppContactListFragment";
+    private static final String TAG = "ContactInfoFragment";
 
     private LayoutInflater inflater;
 
@@ -55,24 +51,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initData() {
-        if (null == mContactsInfo) {
-            return;
-        }
-
-        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
-        if (null == numberInfoList) {
-            return;
-        }
-
-        for (NumberInfo numberInfo : numberInfoList) {
-            View contactNumberView = inflater.inflate(R.layout.layout_contact_number_info_view, null);
-            TextView numberDesc = (TextView) contactNumberView.findViewById(R.id.number_desc_text);
-            numberDesc.setText(numberInfo.getDesc());
-            TextView number = (TextView) contactNumberView.findViewById(R.id.number_text);
-            number.setText(numberInfo.getNumber());
-            contactInfoLayout.addView(contactNumberView);
-        }
+        refreshView();
     }
+
 
     /**
      * Called when a view has been clicked.
@@ -85,5 +66,26 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     public void setContactsInfo(ContactsInfo contactsInfo) {
         mContactsInfo = contactsInfo;
+    }
+
+    public void refreshView() {
+        if (null == mContactsInfo) {
+            return;
+        }
+
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (null == numberInfoList) {
+            return;
+        }
+
+        contactInfoLayout.removeAllViews();
+        for (NumberInfo numberInfo : numberInfoList) {
+            View contactNumberView = inflater.inflate(R.layout.layout_contact_number_info_view, null);
+            TextView numberDesc = (TextView) contactNumberView.findViewById(R.id.number_desc_text);
+            numberDesc.setText(numberInfo.getDesc());
+            TextView number = (TextView) contactNumberView.findViewById(R.id.number_text);
+            number.setText(numberInfo.getNumber());
+            contactInfoLayout.addView(contactNumberView);
+        }
     }
 }

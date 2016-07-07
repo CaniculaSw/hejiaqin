@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
+import com.chinamobile.hejiaqin.business.model.contacts.req.BatchAddContactReq;
+import com.chinamobile.hejiaqin.business.model.contacts.req.EditContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
@@ -75,7 +77,7 @@ public class ContactsHttpManager extends AbsHttpManager {
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/contact/add";
                 break;
             case batchAdd:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/contact/add";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/contact/addList";
                 break;
             case update:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/contact/update";
@@ -126,6 +128,7 @@ public class ContactsHttpManager extends AbsHttpManager {
     protected NetRequest.ContentType getContentType() {
         switch (this.mAction) {
             case add:
+            case update:
                 return NetRequest.ContentType.FORM_DATA;
         }
         return NetRequest.ContentType.FORM_URLENCODED;
@@ -198,21 +201,21 @@ public class ContactsHttpManager extends AbsHttpManager {
     }
 
     // 批量添加联系人
-    public void batchAdd(final Object invoker, final MapStrReqBody reqBody, final IHttpCallBack callBack) {
+    public void batchAdd(final Object invoker, final NVPReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.batchAdd;
         this.mData = reqBody;
         send(invoker, callBack);
     }
 
     // 更新联系人
-    public void update(final Object invoker, final MapStrReqBody reqBody, final IHttpCallBack callBack) {
+    public void update(final Object invoker, final EditContactReq reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.update;
         this.mData = reqBody;
         send(invoker, callBack);
     }
 
     // 删除联系人
-    public void delete(final Object invoker, final MapStrReqBody reqBody, final IHttpCallBack callBack) {
+    public void delete(final Object invoker, final NVPReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.delete;
         this.mData = reqBody;
         send(invoker, callBack);

@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.manager;
 
 import android.content.Context;
 
+import com.customer.framework.utils.StringUtil;
 import com.google.gson.Gson;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
@@ -78,8 +79,18 @@ public class UserInfoCacheManager {
         if (null == userInfo) {
             return null;
         }
-        
+
         return userInfo.getToken();
+    }
+
+    public static String getUserId(Context context) {
+        UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        if (null == userInfo) {
+            return "unknown";
+        }
+
+        String userId = userInfo.getUserId();
+        return StringUtil.isNullOrEmpty(userId) ? "unknown" : userId;
     }
 
     public static void saveHistoryToMem(Context context, LoginHistoryList historyList) {
