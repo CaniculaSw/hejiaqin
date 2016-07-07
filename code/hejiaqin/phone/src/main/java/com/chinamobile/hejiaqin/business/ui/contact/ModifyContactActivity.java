@@ -58,7 +58,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
 
     private IContactsLogic contactsLogic;
 
-    private boolean hasNewPhoto = false;
+    private String newPhotoName = null;
 
     /**
      * 待编辑的联系人信息
@@ -225,19 +225,6 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     }
 
     private void doClickSubmit() {
-        byte[] photo = null;
-        if (hasNewPhoto) {
-            try {
-                Bitmap bitmap = ((BitmapDrawable) headImg.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                photo = baos.toByteArray();
-            } catch (Exception e) {
-            } catch (OutOfMemoryError e) {
-            }
-        }
-
-
         if (addContactMode) {
             if (StringUtil.isNullOrEmpty(newName)) {
                 // TODO
@@ -250,16 +237,15 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                 showToast(R.string.contact_number_input_empty_toast);
                 return;
             }
-            contactsLogic.addAppContact(newName, newNumber, photo);
+            contactsLogic.addAppContact(newName, newNumber, newPhotoName);
         } else {
-            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)) {
+            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)
+                    && StringUtil.isNullOrEmpty(newPhotoName)) {
                 return;
             }
 
             contactsLogic.updateAppContact(editContactsInfo.getContactId()
-                    , StringUtil.isNullOrEmpty(newName) ? editContactsInfo.getName() : newName
-                    , StringUtil.isNullOrEmpty(newNumber) ? editContactsInfo.getPhone() : newNumber
-                    , photo);
+                    , newName, newNumber, newPhotoName);
         }
     }
 
@@ -296,8 +282,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         public void end(String url, Bitmap bitmap) {
             if (bitmap != null) {
                 headImg.setImageBitmap(bitmap);
-                hasNewPhoto = true;
-                // TODO 上传头像
+                newPhotoName = url;
             }
         }
     };

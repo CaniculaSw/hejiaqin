@@ -56,21 +56,25 @@ public class EditContactReq implements ReqBody {
         requestBody.append(getContactId());
         requestBody.append("\r\n");
 
-        contentDisposition = "Content-Disposition: form-data; name=\"phone\"";
-        requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
-        requestBody.append("\r\n");
-        requestBody.append(contentDisposition);
-        requestBody.append("\r\n\r\n");
-        requestBody.append(getPhone());
-        requestBody.append("\r\n");
+        if (null != getPhone()) {
+            contentDisposition = "Content-Disposition: form-data; name=\"phone\"";
+            requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
+            requestBody.append("\r\n");
+            requestBody.append(contentDisposition);
+            requestBody.append("\r\n\r\n");
+            requestBody.append(getPhone());
+            requestBody.append("\r\n");
+        }
 
-        contentDisposition = "Content-Disposition: form-data; name=\"name\"";
-        requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
-        requestBody.append("\r\n");
-        requestBody.append(contentDisposition);
-        requestBody.append("\r\n\r\n");
-        requestBody.append(getName());
-        requestBody.append("\r\n");
+        if (null != getName()) {
+            contentDisposition = "Content-Disposition: form-data; name=\"name\"";
+            requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);
+            requestBody.append("\r\n");
+            requestBody.append(contentDisposition);
+            requestBody.append("\r\n\r\n");
+            requestBody.append(getName());
+            requestBody.append("\r\n");
+        }
 
         contentDisposition = "Content-Disposition: form-data; name=\"token\"";
         requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY);

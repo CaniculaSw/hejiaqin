@@ -16,13 +16,13 @@ public interface IContactsLogic {
 
     void fetchAppContactLst();
 
-    void addAppContact(String name, String number, byte[] photo);
+    void addAppContact(String name, String number, String photoFullPath);
 
     void addAppContact(ContactsInfo contactsInfo);
-    
+
     void batchAddAppContacts(List<ContactsInfo> contactsInfoList);
 
-    void updateAppContact(String contactId, String name, String number, byte[] photo);
+    void updateAppContact(String contactId, String name, String number, String photoFullPath);
 
     void deleteAppContact(String contactId);
 }

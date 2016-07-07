@@ -75,7 +75,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     @Override
-    public void addAppContact(final String name, final String number, final byte[] photo) {
+    public void addAppContact(final String name, final String number, final String photoFullPath) {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
@@ -84,6 +84,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 request.setToken(UserInfoCacheManager.getToken(getContext()));
                 request.setName(name);
                 request.setPhone(number);
+                request.setFile(photoFullPath);
 
                 new ContactsHttpManager(getContext()).add(null, request, new IHttpCallBack() {
 
@@ -214,7 +215,8 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     @Override
-    public void updateAppContact(final String contactId, final String name, final String number, final byte[] photo) {
+    public void updateAppContact(final String contactId, final String name, final String number
+            , final String photoFullPath) {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
@@ -225,7 +227,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 request.setName(name);
                 request.setPhone(number);
                 request.setContactId(contactId);
-                // TODO  request.setFile(photo);
+                request.setFile(photoFullPath);
 
                 new ContactsHttpManager(getContext()).update(null, request, new IHttpCallBack() {
 
