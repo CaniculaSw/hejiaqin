@@ -40,9 +40,11 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
     protected void initDate() {
         int requestCode = getRequestCode();
         if (requestCode == ModifyContactActivity.REQUEST_CODE_INPUT_NAME) {
-            titleLayout.title.setText(R.string.contact_input_name_hint_text);
+            titleLayout.title.setText(R.string.contact_modify_name_text);
+            input.setHint(R.string.contact_input_name_hint_text);
         } else {
-            titleLayout.title.setText(R.string.contact_input_number_hint_text);
+            titleLayout.title.setText(R.string.contact_modify_number_text);
+            input.setHint(R.string.contact_input_number_hint_text);
         }
         // String editData = getIntent().getStringExtra(ModifyContactActivity.INTENT_DATA_EDIT_INFO);
     }
