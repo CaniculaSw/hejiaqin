@@ -260,7 +260,18 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_add_contact_failed_toast);
+            case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_del_contact_success_toast);
+                this.finish();
                 break;
+            case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_del_contact_failed_toast);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_success_toast);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_failed_toast);
         }
     }
 

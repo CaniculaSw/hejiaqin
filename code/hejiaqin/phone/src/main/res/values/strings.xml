@@ -89,6 +89,8 @@
     <string name="contact_info_add_contact_failed_toast">保存失败</string>
     <string name="contact_info_edit_contact_success_toast">更新成功</string>
     <string name="contact_info_edit_contact_failed_toast">更新失败</string>
+    <string name="contact_info_del_contact_success_toast">删除成功</string>
+    <string name="contact_info_del_contact_failed_toast">删除失败</string>
     <string name="contact_info_dial_incoming_text">呼入</string>
     <string name="contact_info_dial_outbound_text">呼出</string>
     <string name="contact_info_dial_missed_text">未接</string>

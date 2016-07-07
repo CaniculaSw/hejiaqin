@@ -165,6 +165,12 @@ public class ContactsHttpManager extends AbsHttpManager {
                         obj = gson.fromJson(data, ContactBean.class);
                         break;
                     case batchAdd:
+                        if (rootJsonObj.has("dataList")) {
+                            data = rootJsonObj.get("dataList").toString();
+                        }
+
+                        obj = gson.fromJson(data, new TypeToken<List<ContactBean>>() {
+                        }.getType());
                         break;
                     case update:
                         if (rootJsonObj.has("data")) {

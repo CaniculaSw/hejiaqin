@@ -175,6 +175,19 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
+                        // 获取服务器返回的数据
+                        List<ContactBean> contactBeanList = (List<ContactBean>) obj;
+
+                        // 将服务器的数据ContactBean转换成本地的ContactInfo
+                        ContactList contactList = new ContactList();
+                        if (null == contactBeanList) {
+                            sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, contactList.get());
+                            return;
+                        }
+                        for (ContactBean contactBean : contactBeanList) {
+                            contactList.addAppContact(contactBean);
+                        }
+                        List<ContactsInfo> contactsInfoList = contactList.get();
                         // 增加数据库中的联系人信息
                         ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
                                 .add(contactsInfoList);
