@@ -399,6 +399,7 @@ public class StringUtil {
 
         return Pattern.compile("^(?=.*?[^\\\\s])[!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~A-Za-z0-9]{6,32}$").matcher(paramString).matches();
     }
+
     /**
      * 汉字转为拼音
      */
@@ -419,6 +420,33 @@ public class StringUtil {
             }
         }
         return fullPinyinLetters.toString().toUpperCase();
+    }
+
+    /**
+     * 汉字转为拼音
+     */
+    public static String[] hanzi2PinyinWithHead(Context context, String input) {
+        String[] result = new String[2];
+        if (null == input || null == context) {
+            return result;
+        }
+
+        char[] chars = input.toCharArray();
+        StringBuffer fullPinyinLetters = new StringBuffer();
+        StringBuffer headCharLetters = new StringBuffer();
+        for (int i = 0, len = chars.length; i < len; i++) {
+            String curChar = String.valueOf(chars[i]);
+            // 获取字符对应的拼音
+            String pinyin =
+                    HanziToPinyin.getInstance(context).hanziToPinyin(curChar);
+            if (pinyin.length() > 0) {
+                fullPinyinLetters.append(pinyin);
+                headCharLetters.append(pinyin.charAt(0));
+            }
+        }
+        result[0] = fullPinyinLetters.toString().toUpperCase();
+        result[1] = headCharLetters.toString().toUpperCase();
+        return result;
     }
 
 
