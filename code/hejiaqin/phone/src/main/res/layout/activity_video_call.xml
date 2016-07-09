@@ -176,7 +176,8 @@
         android:id="@+id/incoming_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#404040">
+        android:background="#404040"
+        android:visibility="gone">
         <LinearLayout
             android:id="@+id/comging_top_layout"
             android:layout_width="match_parent"
