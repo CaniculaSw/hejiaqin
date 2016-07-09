@@ -28,6 +28,11 @@ public class BussinessConstants {
 
         String LITTLEC_APP_KEY = "027336cw";
 
+        int CALL_OUTING_HANGUP = 0;
+        int CALL_TALKING_HANGUP =1;
+        int CALL_INCOMING_HANGUP = 2;
+
+
     }
 
     public interface ActivityRequestCode {

@@ -94,11 +94,12 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/mute_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="9.5dp"
                 android:layout_marginRight="9.5dp"
-                android:src="@drawable/selector_mute"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/mute_off"/>
             <TextView
                 android:id="@+id/mute_lable_tv"
                 android:layout_width="wrap_content"
@@ -153,10 +154,11 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/camera_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="9.5dp"
                 android:layout_marginRight="9.5dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/selector_camera_switch"/>
             <TextView
                 android:id="@+id/camera_label_tv"
@@ -174,7 +176,6 @@
         android:id="@+id/incoming_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:background="#404040">
         <LinearLayout
             android:id="@+id/comging_top_layout"

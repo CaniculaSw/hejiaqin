@@ -7,8 +7,8 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.logic.LogicImp;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
@@ -64,9 +64,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
 
             if (callSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
+                callSession.terminate();
                 return;
             }
             if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+                callSession.terminate();
                 return;
             }
             //TODO 保存通话记录
@@ -159,7 +161,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     }
 
     @Override
-    public CallSession call(String calleeNumber,boolean isVideoCall) {
+    public CallSession call(String calleeNumber, boolean isVideoCall) {
         CallSession callSession = null;
         if (isVideoCall) {
             callSession = CallApi.initiateVideoCall(calleeNumber);
@@ -168,6 +170,21 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         }
         //TODO 保存通话记录
         return callSession;
+    }
+
+    @Override
+    public void hangup(CallSession callSession, boolean isInComing, boolean isTalking) {
+        callSession.terminate();
+    }
+
+    @Override
+    public void answerVideo(CallSession callSession) {
+        callSession.accept(CallSession.TYPE_VIDEO);
+    }
+
+    @Override
+    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking) {
+
     }
 
 }

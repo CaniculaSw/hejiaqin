@@ -87,7 +87,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 if(inputNumber.length()>0) {
                     Intent outingIntent = new Intent();
                     outingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
-                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText());
+                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText().toString());
                     getContext().startActivity(outingIntent);
                 }
                 break;

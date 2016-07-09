@@ -12,9 +12,15 @@ public interface IVoipLogic {
 
     public void unRegisterVoipReceiver();
 
-    public void login(UserInfo userInfo,String ip,String port);
+    public void login(UserInfo userInfo, String ip, String port);
 
     public void logout();
 
-    public CallSession call(String calleeNumber,boolean isVideoCall);
+    public CallSession call(String calleeNumber, boolean isVideoCall);
+
+    public void hangup(CallSession callSession, boolean isInComing, boolean isTalking);
+
+    public void answerVideo(CallSession callSession);
+
+    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking);
 }
