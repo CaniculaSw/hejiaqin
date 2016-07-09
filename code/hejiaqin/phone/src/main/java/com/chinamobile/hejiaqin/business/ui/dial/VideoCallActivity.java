@@ -265,7 +265,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private void showTalking() {
         AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        boolean speakerState = audioManamger.isSpeakerphoneOn();
+        speakerState = audioManamger.isSpeakerphoneOn();
         if(!speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);
         }
