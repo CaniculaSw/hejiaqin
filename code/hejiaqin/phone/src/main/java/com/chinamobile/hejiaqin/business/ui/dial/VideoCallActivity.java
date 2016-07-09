@@ -29,7 +29,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
-import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.system.SysApi;
 
 import java.util.Timer;
@@ -121,8 +120,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private BroadcastReceiver cameraSwitchedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogApi.d("V2OIP", "receive cameraSwitched broadcast");
-            localVideoView.setVisibility(View.VISIBLE);
+            LogUtil.d("VOIP", "receive cameraSwitched broadcast");
+            if(localVideoView !=null) {
+                localVideoView.setVisibility(View.VISIBLE);
+            }
             mCameraLayout.setEnabled(true);
         }
     };
@@ -244,7 +245,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
         else
         {
-            LogApi.e("V2OIP", "OrientationEventListener enable failed!!");
+            LogUtil.e("V2OIP", "OrientationEventListener enable failed!!");
         }
         setCameraRotate();
         if (localVideoView == null) {
@@ -254,6 +255,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             mLargeVideoLayout.addView(localVideoView, layoutParams);
             mCallSession.prepareVideo();
         }
+        registerReceivers();
     }
 
     private void showTalking() {
@@ -276,7 +278,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             if (listener.canDetectOrientation()) {
                 listener.enable();
             } else {
-                LogApi.e("V2OIP", "OrientationEventListener enable failed!!");
+                LogUtil.e("V2OIP", "OrientationEventListener enable failed!!");
             }
         }
         if (mIsInComing) {
@@ -292,7 +294,9 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         setCameraRotate();
         /* creat local video view and remote video view. */
         createVideoView();
-        registerReceivers();
+        if(mIsInComing) {
+            registerReceivers();
+        }
         mCallSession.showVideoWindow();
         startCallTimeTask();
     }
@@ -349,7 +353,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         } else if (Math.abs(orientation - 270) <= ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_270;
         } else {
-            LogApi.e("V2OIP", "orientationChanged get wrong orientation:" + orientation + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
+            LogUtil.e("V2OIP", "orientationChanged get wrong orientation:" + orientation + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
             lastDisplayRotation = Surface.ROTATION_0;
         }
 
@@ -376,7 +380,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         if (CallApi.getCameraCount() < 2) {
             isFrontCamera = false;
-            LogApi.d("V2OIP", "getCameraOrientation getCameraCount " + CallApi.getCameraCount());
+            LogUtil.d("V2OIP", "getCameraOrientation getCameraCount " + CallApi.getCameraCount());
         } else {
             if (CallApi.getCamera() == CallApi.CAMERA_TYPE_FRONT) {
                 isFrontCamera = true;
@@ -401,7 +405,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 degrees = 90;
                 break;
             default:
-                LogApi.e("V2OIP", "getCameraOrientation wrong displayRotation " + displayRotation);
+                LogUtil.e("V2OIP", "getCameraOrientation wrong displayRotation " + displayRotation);
                 break;
         }
 
@@ -513,8 +517,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                     return;
                 }
                 CallApi.switchCamera();
-                localVideoView.setVisibility(View.GONE);
-                LogApi.d("V2OIP", "onClick_CameraSwitch displayRotation" + lastDisplayRotation);
+                if(localVideoView!=null) {
+                    localVideoView.setVisibility(View.GONE);
+                }
+                LogUtil.d("V2OIP", "onClick_CameraSwitch displayRotation" + lastDisplayRotation);
                 int cameraRotate = getCameraOrientation(lastDisplayRotation);
                 CallApi.setCameraRotate(cameraRotate);
                 break;
