@@ -112,25 +112,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 return;
             }
             remoteVideoView.setVisibility(View.VISIBLE);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mLargeVideoLayout.updateViewLayout(remoteVideoView, layoutParams);
         }
     };
 
-    private BroadcastReceiver cameraStartedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            LogApi.d("V2OIP", "receive cameraStarted broadcast");
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
-            if (!mCallSession.equals(session)) {
-                return;
-            }
-
-            int cameraRotate = getCameraOrientation(lastDisplayRotation);
-            CallApi.setCameraRotate(cameraRotate);
-            localVideoView.setVisibility(View.VISIBLE);
-        }
-    };
 
     private BroadcastReceiver cameraSwitchedReceiver = new BroadcastReceiver() {
         @Override
@@ -238,7 +224,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         {
             mCallSession.mute();
         }
-//        createLocalPreviewVideo();
+        createLocalPreviewVideo();
     }
 
     private void createLocalPreviewVideo() {
@@ -263,9 +249,9 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         setCameraRotate();
         if (localVideoView == null) {
             localVideoView = CallApi.createLocalVideoView(getApplicationContext());
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            mLargeVideoLayout.addView(localVideoView, layoutParams);
             localVideoView.setZOrderOnTop(false);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mLargeVideoLayout.addView(localVideoView, layoutParams);
             mCallSession.prepareVideo();
         }
     }
@@ -322,23 +308,24 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         if (remoteVideoView == null) {
             remoteVideoView = CallApi.createRemoteVideoView(getApplicationContext());
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             remoteVideoView.setVisibility(View.GONE);
             mLargeVideoLayout.addView(remoteVideoView, layoutParams);
+            remoteVideoView.setZOrderOnTop(false);
         }
 
         if (localVideoView == null) {
             localVideoView = CallApi.createLocalVideoView(getApplicationContext());
+            localVideoView.setZOrderOnTop(false);
             localVideoView.setVisibility(View.GONE);
-        }
-        else
-        {
+        }else{
             mLargeVideoLayout.removeView(localVideoView);
             localVideoView.setVisibility(View.GONE);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            mSmallVideoLayout.addView(localVideoView, layoutParams);
-            localVideoView.setVisibility(View.VISIBLE);
         }
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mSmallVideoLayout.addView(localVideoView, layoutParams);
+        localVideoView.setVisibility(View.VISIBLE);
+        mCallSession.showVideoWindow();
 
     }
 
@@ -466,9 +453,6 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 cameraSwitchedReceiver,
                 new IntentFilter(CallApi.EVENT_CALL_CAMERA_SWITCHED));
 
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-                cameraStartedReceiver,
-                new IntentFilter(CallApi.EVENT_CALL_CAMERA_STARTED));
 
     }
 
@@ -479,9 +463,6 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .unregisterReceiver(cameraSwitchedReceiver);
-
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(cameraStartedReceiver);
 
     }
 
