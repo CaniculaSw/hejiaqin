@@ -56,11 +56,10 @@ public class BussinessConstants {
      */
     public interface DictInfo {
 
-        //男
-        String SEX_MALE = "1";
-
-        //女
-        String SEX_FEMALE = "0";
+        int SIP_TEMPORARILY_UNAVAILABLE =480;
+        int SIP_BUSY_HERE = 486;
+        int SIP_DECLINE = 603;
+        int SIP_TERMINATED = 487;
 
     }
 

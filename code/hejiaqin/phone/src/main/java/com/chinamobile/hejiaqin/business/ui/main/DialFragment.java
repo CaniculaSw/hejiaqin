@@ -245,13 +245,13 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     {
         mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
     }
-
     @Override
     protected void initData() {
         //TODO test
+
         UserInfo userInfo = new UserInfo();
         userInfo.countryCode="+86";
-        userInfo.username = "2886544005";
+        userInfo.username = "2886544004";
         userInfo.password = "Vconf2015!";
         mVoipLogic.login(userInfo,null,null);
     }
@@ -265,9 +265,9 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         mSearchString = nowText;
 
         // 号码输入小于三位，不进行搜索
-        if (StringUtil.isNullOrEmpty(mSearchString))
-        {
-            mSearchString = "";
+            if (StringUtil.isNullOrEmpty(mSearchString))
+            {
+                mSearchString = "";
             dialSaveContactLayout.setVisibility(View.GONE);
             dialContactRecyclerView.setVisibility(View.GONE);
             callRecordRecyclerView.setVisibility(View.VISIBLE);

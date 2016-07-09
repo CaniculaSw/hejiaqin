@@ -64,19 +64,22 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
 
             if (callSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
+                LogUtil.w(TAG,"VIDEO_SHARE");
                 callSession.terminate();
                 return;
             }
-            if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
-                callSession.terminate();
-                return;
-            }
+//            if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+//                LogUtil.w(TAG,"AUDIO_INCOMING");
+//                callSession.terminate();
+//                return;
+//            }
             //TODO 保存通话记录
-            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING || callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
                 Intent inComingIntent = new Intent();
                 inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
                 inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
                 inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, callSession.getSessionId());
+                inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(inComingIntent);
             }
         }
@@ -92,6 +95,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
                     break;
                 case CallSession.STATUS_IDLE:
+                    LogUtil.d(TAG,"SIP_CAUSE:"+ callSession.getSipCause());
                     VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID, callSession);
                     break;
                 default:
@@ -163,10 +167,18 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     @Override
     public CallSession call(String calleeNumber, boolean isVideoCall) {
         CallSession callSession = null;
+        String outNumber = calleeNumber;
+        if(calleeNumber.startsWith("86"))
+        {
+            outNumber = "+"+calleeNumber;
+        }else if(!calleeNumber.startsWith("+86"))
+        {
+            outNumber = "+86"+calleeNumber;
+        }
         if (isVideoCall) {
-            callSession = CallApi.initiateVideoCall(calleeNumber);
+            callSession = CallApi.initiateVideoCall(outNumber);
         } else {
-            callSession = CallApi.initiateAudioCall(calleeNumber);
+            callSession = CallApi.initiateAudioCall(outNumber);
         }
         //TODO 保存通话记录
         return callSession;

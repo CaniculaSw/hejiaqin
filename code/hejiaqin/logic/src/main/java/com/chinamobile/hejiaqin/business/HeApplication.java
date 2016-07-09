@@ -1,5 +1,7 @@
 package com.chinamobile.hejiaqin.business;
 
+import android.content.Intent;
+
 import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.huawei.rcs.RCSApplication;
 import com.huawei.rcs.call.CallApi;
@@ -29,6 +31,7 @@ public class HeApplication extends RCSApplication {
                 CallApi.CONFIG_MINOR_TYPE_DEFAULT, CallApi.CFG_VALUE_YES);
         SysApi.loadTls(new DefaultTlsHelper());
         SysApi.loadStg(new NatStgHelper());
+
 //        SysApi.loadStg(new SvnStgHelper());
 
 //        ConferenceApi.initiateApi(getApplicationContext());
@@ -43,6 +46,7 @@ public class HeApplication extends RCSApplication {
 	   /* UI must set  the interface for safety certification.
        see detail in Developer's Guide*/
         // SysApi.setTrustCaFilePath("/rootcert.pem");
+        startService(new Intent(HeService.SERVICE_NAME));
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
         /**
          * 初始化小溪推送SDK

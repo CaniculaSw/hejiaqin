@@ -116,6 +116,8 @@
     <string name="call_answer">接听</string>
     <string name="call_reject">挂断</string>
     <string name="call_outing_error">呼叫失败，请稍后重试</string>
+    <string name="sip_temporarily_unavailable">对方暂时无法接通，您可以稍后再拨</string>
+    <string name="sip_busy_here">对方正在通话中，您可以稍后再拨</string>
 
     <!-- 更多 -->
     <string name="more_tab_name">更多</string>

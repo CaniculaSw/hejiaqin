@@ -26,6 +26,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.log.LogApi;
@@ -37,6 +38,8 @@ import java.util.TimerTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VideoCallActivity extends BasicActivity implements View.OnClickListener {
+
+    public static final String TAG = VideoCallActivity.class.getSimpleName();
 
     //视频布局(呼出和通话中)
     private RelativeLayout mVideoLayout;
@@ -97,6 +100,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private  boolean mute = false;
 
     private boolean speakerState;
+
+    private boolean closed;
 
     /* display the video stream which arrived from remote. */
     private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
@@ -218,10 +223,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void outingCall() {
-        createLocalPreviewVideo();
         mCallSession = mVoipLogic.call(mCalleeNumber, true);
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.call_outing_error, Toast.LENGTH_SHORT, null);
+            closed = true;
             getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -233,6 +238,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         {
             mCallSession.mute();
         }
+//        createLocalPreviewVideo();
     }
 
     private void createLocalPreviewVideo() {
@@ -252,7 +258,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
         else
         {
-            LogApi.e("V2OIP","OrientationEventListener enable failed!!");
+            LogApi.e("V2OIP", "OrientationEventListener enable failed!!");
         }
         setCameraRotate();
         if (localVideoView == null) {
@@ -260,6 +266,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mLargeVideoLayout.addView(localVideoView, layoutParams);
             localVideoView.setZOrderOnTop(false);
+            mCallSession.prepareVideo();
         }
     }
 
@@ -288,6 +295,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
         if (mIsInComing) {
             mIncomingLayout.setVisibility(View.GONE);
+            mCallStatusLayout.setVisibility(View.GONE);
             mTopLayout.setVisibility(View.VISIBLE);
             mVideoLayout.setVisibility(View.VISIBLE);
             mBottomLayout.setVisibility(View.VISIBLE);
@@ -484,6 +492,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        if(closed)
+        {
+            LogUtil.w(TAG,"is closed");
+        }
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
@@ -541,7 +553,20 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                     CallSession session = (CallSession) msg.obj;
                     if (mCallSession != null && mCallSession.equals(session)) {
                         mVoipLogic.dealOnClosed(mCallSession,mIsInComing,mIsTalking);
-                        finish();
+                        closed = true;
+                        if(mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
+                        }else if( !mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
+                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE
+                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TERMINATED)) {
+                            showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
+                        }
+                        getHandler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, 2000);
                     }
                 }
                 break;

@@ -137,8 +137,18 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.hejiaqin.dial.videocall" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <service
+            android:enabled="true"
+            android:exported="false"
+            android:name="com.chinamobile.hejiaqin.business.HeService" >
+            <intent-filter>
+                <action android:name="com.chinamobile.hejiaqin.business.heservice" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
