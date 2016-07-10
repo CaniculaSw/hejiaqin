@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
@@ -14,9 +15,12 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by yupeng on 5/23/16.
@@ -57,6 +61,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.adapter_contact_app_view, parent, false);
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
+            holder.image = (CircleImageView) convertView.findViewById(R.id.contact_photo_img);
             holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
@@ -70,6 +75,12 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
     private void initView(int position, ViewHolder holder) {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.text.setText(contactsInfo.getName());
+
+
+        Picasso.with(mContext.getApplicationContext())
+                .load(contactsInfo.getPhotoSm())
+                .placeholder(R.drawable.contact_photo_default)
+                .error(R.drawable.contact_photo_default).into(holder.image);
 
         holder.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +134,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
 
     class ViewHolder {
         TextView text;
+        CircleImageView image;
         View convertView;
     }
 

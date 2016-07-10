@@ -217,7 +217,7 @@ public class ContactsHttpManager extends AbsHttpManager {
     public void update(final Object invoker, final EditContactReq reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.update;
         this.mData = reqBody;
-        send(invoker, callBack);
+        uploadDirect(invoker, callBack);
     }
 
     // 删除联系人

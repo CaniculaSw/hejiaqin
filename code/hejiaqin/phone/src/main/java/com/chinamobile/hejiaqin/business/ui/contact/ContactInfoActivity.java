@@ -28,9 +28,12 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ContactInfoActivity extends BasicFragmentActivity implements View.OnClickListener {
@@ -38,7 +41,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private HeaderView titleLayout;
     private TextView mContactNameText;
-    private ImageView mContactHeadImg;
+    private CircleImageView mContactHeadImg;
 
     private View mContactInfoLay;
 
@@ -98,7 +101,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         // 联系人姓名
         mContactNameText = (TextView) findViewById(R.id.contact_name_text);
         // 联系人头像
-        mContactHeadImg = (ImageView) findViewById(R.id.contact_head_img);
+        mContactHeadImg = (CircleImageView) findViewById(R.id.contact_head_img);
 
         mContactInfoLay = findViewById(R.id.contact_info_layout);
         mContactInfoLay.setOnClickListener(this);
@@ -123,6 +126,10 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         mContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
 
         mContactNameText.setText(mContactsInfo.getName());
+        Picasso.with(this.getApplicationContext())
+                .load(mContactsInfo.getPhotoSm())
+                .placeholder(R.drawable.contact_photo_default)
+                .error(R.drawable.contact_photo_default).into(mContactHeadImg);
 
         fragmentList = new ArrayList<Fragment>();
         BasicFragment contactInfoFragment = new ContactInfoFragment();
@@ -195,9 +202,11 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private void showContactData() {
 
-        // TODO 修改联系人头像
-
         mContactNameText.setText(mContactsInfo.getName());
+        Picasso.with(this.getApplicationContext())
+                .load(mContactsInfo.getPhotoSm())
+                .placeholder(R.drawable.contact_photo_default)
+                .error(R.drawable.contact_photo_default).into(mContactHeadImg);
 
         ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACT_INFO_INDEX);
         contactInfoFragment.setContactsInfo(mContactsInfo);

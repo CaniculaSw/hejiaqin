@@ -72,7 +72,12 @@ public class ContactsInfoManager {
         }
 
         for (ContactsInfo contactsInfo : contactsInfoList) {
-            contactsInfo.setNameInPinyin(StringUtil.hanzi2Pinyin(context, contactsInfo.getName()));
+            String[] hanzi2Pinyin = StringUtil.hanzi2PinyinWithHead(context, contactsInfo.getName());
+            if (null == hanzi2Pinyin) {
+                continue;
+            }
+            contactsInfo.setNameInPinyin(hanzi2Pinyin[0]);
+            contactsInfo.setNameHeadChar(hanzi2Pinyin[1]);
         }
         LogUtil.d(TAG, "sortContactsInfoLst, after set pinyin name:  " + contactsInfoList);
 
