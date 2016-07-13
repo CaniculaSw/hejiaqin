@@ -47,9 +47,11 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
         mHeaderView.title.setText(getString(R.string.more_bind_tv_dialog_by_scan));
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
         mHeaderView.backImageView.setClickable(true);
-        //TODO Need update the icon
-        mHeaderView.rightBtn.setImageResource(R.mipmap.more_icon_set_top_box);
-        mHeaderView.rightBtn.setClickable(true);
+        mHeaderView.rightBtn.setVisibility(View.GONE);
+        mHeaderView.setadd.setVisibility(View.VISIBLE);
+        mHeaderView.tvRight.setVisibility(View.VISIBLE);
+        mHeaderView.tvRight.setText(getString(R.string.more_album));
+        mHeaderView.tvRight.setClickable(true);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
     protected void initListener() {
         mQRCodeView.setResultHandler(this);
         mHeaderView.backImageView.setOnClickListener(this);
-        mHeaderView.rightBtn.setOnClickListener(this);
+        mHeaderView.tvRight.setOnClickListener(this);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
             case R.id.back_iv:
                 finish();
                 break;
-            case R.id.right_btn:
+            case R.id.tvRight:
                 Intent getAlbum = new Intent(); // "android.intent.action.GET_CONTENT"
                 if (Build.VERSION.SDK_INT < 19) {
                     getAlbum.setAction(Intent.ACTION_GET_CONTENT);

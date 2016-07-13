@@ -9,8 +9,9 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 /**
  * Created by eshaohu on 16/5/23.
  */
-public class MoreFunActivity extends BasicActivity  implements View.OnClickListener {
+public class MoreFunActivity extends BasicActivity implements View.OnClickListener {
     private HeaderView headerView;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_more_fun;
@@ -42,7 +43,7 @@ public class MoreFunActivity extends BasicActivity  implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back_iv:
                 finish();
                 break;

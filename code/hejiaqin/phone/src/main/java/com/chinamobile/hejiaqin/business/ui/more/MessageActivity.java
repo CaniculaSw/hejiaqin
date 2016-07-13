@@ -59,6 +59,7 @@ public class MessageActivity extends BasicFragmentActivity implements View.OnCli
 
         }
     };
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_more_message;
@@ -107,6 +108,7 @@ public class MessageActivity extends BasicFragmentActivity implements View.OnCli
     protected void initLogics() {
 
     }
+
     //手动设置ViewPager要显示的视图
     private void switchFragment(int toIndex) {
         mViewPager.setCurrentItem(toIndex, true);
@@ -129,7 +131,7 @@ public class MessageActivity extends BasicFragmentActivity implements View.OnCli
                 }
                 break;
             case R.id.more_sys_msg_edit:
-                editTv.setText(editTv.getText().equals(getResources().getString(R.string.more_edit))? getResources().getString(R.string.more_cancel): getResources().getString(R.string.more_edit));
+                editTv.setText(editTv.getText().equals(getResources().getString(R.string.more_edit)) ? getResources().getString(R.string.more_cancel) : getResources().getString(R.string.more_edit));
                 Message msg = new Message();
                 msg.what = BussinessConstants.SettingMsgID.EDIT_BUTTON_PRESSED;
                 (fragmentList.get(currentIndex)).recieveMsg(msg);

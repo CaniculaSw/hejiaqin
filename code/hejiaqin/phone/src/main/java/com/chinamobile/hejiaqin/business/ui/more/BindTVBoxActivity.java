@@ -50,7 +50,7 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back_iv:
                 finish();
                 break;

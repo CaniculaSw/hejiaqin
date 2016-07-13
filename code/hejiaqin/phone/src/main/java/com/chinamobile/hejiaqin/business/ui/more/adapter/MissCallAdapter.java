@@ -8,12 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.model.more.MissCallMessage;
+import com.customer.framework.component.time.DateTimeUtil;
+import com.customer.framework.ui.AdapterViewHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,9 +28,11 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
     private LayoutInflater inflater;
     private List<MissCallMessage> missCallmessages = new ArrayList<MissCallMessage>();
     private boolean isShow = false;
-
+    private Context mContext;
+    private AdapterViewHolder mViewHolder;
     public MissCallAdapter(Context context) {
         super();
+        mContext = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -55,22 +61,14 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.adapter_miss_call, parent, false);
-            holder.text = (TextView) convertView.findViewById(R.id.more_miss_call_item_text);
-            holder.date = (TextView) convertView.findViewById(R.id.more_miss_call_date);
-            holder.delCb = (CheckBox) convertView.findViewById(R.id.more_checkbox_miss_call);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        MissCallMessage msg = (MissCallMessage) getItem(position);
-        holder.text.setText("(小王) 13776570335 fsadfcsdf");
-        holder.date.setText(msg.getDate());
+        mViewHolder =  AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_miss_call, position);
+        CheckBox checkBox = (CheckBox) mViewHolder.getView(R.id.more_checkbox_miss_call);
 
-        holder.delCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        MissCallMessage msg = (MissCallMessage) getItem(position);
+        mViewHolder.setText(R.id.more_miss_call_item_text,"(小王) 13776570335 fsadfcsdf");
+        mViewHolder.setText(R.id.more_miss_call_date,formatTimeString(msg.getDate()));
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -79,26 +77,53 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         });
 
         if (isShow) {
-            holder.delCb.setVisibility(View.VISIBLE);
+            checkBox.setVisibility(View.VISIBLE);
         } else {
-            holder.delCb.setVisibility(View.GONE);
+            checkBox.setVisibility(View.GONE);
         }
 
-        holder.delCb.setChecked(msg.isChecked());
-        return convertView;
+        checkBox.setChecked(msg.isChecked());
+        return mViewHolder.getView();
     }
 
-    class ViewHolder {
-        TextView text;
-        TextView date;
-        CheckBox delCb;
-    }
 
     public void setData(List<MissCallMessage> missCallInfoList) {
-//        this.missCallmessages.clear();
+        this.missCallmessages.clear();
         if (null != missCallInfoList) {
-            this.missCallmessages = missCallInfoList ;
+            this.missCallmessages.addAll(missCallInfoList)  ;
         }
         notifyDataSetChanged();
+    }
+
+
+    public void deleteSelectedData() {
+        Iterator<MissCallMessage> it = this.missCallmessages.iterator();
+        while (it.hasNext()) {
+            MissCallMessage missCallMsg = it.next();
+            if (missCallMsg.isChecked()) {
+                it.remove();
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void unSelectedAllData() {
+        for (MissCallMessage missCallMsg : this.missCallmessages) {
+            missCallMsg.setChecked(false);
+        }
+        notifyDataSetChanged();
+    }
+
+    private String formatTimeString(String time) {
+        Date date = DateTimeUtil.parseDateString(time,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        if (! DateTimeUtil.isThisYear(date)){
+            return DateTimeUtil.getYYYYMMDDString(date);
+        }else if (DateTimeUtil.isYesterday(date)){
+            return "昨天";
+        }else if (DateTimeUtil.isToday(date)){
+            return DateTimeUtil.getHHMMByDate(date);
+        }else {
+            return DateTimeUtil.getMMddByDate(date);
+        }
     }
 }

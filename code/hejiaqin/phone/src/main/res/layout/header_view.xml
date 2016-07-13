@@ -49,7 +49,7 @@
             android:layout_marginRight="10dp"
             android:text="rightfun"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="14sp"
             android:visibility="gone" />
     </LinearLayout>
 

@@ -61,7 +61,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
     @Override
     protected void initDate() {
         userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-        if (null != userInfo){
+        if (null != userInfo) {
             mUserAccountTv.setText(userInfo.getUserName());
             Picasso.with(UserInfoActivity.this.getApplicationContext())
                     .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm())
@@ -82,10 +82,9 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null){
+        if (data == null) {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -118,7 +117,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back_iv:
                 finish();
                 break;
@@ -129,7 +128,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
         }
     }
 
-    private void changeAvatar(){
+    private void changeAvatar() {
         PhotoManage.getInstance(this).showDialog();
     }
 
@@ -167,7 +166,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
             if (bitmap != null) {
                 mUserAvatarIv.setImageBitmap(bitmap);
             }
-            LogUtil.i(TAG,"Avatar file is: "+ url);
+            LogUtil.i(TAG, "Avatar file is: " + url);
             UpdatePhotoReq req = new UpdatePhotoReq();
             req.setToken(userInfo.getToken());
             req.setFile(url);

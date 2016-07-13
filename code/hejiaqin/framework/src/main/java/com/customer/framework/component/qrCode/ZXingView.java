@@ -7,6 +7,7 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
+import com.google.zxing.common.GlobalHistogramBinarizer;
 import com.google.zxing.common.HybridBinarizer;
 
 import com.customer.framework.component.qrCode.core.QRCodeView;
@@ -37,6 +38,10 @@ public class ZXingView extends QRCodeView {
             PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
             rawResult = mMultiFormatReader.decodeWithState(new BinaryBitmap(new HybridBinarizer(source)));
         } catch (Exception e) {
+            try {
+                PlanarYUVLuminanceSource source2 = new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+                rawResult = mMultiFormatReader.decodeWithState(new BinaryBitmap(new GlobalHistogramBinarizer(source2)));
+            }catch (Exception e1){}
         } finally {
             mMultiFormatReader.reset();
         }

@@ -12,9 +12,9 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.more.MissCallMessage;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.MissCallAdapter;
+import com.customer.framework.component.time.DateTimeUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -80,15 +80,28 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
     @Override
     protected void initData() {
         mMissCallMessages = new ArrayList<MissCallMessage>();
+
+
         MissCallMessage testMessage1 = new MissCallMessage();
-        testMessage1.setDate("12:08");
+        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));
         testMessage1.setFrom("13776570335");
         MissCallMessage testMessage2 = new MissCallMessage();
-        testMessage2.setDate("13:08");
+
+        testMessage2.setDate(DateTimeUtil.getYYYYMMDDHHMMSS(DateTimeUtil.getYesterdayDate()));
         testMessage2.setFrom("13776570335");
+
+        MissCallMessage testMessage3 = new MissCallMessage();
+        testMessage3.setDate("2016-03-15 14:02:03");
+        testMessage3.setFrom("13776570335");
+
+        MissCallMessage testMessage4 = new MissCallMessage();
+        testMessage4.setDate("2015-03-15 14:02:03");
+        testMessage4.setFrom("13776570335");
 
         mMissCallMessages.add(testMessage1);
         mMissCallMessages.add(testMessage2);
+        mMissCallMessages.add(testMessage3);
+        mMissCallMessages.add(testMessage4);
 
         adapter.setData(mMissCallMessages);
     }
@@ -105,20 +118,10 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
     }
 
     private void deleteSelectedData() {
-        Iterator<MissCallMessage> it = mMissCallMessages.iterator();
-        while (it.hasNext()) {
-            MissCallMessage missCallMsg = it.next();
-            if (missCallMsg.isChecked()) {
-                it.remove();
-            }
-        }
-        adapter.notifyDataSetChanged();
+        adapter.deleteSelectedData();
     }
 
     private void unSelectedAllData() {
-        for (MissCallMessage missCallMsg : mMissCallMessages) {
-            missCallMsg.setChecked(false);
-        }
-        adapter.notifyDataSetChanged();
+        adapter.unSelectedAllData();
     }
 }
