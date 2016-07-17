@@ -1,7 +1,10 @@
 package com.chinamobile.hejiaqin.business.ui;
 
+import android.content.Intent;
+
 import com.chinamobile.hejiaqin.BuildConfig;
 import com.chinamobile.hejiaqin.business.HeApplication;
+import com.chinamobile.hejiaqin.business.HeService;
 import com.customer.framework.utils.LogUtil;
 
 /**
@@ -12,6 +15,7 @@ public class PhoneApplication extends HeApplication implements
     @Override
     public void onCreate() {
         super.onCreate();
+        startService(new Intent(this,HeService.class));
         //设置Thread Exception Handler
         if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
             Thread.setDefaultUncaughtExceptionHandler(this);

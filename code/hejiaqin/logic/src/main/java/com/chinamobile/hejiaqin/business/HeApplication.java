@@ -28,9 +28,11 @@ public class HeApplication extends RCSApplication {
         HmeAudio.setup(this);
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
-        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE,CallApi.CONFIG_MINOR_TYPE_DEFAULT,"1");
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
         CallApi.setConfig(CallApi.CONFIG_MAJOR_PREVIEW_BEFORE_CONNED,
                 CallApi.CONFIG_MINOR_TYPE_DEFAULT, CallApi.CFG_VALUE_YES);
+        //设置不插入系统通话记录
+        CallApi.setCustomCfg(CallApi.CFG_CALLLOG_INSERT_SYS_DB, CallApi.CFG_VALUE_NO);
         SysApi.loadTls(new DefaultTlsHelper());
         SysApi.loadStg(new NatStgHelper());
 
@@ -42,7 +44,6 @@ public class HeApplication extends RCSApplication {
 	   /* UI must set  the interface for safety certification.
        see detail in Developer's Guide*/
         // SysApi.setTrustCaFilePath("/rootcert.pem");
-        startService(new Intent(HeService.SERVICE_NAME));
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
         /**
          * 初始化小溪推送SDK
