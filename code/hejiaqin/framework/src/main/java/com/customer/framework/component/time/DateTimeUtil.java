@@ -224,10 +224,12 @@ public class DateTimeUtil {
 		String formatTime = hourDf.format(date);
 		return formatTime;
 	}
+
     public static String getMMddByDate(Date date){
-         return getMMddByDate(date,"MM-dd");
+         return getFormatStrByDate(date,"MM-dd");
     }
-    public static String getMMddByDate(Date date,String dateFormat){
+
+    public static String getFormatStrByDate(Date date,String dateFormat){
         SimpleDateFormat dayDf = new SimpleDateFormat(dateFormat, Locale.getDefault());
         String formatTime = dayDf.format(date);
         return formatTime;

@@ -10,13 +10,16 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.SystemMessage;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.more.SysMessageDetailActivity;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.SysMessageAdapter;
+import com.customer.framework.component.time.DateTimeUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,9 +82,7 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SystemMessage msg = mMessageList.get(position);
                 Intent intent = new Intent(getActivity(), SysMessageDetailActivity.class);
-                intent.putExtra("msgTitle", msg.getTitle());
-                intent.putExtra("msgDate", msg.getDate());
-                intent.putExtra("msgBody", msg.getMsgBody());
+                intent.putExtra("msgID", msg.getId());
                 getActivity().startActivity(intent);
             }
         });
@@ -91,8 +92,9 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
     protected void initData() {
         mMessageList = new ArrayList<SystemMessage>();
         SystemMessage testMessage1 = new SystemMessage();
-        testMessage1.setDate("2016/04/20");
-        testMessage1.setTitle("今夜20:20, 红包雨来袭");
+        Date today = new Date();
+        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));
+        testMessage1.setTitle("测试用系统消息");
         testMessage1.setMsgBody("1 当我在夜里独赴幽会的时候,鸟儿不叫,风儿不吹,街道两旁的房屋沉默地站立着. \n" +
                 "是我自己的脚镯越走越响使我羞怯. \n" +
                 "当我站在凉台上倾听他的足音,树叶不摇,河水静止像熟睡的哨兵膝上的刀剑. \n" +
@@ -136,7 +138,7 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
                 "你的钏镯丁当,乳沫溢出罐沿. \n" +
                 "晨光渐逝而我没有走近你. ");
         SystemMessage testMessage2 = new SystemMessage();
-        testMessage2.setDate("2016/04/20");
+        testMessage2.setDate(DateTimeUtil.parseDate2Str(DateTimeUtil.getYesterdayDate(),"yyyy-MM-dd HH:mm:ss"));
         testMessage2.setTitle("分享出去, 让小伙伴越来越多吧!");
         testMessage2.setMsgBody("4 我在路边行走,也不知道为什么,时忆已过午,和竹枝在风中簌簌作响. \n" +
                 "横斜的影子伸臂拖住流光的双足 \n" +
@@ -178,9 +180,14 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
                 "\n" +
                 "拉宾德拉纳特·泰戈尔（1861年—1941年），印度著名诗人、文学家、社会活动家、哲学家和印度民族主义者。1861年5月7日，拉宾德拉纳特·泰戈尔出生于印度加尔各答一个富有的贵族家庭。1913年，他以《吉檀迦利》成为第一位获得诺贝尔文学奖的亚洲人。他的诗中含有深刻的宗教和哲学的见解，泰戈尔的诗在印度享有史诗的地位，代表作《吉檀迦利》、《飞鸟集》、《眼中沙》、《四个人》、《家庭与世界》、《园丁集》、《新月集》、《最后的诗篇》、《戈拉》、《文明的危机》等。");
 
-        mMessageList.add(testMessage1);
-        mMessageList.add(testMessage2);
 
+        SystemMessageDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                .add(testMessage1);
+        SystemMessageDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                .add(testMessage2);
+
+        mMessageList = SystemMessageDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                .queryAll();
         adapter.setData(mMessageList);
     }
 
@@ -196,21 +203,11 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
     }
 
     private void deleteSelectedData() {
-        Iterator<SystemMessage> it = mMessageList.iterator();
-        while (it.hasNext()) {
-            SystemMessage systemMsg = it.next();
-            if (systemMsg.isChecked()) {
-                it.remove();
-            }
-        }
-        adapter.notifyDataSetChanged();
+        adapter.delSelectedSystemMessage();
     }
 
     private void unSelectedAllData() {
-        for (SystemMessage systemMsg : mMessageList) {
-            systemMsg.setChecked(false);
-        }
-        adapter.notifyDataSetChanged();
+        adapter.unSelectAll();
     }
 
 }

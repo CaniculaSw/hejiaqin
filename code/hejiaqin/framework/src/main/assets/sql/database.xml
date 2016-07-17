@@ -44,4 +44,11 @@
 		<field name="photo_lg" type="TEXT" obligatory="" />
 		<field name="photo_sm" type="TEXT" obligatory="" />
 	</table>
+
+	<table name="SystemMessage">
+		<field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT"/>
+		<field name="title" type="TEXT" obligatory="NOT NULL"/>
+		<field name="content" type="TEXT" obligatory=""/>
+		<field name="time" type="TEXT" obligatory="NOT NULL"/>
+	</table>
 </database>

@@ -212,4 +212,18 @@ public class DatabaseInfo {
         public static final String SQL_SElECT_ALL = new StringBuffer("select * from ")
                 .append(TABLE_NAME).toString();
     }
+
+    public interface SystemMessage {
+        public static final String TABLE_NAME = "SystemMessage";
+        /**
+         * 唯一标识
+         */
+        public static final String TABLE_ID = "_ID";
+        public static final String TITLE = "title";
+        public static final String TIME = "time";
+        public static final String CONTENT = "content";
+
+        public static final String SQL_SElECT_ALL = new StringBuffer("select * from ")
+                .append(TABLE_NAME).toString();
+    }
 }

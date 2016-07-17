@@ -9,6 +9,18 @@ public class SystemMessage {
 
     private String date;
 
+    private String msgBody;
+
+    private String id;
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
     public String getMsgBody() {
         return msgBody;
     }
@@ -16,10 +28,6 @@ public class SystemMessage {
     public void setMsgBody(String msgBody) {
         this.msgBody = msgBody;
     }
-
-    private String msgBody;
-
-    private boolean isChecked;
 
     public String getTitle() {
         return title;
@@ -37,11 +45,4 @@ public class SystemMessage {
         this.date = date;
     }
 
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean isChecked) {
-        this.isChecked = isChecked;
-    }
 }
