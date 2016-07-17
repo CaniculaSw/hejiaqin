@@ -7,7 +7,7 @@ import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 
 /**
- * Created by Xiadong on 2016/5/9.
+ *
  */
 public class PasswordInfo implements ReqBody , Parcelable {
 

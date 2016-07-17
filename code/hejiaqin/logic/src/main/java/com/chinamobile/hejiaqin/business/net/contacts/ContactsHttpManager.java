@@ -50,8 +50,6 @@ public class ContactsHttpManager extends AbsHttpManager {
 
     private Action mAction;
 
-    private ReqBody mData;
-
     public ContactsHttpManager(Context context) {
         this.mContext = context;
     }
@@ -87,20 +85,6 @@ public class ContactsHttpManager extends AbsHttpManager {
                 break;
         }
         return url;
-    }
-
-    /**
-     * 获取请求要携带的消息体
-     *
-     * @return 返回消息体
-     */
-    @Override
-    protected String getBody() {
-        String body = null;
-        if (mData != null) {
-            body = mData.toBody();
-        }
-        return body;
     }
 
     /**

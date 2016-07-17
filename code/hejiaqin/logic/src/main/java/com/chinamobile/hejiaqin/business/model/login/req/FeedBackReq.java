@@ -2,21 +2,13 @@ package com.chinamobile.hejiaqin.business.model.login.req;
 
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
+import com.chinamobile.hejiaqin.business.net.ReqToken;
 
 /**
  * Created by eshaohu on 16/6/26.
  */
-public class FeedBackReq implements ReqBody {
-    private String token;
+public class FeedBackReq extends ReqToken implements ReqBody {
     private String content;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getContent() {
         return content;

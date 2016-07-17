@@ -132,8 +132,6 @@ public class FeedBackActivity extends BasicActivity implements View.OnClickListe
     private void feedback() {
         if (feedBackContentEt.getText().length() > 0) {
             FeedBackReq reqBody = new FeedBackReq();
-            UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-            reqBody.setToken(userInfo.getToken());
             reqBody.setContent(feedBackContentEt.getText().toString());
             loginLogic.feedBack(reqBody);
         } else {

@@ -2,13 +2,12 @@ package com.chinamobile.hejiaqin.business.model.contacts.req;
 
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
+import com.chinamobile.hejiaqin.business.net.ReqToken;
 
 /**
  * Created by Administrator on 2016/6/29 0029.
  */
-public class EditContactReq implements ReqBody {
-
-    private String token;
+public class EditContactReq extends ReqToken implements ReqBody {
 
     private String contactId;
 
@@ -91,14 +90,6 @@ public class EditContactReq implements ReqBody {
 //        requestBody.append("\r\n\r\n");
 //
 //        return requestBody.toString();
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getFile() {

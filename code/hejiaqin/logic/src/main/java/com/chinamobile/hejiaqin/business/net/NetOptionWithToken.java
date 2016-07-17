@@ -30,6 +30,8 @@ public abstract class NetOptionWithToken extends NetOption {
     private static final String TAG = "NetOptionWithToken";
     private static boolean isRefreshTokening = false;
 
+    protected ReqBody mData;
+
     @Override
     public void send(final INetCallBack httpCallback) {
 
@@ -105,6 +107,23 @@ public abstract class NetOptionWithToken extends NetOption {
             }
         }
         return properties;
+    }
+
+
+    @Override
+    protected String getBody() {
+        String body = null;
+        if (mData != null) {
+            if(mData instanceof ReqToken)
+            {
+                UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                if (info != null && info.getToken() != null) {
+                    ((ReqToken) mData).setToken(info.getToken());
+                }
+            }
+            body = mData.toBody();
+        }
+        return body;
     }
 
     protected abstract boolean isNeedToken();

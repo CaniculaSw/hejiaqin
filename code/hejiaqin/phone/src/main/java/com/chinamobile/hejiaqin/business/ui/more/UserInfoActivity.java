@@ -168,7 +168,6 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
             }
             LogUtil.i(TAG, "Avatar file is: " + url);
             UpdatePhotoReq req = new UpdatePhotoReq();
-            req.setToken(userInfo.getToken());
             req.setFile(url);
             loginLogic.updatePhoto(req);
         }

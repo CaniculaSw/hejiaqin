@@ -81,7 +81,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             public void run() {
 
                 AddContactReq request = new AddContactReq();
-                request.setToken(UserInfoCacheManager.getToken(getContext()));
                 request.setName(name);
                 request.setPhone(number);
                 request.setFile(photoFullPath);
@@ -223,7 +222,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
 
 
                 EditContactReq request = new EditContactReq();
-                request.setToken(UserInfoCacheManager.getToken(getContext()));
                 request.setName(name);
                 request.setPhone(number);
                 request.setContactId(contactId);

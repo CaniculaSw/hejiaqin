@@ -2,13 +2,13 @@ package com.chinamobile.hejiaqin.business.model.login.req;
 
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
+import com.chinamobile.hejiaqin.business.net.ReqToken;
 
 /**
  * Created by eshaohu on 16/6/23.
  */
-public class UpdatePhotoReq implements ReqBody {
+public class UpdatePhotoReq extends ReqToken implements ReqBody {
     String file;
-    String token;
 
     public String getFile() {
         return file;
@@ -18,13 +18,6 @@ public class UpdatePhotoReq implements ReqBody {
         this.file = file;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     @Override
     public String toBody() {

@@ -37,8 +37,6 @@ public class SettingHttpmanager extends AbsHttpManager {
      */
     private int mAction;
 
-    private ReqBody mData;
-
     private Context mContext;
 
     public SettingHttpmanager(Context context) {
@@ -61,15 +59,6 @@ public class SettingHttpmanager extends AbsHttpManager {
                 break;
         }
         return url;
-    }
-
-    @Override
-    protected String getBody() {
-        String body = null;
-        if (mData != null) {
-            body = mData.toBody();
-        }
-        return body;
     }
 
     /**
