@@ -1,9 +1,11 @@
 package com.chinamobile.hejiaqin.business.model.dial;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+
 /**
  * Created by zhanggj on 2016/7/17.
  */
-public class CallLog {
+public class CallRecord {
     public static final int TYPE_AUDIO_INCOMING = 1;
     public static final int TYPE_AUDIO_OUTGOING = 2;
     public static final int TYPE_AUDIO_MISSING = 3;
@@ -11,21 +13,34 @@ public class CallLog {
     public static final int TYPE_VIDEO_OUTGOING = 5;
     public static final int TYPE_VIDEO_MISSING = 6;
 
-    private String dbId;
-    private String peerNumber;
-    private String peerame;
-    private String peerHeaderImage;
-    private String beginTime;
-    private String duration;
-    private int type;
-    private boolean read;
+    public static final int INTO_FLAG_HEJIAQING = 1;
+    public static final int INTO_FLAG_SYSTEM = 2;
 
-    public String getDbId() {
-        return dbId;
+    private String id;
+    private String recordId;
+    private String peerNumber;
+    private String peerName;
+    private String peerHeaderImage;
+    private int infoFlag;
+    private String beginTime;
+    private int duration;
+    private int type;
+    private int read;
+
+    public String getId() {
+        return id;
     }
 
-    public void setDbId(String dbId) {
-        this.dbId = dbId;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
     }
 
     public String getPeerNumber() {
@@ -36,12 +51,12 @@ public class CallLog {
         this.peerNumber = peerNumber;
     }
 
-    public String getPeerame() {
-        return peerame;
+    public String getPeerName() {
+        return peerName;
     }
 
-    public void setPeerame(String peerame) {
-        this.peerame = peerame;
+    public void setPeerName(String peerName) {
+        this.peerName = peerName;
     }
 
     public String getPeerHeaderImage() {
@@ -52,6 +67,14 @@ public class CallLog {
         this.peerHeaderImage = peerHeaderImage;
     }
 
+    public int getInfoFlag() {
+        return infoFlag;
+    }
+
+    public void setInfoFlag(int infoFlag) {
+        this.infoFlag = infoFlag;
+    }
+
     public String getBeginTime() {
         return beginTime;
     }
@@ -60,11 +83,11 @@ public class CallLog {
         this.beginTime = beginTime;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -76,11 +99,16 @@ public class CallLog {
         this.type = type;
     }
 
-    public boolean isRead() {
+    public int getRead() {
         return read;
     }
 
-    public void setRead(boolean read) {
+    public void setRead(int read) {
         this.read = read;
+    }
+
+    public boolean isReaded()
+    {
+        return read== BussinessConstants.DictInfo.YES;
     }
 }

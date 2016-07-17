@@ -32,7 +32,6 @@ public class BussinessConstants {
         int CALL_TALKING_HANGUP =1;
         int CALL_INCOMING_HANGUP = 2;
 
-
     }
 
     public interface ActivityRequestCode {
@@ -61,6 +60,8 @@ public class BussinessConstants {
         int SIP_DECLINE = 603;
         int SIP_TERMINATED = 487;
 
+        int YES =1;
+        int NO = 0;
     }
 
     /**

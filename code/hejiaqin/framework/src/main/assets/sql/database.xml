@@ -15,20 +15,12 @@
 	<!-- 通话记录表结构 -->
 	<table name="CallRecord">
 		<field name="_ID" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
-		<field name="ownerUserId" type="TEXT" obligatory=" NOT NULL" />
 		<field name="recordId" type="TEXT" obligatory=" NOT NULL" />
-		<field name="callId" type="TEXT" obligatory="" />
-		<field name="remoteUserId" type="TEXT" obligatory="" />
-		<field name="remoteMsisdn" type="TEXT" obligatory="" />
-		<field name="remoteURI" type="TEXT" obligatory="" />
-		<field name="remoteDisplayName" type="TEXT" obligatory="" />
-		<field name="callType" type="INTEGER" obligatory=" DEFAULT 1" />
-		<field name="callDirection" type="INTEGER" obligatory="" />
-		<field name="avatarURI" type="TEXT" obligatory="" />
-		<field name="readFlag" type="INTEGER" obligatory="" />
-		<field name="callTime" type="TEXT" obligatory="" />
-		<field name="startTime" type="TEXT" obligatory="" />
-		<field name="period" type="INTEGER" obligatory="" />
+		<field name="peerNumber" type="TEXT" obligatory="NOT NULL" />
+		<field name="beginTime" type="TEXT" obligatory="" />
+		<field name="duration" type="INTEGER" obligatory="DEFAULT 0" />
+		<field name="type" type="INTEGER" obligatory="" />
+		<field name="read" type="INTEGER" obligatory="DEFAULT 0" />
 	</table>
 
 	<!-- 联系人基本信息表 -->

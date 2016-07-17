@@ -177,20 +177,12 @@ public class DatabaseInfo {
          * 唯一标识
          */
         public static final String TABLE_ID = "_ID";
-        public static final String OWNER_USERID = "ownerUserId";
         public static final String RECORD_ID = "recordId";
-        public static final String CALL_ID = "callId";
-        public static final String REMOTE_USERID = "remoteUserId";
-        public static final String REMOTE_MSISDN = "remoteMsisdn";
-        public static final String REMOTE_URI = "remoteURI";
-        public static final String REMOTE_DISPLAYNAME = "remoteDisplayName";
-        public static final String CALL_TYPE = "callType";
-        public static final String CALL_DIRECTION = "callDirection";
-        public static final String AVATAR_URI = "avatarURI";
-        public static final String READ_FLAG = "readFlag";
-        public static final String CALL_TIME = "callTime";
-        public static final String START_TIME = "startTime";
-        public static final String PERIOD = "period";
+        public static final String PEER_NUMBER = "peerNumber";
+        public static final String BEGIN_TIME = "beginTime";
+        public static final String DURATION = "duration";
+        public static final String TYPE = "type";
+        public static final String READ = "read";
     }
 
     public interface ContactsInfo {
