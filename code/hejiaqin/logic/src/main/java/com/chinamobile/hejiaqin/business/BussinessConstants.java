@@ -278,6 +278,8 @@ public class BussinessConstants {
 
         String INTENT_INCOMING_SESSION_ID = "intent_incoming_session_id";
 
+        String INTENT_CALLEE_NAME = "intent_callee_name";
+
     }
 
     /**

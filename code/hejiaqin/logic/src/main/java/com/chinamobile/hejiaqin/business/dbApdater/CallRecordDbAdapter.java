@@ -54,7 +54,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         super.applyBatch(operationList);
     }
 
-    public List<CallRecord> query(String[] numbers) {
+    public List<CallRecord> queryWithNumbers(String[] numbers) {
         List<CallRecord> list = new ArrayList<CallRecord>();
         String selection = "";
         if(numbers!=null && numbers.length!=0) {
@@ -77,6 +77,25 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
             list.add(parseValuesToBean(cursor));
         }
         return list;
+    }
+
+    public void deleteByNumbers(String[] numbers) {
+        String selection = "";
+        if(numbers!=null && numbers.length!=0) {
+            if (numbers.length == 1) {
+                selection =  DatabaseInfo.CallRecord.PEER_NUMBER + " = ? ";
+            }
+            for (int i = 0; i < numbers.length; i++) {
+                if (i == 0) {
+                    selection = DatabaseInfo.CallRecord.PEER_NUMBER + " in ( ? ";
+                } else if (i == numbers.length - 1) {
+                    selection = selection + " , ? ) ";
+                } else {
+                    selection = selection + " , ? ";
+                }
+            }
+        }
+        super.delete(DatabaseInfo.CallRecord.TABLE_NAME, selection, numbers);
     }
 
     public List<CallRecord> queryWithName() {

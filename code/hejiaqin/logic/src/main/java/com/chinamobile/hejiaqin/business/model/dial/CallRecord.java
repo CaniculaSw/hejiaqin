@@ -12,6 +12,7 @@ public class CallRecord {
     public static final int TYPE_VIDEO_INCOMING = 4;
     public static final int TYPE_VIDEO_OUTGOING = 5;
     public static final int TYPE_VIDEO_MISSING = 6;
+    public static final int TYPE_VIDEO_REJECT = 7;
 
     public static final int INTO_FLAG_HEJIAQING = 1;
     public static final int INTO_FLAG_SYSTEM = 2;

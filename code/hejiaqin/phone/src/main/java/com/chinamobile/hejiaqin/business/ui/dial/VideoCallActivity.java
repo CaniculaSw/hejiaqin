@@ -27,6 +27,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.system.SysApi;
@@ -72,6 +73,9 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     //被叫号码
     private String mCalleeNumber;
+
+    //被叫姓名
+    private String mCalleeName;
 
     private IVoipLogic mVoipLogic;
 
@@ -185,6 +189,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             showIncoming();
         } else {
             mCalleeNumber = getIntent().getStringExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER);
+            mCalleeName = getIntent().getStringExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME);
             outingCall();
             showOuting();
         }
@@ -203,7 +208,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private void showOuting() {
         //TODO 查询姓名
-        mContactNameTv.setText(mCalleeNumber);
+        mContactNameTv.setText(StringUtil.isNullOrEmpty(mCalleeName)? mCalleeNumber:mCalleeName);
         mTopLayout.setVisibility(View.VISIBLE);
         mVideoLayout.setVisibility(View.VISIBLE);
         mBottomLayout.setVisibility(View.VISIBLE);

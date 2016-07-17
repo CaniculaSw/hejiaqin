@@ -43,7 +43,6 @@ import java.io.IOException;
 public class CommonUtils {
 
 
-
     //检测SD card是否存在
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
@@ -139,4 +138,27 @@ public class CommonUtils {
     public static UserInfo getLocalUserInfo() {
         return (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
     }
+
+    public String getCountryPhoneNumber(String number) {
+        String outNumber = number;
+        if (number.startsWith("86")) {
+            outNumber = "+" + number;
+        } else if (!number.startsWith("+86")) {
+            outNumber = "+86" + number;
+        }
+        return outNumber;
+    }
+
+    public String getPhoneNumber(String countryNumber) {
+        String outNumber = countryNumber;
+        if (countryNumber.startsWith("+86")) {
+            outNumber = countryNumber.substring(countryNumber.indexOf("+86"));
+        } else if (countryNumber.startsWith("86")) {
+            outNumber = countryNumber.substring(countryNumber.indexOf("86"));
+        }else if (countryNumber.startsWith("+")) {
+            outNumber = countryNumber.substring(countryNumber.indexOf("+"));
+        }
+        return outNumber;
+    }
+
 }

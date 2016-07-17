@@ -7,6 +7,9 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
@@ -15,6 +18,8 @@ import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.login.LoginApi;
 import com.huawei.rcs.login.LoginCfg;
 import com.huawei.rcs.login.UserInfo;
+
+import java.util.UUID;
 
 /**
  * Created by zhanggj on 2016/6/5.
@@ -28,6 +33,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private static final String DEFAULT_PORT = "443";
 
     private static VoipLogic instance;
+
+    private String recordId;
+
+    private CallRecordDbAdapter mCallRecordDbAdapter;
 
     private BroadcastReceiver mLoginStatusChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -75,6 +84,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 //            }
             //TODO 保存通话记录
             if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING || callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+                CallRecord callRecord = new CallRecord();
+                recordId = UUID.randomUUID().toString();
+                callRecord.setRecordId(recordId);
+                callRecord.setPeerNumber(callSession.getPeer().getNumber());
+//                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert();
                 Intent inComingIntent = new Intent();
                 inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
                 inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
