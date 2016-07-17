@@ -119,9 +119,9 @@ public class FeedBackActivity extends BasicActivity implements View.OnClickListe
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
-        switch (msg.what){
+        switch (msg.what) {
             case BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS:
-                showToast(getString(R.string.prompt_feedback_ok),Toast.LENGTH_SHORT,null);
+                showToast(getString(R.string.prompt_feedback_ok), Toast.LENGTH_SHORT, null);
                 doBack();
                 break;
             default:
@@ -136,8 +136,8 @@ public class FeedBackActivity extends BasicActivity implements View.OnClickListe
             reqBody.setToken(userInfo.getToken());
             reqBody.setContent(feedBackContentEt.getText().toString());
             loginLogic.feedBack(reqBody);
-        }else {
-            showToast(getString(R.string.prompt_empty_feedback_content), Toast.LENGTH_LONG,null);
+        } else {
+            showToast(getString(R.string.prompt_empty_feedback_content), Toast.LENGTH_LONG, null);
         }
     }
 }

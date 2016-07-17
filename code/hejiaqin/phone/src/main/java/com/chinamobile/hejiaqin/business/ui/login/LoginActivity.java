@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
@@ -31,6 +32,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     private Button signBtn;
     private TextView forgetPwdTv;
     private Button registerBtn;
+    private ImageView clearAccountBtn;
 
     @Override
     protected void initLogics() {
@@ -49,6 +51,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         signBtn = (Button) findViewById(R.id.sign_in_button);
         forgetPwdTv = (TextView) findViewById(R.id.forget_pwd_tv);
         registerBtn = (Button) findViewById(R.id.register_button);
+        clearAccountBtn = (ImageView) findViewById(R.id.clear_btn);
     }
 
     @Override
@@ -61,6 +64,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         signBtn.setOnClickListener(this);
         forgetPwdTv.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
+        clearAccountBtn.setClickable(true);
+        clearAccountBtn.setOnClickListener(this);
         accountEditTv.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -111,6 +116,10 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterFirstStepActivity.class);
                 passwdEditTv.setText("");
                 startActivity(registerIntent);
+                break;
+            case R.id.clear_btn:
+                accountEditTv.setText("");
+                accountEditTv.requestFocus();
                 break;
         }
     }

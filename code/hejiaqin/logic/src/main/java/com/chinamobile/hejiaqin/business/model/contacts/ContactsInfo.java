@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.model.contacts;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.customer.framework.utils.StringUtil;
 
 import java.io.Serializable;
@@ -24,6 +25,8 @@ public class ContactsInfo implements Serializable {
     private List<NumberInfo> numberLst = new ArrayList<NumberInfo>();
 
     private String nameInPinyin;
+
+    private String nameHeadChar;
 
     private ContactMode contactMode;
 
@@ -71,7 +74,17 @@ public class ContactsInfo implements Serializable {
     }
 
     public void setPhotoLg(String photoLg) {
-        this.photoLg = photoLg;
+        if (StringUtil.isNullOrEmpty(photoLg)) {
+            this.photoLg = photoLg;
+            return;
+        }
+
+        if (photoLg.startsWith(BussinessConstants.ServerInfo.HTTP_ADDRESS)) {
+            this.photoLg = photoLg;
+            return;
+        }
+
+        this.photoLg = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + photoLg;
     }
 
     public String getPhotoSm() {
@@ -79,7 +92,18 @@ public class ContactsInfo implements Serializable {
     }
 
     public void setPhotoSm(String photoSm) {
-        this.photoSm = photoSm;
+
+        if (StringUtil.isNullOrEmpty(photoSm)) {
+            this.photoSm = photoSm;
+            return;
+        }
+
+        if (photoSm.startsWith(BussinessConstants.ServerInfo.HTTP_ADDRESS)) {
+            this.photoSm = photoSm;
+            return;
+        }
+
+        this.photoSm = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + photoSm;
     }
 
     public void addNumber(NumberInfo numberInfo) {
@@ -95,6 +119,14 @@ public class ContactsInfo implements Serializable {
 
     public void setNameInPinyin(String nameInPinyin) {
         this.nameInPinyin = nameInPinyin;
+    }
+
+    public String getNameHeadChar() {
+        return nameHeadChar;
+    }
+
+    public void setNameHeadChar(String nameHeadChar) {
+        this.nameHeadChar = nameHeadChar;
     }
 
     /**
@@ -142,6 +174,7 @@ public class ContactsInfo implements Serializable {
                 "contactMode='" + contactMode + '\'' +
                 ", numberLst='" + numberLst + '\'' +
                 ", nameInPinyin='" + nameInPinyin + '\'' +
+                ", nameHeadChar='" + nameHeadChar + '\'' +
                 '}';
     }
 }

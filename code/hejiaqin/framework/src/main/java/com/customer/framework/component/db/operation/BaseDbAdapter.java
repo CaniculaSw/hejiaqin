@@ -36,7 +36,7 @@ public abstract class BaseDbAdapter {
             mApplyingBatch.set(true);
             int i = paramList.size();
             for (int j = 0; j < i; j++) {
-                DbOperation dbOperation =  paramList.get(j);
+                DbOperation dbOperation = paramList.get(j);
                 if ((j > 0) && (dbOperation.isYieldAllowed())) {
                     db.yieldIfContendedSafely(SLEEP_AFTER_YIELD_DELAY);
                 }
@@ -141,6 +141,11 @@ public abstract class BaseDbAdapter {
         return db.rawQuery(sql, selectionArgs);
     }
 
+    protected Cursor query(String table, String[] columns, String selection, String[] selectionArgs,
+                           String groupBy, String having, String orderBy, String limit) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+    }
 
     protected void closeCursor(Cursor cursor) {
         if (cursor != null) {

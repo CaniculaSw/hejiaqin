@@ -1,23 +1,26 @@
 package com.chinamobile.hejiaqin.business.ui.more.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.SystemMessage;
-import com.chinamobile.hejiaqin.business.ui.more.SysMessageDetailActivity;
+import com.customer.framework.component.time.DateTimeUtil;
+import com.customer.framework.ui.AdapterViewHolder;
+import com.customer.framework.utils.LogUtil;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by eshaohu on 16/5/28.
@@ -28,7 +31,11 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
     private List<SystemMessage> sysMessageList = new ArrayList<SystemMessage>();
     private boolean isShow = false;
     private Context context;
-    private SystemMessage msg;
+    private static final String TAG = "SysMessageAdapter";
+
+    private AdapterViewHolder mViewHolder;
+
+    private Set<SystemMessage> selectedSet = new HashSet<SystemMessage>();
 
     public SysMessageAdapter(Context context) {
         super();
@@ -61,49 +68,69 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.adapter_sys_message, parent, false);
-            holder.title = (TextView) convertView.findViewById(R.id.more_sys_msg_title_tv);
-            holder.date = (TextView) convertView.findViewById(R.id.more_sys_msg_date_tv);
-            holder.delCb = (CheckBox) convertView.findViewById(R.id.more_checkbox_sys_message_cb);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+
+        SystemMessage msg = (SystemMessage) getItem(position);
+
+        mViewHolder =  AdapterViewHolder.get(context, convertView, parent, R.layout.adapter_sys_message, position);
+        mViewHolder.setText(R.id.more_sys_msg_title_tv,msg.getTitle());
+        try {
+            mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(DateTimeUtil.parseSTANDARDFormatToDate(msg.getDate()),"yyyy-MM-dd"));
+        } catch (ParseException e) {
+            LogUtil.e(TAG,e);
         }
-        msg = (SystemMessage) getItem(position);
-        holder.title.setText(msg.getTitle());
-        holder.date.setText(msg.getDate());
 
-        holder.delCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CheckBox delCb = (CheckBox) mViewHolder.getView(R.id.more_checkbox_sys_message_cb);
 
+        if (msg != null) {
+            if (selectedSet.contains(msg)) {
+                delCb.setChecked(true);
+            } else {
+                delCb.setChecked(false);
+            }
+        }
+
+        delCb.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sysMessageList.get(position).setChecked(isChecked);
+            public void onClick(View v) {
+                ((CheckBox) v).setChecked(((CheckBox) v).isChecked());
+                if (((CheckBox) v).isChecked()) {
+                    selectedSet.add((SystemMessage) getItem(position));
+
+                } else {
+                    selectedSet.remove((SystemMessage) getItem(position));
+                }
             }
         });
 
         if (isShow) {
-            holder.delCb.setVisibility(View.VISIBLE);
+            delCb.setVisibility(View.VISIBLE);
         } else {
-            holder.delCb.setVisibility(View.GONE);
+            delCb.setVisibility(View.GONE);
         }
 
-        holder.delCb.setChecked(msg.isChecked());
-        return convertView;
+        return mViewHolder.getView();
     }
 
     public void setData(List<SystemMessage> sysMessageList) {
         if (null != sysMessageList) {
-            this.sysMessageList = sysMessageList;
+            this.sysMessageList.addAll(sysMessageList);
         }
         notifyDataSetChanged();
     }
 
-    class ViewHolder {
-        TextView title;
-        TextView date;
-        CheckBox delCb;
+    public void delSelectedSystemMessage(){
+        LogUtil.d(TAG,"The lentg of the selected system messages: "+selectedSet.size());
+        for (SystemMessage systemMessage : selectedSet){
+            this.sysMessageList.remove(systemMessage);
+            LogUtil.d(TAG,"Will delete system message with id: "+ systemMessage.getId());
+            SystemMessageDbAdapter.getInstance(context, UserInfoCacheManager.getUserId(context))
+                    .deleteSystemMessageByID(systemMessage.getId());
+        }
+        this.selectedSet.clear();
+        notifyDataSetChanged();
+    }
+    public void unSelectAll() {
+        selectedSet.clear();
+        notifyDataSetChanged();
     }
 }

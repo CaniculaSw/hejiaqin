@@ -103,7 +103,7 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         });
         adapter = new SelectContactAdapter(this, getHandler());
         mContactListView.setAdapter(adapter);
-        searchAdapter = new SelectableSearchContactAdapter(this,getHandler());
+        searchAdapter = new SelectableSearchContactAdapter(this, getHandler());
         searchView.setAdapter(searchAdapter);
         mSelectCount = (TextView) findViewById(R.id.more_chosen);
         mSelectAll = (TextView) findViewById(R.id.more_select_all);

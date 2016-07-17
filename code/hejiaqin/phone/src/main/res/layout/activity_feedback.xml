@@ -10,11 +10,11 @@
         android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:id="@+id/feed_content_rl"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/feed_content_rl"
         android:layout_below="@+id/feedback_header"
-        android:layout_margin="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/border_feed_back_content_style">
 
         <TextView
@@ -32,25 +32,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/feedback_word_count"
-            android:layout_marginTop="5dp"
             android:background="@null"
             android:gravity="top"
             android:hint="@string/use_help_main_content_hint"
             android:inputType="text"
-            android:padding="5dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="20dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/text_color_gray"
-            android:textSize="18sp" />
+            android:textColorHint="@color/more_scan_text_color"
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <Button
-        android:layout_width="300dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="20dp"
         android:id="@+id/feedback_submit_btn"
+        android:layout_width="326dp"
+        android:layout_height="54dp"
         android:layout_below="@+id/feed_content_rl"
-        android:background="@color/backgroud_color_gray"
-        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border_btn_commit_bg"
         android:text="@string/use_help_confirm_submit"
-        android:layout_centerHorizontal="true" />
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </RelativeLayout>
