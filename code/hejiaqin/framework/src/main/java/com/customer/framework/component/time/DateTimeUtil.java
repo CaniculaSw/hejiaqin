@@ -160,7 +160,11 @@ public class DateTimeUtil {
 	}
 
 	public static boolean isYesterday(Date date){
-        return date.getTime() >= getYesterdayStart() && date.getTime() <= getYesterdayEnd();
+		return date.getTime() >= getYesterdayStart() && date.getTime() <= getYesterdayEnd();
+	}
+
+	public static boolean isInNineDay(Date date){
+		return date.getTime() >= getNinedayStart() && date.getTime() <= getNinedayEnd();
 	}
 
     public static boolean isThisYear(Date date){
@@ -226,7 +230,7 @@ public class DateTimeUtil {
 	}
 
     public static String getMMddByDate(Date date){
-         return getFormatStrByDate(date,"MM-dd");
+         return getFormatStrByDate(date, "MM-dd");
     }
 
     public static String getFormatStrByDate(Date date,String dateFormat){
@@ -405,6 +409,20 @@ public class DateTimeUtil {
 		Date todayDate = ca.getTime();
 		return setEndDate(todayDate);
 	}
+
+	private static long getNinedayStart() {
+		Calendar ca = Calendar.getInstance();
+		ca.add(Calendar.DAY_OF_YEAR, -9);
+		Date todayDate = ca.getTime();
+		return setStartDate(todayDate);
+	}
+
+	private static long getNinedayEnd() {
+		Calendar ca = Calendar.getInstance();
+		Date todayDate = ca.getTime();
+		return setEndDate(todayDate);
+	}
+
 
 	private static long setStartDate(Date date) {
 		date.setHours(0);

@@ -10,6 +10,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
+import com.customer.framework.component.time.DateTimeUtil;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
@@ -19,6 +20,7 @@ import com.huawei.rcs.login.LoginApi;
 import com.huawei.rcs.login.LoginCfg;
 import com.huawei.rcs.login.UserInfo;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -88,7 +90,9 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 recordId = UUID.randomUUID().toString();
                 callRecord.setRecordId(recordId);
                 callRecord.setPeerNumber(callSession.getPeer().getNumber());
-//                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert();
+                callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
+                callRecord.setDuration(callSession.getDuration());
+                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
                 Intent inComingIntent = new Intent();
                 inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
                 inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);

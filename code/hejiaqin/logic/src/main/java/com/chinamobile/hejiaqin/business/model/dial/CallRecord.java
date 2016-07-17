@@ -1,6 +1,11 @@
 package com.chinamobile.hejiaqin.business.model.dial;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.customer.framework.component.time.DateTimeUtil;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by zhanggj on 2016/7/17.
@@ -77,7 +82,70 @@ public class CallRecord {
     }
 
     public String getBeginTime() {
-        return beginTime;
+        Date date = DateTimeUtil.parseDateString(beginTime, new SimpleDateFormat("yyyyMMddHHmmss"));
+        if (DateTimeUtil.isYesterday(date)) {
+            return "昨天";
+        } else if (DateTimeUtil.isToday(date)) {
+            return DateTimeUtil.getHHMMByDate(date);
+        } else if (DateTimeUtil.isInNineDay(date)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            switch (dayOfWeek) {
+                case 1:
+                    return "星期日";
+                case 2:
+                    return "星期一";
+                case 3:
+                    return "星期二";
+                case 4:
+                    return "星期三";
+                case 5:
+                    return "星期四";
+                case 6:
+                    return "星期五";
+                default:
+                    return "星期六";
+            }
+        } else {
+            return DateTimeUtil.getYYYYMMDDString(date);
+        }
+    }
+
+    public String getBeginDay() {
+        Date date = DateTimeUtil.parseDateString(beginTime, new SimpleDateFormat("yyyyMMddHHmmss"));
+        return DateTimeUtil.getHHMMByDate(date);
+    }
+
+    public String getBeginHour() {
+        Date date = DateTimeUtil.parseDateString(beginTime, new SimpleDateFormat("yyyyMMddHHmmss"));
+        if (DateTimeUtil.isYesterday(date)) {
+            return "昨天";
+        } else if (DateTimeUtil.isToday(date)) {
+            return "今天";
+        } else if (DateTimeUtil.isInNineDay(date)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            switch (dayOfWeek) {
+                case 1:
+                    return "星期日";
+                case 2:
+                    return "星期一";
+                case 3:
+                    return "星期二";
+                case 4:
+                    return "星期三";
+                case 5:
+                    return "星期四";
+                case 6:
+                    return "星期五";
+                default:
+                    return "星期六";
+            }
+        } else {
+            return DateTimeUtil.getYYYYMMDDString(date);
+        }
     }
 
     public void setBeginTime(String beginTime) {
@@ -108,8 +176,7 @@ public class CallRecord {
         this.read = read;
     }
 
-    public boolean isReaded()
-    {
-        return read== BussinessConstants.DictInfo.YES;
+    public boolean isReaded() {
+        return read == BussinessConstants.DictInfo.YES;
     }
 }
