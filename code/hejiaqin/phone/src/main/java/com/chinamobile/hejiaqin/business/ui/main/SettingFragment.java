@@ -10,8 +10,10 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.more.AboutActivity;
@@ -46,6 +48,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     HeaderView moreHeader;
     private ILoginLogic loginLogic;
     private UserInfo userInfo;
+    private IVoipLogic mVoipLogic;
 
     private static final String TAG = "SettingFragment";
 
@@ -144,6 +147,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -192,9 +196,10 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     private void doQuit() {
         loginLogic.logout();
+        mVoipLogic.logout();
         Intent intent = new Intent(getContext(), LoginActivity.class);
         this.startActivity(intent);
-        getActivity().finish();
+        MyActivityManager.getInstance().finishAllActivity(LoginActivity.class.getName());
     }
 
     private void jumpToMessage() {

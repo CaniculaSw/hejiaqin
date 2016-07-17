@@ -105,6 +105,9 @@ public class BussinessConstants {
 
         int SERVER_SIDE_ERROR = BASE_MSG_ID + 2;
 
+        //登录网络错误消息ID
+        int LOGIN_NETWORK_ERROR_MSG_ID = BASE_MSG_ID + 3;
+
     }
 
     /**
@@ -295,10 +298,18 @@ public class BussinessConstants {
     public interface DialMsgID {
 
         int BASE_MSG_ID = 40001000;
+
         int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID + 1;
         int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 2;
         int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 3;
         int CALL_RECORD_REFRESH_MSG_ID = BASE_MSG_ID + 4;
+
+        int VOIP_REGISTER_CONNECTED_MSG_ID = BASE_MSG_ID + 5;
+        int VOIP_REGISTER_CONNECTING_MSG_ID = BASE_MSG_ID + 6;
+        int VOIP_REGISTER_DISCONNECTED_MSG_ID = BASE_MSG_ID + 7;
+        int VOIP_REGISTER_KICK_OUT_MSG_ID = BASE_MSG_ID + 8;
+        int VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID = BASE_MSG_ID + 9;
+
     }
 
 

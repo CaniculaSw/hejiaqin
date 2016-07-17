@@ -9,11 +9,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
@@ -29,6 +33,7 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
 
     private Button registerActionBtn;
     private ILoginLogic loginLogic;
+    private IVoipLogic voipLogic;
     private RegisterSecondStepInfo registerSecondStepInfo;
 
     private EditText passwordEt;
@@ -40,6 +45,7 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) this.getLogicByInterfaceClass(ILoginLogic.class);
+        voipLogic = (IVoipLogic) this.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -132,16 +138,47 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
                 loginLogic.login(loginInfo);
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
+                UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
+                //TODO TEST
+                if(Integer.parseInt(userInfo.getPhone().substring(userInfo.getPhone().length()-1))%2 ==0)
+                {
+                    userInfo.setSdkAccount("2886544004");
+                    userInfo.setSdkPassword("Vconf2015!");
+                }
+                else
+                {
+                    userInfo.setSdkAccount("2886544005");
+                    userInfo.setSdkPassword("Vconf2015!");
+                }
+                //TODO TEST
+                com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
+                sdkuserInfo.countryCode="+86";
+                sdkuserInfo.username = userInfo.getSdkAccount();
+                sdkuserInfo.password = userInfo.getSdkPassword();
+                voipLogic.login(sdkuserInfo,null,null);
+            case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(RegisterSecondStepActivity.this, MainFragmentActivity.class);
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
+                showToast(R.string.login_failed, Toast.LENGTH_SHORT, null);
+                this.finishActivitys(new String[]{RegisterFirstStepActivity.class.getName(),RegisterSecondStepActivity.class.getName()});
+                break;
             case BussinessConstants.LoginMsgID.REGISTER_FIRST_STEP_FAIL_MSG_ID:
                 FailResponse response = (FailResponse) msg.obj;
                 if (response.equals("1")) {
                     displayErrorInfo(response.getMsg());
                 }
+                break;
+            case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
+            case BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID:
+                showToast(R.string.login_network_error_tip, Toast.LENGTH_SHORT, null);
+                this.finishActivitys(new String[]{RegisterFirstStepActivity.class.getName(), RegisterSecondStepActivity.class.getName()});
+                break;
+            case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
+                showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
+                this.finishActivitys(new String[]{RegisterFirstStepActivity.class.getName(), RegisterSecondStepActivity.class.getName()});
                 break;
             default:
                 break;

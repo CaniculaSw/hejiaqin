@@ -19,7 +19,9 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
+import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
@@ -143,6 +145,13 @@ public abstract class BasicActivity extends BaseActivity {
                 case BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR:
                     dismissWaitDailog();
                     showToast(R.string.server_side_error, Toast.LENGTH_SHORT, null);
+                    break;
+                case BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID:
+                    showToast(R.string.kick_out, Toast.LENGTH_SHORT, null);
+                    ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).logout();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    this.startActivity(intent);
+                    this.finishAllActivity(LoginActivity.class.getName());
                     break;
                 default:
                     break;

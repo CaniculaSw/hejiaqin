@@ -13,10 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
@@ -27,16 +31,19 @@ import com.customer.framework.utils.StringUtil;
 public class LoginActivity extends BasicActivity implements View.OnClickListener {
 
     private ILoginLogic loginLogic;
+    private IVoipLogic voipLogic;
     private EditText accountEditTv;
     private EditText passwdEditTv;
     private Button signBtn;
     private TextView forgetPwdTv;
     private Button registerBtn;
     private ImageView clearAccountBtn;
+    private boolean logining;
 
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) this.getLogicByInterfaceClass(ILoginLogic.class);
+        voipLogic = (IVoipLogic) this.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -106,6 +113,10 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_in_button:
+                if(logining)
+                {
+                    return;
+                }
                 login();
                 break;
             case R.id.forget_pwd_tv:
@@ -147,6 +158,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             displayErrorInfo(getString(R.string.prompt_wrong_password_format));
             return;
         }
+        logining = true;
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone(accountEditTv.getText().toString());
         loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
@@ -171,6 +183,25 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
+                UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
+                //TODO TEST
+                if(Integer.parseInt(userInfo.getPhone().substring(userInfo.getPhone().length()-1))%2 ==0)
+                {
+                    userInfo.setSdkAccount("2886544004");
+                    userInfo.setSdkPassword("Vconf2015!");
+                }
+                else
+                {
+                    userInfo.setSdkAccount("2886544005");
+                    userInfo.setSdkPassword("Vconf2015!");
+                }
+                //TODO TEST
+                com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
+                sdkuserInfo.countryCode="+86";
+                sdkuserInfo.username = userInfo.getSdkAccount();
+                sdkuserInfo.password = userInfo.getSdkPassword();
+                voipLogic.login(sdkuserInfo,null,null);
+            case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
@@ -178,6 +209,23 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
                 displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
                 accountEditTv.requestFocus();
+                logining = false;
+                break;
+            case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
+                showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
+                logining = false;
+                break;
+            case BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID:
+                if(logining) {
+                    showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
+                    logining = false;
+                }
+                break;
+            case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
+                if(logining) {
+                    showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
+                    logining =false;
+                }
                 break;
             default:
                 break;

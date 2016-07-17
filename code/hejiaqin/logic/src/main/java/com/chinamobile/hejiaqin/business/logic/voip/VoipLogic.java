@@ -54,21 +54,27 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             LogUtil.d(VoipLogic.TAG, "the status is " + new_status);
             switch (new_status) {
                 case LoginApi.STATUS_CONNECTED:
+                    VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID);
                     break;
                 case LoginApi.STATUS_CONNECTING:
+                    VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTING_MSG_ID);
                     break;
                 case LoginApi.STATUS_DISCONNECTED:
                     if (reason == LoginApi.REASON_SRV_FORCE_LOGOUT) {
-                        //TODO 服务器强制注销 如：同一账号在多终端上登录
+                        //服务器强制注销 如：同一账号在多终端上登录
+                        VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID);
                     } else if (reason == LoginApi.REASON_NET_UNAVAILABLE) {
-                        //TODO 网络不可用
+                        //网络不可用
+                        VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID);
+                    }else{
+                        VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
                     }
 
                     break;
                 case LoginApi.STATUS_DISCONNECTING:
                     break;
-
                 case LoginApi.STATUS_IDLE:
+                    VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
                     break;
             }
         }

@@ -204,7 +204,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
             }
         });
     }
