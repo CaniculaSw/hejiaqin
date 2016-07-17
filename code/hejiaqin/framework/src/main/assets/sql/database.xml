@@ -20,7 +20,7 @@
 		<field name="beginTime" type="TEXT" obligatory="" />
 		<field name="duration" type="INTEGER" obligatory="DEFAULT 0" />
 		<field name="type" type="INTEGER" obligatory="" />
-		<field name="read" type="INTEGER" obligatory="DEFAULT 0" />
+		<field name="read" type="INTEGER" obligatory="DEFAULT 1" />
 	</table>
 
 	<!-- 联系人基本信息表 -->

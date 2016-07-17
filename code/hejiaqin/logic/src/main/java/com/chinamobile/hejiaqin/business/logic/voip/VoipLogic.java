@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.logic.voip;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,6 +11,8 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.customer.framework.component.db.DatabaseInfo;
 import com.customer.framework.component.time.DateTimeUtil;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
@@ -21,6 +24,8 @@ import com.huawei.rcs.login.LoginCfg;
 import com.huawei.rcs.login.UserInfo;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -36,7 +41,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     private static VoipLogic instance;
 
-    private String recordId;
+    private Map<String,String> recordMap = new HashMap<String,String>();
 
     private CallRecordDbAdapter mCallRecordDbAdapter;
 
@@ -79,20 +84,25 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 callSession.terminate();
                 return;
             }
-//            if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
-//                LogUtil.w(TAG,"AUDIO_INCOMING");
-//                callSession.terminate();
-//                return;
-//            }
-            //TODO 保存通话记录
-            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING || callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+            if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+                LogUtil.w(TAG,"AUDIO_INCOMING");
+                callSession.terminate();
+                return;
+            }
+
+            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                // 保存通话记录
                 CallRecord callRecord = new CallRecord();
-                recordId = UUID.randomUUID().toString();
+                String recordId = UUID.randomUUID().toString();
                 callRecord.setRecordId(recordId);
-                callRecord.setPeerNumber(callSession.getPeer().getNumber());
+                callRecord.setPeerNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
                 callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
                 callRecord.setDuration(callSession.getDuration());
+                callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
+                callRecord.setRead(BussinessConstants.DictInfo.YES);
                 CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
+                recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
+
                 Intent inComingIntent = new Intent();
                 inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
                 inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
@@ -198,13 +208,43 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         } else {
             callSession = CallApi.initiateAudioCall(outNumber);
         }
-        //TODO 保存通话记录
+
+        // 保存通话记录
+        CallRecord callRecord = new CallRecord();
+        String recordId = UUID.randomUUID().toString();
+        callRecord.setRecordId(recordId);
+        callRecord.setPeerNumber(CommonUtils.getPhoneNumber(calleeNumber));
+        callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
+        callRecord.setDuration(callSession.getDuration());
+        callRecord.setType(CallRecord.TYPE_VIDEO_OUTGOING);
+        callRecord.setRead(BussinessConstants.DictInfo.YES);
+        CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
+        if (callSession.getErrCode() == CallSession.ERRCODE_OK) {
+            recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
+        }
         return callSession;
     }
 
     @Override
     public void hangup(CallSession callSession, boolean isInComing, boolean isTalking) {
         callSession.terminate();
+        String recordId = "";
+        if(recordMap.containsKey(callSession.getSessionId()))
+        {
+            recordId = recordMap.get(String.valueOf(callSession.getSessionId()));
+            recordMap.remove(String.valueOf(callSession.getSessionId()));
+        }
+        if(StringUtil.isNullOrEmpty(recordId))
+        {
+            return;
+        }
+        if(isTalking)
+        {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DatabaseInfo.CallRecord.DURATION, callSession.getDuration());
+            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,contentValues);
+            this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
+        }
     }
 
     @Override
@@ -214,7 +254,34 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     @Override
     public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking) {
-
+        String recordId = "";
+        if(recordMap.containsKey(callSession.getSessionId()))
+        {
+            recordId = recordMap.get(String.valueOf(callSession.getSessionId()));
+            recordMap.remove(String.valueOf(callSession.getSessionId()));
+        }
+        if(StringUtil.isNullOrEmpty(recordId))
+        {
+            return;
+        }
+        ContentValues contentValues = new ContentValues();
+        if(isTalking)
+        {
+            contentValues.put(DatabaseInfo.CallRecord.DURATION, callSession.getDuration());
+        }
+        else if(isInComing)
+        {
+            contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_MISSING);
+            contentValues.put(DatabaseInfo.CallRecord.READ,BussinessConstants.DictInfo.NO);
+        }
+        else if(callSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)
+        {
+            contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_REJECT);
+        }else{
+            return;
+        }
+        CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,contentValues);
+        this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
     }
 
 }

@@ -298,7 +298,7 @@ public class BussinessConstants {
         int CALL_RECORD_START_SERTCH_CONTACT_MSG_ID = BASE_MSG_ID + 1;
         int CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 2;
         int CALL_CLOSED_MSG_ID = BASE_MSG_ID + 3;
-
+        int CALL_RECORD_REFRESH_MSG_ID = BASE_MSG_ID + 4;
     }
 
 

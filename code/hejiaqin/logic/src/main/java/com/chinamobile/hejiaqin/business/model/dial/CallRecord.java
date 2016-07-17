@@ -25,13 +25,13 @@ public class CallRecord {
     private String id;
     private String recordId;
     private String peerNumber;
-    private String peerName;
-    private String peerHeaderImage;
-    private int infoFlag;
     private String beginTime;
     private int duration;
     private int type;
     private int read;
+    private String peerName;
+    private String peerHeaderImage;
+    private int infoFlag;
 
     public String getId() {
         return id;

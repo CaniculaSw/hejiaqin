@@ -100,7 +100,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private boolean hasStoped = false;
 
-    private  boolean mute = false;
+    private boolean mute = false;
 
     private boolean speakerState;
 
@@ -125,7 +125,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         @Override
         public void onReceive(Context context, Intent intent) {
             LogUtil.d("VOIP", "receive cameraSwitched broadcast");
-            if(localVideoView !=null) {
+            if (localVideoView != null) {
                 localVideoView.setVisibility(View.VISIBLE);
             }
             mCameraLayout.setEnabled(true);
@@ -208,7 +208,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private void showOuting() {
         //TODO 查询姓名
-        mContactNameTv.setText(StringUtil.isNullOrEmpty(mCalleeName)? mCalleeNumber:mCalleeName);
+        mContactNameTv.setText(StringUtil.isNullOrEmpty(mCalleeName) ? mCalleeNumber : mCalleeName);
         mTopLayout.setVisibility(View.VISIBLE);
         mVideoLayout.setVisibility(View.VISIBLE);
         mBottomLayout.setVisibility(View.VISIBLE);
@@ -225,12 +225,12 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                     finish();
                 }
             }, 2000);
+        } else {
+            if (mute) {
+                mCallSession.mute();
+            }
+            createLocalPreviewVideo();
         }
-        if(mute)
-        {
-            mCallSession.mute();
-        }
-        createLocalPreviewVideo();
     }
 
     private void createLocalPreviewVideo() {
@@ -238,18 +238,14 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
             @Override
             public void onOrientationChanged(int orientation) {
-                if(orientation != OrientationEventListener.ORIENTATION_UNKNOWN)
-                {
+                if (orientation != OrientationEventListener.ORIENTATION_UNKNOWN) {
                     orientationChanged(orientation);
                 }
             }
         };
-        if(listener.canDetectOrientation())
-        {
+        if (listener.canDetectOrientation()) {
             listener.enable();
-        }
-        else
-        {
+        } else {
             LogUtil.e("V2OIP", "OrientationEventListener enable failed!!");
         }
         setCameraRotate();
@@ -266,11 +262,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private void showTalking() {
         AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         speakerState = audioManamger.isSpeakerphoneOn();
-        if(!speakerState) {
+        if (!speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);
         }
 
-        if(mIsInComing) {
+        if (mIsInComing) {
             OrientationEventListener listener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
 
                 @Override
@@ -299,7 +295,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         setCameraRotate();
         /* creat local video view and remote video view. */
         createVideoView();
-        if(mIsInComing) {
+        if (mIsInComing) {
             registerReceivers();
         }
         mCallSession.showVideoWindow();
@@ -327,7 +323,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             localVideoView = CallApi.createLocalVideoView(getApplicationContext());
             localVideoView.setZOrderOnTop(false);
             localVideoView.setVisibility(View.GONE);
-        }else{
+        } else {
             mLargeVideoLayout.removeView(localVideoView);
             localVideoView.setVisibility(View.GONE);
         }
@@ -482,36 +478,32 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(closed)
-        {
-            LogUtil.w(TAG,"is closed");
+        if (closed) {
+            LogUtil.w(TAG, "is closed");
         }
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
-                mVoipLogic.hangup(mCallSession, mIsInComing,mIsTalking);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking);
                 finish();
                 break;
             case R.id.coming_answer_call_btn:
                 mVoipLogic.answerVideo(mCallSession);
                 break;
             case R.id.coming_reject_call_btn:
-                mVoipLogic.hangup(mCallSession, mIsInComing,mIsTalking);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking);
                 finish();
                 break;
             case R.id.mute_layout:
-                if(mute)
-                {
-                    mute =false;
-                    if(mCallSession!=null)
-                    {
+                if (mute) {
+                    mute = false;
+                    if (mCallSession != null) {
                         mMuteIv.setImageResource(R.mipmap.mute_off);
                         mCallSession.unMute();
                     }
-                }else{
+                } else {
                     mute = true;
-                    if(mCallSession!=null)
-                    {
+                    if (mCallSession != null) {
                         mMuteIv.setImageResource(R.mipmap.mute_on);
                         mCallSession.mute();
                     }
@@ -522,7 +514,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                     return;
                 }
                 CallApi.switchCamera();
-                if(localVideoView!=null) {
+                if (localVideoView != null) {
                     localVideoView.setVisibility(View.GONE);
                 }
                 LogUtil.d("V2OIP", "onClick_CameraSwitch displayRotation" + lastDisplayRotation);
@@ -544,11 +536,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 if (msg.obj != null) {
                     CallSession session = (CallSession) msg.obj;
                     if (mCallSession != null && mCallSession.equals(session)) {
-                        mVoipLogic.dealOnClosed(mCallSession,mIsInComing,mIsTalking);
+                        mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking);
                         closed = true;
-                        if(mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
+                        if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
                             showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-                        }else if( !mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
+                        } else if (!mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
                                 || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE
                                 || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TERMINATED)) {
                             showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
@@ -559,6 +551,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                                 finish();
                             }
                         }, 2000);
+                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                        mVoipLogic.dealOnClosed(session, true, false);
                     }
                 }
                 break;
@@ -569,20 +563,18 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-        if(!mIsTalking)
-        {
+        if (!mIsTalking) {
             return;
         }
-        if ((null != localVideoView || null != remoteVideoView )
-                && CallSession.INVALID_ID != mCallSession.getSessionId()){
-            if(hasStoped)
-            {
+        if ((null != localVideoView || null != remoteVideoView)
+                && CallSession.INVALID_ID != mCallSession.getSessionId()) {
+            if (hasStoped) {
                 mCallSession.showVideoWindow();
                 ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                if(remoteVideoView!=null) {
+                if (remoteVideoView != null) {
                     mLargeVideoLayout.addView(remoteVideoView, layoutParams);
                 }
-                if(localVideoView!=null) {
+                if (localVideoView != null) {
                     mSmallVideoLayout.addView(localVideoView, layoutParams);
                 }
             }
@@ -590,14 +582,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-        if(!mIsTalking)
-        {
+        if (!mIsTalking) {
             return;
         }
-        if (( null != localVideoView || null != remoteVideoView )
-                && CallSession.INVALID_ID != mCallSession.getSessionId() ){
+        if ((null != localVideoView || null != remoteVideoView)
+                && CallSession.INVALID_ID != mCallSession.getSessionId()) {
             mCallSession.hideVideoWindow();
             mLargeVideoLayout.removeAllViews();
             mSmallVideoLayout.removeAllViews();
@@ -609,15 +600,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     public void onDestroy() {
         super.onDestroy();
         //还原免提设置
-        if(!speakerState)
-        {
+        if (!speakerState) {
             AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             audioManamger.setSpeakerphoneOn(speakerState);
         }
         destroyVideoView();
         stopCallTimeTask();
-        if(mIsTalking)
-        {
+        if (mIsTalking) {
             unRegisterReceivers();
         }
     }

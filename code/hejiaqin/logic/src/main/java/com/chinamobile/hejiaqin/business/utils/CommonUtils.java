@@ -139,7 +139,7 @@ public class CommonUtils {
         return (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
     }
 
-    public String getCountryPhoneNumber(String number) {
+    public static String getCountryPhoneNumber(String number) {
         String outNumber = number;
         if (number.startsWith("86")) {
             outNumber = "+" + number;
@@ -149,7 +149,7 @@ public class CommonUtils {
         return outNumber;
     }
 
-    public String getPhoneNumber(String countryNumber) {
+    public static String getPhoneNumber(String countryNumber) {
         String outNumber = countryNumber;
         if (countryNumber.startsWith("+86")) {
             outNumber = countryNumber.substring(countryNumber.indexOf("+86"));
