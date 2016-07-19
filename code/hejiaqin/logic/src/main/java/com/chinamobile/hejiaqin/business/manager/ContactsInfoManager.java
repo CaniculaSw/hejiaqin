@@ -8,8 +8,11 @@ import android.provider.ContactsContract;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.PinyinUnit;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
+import com.customer.framework.utils.string.HanziToPinyin;
+import com.google.zxing.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,14 +75,14 @@ public class ContactsInfoManager {
         }
 
         for (ContactsInfo contactsInfo : contactsInfoList) {
-            String[] hanzi2Pinyin = StringUtil.hanzi2PinyinWithHead(context, contactsInfo.getName());
-            if (null == hanzi2Pinyin) {
+            PinyinUnit pinyinUnit = genPinyinUnit(context, contactsInfo.getName());
+
+            if (null == pinyinUnit || !pinyinUnit.isValid()) {
                 continue;
             }
-            contactsInfo.setNameInPinyin(hanzi2Pinyin[0]);
-            contactsInfo.setNameHeadChar(hanzi2Pinyin[1]);
+
+            contactsInfo.genSearchUnit(pinyinUnit);
         }
-        LogUtil.d(TAG, "sortContactsInfoLst, after set pinyin name:  " + contactsInfoList);
 
         Collections.sort(contactsInfoList, new Comparator<ContactsInfo>() {
             @Override
@@ -135,5 +138,42 @@ public class ContactsInfoManager {
             }
         }
         return matchedContactsInfoList;
+    }
+
+    private PinyinUnit genPinyinUnit(Context context, String chineseWords) {
+        if (StringUtil.isNullOrEmpty(chineseWords)) {
+            return null;
+        }
+
+
+        char[] chineseWordArray = chineseWords.toCharArray();
+        int len = chineseWordArray.length;
+
+        StringBuffer chinesePinyinBuf = new StringBuffer();
+        StringBuffer firstCharsBuf = new StringBuffer();
+        int[] firstCharIndexs = new int[len];
+        for (int i = 0; i < len; i++) {
+            String chineseWord = String.valueOf(chineseWordArray[i]);
+            // 获取字符对应的拼音
+            String pinyin = null;
+            if (" ".equals(chineseWord)) {
+                pinyin = " ";
+            } else {
+                pinyin = HanziToPinyin.getInstance(context).hanziToPinyin(chineseWord);
+            }
+
+            if (pinyin.length() > 0) {
+                firstCharIndexs[i] = chinesePinyinBuf.length();
+                firstCharsBuf.append(pinyin.charAt(0));
+                chinesePinyinBuf.append(pinyin);
+            }
+        }
+
+        PinyinUnit pinyinUnit = new PinyinUnit();
+        pinyinUnit.setChineseWords(chineseWords);
+        pinyinUnit.setChinesePinyin(chinesePinyinBuf.toString().toUpperCase());
+        pinyinUnit.setFirstChars(firstCharsBuf.toString().toUpperCase());
+        pinyinUnit.setFirstCharIndexs(firstCharIndexs);
+        return pinyinUnit;
     }
 }

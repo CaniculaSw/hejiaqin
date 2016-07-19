@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchUnit;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
 
 import java.util.ArrayList;
@@ -50,8 +52,9 @@ public class SearchContactAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.adapter_contact_app_view, parent, false);
-            holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
+            convertView = inflater.inflate(R.layout.adapter_contact_search_view, parent, false);
+            holder.nameText = (TextView) convertView.findViewById(R.id.contact_name_text);
+            holder.numberText = (TextView) convertView.findViewById(R.id.contact_number_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -70,7 +73,11 @@ public class SearchContactAdapter extends BaseAdapter {
 
     private void initView(int position, ViewHolder holder) {
         ContactsInfo contactsInfo = contactsInfoList.get(position);
-        holder.text.setText(contactsInfo.getName());
+
+        SearchUnit searchUnit = contactsInfo.getSearchUnit();
+
+        holder.nameText.setText(Html.fromHtml(searchUnit.getNameText()));
+        holder.numberText.setText(Html.fromHtml(searchUnit.getNumberText()));
     }
 
     public void setData(List<ContactsInfo> contactsInfoList) {
@@ -82,6 +89,7 @@ public class SearchContactAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView text;
+        TextView nameText;
+        TextView numberText;
     }
 }

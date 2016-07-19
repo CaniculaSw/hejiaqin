@@ -24,15 +24,13 @@ public class ContactsInfo implements Serializable {
 
     private List<NumberInfo> numberLst = new ArrayList<NumberInfo>();
 
-    private String nameInPinyin;
-
-    private String nameHeadChar;
-
     private ContactMode contactMode;
 
     private String photoLg;
 
     private String photoSm;
+
+    private SearchUnit searchUnit;
 
     public String getContactId() {
         return contactId;
@@ -114,19 +112,22 @@ public class ContactsInfo implements Serializable {
     }
 
     public String getNameInPinyin() {
-        return nameInPinyin;
+        if (null == searchUnit) {
+            return "";
+        }
+        return searchUnit.getChinesePinyin();
     }
 
-    public void setNameInPinyin(String nameInPinyin) {
-        this.nameInPinyin = nameInPinyin;
+    public SearchUnit getSearchUnit() {
+        return searchUnit;
     }
 
-    public String getNameHeadChar() {
-        return nameHeadChar;
-    }
-
-    public void setNameHeadChar(String nameHeadChar) {
-        this.nameHeadChar = nameHeadChar;
+    public void genSearchUnit(PinyinUnit pinyinUnit) {
+        if (null == searchUnit) {
+            searchUnit = new SearchUnit();
+        }
+        searchUnit.setPinyinUnit(pinyinUnit);
+        searchUnit.setNumberLst(this.numberLst);
     }
 
     /**
@@ -135,11 +136,12 @@ public class ContactsInfo implements Serializable {
      * @return
      */
     public String getGroupName() {
-        if (StringUtil.isNullOrEmpty(this.nameInPinyin)) {
+        String chinesePinyin = getNameInPinyin();
+        if (StringUtil.isNullOrEmpty(chinesePinyin)) {
             return "#";
         }
 
-        char firstChar = this.nameInPinyin.charAt(0);
+        char firstChar = chinesePinyin.charAt(0);
         if (Character.isUpperCase(firstChar)) {
             return String.valueOf(firstChar);
         }
@@ -148,33 +150,26 @@ public class ContactsInfo implements Serializable {
 
     public boolean isMatch(String input) {
         if (StringUtil.isNullOrEmpty(input)) {
-            return true;
+            return false;
         }
 
-        if (name.contains(input)) {
-            return true;
+        if (null == searchUnit) {
+            return false;
         }
 
-        if (nameInPinyin.contains(input.toUpperCase())) {
-            return true;
-        }
-
-        for (NumberInfo numberInfo : numberLst) {
-            if (numberInfo.isMatch(input)) {
-                return true;
-            }
-        }
-        return false;
+        return searchUnit.search(input);
     }
 
     @Override
     public String toString() {
         return "ContactsInfo{" +
-                "name='" + name + '\'' +
-                "contactMode='" + contactMode + '\'' +
-                ", numberLst='" + numberLst + '\'' +
-                ", nameInPinyin='" + nameInPinyin + '\'' +
-                ", nameHeadChar='" + nameHeadChar + '\'' +
+                "photoSm='" + photoSm + '\'' +
+                ", photoLg='" + photoLg + '\'' +
+                ", contactMode=" + contactMode +
+                ", numberLst=" + numberLst +
+                ", name='" + name + '\'' +
+                ", contactId='" + contactId + '\'' +
                 '}';
     }
+
 }
