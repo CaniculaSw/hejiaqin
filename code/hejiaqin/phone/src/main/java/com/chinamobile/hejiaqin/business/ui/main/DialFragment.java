@@ -247,13 +247,6 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     }
     @Override
     protected void initData() {
-        //TODO test
-
-        UserInfo userInfo = new UserInfo();
-        userInfo.countryCode="+86";
-        userInfo.username = "2886544005";
-        userInfo.password = "Vconf2015!";
-        mVoipLogic.login(userInfo,null,null);
     }
 
     /**
