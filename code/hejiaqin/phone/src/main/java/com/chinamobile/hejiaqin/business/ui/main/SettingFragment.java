@@ -111,7 +111,6 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
                     .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(userAvatarIv);
-            //userAvatarIv.setImageResource(R.drawable.contact_photo_default);
         }
     }
 

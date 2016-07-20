@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.net;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.customer.framework.component.net.INetCallBack;
 import com.customer.framework.component.net.NameValuePair;
@@ -10,6 +11,7 @@ import com.customer.framework.component.net.message.BasicNameValuePair;
 import com.customer.framework.component.storage.StorageMgr;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.cryptor.AES;
+import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,19 +20,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * desc:
- * project:Kangxi
- * version 001
- * author: zhanggj
- * Created: 2016/4/14.
- */
 public abstract class NetOptionWithToken extends NetOption {
 
     private static final String TAG = "NetOptionWithToken";
     private static boolean isRefreshTokening = false;
-
+    private static List<NetOptionWithToken> list = new ArrayList<NetOptionWithToken>();
     protected ReqBody mData;
+    private INetCallBack netCallBack;
 
     @Override
     public void send(final INetCallBack httpCallback) {
@@ -41,16 +37,6 @@ public abstract class NetOptionWithToken extends NetOption {
             super.send(httpCallback);
         }
     }
-
-    @Override
-    public void uploadDirect(final INetCallBack httpCallback) {
-        if (isNeedToken()) {
-            uploadWithToken(httpCallback);
-        } else {
-            super.uploadDirect(httpCallback);
-        }
-    }
-
     /**
      * 发送Http请求
      *
@@ -58,39 +44,41 @@ public abstract class NetOptionWithToken extends NetOption {
      */
     private synchronized void sendWithToken(final INetCallBack httpCallback) {
         //TODO:如果没有即将超期并且没有正在发送刷新TOKEN请求，直接发送网络请求
-        if (needRefresh() && !isRefreshTokening) {
-            isRefreshTokening = true;
-            new TokenRefreshNetOption().send(new INetCallBack() {
-                @Override
-                public void onResult(NetResponse response) {
-                    //保存token
-                    isRefreshTokening = false;
-                    //TODO 成功了则刷新本地Token数据
-                    //无论是否成功都不影响业务请求的发送
-                    NetOptionWithToken.super.send(httpCallback);
-                }
-            });
+        if (needRefresh()) {
+            if (!isRefreshTokening) {
+                isRefreshTokening = true;
+                new TokenRefreshNetOption(getContext()).send(new INetCallBack() {
+                    @Override
+                    public void onResult(NetResponse response) {
+                        //保存token
+                        isRefreshTokening = false;
+                        UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                        if (response.getResultCode().equals("0") && info != null) {
+                            UserInfo newInfo = (UserInfo) response.getObj(); //gson.fromJson(rootJsonObj.get("data").toString(),UserInfo.class);
+                            info.setToken(newInfo.getToken());
+                            info.setTokenExpire(newInfo.getTokenExpire());
+                            long now = new Date().getTime();
+                            UserInfoCacheManager.saveUserToMem(getContext(), info, now);
+                            UserInfoCacheManager.saveUserToLoacl(getContext(), info, now);
+                        } else {
+                            LogUtil.w(TAG, "refresh token failed.");
+                        }
+                        //无论是否成功都不影响业务请求的发送
+                        NetOptionWithToken.super.send(httpCallback);
+                        //发送缓存的请求
+                        for (NetOptionWithToken netOptionWithToken : list) {
+                            netOptionWithToken.send(netOptionWithToken.netCallBack);
+                            list.remove(netOptionWithToken);
+                        }
+                    }
+                });
+            } else {
+                //缓存未发送的请求
+                netCallBack = httpCallback;
+                list.add(this);
+            }
         } else {
             super.send(httpCallback);
-        }
-    }
-
-    private synchronized void uploadWithToken(final INetCallBack httpCallback) {
-        //TODO:如果没有即将超期并且没有正在发送刷新TOKEN请求，直接发送网络请求
-        if (needRefresh() && !isRefreshTokening) {
-            isRefreshTokening = true;
-            new TokenRefreshNetOption().send(new INetCallBack() {
-                @Override
-                public void onResult(NetResponse response) {
-                    //保存token
-                    isRefreshTokening = false;
-                    //TODO 成功了则刷新本地Token数据
-                    //无论是否成功都不影响业务请求的发送
-                    NetOptionWithToken.super.uploadDirect(httpCallback);
-                }
-            });
-        } else {
-            super.uploadDirect(httpCallback);
         }
     }
 
@@ -109,13 +97,11 @@ public abstract class NetOptionWithToken extends NetOption {
         return properties;
     }
 
-
     @Override
     protected String getBody() {
         String body = null;
         if (mData != null) {
-            if(mData instanceof ReqToken)
-            {
+            if (mData instanceof ReqToken) {
                 UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
                 if (info != null && info.getToken() != null) {
                     ((ReqToken) mData).setToken(info.getToken());
@@ -129,15 +115,16 @@ public abstract class NetOptionWithToken extends NetOption {
     protected abstract boolean isNeedToken();
 
     private boolean needRefresh() {
-        UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
-        if (info == null) {
+        String infoCache = StorageMgr.getInstance().getSharedPStorage(getContext()).getString(BussinessConstants.Login.USER_INFO_KEY);
+        if (infoCache == null) {
             return false;
         }
+        UserInfo info = new Gson().fromJson(infoCache, UserInfo.class);
         String tokenExpire = info.getTokenExpire();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long expire = 0;
-        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
+        long tokenDate = StorageMgr.getInstance().getSharedPStorage(getContext()).getLong(BussinessConstants.Login.TOKEN_DATE);
         try {
             expire = sdf.parse(tokenExpire).getTime() - tokenDate;
         } catch (ParseException e) {
@@ -147,16 +134,15 @@ public abstract class NetOptionWithToken extends NetOption {
         if (expire == -1) {
             return false;
         }
-
+        LogUtil.i(TAG, "the eipire time is: " + expire + ";the tokenDate is: " + tokenExpire);
         if (tokenDate != Long.MIN_VALUE) {
             Date now = new Date();
             long value = now.getTime() - tokenDate;
             //在有效期内一半时间内刷新TOKEN
-            if (value > expire / 2 && value < expire) {
+            if (value > expire / 2) {
                 return true;
             }
         }
         return false;
     }
-
 }

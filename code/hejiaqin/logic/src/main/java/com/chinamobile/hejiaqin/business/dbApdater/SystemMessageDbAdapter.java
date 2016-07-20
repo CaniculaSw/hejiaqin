@@ -55,7 +55,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
     public List<SystemMessage> queryAll() {
         List<SystemMessage> systemMessagesList = new ArrayList<SystemMessage>();
         String[] columns =  {"_ID","title","time"};
-        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns,null, null,null,null,"time",null);
+        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns,null, null,null,null,DatabaseInfo.SystemMessage.TIME,null);
         if (null == cursor) {
             LogUtil.d("SystemMessageDbAdapter","cursor is null");
             return systemMessagesList;
@@ -64,7 +64,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         while (cursor.moveToNext()) {
             SystemMessage systemMessage = new SystemMessage();
             systemMessage.setId(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TABLE_ID)));
-            systemMessage.setDate(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
+            systemMessage.setTime(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
             systemMessage.setTitle(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TITLE)));
             systemMessagesList.add(systemMessage);
         }
@@ -79,8 +79,8 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
             return systemMessage;
         }
         while (cursor.moveToNext()) {
-            systemMessage.setMsgBody(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.CONTENT)));
-            systemMessage.setDate(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
+            systemMessage.setContent(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.CONTENT)));
+            systemMessage.setTime(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
             systemMessage.setTitle(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TITLE)));
         }
         return systemMessage;
@@ -113,8 +113,8 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
     private ContentValues getCVBySystemMessage(SystemMessage systemMessage) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseInfo.SystemMessage.TITLE, systemMessage.getTitle());
-        contentValues.put(DatabaseInfo.SystemMessage.TIME, systemMessage.getDate());
-        contentValues.put(DatabaseInfo.SystemMessage.CONTENT, systemMessage.getMsgBody());
+        contentValues.put(DatabaseInfo.SystemMessage.TIME, systemMessage.getTime());
+        contentValues.put(DatabaseInfo.SystemMessage.CONTENT, systemMessage.getContent());
         return contentValues;
     }
 

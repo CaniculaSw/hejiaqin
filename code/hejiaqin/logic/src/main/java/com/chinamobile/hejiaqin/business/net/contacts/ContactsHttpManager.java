@@ -4,14 +4,11 @@ import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
-import com.chinamobile.hejiaqin.business.model.contacts.req.BatchAddContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.req.EditContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
-import com.chinamobile.hejiaqin.business.net.MapStrReqBody;
-import com.chinamobile.hejiaqin.business.net.NVPReqBody;
-import com.chinamobile.hejiaqin.business.net.ReqBody;
+import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.utils.LogUtil;
@@ -177,7 +174,7 @@ public class ContactsHttpManager extends AbsHttpManager {
     }
 
     // 查询联系人列表
-    public void list(final Object invoker, final NVPReqBody reqBody, final IHttpCallBack callBack) {
+    public void list(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.list;
         this.mData = reqBody;
         send(invoker, callBack);
@@ -191,7 +188,7 @@ public class ContactsHttpManager extends AbsHttpManager {
     }
 
     // 批量添加联系人
-    public void batchAdd(final Object invoker, final NVPReqBody reqBody, final IHttpCallBack callBack) {
+    public void batchAdd(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.batchAdd;
         this.mData = reqBody;
         send(invoker, callBack);
@@ -201,11 +198,11 @@ public class ContactsHttpManager extends AbsHttpManager {
     public void update(final Object invoker, final EditContactReq reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.update;
         this.mData = reqBody;
-        uploadDirect(invoker, callBack);
+        send(invoker, callBack);
     }
 
     // 删除联系人
-    public void delete(final Object invoker, final NVPReqBody reqBody, final IHttpCallBack callBack) {
+    public void delete(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.delete;
         this.mData = reqBody;
         send(invoker, callBack);

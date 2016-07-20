@@ -58,7 +58,7 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
 
     @Override
     protected void initView() {
-        mHeaderView  = (HeaderView) findViewById(R.id.header);
+        mHeaderView = (HeaderView) findViewById(R.id.header);
         mHeaderView.title.setText(R.string.reset_password_title);
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
@@ -67,13 +67,12 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
         //如果上次计数还没有结束，则重新进入页面后继续
-        if(MyCountDownTimer.getMyMillisUntilFinished()!=0)
-        {
+        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
             sendVerifyCodeTv.setEnabled(false);
             sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
             countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
             countDownTimer.start();
-            continueCountDown =true;
+            continueCountDown = true;
         }
     }
 
@@ -156,14 +155,17 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
             return;
         }
 
-        //重新开始计时
-        if (countDownTimer == null || continueCountDown) {
-            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.MILL_IS_INFUTURE);
-            continueCountDown = false;
-        }
-        countDownTimer.start();
         hideErrorInfo(null);
         loginLogic.getResetPasswordCode(userAccountId);
+    }
+
+    private void startTimer(VerifyCodeCountDownTimer timer) {
+        //重新开始计时
+        if (timer == null || continueCountDown) {
+            timer = new VerifyCodeCountDownTimer(MyCountDownTimer.MILL_IS_INFUTURE);
+            continueCountDown = false;
+        }
+        timer.start();
     }
 
     //校验验证码
@@ -230,7 +232,7 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
     private class VerifyCodeCountDownTimer extends MyCountDownTimer {
 
         /**
-         * @param millisInFuture    总的时间
+         * @param millisInFuture 总的时间
          */
         public VerifyCodeCountDownTimer(long millisInFuture) {
             super(millisInFuture);
@@ -257,11 +259,11 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         FailResponse response;
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_SUCCESS_MSG_ID:
-                super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT,null);
+                startTimer(countDownTimer);
+                super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT, null);
                 break;
             case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID:
-                if(countDownTimer!=null)
-                {
+                if (countDownTimer != null) {
                     countDownTimer.stop();
                     sendVerifyCodeTv.setEnabled(true);
                     sendVerifyCodeTv.setText(R.string.resend_verify_code);
@@ -269,11 +271,10 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
                 break;
             case BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID:
                 response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")){
+                if (response.getCode().equals("1")) {
                     displayErrorInfo(response.getMsg());
                 }
-                if(countDownTimer!=null)
-                {
+                if (countDownTimer != null) {
                     countDownTimer.stop();
                     sendVerifyCodeTv.setEnabled(true);
                     sendVerifyCodeTv.setText(R.string.resend_verify_code);
@@ -281,8 +282,7 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
                 break;
             case BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID:
                 super.dismissWaitDailog();
-                if(countDownTimer!=null)
-                {
+                if (countDownTimer != null) {
                     countDownTimer.stop();
                     sendVerifyCodeTv.setEnabled(true);
                     sendVerifyCodeTv.setText(R.string.send_verify_code);
@@ -294,7 +294,7 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
                 break;
             case BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID:
                 response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")){
+                if (response.getCode().equals("1")) {
                     displayErrorInfo(response.getMsg());
                 }
                 break;

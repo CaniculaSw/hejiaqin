@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.login;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -39,6 +40,20 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     private Button registerBtn;
     private ImageView clearAccountBtn;
     private boolean logining;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String phone = intent.getStringExtra("phone");
+        String passowrd = intent.getStringExtra("password");
+        //注册成功,自动登陆
+        if (!StringUtil.isNullOrEmpty(phone) && !StringUtil.isNullOrEmpty(passowrd)) {
+            accountEditTv.setText(phone);
+            passwdEditTv.setText(passowrd);
+            login();
+        }
+    }
 
     @Override
     protected void initLogics() {
@@ -113,8 +128,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_in_button:
-                if(logining)
-                {
+                if (logining) {
                     return;
                 }
                 login();
@@ -216,15 +230,15 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 logining = false;
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID:
-                if(logining) {
+                if (logining) {
                     showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                     logining = false;
                 }
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
-                if(logining) {
+                if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
-                    logining =false;
+                    logining = false;
                 }
                 break;
             default:

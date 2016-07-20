@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
@@ -13,25 +14,18 @@ import com.customer.framework.utils.LogUtil;
 public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
+    private ISettingLogic settingLogic;
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent;
         if (loginLogic.hasLogined()) {
-            intent = new Intent(MainActivity.this, MainFragmentActivity.class);
-            LogUtil.d(TAG, "Init the CMIM SDK");
-            loginLogic.initCMIMSdk();
+            jumpToMainFragmentActivity();
         } else {
-            intent = new Intent(MainActivity.this, LoginActivity.class);
+            jumpToLoginActivity();
         }
-//        sendEmptyMessageDelayed(BussinessConstants.LoginMsgID.SHOW_LAUNCH_PAGE_FINISHED, 3*1000);
-        // intent = new Intent(MainActivity.this, MainFragmentActivity.class);
-        this.startActivity(intent);
-        this.finish();
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -56,5 +50,19 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
+        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+    }
+    private void jumpToMainFragmentActivity(){
+        Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
+        LogUtil.d(TAG, "Init the CMIM SDK");
+        loginLogic.initCMIMSdk();
+        settingLogic.checkVersion();
+        startActivity(intent);
+        finish();
+    }
+    private void jumpToLoginActivity(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

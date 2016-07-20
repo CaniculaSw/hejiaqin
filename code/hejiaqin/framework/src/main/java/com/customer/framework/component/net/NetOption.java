@@ -1,5 +1,7 @@
 package com.customer.framework.component.net;
 
+import android.content.Context;
+
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
@@ -14,8 +16,7 @@ import java.util.List;
  * Http通道接入的基础类，需要继承并实现相关接口
  * 子类至少需要实现getUrl()和getBody()两个方法
  */
-public abstract class NetOption
-{
+public abstract class NetOption {
     /**
      * 打印标志
      */
@@ -26,28 +27,24 @@ public abstract class NetOption
      *
      * @param httpCallback 回调对象
      */
-    protected void send(final INetCallBack httpCallback)
-    {
-        ThreadTask runnable = new ThreadTask()
-        {
+    protected void send(final INetCallBack httpCallback) {
+        ThreadTask runnable = new ThreadTask() {
             @Override
-            public void run()
-            {
+            public void run() {
                 //0.网络是否连接，如果网络不是连接之间返回
-
-
                 NetRequest request = buildRequest();
-
-                NetResponse response = NetConnector.connect(request);
-
-                if (response.getResponseCode() == null)
-                {
+                NetResponse response = null;
+                if (request.getContentType() == NetRequest.ContentType.FORM_DATA) {
+                    response = NetConnector.uploadDirect(request);
+                } else {
+                    response = NetConnector.connect(request);
+                }
+                if (response.getResponseCode() == null) {
                     response.setResponseCode(NetResponse.ResponseCode.Failed);
                 }
 
                 // 4.在联网正常的情况下，解析数据
-                switch (response.getResponseCode())
-                {
+                switch (response.getResponseCode()) {
                     case Succeed:
                     case BadRequest:
                     case UnAuthorized:
@@ -56,64 +53,7 @@ public abstract class NetOption
                     case Conflict:
                     case InternalError:
 
-                        if (response.getResponseCode() == NetResponse.ResponseCode.Succeed)
-                        {
-                            parserResultCode(response);
-                            LogUtil.i(TAG, "handleResponse()");
-                            response.setObj(handleResponse(response));
-                        }
-                        break;
-                    default:
-                        // 不可解析的情况，设置结果值是-1
-                        response.setResultCode("-1001");
-
-                        break;
-                }
-                // 5.回调
-                httpCallback.onResult(response);
-            }
-        };
-        //加入线程池运行
-        ThreadPoolUtil.execute(runnable);
-    }
-
-    /**
-     * 上传文件
-     *
-     * @param httpCallback 回调对象
-     */
-    protected void uploadDirect(final INetCallBack httpCallback)
-    {
-        ThreadTask runnable = new ThreadTask()
-        {
-            @Override
-            public void run()
-            {
-                //0.网络是否连接，如果网络不是连接之间返回
-
-
-                NetRequest request = buildUploadRequest();
-
-                NetResponse response = NetConnector.uploadDirect(request);
-
-                if (response.getResponseCode() == null)
-                {
-                    response.setResponseCode(NetResponse.ResponseCode.Failed);
-                }
-
-                // 4.在联网正常的情况下，解析数据
-                switch (response.getResponseCode())
-                {
-                    case Succeed:
-                    case BadRequest:
-                    case UnAuthorized:
-                    case Forbidden:
-                    case NotFound:
-                    case Conflict:
-                    case InternalError:
-
-                        if (response.getResponseCode() == NetResponse.ResponseCode.Succeed)
-                        {
+                        if (response.getResponseCode() == NetResponse.ResponseCode.Succeed) {
                             parserResultCode(response);
                             LogUtil.i(TAG, "handleResponse()");
                             response.setObj(handleResponse(response));
@@ -167,8 +107,7 @@ public abstract class NetOption
      *
      * @return 默认为GET请求
      */
-    protected NetRequest.RequestMethod getRequestMethod()
-    {
+    protected NetRequest.RequestMethod getRequestMethod() {
         return NetRequest.RequestMethod.GET;
     }
 
@@ -177,8 +116,7 @@ public abstract class NetOption
      *
      * @return 默认为JSON格式
      */
-    protected NetRequest.ContentType getContentType()
-    {
+    protected NetRequest.ContentType getContentType() {
         return NetRequest.ContentType.JSON;
     }
 
@@ -187,8 +125,7 @@ public abstract class NetOption
      *
      * @return 是否需要GZIP压缩
      */
-    protected boolean isGZip()
-    {
+    protected boolean isGZip() {
         return false;
     }
 
@@ -197,8 +134,7 @@ public abstract class NetOption
      *
      * @return 是否信任任意主机？ true信任，false证书验证（默认值true）
      */
-    protected boolean isTrustAll()
-    {
+    protected boolean isTrustAll() {
         return true;
     }
 
@@ -207,8 +143,7 @@ public abstract class NetOption
      *
      * @return 默认不需要byte数组
      */
-    protected boolean isNeedByte()
-    {
+    protected boolean isNeedByte() {
         return false;
     }
 
@@ -217,8 +152,7 @@ public abstract class NetOption
      *
      * @return 默认为15000毫秒
      */
-    protected int getConnectionTimeOut()
-    {
+    protected int getConnectionTimeOut() {
         return NetRequest.CONNECT_TIMEOUT;
     }
 
@@ -227,8 +161,7 @@ public abstract class NetOption
      *
      * @return 默认为15000毫秒
      */
-    protected int getReadTimeOut()
-    {
+    protected int getReadTimeOut() {
         return NetRequest.READ_TIMEOUT;
     }
 
@@ -237,30 +170,23 @@ public abstract class NetOption
      *
      * @param response 响应对象
      */
-    private void parserResultCode(NetResponse response)
-    {
+    private void parserResultCode(NetResponse response) {
         String data = response.getData();
-        if (data != null)
-        {
+        if (data != null) {
             // JSON
-            if (response.getResponseContentType() != null && response.getResponseContentType() == NetRequest.ContentType.JSON && !isNeedByte())
-            {
+            if (response.getResponseContentType() != null && response.getResponseContentType() == NetRequest.ContentType.JSON && !isNeedByte()) {
                 LogUtil.d(TAG, "Parser the result code with JSON format.");
-                try
-                {
+                try {
                     JSONObject rootJsonObj = new JSONObject(data);
                     // 仅解析Result
-                    if (rootJsonObj.has("code"))
-                    {
+                    if (rootJsonObj.has("code")) {
                         String resultCode = rootJsonObj.getString("code");
                         String resultDesc = rootJsonObj.getString("msg");
 
                         response.setResultCode(resultCode);
                         response.setResultDesc(resultDesc);
                     }
-                }
-                catch (JSONException e)
-                {
+                } catch (JSONException e) {
                     LogUtil.e(TAG, e.toString());
                 }
             }
@@ -272,8 +198,7 @@ public abstract class NetOption
      *
      * @return Request 返回请求对象
      */
-    protected NetRequest buildRequest()
-    {
+    protected NetRequest buildRequest() {
         NetRequest request = new NetRequest();
         request.setUrl(getUrl());
         request.setBody(getBody());
@@ -288,19 +213,6 @@ public abstract class NetOption
         return request;
     }
 
-    protected NetRequest buildUploadRequest()
-    {
-        NetRequest request = new NetRequest();
-        request.setUrl(getUrl());
-        request.setBody(getBody());
-        request.setRequestMethod(getRequestMethod());
-        request.setContentType(getContentType());
-        request.setRequestProperties(getRequestProperties());
-        request.setNeedByte(isNeedByte());
-        request.setGZip(isGZip());
-        request.setConnectionTimeOut(getConnectionTimeOut());
-        request.setReadTOut(getReadTimeOut());
-        request.setTrustAll(isTrustAll());
-        return request;
-    }
+    protected abstract Context getContext();
+
 }

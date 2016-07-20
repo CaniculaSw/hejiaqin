@@ -14,6 +14,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
+import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.chinamobile.hejiaqin.business.net.login.CMIMHelperManager;
 import com.chinamobile.hejiaqin.business.net.login.LoginHttpManager;
 import com.customer.framework.component.net.NetResponse;
@@ -25,8 +26,6 @@ import com.customer.framework.utils.cryptor.DigestUtil;
 import com.google.gson.Gson;
 import com.littlec.sdk.manager.CMIMHelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -214,14 +213,17 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).logout(null, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
+
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
             }
         });
         clean();
@@ -299,32 +301,62 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         if (obj == null) {
             return true;
         }
-        UserInfo info = (UserInfo) obj;
-        String tokenExpire = info.getTokenExpire();
-        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        long expire = 0;
-        try {
-            expire = sdf.parse(tokenExpire).getTime() - tokenDate;
-        } catch (ParseException e) {
-            LogUtil.e(TAG, e);
-        }
-        //永不过期
-        if (expire == -1) {
-            return false;
-        }
-        if (tokenDate != Long.MIN_VALUE) {
-            Date now = new Date();
-            //在有效期内
-            if (now.getTime() - tokenDate < expire) {
-                return false;
-            }
-        }
-        return true;
+        return false;
+//        UserInfo info = (UserInfo) obj;
+//        String tokenExpire = info.getTokenExpire();
+//        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//
+//        long expire = 0;
+//        try {
+//            expire = sdf.parse(tokenExpire).getTime() - tokenDate;
+//        } catch (ParseException e) {
+//            LogUtil.e(TAG, e);
+//        }
+//        //永不过期
+//        if (expire == -1) {
+//            return false;
+//        }
+//        if (tokenDate != Long.MIN_VALUE) {
+//            Date now = new Date();
+//            //在有效期内
+//            if (now.getTime() - tokenDate < expire) {
+//                return false;
+//            }
+//        }
+//        return true;
     }
 
+    @Override
+    public void getUserInfo(NVPWithTokenReqBody reqBody){
+        new LoginHttpManager(getContext()).getUserInfo(null, reqBody, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                UserInfo newUserInfo = (UserInfo) obj;
+                UserInfo oldUserInfo = UserInfoCacheManager.getUserInfo(getContext());
+                newUserInfo.setToken(oldUserInfo.getToken());
+                UserInfoCacheManager.saveUserToLoacl(getContext(), newUserInfo, StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
+                UserInfoCacheManager.saveUserToMem(getContext(),newUserInfo,StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.GET_USER_INFO_SUCCESS_MSG_ID);
+            }
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.GET_USER_INFO_FAIL_MSG_ID, response);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+            }
+        });
+    }
     @Override
     public void updatePassword(PasswordInfo pwdInfo) {
         new LoginHttpManager(getContext()).updatePassword(null, pwdInfo, new IHttpCallBack() {
@@ -357,7 +389,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             return;
         }
         UserInfo userInfo = (UserInfo) obj;
-        CMIMHelperManager.doLogin(userInfo);
+        new CMIMHelperManager(getContext()).doLogin(userInfo);
     }
 
     private void clean() {
@@ -409,13 +441,6 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             @Override
             public void onFailure(Object invoker, String code, String desc) {
                 LoginLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
-//                if (isCommonFailRes(code, desc)) {
-//                    return;
-//                }
-//                FailResponse response = new FailResponse();
-//                response.setCode(code);
-//                response.setMsg(desc);
-//                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, response);
             }
 
             @Override

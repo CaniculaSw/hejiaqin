@@ -16,6 +16,8 @@ import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
+import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
+import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
@@ -175,8 +177,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
 //                reqBody.setToken(UserInfoCacheManager.getToken(getContext()));
 //                reqBody.setContactJson(contactJson);
 
-                NVPReqBody reqBody = new NVPReqBody();
-                reqBody.add("token", UserInfoCacheManager.getToken(getContext()));
+                NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
                 reqBody.add("contactJson", contactJson);
 
                 new ContactsHttpManager(getContext()).batchAdd(null, reqBody, new IHttpCallBack() {
@@ -279,8 +280,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-                NVPReqBody reqBody = new NVPReqBody();
-                reqBody.add("token", UserInfoCacheManager.getToken(getContext()));
+                NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
                 reqBody.add("contactId", contactId);
 
                 new ContactsHttpManager(getContext()).delete(null, reqBody, new IHttpCallBack() {
@@ -320,8 +320,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     private void fetchAppContactsFromServer() {
-        NVPReqBody reqBody = new NVPReqBody();
-        reqBody.add("token", UserInfoCacheManager.getToken(getContext()));
+        NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
 
         new ContactsHttpManager(getContext()).list(null, reqBody, new IHttpCallBack() {
             /**

@@ -7,6 +7,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
+import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 
 /**
  * 登录逻辑接口
@@ -68,6 +69,8 @@ public interface ILoginLogic {
      * @return 是否已经登录
      */
     boolean hasLogined();
+
+    void getUserInfo(NVPWithTokenReqBody reqBody);
 
     /**
      * 修改密码

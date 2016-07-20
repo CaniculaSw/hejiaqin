@@ -7,9 +7,9 @@ public class SystemMessage {
 
     private String title;
 
-    private String date;
+    private String time;
 
-    private String msgBody;
+    private String content;
 
     private String id;
 
@@ -21,12 +21,12 @@ public class SystemMessage {
         this.id = id;
     }
 
-    public String getMsgBody() {
-        return msgBody;
+    public String getContent() {
+        return content;
     }
 
-    public void setMsgBody(String msgBody) {
-        this.msgBody = msgBody;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getTitle() {
@@ -37,12 +37,12 @@ public class SystemMessage {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 
 }

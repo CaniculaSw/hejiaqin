@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.service;
+package com.chinamobile.hejiaqin.business.ui.more.manger;
 
 import android.app.DownloadManager;
 import android.app.Service;

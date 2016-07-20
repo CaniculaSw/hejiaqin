@@ -10,6 +10,7 @@ public class VersionInfo {
     private String time;
     private int byForce;
     private String forceVersionCode;
+    private boolean isNew;
 
     public String getVersionCode() {
         return versionCode;
@@ -57,5 +58,13 @@ public class VersionInfo {
 
     public void setForceVersionCode(String forceVersionCode) {
         this.forceVersionCode = forceVersionCode;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }

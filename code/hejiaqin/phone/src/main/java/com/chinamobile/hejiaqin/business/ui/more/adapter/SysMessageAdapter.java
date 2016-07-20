@@ -74,7 +74,7 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
         mViewHolder =  AdapterViewHolder.get(context, convertView, parent, R.layout.adapter_sys_message, position);
         mViewHolder.setText(R.id.more_sys_msg_title_tv,msg.getTitle());
         try {
-            mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(DateTimeUtil.parseSTANDARDFormatToDate(msg.getDate()),"yyyy-MM-dd"));
+            mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(DateTimeUtil.parseSTANDARDFormatToDate(msg.getTime()),"yyyy-MM-dd"));
         } catch (ParseException e) {
             LogUtil.e(TAG,e);
         }

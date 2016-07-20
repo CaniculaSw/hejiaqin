@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2009-2015 ShenZhen Eternal Dynasty Technology Co., Ltd.
+  ~  * All rights reserved.
+  ~  *
+  ~  * This file contains valuable properties of  ShenZhen Eternal Dynasty
+  ~  * Technology Co., Ltd.,  embodying  substantial  creative efforts  and
+  ~  * confidential information, ideas and expressions.    No part of this
+  ~  * file may be reproduced or distributed in any form or by  any  means,
+  ~  * or stored in a data base or a retrieval system,  without  the prior
+  ~  * written permission  of  ShenZhen Eternal Dynasty Technology Co.,Ltd.
+  ~  *
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:id="@+id/progress_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="@dimen/normal_font"
+        android:textColor="@color/black"
+        />
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_marginTop="5dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

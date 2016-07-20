@@ -2,13 +2,18 @@ package com.chinamobile.hejiaqin.business.manager;
 
 import android.content.Context;
 
-import com.customer.framework.utils.StringUtil;
-import com.google.gson.Gson;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.StringUtil;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -63,6 +68,15 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Login.TOKEN_DATE, tokenDate);
     }
 
+    public static void saveVersionInfoToLoacl(Context context, VersionInfo info) {
+        if (info != null) {
+            HashMap map = new HashMap();
+            Gson gson = new Gson();
+            map.put(BussinessConstants.Setting.VERSION_INFO_KEY, gson.toJson(info));
+            StorageMgr.getInstance().getSharedPStorage(context).save(map);
+        }
+    }
+
     public static void saveHistoryToLoacl(Context context, LoginHistoryList historyList) {
         HashMap map = new HashMap();
         Gson gson = new Gson();
@@ -72,6 +86,20 @@ public class UserInfoCacheManager {
 
     public static UserInfo getUserInfo(Context context) {
         return (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+    }
+
+    public static VersionInfo getVersionInfo(Context context) {
+        String infoStr = StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Setting.VERSION_INFO_KEY);
+        if (infoStr != null){
+            try {
+                JSONObject infoJSONObj = new JSONObject(infoStr);
+                Gson gson = new Gson();
+                return gson.fromJson(infoStr,VersionInfo.class);
+            } catch (JSONException e) {
+                LogUtil.e("UserInfoCacheManager", e);
+            }
+        }
+        return null;
     }
 
     public static String getToken(Context context) {
@@ -105,5 +133,8 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }
 
+    public static void clearVersionInfo(Context context){
+        StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Setting.VERSION_INFO_KEY});
+    }
 
 }
