@@ -76,7 +76,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
                 }
             }
         }
-        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection +" order by "+ DatabaseInfo.CallRecord.BEGIN_TIME + "desc";
+        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection +" order by "+ DatabaseInfo.CallRecord.BEGIN_TIME + " desc ";
         Cursor cursor = super.rawQuery(sql, numbers);
         while (cursor.moveToNext()) {
             list.add(parseValuesToBean(cursor));
@@ -89,14 +89,15 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         if(numbers!=null && numbers.length!=0) {
             if (numbers.length == 1) {
                 selection =  DatabaseInfo.CallRecord.PEER_NUMBER + " = ? ";
-            }
-            for (int i = 0; i < numbers.length; i++) {
-                if (i == 0) {
-                    selection = DatabaseInfo.CallRecord.PEER_NUMBER + " in ( ? ";
-                } else if (i == numbers.length - 1) {
-                    selection = selection + " , ? ) ";
-                } else {
-                    selection = selection + " , ? ";
+            }else {
+                for (int i = 0; i < numbers.length; i++) {
+                    if (i == 0) {
+                        selection = DatabaseInfo.CallRecord.PEER_NUMBER + " in ( ? ";
+                    } else if (i == numbers.length - 1) {
+                        selection = selection + " , ? ) ";
+                    } else {
+                        selection = selection + " , ? ";
+                    }
                 }
             }
         }
