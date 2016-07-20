@@ -3,12 +3,13 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by Administrator on 2016/7/17 0017.
  */
-public class PinyinUnit {
+public class PinyinUnit implements Serializable {
     private static final String TAG = "PinyinUnit";
     /**
      * 中文字符，如王金宝

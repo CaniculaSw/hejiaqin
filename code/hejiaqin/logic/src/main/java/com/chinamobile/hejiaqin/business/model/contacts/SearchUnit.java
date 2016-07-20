@@ -2,12 +2,13 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 
 import com.customer.framework.utils.StringUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/17 0017.
  */
-public class SearchUnit {
+public class SearchUnit implements Serializable {
     public enum SearchType {
         searchByNumber, searchByName
     }
