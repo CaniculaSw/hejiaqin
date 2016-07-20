@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
@@ -139,11 +140,12 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         BasicFragment dialInfoFragment = new DialInfoFragment();
         dialInfoFragment.setActivityListener(listener);
-        ((DialInfoFragment) dialInfoFragment).setDialInfo(genDialInfoGroup());
         fragmentList.add(dialInfoFragment);
 
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         showViewByCurIndex(mViewPager.getCurrentItem());
+
+        contactsLogic.queryContactCallRecords(mContactsInfo);
     }
 
     private List<DialInfoGroup> genDialInfoGroup() {
@@ -213,8 +215,12 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         contactInfoFragment.refreshView();
     }
 
-    private void showDialData() {
+    private void showDialData(List<DialInfoGroup> callRecordList) {
         DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIAL_INFO_INDEX);
+
+        if (null == callRecordList) {
+            callRecordList = new ArrayList<DialInfoGroup>();
+        }
         dialInfoFragment.setDialInfo(new ArrayList<DialInfoGroup>());
         dialInfoFragment.refreshView();
 
@@ -297,6 +303,14 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_failed_toast);
+                break;
+            case BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID:
+                showDialData(null);
+                break;
+            case BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID:
+                List<DialInfoGroup> dialInfoGroupList = (List<DialInfoGroup>) msg.obj;
+                showDialData(dialInfoGroupList);
+                break;
         }
     }
 
@@ -316,10 +330,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         delCallRecordDialog.delLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 拨号逻辑接口删除通话记录 TODO
-
-                // 这里先删除测试数据
-                showDialData();
+                // 拨号逻辑接口删除通话记录
+                contactsLogic.deleteContactCallRecords(mContactsInfo);
 
                 delCallRecordDialog.dismiss();
             }

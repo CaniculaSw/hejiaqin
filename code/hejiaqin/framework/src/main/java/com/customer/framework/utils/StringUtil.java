@@ -422,6 +422,7 @@ public class StringUtil {
         return fullPinyinLetters.toString().toUpperCase();
     }
 
+
     /**
      * 汉字转为拼音
      */

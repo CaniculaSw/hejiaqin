@@ -261,6 +261,12 @@ public class BussinessConstants {
         // 删除应用联系人失败的消息ID
         int DEL_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 11;
 
+
+        // 获取通话记录成功的消息ID
+        int GET_CALL_RECORDS_SUCCESS_MSG_ID = BASE_MSG_ID + 12;
+        // 删除通话记录成功的消息ID
+        int DEL_CALL_RECORDS_SUCCESS_MSG_ID = BASE_MSG_ID + 13;
+
         // handleFragmentMessage
         // 隐藏联系人列表的title
         int UI_HIDE_CCONTACT_LIST_TITLE_ID = BASE_MSG_ID + 100;

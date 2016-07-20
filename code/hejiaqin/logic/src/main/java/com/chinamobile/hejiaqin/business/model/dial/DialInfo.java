@@ -17,21 +17,48 @@ public class DialInfo {
 
     private Type type;
 
+    private String dialTime;
+
+    private String dialDuration;
+
     // 获取通话的时间
     public String getDialTime() {
-        return "15:30";
+        return dialTime;
     }
 
     // 获取通话的时长
     public String getDialDuration() {
-        return "18分12秒";
+        return dialDuration;
     }
 
     public Type getType() {
         return type;
     }
 
+    public void setDialTime(String dialTime) {
+        this.dialTime = dialTime;
+    }
+
+    public void setDialDuration(String dialDuration) {
+        this.dialDuration = dialDuration;
+    }
+
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public static Type convertType(int type) {
+        switch (type) {
+            case CallRecord.TYPE_VIDEO_INCOMING:
+                return Type.in;
+            case CallRecord.TYPE_VIDEO_MISSING:
+                return Type.missed;
+            case CallRecord.TYPE_VIDEO_OUTGOING:
+                return Type.out;
+            case CallRecord.TYPE_VIDEO_REJECT:
+                return Type.reject;
+            default:
+                return Type.out;
+        }
     }
 }
