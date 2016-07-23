@@ -42,6 +42,7 @@
                 android:id="@+id/sys_message_detail_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/more_black_404040"
                 android:textSize="14sp" />

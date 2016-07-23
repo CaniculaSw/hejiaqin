@@ -19,9 +19,10 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
+import com.chinamobile.hejiaqin.business.ui.more.manger.UpdateManger;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
@@ -152,6 +153,12 @@ public abstract class BasicActivity extends BaseActivity {
                     Intent intent = new Intent(this, LoginActivity.class);
                     this.startActivity(intent);
                     this.finishAllActivity(LoginActivity.class.getName());
+                    break;
+                case BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE:
+                    new UpdateManger(BasicActivity.this).showForcedUpdateDialog((VersionInfo)msg.obj);
+                    break;
+                case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
+                    new UpdateManger(BasicActivity.this).showNoticeDialog((VersionInfo)msg.obj);
                     break;
                 default:
                     break;

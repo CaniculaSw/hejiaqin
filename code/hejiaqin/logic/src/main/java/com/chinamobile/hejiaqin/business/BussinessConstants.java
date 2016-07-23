@@ -207,6 +207,9 @@ public class BussinessConstants {
         //修改密码失败的消息ID
         int UPDATE_PHOTO_FAIL_MSG_ID = BASE_MSG_ID + 25;
 
+        int GET_USER_INFO_SUCCESS_MSG_ID = BASE_MSG_ID + 26;
+
+        int GET_USER_INFO_FAIL_MSG_ID = BASE_MSG_ID + 27;
     }
 
     /**
@@ -260,6 +263,12 @@ public class BussinessConstants {
         int DEL_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 10;
         // 删除应用联系人失败的消息ID
         int DEL_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 11;
+
+
+        // 获取通话记录成功的消息ID
+        int GET_CALL_RECORDS_SUCCESS_MSG_ID = BASE_MSG_ID + 12;
+        // 删除通话记录成功的消息ID
+        int DEL_CALL_RECORDS_SUCCESS_MSG_ID = BASE_MSG_ID + 13;
 
         // handleFragmentMessage
         // 隐藏联系人列表的title
@@ -326,7 +335,7 @@ public class BussinessConstants {
 
         String VERSION_INFO_KEY = "versionInfoKey";
         String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
-        String APP_IMG_DEFAULT_NAME = "kangxi_app_default_img.jpg"; //头像图片默认名字
+        String APP_IMG_DEFAULT_NAME = "hejiaqin_app_default_img.jpg"; //头像图片默认名字
         String MORE_SHARE_APP_URL = "http://www.baidu.com";
     }
 
@@ -354,6 +363,7 @@ public class BussinessConstants {
         int SEND_FEED_BACK_SUCCESS = BASE_MSG_ID + 5;
         int NEW_VERSION_AVAILABLE = BASE_MSG_ID + 6;
         int NO_NEW_VERSION_AVAILABLE = BASE_MSG_ID + 7;
+        int NEW_FORCE_VERSION_AVAILABLE = BASE_MSG_ID + 8;
 
     }
 

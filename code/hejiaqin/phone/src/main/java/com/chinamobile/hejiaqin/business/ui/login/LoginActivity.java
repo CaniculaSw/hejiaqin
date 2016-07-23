@@ -1,6 +1,9 @@
 package com.chinamobile.hejiaqin.business.ui.login;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -23,8 +26,13 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
+import com.chinamobile.hejiaqin.business.ui.basic.view.CustomDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.VoipSettingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
+import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 
 
@@ -39,6 +47,22 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     private Button registerBtn;
     private ImageView clearAccountBtn;
     private boolean logining;
+    private String voipUserName;
+    private String voipPassword;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String phone = intent.getStringExtra("phone");
+        String passowrd = intent.getStringExtra("password");
+        //注册成功,自动登陆
+        if (!StringUtil.isNullOrEmpty(phone) && !StringUtil.isNullOrEmpty(passowrd)) {
+            accountEditTv.setText(phone);
+            passwdEditTv.setText(passowrd);
+            login();
+        }
+    }
 
     @Override
     protected void initLogics() {
@@ -113,8 +137,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_in_button:
-                if(logining)
-                {
+                if (logining) {
                     return;
                 }
                 login();
@@ -162,7 +185,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone(accountEditTv.getText().toString());
         loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
-        loginLogic.login(loginInfo);
+        inputTheVOIPSetting(loginInfo);
+//        loginLogic.login(loginInfo);
     }
 
     private void displayErrorInfo(String errorText) {
@@ -176,7 +200,24 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         window.setAttributes(params);
         dialog.show();
     }
+    //TODO For test
+    private void inputTheVOIPSetting(final LoginInfo loginInfo){
+        final VoipSettingDialog.Builder builder = new VoipSettingDialog.Builder(LoginActivity.this);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                voipUserName = builder.getUserName();
+                voipPassword = builder.getPassword();
+                LogUtil.i("LoginActivity","The VOIP user name is: "+voipUserName+" The VOIP password is: "+voipPassword);
+                loginLogic.login(loginInfo);
+                dialog.dismiss();
+            }
+        });
 
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+    }
 
     @Override
     protected void handleStateMessage(Message msg) {
@@ -184,6 +225,12 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
+                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
+                    LogUtil.i("LoginActivity","Update the voip setting");
+                    userInfo.setSdkAccount(voipUserName);
+                    userInfo.setSdkPassword(voipPassword);
+                    UserInfoCacheManager.saveUserToMem(getApplicationContext(),userInfo, StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getLong(BussinessConstants.Login.TOKEN_DATE));
+                }
                 //TODO TEST
                 if(Integer.parseInt(userInfo.getPhone().substring(userInfo.getPhone().length()-1))%2 ==0)
                 {
@@ -216,15 +263,15 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 logining = false;
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID:
-                if(logining) {
+                if (logining) {
                     showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                     logining = false;
                 }
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
-                if(logining) {
+                if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
-                    logining =false;
+                    logining = false;
                 }
                 break;
             default:

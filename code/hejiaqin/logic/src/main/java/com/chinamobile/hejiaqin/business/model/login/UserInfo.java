@@ -1,13 +1,7 @@
 package com.chinamobile.hejiaqin.business.model.login;
 
-/**
- * desc:用户登录后服务器返回的信息
- * project:Kangxi
- * version 001
- * author: zhanggj
- * Created: 2016/4/14.
- */
-public class UserInfo {
+public class UserInfo{
+
 
     private String userId;
 
@@ -18,7 +12,6 @@ public class UserInfo {
     private String sdkAccount;
 
     private String sdkPassword;
-
 
     private String imAccount;
 

@@ -13,8 +13,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
-import com.chinamobile.hejiaqin.business.net.ReqBody;
-import com.customer.framework.component.net.NameValuePair;
+import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.utils.LogUtil;
@@ -22,9 +21,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * desc:
@@ -93,6 +89,8 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     private final int check_forget_password_code_action = action_base + 10;
 
+    private final int get_user_info_action = action_base + 13;
+
 
     /**
      * 请求action
@@ -144,6 +142,9 @@ public class LoginHttpManager extends AbsHttpManager {
             case feed_back:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/feedback";
                 break;
+            case get_user_info_action:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/info";
+                break;
             default:
                 break;
         }
@@ -168,6 +169,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case update_pwd_action:
             case update_photo:
             case feed_back:
+            case get_user_info_action:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -187,38 +189,12 @@ public class LoginHttpManager extends AbsHttpManager {
             case forget_password_code_action:
             case check_forget_password_code_action:
             case update_pwd_action:
-            case feed_back:
                 flag = false;
                 break;
             default:
                 break;
         }
         return flag;
-    }
-
-    @Override
-    protected List<NameValuePair> getRequestProperties() {
-        List<NameValuePair> properties = super.getRequestProperties();
-        if (properties == null) {
-            properties = new ArrayList<NameValuePair>();
-        }
-
-        switch (this.mAction) {
-            case get_verify_code_action:
-            case check_verify_code_action:
-            case register_secondStep_action:
-            case login_action:
-            case forget_password_code_action:
-            case check_forget_password_code_action:
-            case update_pwd_action:
-                //TODO；添加属性
-                break;
-            case update_photo:
-//                properties.add(new BasicNameValuePair("doOutput","true"));
-            default:
-                break;
-        }
-        return properties;
     }
 
     @Override
@@ -240,7 +216,6 @@ public class LoginHttpManager extends AbsHttpManager {
                 if (rootJsonObj.has("data")) {
                     data = rootJsonObj.get("data").toString();
                 }
-
                 Gson gson = new Gson();
                 switch (this.mAction) {
                     case get_verify_code_action:
@@ -264,6 +239,9 @@ public class LoginHttpManager extends AbsHttpManager {
                     case feed_back:
                         break;
                     case update_photo:
+                        obj = gson.fromJson(data, UserInfo.class);
+                        break;
+                    case get_user_info_action:
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
                     default:
@@ -363,7 +341,7 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     public void logout(final Object invoker, final IHttpCallBack callBack) {
         this.mAction = logout_action;
-        NVPReqBody reqBody = new NVPReqBody();
+        this.mData = new NVPWithTokenReqBody();
         send(invoker, callBack);
     }
 
@@ -382,7 +360,7 @@ public class LoginHttpManager extends AbsHttpManager {
     public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto, final IHttpCallBack callBack) {
         this.mAction = update_photo;
         this.mData = updatePhoto;
-        uploadDirect(invoker, callBack);
+        send(invoker, callBack);
     }
 
     public void feedBack(final Object invoker, final FeedBackReq feedBackReq, final IHttpCallBack callBack) {
@@ -391,5 +369,9 @@ public class LoginHttpManager extends AbsHttpManager {
         send(invoker, callBack);
     }
 
-
+    public void getUserInfo(final Object invoker, final  NVPWithTokenReqBody reqBody, final IHttpCallBack callBack){
+        this.mAction = get_user_info_action;
+        this.mData = reqBody;
+        send(invoker,callBack);
+    }
 }

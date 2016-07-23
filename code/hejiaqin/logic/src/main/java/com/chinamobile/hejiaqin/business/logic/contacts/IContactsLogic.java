@@ -25,4 +25,8 @@ public interface IContactsLogic {
     void updateAppContact(String contactId, String name, String number, String photoFullPath);
 
     void deleteAppContact(String contactId);
+
+    void queryContactCallRecords(ContactsInfo contactsInfo);
+
+    void deleteContactCallRecords(ContactsInfo contactsInfo);
 }

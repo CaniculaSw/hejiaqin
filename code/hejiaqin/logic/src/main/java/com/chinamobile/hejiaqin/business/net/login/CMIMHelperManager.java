@@ -1,7 +1,12 @@
 package com.chinamobile.hejiaqin.business.net.login;
 
+import android.content.Context;
+
+import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.customer.framework.utils.LogUtil;
+import com.google.gson.Gson;
 import com.littlec.sdk.entity.AckMessage;
 import com.littlec.sdk.entity.CMGroup;
 import com.littlec.sdk.entity.CMMember;
@@ -9,6 +14,9 @@ import com.littlec.sdk.entity.CMMessage;
 import com.littlec.sdk.entity.SystemMessage;
 import com.littlec.sdk.manager.CMIMHelper;
 import com.littlec.sdk.utils.CMChatListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -18,7 +26,16 @@ import java.util.List;
 public class CMIMHelperManager {
     private static final String TAG = "CMIMHelperManager";
 
-    public static void doLogin(UserInfo userInfo) {
+    private Context mContext;
+
+    public CMIMHelperManager(Context mContext){
+        this.mContext = mContext;
+    }
+
+    private Context getContext(){
+        return this.mContext;
+    }
+    public void doLogin(UserInfo userInfo) {
         CMIMHelper.getCmAccountManager().doLogin(userInfo.getImAccount(), userInfo.getImPassword(), new CMChatListener.OnCMListener() {
             @Override
             public void onSuccess() {
@@ -34,7 +51,7 @@ public class CMIMHelperManager {
         });
     }
 
-    private static void addConnectionListener() {
+    private void addConnectionListener() {
         CMIMHelper.getCmAccountManager().addConnectionListener(new CMChatListener.OnConnectionListener() {
             @Override
             public void onReConnected() {
@@ -58,7 +75,7 @@ public class CMIMHelperManager {
         });
     }
 
-    private static void addMessageReceivedListener() {
+    private void addMessageReceivedListener() {
         CMIMHelper.addListeners(null, new CMChatListener.CMMessageReceivedCallBack() {
             @Override
             public void onReceivedChatMessage(CMMessage cmMessage) {
@@ -118,12 +135,17 @@ public class CMIMHelperManager {
             @Override
             public void onReceivedSystemMessage(SystemMessage systemMessage) {
                 LogUtil.d(TAG, "onReceivedSystemMessage");
-
-                LogUtil.d(TAG, "Message type: " + systemMessage.getType());
-                LogUtil.d(TAG, "Message type: " + systemMessage.getType());
-                LogUtil.d(TAG, "Message title: " + systemMessage.getTitle());
-                LogUtil.d(TAG, "Message content: " + systemMessage.getContent());
-                LogUtil.d(TAG, "Message time: " + systemMessage.getTime());
+                try {
+                    JSONObject systemMessageJSonObj = new JSONObject(systemMessage.getContent());
+                    Gson gson = new Gson();
+                    com.chinamobile.hejiaqin.business.model.more.SystemMessage receivedSystemMessage =
+                            gson.fromJson(systemMessageJSonObj.getString("data"),
+                                          com.chinamobile.hejiaqin.business.model.more.SystemMessage.class);
+                    SystemMessageDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                            .add(receivedSystemMessage);
+                } catch (JSONException e) {
+                    LogUtil.e(TAG,e);
+                }
             }
 
             @Override

@@ -158,13 +158,16 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
             return;
         }
 
+        loginLogic.getVerifyCode(userAccountId);
+    }
+
+    private void startTimer(VerifyCodeCountDownTimer timer) {
         //重新开始计时
-        if (countDownTimer == null || continueCountDown) {
-            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.MILL_IS_INFUTURE);
+        if (timer == null || continueCountDown) {
+            timer = new VerifyCodeCountDownTimer(MyCountDownTimer.MILL_IS_INFUTURE);
             continueCountDown = false;
         }
-        countDownTimer.start();
-        loginLogic.getVerifyCode(userAccountId);
+        timer.start();
     }
 
     //校验验证码
@@ -258,6 +261,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID:
                 super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT, null);
+                startTimer(countDownTimer);
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID:
                 if (countDownTimer != null) {
@@ -268,7 +272,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID:
                 response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")){
+                if (response.getCode().equals("1")) {
                     displayErrorInfo(response.getMsg());
                 }
                 if (countDownTimer != null) {
@@ -291,8 +295,8 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
                 startActivity(intent);
                 break;
             case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID:
-                 response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")){
+                response = (FailResponse) msg.obj;
+                if (response.getCode().equals("1")) {
                     displayErrorInfo(response.getMsg());
                 }
                 break;

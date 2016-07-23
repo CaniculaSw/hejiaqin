@@ -49,11 +49,11 @@ public class SysMessageDetailActivity extends BasicActivity implements View.OnCl
                                                             .querySystemMessageByID(id);
         mTitleTv.setText(systemMessage.getTitle());
         try {
-            mDateTv.setText(DateTimeUtil.parseDate2Str(DateTimeUtil.parseSTANDARDFormatToDate(systemMessage.getDate()),"yyyy/MM/dd"));
+            mDateTv.setText(DateTimeUtil.parseDate2Str(DateTimeUtil.parseSTANDARDFormatToDate(systemMessage.getTime()),"yyyy/MM/dd"));
         } catch (ParseException e) {
             LogUtil.e("SysMessageDetailActivity",e);
         }
-        mBodyTv.setText(systemMessage.getMsgBody());
+        mBodyTv.setText(systemMessage.getContent());
     }
 
     @Override
