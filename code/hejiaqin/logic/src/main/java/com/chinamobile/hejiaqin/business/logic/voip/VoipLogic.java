@@ -263,14 +263,13 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.DURATION, callSession.getDuration());
             CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,contentValues);
-            this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
         }else if(isInComing){
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_REJECT);
             contentValues.put(DatabaseInfo.CallRecord.READ,BussinessConstants.DictInfo.NO);
             CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
-            this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
         }
+        this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
     }
 
     @Override
