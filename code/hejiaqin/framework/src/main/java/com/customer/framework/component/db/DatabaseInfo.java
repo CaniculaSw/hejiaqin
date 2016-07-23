@@ -179,6 +179,7 @@ public class DatabaseInfo {
         public static final String TABLE_ID = "_ID";
         public static final String RECORD_ID = "recordId";
         public static final String PEER_NUMBER = "peerNumber";
+        public static final String NO_COUNTRY_NUMBER = "noCountryNumber";
         public static final String BEGIN_TIME = "beginTime";
         public static final String DURATION = "duration";
         public static final String TYPE = "type";

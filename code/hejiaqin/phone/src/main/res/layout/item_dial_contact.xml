@@ -10,34 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
         <LinearLayout
-            android:id="@+id/call_record_type_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="14dp">
-            <ImageView
-                android:id="@+id/call_record_type_iv"
-                android:layout_width="19dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:background="@mipmap/icon_outbound_call" />
-        </LinearLayout>
-        <LinearLayout
             android:orientation="vertical"
             android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@id/call_record_type_layout"
             android:gravity="center_vertical"
             android:layout_height="match_parent"
             android:layout_width="wrap_content">
             <TextView
-                android:id="@+id/call_record_name_tv"
+                android:id="@+id/contact_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:text="张晓晓"
                 android:color="@color/call_record_name_color"/>
             <TextView
-                android:id="@+id/call_record_number_tv"
+                android:id="@+id/contact_number_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -47,32 +33,20 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/call_record_arrow_layout"
+            android:id="@+id/contact_arrow_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:paddingRight="16dp"
             android:paddingLeft="14dp">
             <ImageView
-                android:id="@+id/call_record_arrow_iv"
+                android:id="@+id/contact_arrow_iv"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:background="@mipmap/call_record_arrow" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/call_record_arrow_layout">
-            <TextView
-                android:id="@+id/call_record_time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="15:38"
-                android:textSize="12sp"
-                android:textColor="@color/call_record_time_color"/>
-        </LinearLayout>
+
     </RelativeLayout>
 
     <LinearLayout

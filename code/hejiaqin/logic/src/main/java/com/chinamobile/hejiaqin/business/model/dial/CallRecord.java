@@ -25,6 +25,7 @@ public class CallRecord {
     private String id;
     private String recordId;
     private String peerNumber;
+    private String noCountryNumber;
     private String beginTime;
     private int duration;
     private int type;
@@ -55,6 +56,14 @@ public class CallRecord {
 
     public void setPeerNumber(String peerNumber) {
         this.peerNumber = peerNumber;
+    }
+
+    public String getNoCountryNumber() {
+        return noCountryNumber;
+    }
+
+    public void setNoCountryNumber(String noCountryNumber) {
+        this.noCountryNumber = noCountryNumber;
     }
 
     public String getPeerName() {

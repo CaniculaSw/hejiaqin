@@ -158,7 +158,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initDate() {
-        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
+
     }
 
     @Override
@@ -287,7 +287,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initLogics() {
-
+        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     private void showPopupWindow() {
@@ -316,8 +316,10 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         delCallRecordDialog.delLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 删除通话记录
+                // 删除通话记录
+                mVoipLogic.delAllCallRecord();
                 delCallRecordDialog.dismiss();
+
             }
         });
         delCallRecordDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {

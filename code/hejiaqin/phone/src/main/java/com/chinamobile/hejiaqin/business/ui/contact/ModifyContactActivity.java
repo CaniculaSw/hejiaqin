@@ -104,12 +104,16 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         PhotoManage.getInstance(this).setPhotoListener(mPhotoChangeListener);
 
         editContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+        //拨号传入的号码保存至和家亲
+        String inputnumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
         addContactMode = (null == editContactsInfo);
         titleLayout.title.setText(addContactMode ? R.string.contact_modify_title_add_text : R.string.contact_modify_title_edit_text);
         if (!addContactMode) {
             // TODO headImg 使用实际头像
             nameText.setText(editContactsInfo.getName());
             numberText.setText(editContactsInfo.getPhone());
+        }else{
+            numberText.setText(inputnumber);
         }
     }
 

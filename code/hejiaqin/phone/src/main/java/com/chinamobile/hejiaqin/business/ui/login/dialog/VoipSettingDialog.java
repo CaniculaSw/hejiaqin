@@ -51,6 +51,8 @@ public class VoipSettingDialog extends Dialog {
         private String positiveButtonText;
         private View contentView;
         private OnClickListener positiveButtonClickListener;
+        private String voipUserName;
+        private String voipPassword;
 
         public Builder(Context context) {
             this.context = context;
@@ -141,6 +143,13 @@ public class VoipSettingDialog extends Dialog {
             return this;
         }
 
+        public Builder setDefaultInfo(String voipUserName,
+                                         String voipPassword) {
+            this.voipUserName = voipUserName;
+            this.voipPassword = voipPassword;
+            return this;
+        }
+
 
         public VoipSettingDialog show() {
             final VoipSettingDialog dialog = create();
@@ -174,7 +183,10 @@ public class VoipSettingDialog extends Dialog {
             }
 
             dialog.setCancelable(flag);
-
+            EditText userET = (EditText) layout.findViewById(R.id.voip_user_name);
+            EditText passwordET = (EditText) layout.findViewById(R.id.voip_password);
+            userET.setText(voipUserName != null ? String.valueOf(voipUserName) : "");
+            passwordET.setText(voipPassword!=null? String.valueOf(voipPassword) : "");
 
             // set the confirm button
             if (positiveButtonText != null) {

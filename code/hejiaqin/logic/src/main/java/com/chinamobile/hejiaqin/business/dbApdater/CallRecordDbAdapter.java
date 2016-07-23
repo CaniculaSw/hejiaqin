@@ -63,11 +63,11 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         String selection = "";
         if(numbers!=null && numbers.length!=0) {
             if (numbers.length == 1) {
-                selection = " where " + DatabaseInfo.CallRecord.PEER_NUMBER + " = ? ";
+                selection = " where " + DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER + " = ? ";
             }else {
                 for (int i = 0; i < numbers.length; i++) {
                     if (i == 0) {
-                        selection = " where " + DatabaseInfo.CallRecord.PEER_NUMBER + " in ( ? ";
+                        selection = " where " + DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER + " in ( ? ";
                     } else if (i == numbers.length - 1) {
                         selection = selection + " , ? ) ";
                     } else {
@@ -88,11 +88,11 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         String selection = "";
         if(numbers!=null && numbers.length!=0) {
             if (numbers.length == 1) {
-                selection =  DatabaseInfo.CallRecord.PEER_NUMBER + " = ? ";
+                selection =  DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER + " = ? ";
             }else {
                 for (int i = 0; i < numbers.length; i++) {
                     if (i == 0) {
-                        selection = DatabaseInfo.CallRecord.PEER_NUMBER + " in ( ? ";
+                        selection = DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER + " in ( ? ";
                     } else if (i == numbers.length - 1) {
                         selection = selection + " , ? ) ";
                     } else {
@@ -108,11 +108,15 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         List<CallRecord> list = new ArrayList<CallRecord>();
         StringBuffer sql = new StringBuffer();
         sql.append("select ");
+        sql.append(DatabaseInfo.CallRecord.TABLE_NAME);
+        sql.append(".");
         sql.append(DatabaseInfo.CallRecord.TABLE_ID);
         sql.append(",");
         sql.append(DatabaseInfo.CallRecord.RECORD_ID);
         sql.append(",");
         sql.append(DatabaseInfo.CallRecord.PEER_NUMBER);
+        sql.append(",");
+        sql.append(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER);
         sql.append(",");
         sql.append(DatabaseInfo.CallRecord.BEGIN_TIME);
         sql.append(",");
@@ -130,7 +134,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         sql.append(" on ");
         sql.append(DatabaseInfo.CallRecord.TABLE_NAME);
         sql.append(".");
-        sql.append(DatabaseInfo.CallRecord.PEER_NUMBER);
+        sql.append(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER);
         sql.append(" = ");
         sql.append(DatabaseInfo.ContactsInfo.TABLE_NAME);
         sql.append(".");
@@ -188,6 +192,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseInfo.CallRecord.RECORD_ID, callRecord.getRecordId());
         contentValues.put(DatabaseInfo.CallRecord.PEER_NUMBER, callRecord.getPeerNumber());
+        contentValues.put(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER, callRecord.getNoCountryNumber());
         contentValues.put(DatabaseInfo.CallRecord.BEGIN_TIME, callRecord.getBeginTime());
         contentValues.put(DatabaseInfo.CallRecord.DURATION, callRecord.getDuration());
         contentValues.put(DatabaseInfo.CallRecord.TYPE, callRecord.getType());
@@ -200,6 +205,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         callRecord.setId(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.TABLE_ID)));
         callRecord.setRecordId(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.RECORD_ID)));
         callRecord.setPeerNumber(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.PEER_NUMBER)));
+        callRecord.setNoCountryNumber(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER)));
         callRecord.setBeginTime(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.BEGIN_TIME)));
         callRecord.setDuration(cursor.getInt(cursor.getColumnIndex(DatabaseInfo.CallRecord.DURATION)));
         callRecord.setType(cursor.getInt(cursor.getColumnIndex(DatabaseInfo.CallRecord.TYPE)));

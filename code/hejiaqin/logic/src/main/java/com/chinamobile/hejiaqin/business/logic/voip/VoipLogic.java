@@ -9,9 +9,13 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
+import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.component.db.DatabaseInfo;
 import com.customer.framework.component.time.DateTimeUtil;
 import com.customer.framework.logic.LogicImp;
@@ -25,6 +29,7 @@ import com.huawei.rcs.login.UserInfo;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -101,7 +106,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 CallRecord callRecord = new CallRecord();
                 String recordId = UUID.randomUUID().toString();
                 callRecord.setRecordId(recordId);
-                callRecord.setPeerNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
+                callRecord.setPeerNumber(callSession.getPeer().getNumber());
+                callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
                 callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
                 callRecord.setDuration(callSession.getDuration());
                 callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
@@ -201,25 +207,18 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     @Override
     public CallSession call(String calleeNumber, boolean isVideoCall) {
         CallSession callSession = null;
-        String outNumber = calleeNumber;
-        if(calleeNumber.startsWith("86"))
-        {
-            outNumber = "+"+calleeNumber;
-        }else if(!calleeNumber.startsWith("+86"))
-        {
-            outNumber = "+86"+calleeNumber;
-        }
         if (isVideoCall) {
-            callSession = CallApi.initiateVideoCall(outNumber);
+            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(calleeNumber));
         } else {
-            callSession = CallApi.initiateAudioCall(outNumber);
+            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(calleeNumber));
         }
 
         // 保存通话记录
         CallRecord callRecord = new CallRecord();
         String recordId = UUID.randomUUID().toString();
         callRecord.setRecordId(recordId);
-        callRecord.setPeerNumber(CommonUtils.getPhoneNumber(calleeNumber));
+        callRecord.setPeerNumber(calleeNumber);
+        callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(calleeNumber));
         callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
         callRecord.setDuration(callSession.getDuration());
         callRecord.setType(CallRecord.TYPE_VIDEO_OUTGOING);
@@ -292,6 +291,28 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
             this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
         }
+    }
+
+    public void delAllCallRecord()
+    {
+        ThreadPoolUtil.execute(new ThreadTask() {
+            @Override
+            public void run() {
+                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).delAll();
+                VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID);
+            }
+        });
+    }
+
+    public void getCallRecord()
+    {
+        ThreadPoolUtil.execute(new ThreadTask() {
+            @Override
+            public void run() {
+                List<CallRecord> callRecords = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).queryWithName();
+                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID, callRecords);
+            }
+        });
     }
 
 }

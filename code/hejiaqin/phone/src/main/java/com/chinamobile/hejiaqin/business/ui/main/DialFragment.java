@@ -4,6 +4,7 @@ package com.chinamobile.hejiaqin.business.ui.main;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,17 +17,23 @@ import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.BaseDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText;
+import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
+import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
+import com.chinamobile.hejiaqin.business.ui.main.adapter.DialContactAdapter;
 import com.chinamobile.hejiaqin.business.ui.more.MessageActivity;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.login.UserInfo;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,6 +79,11 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     private IVoipLogic mVoipLogic;
 
+    private IContactsLogic mContactsLogic;
+
+    private CallRecordAdapter mCallRecordAdapter;
+
+    private DialContactAdapter mDialContactAdapter;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -97,10 +109,27 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     @Override
     protected void handleLogicMsg(Message msg) {
+        Object obj = msg.obj;
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID:
                 //TODO：开始查询
+                //mContactsLogic.searchLocalContactLst(mSearchString);
+                //正式代码需要在查询结果后进行判断是否显示
                 dialSaveContactLayout.setVisibility(View.VISIBLE);
+                //TODO：开始查询
+                break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID:
+                if(obj!=null)
+                {
+                    List<CallRecord> callRecords = (List<CallRecord>)obj;
+                    mCallRecordAdapter.refreshData(callRecords);
+                }
+                break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID:
+                mCallRecordAdapter.refreshData(null);
+                break;
+            case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
+
         }
     }
 
@@ -206,13 +235,22 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         headerView.rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputNumber.length()>0)
-                {
+                if (inputNumber.length() > 0) {
                     return;
                 }
-                mListener.onAction(BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID,null);
+                mListener.onAction(BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID, null);
             }
         });
+
+        mCallRecordAdapter = new CallRecordAdapter(getContext());
+        callRecordRecyclerView.setAdapter(mCallRecordAdapter);
+        callRecordRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        callRecordRecyclerView.setHasFixedSize(true);
+
+        mDialContactAdapter = new DialContactAdapter (getContext());
+        dialContactRecyclerView.setAdapter(mDialContactAdapter);
+        dialContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        dialContactRecyclerView.setHasFixedSize(true);
     }
 
     private String stringFilter(String str)
@@ -244,9 +282,11 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     protected void initLogics()
     {
         mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
+        mContactsLogic = (IContactsLogic)super.getLogicByInterfaceClass(IContactsLogic.class);
     }
     @Override
     protected void initData() {
+        mVoipLogic.getCallRecord();
     }
 
     /**
@@ -258,9 +298,9 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         mSearchString = nowText;
 
         // 号码输入小于三位，不进行搜索
-            if (StringUtil.isNullOrEmpty(mSearchString))
-            {
-                mSearchString = "";
+        if (StringUtil.isNullOrEmpty(mSearchString))
+        {
+            mSearchString = "";
             dialSaveContactLayout.setVisibility(View.GONE);
             dialContactRecyclerView.setVisibility(View.GONE);
             callRecordRecyclerView.setVisibility(View.VISIBLE);
@@ -309,8 +349,12 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                }
                break;
            case R.id.dial_save_contact_arrow_layout:
-               //TODO 保存联系人
-
+               // 保存联系人
+               if(inputNumber.length()>0) {
+                   Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
+                   intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,inputNumber.getText().toString() );
+                   getActivity().startActivity(intent);
+               }
        }
     }
 

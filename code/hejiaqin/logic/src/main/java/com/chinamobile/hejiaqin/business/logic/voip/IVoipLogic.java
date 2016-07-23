@@ -23,4 +23,8 @@ public interface IVoipLogic {
     public void answerVideo(CallSession callSession);
 
     public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking);
+
+    public void delAllCallRecord();
+
+    public void getCallRecord();
 }

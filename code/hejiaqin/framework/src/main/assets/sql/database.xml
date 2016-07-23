@@ -17,6 +17,7 @@
 		<field name="_ID" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
 		<field name="recordId" type="TEXT" obligatory=" NOT NULL" />
 		<field name="peerNumber" type="TEXT" obligatory="NOT NULL" />
+		<field name="noCountryNumber" type="TEXT" obligatory="NOT NULL" />
 		<field name="beginTime" type="TEXT" obligatory="" />
 		<field name="duration" type="INTEGER" obligatory="DEFAULT 0" />
 		<field name="type" type="INTEGER" obligatory="" />

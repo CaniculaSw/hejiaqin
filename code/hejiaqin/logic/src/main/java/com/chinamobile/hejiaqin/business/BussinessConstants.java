@@ -219,6 +219,8 @@ public class BussinessConstants {
         // 联系人详情key值
         String INTENT_CONTACTSINFO_KEY = "INTENT_CONTACTSINFO_KEY";
 
+        String INTENT_CONTACT_NUMBER_KEY = "INTENT_CONTACT_NUMBER_KEY";
+
     }
 
     /**
@@ -318,6 +320,9 @@ public class BussinessConstants {
         int VOIP_REGISTER_DISCONNECTED_MSG_ID = BASE_MSG_ID + 7;
         int VOIP_REGISTER_KICK_OUT_MSG_ID = BASE_MSG_ID + 8;
         int VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID = BASE_MSG_ID + 9;
+
+        int CALL_RECORD_DEL_ALL_MSG_ID = BASE_MSG_ID + 10;
+        int CALL_RECORD_GET_ALL_MSG_ID = BASE_MSG_ID + 11;
 
     }
 

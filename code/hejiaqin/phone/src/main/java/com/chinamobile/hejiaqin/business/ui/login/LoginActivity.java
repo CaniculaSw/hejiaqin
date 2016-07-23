@@ -203,6 +203,22 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     //TODO For test
     private void inputTheVOIPSetting(final LoginInfo loginInfo){
         final VoipSettingDialog.Builder builder = new VoipSettingDialog.Builder(LoginActivity.this);
+        if(voipUserName==null)
+        {
+            String account = accountEditTv.getText().toString();
+            //TODO TEST
+            if(Integer.parseInt(account.substring(account.length() - 1)) % 2 == 0) {
+                builder.setDefaultInfo("2886544004", "Vconf2015!");
+            }
+            else
+            {
+                builder.setDefaultInfo("2886544005", "Vconf2015!");
+            }
+            //TODO TEST
+        }else{
+            builder.setDefaultInfo(voipUserName,voipPassword);
+        }
+
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -229,20 +245,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                     LogUtil.i("LoginActivity","Update the voip setting");
                     userInfo.setSdkAccount(voipUserName);
                     userInfo.setSdkPassword(voipPassword);
-                    UserInfoCacheManager.saveUserToMem(getApplicationContext(),userInfo, StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getLong(BussinessConstants.Login.TOKEN_DATE));
                 }
-                //TODO TEST
-                if(Integer.parseInt(userInfo.getPhone().substring(userInfo.getPhone().length()-1))%2 ==0)
-                {
-                    userInfo.setSdkAccount("2886544004");
-                    userInfo.setSdkPassword("Vconf2015!");
-                }
-                else
-                {
-                    userInfo.setSdkAccount("2886544005");
-                    userInfo.setSdkPassword("Vconf2015!");
-                }
-                //TODO TEST
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode="+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();
