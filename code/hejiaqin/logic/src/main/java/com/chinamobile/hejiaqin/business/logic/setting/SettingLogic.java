@@ -21,15 +21,15 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 VersionInfo info = (VersionInfo) obj;
-                //TODO Test
-                info = new VersionInfo();
-                info.setVersionCode("1");
-                info.setVersionName("版本1.0");
-                info.setUrl("http://downsz.downcc.com/apk/dianxinxiangjia_downcc.apk");
-                info.setTime("2016-03-01 15:17:42");
-                info.setByForce(0);
-                info.setForceVersionCode("1");
-                //TODO Test End
+//                //TODO Test
+//                info = new VersionInfo();
+//                info.setVersionCode("2");
+//                info.setVersionName("版本1.0");
+//                info.setUrl("http://downsz.downcc.com/apk/dianxinxiangjia_downcc.apk");
+//                info.setTime("2016-03-01 15:17:42");
+//                info.setByForce(1);
+//                info.setForceVersionCode("1");
+//                //TODO Test End
                 if (isNewVersion(info)){
                     UserInfoCacheManager.saveVersionInfoToLoacl(getContext(),info);
                     if (isForceUpgrade(info)){
@@ -59,6 +59,9 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     }
 
     private boolean isNewVersion(VersionInfo versionInfo){
+        if (versionInfo == null){
+            return false;
+        }
         int currentVersioncode,versionCode;
         currentVersioncode = SysInfoUtil.getVersionCode(getContext());
         try {
