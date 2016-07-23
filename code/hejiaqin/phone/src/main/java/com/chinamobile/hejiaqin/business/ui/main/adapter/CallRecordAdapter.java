@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
-import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -25,12 +28,15 @@ import java.util.List;
  */
 public class CallRecordAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private List<CallRecord> mData ;
+    private IContactsLogic mContactsLogic;
+    private List<CallRecord> mData;
 
-    public CallRecordAdapter(Context context) {
+    public CallRecordAdapter(Context context, IContactsLogic contactsLogic) {
         this.mContext = context;
+        this.mContactsLogic = contactsLogic;
         mData = new ArrayList<CallRecord>();
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holer = null;
@@ -49,43 +55,58 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
-                    if (mData.get(position).getContactsInfo()!=null)
-                    {
+                    if (mData.get(position).getContactsInfo() != null) {
                         Intent intent = new Intent(mContext, ContactInfoActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
                         intent.putExtras(bundle);
                         mContext.startActivity(intent);
-                    }else{
+                    } else {
                         Intent intent = new Intent(mContext, ContactInfoActivity.class);
                         intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
                         mContext.startActivity(intent);
                     }
                 }
             });
-            if(info.getType() == CallRecord.TYPE_VIDEO_INCOMING)
-            {
+            if (info.getType() == CallRecord.TYPE_VIDEO_INCOMING) {
                 tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_incoming);
-            }else if(info.getType() == CallRecord.TYPE_VIDEO_MISSING)
-            {
+            } else if (info.getType() == CallRecord.TYPE_VIDEO_MISSING) {
                 tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_missed_call);
-            }
-            else if(info.getType() == CallRecord.TYPE_VIDEO_REJECT)
-            {
+            } else if (info.getType() == CallRecord.TYPE_VIDEO_REJECT) {
                 tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_reject_call);
-            }else{
+            } else {
                 tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_outbound_call);
             }
-            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName())?"":info.getPeerName());
+            if (info.getContactsInfo() == null) {
+                //遍历本地联系人
+                boolean isMatch = false;
+                List<ContactsInfo> localcontactsInfos = mContactsLogic.getCacheLocalContactLst();
+                for (ContactsInfo contactsInfo : localcontactsInfos) {
+                    if(isMatch)
+                    {
+                        break;
+                    }
+                    if (contactsInfo.getNumberLst() != null) {
+                        for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
+                            if (info.getNoCountryNumber().equals(numberInfo.getNumber()) || info.getNoCountryNumber().equals(CommonUtils.getPhoneNumber(numberInfo.getNumber()))) {
+                                info.setPeerName(contactsInfo.getName());
+                                info.setContactsInfo(contactsInfo);
+                                isMatch =true;
+                            }
+                        }
+                    }
+                }
+            }
+            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerName());
             tHolder.callRecordNumberTv.setText(info.getPeerNumber());
             tHolder.callRecordTimeTv.setText(info.getBeginTime());
         }
     }
 
     public void refreshData(List<CallRecord> data) {
-        if (data != null)  {
+        if (data != null) {
             mData = data;
-        }else{
+        } else {
             mData.clear();
         }
         notifyDataSetChanged();

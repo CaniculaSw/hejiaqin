@@ -242,7 +242,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             }
         });
 
-        mCallRecordAdapter = new CallRecordAdapter(getContext());
+        mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
         callRecordRecyclerView.setAdapter(mCallRecordAdapter);
         callRecordRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         callRecordRecyclerView.setHasFixedSize(true);
