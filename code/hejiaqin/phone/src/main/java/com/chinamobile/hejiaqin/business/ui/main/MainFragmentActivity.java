@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
@@ -74,6 +74,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     private long exitTime = 0;
 
     private IVoipLogic mVoipLogic;
+
+    private ISettingLogic settingLogic;
 
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
@@ -158,7 +160,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initDate() {
-
+        settingLogic.checkVersion();
+        mVoipLogic.autoLogin();
     }
 
     @Override
@@ -288,6 +291,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     protected void initLogics() {
         mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
+        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     private void showPopupWindow() {

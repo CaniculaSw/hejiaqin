@@ -12,6 +12,8 @@ public interface IVoipLogic {
 
     public void unRegisterVoipReceiver();
 
+    public void autoLogin();
+
     public void login(UserInfo userInfo, String ip, String port);
 
     public void logout();

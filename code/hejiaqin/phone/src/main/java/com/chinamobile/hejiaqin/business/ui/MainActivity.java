@@ -56,7 +56,6 @@ public class MainActivity extends BasicActivity {
         Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
         LogUtil.d(TAG, "Init the CMIM SDK");
         loginLogic.initCMIMSdk();
-        settingLogic.checkVersion();
         startActivity(intent);
         finish();
     }

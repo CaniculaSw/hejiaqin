@@ -183,6 +183,21 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     }
 
     @Override
+    public void autoLogin() {
+        com.chinamobile.hejiaqin.business.model.login.UserInfo userInfo = CommonUtils.getLocalUserInfo();
+        com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
+        sdkuserInfo.countryCode="+86";
+        sdkuserInfo.username = userInfo.getSdkAccount();
+        sdkuserInfo.password = userInfo.getSdkPassword();
+        LoginCfg loginCfg = new LoginCfg();
+        //断网SDK自动重连设置
+        loginCfg.isAutoLogin = true;
+        loginCfg.isRememberPassword = true;
+        loginCfg.isVerified = false;
+        LoginApi.login(sdkuserInfo, loginCfg);
+    }
+
+    @Override
     public void login(UserInfo userInfo, String ip, String port) {
         if (!StringUtil.isNullOrEmpty(ip) && !StringUtil.isNullOrEmpty(port)) {
             LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, ip);

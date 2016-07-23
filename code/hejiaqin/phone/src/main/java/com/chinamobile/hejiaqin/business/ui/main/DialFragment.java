@@ -118,6 +118,9 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 dialSaveContactLayout.setVisibility(View.VISIBLE);
                 //TODO：开始查询
                 break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID:
+                refreshCallRecord();
+                break;
             case BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID:
                 if(obj!=null)
                 {
@@ -130,6 +133,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 break;
             case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
 
+                break;
         }
     }
 
@@ -286,6 +290,11 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     }
     @Override
     protected void initData() {
+        refreshCallRecord();
+    }
+
+    private void refreshCallRecord()
+    {
         mVoipLogic.getCallRecord();
     }
 
