@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhanggj on 2016/7/20.
+ * Created by on 2016/7/20.
  */
 public class DialContactAdapter extends RecyclerView.Adapter  {
     private Context mContext;

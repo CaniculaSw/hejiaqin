@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
@@ -75,6 +77,9 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private ContactsInfo mContactsInfo;
 
+    //是否陌生人
+    private boolean isStranger;
+
     private IContactsLogic contactsLogic;
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
@@ -125,6 +130,21 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     @Override
     protected void initDate() {
         mContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+
+        if(mContactsInfo == null) {
+            //通话记录传入的号码
+            String callRecordNumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+            isStranger = true;
+            mContactsInfo = new ContactsInfo();
+            NumberInfo numberInfo = new NumberInfo();
+            numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+            numberInfo.setNumber(callRecordNumber);
+            mContactsInfo.setContactId("");
+            mContactsInfo.setName("");
+            mContactsInfo.setPhotoLg("");
+            mContactsInfo.setPhotoSm("");
+            mContactsInfo.addNumber(numberInfo);
+        }
 
         mContactNameText.setText(mContactsInfo.getName());
         Picasso.with(this.getApplicationContext())
@@ -270,6 +290,11 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             return;
         }
 
+        if(isStranger)
+        {
+            showAddStrangerDialog();
+            return;
+        }
         // 联系人信息页
         // 合家亲联系人
         if (isAppContact()) {
@@ -341,6 +366,36 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             @Override
             public void onClick(View v) {
                 delCallRecordDialog.dismiss();
+            }
+        });
+    }
+
+    private void showAddStrangerDialog() {
+        final AddContactDialog addContactDialog = new AddContactDialog(this, R.style.CalendarDialog);
+        Window window = addContactDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        addContactDialog.setCancelable(true);
+        addContactDialog.show();
+
+        addContactDialog.addLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addContactDialog.dismiss();
+                Intent intent = new Intent(ContactInfoActivity.this, ModifyContactActivity.class);
+                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mContactsInfo.getNumberLst().get(0).getNumber());
+                startActivity(intent);
+            }
+        });
+
+        addContactDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addContactDialog.dismiss();
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.model.dial;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.customer.framework.component.time.DateTimeUtil;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +34,7 @@ public class CallRecord {
     private String peerName;
     private String peerHeaderImage;
     private int infoFlag;
+    private ContactsInfo contactsInfo;
 
     public String getId() {
         return id;
@@ -88,6 +90,14 @@ public class CallRecord {
 
     public void setInfoFlag(int infoFlag) {
         this.infoFlag = infoFlag;
+    }
+
+    public ContactsInfo getContactsInfo() {
+        return contactsInfo;
+    }
+
+    public void setContactsInfo(ContactsInfo contactsInfo) {
+        this.contactsInfo = contactsInfo;
     }
 
     public String getBeginTime() {

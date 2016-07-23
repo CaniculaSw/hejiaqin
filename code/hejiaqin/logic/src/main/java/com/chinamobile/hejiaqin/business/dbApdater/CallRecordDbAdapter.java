@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.customer.framework.component.db.DatabaseHelper;
 import com.customer.framework.component.db.DatabaseInfo;
@@ -126,7 +128,23 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         sql.append(",");
         sql.append(DatabaseInfo.CallRecord.READ);
         sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.CONTACT_ID);
+        sql.append(",");
         sql.append(DatabaseInfo.ContactsInfo.NAME);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.CONTACT_MODE);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.NAME_IN_PINYIN);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.NUMBER);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.NUMBER_TYPE);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.NUMBER_DESC);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.PHOTO_LG);
+        sql.append(",");
+        sql.append(DatabaseInfo.ContactsInfo.PHOTO_SM);
         sql.append(" from ");
         sql.append( DatabaseInfo.CallRecord.TABLE_NAME);
         sql.append(" left join " );
@@ -141,16 +159,32 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         sql.append(DatabaseInfo.ContactsInfo.NUMBER);
         Cursor cursor = super.rawQuery(sql.toString(), null);
         CallRecord callRecord;
-        String name;
+        ContactBean contactBean;
+        String contactId;
+        String callRecordId ="-1";
         while (cursor.moveToNext()) {
             callRecord = parseValuesToBean(cursor);
-            name = cursor.getString(cursor.getColumnIndex(DatabaseInfo.ContactsInfo.NAME));
-            if(!StringUtil.isNullOrEmpty(name))
-            {
-                callRecord.setPeerName(name);
-                callRecord.setInfoFlag(CallRecord.INTO_FLAG_HEJIAQING);
+            if(!callRecord.getRecordId().equals(callRecordId)) {
+                contactId = cursor.getString(cursor.getColumnIndex(DatabaseInfo.ContactsInfo.CONTACT_ID));
+                if (!StringUtil.isNullOrEmpty(contactId)) {
+                    contactBean = new ContactBean();
+                    contactBean.setContactId(contactId);
+                    // 得到联系人姓名
+                    contactBean.setName(cursor.getString(cursor
+                            .getColumnIndex(DatabaseInfo.ContactsInfo.NAME)));
+                    // 得到手机号码
+                    contactBean.setPhone(cursor.getString(cursor
+                            .getColumnIndex(DatabaseInfo.ContactsInfo.NUMBER)));
+                    contactBean.setPhotoLg(cursor.getString(cursor
+                            .getColumnIndex(DatabaseInfo.ContactsInfo.PHOTO_LG)));
+                    contactBean.setPhotoSm(cursor.getString(cursor
+                            .getColumnIndex(DatabaseInfo.ContactsInfo.PHOTO_SM)));
+                    callRecord.setContactsInfo(ContactList.convert(contactBean));
+                    callRecord.setPeerName(contactBean.getName());
+                }
+                list.add(callRecord);
+                callRecordId = callRecord.getRecordId();
             }
-            list.add(callRecord);
         }
         return list;
     }
