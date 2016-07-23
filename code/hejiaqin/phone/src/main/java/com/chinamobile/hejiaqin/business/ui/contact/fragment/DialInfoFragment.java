@@ -72,6 +72,10 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
     }
 
     public void refreshView() {
+        if(!super.isCreateView)
+        {
+            return;
+        }
         if (null == mDialInfoGroupList) {
             return;
         }

@@ -27,7 +27,7 @@ public abstract class BasicFragment extends BaseFragment {
 
     protected BackListener mListener;
 
-    private boolean isCreateView = false;
+    protected boolean isCreateView = false;
 
     protected boolean networkConnected = true;
 

@@ -108,7 +108,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 callRecord.setRecordId(recordId);
                 callRecord.setPeerNumber(callSession.getPeer().getNumber());
                 callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
-                callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
+                callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
                 callRecord.setDuration(callSession.getDuration());
                 callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
                 callRecord.setRead(BussinessConstants.DictInfo.YES);
@@ -219,7 +219,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         callRecord.setRecordId(recordId);
         callRecord.setPeerNumber(calleeNumber);
         callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(calleeNumber));
-        callRecord.setBeginTime(DateTimeUtil.getDateString(new Date(callSession.getOccurDate())));
+        callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
         callRecord.setDuration(callSession.getDuration());
         callRecord.setType(CallRecord.TYPE_VIDEO_OUTGOING);
         callRecord.setRead(BussinessConstants.DictInfo.YES);
