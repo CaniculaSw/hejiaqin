@@ -156,7 +156,10 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         sql.append(" = ");
         sql.append(DatabaseInfo.ContactsInfo.TABLE_NAME);
         sql.append(".");
-        sql.append(DatabaseInfo.ContactsInfo.NUMBER);
+        sql.append(DatabaseInfo.ContactsInfo.NUMBER_NO_COUNTRY_CODE);
+        sql.append(" order by " );
+        sql.append(DatabaseInfo.CallRecord.BEGIN_TIME);
+        sql.append(" desc ");
         Cursor cursor = super.rawQuery(sql.toString(), null);
         CallRecord callRecord;
         ContactBean contactBean;

@@ -88,7 +88,7 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                     }
                     if (contactsInfo.getNumberLst() != null) {
                         for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                            if (info.getNoCountryNumber().equals(numberInfo.getNumber()) || info.getNoCountryNumber().equals(CommonUtils.getPhoneNumber(numberInfo.getNumber()))) {
+                            if (info.getNoCountryNumber().equals(numberInfo.getNumberNoCountryCode())) {
                                 info.setPeerName(contactsInfo.getName());
                                 info.setContactsInfo(contactsInfo);
                                 isMatch =true;
@@ -99,7 +99,7 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
             }
             tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerName());
             tHolder.callRecordNumberTv.setText(info.getPeerNumber());
-            tHolder.callRecordTimeTv.setText(info.getBeginTime());
+            tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
     }
 

@@ -8,6 +8,7 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.req.EditContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.req.SimpleContactInfo;
@@ -18,14 +19,11 @@ import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
-import com.chinamobile.hejiaqin.business.net.NVPReqBody;
-import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.component.net.NetResponse;
-import com.customer.framework.component.time.TimerUtil;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.StringUtil;
 import com.customer.framework.utils.TimeUtil;
@@ -85,15 +83,15 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     @Override
-    public void searchLocalContactLst(String input) {
+    public void searchLocalContactLst(String input,String invoker) {
         List<ContactsInfo> contactsInfoList = getCacheLocalContactLst();
-        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input));
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker,ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
     }
 
     @Override
-    public void searchAppContactLst(String input) {
+    public void searchAppContactLst(String input,String invoker) {
         List<ContactsInfo> contactsInfoList = getCacheAppContactLst();
-        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input));
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker,ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
     }
 
     @Override
@@ -469,7 +467,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
 
         Map<String, List<DialInfo>> dialInfoMap = new HashMap<String, List<DialInfo>>();
         for (CallRecord callRecord : callRecordList) {
-            String beginTime = callRecord.getBeginTime();
+            String beginTime = callRecord.getBeginTimeformatter();
             if (null == beginTime) {
                 continue;
             }

@@ -12,6 +12,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.SearchContactAdapter;
 
@@ -22,6 +23,8 @@ import java.util.List;
  * Created by Administrator on 2016/7/7 0007.
  */
 public class ContactSearchActivity extends BasicActivity implements View.OnClickListener {
+
+    private static final String TAG = "ContactSearchActivity";
 
     private SearchContactAdapter adapter;
     private EditText searchInput;
@@ -116,17 +119,20 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID:
             case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
-                setData((List<ContactsInfo>) msg.obj);
+                SearchResultContacts resultContacts = (SearchResultContacts) msg.obj;
+                if(TAG.equals(resultContacts.getInvoker())) {
+                    setData(resultContacts.getContactsInfos());
+                }
                 break;
         }
     }
 
     private void startSearch(String input) {
         if (isAppContact()) {
-            contactsLogic.searchAppContactLst(input);
+            contactsLogic.searchAppContactLst(input,TAG);
             return;
         }
-        contactsLogic.searchLocalContactLst(input);
+        contactsLogic.searchLocalContactLst(input,TAG);
     }
 
     public void setData(List<ContactsInfo> contactsInfoList) {

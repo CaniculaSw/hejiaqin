@@ -272,7 +272,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mImageViews[toIndex].setVisibility(View.VISIBLE);
                     mTextViews[toIndex].setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
-                    //TODO:显示拨号盘
+                    //显示拨号盘
                     Message msg = new Message();
                     msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
                     mFragments[mDialIndex].recieveMsg(msg);
@@ -299,7 +299,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         if(mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
             mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
             mDialStatus = DIAL_STATUS_NORMAL;
-            //TODO:收起拨号盘
+            //收起拨号盘
             Message msg = new Message();
             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
             mFragments[mDialIndex].recieveMsg(msg);

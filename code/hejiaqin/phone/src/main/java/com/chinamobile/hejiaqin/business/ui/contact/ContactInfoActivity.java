@@ -32,6 +32,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
+import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -148,10 +149,12 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         }
 
         mContactNameText.setText(mContactsInfo.getName());
-        Picasso.with(this.getApplicationContext())
-                .load(mContactsInfo.getPhotoSm())
-                .placeholder(R.drawable.contact_photo_default)
-                .error(R.drawable.contact_photo_default).into(mContactHeadImg);
+        if(!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+            Picasso.with(this.getApplicationContext())
+                    .load(mContactsInfo.getPhotoSm())
+                    .placeholder(R.drawable.contact_photo_default)
+                    .error(R.drawable.contact_photo_default).into(mContactHeadImg);
+        }
 
         fragmentList = new ArrayList<Fragment>();
         BasicFragment contactInfoFragment = new ContactInfoFragment();
@@ -226,10 +229,12 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     private void showContactData() {
 
         mContactNameText.setText(mContactsInfo.getName());
-        Picasso.with(this.getApplicationContext())
-                .load(mContactsInfo.getPhotoSm())
-                .placeholder(R.drawable.contact_photo_default)
-                .error(R.drawable.contact_photo_default).into(mContactHeadImg);
+        if(!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+            Picasso.with(this.getApplicationContext())
+                    .load(mContactsInfo.getPhotoSm())
+                    .placeholder(R.drawable.contact_photo_default)
+                    .error(R.drawable.contact_photo_default).into(mContactHeadImg);
+        }
 
         ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACT_INFO_INDEX);
         contactInfoFragment.setContactsInfo(mContactsInfo);
@@ -242,7 +247,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         if (null == callRecordList) {
             callRecordList = new ArrayList<DialInfoGroup>();
         }
-        dialInfoFragment.setDialInfo(new ArrayList<DialInfoGroup>());
+        dialInfoFragment.setDialInfo(callRecordList);
         dialInfoFragment.refreshView();
 
         showViewByCurIndex(currentIndex);

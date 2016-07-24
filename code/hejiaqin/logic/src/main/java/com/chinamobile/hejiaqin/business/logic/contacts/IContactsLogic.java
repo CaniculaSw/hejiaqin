@@ -14,9 +14,9 @@ public interface IContactsLogic {
 
     List<ContactsInfo> getCacheAppContactLst();
 
-    void searchLocalContactLst(String input);
+    void searchLocalContactLst(String input,String invoker);
 
-    void searchAppContactLst(String input);
+    void searchAppContactLst(String input,String invoker);
 
     void fetchAppContactLst();
 

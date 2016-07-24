@@ -100,7 +100,7 @@ public class CallRecord {
         this.contactsInfo = contactsInfo;
     }
 
-    public String getBeginTime() {
+    public String getBeginTimeformatter() {
         Date date = DateTimeUtil.parseDateString(beginTime, new SimpleDateFormat("yyyyMMddHHmmss"));
         if (DateTimeUtil.isYesterday(date)) {
             return "昨天";
@@ -165,6 +165,10 @@ public class CallRecord {
         } else {
             return DateTimeUtil.getYYYYMMDDString(date);
         }
+    }
+
+    public String getBeginTime() {
+        return beginTime;
     }
 
     public void setBeginTime(String beginTime) {

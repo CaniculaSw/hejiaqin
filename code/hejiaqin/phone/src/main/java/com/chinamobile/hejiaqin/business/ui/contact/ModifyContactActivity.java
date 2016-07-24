@@ -120,6 +120,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                     .error(R.drawable.contact_photo_default).into(headImg);
         } else if (inputNumber != null) {
             numberText.setText(inputNumber);
+            newNumber = inputNumber;
         }
     }
 

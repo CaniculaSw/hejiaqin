@@ -241,19 +241,21 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
         if (callSession.getErrCode() == CallSession.ERRCODE_OK) {
             recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
+        }else{
+            this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
         }
         return callSession;
     }
 
     @Override
     public void hangup(CallSession callSession, boolean isInComing, boolean isTalking) {
-        callSession.terminate();
         String recordId = "";
-        if(recordMap.containsKey(callSession.getSessionId()))
+        if(recordMap.containsKey(String.valueOf(callSession.getSessionId())))
         {
             recordId = recordMap.get(String.valueOf(callSession.getSessionId()));
             recordMap.remove(String.valueOf(callSession.getSessionId()));
         }
+        callSession.terminate();
         if(StringUtil.isNullOrEmpty(recordId))
         {
             return;
@@ -280,7 +282,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     @Override
     public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking) {
         String recordId = "";
-        if(recordMap.containsKey(callSession.getSessionId()))
+        if(recordMap.containsKey(String.valueOf(callSession.getSessionId())))
         {
             recordId = recordMap.get(String.valueOf(callSession.getSessionId()));
             recordMap.remove(String.valueOf(callSession.getSessionId()));
@@ -294,8 +296,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.DURATION, callSession.getDuration());
-            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,contentValues);
-            this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
+            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
         }
         else if(isInComing)
         {
@@ -303,8 +304,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_MISSING);
             contentValues.put(DatabaseInfo.CallRecord.READ,BussinessConstants.DictInfo.NO);
             CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
-            this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
         }
+        this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
     }
 
     public void delAllCallRecord()

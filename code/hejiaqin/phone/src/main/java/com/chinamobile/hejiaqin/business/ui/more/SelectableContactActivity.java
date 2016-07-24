@@ -10,6 +10,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.SelectableSearchView;
@@ -24,6 +25,9 @@ import java.util.List;
  * Created by eshaohu on 16/6/6.
  */
 public class SelectableContactActivity extends BasicActivity implements View.OnClickListener {
+
+    private static final String TAG = "SelectableContactActivity";
+
     private HeaderView mHeaderView;
     private Context mContext;
     private StickyListHeadersListView mContactListView;
@@ -47,7 +51,10 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
                 searchText.setText(String.format(getString(R.string.contact_search_hint_text), contactsInfoList.size()));
                 break;
             case BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID:
-                searchView.setData((List<ContactsInfo>) msg.obj);
+                SearchResultContacts resultContacts = (SearchResultContacts) msg.obj;
+                if(TAG.equals(resultContacts.getInvoker())) {
+                    searchView.setData(resultContacts.getContactsInfos());
+                }
                 break;
             case BussinessConstants.SettingMsgID.CONTACT_CHECKED_STATED_CHANGED:
                 updateSelectedHint(msg.arg1);
@@ -92,7 +99,7 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
             @Override
             public void search(String input) {
 
-                contactsLogic.searchLocalContactLst(input);
+                contactsLogic.searchLocalContactLst(input,TAG);
             }
 
             @Override

@@ -19,6 +19,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
@@ -42,6 +43,7 @@ import java.util.regex.Pattern;
  */
 public class DialFragment extends BasicFragment implements View.OnClickListener{
 
+    private static final String TAG = "DialFragment";
 
     /**
      * 号码输入框的字符串小于3位则不进行搜索
@@ -112,12 +114,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         Object obj = msg.obj;
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID:
-                //TODO：开始查询
-                //mContactsLogic.searchLocalContactLst(mSearchString);
-                //正式代码需要在查询结果后进行判断是否显示
-                dialSaveContactLayout.setVisibility(View.VISIBLE);
-                //TODO：开始查询
+                //开始查询
+                mContactsLogic.searchLocalContactLst(mSearchString, TAG);
                 break;
+            case BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
             case BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID:
                 refreshCallRecord();
                 break;
@@ -132,7 +136,16 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 mCallRecordAdapter.refreshData(null);
                 break;
             case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
-
+                SearchResultContacts resultContacts = (SearchResultContacts) msg.obj;
+                if(TAG.equals(resultContacts.getInvoker())) {
+                    mDialContactAdapter.refreshData(resultContacts.getContactsInfos());
+                    //正式代码需要在查询结果后进行判断是否显示
+                    if(resultContacts.getContactsInfos()!=null && resultContacts.getContactsInfos().size()>0) {
+                        dialSaveContactLayout.setVisibility(View.GONE);
+                    }else{
+                        dialSaveContactLayout.setVisibility(View.VISIBLE);
+                    }
+                }
                 break;
         }
     }
