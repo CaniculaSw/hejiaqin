@@ -24,14 +24,20 @@ import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.system.SysApi;
+import com.squareup.picasso.Picasso;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -106,6 +112,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private boolean closed;
 
+    private IContactsLogic mContactsLogic;
+
     /* display the video stream which arrived from remote. */
     private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
         @Override
@@ -135,6 +143,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     @Override
     protected void initLogics() {
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+        mContactsLogic = (IContactsLogic)super.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
@@ -199,19 +208,86 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showIncoming() {
-        //TODO 查询姓名和头像信息
-        mCallerNameTv.setText(mCallSession.getPeer().getNumber());
-        mContactNameTv.setText(mCallSession.getPeer().getNumber());
-        //TODO 设置头像
+        // 查询姓名和头像信息
+        ContactsInfo info = searchContactInfo(mCallSession.getPeer().getNumber());
+        if(info!=null)
+        {
+            if(!StringUtil.isNullOrEmpty(info.getName())) {
+                mCallerNameTv.setText(info.getName());
+                mContactNameTv.setText(info.getName());
+            }else{
+                mCallerNameTv.setText(mCallSession.getPeer().getNumber());
+                mContactNameTv.setText(mCallSession.getPeer().getNumber());
+            }
+            if(!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
+                Picasso.with(this.getApplicationContext())
+                        .load(info.getPhotoSm())
+                        .placeholder(R.drawable.contact_photo_default)
+                        .error(R.drawable.contact_photo_default).into(mCallerIv);
+            }
+
+        } else {
+            mCallerNameTv.setText(mCallSession.getPeer().getNumber());
+            mContactNameTv.setText(mCallSession.getPeer().getNumber());
+        }
+
         mIncomingLayout.setVisibility(View.VISIBLE);
     }
 
     private void showOuting() {
         //TODO 查询姓名
-        mContactNameTv.setText(StringUtil.isNullOrEmpty(mCalleeName) ? mCalleeNumber : mCalleeName);
+        if(!StringUtil.isNullOrEmpty(mCalleeName))
+        {
+            mContactNameTv.setText(mCalleeName);
+        }else{
+            ContactsInfo info = searchContactInfo(mCalleeNumber);
+            if(info!=null &&!StringUtil.isNullOrEmpty(info.getName()))
+            {
+                mContactNameTv.setText(info.getName());
+            }else{
+                mContactNameTv.setText(mCalleeNumber);
+            }
+        }
         mTopLayout.setVisibility(View.VISIBLE);
         mVideoLayout.setVisibility(View.VISIBLE);
         mBottomLayout.setVisibility(View.VISIBLE);
+    }
+
+
+    private ContactsInfo searchContactInfo(String phoneNumber)
+    {
+        //遍历本地联系人
+        boolean isMatch = false;
+        List<ContactsInfo> appContactsInfos = mContactsLogic.getCacheAppContactLst();
+        for (ContactsInfo contactsInfo : appContactsInfos) {
+            if(isMatch)
+            {
+                break;
+            }
+            if (contactsInfo.getNumberLst() != null) {
+                for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+                        return contactsInfo;
+                    }
+                }
+            }
+        }
+        List<ContactsInfo> localContactsInfos = mContactsLogic.getCacheLocalContactLst();
+        for (ContactsInfo contactsInfo : localContactsInfos) {
+            if(isMatch)
+            {
+                break;
+            }
+            if (contactsInfo.getNumberLst() != null) {
+                for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+                        return contactsInfo;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     private void outingCall() {
