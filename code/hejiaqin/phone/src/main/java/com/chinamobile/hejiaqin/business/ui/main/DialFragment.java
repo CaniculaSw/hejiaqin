@@ -115,8 +115,9 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID:
                 //开始查询
-                mContactsLogic.searchLocalContactLst(mSearchString, TAG);
+                mContactsLogic.searchAppContactLst(mSearchString, TAG);
                 break;
+            case BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID:
             case BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID:
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
@@ -326,6 +327,10 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             dialSaveContactLayout.setVisibility(View.GONE);
             dialContactRecyclerView.setVisibility(View.GONE);
             callRecordRecyclerView.setVisibility(View.VISIBLE);
+        }else{
+            dialSaveContactLayout.setVisibility(View.GONE);
+            dialContactRecyclerView.setVisibility(View.VISIBLE);
+            callRecordRecyclerView.setVisibility(View.GONE);
         }
 
         Handler handle = getHandler();
