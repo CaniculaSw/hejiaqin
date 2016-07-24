@@ -27,6 +27,7 @@ import com.customer.framework.component.log.Logger;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.component.time.TimerUtil;
 import com.customer.framework.logic.LogicImp;
+import com.customer.framework.utils.StringUtil;
 import com.customer.framework.utils.TimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -482,7 +483,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             DialInfo dialInfo = new DialInfo();
             dialInfo.setType(DialInfo.convertType(callRecord.getType()));
             dialInfo.setDialTime(callRecord.getBeginHour());
-            String durationTime = TimeUtil.disToTimeWithLanuage(Integer.parseInt(dialInfo.getDialDuration()));
+            String durationTime = TimeUtil.disToTimeWithLanuage(StringUtil.getIntValue(dialInfo.getDialDuration()));
             dialInfo.setDialDuration(durationTime);
             dialInfoList.add(dialInfo);
         }

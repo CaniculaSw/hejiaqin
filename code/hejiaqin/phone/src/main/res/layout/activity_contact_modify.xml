@@ -37,7 +37,7 @@
             android:layout_marginRight="16dp"
             android:src="@drawable/contact_modify_arrow_icon" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_head_img"
             android:layout_width="60dp"
             android:layout_height="60dp"

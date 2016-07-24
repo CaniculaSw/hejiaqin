@@ -21,9 +21,12 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ModifyContactActivity extends BasicActivity implements View.OnClickListener {
 
@@ -40,7 +43,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     private HeaderView titleLayout;
 
     private View headView;
-    private ImageView headImg;
+    private CircleImageView headImg;
 
     private View nameView;
     private TextView nameText;
@@ -88,7 +91,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
 
         // 头像
         headView = findViewById(R.id.contact_head_layout);
-        headImg = (ImageView) findViewById(R.id.contact_head_img);
+        headImg = (CircleImageView) findViewById(R.id.contact_head_img);
 
         // 姓名
         nameView = findViewById(R.id.contact_name_layout);
@@ -109,10 +112,13 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         addContactMode = (null == editContactsInfo);
         titleLayout.title.setText(addContactMode ? R.string.contact_modify_title_add_text : R.string.contact_modify_title_edit_text);
         if (!addContactMode) {
-            // TODO headImg 使用实际头像
             nameText.setText(editContactsInfo.getName());
             numberText.setText(editContactsInfo.getPhone());
-        }else if(inputNumber!=null){
+            Picasso.with(this.getApplicationContext())
+                    .load(editContactsInfo.getPhotoSm())
+                    .placeholder(R.drawable.contact_photo_default)
+                    .error(R.drawable.contact_photo_default).into(headImg);
+        } else if (inputNumber != null) {
             numberText.setText(inputNumber);
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.chinamobile.hejiaqin.R;
@@ -42,9 +43,11 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
         if (requestCode == ModifyContactActivity.REQUEST_CODE_INPUT_NAME) {
             titleLayout.title.setText(R.string.contact_modify_name_text);
             input.setHint(R.string.contact_input_name_hint_text);
+            input.setInputType(EditorInfo.TYPE_CLASS_TEXT);
         } else {
             titleLayout.title.setText(R.string.contact_modify_number_text);
             input.setHint(R.string.contact_input_number_hint_text);
+            input.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         }
         // String editData = getIntent().getStringExtra(ModifyContactActivity.INTENT_DATA_EDIT_INFO);
     }
