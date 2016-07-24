@@ -617,8 +617,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
                             showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
                         } else if (!mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TERMINATED)) {
+                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
                             showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
                         }
                         getHandler().postDelayed(new Runnable() {
