@@ -27,6 +27,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.AddContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.DialNumberDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
@@ -274,6 +275,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case R.id.dial_img:
                 // TODO
+                showDialNumberDialog();
                 break;
         }
     }
@@ -471,6 +473,29 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         });
 
 
+    }
+
+
+    private void showDialNumberDialog() {
+        final DialNumberDialog dialNumberDialog = new DialNumberDialog(this, R.style.CalendarDialog
+                , mContactsInfo);
+        Window window = dialNumberDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        dialNumberDialog.setCancelable(true);
+        dialNumberDialog.show();
+
+
+        dialNumberDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialNumberDialog.dismiss();
+            }
+        });
     }
 
     @Override
