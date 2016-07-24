@@ -193,7 +193,9 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case PhotoManage.IMAGE_CODE:
-                PhotoManage.getInstance(this).startPhotoZoom(data.getData());
+                if (null != data) {
+                    PhotoManage.getInstance(this).startPhotoZoom(data.getData());
+                }
                 break;
             case PhotoManage.CAMERA_CODE:
                 if (CommonUtils.hasSdcard()) {
