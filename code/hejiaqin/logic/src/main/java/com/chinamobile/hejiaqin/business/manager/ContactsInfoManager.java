@@ -37,7 +37,9 @@ public class ContactsInfoManager {
     public List<ContactsInfo> getLocalContactLst(Context context) {
         ContactList contactList = new ContactList();
         ContentResolver cr = context.getContentResolver();
-        String str[] = {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER,
+        String str[] = {ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER,
                 ContactsContract.CommonDataKinds.Phone.TYPE};
         Cursor cur = null;
         try {

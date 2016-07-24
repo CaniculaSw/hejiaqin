@@ -49,7 +49,7 @@ public class NumberInfo implements Serializable {
         } else if (type == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) {
             return "移动电话";
         }
-        return "";
+        return "移动电话";
     }
 
     public boolean isMatch(String input) {
