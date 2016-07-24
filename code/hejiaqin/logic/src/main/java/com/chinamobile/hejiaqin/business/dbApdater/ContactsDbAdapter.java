@@ -147,6 +147,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
             contentValues.put(DatabaseInfo.ContactsInfo.NAME, contactsInfo.getName());
             contentValues.put(DatabaseInfo.ContactsInfo.NAME_IN_PINYIN, contactsInfo.getNameInPinyin());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER, numberInfo.getNumber());
+            contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_NO_COUNTRY_CODE, numberInfo.getNumberNoCountryCode());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_DESC, numberInfo.getDesc());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_TYPE, numberInfo.getType());
             contentValues.put(DatabaseInfo.ContactsInfo.CONTACT_ID, contactsInfo.getContactId());

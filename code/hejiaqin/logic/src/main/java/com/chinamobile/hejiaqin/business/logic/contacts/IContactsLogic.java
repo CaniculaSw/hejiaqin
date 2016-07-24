@@ -12,7 +12,11 @@ public interface IContactsLogic {
 
     List<ContactsInfo> getCacheLocalContactLst();
 
+    List<ContactsInfo> getCacheAppContactLst();
+
     void searchLocalContactLst(String input);
+
+    void searchAppContactLst(String input);
 
     void fetchAppContactLst();
 

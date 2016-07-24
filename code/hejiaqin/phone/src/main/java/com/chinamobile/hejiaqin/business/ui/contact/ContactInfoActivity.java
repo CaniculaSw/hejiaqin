@@ -131,7 +131,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     protected void initDate() {
         mContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
 
-        if(mContactsInfo == null) {
+        if (mContactsInfo == null) {
             //通话记录传入的号码
             String callRecordNumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
             isStranger = true;
@@ -290,8 +290,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             return;
         }
 
-        if(isStranger)
-        {
+        if (isStranger) {
             showAddStrangerDialog();
             return;
         }
@@ -335,6 +334,11 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             case BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID:
                 List<DialInfoGroup> dialInfoGroupList = (List<DialInfoGroup>) msg.obj;
                 showDialData(dialInfoGroupList);
+                break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID:
+                if (null != contactsLogic) {
+                    contactsLogic.queryContactCallRecords(mContactsInfo);
+                }
                 break;
         }
     }

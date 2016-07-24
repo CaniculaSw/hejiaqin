@@ -115,6 +115,7 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
                 setData((List<ContactsInfo>) msg.obj);
                 break;
         }
@@ -122,7 +123,7 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
 
     private void startSearch(String input) {
         if (isAppContact()) {
-
+            contactsLogic.searchAppContactLst(input);
             return;
         }
         contactsLogic.searchLocalContactLst(input);

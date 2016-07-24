@@ -9,6 +9,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.PinyinUnit;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.customer.framework.utils.string.HanziToPinyin;
@@ -23,6 +24,7 @@ public class ContactsInfoManager {
     private static final String TAG = "ContactsInfoManager";
     private static ContactsInfoManager instance = new ContactsInfoManager();
     List<ContactsInfo> mLocalContactsInfoList = new ArrayList<>();
+    List<ContactsInfo> mAppContactsInfoList = new ArrayList<>();
 
     private ContactsInfoManager() {
 
@@ -114,10 +116,23 @@ public class ContactsInfoManager {
         }
     }
 
+    public void cacheAppContactInfo(List<ContactsInfo> appContactsInfoList) {
+        mAppContactsInfoList.clear();
+        if (null != appContactsInfoList) {
+            mAppContactsInfoList.addAll(appContactsInfoList);
+        }
+    }
+
     public List<ContactsInfo> getCachedLocalContactInfo() {
         List<ContactsInfo> localContactInfos = new ArrayList<>();
         localContactInfos.addAll(mLocalContactsInfoList);
         return localContactInfos;
+    }
+
+    public List<ContactsInfo> getCachedAppContactInfo() {
+        List<ContactsInfo> appContactInfos = new ArrayList<>();
+        appContactInfos.addAll(mAppContactsInfoList);
+        return appContactInfos;
     }
 
     public List<ContactsInfo> searchContactsInfoLst(List<ContactsInfo> contactsInfoList, String input) {

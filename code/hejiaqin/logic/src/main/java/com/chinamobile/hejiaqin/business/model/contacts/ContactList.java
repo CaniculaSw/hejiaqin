@@ -3,6 +3,7 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 import android.provider.ContactsContract;
 
 import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;

@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchUnit;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
@@ -55,29 +56,32 @@ public class SearchContactAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.adapter_contact_search_view, parent, false);
             holder.nameText = (TextView) convertView.findViewById(R.id.contact_name_text);
             holder.numberText = (TextView) convertView.findViewById(R.id.contact_number_text);
+            holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
         initView(position, holder);
         return convertView;
     }
 
     private void initView(int position, ViewHolder holder) {
-        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        final ContactsInfo contactsInfo = contactsInfoList.get(position);
 
         SearchUnit searchUnit = contactsInfo.getSearchUnit();
 
         holder.nameText.setText(Html.fromHtml(searchUnit.getNameText()));
         holder.numberText.setText(Html.fromHtml(searchUnit.getNumberText()));
+
+        holder.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public void setData(List<ContactsInfo> contactsInfoList) {
@@ -91,5 +95,6 @@ public class SearchContactAdapter extends BaseAdapter {
     class ViewHolder {
         TextView nameText;
         TextView numberText;
+        View convertView;
     }
 }

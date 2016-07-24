@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 
 import android.provider.ContactsContract;
 
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 import java.io.Serializable;
@@ -21,12 +22,17 @@ public class NumberInfo implements Serializable {
      */
     private int type;
 
+
     public String getNumber() {
         return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getNumberNoCountryCode() {
+        return CommonUtils.getPhoneNumber(number);
     }
 
     public int getType() {

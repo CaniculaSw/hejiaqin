@@ -79,9 +79,20 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     @Override
+    public List<ContactsInfo> getCacheAppContactLst() {
+        return ContactsInfoManager.getInstance().getCachedAppContactInfo();
+    }
+
+    @Override
     public void searchLocalContactLst(String input) {
         List<ContactsInfo> contactsInfoList = getCacheLocalContactLst();
         sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input));
+    }
+
+    @Override
+    public void searchAppContactLst(String input) {
+        List<ContactsInfo> contactsInfoList = getCacheAppContactLst();
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input));
     }
 
     @Override
@@ -316,6 +327,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         List<ContactsInfo> newContactsInfoList = ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
                 .queryAll();
         ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(), newContactsInfoList);
+        ContactsInfoManager.getInstance().cacheAppContactInfo(newContactsInfoList);
         sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, newContactsInfoList);
     }
 
@@ -350,6 +362,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 // 替换数据库中的旧数据
                 ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).delAll();
                 ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).add(contactsInfoList);
+                ContactsInfoManager.getInstance().cacheAppContactInfo(contactsInfoList);
 
                 // 通知界面更新数据
                 sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, contactsInfoList);
