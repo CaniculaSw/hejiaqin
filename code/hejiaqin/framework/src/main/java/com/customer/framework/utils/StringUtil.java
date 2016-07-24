@@ -2,6 +2,7 @@ package com.customer.framework.utils;
 
 import android.content.Context;
 
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.string.HanziToPinyin;
 
 import java.util.ArrayList;
@@ -450,5 +451,12 @@ public class StringUtil {
         return result;
     }
 
-
+    public static int getIntValue(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (Exception e) {
+            Logger.w(TAG, "invalid int: " + input);
+            return ERROR_CODE;
+        }
+    }
 }

@@ -197,6 +197,7 @@ public class DatabaseInfo {
         public static final String CONTACT_MODE = "contact_mode";
         public static final String NAME_IN_PINYIN = "name_in_pinyin";
         public static final String NUMBER = "number";
+        public static final String NUMBER_NO_COUNTRY_CODE = "number_no_country_code";
         public static final String NUMBER_TYPE = "number_type";
         public static final String NUMBER_DESC = "number_desc";
         public static final String PHOTO_LG = "photo_lg";
