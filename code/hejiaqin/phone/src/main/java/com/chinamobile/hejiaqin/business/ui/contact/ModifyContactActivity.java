@@ -215,19 +215,23 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
             case REQUEST_CODE_INPUT_NAME:
                 if (null != data) {
                     newName = data.getStringExtra(INTENT_DATA_INPUT_INFO);
-                    if (!StringUtil.isNullOrEmpty(newName)) {
-                        nameText.setText(newName);
-                        showTitleRightIcon();
+                    if (null == newName) {
+                        newName = "";
                     }
+
+                    nameText.setText(newName);
+                    showTitleRightIcon();
                 }
                 break;
             case REQUEST_CODE_INPUT_NUMBER:
                 if (null != data) {
                     newNumber = data.getStringExtra(INTENT_DATA_INPUT_INFO);
-                    if (!StringUtil.isNullOrEmpty(newNumber)) {
-                        numberText.setText(newNumber);
-                        showTitleRightIcon();
+                    if (null == newNumber) {
+                        newNumber = "";
                     }
+
+                    numberText.setText(newNumber);
+                    showTitleRightIcon();
                 }
                 break;
         }
