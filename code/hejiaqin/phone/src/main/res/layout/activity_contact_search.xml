@@ -40,6 +40,7 @@
                 android:layout_toLeftOf="@+id/search_del"
                 android:layout_toRightOf="@+id/contact_search_img"
                 android:background="@null"
+                android:maxLength="32"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textColorHint="@color/contact_list_search_text_color"
                 android:textSize="13sp" />
