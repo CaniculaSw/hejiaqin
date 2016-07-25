@@ -152,11 +152,11 @@ public class CommonUtils {
     public static String getPhoneNumber(String countryNumber) {
         String outNumber = countryNumber;
         if (countryNumber.startsWith("+86")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("+86"));
+            outNumber = countryNumber.substring(countryNumber.indexOf("+86")+3);
         } else if (countryNumber.startsWith("86")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("86"));
+            outNumber = countryNumber.substring(countryNumber.indexOf("86")+2);
         }else if (countryNumber.startsWith("+")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("+"));
+            outNumber = countryNumber.substring(countryNumber.indexOf("+")+1);
         }
         return outNumber;
     }
