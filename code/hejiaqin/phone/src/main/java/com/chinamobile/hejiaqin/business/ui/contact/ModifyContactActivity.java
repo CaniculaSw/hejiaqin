@@ -100,6 +100,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         // 号码
         numberView = findViewById(R.id.contact_number_layout);
         numberText = (TextView) findViewById(R.id.contact_number_hint);
+
+        showTitleRightIcon();
     }
 
     @Override
@@ -215,6 +217,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                     newName = data.getStringExtra(INTENT_DATA_INPUT_INFO);
                     if (!StringUtil.isNullOrEmpty(newName)) {
                         nameText.setText(newName);
+                        showTitleRightIcon();
                     }
                 }
                 break;
@@ -223,6 +226,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                     newNumber = data.getStringExtra(INTENT_DATA_INPUT_INFO);
                     if (!StringUtil.isNullOrEmpty(newNumber)) {
                         numberText.setText(newNumber);
+                        showTitleRightIcon();
                     }
                 }
                 break;
@@ -284,6 +288,22 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         startActivityForResult(intent, REQUEST_CODE_INPUT_NUMBER);
     }
 
+    private void showTitleRightIcon() {
+        if (addContactMode) {
+            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)) {
+                titleLayout.rightBtn.setVisibility(View.INVISIBLE);
+            } else {
+                titleLayout.rightBtn.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)
+                    && StringUtil.isNullOrEmpty(newPhotoName)) {
+                titleLayout.rightBtn.setVisibility(View.INVISIBLE);
+            } else {
+                titleLayout.rightBtn.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
     /**
      * 监听拍摄后得到照片信息
@@ -295,6 +315,7 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
             if (bitmap != null) {
                 headImg.setImageBitmap(bitmap);
                 newPhotoName = url;
+                showTitleRightIcon();
             }
         }
     };

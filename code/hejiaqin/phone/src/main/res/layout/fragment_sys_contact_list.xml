@@ -19,4 +19,42 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
+    <RelativeLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/empty_view_image"
+            android:layout_width="141dp"
+            android:layout_height="161dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="94dp"
+            android:src="@mipmap/sys_contact_empty" />
+
+        <TextView
+            android:id="@+id/empty_view_text_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_view_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:text="@string/contact_sys_contacts_empty_desc"
+            android:textColor="#9a9a9a"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/empty_view_text_desc2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_view_text_desc"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:text="@string/contact_sys_contacts_empty_desc2"
+            android:textColor="#9a9a9a"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
 </FrameLayout>

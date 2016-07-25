@@ -28,6 +28,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     private IContactsLogic contactsLogic;
     private SysContactAdapter adapter;
     private TextView searchText;
+    private StickyListHeadersListView contactListView;
+    private View empty_view;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -41,6 +43,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
                 searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                showView();
                 break;
         }
     }
@@ -54,7 +57,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     protected void initView(View view) {
         Context context = getContext();
 
-        StickyListHeadersListView contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
+        contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
 
         // 添加搜索框
         LayoutInflater inflater = (LayoutInflater) context.getSystemService
@@ -68,6 +71,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
 
         adapter = new SysContactAdapter(this.getContext());
         contactListView.setAdapter(adapter);
+
+        empty_view = view.findViewById(R.id.empty_view);
     }
 
     @Override
@@ -96,6 +101,16 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
                 , ContactSearchActivity.Constant.CONTACT_TYPE_SYS);
         startActivity(intent);
+    }
+
+    private void showView() {
+        if (adapter.isEmpty()) {
+            empty_view.setVisibility(View.VISIBLE);
+            contactListView.setVisibility(View.GONE);
+        } else {
+            empty_view.setVisibility(View.GONE);
+            contactListView.setVisibility(View.VISIBLE);
+        }
     }
 
 }
