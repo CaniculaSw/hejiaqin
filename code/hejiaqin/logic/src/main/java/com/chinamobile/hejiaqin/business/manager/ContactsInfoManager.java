@@ -53,9 +53,15 @@ public class ContactsInfoManager {
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 
                     NumberInfo numberInfo = new NumberInfo();
+
                     // 得到手机号码
-                    numberInfo.setNumber(cur.getString(cur
-                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                    String phoneNumber = cur.getString(cur
+                            .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    if (null != phoneNumber) {
+                        phoneNumber = phoneNumber.replace("-", "");
+                        phoneNumber = phoneNumber.replace(" ", "");
+                    }
+                    numberInfo.setNumber(phoneNumber);
                     // 得到号码类型
                     numberInfo.setType(cur.getInt(cur
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
