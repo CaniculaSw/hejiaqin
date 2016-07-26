@@ -141,10 +141,15 @@ public class CommonUtils {
 
     public static String getCountryPhoneNumber(String number) {
         String outNumber = number;
-        if (number.startsWith("86")) {
-            outNumber = "+" + number;
-        } else if (!number.startsWith("+86")) {
-            outNumber = "+86" + number;
+        if(number.startsWith("0086"))
+        {
+            outNumber = number;
+        }
+        else if (number.startsWith("+86")) {
+            outNumber = number;
+        }
+        else{
+            outNumber ="+86" + number;
         }
         return outNumber;
     }
@@ -153,10 +158,8 @@ public class CommonUtils {
         String outNumber = countryNumber;
         if (countryNumber.startsWith("+86")) {
             outNumber = countryNumber.substring(countryNumber.indexOf("+86")+3);
-        } else if (countryNumber.startsWith("86")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("86")+2);
-        }else if (countryNumber.startsWith("+")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("+")+1);
+        } else if (countryNumber.startsWith("0086")) {
+            outNumber = countryNumber.substring(countryNumber.indexOf("0086")+4);
         }
         return outNumber;
     }
