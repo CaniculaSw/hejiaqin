@@ -3,6 +3,9 @@ package com.chinamobile.hejiaqin.business.model.contacts.req;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqToken;
+import com.customer.framework.utils.StringUtil;
+
+import java.net.URLEncoder;
 
 /**
  * Created by Administrator on 2016/6/29 0029.
