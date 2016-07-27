@@ -223,9 +223,9 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     public CallSession call(String calleeNumber, boolean isVideoCall) {
         CallSession callSession = null;
         if (isVideoCall) {
-            callSession = CallApi.initiateVideoCall(calleeNumber);
+            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(calleeNumber));
         } else {
-            callSession = CallApi.initiateAudioCall(calleeNumber);
+            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(calleeNumber));
         }
 
         // 保存通话记录
