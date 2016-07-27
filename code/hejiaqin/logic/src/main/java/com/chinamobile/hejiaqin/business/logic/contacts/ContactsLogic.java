@@ -465,36 +465,35 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             return dialInfoGroupList;
         }
 
-        Map<String, List<DialInfo>> dialInfoMap = new HashMap<String, List<DialInfo>>();
+        Map<String, DialInfoGroup> dialInfoMap = new HashMap<String, DialInfoGroup>();
+        List<DialInfo> dialInfoList;
         for (CallRecord callRecord : callRecordList) {
-            String beginTime = callRecord.getBeginTimeformatter();
-            if (null == beginTime) {
+            String beginDay = callRecord.getBeginDay();
+            if (null == beginDay) {
                 continue;
             }
 
-            List<DialInfo> dialInfoList = dialInfoMap.get(beginTime);
-            if (null == dialInfoList) {
+            DialInfoGroup dialInfoGroup = dialInfoMap.get(beginDay);
+            if (null == dialInfoGroup) {
+                dialInfoGroup = new DialInfoGroup();
+                dialInfoGroup.setGroupName(beginDay);
                 dialInfoList = new ArrayList<>();
-                dialInfoMap.put(beginTime, dialInfoList);
+                dialInfoGroup.setDialInfoList(dialInfoList);
+                dialInfoMap.put(beginDay, dialInfoGroup);
+                dialInfoGroupList.add(dialInfoGroup);
+            }else{
+                dialInfoList = dialInfoGroup.getDialInfoList();
             }
 
             DialInfo dialInfo = new DialInfo();
             dialInfo.setType(DialInfo.convertType(callRecord.getType()));
             dialInfo.setDialTime(callRecord.getBeginHour());
-            String durationTime = TimeUtil.disToTimeWithLanuage(StringUtil.getIntValue(dialInfo.getDialDuration()));
+            String durationTime = TimeUtil.disToTimeWithLanuage(callRecord.getDuration());
             dialInfo.setDialDuration(durationTime);
+            dialInfo.setDialDay(callRecord.getBeginDay());
             dialInfoList.add(dialInfo);
         }
-
-        Iterator<Map.Entry<String, List<DialInfo>>> iter = dialInfoMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<String, List<DialInfo>> entry = iter.next();
-            DialInfoGroup dialInfoGroup = new DialInfoGroup();
-            dialInfoGroup.setGroupName(entry.getKey());
-            dialInfoGroup.setDialInfoList(entry.getValue());
-            dialInfoGroupList.add(dialInfoGroup);
-        }
-
+        //MAP 是无顺序的，所以不能使用map进行递归转换list
         return dialInfoGroupList;
     }
 }

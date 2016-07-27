@@ -21,6 +21,8 @@ public class DialInfo {
 
     private String dialDuration;
 
+    private String dialDay;
+
     // 获取通话的时间
     public String getDialTime() {
         return dialTime;
@@ -41,6 +43,14 @@ public class DialInfo {
 
     public void setDialDuration(String dialDuration) {
         this.dialDuration = dialDuration;
+    }
+
+    public String getDialDay() {
+        return dialDay;
+    }
+
+    public void setDialDay(String dialDay) {
+        this.dialDay = dialDay;
     }
 
     public void setType(Type type) {

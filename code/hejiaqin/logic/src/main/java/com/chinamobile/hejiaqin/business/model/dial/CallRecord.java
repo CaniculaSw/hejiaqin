@@ -131,12 +131,12 @@ public class CallRecord {
         }
     }
 
-    public String getBeginDay() {
+    public String getBeginHour() {
         Date date = DateTimeUtil.parseDateString(beginTime, new SimpleDateFormat("yyyyMMddHHmmss"));
         return DateTimeUtil.getHHMMByDate(date);
     }
 
-    public String getBeginHour() {
+    public String getBeginDay() {
         Date date = DateTimeUtil.parseDateString(beginTime, new SimpleDateFormat("yyyyMMddHHmmss"));
         if (DateTimeUtil.isYesterday(date)) {
             return "昨天";
