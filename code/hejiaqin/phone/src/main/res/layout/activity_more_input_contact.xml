@@ -62,15 +62,15 @@
         <EditText
             android:id="@+id/more_input_contact_name_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:background="@null"
             android:singleLine="true"
             android:layout_toRightOf="@+id/more_input_contact_name_text"
             android:hint="@string/contact_modify_name_hint_text"
-            android:textColor="@color/contact_list_search_text_color"
-            android:textSize="16sp" />
+            android:textColor="@color/more_black_404040"
+            android:textColorHint="@color/contact_list_search_text_color"            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -96,14 +96,16 @@
         <EditText
             android:id="@+id/more_input_contact_number_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:singleLine="true"
             android:layout_centerVertical="true"
             android:background="@null"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/more_input_contact_number_text"
             android:hint="@string/contact_modify_number_hint_text"
-            android:textColor="@color/contact_list_search_text_color"
+            android:inputType="number"
+            android:textColor="@color/more_black_404040"
+            android:textColorHint="@color/contact_list_search_text_color"
             android:textSize="16sp" />
 
     </RelativeLayout>

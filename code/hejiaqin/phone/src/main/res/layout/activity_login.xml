@@ -72,7 +72,7 @@
         <EditText
             android:id="@+id/account_edit_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/account_iv"
             android:layout_toLeftOf="@+id/clear_btn"
@@ -113,7 +113,7 @@
         <EditText
             android:id="@+id/password_edit_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingLeft="20dp"
             android:background="@null"
             android:hint="@string/prompt_password"

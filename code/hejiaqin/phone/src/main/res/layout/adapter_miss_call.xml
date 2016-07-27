@@ -24,30 +24,37 @@
         android:paddingLeft="6dp"
         android:paddingRight="16dp">
 
-        <CheckBox
-            android:id="@+id/more_checkbox_miss_call"
-            style="@style/MoreDeleteMsgCheckBox"
+        <RelativeLayout
+            android:id="@+id/more_checkbox_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:visibility="gone" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/more_sys_photo_img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/more_checkbox_miss_call"
-            android:src="@drawable/contact_photo_default" />
+            <CheckBox
+                android:id="@+id/more_checkbox_miss_call"
+                style="@style/MoreDeleteMsgCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/more_sys_photo_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/more_checkbox_miss_call"
+                android:src="@drawable/contact_photo_default" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/more_miss_call_text_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/more_sys_photo_img"
+            android:layout_toRightOf="@+id/more_checkbox_photo"
             android:background="@drawable/more_dialog"
             android:orientation="vertical">
 

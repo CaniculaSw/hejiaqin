@@ -154,7 +154,7 @@
     <string name="more_about_contract">服务条款</string>
     <string name="more_about_company">中国移动(杭研)信息技术有限公司技术支持</string>
     <string name="more_about_version">版本号: %s</string>
-    <string name="more_about_release_date">发布日期: 2016年4月20号</string>
+    <string name="more_about_release_date">发布日期: 2016年7月27号</string>
     <string name="more_sys_msg_miss_call">漏接来电</string>
     <string name="more_sys_msg_sys_message">系统消息</string>
     <string name="more_edit">编辑</string>
@@ -163,7 +163,7 @@
     <string name="more_miss_call_message_greeting">尊敬的用户:</string>
     <string name="more_avatar">头像</string>
     <string name="more_account">账号</string>
-    <string name="more_user_info">编辑联系人</string>
+    <string name="more_user_info">个人信息</string>
     <string name="more_bind_tv_and_enjoye">绑定机顶盒, 即可享受</string>
     <string name="more_send_the_contact">发送联系人</string>
     <string name="more_add_contact">机顶盒添加联系人, 轻松搞定</string>

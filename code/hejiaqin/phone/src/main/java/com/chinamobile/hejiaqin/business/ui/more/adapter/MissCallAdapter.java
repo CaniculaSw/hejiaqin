@@ -65,7 +65,7 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         CheckBox checkBox = (CheckBox) mViewHolder.getView(R.id.more_checkbox_miss_call);
 
         MissCallMessage msg = (MissCallMessage) getItem(position);
-        mViewHolder.setText(R.id.more_miss_call_item_text,"(小王) 13776570335 fsadfcsdf");
+        mViewHolder.setText(R.id.more_miss_call_item_text,"(小王) 13776570335fsadfcsdftgfhgfgdfjgf");
         mViewHolder.setText(R.id.more_miss_call_date,formatTimeString(msg.getDate()));
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

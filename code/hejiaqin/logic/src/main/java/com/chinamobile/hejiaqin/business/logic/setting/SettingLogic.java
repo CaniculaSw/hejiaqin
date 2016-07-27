@@ -23,11 +23,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                 VersionInfo info = (VersionInfo) obj;
 //                //TODO Test
 //                info = new VersionInfo();
-//                info.setVersionCode("2");
+//                info.setVersionCode("1");
 //                info.setVersionName("版本1.0");
 //                info.setUrl("http://downsz.downcc.com/apk/dianxinxiangjia_downcc.apk");
 //                info.setTime("2016-03-01 15:17:42");
-//                info.setByForce(1);
+//                info.setByForce(0);
 //                info.setForceVersionCode("1");
 //                //TODO Test End
                 if (isNewVersion(info)){

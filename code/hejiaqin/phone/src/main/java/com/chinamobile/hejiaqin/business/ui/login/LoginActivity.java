@@ -26,12 +26,9 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
-import com.chinamobile.hejiaqin.business.ui.basic.view.CustomDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.VoipSettingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
-import com.customer.framework.component.storage.StorageMgr;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 
