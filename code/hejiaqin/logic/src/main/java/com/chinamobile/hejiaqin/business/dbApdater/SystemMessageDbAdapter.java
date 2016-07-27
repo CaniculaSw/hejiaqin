@@ -55,7 +55,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
     public List<SystemMessage> queryAll() {
         List<SystemMessage> systemMessagesList = new ArrayList<SystemMessage>();
         String[] columns =  {"_ID","title","time"};
-        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns,null, null,null,null,DatabaseInfo.SystemMessage.TIME,null);
+        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns,null, null,null,null,DatabaseInfo.SystemMessage.TIME+" desc",null);
         if (null == cursor) {
             LogUtil.d("SystemMessageDbAdapter","cursor is null");
             return systemMessagesList;
