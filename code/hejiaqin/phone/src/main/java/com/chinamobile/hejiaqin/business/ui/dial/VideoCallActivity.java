@@ -208,16 +208,17 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showIncoming() {
+        String incomingNumber = CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber());
         // 查询姓名和头像信息
-        ContactsInfo info = searchContactInfo(mCallSession.getPeer().getNumber());
+        ContactsInfo info = searchContactInfo(incomingNumber);
         if(info!=null)
         {
             if(!StringUtil.isNullOrEmpty(info.getName())) {
                 mCallerNameTv.setText(info.getName());
                 mContactNameTv.setText(info.getName());
             }else{
-                mCallerNameTv.setText(mCallSession.getPeer().getNumber());
-                mContactNameTv.setText(mCallSession.getPeer().getNumber());
+                mCallerNameTv.setText(incomingNumber);
+                mContactNameTv.setText(incomingNumber);
             }
             if(!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
                 Picasso.with(this.getApplicationContext())
@@ -227,8 +228,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             }
 
         } else {
-            mCallerNameTv.setText(mCallSession.getPeer().getNumber());
-            mContactNameTv.setText(mCallSession.getPeer().getNumber());
+            mCallerNameTv.setText(incomingNumber);
+            mContactNameTv.setText(incomingNumber);
         }
 
         mIncomingLayout.setVisibility(View.VISIBLE);
@@ -336,6 +337,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showTalking() {
+        mIsTalking =true;
         AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         speakerState = audioManamger.isSpeakerphoneOn();
         if (!speakerState) {

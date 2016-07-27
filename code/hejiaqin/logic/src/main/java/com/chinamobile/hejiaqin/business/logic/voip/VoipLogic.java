@@ -106,7 +106,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 CallRecord callRecord = new CallRecord();
                 String recordId = UUID.randomUUID().toString();
                 callRecord.setRecordId(recordId);
-                callRecord.setPeerNumber(callSession.getPeer().getNumber());
+                callRecord.setPeerNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
                 callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
                 callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
                 callRecord.setDuration(callSession.getDuration());
