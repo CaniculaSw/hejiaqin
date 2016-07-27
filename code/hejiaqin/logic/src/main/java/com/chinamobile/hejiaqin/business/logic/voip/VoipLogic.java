@@ -95,13 +95,12 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 callSession.terminate();
                 return;
             }
-            if (callSession.getType() == CallSession.TYPE_AUDIO_INCOMING) {
+            if (callSession.getType() != CallSession.TYPE_VIDEO) {
                 LogUtil.w(TAG,"AUDIO_INCOMING");
                 callSession.terminate();
                 return;
             }
-
-            if (callSession.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+            if (callSession.getType() == CallSession.TYPE_VIDEO) {
                 // 保存通话记录
                 CallRecord callRecord = new CallRecord();
                 String recordId = UUID.randomUUID().toString();
@@ -248,7 +247,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     }
 
     @Override
-    public void hangup(CallSession callSession, boolean isInComing, boolean isTalking) {
+    public void hangup(CallSession callSession, boolean isInComing, boolean isTalking,int callTime) {
         String recordId = "";
         if(recordMap.containsKey(String.valueOf(callSession.getSessionId())))
         {
@@ -263,7 +262,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         if(isTalking)
         {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(DatabaseInfo.CallRecord.DURATION, callSession.getDuration());
+            contentValues.put(DatabaseInfo.CallRecord.DURATION, callTime);
             CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,contentValues);
         }else if(isInComing){
             ContentValues contentValues = new ContentValues();
@@ -280,7 +279,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     }
 
     @Override
-    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking) {
+    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking,int callTime) {
         String recordId = "";
         if(recordMap.containsKey(String.valueOf(callSession.getSessionId())))
         {
@@ -295,7 +294,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         if(isTalking)
         {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(DatabaseInfo.CallRecord.DURATION, callSession.getDuration());
+            contentValues.put(DatabaseInfo.CallRecord.DURATION, callTime);
             CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
         }
         else if(isInComing)

@@ -562,14 +562,14 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
-                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking,callTime);
                 finish();
                 break;
             case R.id.coming_answer_call_btn:
                 mVoipLogic.answerVideo(mCallSession);
                 break;
             case R.id.coming_reject_call_btn:
-                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking,callTime);
                 finish();
                 break;
             case R.id.mute_layout:
@@ -614,7 +614,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 if (msg.obj != null) {
                     CallSession session = (CallSession) msg.obj;
                     if (mCallSession != null && mCallSession.equals(session)) {
-                        mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking);
+                        mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
                             showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
@@ -629,7 +629,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                             }
                         }, 2000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-                        mVoipLogic.dealOnClosed(session, true, false);
+                        mVoipLogic.dealOnClosed(session, true, false,0);
                     }
                 }
                 break;
