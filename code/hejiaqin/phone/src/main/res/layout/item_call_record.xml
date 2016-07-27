@@ -17,10 +17,9 @@
             android:layout_marginLeft="14dp">
             <ImageView
                 android:id="@+id/call_record_type_iv"
-                android:layout_width="19dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:background="@mipmap/icon_outbound_call" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
