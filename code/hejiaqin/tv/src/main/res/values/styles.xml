@@ -1,0 +1,105 @@
+<resources>
+
+    <style name="Theme.kangxi" parent="Theme.AppCompat.Light">
+        <item name="android:editTextStyle">@style/KangxiEditText</item>
+    </style>
+
+    <style name="KangxiEditText" parent="Base.V7.Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/selector_edit</item>
+        <item name="android:paddingLeft">@dimen/edit_padding_left</item>
+        <item name="android:paddingRight">@dimen/edit_padding_right</item>
+        <item name="android:paddingTop">@dimen/edit_padding_top</item>
+        <item name="android:paddingBottom">@dimen/edit_padding_bottom</item>
+        <item name="android:maxLength">20</item>
+    </style>
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="MoreDeleteMsgCheckBox" parent="android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/more_delete_message_checkbox</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <style name="CustomProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="kangxiProgressBarStyle">
+        <item name="android:indeterminateDrawable">@drawable/kangxi_progress_shape</item>　　
+        <item name="android:minWidth">70dp</item>　　
+        <item name="android:maxWidth">70dp</item>　
+        <item name="android:minHeight">70dp</item>　　
+        <item name="android:maxHeight">70dp</item>
+    </style>
+
+    <style name="CalendarDialog" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
+    <!-- 开关控件自定义样式 -->
+    <style name="SwitchButtonStyle">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="kswThumbWidth">30dp</item>
+        <item name="kswThumbHeight">22dp</item>
+        <item name="kswBackColor">@color/switch_button_off</item>
+        <item name="kswThumbColor">@color/white</item>
+        <item name="kswBackMeasureRatio">2.2</item>
+        <item name="kswBackRadius">2dp</item>
+        <item name="kswThumbRadius">2dp</item>
+        <item name="kswTintColor">@color/white</item>
+    </style>
+
+    <!-- Banner的样式 -->
+    <style name="BannerDefaultStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <!-- 自定义属性在styles.xml中不需要命名空间,直接用属性名就可以了 -->
+        <!-- 开启自动轮播 -->
+        <item name="banner_pointAutoPlayAble">true</item>
+        <!-- 自动轮播的时间间隔 -->
+        <item name="banner_pointAutoPlayInterval">2000</item>
+        <!-- 指示点容器背景 -->
+        <item name="banner_pointContainerBackground">@color/clear_color</item>d
+        <!-- 指示点背景 -->
+        <item name="banner_pointDrawable">@drawable/selector_banner_point1</item>
+        <!-- 指示点容器左右内间距 -->
+        <item name="banner_pointContainerLeftRightPadding">10dp</item>
+        <!-- 指示点上下外间距 -->
+        <item name="banner_pointTopBottomMargin">30dp</item>
+        <!-- 指示点左右外间距 -->
+        <item name="banner_pointLeftRightMargin">3dp</item>
+        <!-- 指示点的位置 -->
+        <item name="banner_pointGravity">bottom|center_horizontal</item>
+        <!-- 页码切换过程的时间长度 -->
+        <item name="banner_pageChangeDuration">800</item>
+        <!-- 提示文案的文字大小 -->
+        <item name="banner_tipTextSize">10sp</item>
+        <!-- 提示文案的文字颜色 -->
+        <item name="banner_tipTextColor">@android:color/white</item>
+        <!-- 设置切换模式 -->
+        <item name="banner_transitionEffect">alpha</item>
+
+    </style>
+</resources>

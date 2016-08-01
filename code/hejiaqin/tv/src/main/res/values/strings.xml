@@ -1,0 +1,190 @@
+<resources>
+    <string name="app_name">和家亲</string>
+    <string name="network_error_tip">请检查你的网络连接</string>
+    <string name="last_page">最后一页</string>
+    <string name="permission_help_title">帮助</string>
+    <string name="permission_necessary_help_content">当前应用缺少必要权限。\n请点击“设置”-“权限”打开所需权限。</string>
+    <string name="permission_settings">设置</string>
+    <string name="permission_cancel">取消</string>
+    <string name="quit_app_toast_msg">再按一次退出程序</string>
+
+    <string name="resend_verify_code">获取验证码</string>
+
+    <string name="get_verify_code_success">验证码已发送</string>
+    <string name="verify_code_null">验证码不能为空</string>
+    <string name="nick_name_null">昵称不能为空</string>
+    <string name="has_registered">该手机号码已注册</string>
+    <string name="verify_other_error">验证码发送失败,请稍后重试</string>
+    <string name="check_verify_code_diff">验证码错误</string>
+    <string name="check_verify_code_disable">验证码已失效</string>
+    <string name="has_registered_forbidden">该手机号码已注册并被禁用</string>
+    <string name="register_fail">注册失败</string>
+    <string name="start_failed">登录失败</string>
+    <string name="register_success">注册成功</string>
+
+    <!-- 重设/修改密码-->
+
+    <string name="prompt_new_password">请输入新密码</string>
+    <string name="reset_pwd_action_submit">提交</string>
+    <string name="update_password_title">修改密码</string>
+    <string name="prompt_original_password">请输入原密码</string>
+
+    <string name="original_pwd_required">请输入原密码</string>
+    <string name="new_pwd_required">请输入新密码</string>
+    <string name="confirm_pwd_required">请输入确认密码</string>
+    <string name="password_not_match">两次输入的密码不一致</string>
+    <string name="reset_success">重置成功</string>
+    <string name="update_password_success">修改密码成功</string>
+
+
+    <!--个人信息-->修改成功
+    <string name="no_sdcard_update_header">未找到存储卡，无法存储照片！</string>
+
+    <!--main framgent-->
+    <string name="navigation_contact">联系人</string>
+    <string name="navigation_dial">拨号</string>
+    <string name="navigation_more">更多</string>
+
+    <!-- 登录 -->
+    <string name="action_sign_in">登录</string>
+    <string name="action_forget_pwd">忘记密码 ?</string>
+    <string name="register">注册</string>
+    <string name="register_title">注册</string>
+    <string name="prompt_account">请输入账号</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="prompt_confirm_password">请再次输入密码</string>
+    <string name="prompt_empty_confirm_password">请输入确认密码</string>
+    <string name="prompt_password_not_the_same">密码和确认密码不一致</string>
+    <string name="send_verify_code">获取验证码</string>
+    <string name="login">登录</string>
+    <string name="prompt_phone_no">请输入手机号码</string>
+    <string name="action_next">下一步</string>
+    <string name="action_register">提交</string>
+    <string name="prompt_verify_code">请输入验证码</string>
+    <string name="resend_verify_code_unit">s</string>
+    <string name="prompt_return">重新输入</string>
+    <string name="prompt_wrong_phone_no">手机号码格式错误</string>
+    <string name="prompt_wrong_password_format">密码格式错误</string>
+    <string name="prompt_wrong_verify_code_format">验证码格式错误</string>
+    <string name="prompt_wrong_password_or_phone_no">手机号码或密码输入错误</string>
+    <string name="reset_password_title">忘记密码</string>
+    <string name="login_failed">登录失败，请稍后再试</string>
+    <string name="login_network_error_tip">登录失败，请检查你的网络连接</string>
+    <string name="kick_out">您已在别处登录，请重新登录</string>
+    <!-- 联系人 -->
+    <string name="contact_navigation_app_contacts">合家亲</string>
+    <string name="contact_navigation_sys_contacts">通讯录</string>
+    <string name="contact_sys_contacts_empty_desc">您的手机通讯录为空哦</string>
+    <string name="contact_sys_contacts_empty_desc2">可能是关闭了访问通讯录的权限，请去设置中开启</string>
+    <string name="contact_search_hint_text">在%s个人中搜索</string>
+    <string name="contact_search_content_head_text">联系人</string>
+    <string name="contact_modify_title_add_text">新增联系人</string>
+    <string name="contact_modify_title_edit_text">编辑联系人</string>
+    <string name="contact_modify_head_text">头像</string>
+    <string name="contact_modify_name_text">姓名</string>
+    <string name="contact_modify_number_text">号码</string>
+    <string name="contact_modify_name_hint_text">请输入姓名</string>
+    <string name="contact_modify_number_hint_text">请输入号码</string>
+    <string name="contact_modify_head_take_photo_text">拍照</string>
+    <string name="contact_modify_head_open_album_text">打开相册</string>
+    <string name="contact_info_title_text">详情</string>
+    <string name="contact_info_add_contact_text">保存至和家亲</string>
+    <string name="contact_info_edit_contact_text">编辑联系人</string>
+    <string name="contact_info_del_contact_text">删除联系人</string>
+    <string name="contact_info_add_contact_success_toast">保存成功</string>
+    <string name="contact_info_add_contact_failed_toast">保存失败</string>
+    <string name="contact_info_edit_contact_success_toast">更新成功</string>
+    <string name="contact_info_edit_contact_failed_toast">更新失败</string>
+    <string name="contact_info_del_contact_success_toast">删除成功</string>
+    <string name="contact_info_del_contact_failed_toast">删除失败</string>
+    <string name="contact_info_dial_incoming_text">呼入</string>
+    <string name="contact_info_dial_outbound_text">呼出</string>
+    <string name="contact_info_dial_missed_text">未接</string>
+    <string name="contact_info_dial_reject_text">拒绝</string>
+    <string name="contact_input_name_hint_text">输入姓名</string>
+    <string name="contact_input_number_hint_text">输入手机号码</string>
+    <string name="contact_name_input_empty_toast">姓名不能为空</string>
+    <string name="contact_number_input_empty_toast">手机号码不能为空</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 拨号 -->
+    <string name="dial_title">全部</string>
+    <string name="dial_save_contact">保存至和家亲</string>
+    <string name="del_all_call_record">删除所有通讯记录</string>
+    <string name="del_call_record_cancel">取消</string>
+    <string name="call_outing">正在拨号...</string>
+    <string name="call_mute">静音</string>
+    <string name="call_hangup">挂断</string>
+    <string name="call_switch_camera">切换摄像头</string>
+    <string name="call_coming">邀你视频...</string>
+    <string name="call_answer">接听</string>
+    <string name="call_reject">挂断</string>
+    <string name="call_outing_error">呼叫失败，请稍后重试</string>
+    <string name="sip_temporarily_unavailable">对方暂时无法接通，您可以稍后再拨</string>
+    <string name="sip_busy_here">对方正在通话中，您可以稍后再拨</string>
+    <string name="voip_register_fail">登录失败，请稍后再试</string>
+
+    <!-- 更多 -->
+    <string name="about_version_update">版本更新</string>
+    <string name="about_version_new_to_update">检测到您有新版本，是否确认更新？</string>
+    <string name="about_hejiaqin_update"> 下载</string>
+    <string name="about_hejiaqin_download_error"> 下载错误</string>
+    <string name="about_hejiaqin_later_to_update"> 以后再说</string>
+    <string name="about_hejiaqin_version_warming"> 由于您的版本过低，需要更新，否则无法正常使用！</string>
+    <string name="about_hejiaqin_update_now"> 马上更新</string>
+    <string name="about_hejiaqin_progress_quit"> 退出程序</string>
+    <string name="about_hejiaqin_version_new">当前已是最新版本</string>
+    <string name="about_hejiaqin_download">正在下载最新版本，请稍后...</string>
+    <string name="cancel">取消</string>
+    <string name="more_tab_name">更多</string>
+    <string name="more_send_to_tv">发送联系人至我的机顶盒</string>
+    <string name="more_share_app">分享APP</string>
+    <string name="more_more_fun">更多精彩</string>
+    <string name="more_about">关于</string>
+    <string name="more_quit">退出登陆</string>
+    <string name="more_more_fun_tv_tv">电视-电视互连</string>
+    <string name="more_more_fun_tv_tv_description">在家, 畅享亲人间的电视高清视频通话</string>
+    <string name="more_more_fun_tv_phone">电视-手机互通</string>
+    <string name="more_more_fun_tv_phone_description">在外, 也能面对面与家人聊天</string>
+    <string name="more_scan_the_qr_code">扫一扫上面二维码, 下载APP</string>
+    <string name="more_about_feedback">反馈</string>
+    <string name="more_about_check_update">检查更新</string>
+    <string name="more_about_contract">服务条款</string>
+    <string name="more_about_company">中国移动(杭研)信息技术有限公司技术支持</string>
+    <string name="more_about_version">版本号: %s</string>
+    <string name="more_about_release_date">发布日期: 2016年7月27号</string>
+    <string name="more_sys_msg_miss_call">漏接来电</string>
+    <string name="more_sys_msg_sys_message">系统消息</string>
+    <string name="more_edit">编辑</string>
+    <string name="more_cancel">取消</string>
+    <string name="more_msg_delete">删除</string>
+    <string name="more_miss_call_message_greeting">尊敬的用户:</string>
+    <string name="more_avatar">头像</string>
+    <string name="more_account">账号</string>
+    <string name="more_user_info">个人信息</string>
+    <string name="more_bind_tv_and_enjoye">绑定机顶盒, 即可享受</string>
+    <string name="more_send_the_contact">发送联系人</string>
+    <string name="more_add_contact">机顶盒添加联系人, 轻松搞定</string>
+    <string name="more_bind_tv_btn_text">绑定机顶盒</string>
+    <string name="more_bind_tv_dialog_choose_bind_method">请选择一种绑定机顶盒的方式</string>
+    <string name="more_bind_tv_dialog_by_scan">扫一扫</string>
+    <string name="more_album">相册</string>
+    <string name="more_bind_tv_dialog_by_input">手动输入账号</string>
+    <string name="more_bind_tv_dialog_by_contact">从联系人中选择</string>
+    <string name="more_where_to_find_the_qrcode">请扫描机顶盒"设置"-"账号"中的二维码</string>
+    <string name="more_scan_hint">将取景框对准二维码, 即可自动扫描</string>
+    <string name="more_input_account">手动输入账号</string>
+    <string name="more_choose_contact">选择机顶盒</string>
+    <string name="more_select_all">全选</string>
+    <string name="more_cancle_select_all">取消全选</string>
+    <string name="more_chosen">已选择 (%s)</string>
+    <string name="use_help_feed_back">意见反馈</string>
+    <string name="use_help_main_content_hint">请输入您的意见与建议, 最多可输入200字</string>
+    <string name="feed_back_word_count">%s/200</string>
+    <string name="use_help_confirm_submit">提交</string>
+    <string name="server_side_error">系统异常</string>
+    <string name="prompt_empty_feedback_content">请输入反馈内容</string>
+    <string name="prompt_feedback_ok">提交成功</string>
+</resources>

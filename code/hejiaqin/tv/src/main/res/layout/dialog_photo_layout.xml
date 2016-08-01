@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_camera"
+            android:layout_width="fill_parent"
+            android:layout_height="44dp">
+
+            <TextView
+                android:id="@+id/tv_camera"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/contact_modify_head_take_photo_text"
+                android:textColor="#404040"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#e0e1e1" />
+
+        <RelativeLayout
+            android:id="@+id/rl_photo"
+            android:layout_width="fill_parent"
+            android:layout_height="44dp">
+
+            <TextView
+                android:id="@+id/tv_photo"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/contact_modify_head_open_album_text"
+                android:textColor="#404040"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="#e0e1e1" />
+
+    <RelativeLayout
+        android:id="@+id/rl_dismiss"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp">
+
+        <TextView
+            android:id="@+id/tv_dismiss"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/del_call_record_cancel"
+            android:textColor="#404040"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</LinearLayout>

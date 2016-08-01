@@ -1,0 +1,73 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="header_height">56dp</dimen>
+    <dimen name="header_title_margin">20dp</dimen>
+
+    <!--字体大小-->
+    <dimen name="normal_font">16dp</dimen>
+    <dimen name="date_picker_text_size">10dp</dimen>
+    <!-- 分割线的宽高 -->
+    <dimen name="line_size">1dp</dimen>
+
+    <!--editTextView-->
+    <dimen name="edit_padding_left">4dp</dimen>
+    <dimen name="edit_padding_right">4dp</dimen>
+    <dimen name="edit_padding_top">10dp</dimen>
+    <dimen name="edit_padding_bottom">7dp</dimen>
+
+    <!--登录、注册文本框-->
+    <dimen name="login_register_edit_row_height">43dp</dimen>
+    <dimen name="login_register_edit_width">200dp</dimen>
+    <dimen name="login_register_button_height">25dp</dimen>
+    <dimen name="login_register_button_width">74dp</dimen>
+
+    <dimen name="login_logo_width">88dp</dimen>
+    <dimen name="login_logo_height">199dp</dimen>
+    <dimen name="login_logo_margin_top">14dp</dimen>
+    <dimen name="login_logo_margin_right">39dp</dimen>
+
+    <dimen name="login_content_margin_top">160dp</dimen>
+    <dimen name="login_content_account_margin_top">62dp</dimen>
+    <dimen name="error_info_height">34dp</dimen>
+    <dimen name="error_info_text_size">11dp</dimen>
+    <dimen name="login_button_margin_top">5dp</dimen>
+    <dimen name="login_button_margin_left">16dp</dimen>
+    <dimen name="forget_pwd_margin_top">8dp</dimen>
+    <dimen name="forget_pwd_padding_top">10dp</dimen>
+    <dimen name="forget_pwd_padding_left">20dp</dimen>
+    <dimen name="forget_pwd_text_size">12dp</dimen>
+    <dimen name="login_content_bottom">14dp</dimen>
+
+    <dimen name="app_introduce_margin_top">12dp</dimen>
+    <dimen name="app_introduce_margin_right">12dp</dimen>
+    <dimen name="app_introduce_text_size">11dp</dimen>
+
+    <dimen name="app_copyright_margin_bottom">12dp</dimen>
+    <dimen name="app_copyright_text_size">11dp</dimen>
+
+    <dimen name="login_header_margin_top">114dp</dimen>
+    <dimen name="login_header_size">90dp</dimen>
+    <dimen name="login_header_border_size">2dp</dimen>
+
+    <dimen name="register_content_account_margin_top">5dp</dimen>
+    <dimen name="register_content_bottom">24dp</dimen>
+
+    <dimen name="register_verify_code_margin_left">-4dp</dimen>
+    <dimen name="register_verify_code_margin_bottom">4dp</dimen>
+    <dimen name="verify_code_button_text_size">13dp</dimen>
+
+    <!--主页面-->
+    <dimen name="main_navigation_height">49dp</dimen>
+    <dimen name="main_navigation_margin">10.5dp</dimen>
+    <dimen name="main_navigation_image_margin_top">3.5dp</dimen>
+    <dimen name="main_navigation_contact_image_width">25dp</dimen>
+    <dimen name="main_navigation_contact_image_height">25dp</dimen>
+    <dimen name="main_navigation_dial_image_width">25dp</dimen>
+    <dimen name="main_navigation_dial_image_height">25dp</dimen>
+    <dimen name="main_navigation_more_image_width">25dp</dimen>
+    <dimen name="main_navigation_more_image_height">25dp</dimen>
+    <dimen name="main_navigation_text_size">10sp</dimen>
+
+</resources>
