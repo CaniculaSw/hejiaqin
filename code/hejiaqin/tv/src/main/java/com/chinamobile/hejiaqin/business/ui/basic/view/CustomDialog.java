@@ -213,9 +213,9 @@ public class CustomDialog extends Dialog {
             } else if (contentView != null) {
                 // if no message set
                 // addLocalContact the contentView to the dialog body
-                ((LinearLayout) layout.findViewById(R.id.content))
+                ((LinearLayout) layout.findViewById(R.id.content_left))
                         .removeAllViews();
-                ((LinearLayout) layout.findViewById(R.id.content))
+                ((LinearLayout) layout.findViewById(R.id.content_left))
                         .addView(contentView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
             }
             dialog.setContentView(layout);

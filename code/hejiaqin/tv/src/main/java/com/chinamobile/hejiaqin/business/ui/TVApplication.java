@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui;
 
+import android.app.Application;
 import android.content.Intent;
 
 import com.chinamobile.hejiaqin.tv.BuildConfig;
@@ -10,7 +11,7 @@ import com.customer.framework.utils.LogUtil;
 /**
  * Created by zhanggj on 2016/6/5.
  */
-public class TVApplication extends HeApplication implements
+public class TVApplication extends Application implements
         Thread.UncaughtExceptionHandler{
     @Override
     public void onCreate() {

@@ -47,7 +47,9 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     View mSettingLay;
 
-    BasicFragment[] mFragments = new BasicFragment[3];
+    BasicFragment[] mLeftFragments = new BasicFragment[3];
+
+    BasicFragment[] mRightFragments = new BasicFragment[1];
 
     TextView[] mTextViews = new TextView[3];
 
@@ -147,10 +149,14 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
 
         mFm = getSupportFragmentManager();
-        mFragments[mContactsIndex] = new ContactsFragment();
-        mFragments[mContactsIndex].setActivityListener(listener);
+        mLeftFragments[mContactsIndex] = new ContactsFragment();
+        mLeftFragments[mContactsIndex].setActivityListener(listener);
         FragmentTransaction ft = mFm.beginTransaction();
-        ft.add(R.id.content, mFragments[mContactsIndex]);
+        ft.add(R.id.content_left, mLeftFragments[mContactsIndex]);
+
+        mRightFragments[0] =  new TestFragment();
+        mRightFragments[0].setActivityListener(listener);
+        ft.add(R.id.content_right, mRightFragments[0]);
         ft.commit();
         mTextViews[mContactsIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
         mImageViews[mContactsIndex].setBackgroundResource(mImageSelectedBgResId[mContactsIndex]);
@@ -161,13 +167,21 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     protected void initDate() {
         settingLogic.checkVersion();
-        mVoipLogic.autoLogin();
+       // mVoipLogic.autoLogin();
     }
 
     @Override
     protected void initListener() {
         mContactsLay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                switchFragment(mContactsIndex);
+                mContactsLay.requestFocus();
+            }
+        });
+
+        mContactsLay.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
                 switchFragment(mContactsIndex);
             }
         });
@@ -185,7 +199,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                             //显示拨号盘
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
-                            mFragments[mDialIndex].recieveMsg(msg);
+                            mLeftFragments[mDialIndex].recieveMsg(msg);
                             break;
                         case DIAL_STATUS_SHOW_KEYBORD:
                             mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
@@ -193,25 +207,42 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                             //收起拨号盘
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
-                            mFragments[mDialIndex].recieveMsg(msg);
+                            mLeftFragments[mDialIndex].recieveMsg(msg);
                             break;
                         case DIAL_STATUS_CALL:
                             //呼叫电话
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID;
-                            mFragments[mDialIndex].recieveMsg(msg);
+                            mLeftFragments[mDialIndex].recieveMsg(msg);
                             break;
                     }
                 }
+                mDialLay.requestFocus();
+            }
+        });
+
+        mDialLay.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                switchFragment(mDialIndex);
             }
         });
 
         mSettingLay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switchFragment(mSettingIndex);
+                mSettingLay.requestFocus();
             }
         });
 
+        mSettingLay.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                switchFragment(mSettingIndex);
+            }
+        });
+
+        mContactsLay.requestFocus();
     }
 
     private void switchFragment(int toIndex) {
@@ -219,31 +250,37 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             return;
         }
         FragmentTransaction ft = mFm.beginTransaction();
-        ft.hide(mFragments[mCurrentIndex]);
-        if (mFragments[toIndex] != null) {
-            if (mFragments[toIndex].isAdded()) {
-                ft.show(mFragments[toIndex]);
+        ft.hide(mLeftFragments[mCurrentIndex]);
+        if (mLeftFragments[toIndex] != null) {
+            if (mLeftFragments[toIndex].isAdded()) {
+                ft.show(mLeftFragments[toIndex]);
             } else {
-                ft.add(R.id.content, mFragments[toIndex]);
+                ft.add(R.id.content_left, mLeftFragments[toIndex]);
             }
         } else {
             switch (toIndex) {
                 case mContactsIndex:
-                    mFragments[toIndex] = new ContactsFragment();
-                    mFragments[toIndex].setActivityListener(listener);
+                    mLeftFragments[toIndex] = new ContactsFragment();
+                    mLeftFragments[toIndex].setActivityListener(listener);
+                    mContactsLay.setFocusable(true);
+                    mContactsLay.requestFocus();
                     break;
                 case mDialIndex:
-                    mFragments[toIndex] = new DialFragment();
-                    mFragments[toIndex].setActivityListener(listener);
+                    mLeftFragments[toIndex] = new DialFragment();
+                    mLeftFragments[toIndex].setActivityListener(listener);
+                    mDialLay.setFocusable(true);
+                    mDialLay.requestFocus();
                     break;
                 case mSettingIndex:
-                    mFragments[toIndex] = new SettingFragment();
-                    mFragments[toIndex].setActivityListener(listener);
+                    mLeftFragments[toIndex] = new SettingFragment();
+                    mLeftFragments[toIndex].setActivityListener(listener);
+                    mSettingLay.setFocusable(true);
+                    mSettingLay.requestFocus();
                     break;
             }
-            ft.add(R.id.content, mFragments[toIndex]);
+            ft.add(R.id.content_left, mLeftFragments[toIndex]);
         }
-        LogUtil.d("MainFragmentActivity", "commit:" + mFragments[toIndex].getClass());
+        LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
         ft.commit();
         mTextViews[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
         mImageViews[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
@@ -275,7 +312,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     //显示拨号盘
                     Message msg = new Message();
                     msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
-                    mFragments[mDialIndex].recieveMsg(msg);
+                    mLeftFragments[mDialIndex].recieveMsg(msg);
                     break;
                 case DIAL_STATUS_CALL:
                     mImageViews[toIndex].setVisibility(View.GONE);
@@ -302,7 +339,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             //收起拨号盘
             Message msg = new Message();
             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
-            mFragments[mDialIndex].recieveMsg(msg);
+            mLeftFragments[mDialIndex].recieveMsg(msg);
         }
 
         final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this, R.style.CalendarDialog);
@@ -349,8 +386,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     public void doNetWorkConnect() {
         //通知Fragment网络已经连接
-        if (mFragments[mContactsIndex] != null) {
-            mFragments[mContactsIndex].doNetWorkConnect();
+        if (mLeftFragments[mContactsIndex] != null) {
+            mLeftFragments[mContactsIndex].doNetWorkConnect();
         }
     }
 
