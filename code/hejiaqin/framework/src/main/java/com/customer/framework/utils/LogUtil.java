@@ -93,11 +93,13 @@ public class LogUtil {
      * @param msg 打印信息
      * @return 返回
      */
-    public static int v(String tag, String msg) {
-        if (hasPermissions()) {
-            return Logger.v(tag, msg);
-        } else {
-            return Log.v(tag, msg);
+    public static void v(String tag, String msg) {
+        if(isLoggable(VERBOSE)) {
+            if (hasPermissions()) {
+                Logger.v(tag, msg);
+            } else {
+                Log.v(tag, msg);
+            }
         }
     }
 
@@ -109,11 +111,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int v(String tag, String msg, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.v(tag, msg, tr);
-        } else {
-            return Log.v(tag, msg, tr);
+    public static void v(String tag, String msg, Throwable tr) {
+        if(isLoggable(VERBOSE)) {
+            if (hasPermissions()) {
+                Logger.v(tag, msg, tr);
+            } else {
+                Log.v(tag, msg, tr);
+            }
         }
     }
 
@@ -125,11 +129,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int v(String tag, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.v(tag, tr);
-        } else {
-            return Log.v(tag, getStackTraceString(tr));
+    public static void v(String tag, Throwable tr) {
+        if(isLoggable(VERBOSE)) {
+            if (hasPermissions()) {
+                Logger.v(tag, tr);
+            } else {
+                Log.v(tag, getStackTraceString(tr));
+            }
         }
     }
 
@@ -140,11 +146,13 @@ public class LogUtil {
      * @param msg 打印信息
      * @return 返回
      */
-    public static int d(String tag, String msg) {
-        if (hasPermissions()) {
-            return Logger.d(tag, msg);
-        } else {
-            return Log.d(tag, msg);
+    public static void d(String tag, String msg) {
+        if(isLoggable(DEBUG)) {
+            if (hasPermissions()) {
+                Logger.d(tag, msg);
+            } else {
+                Log.d(tag, msg);
+            }
         }
     }
 
@@ -156,11 +164,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int d(String tag, String msg, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.d(tag, msg, tr);
-        } else {
-            return Log.d(tag, msg, tr);
+    public static void d(String tag, String msg, Throwable tr) {
+        if(isLoggable(DEBUG)) {
+            if (hasPermissions()) {
+                Logger.d(tag, msg, tr);
+            } else {
+                Log.d(tag, msg, tr);
+            }
         }
     }
 
@@ -171,11 +181,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int d(String tag, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.d(tag, tr);
-        } else {
-            return Log.d(tag, getStackTraceString(tr));
+    public static void d(String tag, Throwable tr) {
+        if(isLoggable(DEBUG)) {
+            if (hasPermissions()) {
+                Logger.d(tag, tr);
+            } else {
+                Log.d(tag, getStackTraceString(tr));
+            }
         }
     }
 
@@ -186,11 +198,13 @@ public class LogUtil {
      * @param msg 打印信息
      * @return 返回
      */
-    public static int i(String tag, String msg) {
-        if (hasPermissions()) {
-            return Logger.i(tag, msg);
-        } else {
-            return Log.i(tag, msg);
+    public static void i(String tag, String msg) {
+        if(isLoggable(INFO)) {
+            if (hasPermissions()) {
+                Logger.i(tag, msg);
+            } else {
+                Log.i(tag, msg);
+            }
         }
     }
 
@@ -202,11 +216,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int i(String tag, String msg, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.i(tag, msg, tr);
-        } else {
-            return Log.i(tag, msg, tr);
+    public static void i(String tag, String msg, Throwable tr) {
+        if(isLoggable(INFO)) {
+            if (hasPermissions()) {
+                Logger.i(tag, msg, tr);
+            } else {
+                Log.i(tag, msg, tr);
+            }
         }
     }
 
@@ -217,11 +233,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int i(String tag, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.i(tag, tr);
-        } else {
-            return Log.i(tag, getStackTraceString(tr));
+    public static void i(String tag, Throwable tr) {
+        if(isLoggable(INFO)) {
+            if (hasPermissions()) {
+                Logger.i(tag, tr);
+            } else {
+                Log.i(tag, getStackTraceString(tr));
+            }
         }
     }
 
@@ -232,11 +250,13 @@ public class LogUtil {
      * @param msg 打印信息
      * @return 返回
      */
-    public static int w(String tag, String msg) {
-        if (hasPermissions()) {
-            return Logger.w(tag, msg);
-        } else {
-            return Log.w(tag, msg);
+    public static void w(String tag, String msg) {
+        if(isLoggable(WARN)) {
+            if (hasPermissions()) {
+                Logger.w(tag, msg);
+            } else {
+                Log.w(tag, msg);
+            }
         }
     }
 
@@ -248,11 +268,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int w(String tag, String msg, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.w(tag, msg, tr);
-        } else {
-            return Log.w(tag, msg, tr);
+    public static void w(String tag, String msg, Throwable tr) {
+        if(isLoggable(WARN)) {
+            if (hasPermissions()) {
+                Logger.w(tag, msg, tr);
+            } else {
+                Log.w(tag, msg, tr);
+            }
         }
     }
 
@@ -263,11 +285,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int w(String tag, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.w(tag, tr);
-        } else {
-            return Log.w(tag, getStackTraceString(tr));
+    public static void w(String tag, Throwable tr) {
+        if(isLoggable(WARN)) {
+            if (hasPermissions()) {
+                Logger.w(tag, tr);
+            } else {
+                Log.w(tag, getStackTraceString(tr));
+            }
         }
     }
 
@@ -278,11 +302,13 @@ public class LogUtil {
      * @param msg 打印信息
      * @return 返回
      */
-    public static int e(String tag, String msg) {
-        if (hasPermissions()) {
-            return Logger.e(tag, msg);
-        } else {
-            return Log.e(tag, msg);
+    public static void e(String tag, String msg) {
+        if(isLoggable(ERROR)) {
+            if (hasPermissions()) {
+                Logger.e(tag, msg);
+            } else {
+                Log.e(tag, msg);
+            }
         }
     }
 
@@ -294,11 +320,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int e(String tag, String msg, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.e(tag, msg, tr);
-        } else {
-            return Log.e(tag, msg, tr);
+    public static void e(String tag, String msg, Throwable tr) {
+        if(isLoggable(ERROR)) {
+            if (hasPermissions()) {
+                Logger.e(tag, msg, tr);
+            } else {
+                Log.e(tag, msg, tr);
+            }
         }
     }
 
@@ -309,11 +337,13 @@ public class LogUtil {
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int e(String tag, Throwable tr) {
-        if (hasPermissions()) {
-            return Logger.e(tag, tr);
-        } else {
-            return Log.e(tag, getStackTraceString(tr));
+    public static void e(String tag, Throwable tr) {
+        if(isLoggable(ERROR)) {
+            if (hasPermissions()) {
+                Logger.e(tag, tr);
+            } else {
+                Log.e(tag, getStackTraceString(tr));
+            }
         }
     }
 
@@ -343,6 +373,6 @@ public class LogUtil {
      * @return
      */
     private static String getStackTraceString(Throwable tr) {
-        return Log.getStackTraceString(tr);
+        return android.util.Log.getStackTraceString(tr);
     }
 }
