@@ -2,41 +2,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/common_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/contact_add_layout"
         android:layout_width="fill_parent"
-        android:layout_height="39dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="70px"
+        android:background="@drawable/adapter_contact_list_item_bg"
+        android:orientation="horizontal"
+        android:paddingLeft="56px"
+        android:paddingRight="56px">
 
         <ImageView
             android:id="@+id/contact_add_img"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="43px"
+            android:layout_height="43px"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/contact_search_icon" />
+            android:src="@mipmap/contact_add" />
+
         <TextView
             android:id="@+id/contact_add_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="26sp"
             android:layout_toRightOf="@+id/contact_add_img"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/contact_list_search_text_color"
-            android:text="@string/contact_modify_title_add_text"
+            android:text="@string/contact_add_text"
+            android:textColor="@color/contact_list_username_text_color"
             android:textSize="13sp" />
 
     </RelativeLayout>
 
     <View
         android:id="@+id/divider"
-        android:layout_below="@+id/contact_head_layout"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_below="@+id/contact_add_layout"
+        android:layout_marginLeft="56px"
+        android:layout_marginRight="56px"
         android:background="@color/contact_list_divider_bg_color" />
 
 </RelativeLayout>

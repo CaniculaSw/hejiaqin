@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/headerLayout"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/header_height"
-    android:background="@color/green"
+    android:layout_height="86px"
+    android:background="@color/common_bg"
     android:orientation="horizontal">
 
     <LinearLayout

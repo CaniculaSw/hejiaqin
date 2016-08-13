@@ -2,21 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/common_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/contact_info_layout"
         android:layout_width="fill_parent"
         android:layout_height="55dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:background="@drawable/adapter_contact_list_item_bg"
+        android:orientation="horizontal"
+        android:paddingLeft="56px"
+        android:paddingRight="56px">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_photo_img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="43px"
+            android:layout_height="43px"
             android:layout_centerVertical="true"
             android:src="@drawable/contact_photo_default" />
 
@@ -25,10 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColor="@color/contact_list_username_text_color"
-            android:textSize="16sp"
+            android:layout_marginLeft="26px"
             android:layout_toRightOf="@+id/contact_photo_img"
-            android:layout_marginLeft="10dp"/>
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -37,5 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/contact_info_layout"
+        android:layout_marginLeft="56px"
+        android:layout_marginRight="56px"
         android:background="@color/contact_list_divider_bg_color" />
 </RelativeLayout>

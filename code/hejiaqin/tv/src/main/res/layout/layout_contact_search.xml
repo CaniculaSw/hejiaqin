@@ -15,7 +15,7 @@
             android:layout_height="14dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="26dp"
-            android:src="@drawable/contact_search_icon" />
+            android:src="@mipmap/contact_search_icon" />
 
         <EditText
             android:id="@+id/search_input"

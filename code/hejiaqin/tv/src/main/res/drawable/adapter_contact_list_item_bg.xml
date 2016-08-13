@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--选中时的图片背景-->
+    <item android:state_selected="true">
+        <color android:color="@color/navigator_bg" />
+    </item>
+    <!--获得焦点时的图片背景-->
+    <item android:state_focused="true">
+        <color android:color="@color/navigator_bg" />
+    </item>
+    <!-- 默认时的背景图片-->
+    <item>
+        <color android:color="@color/common_bg" />
+    </item>
+
+</selector>

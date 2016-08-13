@@ -247,7 +247,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 sdkuserInfo.countryCode="+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                voipLogic.login(sdkuserInfo,null,null);
+              //  voipLogic.login(sdkuserInfo,null,null);
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
                 this.startActivity(intent);

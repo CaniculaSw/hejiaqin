@@ -59,7 +59,6 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
 
         titleLayout = (HeaderView) view.findViewById(R.id.title);
         titleLayout.title.setText(R.string.contact_navigation_app_contacts);
-        titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
 
         StickyListHeadersListView contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
