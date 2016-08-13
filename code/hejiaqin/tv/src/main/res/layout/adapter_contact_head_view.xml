@@ -11,8 +11,8 @@
         android:layout_height="21dp"
         android:background="@color/contact_list_head_bg_color"
         android:orientation="horizontal"
-        android:paddingLeft="56px"
-        android:paddingRight="56px">
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp">
 
         <TextView
             android:id="@+id/contact_head_text"
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/contact_head_layout"
-        android:layout_marginLeft="56px"
-        android:layout_marginRight="56px"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
         android:background="@color/contact_list_divider_bg_color" />
 
 </RelativeLayout>

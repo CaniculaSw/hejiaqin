@@ -8,16 +8,16 @@
     <RelativeLayout
         android:id="@+id/contact_add_layout"
         android:layout_width="fill_parent"
-        android:layout_height="70px"
+        android:layout_height="35dp"
         android:background="@drawable/adapter_contact_list_item_bg"
         android:orientation="horizontal"
-        android:paddingLeft="56px"
-        android:paddingRight="56px">
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp">
 
         <ImageView
             android:id="@+id/contact_add_img"
-            android:layout_width="43px"
-            android:layout_height="43px"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/contact_add" />
 
@@ -39,8 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/contact_add_layout"
-        android:layout_marginLeft="56px"
-        android:layout_marginRight="56px"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
         android:background="@color/contact_list_divider_bg_color" />
 
 </RelativeLayout>

@@ -8,9 +8,9 @@
     <RelativeLayout
         android:id="@+id/contact_search_layout"
         android:layout_width="fill_parent"
-        android:layout_height="46px"
-        android:layout_marginLeft="56px"
-        android:layout_marginRight="56px"
+        android:layout_height="23dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
         android:background="@mipmap/contact_search_bg"
         android:gravity="center"
         android:orientation="horizontal">

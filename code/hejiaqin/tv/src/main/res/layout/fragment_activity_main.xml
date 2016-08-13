@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/main_nav"
-        android:layout_width="200px"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
         android:background="@color/navigator_bg"
         android:focusable="true"
@@ -17,20 +17,20 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32px"
+            android:layout_marginTop="16dp"
             android:focusable="false"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/logo_nav" />
 
         <RelativeLayout
-            android:layout_width="200px"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
             <LinearLayout
                 android:id="@+id/recent_layout"
-                android:layout_width="200px"
-                android:layout_height="100px"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:focusable="true"
                 android:gravity="center"
                 android:nextFocusDown="@+id/contact_layout"
@@ -47,8 +47,8 @@
 
             <LinearLayout
                 android:id="@+id/contact_layout"
-                android:layout_width="200px"
-                android:layout_height="100px"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/recent_layout"
                 android:focusable="true"
                 android:gravity="center"
@@ -68,8 +68,8 @@
 
             <LinearLayout
                 android:id="@+id/dial_layout"
-                android:layout_width="200px"
-                android:layout_height="100px"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/contact_layout"
                 android:focusable="true"
                 android:gravity="center"
@@ -88,8 +88,8 @@
 
             <LinearLayout
                 android:id="@+id/more_layout"
-                android:layout_width="200px"
-                android:layout_height="100px"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/dial_layout"
                 android:focusable="true"
                 android:gravity="center"

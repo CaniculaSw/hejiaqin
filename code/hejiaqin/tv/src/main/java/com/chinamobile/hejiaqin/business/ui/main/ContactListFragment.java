@@ -72,7 +72,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         searchText = (TextView) searchLayout.findViewById(R.id.contact_search_text);
         // 添加点击事件
         searchLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
-        FocusManager.getInstance().addFocusViewInLeftFrag("0", searchLayout);
+        FocusManager.getInstance().addFocusViewInLeftFrag("1", searchLayout);
 
         // 添加新增联系人
         View addLayout = inflater.inflate(R.layout.layout_contact_add_view, null);
@@ -83,6 +83,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         // 添加adapter
         adapter = new AppContactAdapter(context);
         contactListView.setAdapter(adapter);
+
     }
 
     @Override
