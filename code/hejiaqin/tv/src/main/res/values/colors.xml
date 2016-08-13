@@ -44,6 +44,9 @@
     <!-- 公共-->
     <color name="white">#ffffff</color>
     <color name="green">#40c875</color>
+    <color name="common_bg">#484c9f</color>
+    <color name="navigator_bg">#181f54</color>
+    <color name="navigator_select_bg">#484c9f</color>
 
     <!-- 联系人 -->
     <color name="contact_list_navigator_text_selected">#ffffffff</color>

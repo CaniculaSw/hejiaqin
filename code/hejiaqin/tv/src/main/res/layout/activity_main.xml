@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:id="@+id/main_bottom"
+        android:id="@+id/main_nav"
         android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/main_navigation_margin"

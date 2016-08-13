@@ -5,13 +5,14 @@ import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
@@ -20,6 +21,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
 
 /**
@@ -41,33 +43,24 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     View mNavigatorLay;
 
-    View mContactsLay;
-
-    View mDialLay;
-
-    View mSettingLay;
-
-    BasicFragment[] mLeftFragments = new BasicFragment[3];
+    BasicFragment[] mLeftFragments = new BasicFragment[4];
 
     BasicFragment[] mRightFragments = new BasicFragment[1];
 
-    TextView[] mTextViews = new TextView[3];
+//    TextView[] mTextViews = new TextView[3];
 
-    ImageView[] mImageViews = new ImageView[3];
+    View[] mMenuViews = new View[4];
 
     ImageView mDialCallImage;
 
-    int[] mImageSelectedBgResId = new int[3];
-
-    int[] mImageUnSelectedBgResId = new int[3];
-
     int mCurrentIndex;
+    final int mRecentIndex = 0;
 
-    final int mContactsIndex = 0;
+    final int mContactsIndex = 1;
 
-    final int mDialIndex = 1;
+    final int mDialIndex = 2;
 
-    final int mSettingIndex = 2;
+    final int mSettingIndex = 3;
 
     private boolean mDialSeleted = false;
 
@@ -88,19 +81,14 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     MainFragmentActivity.this.finishAllActivity(LoginActivity.class.getName());
                     break;
                 case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID:
-                    if(mDialStatus == DIAL_STATUS_CALL) {
+                    if (mDialStatus == DIAL_STATUS_CALL) {
                         return;
                     }
-                    mImageViews[mDialIndex].setVisibility(View.GONE);
-                    mTextViews[mDialIndex].setVisibility(View.GONE);
                     mDialCallImage.setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_CALL;
                     break;
                 case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID:
                     mDialCallImage.setVisibility(View.GONE);
-                    mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial_show);
-                    mImageViews[mDialIndex].setVisibility(View.VISIBLE);
-                    mTextViews[mDialIndex].setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
                     break;
                 // 显示导航栏
@@ -125,41 +113,29 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initView() {
-        mNavigatorLay = findViewById(R.id.main_bottom);
-        mContactsLay = findViewById(R.id.contact_layout);
-        mDialLay = findViewById(R.id.dial_layout);
-        mSettingLay = findViewById(R.id.more_layout);
+        mNavigatorLay = findViewById(R.id.main_nav);
 
-        mTextViews[mContactsIndex] = (TextView) findViewById(R.id.contact_text);
-        mTextViews[mDialIndex] = (TextView) findViewById(R.id.dial_text);
-        mTextViews[mSettingIndex] = (TextView) findViewById(R.id.more_text);
-
-        mImageViews[mContactsIndex] = (ImageView) findViewById(R.id.contact_image);
-        mImageViews[mDialIndex] = (ImageView) findViewById(R.id.dial_image);
-        mImageViews[mSettingIndex] = (ImageView) findViewById(R.id.more_image);
-
-        mImageSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_selected_contact;
-        mImageSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_selected_dial_show;
-        mImageSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_selected_more;
-
-        mImageUnSelectedBgResId[mContactsIndex] = R.mipmap.main_navigation_unselected_contact;
-        mImageUnSelectedBgResId[mDialIndex] = R.mipmap.main_navigation_unselected_dial;
-        mImageUnSelectedBgResId[mSettingIndex] = R.mipmap.main_navigation_unselected_more;
+        mMenuViews[mRecentIndex] = findViewById(R.id.recent_layout);
+        mMenuViews[mRecentIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
+        mMenuViews[mContactsIndex] = findViewById(R.id.contact_layout);
+        mMenuViews[mContactsIndex].setBackgroundColor(getResources().getColor(R.color.navigator_select_bg));
+        mMenuViews[mDialIndex] = findViewById(R.id.dial_layout);
+        mMenuViews[mDialIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
+        mMenuViews[mSettingIndex] = findViewById(R.id.more_layout);
+        mMenuViews[mSettingIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
 
         mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
 
         mFm = getSupportFragmentManager();
-        mLeftFragments[mContactsIndex] = new ContactsFragment();
+        mLeftFragments[mContactsIndex] = new ContactListFragment();
         mLeftFragments[mContactsIndex].setActivityListener(listener);
         FragmentTransaction ft = mFm.beginTransaction();
         ft.add(R.id.content_left, mLeftFragments[mContactsIndex]);
 
-        mRightFragments[0] =  new TestFragment();
+        mRightFragments[0] = new TestFragment();
         mRightFragments[0].setActivityListener(listener);
         ft.add(R.id.content_right, mRightFragments[0]);
         ft.commit();
-        mTextViews[mContactsIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
-        mImageViews[mContactsIndex].setBackgroundResource(mImageSelectedBgResId[mContactsIndex]);
         mCurrentIndex = mContactsIndex;
 
     }
@@ -167,88 +143,33 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     protected void initDate() {
         settingLogic.checkVersion();
-       // mVoipLogic.autoLogin();
+        // mVoipLogic.autoLogin();
     }
 
     @Override
     protected void initListener() {
-        mContactsLay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                switchFragment(mContactsIndex);
-                mContactsLay.requestFocus();
-            }
-        });
-
-        mContactsLay.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                switchFragment(mContactsIndex);
-            }
-        });
-
-        mDialLay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!mDialSeleted) {
-                    switchFragment(mDialIndex);
-                } else {
-                    Message msg;
-                    switch (mDialStatus) {
-                        case DIAL_STATUS_NORMAL:
-                            mImageViews[mDialIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
-                            mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
-                            //显示拨号盘
-                            msg = new Message();
-                            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
-                            mLeftFragments[mDialIndex].recieveMsg(msg);
-                            break;
-                        case DIAL_STATUS_SHOW_KEYBORD:
-                            mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
-                            mDialStatus = DIAL_STATUS_NORMAL;
-                            //收起拨号盘
-                            msg = new Message();
-                            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
-                            mLeftFragments[mDialIndex].recieveMsg(msg);
-                            break;
-                        case DIAL_STATUS_CALL:
-                            //呼叫电话
-                            msg = new Message();
-                            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID;
-                            mLeftFragments[mDialIndex].recieveMsg(msg);
-                            break;
-                    }
+        for (int i = 0; i < mMenuViews.length; i++) {
+            final int menuIndex = i;
+            mMenuViews[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    switchFragment(menuIndex);
                 }
-                mDialLay.requestFocus();
-            }
-        });
+            });
 
-        mDialLay.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                switchFragment(mDialIndex);
-            }
-        });
-
-        mSettingLay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                switchFragment(mSettingIndex);
-                mSettingLay.requestFocus();
-            }
-        });
-
-        mSettingLay.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                switchFragment(mSettingIndex);
-            }
-        });
-
-        mContactsLay.requestFocus();
+            mMenuViews[i].setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    switchFragment(menuIndex);
+                }
+            });
+        }
     }
 
     private void switchFragment(int toIndex) {
         if (mCurrentIndex == toIndex) {
             return;
         }
+
         FragmentTransaction ft = mFm.beginTransaction();
         ft.hide(mLeftFragments[mCurrentIndex]);
         if (mLeftFragments[toIndex] != null) {
@@ -259,82 +180,45 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             }
         } else {
             switch (toIndex) {
-                case mContactsIndex:
-                    mLeftFragments[toIndex] = new ContactsFragment();
+                case mRecentIndex:
+                    mLeftFragments[toIndex] = new TestFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    mContactsLay.setFocusable(true);
-                    mContactsLay.requestFocus();
+                    break;
+                case mContactsIndex:
+                    mLeftFragments[toIndex] = new ContactListFragment();
+                    mLeftFragments[toIndex].setActivityListener(listener);
                     break;
                 case mDialIndex:
                     mLeftFragments[toIndex] = new DialFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    mDialLay.setFocusable(true);
-                    mDialLay.requestFocus();
                     break;
                 case mSettingIndex:
                     mLeftFragments[toIndex] = new SettingFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    mSettingLay.setFocusable(true);
-                    mSettingLay.requestFocus();
                     break;
             }
             ft.add(R.id.content_left, mLeftFragments[toIndex]);
         }
         LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
         ft.commit();
-        mTextViews[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
-        mImageViews[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
-        if (toIndex != mDialIndex) {
-            mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
-            mImageViews[toIndex].setBackgroundResource(mImageSelectedBgResId[toIndex]);
-        }
-        if (mCurrentIndex == mDialIndex) {
-            mDialSeleted = false;
-            if (mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
-                mDialStatus = DIAL_STATUS_NORMAL;
-            }
-            else if(mDialStatus == DIAL_STATUS_CALL)
-            {
-                mImageViews[mDialIndex].setVisibility(View.VISIBLE);
-                mTextViews[mDialIndex].setVisibility(View.VISIBLE);
-                mDialCallImage.setVisibility(View.GONE);
-            }
-        } else if (toIndex == mDialIndex) {
-            mDialSeleted = true;
-            switch (mDialStatus) {
-                case DIAL_STATUS_NORMAL:
-                    mDialCallImage.setVisibility(View.GONE);
-                    mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
-                    mImageViews[toIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
-                    mImageViews[toIndex].setVisibility(View.VISIBLE);
-                    mTextViews[toIndex].setVisibility(View.VISIBLE);
-                    mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
-                    //显示拨号盘
-                    Message msg = new Message();
-                    msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;
-                    mLeftFragments[mDialIndex].recieveMsg(msg);
-                    break;
-                case DIAL_STATUS_CALL:
-                    mImageViews[toIndex].setVisibility(View.GONE);
-                    mTextViews[toIndex].setVisibility(View.GONE);
-                    mDialCallImage.setVisibility(View.VISIBLE);
-                    break;
 
-            }
-        }
+        mMenuViews[mCurrentIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
+        mMenuViews[toIndex].setBackgroundColor(getResources().getColor(R.color.navigator_select_bg));
+
         mCurrentIndex = toIndex;
+        FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
     }
+
 
     @Override
     protected void initLogics() {
-        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
         settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     private void showPopupWindow() {
 
-        if(mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
-            mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+        if (mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
             mDialStatus = DIAL_STATUS_NORMAL;
             //收起拨号盘
             Message msg = new Message();
@@ -394,11 +278,38 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            showToast(R.string.quit_app_toast_msg, Toast.LENGTH_SHORT,null);
+            showToast(R.string.quit_app_toast_msg, Toast.LENGTH_SHORT, null);
             exitTime = System.currentTimeMillis();
             return;
         }
         mVoipLogic.logout();
         super.onBackPressed();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_LEFT");
+                FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_RIGHT");
+                View leftFocusView = FocusManager.getInstance().getFocusViewInLeftFrag(String.valueOf(mCurrentIndex));
+                if (null != leftFocusView) {
+                    FocusManager.getInstance().requestFocus(leftFocusView);
+                    return true;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_UP");
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_DOWN");
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

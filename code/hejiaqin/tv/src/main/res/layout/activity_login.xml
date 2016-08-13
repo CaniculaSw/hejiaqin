@@ -121,6 +121,8 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
+            android:nextFocusDown="@+id/sign_in_button"
+            android:nextFocusUp="@+id/account_edit_tv"
             android:textColor="@color/black"
             android:textColorHint="@color/hint_text_color_gray"
             android:textSize="16sp" />
@@ -135,6 +137,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_login_bg"
         android:gravity="center"
+        android:nextFocusDown="@+id/forget_pwd_tv"
+        android:nextFocusUp="@+id/password_edit_tv"
         android:text="@string/action_sign_in"
         android:textColor="@color/white"
         android:textSize="18sp" />
@@ -146,6 +150,7 @@
         android:layout_below="@+id/sign_in_button"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:nextFocusUp="@+id/sign_in_button"
         android:layout_marginTop="24dp"
         android:gravity="center"
         android:maxLines="1"

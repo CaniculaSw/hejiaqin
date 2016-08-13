@@ -63,7 +63,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="38dp"
-                android:text="@string/contact_navigation_sys_contacts"
+                android:text="@string/contact_navigation_app_contacts"
                 android:textColor="@color/contact_list_navigator_text_unselected"
                 android:textSize="18sp" />
 
