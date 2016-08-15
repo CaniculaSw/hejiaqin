@@ -1,13 +1,17 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
@@ -15,17 +19,42 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
 import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.StringUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactInfoFragment";
 
     private LayoutInflater inflater;
 
-    private LinearLayout contactInfoLayout;
+    private RelativeLayout contactInfoLayout;
+    private HeaderView titleLayout;
+    private TextView mContactNameText;
+    private CircleImageView mContactHeadImg;
+
 
     private ContactsInfo mContactsInfo;
+    private boolean isStranger;
+
+    public static ContactInfoFragment newInstance(String contactNumber) {
+        ContactInfoFragment fragment = new ContactInfoFragment();
+        Bundle args = new Bundle();
+        args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ContactInfoFragment newInstance(ContactsInfo contactsInfo) {
+        ContactInfoFragment fragment = new ContactInfoFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -44,14 +73,50 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initView(View view) {
-        inflater = (LayoutInflater) getContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
-        contactInfoLayout = (LinearLayout) view.findViewById(R.id.contact_info_layout);
+        contactInfoLayout = (RelativeLayout) view.findViewById(R.id.contact_info_layout);
+
+        // title
+        titleLayout = (HeaderView) view.findViewById(R.id.title);
+        titleLayout.title.setText(R.string.contact_info_title_text);
+        titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
+
+        // 联系人姓名
+        mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
+        // 联系人头像
+        mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
     }
 
     @Override
     protected void initData() {
-        refreshView();
+
+        Bundle argBundle = getArguments();
+        if (null == argBundle) {
+            return;
+        }
+        mContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+
+        if (mContactsInfo == null) {
+            //通话记录传入的号码
+            String callRecordNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+            isStranger = true;
+            mContactsInfo = new ContactsInfo();
+            NumberInfo numberInfo = new NumberInfo();
+            numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+            numberInfo.setNumber(callRecordNumber);
+            mContactsInfo.setContactId("");
+            mContactsInfo.setName("");
+            mContactsInfo.setPhotoLg("");
+            mContactsInfo.setPhotoSm("");
+            mContactsInfo.addNumber(numberInfo);
+        }
+
+        mContactNameText.setText(mContactsInfo.getName());
+        if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+            Picasso.with(getContext())
+                    .load(mContactsInfo.getPhotoSm())
+                    .placeholder(R.drawable.contact_photo_default)
+                    .error(R.drawable.contact_photo_default).into(mContactHeadImg);
+        }
     }
 
 

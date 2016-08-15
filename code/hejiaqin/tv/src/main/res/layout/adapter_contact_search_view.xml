@@ -56,4 +56,6 @@
         android:layout_height="0.5dp"
         android:layout_below="@+id/contact_info_layout"
         android:background="@color/contact_list_divider_bg_color" />
+
+
 </RelativeLayout>

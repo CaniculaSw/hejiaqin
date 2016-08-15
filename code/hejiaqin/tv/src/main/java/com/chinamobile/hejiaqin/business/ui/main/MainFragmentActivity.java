@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
@@ -38,8 +39,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     private static final int DIAL_STATUS_SHOW_KEYBORD = 2;
 
     private static final int DIAL_STATUS_CALL = 3;
-
-    FragmentManager mFm;
 
     View mNavigatorLay;
 
@@ -126,16 +125,15 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
 
-        mFm = getSupportFragmentManager();
+        FragmentMgr.getInstance().init(this, R.id.content_left, R.id.content_right);
         mLeftFragments[mContactsIndex] = new ContactListFragment();
         mLeftFragments[mContactsIndex].setActivityListener(listener);
-        FragmentTransaction ft = mFm.beginTransaction();
-        ft.add(R.id.content_left, mLeftFragments[mContactsIndex]);
+        FragmentMgr.getInstance().showContactFragment(mLeftFragments[mContactsIndex]);
 
         mRightFragments[0] = new TestFragment();
         mRightFragments[0].setActivityListener(listener);
-        ft.add(R.id.content_right, mRightFragments[0]);
-        ft.commit();
+        FragmentMgr.getInstance().showRightFragment(mRightFragments[0]);
+
         mCurrentIndex = mContactsIndex;
 
     }
@@ -170,37 +168,38 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             return;
         }
 
-        FragmentTransaction ft = mFm.beginTransaction();
-        ft.hide(mLeftFragments[mCurrentIndex]);
-        if (mLeftFragments[toIndex] != null) {
-            if (mLeftFragments[toIndex].isAdded()) {
-                ft.show(mLeftFragments[toIndex]);
-            } else {
-                ft.add(R.id.content_left, mLeftFragments[toIndex]);
-            }
-        } else {
-            switch (toIndex) {
-                case mRecentIndex:
+        switch (toIndex) {
+            case mRecentIndex:
+                if (null == mLeftFragments[toIndex]) {
                     mLeftFragments[toIndex] = new TestFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    break;
-                case mContactsIndex:
+                }
+                FragmentMgr.getInstance().showRecentFragment(mLeftFragments[toIndex]);
+                break;
+            case mContactsIndex:
+                if (null == mLeftFragments[toIndex]) {
                     mLeftFragments[toIndex] = new ContactListFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    break;
-                case mDialIndex:
+                }
+                FragmentMgr.getInstance().showContactFragment(mLeftFragments[toIndex]);
+                break;
+            case mDialIndex:
+                if (null == mLeftFragments[toIndex]) {
                     mLeftFragments[toIndex] = new DialFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    break;
-                case mSettingIndex:
+                }
+                FragmentMgr.getInstance().showDialFragment(mLeftFragments[toIndex]);
+                break;
+            case mSettingIndex:
+                if (null == mLeftFragments[toIndex]) {
                     mLeftFragments[toIndex] = new SettingFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
-                    break;
-            }
-            ft.add(R.id.content_left, mLeftFragments[toIndex]);
+                }
+                FragmentMgr.getInstance().showSettingFragment(mLeftFragments[toIndex]);
+                break;
         }
+
         LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
-        ft.commit();
 
         mMenuViews[mCurrentIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
         mMenuViews[toIndex].setBackgroundColor(getResources().getColor(R.color.navigator_select_bg));

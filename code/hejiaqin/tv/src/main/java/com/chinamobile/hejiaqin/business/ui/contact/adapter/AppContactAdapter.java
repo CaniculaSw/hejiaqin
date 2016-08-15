@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
@@ -85,11 +87,14 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
         holder.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+//                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
+
+                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo);
+                FragmentMgr.getInstance().showContactFragment(fragment);
             }
         });
     }
