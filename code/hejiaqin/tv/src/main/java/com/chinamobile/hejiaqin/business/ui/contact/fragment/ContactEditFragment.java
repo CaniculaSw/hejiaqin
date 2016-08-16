@@ -1,25 +1,20 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
-import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
-import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.utils.LogUtil;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +22,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
+public class ContactEditFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactInfoFragment";
 
     private LayoutInflater inflater;
@@ -41,16 +36,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private ContactsInfo mContactsInfo;
     private boolean isStranger;
 
-    public static ContactInfoFragment newInstance(String contactNumber) {
-        ContactInfoFragment fragment = new ContactInfoFragment();
-        Bundle args = new Bundle();
-        args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static ContactInfoFragment newInstance(ContactsInfo contactsInfo) {
-        ContactInfoFragment fragment = new ContactInfoFragment();
+    public static ContactEditFragment newInstance(ContactsInfo contactsInfo) {
+        ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
         args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
         fragment.setArguments(args);
@@ -69,7 +56,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_contact_info;
+        return R.layout.fragment_contact_edit;
     }
 
     @Override
@@ -85,8 +72,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
         // 联系人头像
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
-
-        titleLayout.backImageView.setOnClickListener(this);
     }
 
     @Override

@@ -100,18 +100,46 @@ public class FragmentMgr {
         fragmentTransaction.commit();
     }
 
-    public void finishFragment(Stack fragmentStack, BaseFragment fragment) {
+    public void finishRecentFragment(BaseFragment fragment) {
+        finishFragment(recentFragmentStack, fragment);
+    }
 
+    public void finishContactFragment(BaseFragment fragment) {
+        finishFragment(contactFragmentStack, fragment);
+    }
+
+
+    public void finishDialFragment(BaseFragment fragment) {
+        finishFragment(dialFragmentStack, fragment);
+    }
+
+    public void finishSettingFragment(BaseFragment fragment) {
+        finishFragment(settingFragmentStack, fragment);
+    }
+
+    public void finishRightFragment(BaseFragment fragment) {
+        finishFragment(rightFragmentStack, fragment);
+    }
+
+
+    private void finishFragment(Stack fragmentStack, BaseFragment fragment) {
+        Logger.d(TAG, "finishFragment: " + fragment.getClass());
         synchronized (fragmentStack) {
             fragmentStack.remove(fragment);
         }
 
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         if (null != fragment && fragment.isAdded()) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.hide(fragment);
             fragmentTransaction.remove(fragment);
-            fragmentTransaction.commit();
         }
+
+        BaseFragment curTopFragment = getTopFragment(fragmentStack);
+        if (null != curTopFragment) {
+            Logger.d(TAG, "finishFragment, show curTopFragment: " + curTopFragment.getClass());
+            fragmentTransaction.show(curTopFragment);
+        }
+        fragmentTransaction.commit();
     }
 
 

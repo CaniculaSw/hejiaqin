@@ -2,50 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/common_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/contact_info_layout"
         android:layout_width="fill_parent"
-        android:layout_height="54dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="55dp"
+        android:background="@drawable/adapter_contact_list_item_bg"
+        android:orientation="horizontal"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/contact_photo_img"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/contact_photo_default" />
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/contact_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/contact_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="王小龙"
-                android:textColor="#404040"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/contact_number_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/contact_name_text"
-                android:text="14678399909"
-                android:textColor="#9a9a9a"
-                android:textSize="15sp" />
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/contact_arrow_iv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:background="@mipmap/call_record_arrow" />
+            android:layout_marginLeft="13dp"
+            android:layout_toRightOf="@+id/contact_photo_img"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -55,6 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/contact_info_layout"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
         android:background="@color/contact_list_divider_bg_color" />
 
 

@@ -9,14 +9,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchUnit;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Administrator on 2016/5/28 0028.
@@ -54,8 +59,8 @@ public class SearchContactAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.adapter_contact_search_view, parent, false);
-            holder.nameText = (TextView) convertView.findViewById(R.id.contact_name_text);
-            holder.numberText = (TextView) convertView.findViewById(R.id.contact_number_text);
+            holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
+            holder.image = (CircleImageView) convertView.findViewById(R.id.contact_photo_img);
             holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
@@ -68,18 +73,25 @@ public class SearchContactAdapter extends BaseAdapter {
 
     private void initView(int position, ViewHolder holder) {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
+        holder.text.setText(contactsInfo.getName());
 
-        SearchUnit searchUnit = contactsInfo.getSearchUnit();
 
-        holder.nameText.setText(Html.fromHtml(searchUnit.getNameText()));
-        holder.numberText.setText(Html.fromHtml(searchUnit.getNumberText()));
+        Picasso.with(mContext.getApplicationContext())
+                .load(contactsInfo.getPhotoSm())
+                .placeholder(R.drawable.contact_photo_default)
+                .error(R.drawable.contact_photo_default).into(holder.image);
 
         holder.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+//                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
+
+                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo);
+                FragmentMgr.getInstance().showContactFragment(fragment);
             }
         });
     }
@@ -93,8 +105,8 @@ public class SearchContactAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView nameText;
-        TextView numberText;
+        TextView text;
+        CircleImageView image;
         View convertView;
     }
 }
