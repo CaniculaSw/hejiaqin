@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.ContactsContract;
@@ -9,10 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.StringUtil;
@@ -23,23 +26,53 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactEditFragment extends BasicFragment implements View.OnClickListener {
-    private static final String TAG = "ContactInfoFragment";
-
-    private LayoutInflater inflater;
-
-    private RelativeLayout contactInfoLayout;
+    private static final String TAG = "ContactEditFragment";
     private HeaderView titleLayout;
-    private TextView mContactNameText;
-    private CircleImageView mContactHeadImg;
+
+    private View headView;
+    private CircleImageView headImg;
+
+    private View nameView;
+    private TextView nameText;
+    String newName;
+
+    private View numberView;
+    private TextView numberText;
+    String newNumber;
 
 
-    private ContactsInfo mContactsInfo;
-    private boolean isStranger;
+    /**
+     * 当前支持两种模式:新增联系人和修改联系人;
+     * 默认为新增联系人
+     */
+    private boolean addContactMode = true;
+
+    private IContactsLogic contactsLogic;
+
+    private String newPhotoName = null;
+
+    /**
+     * 待编辑的联系人信息
+     */
+    private ContactsInfo editContactsInfo;
+
+    public static ContactEditFragment newInstance() {
+        ContactEditFragment fragment = new ContactEditFragment();
+        return fragment;
+    }
 
     public static ContactEditFragment newInstance(ContactsInfo contactsInfo) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
         args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ContactEditFragment newInstance(String contactNumber) {
+        ContactEditFragment fragment = new ContactEditFragment();
+        Bundle args = new Bundle();
+        args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,50 +94,52 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initView(View view) {
-        contactInfoLayout = (RelativeLayout) view.findViewById(R.id.contact_info_layout);
-
         // title
         titleLayout = (HeaderView) view.findViewById(R.id.title);
-        titleLayout.title.setText(R.string.contact_info_title_text);
+        titleLayout.title.setText("");
+        titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
         titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
+        titleLayout.backImageView.setOnClickListener(this);
 
-        // 联系人姓名
-        mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
-        // 联系人头像
-        mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
+        // 头像
+        headView = view.findViewById(R.id.contact_head_layout);
+        headImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
+
+        // 姓名
+        nameView = view.findViewById(R.id.contact_name_layout);
+        nameText = (TextView) view.findViewById(R.id.contact_name_hint);
+
+        // 号码
+        numberView = view.findViewById(R.id.contact_number_layout);
+        numberText = (TextView) view.findViewById(R.id.contact_number_hint);
     }
 
     @Override
     protected void initData() {
 
+        String inputNumber = null;
         Bundle argBundle = getArguments();
-        if (null == argBundle) {
-            return;
-        }
-        mContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
-
-        if (mContactsInfo == null) {
-            //通话记录传入的号码
-            String callRecordNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
-            isStranger = true;
-            mContactsInfo = new ContactsInfo();
-            NumberInfo numberInfo = new NumberInfo();
-            numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
-            numberInfo.setNumber(callRecordNumber);
-            mContactsInfo.setContactId("");
-            mContactsInfo.setName("");
-            mContactsInfo.setPhotoLg("");
-            mContactsInfo.setPhotoSm("");
-            mContactsInfo.addNumber(numberInfo);
+        if (null != argBundle) {
+            editContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+            //拨号传入的号码保存至和家亲
+            inputNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
         }
 
-        mContactNameText.setText(mContactsInfo.getName());
-        if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+        PhotoManage.getInstance(getContext()).setPhotoListener(mPhotoChangeListener);
+
+        addContactMode = (null == editContactsInfo);
+        if (!addContactMode) {
+            nameText.setText(editContactsInfo.getName());
+            numberText.setText(editContactsInfo.getPhone());
             Picasso.with(getContext())
-                    .load(mContactsInfo.getPhotoSm())
+                    .load(editContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
-                    .error(R.drawable.contact_photo_default).into(mContactHeadImg);
+                    .error(R.drawable.contact_photo_default).into(headImg);
+        } else if (inputNumber != null) {
+            numberText.setText(inputNumber);
+            newNumber = inputNumber;
         }
+
     }
 
 
@@ -124,29 +159,17 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         }
     }
 
-    public void setContactsInfo(ContactsInfo contactsInfo) {
-        mContactsInfo = contactsInfo;
-    }
+    /**
+     * 监听拍摄后得到照片信息
+     */
+    private PhotoManage.PhotoChangeListener mPhotoChangeListener = new PhotoManage.PhotoChangeListener() {
 
-    public void refreshView() {
-        if (null == mContactsInfo) {
-            return;
+        @Override
+        public void end(String url, Bitmap bitmap) {
+            if (bitmap != null) {
+                headImg.setImageBitmap(bitmap);
+                newPhotoName = url;
+            }
         }
-
-        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
-        if (null == numberInfoList) {
-            return;
-        }
-
-        contactInfoLayout.removeAllViews();
-        for (NumberInfo numberInfo : numberInfoList) {
-            View contactNumberView = inflater.inflate(R.layout.layout_contact_number_info_view, null);
-            TextView numberDesc = (TextView) contactNumberView.findViewById(R.id.number_desc_text);
-            numberDesc.setText(numberInfo.getDesc());
-            TextView number = (TextView) contactNumberView.findViewById(R.id.number_text);
-            number.setText(numberInfo.getNumber());
-            contactInfoLayout.addView(contactNumberView);
-        }
-    }
-
+    };
 }

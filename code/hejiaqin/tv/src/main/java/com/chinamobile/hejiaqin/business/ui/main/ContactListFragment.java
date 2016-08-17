@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactEditFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactSearchFragment;
 import com.chinamobile.hejiaqin.tv.R;
@@ -112,6 +113,9 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
                 LogUtil.d(TAG, "start search");
                 enterSearchView();
                 break;
+            case R.id.contact_add_layout:
+                enterAddView();
+                break;
         }
     }
 
@@ -121,6 +125,11 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
 //                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
 //        startActivity(intent);
         ContactSearchFragment fragment = ContactSearchFragment.newInstance();
+        FragmentMgr.getInstance().showContactFragment(fragment);
+    }
+
+    private void enterAddView() {
+        ContactEditFragment fragment = ContactEditFragment.newInstance();
         FragmentMgr.getInstance().showContactFragment(fragment);
     }
 }
