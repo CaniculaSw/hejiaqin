@@ -4,23 +4,23 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 
-import com.chinamobile.hejiaqin.tv.R;
+import com.chinamobile.hejiaqin.R;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/5/7.
  */
-public class KangxiProgressDialog extends Dialog {
-    public KangxiProgressDialog(Context context, String strMessage) {
+public class hejiaqinProgressDialog extends Dialog {
+    public hejiaqinProgressDialog(Context context, String strMessage) {
         this(context, R.style.CustomProgressDialog, strMessage);
     }
 
-    public KangxiProgressDialog(Context context, int theme, String strMessage) {
+    public hejiaqinProgressDialog(Context context, int theme, String strMessage) {
         super(context, theme);
-        this.setContentView(R.layout.kangxi_progress_dialog);
+        this.setContentView(R.layout.hejiaqin_progress_dialog);
         this.getWindow().getAttributes().gravity = Gravity.CENTER;
     }
 

@@ -10,9 +10,9 @@ import java.util.List;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/28.
  */
 public class MyActivityManager {

@@ -31,9 +31,9 @@ import com.customer.framework.utils.PermissionsChecker;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/8.
  */
 public abstract class BasicFragmentActivity extends BaseFragmentActivity {
@@ -202,7 +202,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new KangxiProgressDialog(this,null);
+        waitDialog = new hejiaqinProgressDialog(this,null);
         waitDialog.show();
     }
 

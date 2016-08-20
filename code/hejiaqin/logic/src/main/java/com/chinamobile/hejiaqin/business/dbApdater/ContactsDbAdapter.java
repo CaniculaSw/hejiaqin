@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhanggj on 2016/5/30.
+ * Created by  on 2016/5/30.
  */
 public class ContactsDbAdapter extends BaseDbAdapter {
 

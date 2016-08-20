@@ -12,7 +12,7 @@ import com.chinamobile.hejiaqin.tv.R;
  * desc: 设置
  * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/22.
  */
 public class TestFragment extends BasicFragment implements View.OnClickListener {

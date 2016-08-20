@@ -19,9 +19,9 @@ import java.util.HashMap;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/5/13.
  */
 public class UserInfoCacheManager {

@@ -4,9 +4,9 @@ import android.os.CountDownTimer;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/5/10.
  */
 public class MyCountDownTimer extends CountDownTimer {

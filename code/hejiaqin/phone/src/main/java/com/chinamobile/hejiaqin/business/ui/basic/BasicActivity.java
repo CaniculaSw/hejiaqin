@@ -31,9 +31,9 @@ import com.customer.framework.utils.PermissionsChecker;
 
 /**
  * desc:Basic Actity,处理系统初始化以及将LogicBuilder传入底层框架
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/8.
  */
 public abstract class BasicActivity extends BaseActivity {
@@ -206,7 +206,7 @@ public abstract class BasicActivity extends BaseActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new KangxiProgressDialog(this, null);
+        waitDialog = new hejiaqinProgressDialog(this, null);
         waitDialog.show();
     }
 

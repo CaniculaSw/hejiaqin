@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import com.chinamobile.hejiaqin.tv.R;
 
 /**
- * Created by zhanggj on 2016/6/25.
+ * Created by  on 2016/6/25.
  */
 public class EditContactDialog extends Dialog {
     public LinearLayout editLayout;

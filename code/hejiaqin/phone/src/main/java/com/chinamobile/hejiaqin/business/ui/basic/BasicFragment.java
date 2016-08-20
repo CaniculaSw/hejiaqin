@@ -18,9 +18,9 @@ import com.customer.framework.ui.BaseFragment;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/23.
  */
 public abstract class BasicFragment extends BaseFragment {

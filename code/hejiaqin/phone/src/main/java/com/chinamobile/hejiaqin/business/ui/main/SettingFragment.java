@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc: 设置
  * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/22.
  */
 public class SettingFragment extends BasicFragment implements View.OnClickListener {

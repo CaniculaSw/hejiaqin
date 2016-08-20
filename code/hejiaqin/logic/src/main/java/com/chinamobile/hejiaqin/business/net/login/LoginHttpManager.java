@@ -24,9 +24,9 @@ import org.json.JSONObject;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/14.
  */
 public class LoginHttpManager extends AbsHttpManager {

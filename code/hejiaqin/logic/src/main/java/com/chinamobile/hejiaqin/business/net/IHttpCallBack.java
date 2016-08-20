@@ -4,9 +4,9 @@ import com.customer.framework.component.net.NetResponse;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/14.
  */
 public interface IHttpCallBack {

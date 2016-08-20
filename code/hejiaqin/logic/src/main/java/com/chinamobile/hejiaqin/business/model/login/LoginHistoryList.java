@@ -5,9 +5,9 @@ import java.util.List;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/5/9.
  */
 public class LoginHistoryList {

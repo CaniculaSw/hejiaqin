@@ -4,7 +4,7 @@ import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.login.UserInfo;
 
 /**
- * Created by zhanggj on 2016/6/5.
+ * Created by  on 2016/6/5.
  */
 public interface IVoipLogic {
 

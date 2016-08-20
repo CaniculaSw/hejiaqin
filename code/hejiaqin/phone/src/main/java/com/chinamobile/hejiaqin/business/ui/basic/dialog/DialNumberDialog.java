@@ -18,7 +18,7 @@ import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import java.util.List;
 
 /**
- * Created by zhanggj on 2016/6/25.
+ * Created by  on 2016/6/25.
  */
 public class DialNumberDialog extends Dialog {
     public LinearLayout addLayout;

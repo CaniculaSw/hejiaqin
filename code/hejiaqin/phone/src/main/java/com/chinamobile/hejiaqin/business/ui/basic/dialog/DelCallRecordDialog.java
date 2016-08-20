@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import com.chinamobile.hejiaqin.R;
 
 /**
- * Created by zhanggj on 2016/6/25.
+ * Created by  on 2016/6/25.
  */
 public class DelCallRecordDialog extends Dialog {
     public LinearLayout delLayout;

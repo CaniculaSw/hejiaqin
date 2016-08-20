@@ -14,8 +14,8 @@ import com.customer.framework.logic.BuilderImp;
 
 /**
  * Logic buider
- * Kangxi Version 001
- * author: zhanggj
+ * hejiaqin Version 001
+ * author:
  * Created: 2016/4/8.
  */
 public class LogicBuilder extends BuilderImp {

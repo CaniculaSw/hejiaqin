@@ -8,7 +8,7 @@ import com.chinamobile.hejiaqin.business.HeService;
 import com.customer.framework.utils.LogUtil;
 
 /**
- * Created by zhanggj on 2016/6/5.
+ * Created by  on 2016/6/5.
  */
 public class PhoneApplication extends HeApplication implements
         Thread.UncaughtExceptionHandler{

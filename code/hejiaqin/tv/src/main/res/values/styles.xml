@@ -1,10 +1,10 @@
 <resources>
 
-    <style name="Theme.kangxi" parent="Theme.AppCompat.Light">
-        <item name="android:editTextStyle">@style/KangxiEditText</item>
+    <style name="Theme.hejiaqin" parent="Theme.AppCompat.Light">
+        <item name="android:editTextStyle">@style/hejiaqinEditText</item>
     </style>
 
-    <style name="KangxiEditText" parent="Base.V7.Widget.AppCompat.EditText">
+    <style name="hejiaqinEditText" parent="Base.V7.Widget.AppCompat.EditText">
         <item name="android:background">@drawable/selector_edit</item>
         <item name="android:paddingLeft">@dimen/edit_padding_left</item>
         <item name="android:paddingRight">@dimen/edit_padding_right</item>
@@ -39,8 +39,8 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="kangxiProgressBarStyle">
-        <item name="android:indeterminateDrawable">@drawable/kangxi_progress_shape</item>　　
+    <style name="hejiaqinProgressBarStyle">
+        <item name="android:indeterminateDrawable">@drawable/hejiaqin_progress_shape</item>　　
         <item name="android:minWidth">70dp</item>　　
         <item name="android:maxWidth">70dp</item>　
         <item name="android:minHeight">70dp</item>　　

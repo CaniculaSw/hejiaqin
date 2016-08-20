@@ -2,8 +2,8 @@ package com.chinamobile.hejiaqin.business;
 
 /**
  * 业务常量值
- * Kangxi Version 001
- * author: zhanggj
+ * hejiaqin Version 001
+ * author:
  * Created: 2016/4/8.
  */
 public class BussinessConstants {

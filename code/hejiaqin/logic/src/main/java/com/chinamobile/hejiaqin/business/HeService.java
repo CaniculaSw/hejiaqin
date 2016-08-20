@@ -6,7 +6,7 @@ import android.util.Log;
 import com.huawei.rcs.RCSService;
 
 /**
- * Created by zhanggj on 2016/7/9.
+ * Created by  on 2016/7/9.
  */
 public class HeService extends RCSService {
 

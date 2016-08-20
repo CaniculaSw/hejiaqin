@@ -21,7 +21,7 @@ import com.customer.framework.utils.PermissionsChecker;
 /**
  * desc:
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/6/13.
  */
 public class PermissionsActivity extends Activity {

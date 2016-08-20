@@ -5,9 +5,9 @@ import com.chinamobile.hejiaqin.business.net.ReqBody;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/15.
  */
 public class VerifyInfo implements ReqBody {

@@ -14,9 +14,9 @@ import com.chinamobile.hejiaqin.tv.R;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/18.
  */
 public class HeaderView extends RelativeLayout

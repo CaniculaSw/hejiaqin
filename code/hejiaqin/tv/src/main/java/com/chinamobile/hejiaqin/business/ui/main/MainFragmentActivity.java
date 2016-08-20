@@ -27,9 +27,9 @@ import com.customer.framework.utils.LogUtil;
 
 /**
  * desc: main
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/22.
  */
 public class MainFragmentActivity extends BasicFragmentActivity {

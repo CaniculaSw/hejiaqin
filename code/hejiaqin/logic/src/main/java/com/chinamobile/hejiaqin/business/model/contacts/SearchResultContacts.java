@@ -3,7 +3,7 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 import java.util.List;
 
 /**
- * Created by zhanggj on 2016/7/25.
+ * Created by  on 2016/7/25.
  */
 public class SearchResultContacts {
     private String invoker;

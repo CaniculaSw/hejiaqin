@@ -9,8 +9,8 @@ import com.chinamobile.hejiaqin.business.net.ReqBody;
 
 /**
  * 注册信息
- * Kangxi Version 001
- * author: zhanggj
+ * hejiaqin Version 001
+ * author:
  * Created: 2016/4/8.
  */
 public class RegisterSecondStepInfo implements ReqBody, Parcelable {

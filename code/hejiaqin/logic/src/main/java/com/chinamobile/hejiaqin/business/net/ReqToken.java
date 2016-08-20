@@ -1,7 +1,7 @@
 package com.chinamobile.hejiaqin.business.net;
 
 /**
- * Created by zhanggj on 2016/7/17.
+ * Created by  on 2016/7/17.
  */
 public class ReqToken {
     private String token;

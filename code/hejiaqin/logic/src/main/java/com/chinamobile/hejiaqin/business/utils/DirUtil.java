@@ -5,9 +5,9 @@ import android.os.Environment;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/27.
  */
 public class DirUtil {

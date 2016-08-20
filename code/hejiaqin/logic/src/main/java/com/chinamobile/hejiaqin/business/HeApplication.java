@@ -16,7 +16,7 @@ import com.huawei.rcs.upgrade.UpgradeApi;
 import com.littlec.sdk.manager.CMIMHelper;
 
 /**
- * Created by zhanggj on 2016/6/5.
+ * Created by  on 2016/6/5.
  */
 public class HeApplication extends RCSApplication {
     @Override

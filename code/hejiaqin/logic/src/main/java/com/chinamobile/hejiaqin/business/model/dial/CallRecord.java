@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by zhanggj on 2016/7/17.
+ * Created by  on 2016/7/17.
  */
 public class CallRecord {
     public static final int TYPE_AUDIO_INCOMING = 1;

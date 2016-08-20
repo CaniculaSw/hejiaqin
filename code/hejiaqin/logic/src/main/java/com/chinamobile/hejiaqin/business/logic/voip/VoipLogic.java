@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by zhanggj on 2016/6/5.
+ * Created by  on 2016/6/5.
  */
 public class VoipLogic extends LogicImp implements IVoipLogic {
 

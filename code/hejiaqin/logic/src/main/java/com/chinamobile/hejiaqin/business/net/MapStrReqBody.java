@@ -9,9 +9,9 @@ import java.util.Map;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/28.
  */
 public class MapStrReqBody implements ReqBody{

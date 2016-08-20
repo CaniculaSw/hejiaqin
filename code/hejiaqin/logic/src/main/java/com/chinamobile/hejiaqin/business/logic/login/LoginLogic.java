@@ -30,8 +30,8 @@ import java.util.Date;
 
 /**
  * 登录逻辑接口
- * Kangxi Version 001
- * author: zhanggj
+ * hejiaqin Version 001
+ * author:
  * Created: 2016/4/8.
  */
 public class LoginLogic extends LogicImp implements ILoginLogic {

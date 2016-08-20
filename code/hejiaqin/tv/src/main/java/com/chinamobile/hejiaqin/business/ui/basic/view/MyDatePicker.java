@@ -514,7 +514,7 @@ public class MyDatePicker extends FrameLayout {
             int startYear =
                     DEFAULT_START_YEAR;
             int endYear = DEFAULT_END_YEAR;
-            int layoutResourceId = R.layout.kangxi_date_picker_legacy;
+            int layoutResourceId = R.layout.hejiaqin_date_picker_legacy;
 
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
