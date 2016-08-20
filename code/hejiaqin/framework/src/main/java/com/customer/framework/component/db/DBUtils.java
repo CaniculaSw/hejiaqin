@@ -9,8 +9,8 @@ import com.customer.framework.utils.LogUtil;
 
 /**
  * 读取数据库表结构文件
- * Kangxi Version 001
- * author: zhanggj
+ * hejiaqin Version 001
+ * author:
  * Created: 2016/4/8.
  */
 public class DBUtils

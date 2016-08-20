@@ -65,7 +65,7 @@ public class Logger
             {
                 {
                     put(LOG_TYPE_COMMON, Environment.getExternalStorageDirectory()
-                            .getPath() + "/kangxi/log/common/");
+                            .getPath() + "/hejiaqin/log/common/");
                 }
             };
 

@@ -2,9 +2,9 @@ package com.customer.framework.component.net.util;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/8.
  */
 public class LangUtils {

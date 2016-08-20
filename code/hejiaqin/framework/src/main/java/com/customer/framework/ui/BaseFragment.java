@@ -17,9 +17,9 @@ import java.util.Set;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/23.
  */
 public abstract class BaseFragment extends Fragment {

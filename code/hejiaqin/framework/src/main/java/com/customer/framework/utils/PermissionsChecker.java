@@ -8,7 +8,7 @@ import android.os.Build;
 /**
  * desc:i
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/6/12.
  */
 public class PermissionsChecker {

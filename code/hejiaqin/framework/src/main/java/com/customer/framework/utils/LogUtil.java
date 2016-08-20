@@ -12,7 +12,7 @@ import com.customer.framework.component.log.Logger;
 /**
  * desc:
  * version 001
- * author: zhanggj
+ * author:
  */
 public class LogUtil {
 

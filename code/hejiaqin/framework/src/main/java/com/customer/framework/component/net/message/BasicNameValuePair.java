@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 /**
  * desc:
- * project:Kangxi
+ * project:hejiaqin
  * version 001
- * author: zhanggj
+ * author:
  * Created: 2016/4/8.
  */
 public class BasicNameValuePair implements NameValuePair, Cloneable, Serializable {
