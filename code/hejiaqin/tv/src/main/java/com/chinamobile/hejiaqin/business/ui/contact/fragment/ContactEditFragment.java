@@ -14,6 +14,7 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
@@ -112,6 +113,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         // 号码
         numberView = view.findViewById(R.id.contact_number_layout);
         numberText = (TextView) view.findViewById(R.id.contact_number_hint);
+
+        FocusManager.getInstance().requestFocus(headView);
     }
 
     @Override

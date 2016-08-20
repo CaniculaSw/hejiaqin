@@ -14,16 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="86dp"
         android:layout_below="@+id/title"
-        android:layout_marginTop="10dp"
         android:gravity="center_vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_head_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/contact_head_arrow"
             android:src="@drawable/contact_photo_default" />
 
     </RelativeLayout>
@@ -31,12 +28,12 @@
     <RelativeLayout
         android:id="@+id/contact_name_layout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="27dp"
         android:layout_below="@+id/contact_head_layout"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="28dp"
         android:layout_marginTop="10dp"
-        android:background="@mipmap/contact_search_bg"
+        android:background="@mipmap/contact_input_bg"
         android:gravity="center_vertical">
 
         <TextView
@@ -44,34 +41,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/contact_modify_name_text"
-            android:textColor="@color/contact_list_username_text_color"
-            android:textSize="16sp" />
+            android:textColor="#7b8ed3"
+            android:textSize="10sp" />
 
 
-        <TextView
+        <EditText
             android:id="@+id/contact_name_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/contact_name_text"
             android:text="@string/contact_modify_name_hint_text"
-            android:textColor="@color/contact_list_search_text_color"
-            android:textSize="16sp" />
+            android:textColor="#f8f8f7"
+            android:background="@null"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/contact_number_layout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="27dp"
         android:layout_below="@+id/contact_name_layout"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="28dp"
         android:layout_marginTop="10dp"
-        android:background="@mipmap/contact_search_bg"
+        android:background="@mipmap/contact_input_bg"
         android:gravity="center_vertical">
 
         <TextView
@@ -79,22 +77,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/contact_modify_number_text"
-            android:textColor="@color/contact_list_username_text_color"
-            android:textSize="16sp" />
+            android:textColor="#7b8ed3"
+            android:textSize="10sp" />
 
 
-        <TextView
+        <EditText
             android:id="@+id/contact_number_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/contact_number_text"
             android:text="@string/contact_modify_number_hint_text"
-            android:textColor="@color/contact_list_search_text_color"
-            android:textSize="16sp" />
+            android:textColor="#f8f8f7"
+            android:background="@null"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
