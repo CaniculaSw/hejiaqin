@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.adapter;
+package com.chinamobile.hejiaqin.business.ui.setting.adapter;
 
 import android.content.Context;
 import android.os.Handler;

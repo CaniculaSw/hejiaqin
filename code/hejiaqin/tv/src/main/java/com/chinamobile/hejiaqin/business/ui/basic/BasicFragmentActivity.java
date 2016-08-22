@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
-import com.chinamobile.hejiaqin.business.ui.more.manger.UpdateManger;
+import com.chinamobile.hejiaqin.business.ui.setting.manger.UpdateManger;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragmentActivity;

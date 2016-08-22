@@ -25,11 +25,11 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (loginLogic.hasLogined()) {
+//        if (loginLogic.hasLogined()) {
             jumpToMainFragmentActivity();
-        } else {
-            jumpToLoginActivity();
-        }
+//        } else {
+//            jumpToLoginActivity();
+//        }
 
     }
 
@@ -61,7 +61,7 @@ public class MainActivity extends BasicActivity {
 
     private void jumpToMainFragmentActivity() {
         Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
-        LogUtil.d(TAG, "Init the CMIM SDK");
+//        LogUtil.d(TAG, "Init the CMIM SDK");
 //        loginLogic.initCMIMSdk();
         settingLogic.checkVersion();
         startActivity(intent);

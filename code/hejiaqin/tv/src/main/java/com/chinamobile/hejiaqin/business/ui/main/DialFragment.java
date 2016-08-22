@@ -30,7 +30,6 @@ import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.DialContactAdapter;
-import com.chinamobile.hejiaqin.business.ui.more.MessageActivity;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.login.UserInfo;
 

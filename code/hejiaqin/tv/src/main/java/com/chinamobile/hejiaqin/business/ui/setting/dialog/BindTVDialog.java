@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.dialog;
+package com.chinamobile.hejiaqin.business.ui.setting.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.tv.R;
-import com.chinamobile.hejiaqin.business.ui.more.SelectableContactActivity;
-import com.chinamobile.hejiaqin.business.ui.more.InputAcountActivity;
-import com.chinamobile.hejiaqin.business.ui.more.ScanActivity;
+import com.chinamobile.hejiaqin.business.ui.setting.SelectableContactActivity;
+import com.chinamobile.hejiaqin.business.ui.setting.InputAcountActivity;
+import com.chinamobile.hejiaqin.business.ui.setting.ScanActivity;
 
 
 /**

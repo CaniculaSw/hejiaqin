@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more;
+package com.chinamobile.hejiaqin.business.ui.setting;
 
 import android.view.View;
 

@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.fragment;
+package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,14 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.ui.setting.adapter.SysMessageAdapter;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.SystemMessage;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.more.SysMessageDetailActivity;
-import com.chinamobile.hejiaqin.business.ui.more.adapter.SysMessageAdapter;
+import com.chinamobile.hejiaqin.business.ui.setting.SysMessageDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;

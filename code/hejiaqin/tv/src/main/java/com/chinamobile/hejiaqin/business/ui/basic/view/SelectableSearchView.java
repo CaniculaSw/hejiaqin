@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectableSearchContactAdapter;
+import com.chinamobile.hejiaqin.business.ui.setting.adapter.SelectableSearchContactAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

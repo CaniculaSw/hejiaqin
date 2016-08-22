@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.fragment;
+package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
 import android.content.Context;
 import android.os.Message;
@@ -11,7 +11,7 @@ import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.more.MissCallMessage;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.more.adapter.MissCallAdapter;
+import com.chinamobile.hejiaqin.business.ui.setting.adapter.MissCallAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

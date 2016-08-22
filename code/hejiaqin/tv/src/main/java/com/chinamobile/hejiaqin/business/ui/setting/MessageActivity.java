@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more;
+package com.chinamobile.hejiaqin.business.ui.setting;
 
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.MissCallListFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
-import com.chinamobile.hejiaqin.business.ui.more.fragment.MissCallListFragment;
-import com.chinamobile.hejiaqin.business.ui.more.fragment.SystemMessageListFragment;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.SystemMessageListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

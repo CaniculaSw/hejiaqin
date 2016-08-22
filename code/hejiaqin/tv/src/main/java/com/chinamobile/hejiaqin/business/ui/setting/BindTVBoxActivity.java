@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more;
+package com.chinamobile.hejiaqin.business.ui.setting;
 
 import android.view.Gravity;
 import android.view.View;
@@ -6,10 +6,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindTVDialog;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.business.ui.more.dialog.BindTVDialog;
 
 /**
  * Created by eshaohu on 16/5/30.

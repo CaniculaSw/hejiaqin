@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more;
+package com.chinamobile.hejiaqin.business.ui.setting;
 
 import android.content.Context;
 import android.os.Message;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.ui.setting.adapter.SelectableSearchContactAdapter;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
@@ -15,8 +16,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.SelectableSearchView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
-import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectContactAdapter;
-import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectableSearchContactAdapter;
+import com.chinamobile.hejiaqin.business.ui.setting.adapter.SelectContactAdapter;
 
 import java.util.List;
 

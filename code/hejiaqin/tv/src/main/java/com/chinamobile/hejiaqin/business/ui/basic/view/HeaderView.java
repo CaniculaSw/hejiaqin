@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,7 +27,7 @@ public class HeaderView extends RelativeLayout
     public LinearLayout middleLayout;
     public ImageView rightBtn;
     public ImageView rightImageView;
-    public ImageView backImageView;
+    public ImageButton backImageView;
     public LinearLayout setadd;
     public TextView title;
     public TextView tvRight;
@@ -59,7 +60,7 @@ public class HeaderView extends RelativeLayout
         this.setadd = ((LinearLayout)this.headerView.findViewById(R.id.setadd));
         this.tvRight = ((TextView)this.headerView.findViewById(R.id.tvRight));
         this.rightImageView = ((ImageView)this.headerView.findViewById(R.id.right_imageView));
-        this.backImageView = (ImageView)this.headerView.findViewById(R.id.back_iv);
+        this.backImageView = (ImageButton) this.headerView.findViewById(R.id.back_iv);
         this.logoIv = (ImageView)this.headerView.findViewById(R.id.logo_iv);
     }
 }

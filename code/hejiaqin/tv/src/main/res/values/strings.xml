@@ -127,6 +127,14 @@
     <string name="voip_register_fail">登录失败，请稍后再试</string>
 
     <!-- 更多 -->
+    <!-- TV-->
+    <string name="setting_title">设置</string>
+    <string name="function_setting">功能设置</string>
+    <string name="box_account">终端账号</string>
+    <string name="check_status">状态检测</string>
+    <string name="about">关于</string>
+    <string name="download_app">手机app下载</string>
+    <!--END TV -->
     <string name="about_version_update">版本更新</string>
     <string name="about_version_new_to_update">检测到您有新版本，是否确认更新？</string>
     <string name="about_hejiaqin_update"> 下载</string>

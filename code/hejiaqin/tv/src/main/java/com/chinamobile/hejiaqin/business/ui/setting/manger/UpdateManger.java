@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.more.manger;
+package com.chinamobile.hejiaqin.business.ui.setting.manger;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
