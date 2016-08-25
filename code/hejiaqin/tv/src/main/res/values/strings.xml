@@ -134,6 +134,10 @@
     <string name="check_status">状态检测</string>
     <string name="about">关于</string>
     <string name="download_app">手机app下载</string>
+    <string name="auto_answer">自动接听</string>
+    <string name="auto_answer_hint">提示：您所添加号码的来电将会自动接听，如未选号码所有来电将会自动接听</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
     <!--END TV -->
     <string name="about_version_update">版本更新</string>
     <string name="about_version_new_to_update">检测到您有新版本，是否确认更新？</string>

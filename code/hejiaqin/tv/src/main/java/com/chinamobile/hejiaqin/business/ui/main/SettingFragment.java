@@ -2,19 +2,17 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 
 import android.os.Message;
-import android.view.FocusFinder;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.AutoAnswerSettingFragment;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.utils.LogUtil;
 
 
 /**
@@ -48,7 +46,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_tab_more;
+        return R.layout.fragment_tab_setting;
     }
 
     @Override
@@ -78,7 +76,14 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        LogUtil.i(TAG, String.valueOf(v.getId()));
+        switch (v.getId()) {
+            case R.id.function_setting_ll:
+                FragmentMgr.getInstance().showRecentFragment(new AutoAnswerSettingFragment());
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override

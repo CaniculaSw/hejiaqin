@@ -14,16 +14,14 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
-import com.chinamobile.hejiaqin.tv.BuildConfig;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
-import com.chinamobile.hejiaqin.business.ui.setting.manger.UpdateManger;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
+import com.chinamobile.hejiaqin.tv.BuildConfig;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragmentActivity;
 import com.customer.framework.utils.LogUtil;
@@ -58,6 +56,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,12 +105,6 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     dismissWaitDailog();
                     showToast(R.string.server_side_error, Toast.LENGTH_SHORT, null);
                     break;
-                case BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE:
-                    new UpdateManger(BasicFragmentActivity.this).showForcedUpdateDialog((VersionInfo)msg.obj);
-                    break;
-                case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
-                    new UpdateManger(BasicFragmentActivity.this).showNoticeDialog((VersionInfo)msg.obj);
-                    break;
                 default:
                     break;
             }
@@ -135,13 +128,10 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             if (PermissionsChecker.lacksPermissions(getApplicationContext(), needPermissions)) {
                 startPermissionsActivity(needPermissions);
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
-        }else
-        {
+        } else {
             return true;
         }
     }
@@ -155,11 +145,9 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
-                if(resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission)
-                {
+                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
                     finish();
                 }
                 break;
@@ -202,7 +190,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new hejiaqinProgressDialog(this,null);
+        waitDialog = new hejiaqinProgressDialog(this, null);
         waitDialog.show();
     }
 
