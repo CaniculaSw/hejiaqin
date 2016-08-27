@@ -166,14 +166,5 @@
         android:nextFocusLeft="@+id/main_nav"
         android:nextFocusRight="@+id/content_right"></FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/content_right"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:focusable="false"
-        android:nextFocusLeft="@+id/content_left"
-        android:visibility="gone"></FrameLayout>
-
 </LinearLayout>
 

@@ -9,23 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/call_record_recycler_view"
-        android:layout_below="@id/header_view_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:scrollbars="none" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/dial_contact_recycler_view"
-        android:layout_below="@id/header_view_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:scrollbars="none"
-        android:visibility="gone"/>
-
     <RelativeLayout
         android:id="@+id/dial_save_contact_layout"
         android:layout_width="match_parent"

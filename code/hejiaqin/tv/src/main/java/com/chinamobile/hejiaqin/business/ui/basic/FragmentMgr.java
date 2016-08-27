@@ -52,6 +52,11 @@ public class FragmentMgr {
         this.rightContainerResId = rightContainerResId;
     }
 
+    public void init(FragmentActivity activity, int leftContainerResId) {
+        mFragmentManager = activity.getSupportFragmentManager();
+        this.leftContainerResId = leftContainerResId;
+    }
+
     public void showRecentFragment(BaseFragment fragment) {
         showFragment(recentFragmentStack, fragment, true);
     }

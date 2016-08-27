@@ -44,8 +44,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     BasicFragment[] mLeftFragments = new BasicFragment[4];
 
-    BasicFragment[] mRightFragments = new BasicFragment[1];
-
 //    TextView[] mTextViews = new TextView[3];
 
     View[] mMenuViews = new View[4];
@@ -125,14 +123,10 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
 
-        FragmentMgr.getInstance().init(this, R.id.content_left, R.id.content_right);
+        FragmentMgr.getInstance().init(this, R.id.content_left);
         mLeftFragments[mContactsIndex] = new ContactListFragment();
         mLeftFragments[mContactsIndex].setActivityListener(listener);
         FragmentMgr.getInstance().showContactFragment(mLeftFragments[mContactsIndex]);
-
-        mRightFragments[0] = new TestFragment();
-        mRightFragments[0].setActivityListener(listener);
-        FragmentMgr.getInstance().showRightFragment(mRightFragments[0]);
 
         mCurrentIndex = mContactsIndex;
 
@@ -171,7 +165,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         switch (toIndex) {
             case mRecentIndex:
                 if (null == mLeftFragments[toIndex]) {
-                    mLeftFragments[toIndex] = new TestFragment();
+                    mLeftFragments[toIndex] = new CallRecordFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
                 }
                 FragmentMgr.getInstance().showRecentFragment(mLeftFragments[toIndex]);
