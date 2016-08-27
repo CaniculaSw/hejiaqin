@@ -115,13 +115,13 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         mNavigatorLay = findViewById(R.id.main_nav);
 
         mMenuViews[mRecentIndex] = findViewById(R.id.recent_layout);
-        mMenuViews[mRecentIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
+        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[mContactsIndex] = findViewById(R.id.contact_layout);
-        mMenuViews[mContactsIndex].setBackgroundColor(getResources().getColor(R.color.navigator_select_bg));
+        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[mDialIndex] = findViewById(R.id.dial_layout);
-        mMenuViews[mDialIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
+        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[mSettingIndex] = findViewById(R.id.more_layout);
-        mMenuViews[mSettingIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
+        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
 
         mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
 
@@ -201,8 +201,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
 
-        mMenuViews[mCurrentIndex].setBackgroundColor(getResources().getColor(R.color.navigator_bg));
-        mMenuViews[toIndex].setBackgroundColor(getResources().getColor(R.color.navigator_select_bg));
+        mMenuViews[mCurrentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
+        mMenuViews[toIndex].setBackgroundColor(getResources().getColor(R.color.transparent));
 
         mCurrentIndex = toIndex;
         FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);

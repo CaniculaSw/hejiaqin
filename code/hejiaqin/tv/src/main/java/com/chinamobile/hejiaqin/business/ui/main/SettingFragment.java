@@ -52,7 +52,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     @Override
     protected void initView(View view) {
         settingHeader = (HeaderView) view.findViewById(R.id.title);
-        settingHeader.title.setText(getResources().getText(R.string.setting_title));
+        settingHeader.title.setText(getResources().getText(R.string.setting));
 
         functionSettingLL = (LinearLayout) view.findViewById(R.id.function_setting_ll);
         boxAccountLL = (LinearLayout) view.findViewById(R.id.box_account_ll);
@@ -76,9 +76,10 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.function_setting_ll:
-                FragmentMgr.getInstance().showRecentFragment(new AutoAnswerSettingFragment());
+                FragmentMgr.getInstance().showSettingFragment(new AutoAnswerSettingFragment());
                 break;
             default:
                 break;

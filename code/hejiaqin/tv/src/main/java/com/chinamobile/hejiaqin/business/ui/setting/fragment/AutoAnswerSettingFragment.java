@@ -33,12 +33,7 @@ public class AutoAnswerSettingFragment extends BasicFragment implements View.OnC
     @Override
     protected void initView(View view) {
         headerView = (HeaderView) view.findViewById(R.id.title);
-        headerView.title.setVisibility(View.INVISIBLE);
-        headerView.backImageView.setImageResource(R.drawable.icon_back);
-        headerView.backImageView.setBackgroundResource(R.drawable.selector_back_btn_bg);
-        headerView.backImageView.setOnClickListener(this);
-        headerView.backImageView.setFocusable(true);
-        headerView.backImageView.requestFocus();
+        headerView.title.setText(getString(R.string.auto_answer));
     }
 
     @Override

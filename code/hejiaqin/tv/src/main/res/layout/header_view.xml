@@ -3,7 +3,6 @@
     android:id="@+id/headerLayout"
     android:layout_width="fill_parent"
     android:layout_height="43dp"
-    android:background="@color/common_bg"
     android:orientation="horizontal">
 
     <LinearLayout

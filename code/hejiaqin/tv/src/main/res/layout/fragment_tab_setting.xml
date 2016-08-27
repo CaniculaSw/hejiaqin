@@ -1,50 +1,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_bg">
+    android:layout_height="match_parent">
 
 
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="60dp" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_below="@+id/title"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/line" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/function_setting_ll"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:nextFocusDown="@+id/box_account_ll"
             android:nextFocusForward="@+id/function_setting_ll"
             android:nextFocusRight="@+id/function_setting_ll"
-            android:nextFocusUp="@+id/function_setting_ll"
-            android:paddingBottom="20dp"
-            android:paddingLeft="60dp"
-            android:paddingTop="20dp">
+            android:nextFocusUp="@+id/function_setting_ll">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_setting" />
 
@@ -52,38 +41,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/function_setting"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/title"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/line" />
-
         <LinearLayout
             android:id="@+id/box_account_ll"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:nextFocusDown="@+id/check_status_ll"
             android:nextFocusForward="@+id/box_account_ll"
             android:nextFocusRight="@+id/box_account_ll"
             android:nextFocusUp="@+id/function_setting_ll"
-            android:paddingBottom="20dp"
-            android:paddingLeft="60dp"
-            android:paddingTop="20dp">
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_account" />
 
@@ -91,24 +72,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/box_account"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/title"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/line" />
 
         <LinearLayout
             android:id="@+id/check_status_ll"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
@@ -116,13 +90,12 @@
             android:nextFocusForward="@+id/check_status_ll"
             android:nextFocusRight="@+id/check_status_ll"
             android:nextFocusUp="@+id/box_account_ll"
-            android:paddingBottom="20dp"
-            android:paddingLeft="60dp"
-            android:paddingTop="20dp">
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_status" />
 
@@ -130,24 +103,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/check_status"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/title"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/line" />
-
         <LinearLayout
             android:id="@+id/about_ll"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
@@ -155,13 +120,12 @@
             android:nextFocusForward="@+id/about_ll"
             android:nextFocusRight="@+id/about_ll"
             android:nextFocusUp="@+id/check_status_ll"
-            android:paddingBottom="20dp"
-            android:paddingLeft="60dp"
-            android:paddingTop="20dp">
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_about" />
 
@@ -169,24 +133,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/about"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/title"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/line" />
-
         <LinearLayout
             android:id="@+id/download_app_ll"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
@@ -194,13 +150,12 @@
             android:nextFocusForward="@+id/download_app_ll"
             android:nextFocusRight="@+id/download_app_ll"
             android:nextFocusUp="@+id/about_ll"
-            android:paddingBottom="20dp"
-            android:paddingLeft="60dp"
-            android:paddingTop="20dp">
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_download" />
 
@@ -208,19 +163,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/download_app"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/title"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/line" />
     </LinearLayout>
 
 </RelativeLayout>
