@@ -26,28 +26,15 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     private static final String TAG = "DialFragment";
 
-    /**
-     * 号码输入框的字符串小于3位则不进行搜索
-     */
-    private static final int SEARCH_START_LENGTH = 1;
-
-    /**
-     * 两次输入间隔时间, 如果小于这个时间, 则不响应搜索
-     */
-    private static final int SEARCH_WORD_CHANGE_TIME = 200;
 
     HeaderView headerView;
 
 
-    RelativeLayout dialSaveContactLayout;
     LinearLayout dialSaveContactArrowLayout;
 
-    LinearLayout inputNumberAboveLine;
-    LinearLayout inputNumberLayout;
     DigitsEditText inputNumber;
     LinearLayout dialNumberDelLayout;
     ImageView dialNumberDelIv;
-    LinearLayout inputNumberBelowLine;
     DialDigitKeypadView digitKeypad;
 
     @Override
@@ -68,19 +55,12 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     @Override
     protected void initView(View view) {
         headerView = (HeaderView) view.findViewById(R.id.header_view_id);
-        headerView.logoIv.setImageResource(R.mipmap.logo_small);
         headerView.title.setText(R.string.dial_title);
-        headerView.rightBtn.setImageResource(R.drawable.selector_title_icon_delete);
-
-        dialSaveContactLayout = (RelativeLayout)view.findViewById(R.id.dial_save_contact_layout);
 
         dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);;
-        inputNumberAboveLine = (LinearLayout)view.findViewById(R.id.input_number_above_line);
-        inputNumberLayout = (LinearLayout)view.findViewById(R.id.input_number_layout);
         inputNumber = (DigitsEditText)view.findViewById(R.id.input_number);
         dialNumberDelLayout = (LinearLayout)view.findViewById(R.id.dial_number_del_layout);
         dialNumberDelIv = (ImageView)view.findViewById(R.id.dial_number_del_iv);
-        inputNumberBelowLine = (LinearLayout)view.findViewById(R.id.input_number_below_line);
         digitKeypad = (DialDigitKeypadView)view.findViewById(R.id.digit_keypad);
         dialSaveContactArrowLayout.setOnClickListener(this);
         digitKeypad.setDigitKeyPressEvent(new BaseDigitKeypadView.DigitKeyPressEvent() {
@@ -123,16 +103,6 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 return true;
             }
         });
-        headerView.rightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (inputNumber.length() > 0) {
-                    Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
-                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,inputNumber.getText().toString() );
-                    getActivity().startActivity(intent);
-                }
-            }
-        });
     }
 
 
@@ -166,6 +136,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                {
                    inputNumber.setCursorVisible(false);
                }
+               break;
+           case R.id.dial_save_contact_arrow_layout:
                break;
        }
     }

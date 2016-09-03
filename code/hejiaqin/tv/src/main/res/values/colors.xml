@@ -63,7 +63,7 @@
     <color name="call_record_name_color">#ffffff</color>
     <color name="call_record_number_color">#ffffff</color>
     <color name="call_record_time_color">#ffffff</color>
-    <color name="keypad_text_color">#404040</color>
+    <color name="keypad_text_color">#ffffff</color>
     <color name="keypad_line_color">#b8b8b8</color>
     <color name="input_number_layout_color">#f8f8f8</color>
     <color name="input_number_above_line_color">#b8b8b8</color>
