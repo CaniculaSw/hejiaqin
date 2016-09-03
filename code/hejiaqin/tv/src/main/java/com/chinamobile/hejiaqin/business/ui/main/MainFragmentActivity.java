@@ -48,8 +48,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     View[] mMenuViews = new View[4];
 
-    ImageView mDialCallImage;
-
     int mCurrentIndex;
     final int mRecentIndex = 0;
 
@@ -77,17 +75,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     MainFragmentActivity.this.startActivity(intent);
                     MainFragmentActivity.this.finishAllActivity(LoginActivity.class.getName());
                     break;
-                case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID:
-                    if (mDialStatus == DIAL_STATUS_CALL) {
-                        return;
-                    }
-                    mDialCallImage.setVisibility(View.VISIBLE);
-                    mDialStatus = DIAL_STATUS_CALL;
-                    break;
-                case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID:
-                    mDialCallImage.setVisibility(View.GONE);
-                    mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
-                    break;
                 // 显示导航栏
                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID:
                     mNavigatorLay.setVisibility(View.VISIBLE);
@@ -95,9 +82,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 // 隐藏导航栏
                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID:
                     mNavigatorLay.setVisibility(View.GONE);
-                    break;
-                case BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID:
-                    showPopupWindow();
                     break;
             }
         }
@@ -115,20 +99,20 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         mMenuViews[mRecentIndex] = findViewById(R.id.recent_layout);
         mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[mContactsIndex] = findViewById(R.id.contact_layout);
-        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
+        mMenuViews[mContactsIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[mDialIndex] = findViewById(R.id.dial_layout);
-        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
+        mMenuViews[mDialIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[mSettingIndex] = findViewById(R.id.more_layout);
-        mMenuViews[mRecentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
-
-        mDialCallImage = (ImageView) findViewById(R.id.dial_call_image);
+        mMenuViews[mSettingIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
 
         FragmentMgr.getInstance().init(this, R.id.content_left);
-        mLeftFragments[mContactsIndex] = new ContactListFragment();
-        mLeftFragments[mContactsIndex].setActivityListener(listener);
-        FragmentMgr.getInstance().showContactFragment(mLeftFragments[mContactsIndex]);
+        mLeftFragments[mRecentIndex] = new CallRecordFragment();
+        mLeftFragments[mRecentIndex].setActivityListener(listener);
+        FragmentMgr.getInstance().showContactFragment(mLeftFragments[mRecentIndex]);
 
-        mCurrentIndex = mContactsIndex;
+        mCurrentIndex = mRecentIndex;
+        mMenuViews[mCurrentIndex].setBackgroundColor(getResources().getColor(R.color.transparent));
+        FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
 
     }
 
@@ -207,47 +191,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     protected void initLogics() {
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
         settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
-    }
-
-    private void showPopupWindow() {
-
-        if (mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
-            mDialStatus = DIAL_STATUS_NORMAL;
-            //收起拨号盘
-            Message msg = new Message();
-            msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_KEYBORD_MSG_ID;
-            mLeftFragments[mDialIndex].recieveMsg(msg);
-        }
-
-        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this, R.style.CalendarDialog);
-        Window window = delCallRecordDialog.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.width = WindowManager.LayoutParams.FILL_PARENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.gravity = Gravity.BOTTOM;
-        window.setAttributes(params);
-        delCallRecordDialog.setCancelable(true);
-        delCallRecordDialog.show();
-
-        // 设置按钮的点击事件
-        delCallRecordDialog.delLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 删除通话记录
-                mVoipLogic.delAllCallRecord();
-                delCallRecordDialog.dismiss();
-
-            }
-        });
-        delCallRecordDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                delCallRecordDialog.dismiss();
-            }
-        });
-
     }
 
 

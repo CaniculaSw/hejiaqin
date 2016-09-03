@@ -22,17 +22,7 @@ import java.util.List;
  */
 public class CallRecordFragment extends BasicFragment{
 
-    private static final String TAG = "DialFragment";
-
-    /**
-     * 号码输入框的字符串小于3位则不进行搜索
-     */
-    private static final int SEARCH_START_LENGTH = 1;
-
-    /**
-     * 两次输入间隔时间, 如果小于这个时间, 则不响应搜索
-     */
-    private static final int SEARCH_WORD_CHANGE_TIME = 200;
+    private static final String TAG = "CallRecordFragment";
 
     HeaderView headerView;
     RecyclerView callRecordRecyclerView;
@@ -81,9 +71,7 @@ public class CallRecordFragment extends BasicFragment{
     @Override
     protected void initView(View view) {
         headerView = (HeaderView) view.findViewById(R.id.header_view_id);
-        headerView.logoIv.setImageResource(R.mipmap.logo_small);
-        headerView.title.setText(R.string.dial_title);
-        headerView.rightBtn.setImageResource(R.drawable.selector_title_icon_delete);
+        headerView.title.setText(R.string.call_record_title);
 
         callRecordRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_recycler_view);
 

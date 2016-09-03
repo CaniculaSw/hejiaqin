@@ -127,43 +127,7 @@
             android:name="com.chinamobile.hejiaqin.business.ui.contact.InputInfoActivity"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.MoreFunActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.ShareAppActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.MessageActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.AboutActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.SysMessageDetailActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.UserInfoActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.BindTVBoxActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.ScanActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.InputAcountActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.SelectableContactActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
             android:name="com.chinamobile.hejiaqin.business.ui.login.ResetPasswordFirstStepActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.FeedBackActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.setting.ShowContractActivity"
             android:screenOrientation="landscape"></activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity"

@@ -11,7 +11,7 @@ import com.customer.framework.utils.LogUtil;
 /**
  * Created by  on 2016/6/5.
  */
-public class TVApplication extends Application implements
+public class TVApplication extends HeApplication implements
         Thread.UncaughtExceptionHandler{
     @Override
     public void onCreate() {
