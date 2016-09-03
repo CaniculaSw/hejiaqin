@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/input_number_layout"
         android:layout_width="484dp"
-        android:layout_height="44dp"
+        android:layout_height="66dp"
         android:layout_below="@+id/header_view_id"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
@@ -29,9 +29,9 @@
             android:background="@drawable/selector_common_bg">
             <ImageView
                 android:id="@+id/dial_save_contact_arrow_iv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@mipmap/call_record_arrow" />
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/dial_save_contact_arrow" />
         </LinearLayout>
         <com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText
             android:id="@+id/input_number"
@@ -43,6 +43,7 @@
             android:ellipsize="start"
             android:singleLine="true"
             android:textSize="20sp"
+            android:focusable="false"
             android:textColor="@color/keypad_text_color"/>
         <LinearLayout
             android:id="@+id/dial_number_del_layout"
@@ -55,7 +56,7 @@
                 android:id="@+id/dial_number_del_iv"
                 android:layout_width="32dp"
                 android:layout_height="28dp"
-                android:background="@mipmap/icon_dial_number_delete" />
+                android:src="@mipmap/icon_dial_number_delete" />
         </LinearLayout>
     </RelativeLayout>
 
