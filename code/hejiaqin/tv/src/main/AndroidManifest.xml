@@ -105,6 +105,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.dialog.AutoAnswerNumberSettingDialog"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
             android:name="com.chinamobile.hejiaqin.business.ui.login.ResetPasswordSecondStepActivity"
             android:screenOrientation="landscape" />
 
@@ -125,9 +130,6 @@
             android:screenOrientation="landscape" />
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.contact.InputInfoActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.login.ResetPasswordFirstStepActivity"
             android:screenOrientation="landscape"></activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity"

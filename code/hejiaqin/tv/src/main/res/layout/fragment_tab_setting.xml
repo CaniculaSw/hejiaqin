@@ -7,7 +7,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="60dp" />
 
 
     <LinearLayout
@@ -47,7 +47,6 @@
             android:id="@+id/box_account_ll"
             android:layout_width="496dp"
             android:layout_height="80dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:gravity="center"
@@ -74,7 +73,6 @@
             android:id="@+id/check_status_ll"
             android:layout_width="496dp"
             android:layout_height="80dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:gravity="center"
@@ -100,7 +98,6 @@
             android:id="@+id/about_ll"
             android:layout_width="496dp"
             android:layout_height="80dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:gravity="center"
@@ -114,7 +111,7 @@
                 android:layout_height="65dp"
                 android:background="@drawable/btn_bg_normal"
                 android:drawableLeft="@drawable/icon_about"
-                android:drawablePadding="5dp"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="@string/about"
@@ -126,13 +123,13 @@
             android:id="@+id/download_app_ll"
             android:layout_width="496dp"
             android:layout_height="80dp"
-            android:layout_marginTop="5dp"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:gravity="center"
             android:nextFocusDown="@+id/download_app_ll"
             android:nextFocusForward="@+id/download_app_ll"
             android:nextFocusRight="@+id/download_app_ll"
+
             android:nextFocusUp="@+id/about_ll">
 
             <TextView

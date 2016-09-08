@@ -48,11 +48,8 @@ public class FocusManager {
         return rightFragFocusViews.containsKey(fragName);
     }
 
-
     public void requestFocus(View view) {
         view.setFocusable(true);
         view.requestFocus();
     }
-
-
 }

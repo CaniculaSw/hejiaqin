@@ -1,13 +1,15 @@
 package com.chinamobile.hejiaqin.business.ui.basic;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.FocusFinder;
 import android.view.View;
 
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.ui.BaseFragment;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,36 +23,27 @@ public class FragmentMgr {
     private static final FragmentMgr instance =
             new FragmentMgr();
 
-    int leftContainerResId, rightContainerResId;
+    int leftContainerResId;
     FragmentManager mFragmentManager;
-
-    Stack<BaseFragment> recentFragmentStack = new Stack<>();
-
-    Stack<BaseFragment> contactFragmentStack = new Stack<>();
-
-    Stack<BaseFragment> dialFragmentStack = new Stack<>();
-
-    Stack<BaseFragment> settingFragmentStack = new Stack<>();
-
-    Stack<BaseFragment> rightFragmentStack = new Stack<>();
-
+    Map fragmentStackMap = new HashMap();
+    Map focusedViewBackStack = new HashMap();
     BaseFragment curLeftShowFragment;
 
-    BaseFragment curRightShowFragment;
-
     private FragmentMgr() {
-
+        fragmentStackMap.put(0, new Stack<BaseFragment>());
+        fragmentStackMap.put(1, new Stack<BaseFragment>());
+        fragmentStackMap.put(2, new Stack<BaseFragment>());
+        fragmentStackMap.put(3, new Stack<BaseFragment>());
+        focusedViewBackStack.put(0, new Stack<View>());
+        focusedViewBackStack.put(1, new Stack<View>());
+        focusedViewBackStack.put(2, new Stack<View>());
+        focusedViewBackStack.put(3, new Stack<View>());
     }
 
     public static FragmentMgr getInstance() {
         return instance;
     }
 
-    public void init(FragmentActivity activity, int leftContainerResId, int rightContainerResId) {
-        mFragmentManager = activity.getSupportFragmentManager();
-        this.leftContainerResId = leftContainerResId;
-        this.rightContainerResId = rightContainerResId;
-    }
 
     public void init(FragmentActivity activity, int leftContainerResId) {
         mFragmentManager = activity.getSupportFragmentManager();
@@ -58,77 +51,99 @@ public class FragmentMgr {
     }
 
     public void showRecentFragment(BaseFragment fragment) {
-        showFragment(recentFragmentStack, fragment, true);
+        showFragment(0, fragment);
     }
 
     public void showContactFragment(BaseFragment fragment) {
-        showFragment(contactFragmentStack, fragment, true);
+        showFragment(1, fragment);
     }
 
 
     public void showDialFragment(BaseFragment fragment) {
-        showFragment(dialFragmentStack, fragment, true);
+        showFragment(2, fragment);
     }
 
     public void showSettingFragment(BaseFragment fragment) {
-        showFragment(settingFragmentStack, fragment, true);
+        showFragment(3, fragment);
     }
 
-    public void showRightFragment(BaseFragment fragment) {
-        showFragment(rightFragmentStack, fragment, false);
+    public void showFragment(int index, BaseFragment fragment) {
+        showFragment((Stack) fragmentStackMap.get(index), (Stack) focusedViewBackStack.get(index), fragment);
     }
 
-    private void showFragment(Stack fragmentStack, BaseFragment fragment, boolean isLeft) {
+    private void showFragment(Stack fragmentStack, Stack backStack, BaseFragment fragment) {
         Logger.d(TAG, "showFragment: " + fragment.getClass());
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        BaseFragment curTopFragment = isLeft ? curLeftShowFragment : curRightShowFragment;
+        BaseFragment curTopFragment = curLeftShowFragment;
         if (null != curTopFragment) {
-            Logger.d(TAG, "showFragment,  currentTopFragment is " + curTopFragment.getClass());
+            LogUtil.d(TAG, "showFragment,  currentTopFragment is " + curTopFragment.getClass());
             fragmentTransaction.hide(curTopFragment);
         }
 
-
         if (fragment.isAdded()) {
-            Logger.d(TAG, "showFragment, fragment added. ");
+            LogUtil.d(TAG, "showFragment, fragment added. ");
             fragmentTransaction.show(fragment);
         } else {
-            Logger.d(TAG, "showFragment, fragment not added. ");
-            fragmentTransaction.add(isLeft ? leftContainerResId : rightContainerResId, fragment);
+            LogUtil.d(TAG, "showFragment, fragment not added. ");
+            fragmentTransaction.add(leftContainerResId, fragment);
             addFragment(fragmentStack, fragment);
         }
 
-        if (isLeft) {
-            curLeftShowFragment = fragment;
-        } else {
-            curRightShowFragment = fragment;
+        LogUtil.i(TAG, "curLeftShowFragment: " + curLeftShowFragment);
+
+        if (curLeftShowFragment != null && curLeftShowFragment.getActivity() != null) {
+            View focus = curLeftShowFragment.getActivity().getCurrentFocus();
+            if (focus != null && fragmentStack.size() > 1) {
+                backStack.push(focus);
+            }
         }
+        LogUtil.i(TAG, "Current back stack size is: " + backStack.size());
+        curLeftShowFragment = fragment;
+
         fragmentTransaction.commit();
     }
 
+    public BaseFragment getCurLeftShowFragment() {
+        return curLeftShowFragment;
+    }
+
     public void finishRecentFragment(BaseFragment fragment) {
-        finishFragment(recentFragmentStack, fragment);
+        finishFragment(0, fragment);
     }
 
     public void finishContactFragment(BaseFragment fragment) {
-        finishFragment(contactFragmentStack, fragment);
+        finishFragment(1, fragment);
     }
 
 
     public void finishDialFragment(BaseFragment fragment) {
-        finishFragment(dialFragmentStack, fragment);
+        finishFragment(2, fragment);
     }
 
     public void finishSettingFragment(BaseFragment fragment) {
-        finishFragment(settingFragmentStack, fragment);
+        finishFragment(3, fragment);
     }
 
-    public void finishRightFragment(BaseFragment fragment) {
-        finishFragment(rightFragmentStack, fragment);
+    public void finishFragment(int index, BaseFragment fragment) {
+        finishFragment((Stack) fragmentStackMap.get(index), fragment);
+        if (((Stack) focusedViewBackStack.get(index)).size() > 0) {
+            View backView = (View) ((Stack) focusedViewBackStack.get(index)).pop();
+            if (backView != null) {
+                backView.requestFocus();
+            }
+        }
+        if (isParentFragmentShowingOfCurrentIndex(index)){
+            ((Stack) focusedViewBackStack.get(index)).clear();
+        }
     }
 
+    public boolean isParentFragmentShowingOfCurrentIndex(int index) {
+        Stack<BaseFragment> stack = (Stack<BaseFragment>) fragmentStackMap.get(index);
+        return stack.size() <= 1 ? true : false;
+    }
 
     private void finishFragment(Stack fragmentStack, BaseFragment fragment) {
-        Logger.d(TAG, "finishFragment: " + fragment.getClass());
+        LogUtil.d(TAG, "finishFragment: " + fragment.getClass());
         synchronized (fragmentStack) {
             fragmentStack.remove(fragment);
         }
@@ -141,8 +156,9 @@ public class FragmentMgr {
 
         BaseFragment curTopFragment = getTopFragment(fragmentStack);
         if (null != curTopFragment) {
-            Logger.d(TAG, "finishFragment, show curTopFragment: " + curTopFragment.getClass());
+            LogUtil.d(TAG, "finishFragment, show curTopFragment: " + curTopFragment.getClass());
             fragmentTransaction.show(curTopFragment);
+            curLeftShowFragment = curTopFragment;
         }
         fragmentTransaction.commit();
     }

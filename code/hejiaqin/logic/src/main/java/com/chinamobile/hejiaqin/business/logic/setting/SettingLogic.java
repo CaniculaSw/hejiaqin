@@ -1,7 +1,11 @@
 package com.chinamobile.hejiaqin.business.logic.setting;
 
+import android.content.Context;
+import android.os.Message;
+
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
@@ -15,6 +19,31 @@ import com.customer.framework.utils.LogUtil;
  */
 public class SettingLogic extends LogicImp implements ISettingLogic {
     private static final String TAG = "SettingLogic";
+
+    @Override
+    public void handleCommit(Context context, String inputNumber, final String id) {
+        TvSettingInfo settingInfo = UserInfoCacheManager.getUserSettingInfo(context);
+        if (settingInfo != null) {
+            switch (id){
+                case "numberOne":
+                    settingInfo.setNumberOne(inputNumber);
+                    break;
+                case "numberTwo":
+                    settingInfo.setNumberTwo(inputNumber);
+                    break;
+                case "numberThree":
+                    settingInfo.setNumberThree(inputNumber);
+                    break;
+                case "numberFour":
+                    settingInfo.setNumberFour(inputNumber);
+                    break;
+            }
+            UserInfoCacheManager.updateUserSetting(context, settingInfo);
+            Message msg = new Message();
+            msg.what = BussinessConstants.SettingMsgID.AUTO_ANSWER_SETTING_COMMIT;
+            SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.AUTO_ANSWER_SETTING_COMMIT);
+        }
+    }
 
     public void checkVersion() {
         new SettingHttpmanager(getContext()).checkVersion(null, new IHttpCallBack() {
@@ -30,16 +59,16 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
 //                info.setByForce(0);
 //                info.setForceVersionCode("1");
 //                //TODO Test End
-                if (isNewVersion(info)){
-                    UserInfoCacheManager.saveVersionInfoToLoacl(getContext(),info);
-                    if (isForceUpgrade(info)){
-                        LogUtil.i(TAG,"New force version found!");
-                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE,info);
-                    }else {
-                        LogUtil.i(TAG,"New version found!");
-                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE,info);
+                if (isNewVersion(info)) {
+                    UserInfoCacheManager.saveVersionInfoToLoacl(getContext(), info);
+                    if (isForceUpgrade(info)) {
+                        LogUtil.i(TAG, "New force version found!");
+                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE, info);
+                    } else {
+                        LogUtil.i(TAG, "New version found!");
+                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE, info);
                     }
-                }else {
+                } else {
                     UserInfoCacheManager.clearVersionInfo(getContext());
                     SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE);
                 }
@@ -58,11 +87,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         });
     }
 
-    private boolean isNewVersion(VersionInfo versionInfo){
-        if (versionInfo == null){
+    private boolean isNewVersion(VersionInfo versionInfo) {
+        if (versionInfo == null) {
             return false;
         }
-        int currentVersioncode,versionCode;
+        int currentVersioncode, versionCode;
         currentVersioncode = SysInfoUtil.getVersionCode(getContext());
         try {
             versionCode = Integer.parseInt(versionInfo.getVersionCode());
@@ -70,11 +99,12 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             LogUtil.e(TAG, e);
             return false;
         }
-        if (currentVersioncode < versionCode){
+        if (currentVersioncode < versionCode) {
             return true;
         }
         return false;
     }
+
     private boolean isForceUpgrade(VersionInfo versionInfo) {
         if (versionInfo.getByForce() == 1) {
             return true;
@@ -87,7 +117,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             LogUtil.e(TAG, e);
             return false;
         }
-        if (currentVersioncode < forceVersionCode){
+        if (currentVersioncode < forceVersionCode) {
             return true;
         }
         return false;

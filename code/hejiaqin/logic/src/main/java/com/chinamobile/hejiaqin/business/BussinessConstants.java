@@ -29,7 +29,7 @@ public class BussinessConstants {
         String LITTLEC_APP_KEY = "027336cw";
 
         int CALL_OUTING_HANGUP = 0;
-        int CALL_TALKING_HANGUP =1;
+        int CALL_TALKING_HANGUP = 1;
         int CALL_INCOMING_HANGUP = 2;
 
     }
@@ -55,12 +55,12 @@ public class BussinessConstants {
      */
     public interface DictInfo {
 
-        int SIP_TEMPORARILY_UNAVAILABLE =480;
+        int SIP_TEMPORARILY_UNAVAILABLE = 480;
         int SIP_BUSY_HERE = 486;
         int SIP_DECLINE = 603;
         int SIP_TERMINATED = 487;
 
-        int YES =1;
+        int YES = 1;
         int NO = 0;
     }
 
@@ -339,6 +339,7 @@ public class BussinessConstants {
         String GET_VERSION_AFTER_LOGIN = "getVersionAfterLogin";
 
         String VERSION_INFO_KEY = "versionInfoKey";
+        String USER_SETTING_KEY = "userSettingInfo";
         String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
         String APP_IMG_DEFAULT_NAME = "hejiaqin_app_default_img.jpg"; //头像图片默认名字
         String MORE_SHARE_APP_URL = "http://www.baidu.com";
@@ -369,6 +370,7 @@ public class BussinessConstants {
         int NEW_VERSION_AVAILABLE = BASE_MSG_ID + 6;
         int NO_NEW_VERSION_AVAILABLE = BASE_MSG_ID + 7;
         int NEW_FORCE_VERSION_AVAILABLE = BASE_MSG_ID + 8;
+        int AUTO_ANSWER_SETTING_COMMIT = BASE_MSG_ID + 9;
 
     }
 

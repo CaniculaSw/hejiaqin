@@ -6,6 +6,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.customer.framework.component.storage.StorageMgr;
 import com.customer.framework.utils.LogUtil;
@@ -61,6 +62,26 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).save(map);
     }
 
+    private static void saveUserSettingToLocal(Context context, TvSettingInfo setting) {
+        HashMap map = new HashMap();
+        Gson gson = new Gson();
+        map.put(BussinessConstants.Setting.USER_SETTING_KEY, gson.toJson(setting));
+        StorageMgr.getInstance().getSharedPStorage(context).save(map);
+    }
+
+//    private static void saveUserSettingToMem(Context context, TvSettingInfo setting){
+//        if (setting != null){
+//            StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Setting.USER_SETTING_KEY, setting);
+//        }
+//    }
+
+    public static void updateUserSetting(Context context,TvSettingInfo newSettingInfo){
+        if (newSettingInfo != null){
+            saveUserSettingToLocal(context,newSettingInfo);
+//            saveUserSettingToMem(context,newSettingInfo);
+        }
+    }
+
     public static void saveUserToMem(Context context, UserInfo info, long tokenDate) {
         if (info != null) {
             StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Login.USER_INFO_KEY, info);
@@ -90,14 +111,18 @@ public class UserInfoCacheManager {
 
     public static VersionInfo getVersionInfo(Context context) {
         String infoStr = StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Setting.VERSION_INFO_KEY);
-        if (infoStr != null){
-            try {
-                JSONObject infoJSONObj = new JSONObject(infoStr);
-                Gson gson = new Gson();
-                return gson.fromJson(infoStr,VersionInfo.class);
-            } catch (JSONException e) {
-                LogUtil.e("UserInfoCacheManager", e);
-            }
+        if (infoStr != null) {
+            Gson gson = new Gson();
+            return gson.fromJson(infoStr, VersionInfo.class);
+        }
+        return null;
+    }
+
+    public static TvSettingInfo getUserSettingInfo(Context context) {
+        String settingStr = StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Setting.USER_SETTING_KEY);
+        if (settingStr != null) {
+            Gson gson = new Gson();
+            return gson.fromJson(settingStr, TvSettingInfo.class);
         }
         return null;
     }
@@ -133,7 +158,7 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }
 
-    public static void clearVersionInfo(Context context){
+    public static void clearVersionInfo(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Setting.VERSION_INFO_KEY});
     }
 

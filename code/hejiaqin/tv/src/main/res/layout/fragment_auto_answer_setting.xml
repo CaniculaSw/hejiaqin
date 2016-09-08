@@ -1,8 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_bg">
-
+    android:layout_height="match_parent">
 
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
         android:id="@+id/title"
@@ -11,48 +9,255 @@
         android:layout_marginTop="60dp" />
 
     <LinearLayout
+        android:id="@+id/yes_no_btn_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/btn_yes"
+            android:layout_width="235dp"
+            android:layout_height="60dp"
+            android:background="@drawable/selector_setting_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusDown="@+id/btn_number_one"
+            android:nextFocusLeft="@null"
+            android:nextFocusRight="@+id/btn_no"
+            android:nextFocusUp="@+id/btn_yes">
+
+            <LinearLayout
+                android:id="@+id/btn_yes_ll"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_bg_normal"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btn_yes_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/btn_yes_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/btn_yes_tv"
+                    android:paddingLeft="5dp"
+                    android:src="@drawable/icon_confirm"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_no"
+            android:layout_width="235dp"
+            android:layout_height="60dp"
+            android:background="@drawable/selector_setting_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusDown="@+id/btn_number_two"
+            android:nextFocusLeft="@+id/btn_yes"
+            android:nextFocusRight="@+id/btn_no"
+            android:nextFocusUp="@+id/btn_no">
+
+            <LinearLayout
+                android:id="@+id/btn_no_ll"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_bg_normal"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btn_no_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/btn_no_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:src="@drawable/icon_confirm"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_number_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/yes_no_btn_ll"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/yes"
+            <LinearLayout
+                android:id="@+id/btn_number_one"
                 android:layout_width="235dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:background="@drawable/selector_setting_bg"
-                android:nextFocusDown="@+id/yes"
-                android:nextFocusRight="@+id/no"
-                android:nextFocusUp="@+id/yes"
-                android:text="@string/yes"
-                android:textColor="@color/white"
-                android:textSize="20sp">
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:nextFocusDown="@+id/btn_number_three"
+                android:nextFocusLeft="@null"
+                android:nextFocusRight="@+id/btn_number_two"
+                android:nextFocusUp="@+id/btn_yes">
 
-                <requestFocus />
-            </Button>
+                <LinearLayout
+                    android:id="@+id/number_one_ll"
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_bg_normal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/no"
+                    <TextView
+                        android:id="@+id/number_one_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_one"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_number_two"
                 android:layout_width="235dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:background="@drawable/selector_setting_bg"
-                android:nextFocusDown="@+id/no"
-                android:nextFocusLeft="@+id/yes"
-                android:nextFocusRight="@+id/no"
-                android:nextFocusUp="@+id/no"
-                android:text="@string/no"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:focusable="true"
+                android:gravity="center"
+                android:nextFocusDown="@+id/btn_number_four"
+                android:nextFocusLeft="@+id/btn_number_one"
+                android:nextFocusRight="@+id/btn_number_two"
+                android:nextFocusUp="@+id/btn_no">
 
+                <LinearLayout
+                    android:id="@+id/number_two_ll"
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_bg_normal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/number_two_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_two"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/btn_number_three"
+                android:layout_width="235dp"
+                android:layout_height="60dp"
+                android:background="@drawable/selector_setting_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:nextFocusDown="@+id/btn_number_three"
+                android:nextFocusLeft="@null"
+                android:nextFocusRight="@+id/btn_number_four"
+                android:nextFocusUp="@+id/btn_number_one">
+
+                <LinearLayout
+                    android:id="@+id/number_three_ll"
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_bg_normal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/number_three_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_three"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_number_four"
+                android:layout_width="235dp"
+                android:layout_height="60dp"
+                android:background="@drawable/selector_setting_bg"
+                android:focusable="true"
+                android:gravity="center"
+                android:nextFocusDown="@+id/btn_number_four"
+                android:nextFocusLeft="@+id/btn_number_three"
+                android:nextFocusRight="@+id/btn_number_four"
+                android:nextFocusUp="@+id/btn_number_two">
+
+                <LinearLayout
+                    android:id="@+id/number_four_ll"
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_bg_normal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/number_four_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_four"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="470dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/auto_answer_hint"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 </RelativeLayout>

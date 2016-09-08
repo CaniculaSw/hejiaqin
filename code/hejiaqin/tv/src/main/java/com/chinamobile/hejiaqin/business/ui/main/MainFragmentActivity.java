@@ -2,8 +2,6 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.content.Intent;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,17 +10,17 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
-import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
-import com.customer.framework.component.log.Logger;
+import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.ui.BaseFragment;
 import com.customer.framework.utils.LogUtil;
 
 /**
@@ -173,7 +171,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mLeftFragments[toIndex] = new SettingFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
                 }
-                FragmentMgr.getInstance().showSettingFragment(mLeftFragments[toIndex]);
+                FragmentMgr.getInstance().showFragment(toIndex, mLeftFragments[toIndex]);
                 break;
         }
 
@@ -213,7 +211,11 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
+        if (!FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex)) {
+            BaseFragment fragment = FragmentMgr.getInstance().getCurLeftShowFragment();
+            FragmentMgr.getInstance().finishFragment(mCurrentIndex, fragment);
+            return;
+        } else if ((System.currentTimeMillis() - exitTime) > 2000) {
             showToast(R.string.quit_app_toast_msg, Toast.LENGTH_SHORT, null);
             exitTime = System.currentTimeMillis();
             return;
@@ -228,22 +230,28 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_LEFT");
-                FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
+                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_LEFT");
+                View focused = getCurrentFocus();
+                LogUtil.d(TAG, "focused: " + focused.toString());
+                View nextFocuse = focused.focusSearch(View.FOCUS_LEFT);
+                if (nextFocuse != null && nextFocuse.focusSearch(View.FOCUS_LEFT) != null) {
+                    nextFocuse.requestFocus();
+                } else if (FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex)) {
+                    FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
+                }
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_RIGHT");
+                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_RIGHT");
                 View leftFocusView = FocusManager.getInstance().getFocusViewInLeftFrag(String.valueOf(mCurrentIndex));
                 if (null != leftFocusView && mMenuViews[mCurrentIndex].isFocused()) {
                     FocusManager.getInstance().requestFocus(leftFocusView);
-                    return true;
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_UP");
+                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_UP");
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                Logger.d(TAG, "KeyEvent.KEYCODE_DPAD_DOWN");
+                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_DOWN");
                 break;
         }
         return super.onKeyDown(keyCode, event);

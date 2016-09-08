@@ -61,7 +61,7 @@ public class ShareAppActivity extends BasicActivity implements View.OnClickListe
     }
 
     private void createQRCode(String url, int size) {
-        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(ShareAppActivity.this, size), Color.parseColor("#000000"), new QRCodeEncoder.Delegate() {
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(ShareAppActivity.this, size), Color.parseColor("#000000"),Color.WHITE ,new QRCodeEncoder.Delegate() {
             @Override
             public void onEncodeQRCodeSuccess(Bitmap qrCode) {
                 qrCodeIv.setImageBitmap(qrCode);

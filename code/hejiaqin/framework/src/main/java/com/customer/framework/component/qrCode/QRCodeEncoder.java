@@ -38,7 +38,7 @@ public class QRCodeEncoder {
      * @param delegate 创建二维码图片的代理
      */
     public static void encodeQRCode(String content, int size, Delegate delegate) {
-        QRCodeEncoder.encodeQRCode(content, size, Color.BLACK, delegate);
+        QRCodeEncoder.encodeQRCode(content, size, Color.BLACK, Color.WHITE, delegate);
     }
 
     /**
@@ -49,8 +49,8 @@ public class QRCodeEncoder {
      * @param color    二维码图片的颜色
      * @param delegate 创建二维码图片的代理
      */
-    public static void encodeQRCode(final String content, final int size, final int color, final Delegate delegate) {
-        encodeQRCode(content, size, color, null, delegate);
+    public static void encodeQRCode(final String content, final int size, final int color, final int backgroundColor, final Delegate delegate) {
+        encodeQRCode(content, size, color, backgroundColor, null, delegate);
     }
 
     /**
@@ -62,7 +62,7 @@ public class QRCodeEncoder {
      * @param logo     二维码图片的logo
      * @param delegate 创建二维码图片的代理
      */
-    public static void encodeQRCode(final String content, final int size, final int color, final Bitmap logo, final Delegate delegate) {
+    public static void encodeQRCode(final String content, final int size, final int color, final int backgroundColor, final Bitmap logo, final Delegate delegate) {
         new AsyncTask<Void, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(Void... params) {
@@ -74,7 +74,7 @@ public class QRCodeEncoder {
                             if (matrix.get(x, y)) {
                                 pixels[y * size + x] = color;
                             } else {
-                                pixels[y * size + x] = Color.WHITE;
+                                pixels[y * size + x] = backgroundColor;
                             }
                         }
                     }

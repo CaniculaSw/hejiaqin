@@ -11,7 +11,11 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.AboutFragment;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.AutoAnswerSettingFragment;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.BoxAccountFragment;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.CheckStatusFragment;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.DownloadAppFragment;
 import com.chinamobile.hejiaqin.tv.R;
 
 
@@ -80,6 +84,18 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.function_setting_ll:
                 FragmentMgr.getInstance().showSettingFragment(new AutoAnswerSettingFragment());
+                break;
+            case R.id.download_app_ll:
+                FragmentMgr.getInstance().showSettingFragment(new DownloadAppFragment());
+                break;
+            case R.id.about_ll:
+                FragmentMgr.getInstance().showSettingFragment(new AboutFragment());
+                break;
+            case R.id.check_status_ll:
+                FragmentMgr.getInstance().showSettingFragment(new CheckStatusFragment());
+                break;
+            case R.id.box_account_ll:
+                FragmentMgr.getInstance().showSettingFragment(new BoxAccountFragment());
                 break;
             default:
                 break;

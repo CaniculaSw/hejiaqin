@@ -160,7 +160,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initDate() {
-        settingLogic.checkVersion();
+        //settingLogic.checkVersion();
         mVoipLogic.autoLogin();
     }
 
