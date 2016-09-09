@@ -33,7 +33,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private LayoutInflater inflater;
 
     private RelativeLayout contactInfoLayout;
-    private HeaderView titleLayout;
     private TextView mContactNameText;
     private CircleImageView mContactHeadImg;
 
@@ -76,17 +75,11 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     protected void initView(View view) {
         contactInfoLayout = (RelativeLayout) view.findViewById(R.id.contact_info_layout);
 
-        // title
-        titleLayout = (HeaderView) view.findViewById(R.id.title);
-        titleLayout.title.setText(R.string.contact_info_title_text);
-        titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
-
         // 联系人姓名
         mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
         // 联系人头像
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
-        titleLayout.backImageView.setOnClickListener(this);
     }
 
     @Override
