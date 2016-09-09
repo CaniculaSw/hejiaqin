@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_bg">
-
-    <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/contact_head_layout"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:layout_below="@+id/title"
+        android:layout_marginTop="116dp"
         android:gravity="center_vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_head_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:src="@drawable/contact_photo_default" />
 
@@ -27,13 +21,12 @@
 
     <RelativeLayout
         android:id="@+id/contact_name_layout"
-        android:layout_width="match_parent"
-        android:layout_height="27dp"
+        android:layout_width="482dp"
+        android:layout_height="67dp"
         android:layout_below="@+id/contact_head_layout"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/contact_input_bg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:background="@drawable/adapter_contact_list_item_bg"
         android:gravity="center_vertical">
 
         <TextView
@@ -41,10 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:text="@string/contact_modify_name_text"
-            android:textColor="#7b8ed3"
-            android:textSize="10sp" />
+            android:textColor="#6a728a"
+            android:textSize="20sp" />
 
 
         <EditText
@@ -52,24 +45,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/contact_name_text"
-            android:text="@string/contact_modify_name_hint_text"
-            android:textColor="#f8f8f7"
             android:background="@null"
-            android:textSize="10sp" />
+            android:text="@string/contact_modify_name_hint_text"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/contact_number_layout"
-        android:layout_width="match_parent"
-        android:layout_height="27dp"
+        android:layout_width="482dp"
+        android:layout_height="67dp"
         android:layout_below="@+id/contact_name_layout"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@mipmap/contact_input_bg"
+        android:background="@drawable/adapter_contact_list_item_bg"
         android:gravity="center_vertical">
 
         <TextView
@@ -77,10 +69,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:text="@string/contact_modify_number_text"
-            android:textColor="#7b8ed3"
-            android:textSize="10sp" />
+            android:textColor="#6a728a"
+            android:textSize="20sp" />
 
 
         <EditText
@@ -88,13 +80,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/contact_number_text"
-            android:text="@string/contact_modify_number_hint_text"
-            android:textColor="#f8f8f7"
             android:background="@null"
-            android:textSize="10sp" />
+            android:text="@string/contact_modify_number_hint_text"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="20sp" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/contact_info_save_btn"
+        android:layout_width="482dp"
+        android:layout_height="67dp"
+        android:layout_below="@+id/contact_number_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/adapter_contact_list_item_bg"
+        android:gravity="center"
+        android:text="@string/contact_modify_save_text"
+        android:textColor="@color/contact_list_username_text_color"
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -81,6 +81,7 @@
     <string name="contact_search_content_head_text">联系人</string>
     <string name="contact_modify_title_add_text">新增联系人</string>
     <string name="contact_modify_title_edit_text">编辑联系人</string>
+    <string name="contact_modify_save_text">保存</string>
     <string name="contact_modify_head_text">头像</string>
     <string name="contact_modify_name_text">姓名</string>
     <string name="contact_modify_number_text">号码</string>

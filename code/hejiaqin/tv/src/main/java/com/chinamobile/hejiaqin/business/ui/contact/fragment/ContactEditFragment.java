@@ -28,8 +28,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactEditFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactEditFragment";
-    private HeaderView titleLayout;
-
     private View headView;
     private CircleImageView headImg;
 
@@ -95,13 +93,6 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initView(View view) {
-        // title
-        titleLayout = (HeaderView) view.findViewById(R.id.title);
-        titleLayout.title.setText("");
-        titleLayout.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
-        titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
-        titleLayout.backImageView.setOnClickListener(this);
-
         // 头像
         headView = view.findViewById(R.id.contact_head_layout);
         headImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
