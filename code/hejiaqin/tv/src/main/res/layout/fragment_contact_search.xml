@@ -1,53 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_bg">
+    android:layout_height="match_parent">
 
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp" />
 
     <RelativeLayout
         android:id="@+id/search_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="23dp"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
         android:layout_below="@+id/title"
+        android:layout_marginTop="28dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/search_input_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="23dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            android:background="@mipmap/contact_search_bg"
+            android:layout_width="482dp"
+            android:layout_height="67dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
             android:minWidth="290dp">
 
-            <ImageView
-                android:id="@+id/contact_search_img"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="6dp"
-                android:src="@mipmap/contact_search_icon" />
 
             <EditText
                 android:id="@+id/search_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/search_del"
-                android:layout_toRightOf="@+id/contact_search_img"
                 android:background="@null"
+                android:hint="@string/contact_search_hint_text"
                 android:maxLength="32"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textColorHint="@color/contact_list_search_text_color"
-                android:textSize="13sp" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/search_del"
@@ -67,6 +60,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_layout"
-        android:background="@color/common_bg" />
+        android:layout_marginTop="28dp" />
 
 </RelativeLayout>

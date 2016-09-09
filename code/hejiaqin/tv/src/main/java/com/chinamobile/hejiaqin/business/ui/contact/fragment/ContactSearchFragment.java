@@ -22,9 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactSearchFragment extends BasicFragment implements View.OnClickListener {
-    private static final String TAG = "ContactInfoFragment";
+    private static final String TAG = "ContactSearchFragment";
 
-    private RelativeLayout contactInfoLayout;
     private HeaderView titleLayout;
 
     private EditText searchInput;
@@ -70,12 +69,9 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
     @Override
     protected void initView(View view) {
-        contactInfoLayout = (RelativeLayout) view.findViewById(R.id.contact_info_layout);
-
         // title
         titleLayout = (HeaderView) view.findViewById(R.id.title);
-        titleLayout.title.setText("");
-        titleLayout.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
+        titleLayout.title.setText(R.string.contact_search_text);
 
         // 搜索框
         searchInput = (EditText) view.findViewById(R.id.search_input);

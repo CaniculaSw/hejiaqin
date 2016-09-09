@@ -17,6 +17,8 @@
             android:layout_height="67dp"
             android:background="@drawable/adapter_contact_list_item_bg"
             android:gravity="center"
+            android:nextFocusDown="@+id/contact_search_layout"
+            android:nextFocusRight="@+id/contact_search_layout"
             android:orientation="horizontal">
 
             <ImageView
@@ -46,6 +48,8 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/adapter_contact_list_item_bg"
             android:gravity="center"
+            android:nextFocusLeft="@+id/contact_add_layout"
+            android:nextFocusUp="@+id/contact_add_layout"
             android:orientation="horizontal">
 
             <ImageView
@@ -60,9 +64,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="@string/contact_search_text"
                 android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/contact_search_img"
+                android:text="@string/contact_search_text"
                 android:textColor="@color/contact_list_search_text_color"
                 android:textSize="24sp" />
 

@@ -71,6 +71,11 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         View operLayout = inflater.inflate(R.layout.layout_contact_oper_view, null);
         contactListView.addHeaderView(operLayout);
 
+        // 搜索联系人按钮
+        operLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
+        // 添加联系人按钮
+        operLayout.findViewById(R.id.contact_add_layout).setOnClickListener(this);
+
         // 添加adapter
         adapter = new AppContactAdapter(context);
         contactListView.setAdapter(adapter);

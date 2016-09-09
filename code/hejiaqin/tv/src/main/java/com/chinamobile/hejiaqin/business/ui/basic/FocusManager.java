@@ -14,8 +14,6 @@ public class FocusManager {
 
     private Map<String, View> leftFragFocusViews = new HashMap<>();
 
-    private Map<String, View> rightFragFocusViews = new HashMap<>();
-
     private FocusManager() {
 
     }
@@ -34,18 +32,6 @@ public class FocusManager {
 
     public boolean isExistInLeftFrag(String fragName) {
         return leftFragFocusViews.containsKey(fragName);
-    }
-
-    public void addFocusViewInRightFrag(String fragName, View view) {
-        rightFragFocusViews.put(fragName, view);
-    }
-
-    public View getFocusViewInRightFrag(String fragName) {
-        return rightFragFocusViews.get(fragName);
-    }
-
-    public boolean isExistInRightFrag(String fragName) {
-        return rightFragFocusViews.containsKey(fragName);
     }
 
     public void requestFocus(View view) {
