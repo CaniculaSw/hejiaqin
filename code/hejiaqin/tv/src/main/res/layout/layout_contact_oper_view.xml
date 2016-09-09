@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/contact_oper_layout"
+        android:layout_width="482dp"
+        android:layout_height="67dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/contact_add_layout"
+            android:layout_width="237dp"
+            android:layout_height="67dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/contact_add_img"
+                android:layout_width="22dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/contact_list_add_icon" />
+
+            <TextView
+                android:id="@+id/contact_add_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/contact_add_img"
+                android:text="@string/contact_add_text"
+                android:textColor="@color/contact_list_search_text_color"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/contact_search_layout"
+            android:layout_width="237dp"
+            android:layout_height="67dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/contact_search_img"
+                android:layout_width="22dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/contact_list_search_icon" />
+
+            <TextView
+                android:id="@+id/contact_search_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/contact_search_text"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/contact_search_img"
+                android:textColor="@color/contact_list_search_text_color"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

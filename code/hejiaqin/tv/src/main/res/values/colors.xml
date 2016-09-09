@@ -52,10 +52,9 @@
     <color name="contact_list_navigator_text_selected">#ffffffff</color>
     <color name="contact_list_navigator_text_unselected">#80ffffff</color>
     <color name="contact_list_divider_bg_color">#657dc5</color>
-    <color name="contact_list_username_text_color">#e7e9f3</color>
-    <color name="contact_list_head_text_color">#e7e9f3</color>
-    <color name="contact_list_head_bg_color">#484c9f</color>
-    <color name="contact_list_search_text_color">#8ea4e7</color>
+    <color name="contact_list_username_text_color">#f1f2f4</color>
+    <color name="contact_list_head_text_color">#f1f2f4</color>
+    <color name="contact_list_search_text_color">#f1f2f4</color>
 
     <!-- 拨号 -->
     <color name="dial_main_bg_color">#f4f4f4</color>

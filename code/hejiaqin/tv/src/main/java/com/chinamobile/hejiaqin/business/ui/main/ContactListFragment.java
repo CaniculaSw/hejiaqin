@@ -33,7 +33,6 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     private static final String TAG = "AppContactListFragment";
     private IContactsLogic contactsLogic;
     private AppContactAdapter adapter;
-    private TextView searchText;
     private HeaderView titleLayout;
 
     @Override
@@ -47,7 +46,6 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
-                searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
                 break;
         }
     }
@@ -70,19 +68,8 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         // 添加搜索框
         LayoutInflater inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
-        View searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
-        contactListView.addHeaderView(searchLayout);
-        // 设置搜索显示的文字
-        searchText = (TextView) searchLayout.findViewById(R.id.contact_search_text);
-        // 添加点击事件
-        searchLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
-        FocusManager.getInstance().addFocusViewInLeftFrag("1", searchLayout);
-
-        // 添加新增联系人
-        View addLayout = inflater.inflate(R.layout.layout_contact_add_view, null);
-        contactListView.addHeaderView(addLayout);
-        // 添加点击事件
-        addLayout.findViewById(R.id.contact_add_layout).setOnClickListener(this);
+        View operLayout = inflater.inflate(R.layout.layout_contact_oper_view, null);
+        contactListView.addHeaderView(operLayout);
 
         // 添加adapter
         adapter = new AppContactAdapter(context);
