@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="86dp"
         android:layout_marginTop="116dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:nextFocusDown="@+id/contact_name_layout">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_head_img"
@@ -27,7 +28,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
         android:background="@drawable/adapter_contact_list_item_bg"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:nextFocusDown="@+id/contact_number_layout"
+        android:nextFocusUp="@+id/contact_head_layout">
 
         <TextView
             android:id="@+id/contact_name_text"
@@ -35,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
+            android:focusable="false"
             android:text="@string/contact_modify_name_text"
             android:textColor="#6a728a"
             android:textSize="20sp" />
@@ -62,7 +66,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/adapter_contact_list_item_bg"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:nextFocusDown="@+id/contact_info_save_btn"
+        android:nextFocusUp="@+id/contact_name_layout">
 
         <TextView
             android:id="@+id/contact_number_text"
@@ -70,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
+            android:focusable="false"
             android:text="@string/contact_modify_number_text"
             android:textColor="#6a728a"
             android:textSize="20sp" />
@@ -98,6 +105,7 @@
         android:layout_marginTop="28dp"
         android:background="@drawable/adapter_contact_list_item_bg"
         android:gravity="center"
+        android:nextFocusUp="@+id/contact_number_layout"
         android:text="@string/contact_modify_save_text"
         android:textColor="@color/contact_list_username_text_color"
         android:textSize="20sp" />

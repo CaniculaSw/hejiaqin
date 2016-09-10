@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
+import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
@@ -31,6 +33,8 @@ public abstract class BasicFragment extends BaseFragment {
 
     protected boolean networkConnected = true;
 
+    private MyToast myToast;
+
     @Override
     protected void initSystem(Context context) {
         //根据build.gradle设置日志级别
@@ -52,6 +56,7 @@ public abstract class BasicFragment extends BaseFragment {
         if (resId <= 0) {
             return null;
         }
+        myToast = new MyToast(this.getContext().getApplicationContext());
         View view = inflater.inflate(resId, container, false);
         initView(view);
         initData();
@@ -118,4 +123,12 @@ public abstract class BasicFragment extends BaseFragment {
         this.networkConnected = false;
     }
 
+    protected void showToast(int resId) {
+        MyToast.Position position = myToast.new Position();
+        showToast(resId, Toast.LENGTH_SHORT, position);
+    }
+
+    protected void showToast(int resId, int duration, MyToast.Position pos) {
+        myToast.showToast(resId, duration, pos);
+    }
 }

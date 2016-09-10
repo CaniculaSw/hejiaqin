@@ -95,6 +95,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
     protected void initView(View view) {
         // 头像
         headView = view.findViewById(R.id.contact_head_layout);
+        headView.setOnClickListener(this);
         headImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
         // 姓名
@@ -105,7 +106,10 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         numberView = view.findViewById(R.id.contact_number_layout);
         numberText = (TextView) view.findViewById(R.id.contact_number_hint);
 
-        FocusManager.getInstance().requestFocus(headView);
+        // 保存按钮
+        view.findViewById(R.id.contact_info_save_btn).setOnClickListener(this);
+
+        FocusManager.getInstance().requestFocus(nameView);
     }
 
     @Override
@@ -150,6 +154,42 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             case R.id.back_iv:
                 FragmentMgr.getInstance().finishContactFragment(this);
                 break;
+            case R.id.contact_head_layout:
+                doClickHeadLayout();
+                break;
+            case R.id.contact_info_save_btn:
+                doClickSubmit();
+                break;
+        }
+    }
+
+
+    private void doClickHeadLayout() {
+        PhotoManage.getInstance(this.getContext()).showDialog();
+    }
+
+    private void doClickSubmit() {
+        if (addContactMode) {
+            if (StringUtil.isNullOrEmpty(newName)) {
+                // TODO
+                showToast(R.string.contact_name_input_empty_toast);
+                return;
+            }
+
+            if (StringUtil.isNullOrEmpty(newNumber)) {
+                // TODO
+                showToast(R.string.contact_number_input_empty_toast);
+                return;
+            }
+            contactsLogic.addAppContact(newName, newNumber, newPhotoName);
+        } else {
+            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)
+                    && StringUtil.isNullOrEmpty(newPhotoName)) {
+                return;
+            }
+
+            contactsLogic.updateAppContact(editContactsInfo.getContactId()
+                    , newName, newNumber, newPhotoName);
         }
     }
 
