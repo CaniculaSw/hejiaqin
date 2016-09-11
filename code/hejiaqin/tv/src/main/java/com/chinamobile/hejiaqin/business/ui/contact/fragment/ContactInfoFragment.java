@@ -74,7 +74,38 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void handleLogicMsg(Message msg) {
-
+        switch (msg.what) {
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_add_contact_success_toast);
+                break;
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_add_contact_failed_toast);
+            case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_del_contact_success_toast);
+                FragmentMgr.getInstance().finishContactFragment(this);
+                break;
+            case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_del_contact_failed_toast);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_success_toast);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_failed_toast);
+                break;
+            case BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID:
+                showDialData(null);
+                break;
+            case BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID:
+                List<DialInfoGroup> dialInfoGroupList = (List<DialInfoGroup>) msg.obj;
+                showDialData(dialInfoGroupList);
+                break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID:
+                if (null != contactsLogic) {
+                    contactsLogic.queryContactCallRecords(mContactsInfo);
+                }
+                break;
+        }
     }
 
     @Override
@@ -115,7 +146,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initData() {
-
         Bundle argBundle = getArguments();
         if (null == argBundle) {
             return;
@@ -146,8 +176,18 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
 
+        contactsLogic.queryContactCallRecords(mContactsInfo);
         setDialInfo(genDialInfoGroup());
         refreshView();
+    }
+
+    private void showDialData(List<DialInfoGroup> callRecordList) {
+        if (null == callRecordList) {
+            callRecordList = new ArrayList<DialInfoGroup>();
+        }
+        setDialInfo(callRecordList);
+        refreshView();
+
     }
 
     public void setDialInfo(List<DialInfoGroup> dialInfoGroupList) {
