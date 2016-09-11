@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:background="@drawable/selector_dial_bg"
             android:focusable="true"
             android:gravity="center"
@@ -33,7 +33,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -55,7 +55,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -79,12 +79,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
@@ -105,7 +105,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -127,7 +127,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -151,12 +151,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
@@ -177,7 +177,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -199,7 +199,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -223,12 +223,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
@@ -249,7 +249,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
@@ -271,7 +271,7 @@
 
         <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="66dp"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
             android:focusable="true"
             android:gravity="center"
