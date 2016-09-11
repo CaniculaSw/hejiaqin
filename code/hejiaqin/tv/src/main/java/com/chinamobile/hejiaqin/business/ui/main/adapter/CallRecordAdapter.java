@@ -69,13 +69,13 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                 }
             });
             if (info.getType() == CallRecord.TYPE_VIDEO_INCOMING) {
-                tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_incoming);
+                tHolder.callRecordTypeIv.setImageResource(R.drawable.icon_incoming);
             } else if (info.getType() == CallRecord.TYPE_VIDEO_MISSING) {
-                tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_missed_call);
+                tHolder.callRecordTypeIv.setImageResource(R.drawable.icon_missed_call);
             } else if (info.getType() == CallRecord.TYPE_VIDEO_REJECT) {
-                tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_reject_call);
+                tHolder.callRecordTypeIv.setImageResource(R.drawable.icon_reject_call);
             } else {
-                tHolder.callRecordTypeIv.setImageResource(R.mipmap.icon_outbound_call);
+                tHolder.callRecordTypeIv.setImageResource(R.drawable.icon_outbound_call);
             }
             if (info.getContactsInfo() == null) {
                 //遍历本地联系人

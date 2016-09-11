@@ -72,48 +72,48 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
     }
 
     public void refreshView() {
-        if(!super.isCreateView)
-        {
-            return;
-        }
-        if (null == mDialInfoGroupList) {
-            return;
-        }
-
-
-        dialInfoLayout.removeAllViews();
-        for (DialInfoGroup dialInfoGroup : mDialInfoGroupList) {
-            if (null == dialInfoGroup.getGroupName() || null == dialInfoGroup.getDialInfoList()
-                    || dialInfoGroup.getDialInfoList().isEmpty()) {
-                continue;
-            }
-
-            View dialInfoGroupView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
-            TextView groupNameText = (TextView) dialInfoGroupView.findViewById(R.id.dial_group_name_text);
-            groupNameText.setText(dialInfoGroup.getGroupName());
-            groupNameText.setVisibility(View.VISIBLE);
-            dialInfoGroupView.findViewById(R.id.dial_info_item_layout).setVisibility(View.GONE);
-            dialInfoLayout.addView(dialInfoGroupView);
-
-            for (DialInfo dialInfo : dialInfoGroup.getDialInfoList()) {
-                View dialInfoView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
-                dialInfoView.findViewById(R.id.dial_group_name_text).setVisibility(View.GONE);
-                dialInfoView.findViewById(R.id.dial_info_item_layout).setVisibility(View.VISIBLE);
-
-                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
-                dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
-
-                TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
-                dialTypeText.setText(getStringResIdByDialType(dialInfo.getType()));
-
-                TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
-                dialTimeText.setText(dialInfo.getDialTime());
-
-                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
-                dialDurationText.setText(dialInfo.getDialDuration());
-                dialInfoLayout.addView(dialInfoView);
-            }
-        }
+//        if(!super.isCreateView)
+//        {
+//            return;
+//        }
+//        if (null == mDialInfoGroupList) {
+//            return;
+//        }
+//
+//
+//        dialInfoLayout.removeAllViews();
+//        for (DialInfoGroup dialInfoGroup : mDialInfoGroupList) {
+//            if (null == dialInfoGroup.getGroupName() || null == dialInfoGroup.getDialInfoList()
+//                    || dialInfoGroup.getDialInfoList().isEmpty()) {
+//                continue;
+//            }
+//
+//            View dialInfoGroupView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
+//            TextView groupNameText = (TextView) dialInfoGroupView.findViewById(R.id.dial_group_name_text);
+//            groupNameText.setText(dialInfoGroup.getGroupName());
+//            groupNameText.setVisibility(View.VISIBLE);
+//            dialInfoGroupView.findViewById(R.id.dial_info_item_layout).setVisibility(View.GONE);
+//            dialInfoLayout.addView(dialInfoGroupView);
+//
+//            for (DialInfo dialInfo : dialInfoGroup.getDialInfoList()) {
+//                View dialInfoView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
+//                dialInfoView.findViewById(R.id.dial_group_name_text).setVisibility(View.GONE);
+//                dialInfoView.findViewById(R.id.dial_info_item_layout).setVisibility(View.VISIBLE);
+//
+//                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
+//                dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
+//
+//                TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
+//                dialTypeText.setText(getStringResIdByDialType(dialInfo.getType()));
+//
+//                TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
+//                dialTimeText.setText(dialInfo.getDialTime());
+//
+//                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
+//                dialDurationText.setText(dialInfo.getDialDuration());
+//                dialInfoLayout.addView(dialInfoView);
+//            }
+//        }
     }
 
     public boolean hasData() {
@@ -122,19 +122,19 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
 
     private int getIconResIdByDialType(DialInfo.Type type) {
         if (null == type) {
-            return R.mipmap.icon_incoming;
+            return R.drawable.icon_incoming;
         }
         switch (type) {
             case in:
-                return R.mipmap.icon_incoming;
+                return R.drawable.icon_incoming;
             case out:
-                return R.mipmap.icon_outbound_call;
+                return R.drawable.icon_outbound_call;
             case missed:
-                return R.mipmap.icon_missed_call;
+                return R.drawable.icon_missed_call;
             case reject:
-                return R.mipmap.icon_reject_call;
+                return R.drawable.icon_reject_call;
             default:
-                return R.mipmap.icon_incoming;
+                return R.drawable.icon_incoming;
         }
     }
 

@@ -187,5 +187,20 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="482dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dial_oper_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/dial_info_layout"
+            android:layout_width="482dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
 
 </RelativeLayout>

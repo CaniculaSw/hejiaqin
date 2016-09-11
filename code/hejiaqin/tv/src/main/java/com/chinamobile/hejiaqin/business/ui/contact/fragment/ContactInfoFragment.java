@@ -6,12 +6,15 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.tv.R;
@@ -24,6 +27,7 @@ import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,14 +37,16 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     private LayoutInflater inflater;
 
-    private RelativeLayout contactInfoLayout;
     private TextView mContactNameText;
     private CircleImageView mContactHeadImg;
     private View contactMoreView;
     private View strangerMoreView;
 
+    private LinearLayout mDialInfoLayout;
+
 
     private ContactsInfo mContactsInfo;
+    private List<DialInfoGroup> mDialInfoGroupList = new ArrayList<>();
     private boolean isStranger = false;
 
     private IContactsLogic contactsLogic;
@@ -83,7 +89,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initView(View view) {
-        contactInfoLayout = (RelativeLayout) view.findViewById(R.id.contact_info_layout);
+        inflater = (LayoutInflater) getContext().getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
 
         // 联系人姓名
         mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
@@ -102,6 +109,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         strangerMoreView = view.findViewById(R.id.stranger_more_layout);
         view.findViewById(R.id.add_contact_btn).setOnClickListener(this);
         view.findViewById(R.id.stranger_cancel_btn).setOnClickListener(this);
+
+        mDialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
     }
 
     @Override
@@ -136,8 +145,18 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
+
+        setDialInfo(genDialInfoGroup());
+        refreshView();
     }
 
+    public void setDialInfo(List<DialInfoGroup> dialInfoGroupList) {
+        if (null == dialInfoGroupList) {
+            return;
+        }
+        mDialInfoGroupList.clear();
+        mDialInfoGroupList.addAll(dialInfoGroupList);
+    }
 
     /**
      * Called when a view has been clicked.
@@ -209,23 +228,33 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     }
 
     public void refreshView() {
-        if (null == mContactsInfo) {
+        if (null == mDialInfoGroupList) {
             return;
         }
 
-        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
-        if (null == numberInfoList) {
-            return;
-        }
+        mDialInfoLayout.removeAllViews();
+        for (DialInfoGroup dialInfoGroup : mDialInfoGroupList) {
+            if (null == dialInfoGroup.getGroupName() || null == dialInfoGroup.getDialInfoList()
+                    || dialInfoGroup.getDialInfoList().isEmpty()) {
+                continue;
+            }
 
-        contactInfoLayout.removeAllViews();
-        for (NumberInfo numberInfo : numberInfoList) {
-            View contactNumberView = inflater.inflate(R.layout.layout_contact_number_info_view, null);
-            TextView numberDesc = (TextView) contactNumberView.findViewById(R.id.number_desc_text);
-            numberDesc.setText(numberInfo.getDesc());
-            TextView number = (TextView) contactNumberView.findViewById(R.id.number_text);
-            number.setText(numberInfo.getNumber());
-            contactInfoLayout.addView(contactNumberView);
+            for (DialInfo dialInfo : dialInfoGroup.getDialInfoList()) {
+                View dialInfoView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
+
+                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
+                dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
+
+                TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
+                dialTypeText.setText(getStringResIdByDialType(dialInfo.getType()));
+
+                TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
+                dialTimeText.setText(dialInfo.getDialTime());
+
+                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
+                dialDurationText.setText(dialInfo.getDialDuration());
+                mDialInfoLayout.addView(dialInfoView);
+            }
         }
     }
 
@@ -252,4 +281,107 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         contactMoreView.setVisibility(View.GONE);
     }
 
+    private int getIconResIdByDialType(DialInfo.Type type) {
+        if (null == type) {
+            return R.drawable.icon_incoming;
+        }
+        switch (type) {
+            case in:
+                return R.drawable.icon_incoming;
+            case out:
+                return R.drawable.icon_outbound_call;
+            case missed:
+                return R.drawable.icon_missed_call;
+            case reject:
+                return R.drawable.icon_reject_call;
+            default:
+                return R.drawable.icon_incoming;
+        }
+    }
+
+    private int getStringResIdByDialType(DialInfo.Type type) {
+        if (null == type) {
+            return R.string.contact_info_dial_incoming_text;
+        }
+        switch (type) {
+            case in:
+                return R.string.contact_info_dial_incoming_text;
+            case out:
+                return R.string.contact_info_dial_outbound_text;
+            case missed:
+                return R.string.contact_info_dial_missed_text;
+            case reject:
+                return R.string.contact_info_dial_reject_text;
+            default:
+                return R.string.contact_info_dial_incoming_text;
+        }
+    }
+
+    private List<DialInfoGroup> genDialInfoGroup() {
+        List<DialInfoGroup> dialInfoGroupList = new ArrayList<>();
+
+
+        DialInfoGroup group1 = new DialInfoGroup();
+        group1.setGroupName("今天");
+        group1.setDialInfoList(genDialInfoList());
+        dialInfoGroupList.add(group1);
+
+        DialInfoGroup group2 = new DialInfoGroup();
+        group2.setGroupName("周一");
+        group2.setDialInfoList(genDialInfoList());
+        dialInfoGroupList.add(group2);
+
+
+        DialInfoGroup group3 = new DialInfoGroup();
+        group3.setGroupName("周日");
+        group3.setDialInfoList(genDialInfoList());
+        dialInfoGroupList.add(group3);
+        return dialInfoGroupList;
+    }
+
+    private List<DialInfo> genDialInfoList() {
+        List<DialInfo> dialInfoList = new ArrayList<>();
+        DialInfo dialInfo1 = new DialInfo();
+        dialInfo1.setType(DialInfo.Type.in);
+        dialInfo1.setDialTime("10:51");
+        dialInfo1.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo1);
+
+        DialInfo dialInfo2 = new DialInfo();
+        dialInfo2.setType(DialInfo.Type.in);
+        dialInfo2.setDialTime("周一");
+        dialInfo2.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo2);
+
+        DialInfo dialInfo3 = new DialInfo();
+        dialInfo3.setType(DialInfo.Type.out);
+        dialInfo3.setDialTime("周一");
+        dialInfo3.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo3);
+
+        DialInfo dialInfo4 = new DialInfo();
+        dialInfo4.setType(DialInfo.Type.missed);
+        dialInfo4.setDialTime("10月1日");
+        dialInfo4.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo4);
+
+        DialInfo dialInfo5 = new DialInfo();
+        dialInfo5.setType(DialInfo.Type.reject);
+        dialInfo5.setDialTime("5月10日");
+        dialInfo5.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo5);
+
+        DialInfo dialInfo6 = new DialInfo();
+        dialInfo6.setType(DialInfo.Type.in);
+        dialInfo6.setDialTime("5月9日");
+        dialInfo6.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo6);
+
+        DialInfo dialInfo7 = new DialInfo();
+        dialInfo7.setType(DialInfo.Type.out);
+        dialInfo7.setDialTime("2月3日");
+        dialInfo7.setDialDuration("1分10秒");
+        dialInfoList.add(dialInfo7);
+        return dialInfoList;
+    }
 }
