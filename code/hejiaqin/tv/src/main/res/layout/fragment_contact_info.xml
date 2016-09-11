@@ -65,9 +65,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp">
 
-
         <Button
-            android:id="@+id/dial_add_btn"
+            android:id="@+id/dial_more_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -92,6 +91,100 @@
             android:text="清除"
             android:textColor="@color/contact_list_username_text_color"
             android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/contact_more_layout"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dial_call_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/dial_oper_layout"
+        android:background="@drawable/contact_info_more_bg"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/edit_contact_btn"
+            android:layout_width="202dp"
+            android:layout_height="63dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:text="编辑联系人"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/del_contact_btn"
+            android:layout_width="202dp"
+            android:layout_height="63dp"
+            android:layout_below="@+id/edit_contact_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:text="删除联系人"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/contact_cancel_btn"
+            android:layout_width="202dp"
+            android:layout_height="63dp"
+            android:layout_below="@+id/del_contact_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/stranger_more_layout"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dial_call_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/dial_oper_layout"
+        android:background="@drawable/contact_info_more_bg"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/add_contact_btn"
+            android:layout_width="202dp"
+            android:layout_height="63dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:text="保存到通讯录"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:id="@+id/stranger_cancel_btn"
+            android:layout_width="202dp"
+            android:layout_height="63dp"
+            android:layout_below="@+id/add_contact_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/adapter_contact_list_item_bg"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/contact_list_username_text_color"
+            android:textSize="18sp" />
+
     </RelativeLayout>
 
 
