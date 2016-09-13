@@ -3,184 +3,293 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_one"
+        <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
+            android:layout_height="71dp"
+            android:background="@drawable/selector_dial_bg"
+            android:focusable="true"
             android:gravity="center"
-            android:text="1"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_two"
-            android:layout_width="151dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:text="2"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            <Button
+                android:id="@+id/key_one"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/key_three"
+        <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="match_parent"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
-            android:textSize="30sp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="3"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_two"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="151dp"
+            android:layout_height="71dp"
+            android:layout_marginLeft="15dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_three"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_four"
+        <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
+            android:layout_height="71dp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="4"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_five"
-            android:layout_width="151dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:text="5"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            <Button
+                android:id="@+id/key_four"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/key_six"
+        <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="match_parent"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
-            android:textSize="30sp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="6"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_five"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="151dp"
+            android:layout_height="71dp"
+            android:layout_marginLeft="15dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_six"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_seven"
+        <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
+            android:layout_height="71dp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="7"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_eight"
-            android:layout_width="151dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:text="8"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            <Button
+                android:id="@+id/key_seven"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/key_nine"
+        <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="match_parent"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
-            android:textSize="30sp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="9"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false" />
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_eight"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="151dp"
+            android:layout_height="71dp"
+            android:layout_marginLeft="15dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_nine"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_asterisk"
+        <LinearLayout
             android:layout_width="152dp"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
+            android:layout_height="71dp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="*"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/key_zero"
-            android:layout_width="151dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            <Button
+                android:id="@+id/key_asterisk"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="*"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/key_dot"
+        <LinearLayout
             android:layout_width="151dp"
-            android:layout_height="match_parent"
+            android:layout_height="71dp"
             android:layout_marginLeft="15dp"
-            android:textSize="30sp"
+            android:focusable="true"
             android:gravity="center"
-            android:text="#"
-            android:textColor="@color/keypad_text_color"
-            android:background="@drawable/selector_common_bg"
-            android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_zero"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="151dp"
+            android:layout_height="71dp"
+            android:layout_marginLeft="15dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:background="@drawable/selector_dial_bg"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/key_dot"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:text="#"
+                android:textColor="@color/keypad_text_color"
+                android:background="@drawable/dial_num_btn_bg"
+                android:contentDescription="@null"
+                android:soundEffectsEnabled="false" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
