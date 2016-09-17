@@ -13,13 +13,12 @@
         <LinearLayout
             android:layout_width="152dp"
             android:layout_height="71dp"
+            android:id="@+id/key_one"
             android:background="@drawable/selector_dial_bg"
             android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal">
-
             <Button
-                android:id="@+id/key_one"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -32,6 +31,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_two"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -41,7 +41,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_two"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -54,6 +53,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_three"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -63,7 +63,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_three"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -83,6 +82,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/key_four"
             android:layout_width="152dp"
             android:layout_height="71dp"
             android:focusable="true"
@@ -91,7 +91,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_four"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -104,6 +103,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_five"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -113,7 +113,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_five"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -126,6 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_six"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -135,7 +135,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_six"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -155,6 +154,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/key_seven"
             android:layout_width="152dp"
             android:layout_height="71dp"
             android:focusable="true"
@@ -163,7 +163,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_seven"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -176,6 +175,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_eight"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -185,7 +185,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_eight"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -198,6 +197,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_nine"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -207,7 +207,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_nine"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -227,6 +226,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/key_asterisk"
             android:layout_width="152dp"
             android:layout_height="71dp"
             android:focusable="true"
@@ -235,7 +235,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_asterisk"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -248,6 +247,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_zero"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -257,7 +257,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_zero"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"
@@ -270,6 +269,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/key_dot"
             android:layout_width="151dp"
             android:layout_height="71dp"
             android:layout_marginLeft="15dp"
@@ -279,7 +279,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/key_dot"
                 android:layout_width="145dp"
                 android:layout_height="60dp"
                 android:textSize="30sp"

@@ -112,6 +112,13 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        digitKeypad.btnOne.requestFocus();
+    }
+
+    @Override
     public void onClick(View v) {
        switch (v.getId())
        {

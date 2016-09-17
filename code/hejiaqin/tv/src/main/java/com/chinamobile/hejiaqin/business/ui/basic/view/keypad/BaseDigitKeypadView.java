@@ -26,62 +26,62 @@ public abstract class BaseDigitKeypadView extends LinearLayout
     /**
      * key 1
      */
-    protected Button btnOne;
+    public LinearLayout btnOne;
     
     /**
      * key 2
      */
-    protected Button btnTwo;
+    protected LinearLayout btnTwo;
     
     /**
      * key 3
      */
-    protected Button btnThree;
+    protected LinearLayout btnThree;
     
     /**
      * key 4
      */
-    protected Button btnFour;
+    protected LinearLayout btnFour;
     
     /**
      * key 5
      */
-    protected Button btnFive;
+    protected LinearLayout btnFive;
     
     /**
      * key 6
      */
-    protected Button btnSix;
+    protected LinearLayout btnSix;
     
     /**
      * key 7
      */
-    protected Button btnSeven;
+    protected LinearLayout btnSeven;
     
     /**
      * key8
      */
-    protected Button btnEight;
+    protected LinearLayout btnEight;
     
     /**
      * key 9
      */
-    protected Button btnNine;
+    protected LinearLayout btnNine;
     
     /**
      * key *
      */
-    protected Button btnAsterisk;
+    protected LinearLayout btnAsterisk;
     
     /**
      * key 0
      */
-    protected Button btnZero;
+    protected LinearLayout btnZero;
     
     /**
      * key #
      */
-    protected Button btnDot;
+    protected LinearLayout btnDot;
     
     /**
      * context

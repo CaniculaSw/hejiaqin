@@ -38,17 +38,17 @@ public class DialDigitKeypadView extends BaseDigitKeypadView
         addView(layoutShowDial, new LayoutParams(LayoutParams.MATCH_PARENT,
             LayoutParams.MATCH_PARENT));
         // 实例化拨号盘中的按键
-        btnOne = (Button) findViewById(R.id.key_one);
-        btnTwo = (Button) findViewById(R.id.key_two);
-        btnThree = (Button) findViewById(R.id.key_three);
-        btnFour = (Button) findViewById(R.id.key_four);
-        btnFive = (Button) findViewById(R.id.key_five);
-        btnSix = (Button) findViewById(R.id.key_six);
-        btnSeven = (Button) findViewById(R.id.key_seven);
-        btnEight = (Button) findViewById(R.id.key_eight);
-        btnNine = (Button) findViewById(R.id.key_nine);
-        btnAsterisk = (Button) findViewById(R.id.key_asterisk);
-        btnZero = (Button) findViewById(R.id.key_zero);
-        btnDot = (Button) findViewById(R.id.key_dot);
+        btnOne = (LinearLayout) findViewById(R.id.key_one);
+        btnTwo = (LinearLayout) findViewById(R.id.key_two);
+        btnThree = (LinearLayout) findViewById(R.id.key_three);
+        btnFour = (LinearLayout) findViewById(R.id.key_four);
+        btnFive = (LinearLayout) findViewById(R.id.key_five);
+        btnSix = (LinearLayout) findViewById(R.id.key_six);
+        btnSeven = (LinearLayout) findViewById(R.id.key_seven);
+        btnEight = (LinearLayout) findViewById(R.id.key_eight);
+        btnNine = (LinearLayout) findViewById(R.id.key_nine);
+        btnAsterisk = (LinearLayout) findViewById(R.id.key_asterisk);
+        btnZero = (LinearLayout) findViewById(R.id.key_zero);
+        btnDot = (LinearLayout) findViewById(R.id.key_dot);
     }
 }
