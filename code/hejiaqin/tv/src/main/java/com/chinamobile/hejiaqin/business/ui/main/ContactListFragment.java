@@ -3,8 +3,11 @@ package com.chinamobile.hejiaqin.business.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
@@ -22,6 +25,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.SearchView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
@@ -34,6 +38,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     private IContactsLogic contactsLogic;
     private AppContactAdapter adapter;
     private HeaderView titleLayout;
+    private StickyListHeadersListView contactListView;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -62,24 +67,54 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         titleLayout = (HeaderView) view.findViewById(R.id.title);
         titleLayout.title.setText(R.string.contact_navigation_app_contacts);
 
+        contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
+        contactListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //当此选中的item的子控件需要获得焦点时
+                parent.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
 
-        StickyListHeadersListView contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                parent.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+            }
+        });
 
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
-        View operLayout = inflater.inflate(R.layout.layout_contact_oper_view, null);
-        contactListView.addHeaderView(operLayout);
+        View operLayout = view.findViewById(R.id.oper);
 
         // 搜索联系人按钮
-        operLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
+        View searchLayout = operLayout.findViewById(R.id.contact_search_layout);
+        searchLayout.setOnClickListener(this);
+        searchLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    contactListView.clearFocus();
+                    contactListView.setFocusable(false);
+                }
+            }
+        });
         // 添加联系人按钮
-        operLayout.findViewById(R.id.contact_add_layout).setOnClickListener(this);
+        View addLayout = operLayout.findViewById(R.id.contact_add_layout);
+        addLayout.setOnClickListener(this);
+        addLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    contactListView.clearFocus();
+                    contactListView.setFocusable(false);
+                }
+            }
+        });
 
         // 添加adapter
         adapter = new AppContactAdapter(context);
         contactListView.setAdapter(adapter);
-
+        contactListView.setItemsCanFocus(true);
+        contactListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
+import com.customer.framework.component.log.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -97,6 +98,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
                 FragmentMgr.getInstance().showContactFragment(fragment);
             }
         });
+
     }
 
     @Override

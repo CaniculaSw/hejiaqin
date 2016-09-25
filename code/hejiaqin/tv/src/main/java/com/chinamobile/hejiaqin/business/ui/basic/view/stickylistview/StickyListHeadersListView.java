@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.FrameLayout;
@@ -777,6 +778,10 @@ public class StickyListHeadersListView extends FrameLayout {
         mList.setOnItemLongClickListener(listener);
     }
 
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener) {
+        mList.setOnItemSelectedListener(listener);
+    }
+
     public void addHeaderView(View v, Object data, boolean isSelectable) {
         mList.addHeaderView(v, data, isSelectable);
     }
@@ -1130,5 +1135,9 @@ public class StickyListHeadersListView extends FrameLayout {
 
     public boolean isStackFromBottom() {
     	return mList.isStackFromBottom();
+    }
+
+    public void setItemsCanFocus(boolean itemsCanFocus) {
+        mList.setItemsCanFocus(itemsCanFocus);
     }
 }

@@ -106,7 +106,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         FragmentMgr.getInstance().init(this, R.id.content_left);
         mLeftFragments[mRecentIndex] = new CallRecordFragment();
         mLeftFragments[mRecentIndex].setActivityListener(listener);
-        FragmentMgr.getInstance().showContactFragment(mLeftFragments[mRecentIndex]);
+        FragmentMgr.getInstance().showRecentFragment(mLeftFragments[mRecentIndex]);
 
         mCurrentIndex = mRecentIndex;
         mMenuViews[mCurrentIndex].setBackgroundColor(getResources().getColor(R.color.transparent));
