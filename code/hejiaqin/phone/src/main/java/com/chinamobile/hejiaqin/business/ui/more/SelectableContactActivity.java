@@ -44,7 +44,7 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
-            case BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
                 searchView.setHint(String.format(getString(R.string.contact_search_hint_text), contactsInfoList.size()));
@@ -118,7 +118,7 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
 
     @Override
     protected void initDate() {
-        contactsLogic.fetchLocalContactLst();
+        contactsLogic.fetchAppContactLst();
         mSelectedContactNum = 0;
         updateSelectedHint(mSelectedContactNum);
     }

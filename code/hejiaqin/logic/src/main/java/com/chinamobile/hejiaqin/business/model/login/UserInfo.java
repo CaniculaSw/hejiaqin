@@ -1,8 +1,9 @@
 package com.chinamobile.hejiaqin.business.model.login;
 
-public class UserInfo{
+public class UserInfo {
 
-
+    private String name;
+    private String tvAccount;
     private String userId;
 
     private String userName;
@@ -123,4 +124,19 @@ public class UserInfo{
         this.photoSm = photoSm;
     }
 
+    public String getTvAccount() {
+        return tvAccount;
+    }
+
+    public void setTvAccount(String tvAccount) {
+        this.tvAccount = tvAccount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

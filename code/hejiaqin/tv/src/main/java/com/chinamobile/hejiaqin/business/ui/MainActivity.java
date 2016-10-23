@@ -26,9 +26,9 @@ public class MainActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        if (loginLogic.hasLogined()) {
-            jumpToMainFragmentActivity();
+//            jumpToMainFragmentActivity();
 //        } else {
-//            jumpToLoginActivity();
+            jumpToLoginActivity();
 //        }
 
     }

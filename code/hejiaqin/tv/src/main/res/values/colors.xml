@@ -14,7 +14,7 @@
 
     <!--登录、注册-->
     <color name="error_info_text_color">#fda264</color>
-    <color name="hint_text_color_gray">#b8b8b8</color>
+    <color name="hint_text_color_gray">#8f8f8f</color>
     <color name="green_37c972">#37c972</color>
 
     <!-- 灰色字体颜色 -->
@@ -70,4 +70,5 @@
 
 
     <color name="contact_list_search_mask_bg_color">#60000000</color>
+    <color name="contact_info_head_select">#38b479</color>
 </resources>

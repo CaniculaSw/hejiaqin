@@ -139,7 +139,7 @@
     <string name="about_hejiaqin_download">正在下载最新版本，请稍后...</string>
     <string name="cancel">取消</string>
     <string name="more_tab_name">更多</string>
-    <string name="more_send_to_tv">发送联系人至我的机顶盒</string>
+    <string name="more_send_to_tv">TV协助</string>
     <string name="more_share_app">分享APP</string>
     <string name="more_more_fun">更多精彩</string>
     <string name="more_about">关于</string>
@@ -167,7 +167,7 @@
     <string name="more_bind_tv_and_enjoye">绑定机顶盒, 即可享受</string>
     <string name="more_send_the_contact">发送联系人</string>
     <string name="more_add_contact">机顶盒添加联系人, 轻松搞定</string>
-    <string name="more_bind_tv_btn_text">绑定机顶盒</string>
+    <string name="more_bind_tv_btn_text">TV协助</string>
     <string name="more_bind_tv_dialog_choose_bind_method">请选择一种绑定机顶盒的方式</string>
     <string name="more_bind_tv_dialog_by_scan">扫一扫</string>
     <string name="more_album">相册</string>
@@ -177,6 +177,9 @@
     <string name="more_scan_hint">将取景框对准二维码, 即可自动扫描</string>
     <string name="more_input_account">手动输入账号</string>
     <string name="more_choose_contact">选择机顶盒</string>
+    <string name="more_my_tv_box">我的机顶盒</string>
+    <string name="send_contact">发送联系人</string>
+    <string name="remote_monitor">TV远程看护</string>
     <string name="more_select_all">全选</string>
     <string name="more_cancle_select_all">取消全选</string>
     <string name="more_chosen">已选择 (%s)</string>
