@@ -9,7 +9,7 @@
         android:id="@+id/header_view_id"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp" />
 
     <RelativeLayout
         android:id="@+id/input_number_layout"
@@ -20,6 +20,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_centerInParent="true">
+
         <LinearLayout
             android:id="@+id/dial_save_contact_arrow_layout"
             android:layout_width="66dp"
@@ -28,12 +29,21 @@
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg">
-            <ImageView
-                android:id="@+id/dial_save_contact_arrow_iv"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@mipmap/dial_save_contact_arrow" />
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:background="@drawable/dial_num_btn_bg">
+
+                <ImageView
+                    android:id="@+id/dial_save_contact_arrow_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/dial_save_contact_arrow" />
+            </LinearLayout>
         </LinearLayout>
+
         <com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText
             android:id="@+id/input_number"
             android:layout_width="352dp"
@@ -45,7 +55,8 @@
             android:singleLine="true"
             android:textSize="20sp"
             android:focusable="false"
-            android:textColor="@color/keypad_text_color"/>
+            android:textColor="@color/keypad_text_color" />
+
         <LinearLayout
             android:id="@+id/dial_number_del_layout"
             android:layout_width="66dp"
@@ -54,11 +65,19 @@
             android:gravity="center"
             android:layout_alignParentRight="true"
             android:background="@drawable/selector_dial_bg">
-            <ImageView
-                android:id="@+id/dial_number_del_iv"
-                android:layout_width="32dp"
-                android:layout_height="28dp"
-                android:src="@mipmap/icon_dial_number_delete" />
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:background="@drawable/dial_num_btn_bg">
+
+                <ImageView
+                    android:id="@+id/dial_number_del_iv"
+                    android:layout_width="32dp"
+                    android:layout_height="28dp"
+                    android:src="@mipmap/icon_dial_number_delete" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
@@ -82,15 +101,17 @@
         android:gravity="center_vertical"
         android:layout_centerInParent="true"
         android:focusable="true"
-        android:background="@drawable/dial_num_btn_bg">
+        android:background="@drawable/selector_dial_bg">
+
         <LinearLayout
             android:id="@+id/dial_video_childlayout"
-            android:layout_width="484dp"
-            android:layout_height="66dp"
+            android:layout_width="464dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:gravity="center"
             android:focusable="true"
             android:background="@drawable/fragment_dial_video_bg">
+
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"

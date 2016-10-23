@@ -36,6 +36,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     LinearLayout dialNumberDelLayout;
     ImageView dialNumberDelIv;
     DialDigitKeypadView digitKeypad;
+    LinearLayout dialVideoLayout;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -57,12 +58,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         headerView = (HeaderView) view.findViewById(R.id.header_view_id);
         headerView.title.setText(R.string.dial_title);
 
-        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);;
+        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
         inputNumber = (DigitsEditText)view.findViewById(R.id.input_number);
         dialNumberDelLayout = (LinearLayout)view.findViewById(R.id.dial_number_del_layout);
         dialNumberDelIv = (ImageView)view.findViewById(R.id.dial_number_del_iv);
         digitKeypad = (DialDigitKeypadView)view.findViewById(R.id.digit_keypad);
+        dialVideoLayout =(LinearLayout)view.findViewById(R.id.dial_video_layout);
         dialSaveContactArrowLayout.setOnClickListener(this);
+        dialVideoLayout.setOnClickListener(this);
         digitKeypad.setDigitKeyPressEvent(new BaseDigitKeypadView.DigitKeyPressEvent() {
 
             @Override
@@ -145,6 +148,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                }
                break;
            case R.id.dial_save_contact_arrow_layout:
+               break;
+           case R.id.dial_video_layout:
                break;
        }
     }

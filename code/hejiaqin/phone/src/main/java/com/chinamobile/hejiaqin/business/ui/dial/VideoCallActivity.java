@@ -143,7 +143,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     @Override
     protected void initLogics() {
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
-        mContactsLogic = (IContactsLogic)super.getLogicByInterfaceClass(IContactsLogic.class);
+        mContactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
@@ -211,16 +211,15 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         String incomingNumber = CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber());
         // 查询姓名和头像信息
         ContactsInfo info = searchContactInfo(incomingNumber);
-        if(info!=null)
-        {
-            if(!StringUtil.isNullOrEmpty(info.getName())) {
+        if (info != null) {
+            if (!StringUtil.isNullOrEmpty(info.getName())) {
                 mCallerNameTv.setText(info.getName());
                 mContactNameTv.setText(info.getName());
-            }else{
+            } else {
                 mCallerNameTv.setText(incomingNumber);
                 mContactNameTv.setText(incomingNumber);
             }
-            if(!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
+            if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
                 Picasso.with(this.getApplicationContext())
                         .load(info.getPhotoSm())
                         .placeholder(R.drawable.contact_photo_default)
@@ -237,15 +236,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private void showOuting() {
         //TODO 查询姓名
-        if(!StringUtil.isNullOrEmpty(mCalleeName))
-        {
+        if (!StringUtil.isNullOrEmpty(mCalleeName)) {
             mContactNameTv.setText(mCalleeName);
-        }else{
+        } else {
             ContactsInfo info = searchContactInfo(mCalleeNumber);
-            if(info!=null &&!StringUtil.isNullOrEmpty(info.getName()))
-            {
+            if (info != null && !StringUtil.isNullOrEmpty(info.getName())) {
                 mContactNameTv.setText(info.getName());
-            }else{
+            } else {
                 mContactNameTv.setText(mCalleeNumber);
             }
         }
@@ -255,14 +252,12 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
 
-    private ContactsInfo searchContactInfo(String phoneNumber)
-    {
+    private ContactsInfo searchContactInfo(String phoneNumber) {
         //遍历本地联系人
         boolean isMatch = false;
         List<ContactsInfo> appContactsInfos = mContactsLogic.getCacheAppContactLst();
         for (ContactsInfo contactsInfo : appContactsInfos) {
-            if(isMatch)
-            {
+            if (isMatch) {
                 break;
             }
             if (contactsInfo.getNumberLst() != null) {
@@ -275,8 +270,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
         List<ContactsInfo> localContactsInfos = mContactsLogic.getCacheLocalContactLst();
         for (ContactsInfo contactsInfo : localContactsInfos) {
-            if(isMatch)
-            {
+            if (isMatch) {
                 break;
             }
             if (contactsInfo.getNumberLst() != null) {
@@ -337,7 +331,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showTalking() {
-        mIsTalking =true;
+        mIsTalking = true;
+        CallApi.setPauseMode(1);
         AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         speakerState = audioManamger.isSpeakerphoneOn();
         if (!speakerState) {
@@ -562,14 +557,14 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
-                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking,callTime);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking, callTime);
                 finish();
                 break;
             case R.id.coming_answer_call_btn:
                 mVoipLogic.answerVideo(mCallSession);
                 break;
             case R.id.coming_reject_call_btn:
-                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking,callTime);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking, callTime);
                 finish();
                 break;
             case R.id.mute_layout:
@@ -629,7 +624,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                             }
                         }, 2000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-                        mVoipLogic.dealOnClosed(session, true, false,0);
+                        mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
                 break;
