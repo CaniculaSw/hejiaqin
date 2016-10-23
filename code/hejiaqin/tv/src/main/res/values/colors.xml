@@ -70,4 +70,5 @@
 
 
     <color name="contact_list_search_mask_bg_color">#60000000</color>
+    <color name="contact_info_head_select">#38b479</color>
 </resources>
