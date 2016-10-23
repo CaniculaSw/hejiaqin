@@ -11,17 +11,35 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="30dp" />
 
-    <LinearLayout
-        android:id="@+id/delete_layout"
+    <RelativeLayout
+        android:id="@+id/delete_parent_layout"
         android:layout_below="@id/header_view_id"
         android:layout_width="484dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:focusable="true"
         android:orientation="horizontal">
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/delete_layout"
+            android:layout_width="71dp"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_dial_bg"
+            android:focusable="true">
+            <Button
+                android:layout_width="69dp"
+                android:layout_height="42dp"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:background="@drawable/record_clear_btn_bg"
+                android:text="@string/call_record_clear"/>
+        </LinearLayout>
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/call_record_recycler_view"
-        android:layout_below="@id/delete_layout"
+        android:layout_below="@id/delete_parent_layout"
         android:layout_width="484dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
