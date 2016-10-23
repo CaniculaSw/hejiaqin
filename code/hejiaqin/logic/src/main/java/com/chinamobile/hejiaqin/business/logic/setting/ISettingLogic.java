@@ -7,5 +7,6 @@ import android.content.Context;
  */
 public interface ISettingLogic {
     public void checkVersion();
+    public void getDeviceList();
     public void handleCommit(Context context, String inputNumber,String id);
 }

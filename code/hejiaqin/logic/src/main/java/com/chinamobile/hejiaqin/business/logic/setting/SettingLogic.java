@@ -7,7 +7,11 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
+import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
+import com.chinamobile.hejiaqin.business.net.ReqBody;
+import com.chinamobile.hejiaqin.business.net.ReqToken;
 import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.SysInfoUtil;
 import com.customer.framework.component.net.NetResponse;
@@ -24,7 +28,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     public void handleCommit(Context context, String inputNumber, final String id) {
         TvSettingInfo settingInfo = UserInfoCacheManager.getUserSettingInfo(context);
         if (settingInfo != null) {
-            switch (id){
+            switch (id) {
                 case "numberOne":
                     settingInfo.setNumberOne(inputNumber);
                     break;
@@ -39,12 +43,32 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                     break;
             }
             UserInfoCacheManager.updateUserSetting(context, settingInfo);
-            Message msg = new Message();
-            msg.what = BussinessConstants.SettingMsgID.AUTO_ANSWER_SETTING_COMMIT;
             SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.AUTO_ANSWER_SETTING_COMMIT);
         }
     }
 
+    @Override
+    public void getDeviceList() {
+        final GetDeviceListReq reqBody = new GetDeviceListReq();
+        new SettingHttpmanager(getContext()).getDeviceList(null, reqBody, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL,obj);
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
+            }
+        });
+    }
+
+    @Override
     public void checkVersion() {
         new SettingHttpmanager(getContext()).checkVersion(null, new IHttpCallBack() {
             @Override
