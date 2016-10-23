@@ -9,6 +9,7 @@
         android:id="@+id/contact_info_layout"
         android:layout_width="match_parent"
         android:layout_height="210dp"
+        android:focusable="false"
         android:layout_below="@+id/title">
 
 
@@ -18,6 +19,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
+            android:focusable="false"
             android:src="@drawable/contact_photo_default"
             app:civ_border_color="@color/contact_list_username_text_color"
             app:civ_border_width="2dp" />
@@ -29,6 +31,7 @@
             android:layout_below="@+id/contact_head_img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="18dp"
+            android:focusable="false"
             android:text="包小美"
             android:textColor="@color/contact_list_username_text_color"
             android:textSize="18sp" />
@@ -40,6 +43,7 @@
             android:layout_below="@+id/contact_name_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="6dp"
+            android:focusable="false"
             android:text="123456789"
             android:textColor="@color/contact_list_username_text_color"
             android:textSize="18sp" />
@@ -48,49 +52,76 @@
     </RelativeLayout>
 
 
-    <Button
+    <ImageButton
         android:id="@+id/dial_call_btn"
-        android:layout_width="482dp"
-        android:layout_height="67dp"
+        android:layout_width="486dp"
+        android:layout_height="71dp"
         android:layout_below="@+id/contact_info_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:background="@drawable/contact_info_call" />
+        android:focusable="true"
+        android:background="@drawable/selector_setting_bg"
+        android:padding="2dp"
+        android:nextFocusDown="@+id/dial_more_btn"
+        android:src="@drawable/contact_info_call" />
 
     <RelativeLayout
         android:id="@+id/dial_oper_layout"
         android:layout_width="482dp"
         android:layout_height="64dp"
+        android:focusable="false"
         android:layout_below="@+id/dial_call_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp">
 
-        <Button
+
+        <ImageButton
             android:id="@+id/dial_more_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="47dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/contact_info_add_bg" />
+            android:focusable="true"
+            android:nextFocusRight="@+id/dial_clear_layout"
+            android:nextFocusDown="@+id/dial_clear_layout"
+            android:nextFocusUp="@+id/dial_call_btn"
+            android:background="@drawable/selector_setting_bg"
+            android:padding="2dp"
+            android:src="@drawable/contact_info_add_bg" />
 
         <TextView
             android:id="@+id/dial_record_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:focusable="false"
             android:text="拨号记录"
             android:textColor="@color/contact_list_username_text_color"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/dial_clear_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <RelativeLayout
+            android:id="@+id/dial_clear_layout"
+            android:layout_width="75dp"
+            android:layout_height="47dp"
+            android:nextFocusLeft="@+id/dial_more_btn"
+            android:nextFocusUp="@+id/dial_more_btn"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/contact_info_dial_clear_bg"
-            android:text="清除"
-            android:textColor="@color/contact_list_username_text_color"
-            android:textSize="18sp" />
+            android:focusable="true"
+            android:background="@drawable/selector_setting_bg">
+
+            <Button
+                android:id="@+id/dial_clear_btn"
+                android:layout_width="71dp"
+                android:layout_height="43dp"
+                android:background="@drawable/contact_info_dial_clear_bg"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:focusable="false"
+                android:text="清除"
+                android:textColor="@color/contact_list_username_text_color"
+                android:textSize="18sp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout

@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Message;
@@ -8,8 +9,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.qrCode.QRCodeEncoder;
 import com.customer.framework.component.qrCode.core.DisplayUtils;
@@ -70,7 +74,12 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
 
     @Override
     protected void initData() {
-        createQRCode("13776570335", 1400, qrCode);
+        UserInfo userInfo = (UserInfo) UserInfoCacheManager.getUserInfo(getContext());
+        if (userInfo != null){
+            boxAccount.setText(userInfo.getTvAccount());
+            createQRCode(userInfo.getTvAccount(), 1400, qrCode);
+        }
+//        createQRCode("13776570335", 1400, qrCode);
     }
 
     @Override
@@ -78,6 +87,10 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         switch (view.getId()) {
             case R.id.logout_btn:
                 LogUtil.i(TAG, "will logout!");
+                UserInfoCacheManager.clearUserInfo(getContext());
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
                 break;
             default:
                 break;

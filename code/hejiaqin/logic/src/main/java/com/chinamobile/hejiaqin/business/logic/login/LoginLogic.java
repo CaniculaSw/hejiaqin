@@ -10,6 +10,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
@@ -207,6 +208,38 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             }
         });
     }
+
+    @Override
+    public void tvLogin(TvLoginInfo info) {
+        new LoginHttpManager(getContext()).tvLogin(null, info, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                UserInfo userInfo = (UserInfo) obj;
+                Date now = new Date();
+                UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
+                initCMIMSdk();
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
+                UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID, response);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
+            }
+        });
+    }
+
 
     @Override
     public void logout() {

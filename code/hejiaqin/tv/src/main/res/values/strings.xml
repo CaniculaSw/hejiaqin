@@ -140,6 +140,8 @@
     <string name="record">视频记录</string>
     <string name="contact_list">通讯录</string>
     <!--Setting -->
+    <string name="input_password_hint">请输入密码</string>
+    <string name="input_account_hint">请输入账号</string>
     <string name="function_setting">功能设置</string>
     <string name="box_account">终端账号</string>
     <string name="check_status">状态检测</string>

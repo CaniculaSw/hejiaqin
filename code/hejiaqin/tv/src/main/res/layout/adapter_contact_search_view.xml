@@ -10,6 +10,7 @@
         android:layout_height="67dp"
         android:layout_centerInParent="true"
         android:background="@drawable/adapter_contact_list_item_bg"
+        android:focusable="true"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
