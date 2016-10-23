@@ -7,6 +7,7 @@ import com.huawei.rcs.RCSApplication;
 import com.huawei.rcs.caasomp.CaasOmp;
 import com.huawei.rcs.caasomp.CaasOmpCfg;
 import com.huawei.rcs.call.CallApi;
+import com.huawei.rcs.message.MessagingApi;
 import com.huawei.rcs.hme.HmeAudio;
 import com.huawei.rcs.hme.HmeVideo;
 import com.huawei.rcs.stg.NatStgHelper;
@@ -35,6 +36,8 @@ public class HeApplication extends RCSApplication {
         CallApi.setCustomCfg(CallApi.CFG_CALLLOG_INSERT_SYS_DB, CallApi.CFG_VALUE_NO);
         SysApi.loadTls(new DefaultTlsHelper());
         SysApi.loadStg(new NatStgHelper());
+
+        MessagingApi.init(getApplicationContext());
 
 //        SysApi.loadStg(new SvnStgHelper());
 

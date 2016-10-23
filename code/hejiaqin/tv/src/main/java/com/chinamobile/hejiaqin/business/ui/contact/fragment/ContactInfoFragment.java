@@ -6,24 +6,21 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
-import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
-import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
-import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
-import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
-import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.utils.LogUtil;
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
@@ -129,6 +126,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
 
+        ImageButton dialCallBtn = (ImageButton) view.findViewById(R.id.dial_call_btn);
+        dialCallBtn.setOnClickListener(this);
+
         view.findViewById(R.id.dial_more_btn).setOnClickListener(this);
         view.findViewById(R.id.dial_clear_btn).setOnClickListener(this);
 
@@ -142,6 +142,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         view.findViewById(R.id.stranger_cancel_btn).setOnClickListener(this);
 
         mDialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
+
+        FocusManager.getInstance().requestFocus(dialCallBtn);
     }
 
     @Override
@@ -176,7 +178,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
 
-        contactsLogic.queryContactCallRecords(mContactsInfo);
+        // contactsLogic.queryContactCallRecords(mContactsInfo);
         setDialInfo(genDialInfoGroup());
         refreshView();
     }

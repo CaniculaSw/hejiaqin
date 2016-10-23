@@ -113,6 +113,7 @@
 
     <!-- 通话记录 -->
     <string name="call_record_title">视频记录</string>
+    <string name="call_record_clear">清除</string>
 
     <!-- 拨号 -->
     <string name="dial_title">全部</string>

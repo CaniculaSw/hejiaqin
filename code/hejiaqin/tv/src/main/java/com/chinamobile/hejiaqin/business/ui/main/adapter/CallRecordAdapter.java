@@ -55,17 +55,17 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
-//                    if (mData.get(position).getContactsInfo() != null) {
-//                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
-//                        intent.putExtras(bundle);
-//                        mContext.startActivity(intent);
-//                    } else {
-//                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
-//                        intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
-//                        mContext.startActivity(intent);
-//                    }
+                    if (mData.get(position).getContactsInfo() != null) {
+                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                        intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
+                        mContext.startActivity(intent);
+                    }
                 }
             });
             if (info.getType() == CallRecord.TYPE_VIDEO_INCOMING) {

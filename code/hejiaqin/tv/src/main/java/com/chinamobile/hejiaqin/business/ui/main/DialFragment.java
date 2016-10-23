@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.BaseDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadView;
@@ -106,6 +107,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 return true;
             }
         });
+        FocusManager.getInstance().addFocusViewInLeftFrag("2", digitKeypad.btnOne);
     }
 
 
@@ -118,7 +120,6 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     public void onResume()
     {
         super.onResume();
-        digitKeypad.btnOne.requestFocus();
     }
 
     @Override

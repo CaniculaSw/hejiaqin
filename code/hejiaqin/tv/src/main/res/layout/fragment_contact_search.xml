@@ -40,16 +40,20 @@
                 android:maxLength="32"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textColorHint="@color/contact_list_search_text_color"
+                android:nextFocusDown="@+id/search_del"
+                android:nextFocusRight="@+id/search_del"
                 android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/search_del"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:src="@mipmap/icon_delete"
+                android:src="@mipmap/icon_clear_all"
+                android:nextFocusLeft="@+id/search_input"
+                android:nextFocusUp="@+id/search_input"
                 android:visibility="invisible" />
         </RelativeLayout>
 
