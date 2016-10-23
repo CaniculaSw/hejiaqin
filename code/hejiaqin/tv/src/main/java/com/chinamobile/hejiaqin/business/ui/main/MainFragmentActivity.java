@@ -144,34 +144,43 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             return;
         }
 
+        BaseFragment switchFragment = FragmentMgr.getInstance().getTopFragment(toIndex);
         switch (toIndex) {
             case mRecentIndex:
-                if (null == mLeftFragments[toIndex]) {
+                if (null == switchFragment) {
                     mLeftFragments[toIndex] = new CallRecordFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
+                    FragmentMgr.getInstance().showRecentFragment(mLeftFragments[toIndex]);
+                } else {
+                    FragmentMgr.getInstance().showRecentFragment(switchFragment);
                 }
-                FragmentMgr.getInstance().showRecentFragment(mLeftFragments[toIndex]);
                 break;
             case mContactsIndex:
-                if (null == mLeftFragments[toIndex]) {
+                if (null == switchFragment) {
                     mLeftFragments[toIndex] = new ContactListFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
+                    FragmentMgr.getInstance().showContactFragment(mLeftFragments[toIndex]);
+                } else {
+                    FragmentMgr.getInstance().showContactFragment(switchFragment);
                 }
-                FragmentMgr.getInstance().showContactFragment(mLeftFragments[toIndex]);
                 break;
             case mDialIndex:
-                if (null == mLeftFragments[toIndex]) {
+                if (null == switchFragment) {
                     mLeftFragments[toIndex] = new DialFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
+                    FragmentMgr.getInstance().showDialFragment(mLeftFragments[toIndex]);
+                } else {
+                    FragmentMgr.getInstance().showDialFragment(switchFragment);
                 }
-                FragmentMgr.getInstance().showDialFragment(mLeftFragments[toIndex]);
                 break;
             case mSettingIndex:
-                if (null == mLeftFragments[toIndex]) {
+                if (null == switchFragment) {
                     mLeftFragments[toIndex] = new SettingFragment();
                     mLeftFragments[toIndex].setActivityListener(listener);
+                    FragmentMgr.getInstance().showSettingFragment(mLeftFragments[toIndex]);
+                } else {
+                    FragmentMgr.getInstance().showSettingFragment(switchFragment);
                 }
-                FragmentMgr.getInstance().showFragment(toIndex, mLeftFragments[toIndex]);
                 break;
         }
 

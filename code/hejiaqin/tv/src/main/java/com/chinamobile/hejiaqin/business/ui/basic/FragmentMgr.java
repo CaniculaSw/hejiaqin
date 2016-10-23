@@ -132,7 +132,7 @@ public class FragmentMgr {
                 backView.requestFocus();
             }
         }
-        if (isParentFragmentShowingOfCurrentIndex(index)){
+        if (isParentFragmentShowingOfCurrentIndex(index)) {
             ((Stack) focusedViewBackStack.get(index)).clear();
         }
     }
@@ -161,6 +161,10 @@ public class FragmentMgr {
             curLeftShowFragment = curTopFragment;
         }
         fragmentTransaction.commit();
+    }
+
+    public BaseFragment getTopFragment(int index) {
+        return getTopFragment((Stack) fragmentStackMap.get(index));
     }
 
 
