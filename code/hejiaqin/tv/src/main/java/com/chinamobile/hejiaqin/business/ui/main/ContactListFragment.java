@@ -115,6 +115,8 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         contactListView.setAdapter(adapter);
         contactListView.setItemsCanFocus(true);
         contactListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+
+        FocusManager.getInstance().addFocusViewInLeftFrag("1", addLayout);
     }
 
     @Override

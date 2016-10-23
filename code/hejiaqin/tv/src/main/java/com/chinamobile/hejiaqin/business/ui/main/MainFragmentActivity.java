@@ -245,6 +245,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 View leftFocusView = FocusManager.getInstance().getFocusViewInLeftFrag(String.valueOf(mCurrentIndex));
                 if (null != leftFocusView && mMenuViews[mCurrentIndex].isFocused()) {
                     FocusManager.getInstance().requestFocus(leftFocusView);
+                    return true;
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
