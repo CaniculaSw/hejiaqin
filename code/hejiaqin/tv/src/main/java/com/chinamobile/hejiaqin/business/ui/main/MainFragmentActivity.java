@@ -227,16 +227,18 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
+        View focused = getCurrentFocus();
+        LogUtil.d(TAG, "focused: " + focused.toString());
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_LEFT");
-                View focused = getCurrentFocus();
-                LogUtil.d(TAG, "focused: " + focused.toString());
-                View nextFocuse = focused.focusSearch(View.FOCUS_LEFT);
-                if (nextFocuse != null && nextFocuse.focusSearch(View.FOCUS_LEFT) != null) {
-                    nextFocuse.requestFocus();
-                } else if (FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex)) {
+                View nextLeftFocuse = focused.focusSearch(View.FOCUS_LEFT);
+                //if (nextFocuse != null && nextFocuse.focusSearch(View.FOCUS_LEFT) != null) {
+                if (nextLeftFocuse != null && !isViewInMenus(nextLeftFocuse.getId())) {
+                    nextLeftFocuse.requestFocus();
+                }
+                //else if (FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex)) {
+                else {
                     FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
                 }
                 return true;
@@ -250,11 +252,27 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
                 LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_UP");
+                if (!isViewInMenus(focused.getId())) {
+                    View nextUpFocuse = focused.focusSearch(View.FOCUS_UP);
+                    if (null != nextUpFocuse && isViewInMenus(nextUpFocuse.getId())) {
+                        return true;
+                    }
+                }
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_DOWN");
+                if (!isViewInMenus(focused.getId())) {
+                    View nextDownFocuse = focused.focusSearch(View.FOCUS_DOWN);
+                    if (null != nextDownFocuse && isViewInMenus(nextDownFocuse.getId())) {
+                        return true;
+                    }
+                }
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private boolean isViewInMenus(int viewId) {
+        return mNavigatorLay.findViewById(viewId) != null;
     }
 }
