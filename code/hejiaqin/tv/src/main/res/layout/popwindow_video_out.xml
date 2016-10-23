@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="420dp"
+    android:layout_height="402dp"
+    android:layout_alignParentTop="true"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:background="@drawable/video_dialog_bg"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/caller_iv"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/contact_photo_default"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#737c95" />
+
+    <TextView
+        android:id="@+id/caller_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="包宏浩"
+        android:textSize="26sp"
+        android:layout_marginTop="12dp"
+        android:textColor="#ebecef" />
+
+    <TextView
+        android:id="@+id/caller_number_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12345678912"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/call_status_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/call_outing"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:textColor="#aaafbc" />
+
+    <LinearLayout
+        android:id="@+id/reject_call_layout"
+        android:layout_marginTop="58dp"
+        android:layout_width="336dp"
+        android:layout_height="66dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:focusable="true"
+        android:background="@drawable/selector_dial_bg">
+
+        <Button
+            android:layout_width="324dp"
+            android:layout_height="60dp"
+            android:text="@string/call_reject"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/border_btn_hangupcall_bg" />
+    </LinearLayout>
+</LinearLayout>
