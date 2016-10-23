@@ -4,6 +4,8 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -13,6 +15,7 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.SearchContactAdapter;
@@ -26,6 +29,7 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
     private HeaderView titleLayout;
 
+    private View searchLayout;
     private EditText searchInput;
     private View searchDelete;
     private ListView contactsListView;
@@ -74,14 +78,36 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         titleLayout.title.setText(R.string.contact_search_text);
 
         // 搜索框
+        searchLayout = view.findViewById(R.id.search_input_layout);
         searchInput = (EditText) view.findViewById(R.id.search_input);
         searchDelete = view.findViewById(R.id.search_del);
 
         // 搜索结果列表
         contactsListView = (ListView) view.findViewById(R.id.list);
+        contactsListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //当此选中的item的子控件需要获得焦点时
+                parent.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                parent.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+            }
+        });
+
         adapter = new SearchContactAdapter(getContext());
         contactsListView.setAdapter(adapter);
+        contactsListView.setItemsCanFocus(true);
+        contactsListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
+        searchInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                searchLayout.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.drawable.contact_list_item_bg);
+            }
+        });
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,7 +132,16 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         });
 
         searchDelete.setOnClickListener(this);
+        searchDelete.setBackgroundResource(R.drawable.delete_bg);
+        searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                searchDelete.getBackground().setAlpha(hasFocus? 0 : 255);
+            }
+        });
         titleLayout.backImageView.setOnClickListener(this);
+
+        FocusManager.getInstance().requestFocus(searchInput);
     }
 
     @Override
