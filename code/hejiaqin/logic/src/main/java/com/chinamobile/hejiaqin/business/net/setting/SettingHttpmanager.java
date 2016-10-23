@@ -1,17 +1,25 @@
 package com.chinamobile.hejiaqin.business.net.setting;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
+import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
+import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
+import com.chinamobile.hejiaqin.business.net.ReqToken;
 import com.customer.framework.component.net.NameValuePair;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.utils.LogUtil;
 import com.google.gson.Gson;
+import com.google.gson.internal.ObjectConstructor;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +39,7 @@ public class SettingHttpmanager extends AbsHttpManager {
     private final int action_base = 0;
 
     private final int check_android_version = action_base + 1;
+    private final int get_device_list = action_base + 2;
 
     /**
      * 请求action
@@ -55,6 +64,9 @@ public class SettingHttpmanager extends AbsHttpManager {
             case check_android_version:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/version/android";
                 break;
+            case get_device_list:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/getDeviceList";
+                break;
             default:
                 break;
         }
@@ -70,6 +82,7 @@ public class SettingHttpmanager extends AbsHttpManager {
         NetRequest.RequestMethod method = NetRequest.RequestMethod.GET;
         switch (this.mAction) {
             case check_android_version:
+            case get_device_list:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -100,6 +113,8 @@ public class SettingHttpmanager extends AbsHttpManager {
         switch (this.mAction) {
             case check_android_version:
                 //TODO
+            case get_device_list:
+                //TODO
             default:
                 break;
         }
@@ -119,13 +134,18 @@ public class SettingHttpmanager extends AbsHttpManager {
             try {
                 String data = "";
                 JSONObject rootJsonObj = new JSONObject(response.getData());
-                if (rootJsonObj.has("data")){
+                if (rootJsonObj.has("data")) {
                     data = rootJsonObj.get("data").toString();
+                }else if (rootJsonObj.has("dataList")){
+                    data = rootJsonObj.get("dataList").toString();
                 }
                 Gson gson = new Gson();
                 switch (this.mAction) {
                     case check_android_version:
                         obj = gson.fromJson(data, VersionInfo.class);
+                        break;
+                    case get_device_list:
+                        obj = gson.fromJson(data,new TypeToken<List<UserInfo>>(){}.getType());
                         break;
                     default:
                         break;
@@ -138,9 +158,15 @@ public class SettingHttpmanager extends AbsHttpManager {
         return obj;
     }
 
-    public void checkVersion(final Object invoker, final IHttpCallBack callBack){
+    public void checkVersion(final Object invoker, final IHttpCallBack callBack) {
         this.mAction = check_android_version;
         this.mData = null;
+        send(invoker, callBack);
+    }
+
+    public void getDeviceList(final Object invoker, final GetDeviceListReq req, final IHttpCallBack callBack) {
+        this.mAction = get_device_list;
+        this.mData = req;
         send(invoker, callBack);
     }
 }

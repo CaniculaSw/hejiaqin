@@ -5,6 +5,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
@@ -58,6 +59,7 @@ public interface ILoginLogic {
      */
     void login(LoginInfo info);
 
+    void tvLogin(TvLoginInfo info);
     /**
      * 用户注销
      */

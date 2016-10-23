@@ -67,7 +67,6 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
                     .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(mUserAvatarIv);
-            //userAvatarIv.setImageResource(R.drawable.contact_photo_default);
         }
     }
 

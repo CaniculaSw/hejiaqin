@@ -46,6 +46,7 @@
                 android:nextFocusUp="@+id/number_et"
                 android:paddingLeft="15dp"
                 android:textColor="@color/white"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="20sp">
 
                 <requestFocus />

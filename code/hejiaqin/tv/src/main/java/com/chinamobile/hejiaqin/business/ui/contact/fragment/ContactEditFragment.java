@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -26,11 +27,11 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
     private CircleImageView headImg;
 
     private View nameView;
-    private TextView nameText;
+    private EditText nameText;
     String newName;
 
     private View numberView;
-    private TextView numberText;
+    private EditText numberText;
     String newNumber;
 
 
@@ -96,19 +97,37 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         headView = view.findViewById(R.id.contact_head_layout);
         headView.setOnClickListener(this);
         headImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
+        headView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                headImg.setBorderColorResource(hasFocus? R.color.contact_info_head_select: R.color.white);
+            }
+        });
 
         // 姓名
         nameView = view.findViewById(R.id.contact_name_layout);
-        nameText = (TextView) view.findViewById(R.id.contact_name_hint);
+        nameText = (EditText) view.findViewById(R.id.contact_name_hint);
+        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                nameView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.drawable.contact_list_item_bg);
+            }
+        });
 
         // 号码
         numberView = view.findViewById(R.id.contact_number_layout);
-        numberText = (TextView) view.findViewById(R.id.contact_number_hint);
+        numberText = (EditText) view.findViewById(R.id.contact_number_hint);
+        numberText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                numberView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.drawable.contact_list_item_bg);
+            }
+        });
 
         // 保存按钮
         view.findViewById(R.id.contact_info_save_btn).setOnClickListener(this);
 
-        FocusManager.getInstance().requestFocus(nameView);
+        FocusManager.getInstance().requestFocus(nameText);
     }
 
     @Override

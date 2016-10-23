@@ -8,6 +8,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
@@ -91,6 +92,7 @@ public class LoginHttpManager extends AbsHttpManager {
 
     private final int get_user_info_action = action_base + 13;
 
+    private final int tv_login_action = action_base + 14;
 
     /**
      * 请求action
@@ -145,6 +147,9 @@ public class LoginHttpManager extends AbsHttpManager {
             case get_user_info_action:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/info";
                 break;
+            case tv_login_action:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/tvLogin";
+                break;
             default:
                 break;
         }
@@ -170,6 +175,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case update_photo:
             case feed_back:
             case get_user_info_action:
+            case tv_login_action:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -189,6 +195,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case forget_password_code_action:
             case check_forget_password_code_action:
             case update_pwd_action:
+            case tv_login_action:
                 flag = false;
                 break;
             default:
@@ -229,6 +236,7 @@ public class LoginHttpManager extends AbsHttpManager {
                         break;
                     case register_secondStep_action:
                         break;
+                    case tv_login_action:
                     case login_action:
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
@@ -333,6 +341,12 @@ public class LoginHttpManager extends AbsHttpManager {
         send(invoker, callBack);
     }
 
+    public void tvLogin(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
+        this.mAction = tv_login_action;
+        this.mData = loginInfo;
+        send(invoker, callBack);
+    }
+
     /**
      * 登录方法
      *
@@ -369,9 +383,9 @@ public class LoginHttpManager extends AbsHttpManager {
         send(invoker, callBack);
     }
 
-    public void getUserInfo(final Object invoker, final  NVPWithTokenReqBody reqBody, final IHttpCallBack callBack){
+    public void getUserInfo(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = get_user_info_action;
         this.mData = reqBody;
-        send(invoker,callBack);
+        send(invoker, callBack);
     }
 }
