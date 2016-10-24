@@ -4,8 +4,6 @@ import android.content.Intent;
 
 import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.huawei.rcs.RCSApplication;
-import com.huawei.rcs.caasomp.CaasOmp;
-import com.huawei.rcs.caasomp.CaasOmpCfg;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.message.MessagingApi;
 import com.huawei.rcs.hme.HmeAudio;
@@ -14,6 +12,7 @@ import com.huawei.rcs.stg.NatStgHelper;
 import com.huawei.rcs.system.SysApi;
 import com.huawei.rcs.tls.DefaultTlsHelper;
 import com.huawei.rcs.upgrade.UpgradeApi;
+import com.huawei.rcs.caasomp.*;
 import com.littlec.sdk.manager.CMIMHelper;
 
 /**
@@ -37,8 +36,9 @@ public class HeApplication extends RCSApplication {
         SysApi.loadTls(new DefaultTlsHelper());
         SysApi.loadStg(new NatStgHelper());
 
+        //initial message API
         MessagingApi.init(getApplicationContext());
-
+        MessagingApi.openTolistUncompletedMessage();
 //        SysApi.loadStg(new SvnStgHelper());
 
 //        CaasOmp.init();
