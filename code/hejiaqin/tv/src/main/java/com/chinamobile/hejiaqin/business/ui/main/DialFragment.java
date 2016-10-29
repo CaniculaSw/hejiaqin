@@ -115,13 +115,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     protected void initData() {
 
     }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-    }
-
+    
     @Override
     public void onClick(View v) {
        switch (v.getId())

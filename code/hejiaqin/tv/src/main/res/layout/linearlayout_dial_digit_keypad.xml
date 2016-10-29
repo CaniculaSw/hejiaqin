@@ -11,16 +11,16 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="152dp"
-            android:layout_height="71dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
             android:id="@+id/key_one"
             android:background="@drawable/selector_dial_bg"
             android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal">
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="1"
@@ -32,17 +32,17 @@
 
         <LinearLayout
             android:id="@+id/key_two"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="2"
@@ -54,17 +54,17 @@
 
         <LinearLayout
             android:id="@+id/key_three"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="3"
@@ -78,21 +78,21 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/key_four"
-            android:layout_width="152dp"
-            android:layout_height="71dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="4"
@@ -104,17 +104,17 @@
 
         <LinearLayout
             android:id="@+id/key_five"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="5"
@@ -126,17 +126,17 @@
 
         <LinearLayout
             android:id="@+id/key_six"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="6"
@@ -150,21 +150,21 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/key_seven"
-            android:layout_width="152dp"
-            android:layout_height="71dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="7"
@@ -176,17 +176,17 @@
 
         <LinearLayout
             android:id="@+id/key_eight"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="8"
@@ -198,17 +198,17 @@
 
         <LinearLayout
             android:id="@+id/key_nine"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="9"
@@ -222,21 +222,21 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/key_asterisk"
-            android:layout_width="152dp"
-            android:layout_height="71dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="*"
@@ -248,17 +248,17 @@
 
         <LinearLayout
             android:id="@+id/key_zero"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="0"
@@ -270,17 +270,17 @@
 
         <LinearLayout
             android:id="@+id/key_dot"
-            android:layout_width="151dp"
-            android:layout_height="71dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="162dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="4dp"
             android:focusable="true"
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="145dp"
-                android:layout_height="60dp"
+                android:layout_width="150dp"
+                android:layout_height="64dp"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:text="#"
