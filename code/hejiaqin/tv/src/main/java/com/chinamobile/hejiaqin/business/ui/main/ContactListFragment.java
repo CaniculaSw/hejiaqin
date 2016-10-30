@@ -1,31 +1,23 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Message;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactEditFragment;
-import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactSearchFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.view.SearchView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
-import com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
@@ -38,6 +30,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     private IContactsLogic contactsLogic;
     private AppContactAdapter adapter;
     private HeaderView titleLayout;
+    private View addLayout;
     private StickyListHeadersListView contactListView;
 
     @Override
@@ -98,7 +91,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
             }
         });
         // 添加联系人按钮
-        View addLayout = operLayout.findViewById(R.id.contact_add_layout);
+        addLayout = operLayout.findViewById(R.id.contact_add_layout);
         addLayout.setOnClickListener(this);
         addLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -127,6 +120,12 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     @Override
     protected void initData() {
         contactsLogic.fetchAppContactLst();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FocusManager.getInstance().requestFocus(addLayout);
     }
 
     /**
