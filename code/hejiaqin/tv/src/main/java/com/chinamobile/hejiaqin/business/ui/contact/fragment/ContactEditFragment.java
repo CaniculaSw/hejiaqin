@@ -127,7 +127,6 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         // 保存按钮
         view.findViewById(R.id.contact_info_save_btn).setOnClickListener(this);
 
-        FocusManager.getInstance().requestFocus(nameText);
     }
 
     @Override
@@ -157,7 +156,11 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         }
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        FocusManager.getInstance().requestFocus(nameText);
+    }
 
     /**
      * Called when a view has been clicked.

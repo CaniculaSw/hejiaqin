@@ -151,7 +151,6 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 //        });
         titleLayout.backImageView.setOnClickListener(this);
 
-        FocusManager.getInstance().requestFocus(searchInput);
     }
 
     @Override
@@ -159,6 +158,11 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        FocusManager.getInstance().requestFocus(searchInput);
+    }
 
     /**
      * Called when a view has been clicked.
