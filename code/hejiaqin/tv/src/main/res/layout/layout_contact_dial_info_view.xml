@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="482dp"
-    android:layout_height="67dp"
+    android:layout_width="492dp"
+    android:layout_height="78dp"
+    android:background="@drawable/selector_setting_bg"
+    android:focusable="true"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/dial_info_layout"
         android:layout_width="482dp"
         android:layout_height="67dp"
-        android:focusable="true"
-        android:background="@drawable/adapter_contact_list_item_bg"
+        android:layout_centerInParent="true"
+        android:background="@drawable/contact_list_item_bg"
         android:orientation="horizontal">
 
 

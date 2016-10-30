@@ -237,7 +237,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         View focused = getCurrentFocus();
-        LogUtil.d(TAG, "focused: " + focused.toString());
+        LogUtil.d(TAG, "focused: " + focused);
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_LEFT");

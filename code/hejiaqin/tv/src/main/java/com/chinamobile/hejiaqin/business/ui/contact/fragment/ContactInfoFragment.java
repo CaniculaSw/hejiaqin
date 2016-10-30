@@ -126,7 +126,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
 
-        ImageButton dialCallBtn = (ImageButton) view.findViewById(R.id.dial_call_btn);
+        View dialCallBtn = view.findViewById(R.id.dial_call_btn);
         dialCallBtn.setOnClickListener(this);
 
         view.findViewById(R.id.dial_more_btn).setOnClickListener(this);

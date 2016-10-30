@@ -11,18 +11,19 @@
 
     <RelativeLayout
         android:id="@+id/search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_width="492dp"
+        android:layout_height="78dp"
         android:layout_below="@+id/title"
         android:layout_marginTop="28dp"
-        android:gravity="center"
+        android:layout_centerInParent="true"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/search_input_layout"
             android:layout_width="482dp"
             android:layout_height="67dp"
-            android:background="@drawable/adapter_contact_list_item_bg"
+            android:layout_centerInParent="true"
+            android:background="@drawable/contact_list_item_bg"
             android:minWidth="290dp">
 
 
@@ -44,14 +45,15 @@
                 android:nextFocusRight="@+id/search_del"
                 android:textSize="18sp" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/search_del"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:src="@mipmap/icon_clear_all"
+                android:focusable="true"
+                android:src="@drawable/icon_delete"
                 android:nextFocusLeft="@+id/search_input"
                 android:nextFocusUp="@+id/search_input"
                 android:visibility="invisible" />

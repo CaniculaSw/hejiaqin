@@ -110,7 +110,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                nameView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.drawable.contact_list_item_bg);
+                nameView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.color.transparent);
             }
         });
 
@@ -120,7 +120,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         numberText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                numberView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.drawable.contact_list_item_bg);
+                numberView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.color.transparent);
             }
         });
 
