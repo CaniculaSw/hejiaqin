@@ -53,7 +53,7 @@
             android:paddingLeft="64dp"
             android:ellipsize="start"
             android:singleLine="true"
-            android:textSize="20sp"
+            android:textSize="36sp"
             android:focusable="false"
             android:textColor="@color/keypad_text_color" />
 
@@ -96,7 +96,7 @@
         android:layout_below="@+id/digit_keypad"
         android:layout_marginTop="18dp"
         android:layout_width="494dp"
-        android:layout_height="78dp"
+        android:layout_height="76dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_centerInParent="true"

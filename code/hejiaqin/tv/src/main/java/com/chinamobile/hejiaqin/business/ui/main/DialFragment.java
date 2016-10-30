@@ -3,21 +3,28 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.content.Intent;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.BaseDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText;
-import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactEditFragment;
 import com.chinamobile.hejiaqin.tv.R;
 
 /**
@@ -38,6 +45,9 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     ImageView dialNumberDelIv;
     DialDigitKeypadView digitKeypad;
     LinearLayout dialVideoLayout;
+
+    private IVoipLogic mVoipLogic;
+    private IContactsLogic mContactsLogic;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -110,6 +120,11 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         FocusManager.getInstance().addFocusViewInLeftFrag("2", digitKeypad.btnOne);
     }
 
+    @Override
+    protected void initLogics() {
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+        mContactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
+    }
 
     @Override
     protected void initData() {
@@ -143,8 +158,25 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                }
                break;
            case R.id.dial_save_contact_arrow_layout:
+               // 保存联系人
+               if(inputNumber.length()>0) {
+                   ContactEditFragment fragment = ContactEditFragment.newInstance(inputNumber.getText().toString());
+                   FragmentMgr.getInstance().showDialFragment(fragment);
+               }
                break;
            case R.id.dial_video_layout:
+               if(inputNumber.length()>0) {
+                   VideoOutDialog videoOutDialog = new VideoOutDialog(getActivity(), R.style.CalendarDialog,inputNumber.getText().toString(),mVoipLogic,mContactsLogic );
+                   Window window = videoOutDialog.getWindow();
+                   window.getDecorView().setPadding(0, 0, 0, 0);
+                   WindowManager.LayoutParams params = window.getAttributes();
+                   params.width = WindowManager.LayoutParams.MATCH_PARENT;
+                   params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                   params.gravity = Gravity.CENTER;
+                   window.setAttributes(params);
+                   videoOutDialog.setCancelable(false);
+                   videoOutDialog.show();
+               }
                break;
        }
     }

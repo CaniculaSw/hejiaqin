@@ -22,16 +22,15 @@
         android:id="@+id/caller_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="包宏浩"
         android:textSize="26sp"
         android:layout_marginTop="12dp"
-        android:textColor="#ebecef" />
+        android:textColor="#ebecef"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/caller_number_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12345678912"
         android:textSize="16sp"
         android:layout_marginTop="8dp"
         android:textColor="@color/white" />
@@ -49,7 +48,7 @@
         android:id="@+id/reject_call_layout"
         android:layout_marginTop="58dp"
         android:layout_width="336dp"
-        android:layout_height="66dp"
+        android:layout_height="72dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:focusable="true"
