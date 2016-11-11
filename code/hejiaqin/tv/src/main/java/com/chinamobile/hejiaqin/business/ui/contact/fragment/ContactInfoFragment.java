@@ -38,6 +38,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private CircleImageView mContactHeadImg;
     private View contactMoreView;
     private View strangerMoreView;
+    private View dialCallBtn;
 
     private LinearLayout mDialInfoLayout;
 
@@ -126,7 +127,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
 
-        ImageButton dialCallBtn = (ImageButton) view.findViewById(R.id.dial_call_btn);
+        dialCallBtn = view.findViewById(R.id.dial_call_btn);
         dialCallBtn.setOnClickListener(this);
 
         view.findViewById(R.id.dial_more_btn).setOnClickListener(this);
@@ -142,10 +143,14 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         view.findViewById(R.id.stranger_cancel_btn).setOnClickListener(this);
 
         mDialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
-
-        FocusManager.getInstance().requestFocus(dialCallBtn);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        FocusManager.getInstance().requestFocus(dialCallBtn);
+    }
+    
     @Override
     protected void initData() {
         Bundle argBundle = getArguments();

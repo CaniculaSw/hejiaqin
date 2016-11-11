@@ -116,7 +116,7 @@
     <string name="call_record_clear">清除</string>
 
     <!-- 拨号 -->
-    <string name="dial_title">全部</string>
+    <string name="dial_title">拨号键盘</string>
     <string name="dial_save_contact">保存至和家亲</string>
     <string name="del_all_call_record">删除所有通讯记录</string>
     <string name="del_call_record_cancel">取消</string>

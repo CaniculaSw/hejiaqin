@@ -3,6 +3,7 @@
     android:id="@+id/headerLayout"
     android:layout_width="fill_parent"
     android:layout_height="43dp"
+    android:focusable="false"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -10,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_centerInParent="true"
+        android:focusable="false"
         android:gravity="center">
 
         <TextView
@@ -20,6 +22,7 @@
             android:layout_marginRight="@dimen/header_title_margin"
             android:gravity="center"
             android:text="title"
+            android:focusable="false"
             android:textColor="@color/white"
             android:textSize="32sp" />
     </LinearLayout>
@@ -31,6 +34,7 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/item_click_style"
         android:gravity="center"
+        android:focusable="false"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -39,6 +43,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginRight="10dp"
+            android:focusable="false"
             android:visibility="gone" />
 
         <TextView
@@ -48,6 +53,7 @@
             android:layout_marginRight="20dp"
             android:text="rightfun"
             android:textColor="@color/white"
+            android:focusable="false"
             android:textSize="28sp"
             android:visibility="gone" />
     </LinearLayout>
@@ -58,6 +64,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_marginRight="28dp"
+        android:focusable="false"
         android:background="@color/clear_color"
         android:textSize="@dimen/normal_font"
         android:visibility="visible" />
@@ -69,6 +76,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="60dp"
+        android:focusable="false"
         android:background="@color/clear_color"
         android:textSize="@dimen/normal_font"
         android:visibility="visible" />
@@ -79,6 +87,7 @@
         android:layout_height="17dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:focusable="false"
         android:layout_marginBottom="18.5dp"
         android:layout_marginLeft="16dp"
         android:scaleType="centerCrop"

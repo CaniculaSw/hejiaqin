@@ -5,12 +5,14 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
 import com.chinamobile.hejiaqin.tv.R;
@@ -24,8 +26,9 @@ public class CallRecordFragment extends BasicFragment{
 
     private static final String TAG = "CallRecordFragment";
 
-    HeaderView headerView;
-    RecyclerView callRecordRecyclerView;
+    private HeaderView headerView;
+    private RecyclerView callRecordRecyclerView;
+    private LinearLayout deleteLayout;
 
     private IVoipLogic mVoipLogic;
 
@@ -73,12 +76,14 @@ public class CallRecordFragment extends BasicFragment{
         headerView = (HeaderView) view.findViewById(R.id.header_view_id);
         headerView.title.setText(R.string.call_record_title);
 
+        deleteLayout =(LinearLayout)view.findViewById(R.id.delete_layout);
         callRecordRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_recycler_view);
 
         mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
         callRecordRecyclerView.setAdapter(mCallRecordAdapter);
         callRecordRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         callRecordRecyclerView.setHasFixedSize(true);
+        FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
     }
 
 
