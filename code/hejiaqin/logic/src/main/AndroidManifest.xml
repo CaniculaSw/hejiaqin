@@ -6,9 +6,8 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <provider
-            android:name="com.huawei.rcs.message.provider.MessageProvider"
-            android:authorities="com.huawei.rcs.messaging.demo"
+        <provider android:name="com.huawei.rcs.message.provider.MessageProvider"
+            android:authorities="com.huawei.rcs.messaging"
             android:exported="false" />
     </application>
 

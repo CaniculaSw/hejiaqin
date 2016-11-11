@@ -66,32 +66,8 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected void initDate() {
-//        bindedList = new ArrayList<>();
-//        UserInfo tv = new UserInfo();
-//        tv.setName("包小美");
-//        List<UserInfo> testList = new ArrayList<UserInfo>();
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        testList.add(UserInfoCacheManager.getUserInfo(this));
-//        testList.add(tv);
-//        adapter.setData(testList);
         settingLogic.getDeviceList();
+
     }
 
     @Override

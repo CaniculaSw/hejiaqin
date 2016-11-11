@@ -9,4 +9,5 @@ public interface ISettingLogic {
     public void checkVersion();
     public void getDeviceList();
     public void handleCommit(Context context, String inputNumber,String id);
+    public void sendBindReq(String TVNumber);
 }
