@@ -126,9 +126,6 @@
             android:name="com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name="com.chinamobile.hejiaqin.business.ui.contact.InputInfoActivity"
             android:screenOrientation="landscape"></activity>
         <activity

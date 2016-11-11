@@ -78,9 +78,10 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         titleLayout.title.setText(R.string.contact_search_text);
 
         // 搜索框
-        searchLayout = view.findViewById(R.id.search_input_layout);
+        searchLayout = view.findViewById(R.id.search_layout);
         searchInput = (EditText) view.findViewById(R.id.search_input);
         searchDelete = view.findViewById(R.id.search_del);
+
 
         // 搜索结果列表
         contactsListView = (ListView) view.findViewById(R.id.list);
@@ -105,7 +106,16 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         searchInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                searchLayout.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.drawable.contact_list_item_bg);
+                searchLayout.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.color.transparent);
+            }
+        });
+        searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    searchLayout.setBackgroundResource(R.color.transparent);
+                }
+                searchDelete.setBackgroundResource(hasFocus ? R.drawable.delete_bg : R.color.transparent);
             }
         });
         searchInput.addTextChangedListener(new TextWatcher() {
@@ -133,15 +143,14 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
         searchDelete.setOnClickListener(this);
         searchDelete.setBackgroundResource(R.drawable.delete_bg);
-        searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                searchDelete.getBackground().setAlpha(hasFocus? 0 : 255);
-            }
-        });
+//        searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                searchDelete.getBackground().setAlpha(hasFocus? 0 : 255);
+//            }
+//        });
         titleLayout.backImageView.setOnClickListener(this);
 
-        FocusManager.getInstance().requestFocus(searchInput);
     }
 
     @Override
@@ -149,6 +158,11 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        FocusManager.getInstance().requestFocus(searchInput);
+    }
 
     /**
      * Called when a view has been clicked.
@@ -163,6 +177,7 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
                 break;
             case R.id.search_del:
                 searchInput.setText("");
+                FocusManager.getInstance().requestFocus(searchInput);
                 break;
         }
     }

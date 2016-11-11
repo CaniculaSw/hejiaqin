@@ -6,32 +6,39 @@
 
     <RelativeLayout
         android:id="@+id/contact_info_layout"
-        android:layout_width="482dp"
-        android:layout_height="67dp"
+        android:layout_width="492dp"
+        android:layout_height="78dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/adapter_contact_list_item_bg"
+        android:background="@drawable/selector_setting_bg"
         android:focusable="true"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/contact_photo_img"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/contact_photo_default" />
+        <RelativeLayout
+            android:layout_width="482dp"
+            android:layout_height="67dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/contact_list_item_bg"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/contact_name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@+id/contact_photo_img"
-            android:textColor="@color/contact_list_username_text_color"
-            android:textSize="18sp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/contact_photo_img"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/contact_photo_default" />
 
+            <TextView
+                android:id="@+id/contact_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@+id/contact_photo_img"
+                android:textColor="@color/contact_list_username_text_color"
+                android:textSize="18sp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <View
