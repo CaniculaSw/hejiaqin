@@ -2,7 +2,10 @@ package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -85,7 +88,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterSelected(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                Logger.i(TAG, "onLetterSelected: " + letter + "; position: "
+                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
                         + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);
@@ -111,6 +114,15 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
                 tipText.setVisibility(View.GONE);
             }
         });
+
+        getActivity().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, mObserver);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().getContentResolver().unregisterContentObserver(mObserver);
     }
 
     @Override
@@ -151,4 +163,14 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         }
     }
 
+    //监听联系人数据的监听对象
+    private ContentObserver mObserver = new ContentObserver(
+            new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            // 当联系人表发生变化时进行相应的操作
+            LogUtil.d(TAG, "sys contact list changed: " + selfChange);
+            contactsLogic.fetchLocalContactLst();
+        }
+    };
 }

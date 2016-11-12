@@ -81,7 +81,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterSelected(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                Logger.i(TAG, "onLetterSelected: " + letter + "; position: "
+                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
                         + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);

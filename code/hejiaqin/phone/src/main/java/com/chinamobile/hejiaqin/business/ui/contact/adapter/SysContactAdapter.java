@@ -135,13 +135,13 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
         if (null != contactsInfoList) {
             int index = 0;
             for (ContactsInfo contactsInfo : contactsInfoList) {
-                this.contactsInfoList.add(contactsInfo);
-                index++;
                 String groupLetter = contactsInfo.getGroupName();
                 this.positionToLetter.put(index, groupLetter);
                 if (!letterToPosition.containsKey(groupLetter)) {
-                    this.letterToPosition.put(groupLetter, index);
+                    this.letterToPosition.put(groupLetter, index + 1);
                 }
+                this.contactsInfoList.add(contactsInfo);
+                index++;
             }
         }
 
