@@ -32,6 +32,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
+import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
@@ -149,7 +151,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         }
 
         mContactNameText.setText(mContactsInfo.getName());
-        if(!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+        if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
             Picasso.with(this.getApplicationContext())
                     .load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
@@ -229,7 +231,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     private void showContactData() {
 
         mContactNameText.setText(mContactsInfo.getName());
-        if(!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+        if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
             Picasso.with(this.getApplicationContext())
                     .load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
@@ -280,9 +282,29 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case R.id.dial_img:
                 // TODO
-                showDialNumberDialog();
+                startVideoCall();
                 break;
         }
+    }
+
+    private void startVideoCall() {
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (numberInfoList.isEmpty()) {
+            Logger.w(TAG, "startVideoCall, no number info.");
+            return;
+        }
+
+        if (numberInfoList.size() > 1) {
+            showDialNumberDialog();
+            return;
+        }
+
+
+        NumberInfo numberInfo = numberInfoList.get(0);
+        Intent outingIntent = new Intent(this, VideoCallActivity.class);
+        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
+        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mContactsInfo.getName());
+        startActivity(outingIntent);
     }
 
     private void doClickTitleRight() {

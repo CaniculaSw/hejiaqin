@@ -3,6 +3,7 @@ package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyList
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yupeng on 5/23/16.
@@ -28,6 +31,9 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
 
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
 
+    private SparseArray<String> positionToLetter = new SparseArray<>();
+
+    private Map<String, Integer> letterToPosition = new HashMap<>();
 
     public SysContactAdapter(Context context) {
         mContext = context;
@@ -106,15 +112,39 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
     @Override
     public long getHeaderId(int position) {
         //return the first character of the country as ID because this is what headers are based upon
-        ContactsInfo contactsInfo = contactsInfoList.get(position);
-        return contactsInfo.getGroupName().charAt(0);
+//        ContactsInfo contactsInfo = contactsInfoList.get(position);
+//        return contactsInfo.getGroupName().charAt(0);
+
+        String groupLetter = this.positionToLetter.get(position);
+        return null == groupLetter ? -1 : groupLetter.charAt(0);
+    }
+
+    public int getPositionByLetter(String letter) {
+        Integer position = this.letterToPosition.get(letter);
+        return null == position ? -1 : position;
+    }
+
+    public String[] getGroupLetters() {
+        return letterToPosition.keySet().toArray(new String[letterToPosition.size()]);
     }
 
     public void setData(List<ContactsInfo> contactsInfoList) {
         this.contactsInfoList.clear();
+        this.positionToLetter.clear();
+        this.letterToPosition.clear();
         if (null != contactsInfoList) {
-            this.contactsInfoList.addAll(contactsInfoList);
+            int index = 0;
+            for (ContactsInfo contactsInfo : contactsInfoList) {
+                this.contactsInfoList.add(contactsInfo);
+                index++;
+                String groupLetter = contactsInfo.getGroupName();
+                this.positionToLetter.put(index, groupLetter);
+                if (!letterToPosition.containsKey(groupLetter)) {
+                    this.letterToPosition.put(groupLetter, index);
+                }
+            }
         }
+
         notifyDataSetChanged();
     }
 
