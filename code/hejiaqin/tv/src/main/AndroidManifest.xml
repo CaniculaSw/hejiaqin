@@ -27,16 +27,11 @@
     <uses-permission android:name="android.permission.INSTALL_DRM" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RECEIVE_MMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_OWNER_DATA" />
-    <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -96,22 +91,13 @@
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.login.LoginActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterFirstStepActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterSecondStepActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
+
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.setting.dialog.AutoAnswerNumberSettingDialog"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.login.ResetPasswordSecondStepActivity"
-            android:screenOrientation="landscape" />
+
 
         <!-- 登录后的主页 -->
         <activity
