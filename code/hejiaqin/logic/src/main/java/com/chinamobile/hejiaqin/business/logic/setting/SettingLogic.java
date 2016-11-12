@@ -88,15 +88,15 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     private void handleBindRequest(TextMessage msg) {
         switch (getOpCode(msg.getContent())) {
             case CaaSUtil.OpCode.BIND:
-                LogUtil.i(TAG, "Will send the BIND_REQUEST message to UI");
+                LogUtil.d(TAG, "Will send the BIND_REQUEST message to UI");
                 sendMessage(BussinessConstants.SettingMsgID.BIND_REQUEST, msg);
                 break;
             case CaaSUtil.OpCode.BIND_SUCCESS:
-                LogUtil.i(TAG, "Will send the BIND_SUCCESS message to UI");
+                LogUtil.d(TAG, "Will send the BIND_SUCCESS message to UI");
                 sendMessage(BussinessConstants.SettingMsgID.BIND_SUCCESS, msg);
                 break;
             case CaaSUtil.OpCode.BIND_DENIED:
-                LogUtil.i(TAG, "Will send the BIND_DENIED message to UI");
+                LogUtil.d(TAG, "Will send the BIND_DENIED message to UI");
                 sendMessage(BussinessConstants.SettingMsgID.BIND_DENIED, msg);
                 break;
         }

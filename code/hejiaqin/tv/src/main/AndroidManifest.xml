@@ -96,9 +96,13 @@
             android:name="com.chinamobile.hejiaqin.business.ui.setting.dialog.AutoAnswerNumberSettingDialog"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 登录后的主页 -->
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity"
