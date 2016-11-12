@@ -95,7 +95,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
     protected void initView(View view) {
         // 头像
         headView = view.findViewById(R.id.contact_head_layout);
-        headView.setOnClickListener(this);
+        // headView.setOnClickListener(this);
         headImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
         headView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
