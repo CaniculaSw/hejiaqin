@@ -14,19 +14,19 @@ public class CaaSUtil {
 
 
     public interface CmdType {
-        int BIND = 0;
-        int SEND_CONTACT = 1;
-        int TV_HELPER = 3;
+        String BIND = "0";
+        String SEND_CONTACT = "1";
+        String TV_HELPER = "3";
     }
 
     public interface OpCode {
-        int BIND = 0; //Phone -> TV
-        int DEBIND = 1;//Phone -> TV
-        int BIND_SUCCESS = 100; //TV->Phone
-        int BIND_DENIED = 101;//TV->Phone
-        int DEBIND_SUCCESS = 102;//TV->Phone
-        int DEBIND_FAILED = 103;//TV->Phone
-        int BIND_UNAVALIABLE = 104;//TV->Phone
+        String BIND = "0"; //Phone -> TV
+        String DEBIND = "1";//Phone -> TV
+        String BIND_SUCCESS = "100"; //TV->Phone
+        String BIND_DENIED = "101";//TV->Phone
+        String DEBIND_SUCCESS = "102";//TV->Phone
+        String DEBIND_FAILED = "103";//TV->Phone
+        String BIND_UNAVALIABLE = "104";//TV->Phone
     }
 
     public static StringBuilder setMainBody(String cmdType, String seq, String opCode) {
