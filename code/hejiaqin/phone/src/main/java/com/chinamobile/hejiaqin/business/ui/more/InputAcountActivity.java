@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 
@@ -17,6 +19,7 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
     private HeaderView mHeaderView;
     private EditText mName;
     private EditText mNumber;
+    private ISettingLogic settingLogic;
 
     @Override
     protected int getLayoutId() {
@@ -79,7 +82,7 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
 
     @Override
     protected void initLogics() {
-
+        settingLogic = (ISettingLogic) LogicBuilder.getInstance(getApplicationContext()).getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -93,6 +96,7 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
                     break;
                 } else {
                     showToast("OK", Toast.LENGTH_LONG, null);
+                    settingLogic.sendBindReq(mNumber.getText().toString());
                 }
                 break;
             default:
