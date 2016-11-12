@@ -257,11 +257,24 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 sdkuserInfo.countryCode="+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
+
+                //TODO TEST
+                if(Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
+                    sdkuserInfo.username = "2886544004";
+                    sdkuserInfo.password = "Vconf2015!";
+                }
+                else
+                {
+                    sdkuserInfo.username = "2886544005";
+                    sdkuserInfo.password = "Vconf2015!";
+                }
+                //TODO TEST
                 LogUtil.i(TAG,"SDK username: " + sdkuserInfo.username);
                 voipLogic.login(sdkuserInfo,null,null);
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
                 this.startActivity(intent);
+                intent.putExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, true);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
