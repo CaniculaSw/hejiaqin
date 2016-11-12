@@ -131,6 +131,7 @@ public class BussinessConstants {
 
         String INTENT_LOGIN_ID = "registerLoginId";
 
+        String INTENT_FROM_LONGIN = "fromLogin";
     }
 
     /**

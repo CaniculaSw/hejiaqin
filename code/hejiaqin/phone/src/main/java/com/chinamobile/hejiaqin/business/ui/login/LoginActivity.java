@@ -250,6 +250,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 voipLogic.login(sdkuserInfo,null,null);
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
+                intent.putExtra(BussinessConstants.Login.INTENT_FROM_LONGIN,true);
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
