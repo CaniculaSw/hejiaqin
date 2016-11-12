@@ -2,12 +2,8 @@ package com.chinamobile.hejiaqin.business.ui.main;
 
 import android.content.Intent;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -17,7 +13,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
-import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordDialog;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.ui.BaseFragment;
@@ -116,8 +111,11 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initDate() {
-        settingLogic.checkVersion();
-        // mVoipLogic.autoLogin();
+        //settingLogic.checkVersion();
+        if(!getIntent().getBooleanExtra(BussinessConstants.Login.INTENT_FROM_LONGIN,false)) {
+            LogUtil.d(TAG,"autoLogin");
+            mVoipLogic.autoLogin();
+        }
     }
 
     @Override

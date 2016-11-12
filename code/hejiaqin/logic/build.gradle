@@ -52,4 +52,6 @@ dependencies {
     compile files('src/main/jniLibs/uspsocks5.jar')
     compile files('src/main/jniLibs/uspstg.jar')
     compile files('src/main/jniLibs/uspwatcher.jar')
+    compile files('src/main/jniLibs/sa_im.jar')
+    compile files('src/main/jniLibs/sci_im.jar')
 }

@@ -131,6 +131,7 @@ public class BussinessConstants {
 
         String INTENT_LOGIN_ID = "registerLoginId";
 
+        String INTENT_FROM_LONGIN = "fromLogin";
     }
 
     /**
@@ -372,6 +373,9 @@ public class BussinessConstants {
         int NEW_FORCE_VERSION_AVAILABLE = BASE_MSG_ID + 8;
         int AUTO_ANSWER_SETTING_COMMIT = BASE_MSG_ID + 9;
         int GET_DEVICE_LIST_SUCCESSFUL = BASE_MSG_ID + 10;
+        int BIND_REQUEST = BASE_MSG_ID + 11;
+        int BIND_SUCCESS = BASE_MSG_ID + 12;
+        int BIND_DENIED = BASE_MSG_ID + 13;
 
     }
 

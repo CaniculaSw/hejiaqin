@@ -1,7 +1,11 @@
 package com.chinamobile.hejiaqin.business.logic.setting;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.os.Message;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
@@ -9,20 +13,115 @@ import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
-import com.chinamobile.hejiaqin.business.net.NVPReqBody;
-import com.chinamobile.hejiaqin.business.net.ReqBody;
-import com.chinamobile.hejiaqin.business.net.ReqToken;
 import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
+import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 import com.chinamobile.hejiaqin.business.utils.SysInfoUtil;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.XmlParseUtil;
+import com.huawei.rcs.message.Conversation;
+import com.huawei.rcs.message.Message;
+import com.huawei.rcs.message.MessageConversation;
+import com.huawei.rcs.message.MessagingApi;
+import com.huawei.rcs.message.TextMessage;
 
 /**
  * Created by eshaohu on 16/5/24.
  */
 public class SettingLogic extends LogicImp implements ISettingLogic {
     private static final String TAG = "SettingLogic";
+    private static SettingLogic instance;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
+            if (msg == null) {
+                Toast.makeText(getContext(), "Message received.But message is null", Toast.LENGTH_LONG).show();
+                return;
+            }
+            msg.read();
+            LogUtil.i(TAG, "Message received.");
+            Toast.makeText(getContext(), "Message received.", Toast.LENGTH_LONG).show();
+            int msgType = msg.getType();
+            switch (msgType) {
+                case Message.MESSAGE_TYPE_TEXT: { // 文本消息
+                    TextMessage textMessage = (TextMessage) msg;
+                    LogUtil.d(TAG, "receive message: " + msg.getBody() + " Peer name: " + msg.getPeer().getNumber());
+                    handleTextMessage(textMessage);
+                    break;
+                }
+                default: { // 其他消息
+                }
+            }
+            if (this.isOrderedBroadcast()) {
+                LogUtil.i(TAG, "abort the broadcast");
+                this.abortBroadcast();
+            }
+        }
+    };
+
+    private BroadcastReceiver mMessageStatusChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            LogUtil.i(TAG, "Message status changed.");
+            Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
+
+            if (null != msg) {
+                LogUtil.i(TAG, "Status: " + msg.getStatus() + " body: " + msg.getBody());
+                return;
+            }
+        }
+    };
+
+    private void handleTextMessage(TextMessage msg) {
+        String cmdType = getCmdType(msg.getContent());
+        switch (cmdType) {
+            case CaaSUtil.CmdType.BIND:
+                handleBindRequest(msg);
+                break;
+
+        }
+    }
+
+    private void handleBindRequest(TextMessage msg) {
+        switch (getOpCode(msg.getContent())) {
+            case CaaSUtil.OpCode.BIND:
+                LogUtil.i(TAG, "Will send the BIND_REQUEST message to UI");
+                sendMessage(BussinessConstants.SettingMsgID.BIND_REQUEST, msg);
+                break;
+            case CaaSUtil.OpCode.BIND_SUCCESS:
+                LogUtil.i(TAG, "Will send the BIND_SUCCESS message to UI");
+                sendMessage(BussinessConstants.SettingMsgID.BIND_SUCCESS, msg);
+                break;
+            case CaaSUtil.OpCode.BIND_DENIED:
+                LogUtil.i(TAG, "Will send the BIND_DENIED message to UI");
+                sendMessage(BussinessConstants.SettingMsgID.BIND_DENIED, msg);
+                break;
+        }
+    }
+
+    private SettingLogic(Context context) {
+        init(context.getApplicationContext());
+    }
+
+    /**
+     * 获取单例对象
+     *
+     * @param context 系统的context对象
+     * @return LogicBuilder对象
+     */
+    public static SettingLogic getInstance(Context context) {
+        if (instance == null) {
+            synchronized (SettingLogic.class) {
+                if (instance == null) {
+                    instance = new SettingLogic(context);
+                }
+            }
+        }
+        return instance;
+    }
 
     @Override
     public void handleCommit(Context context, String inputNumber, final String id) {
@@ -53,7 +152,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         new SettingHttpmanager(getContext()).getDeviceList(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL,obj);
+                SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);
             }
 
             @Override
@@ -111,6 +210,16 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         });
     }
 
+    @Override
+    public void sendBindReq(String TVNumber) {
+        MessageConversation mMessageConversation = MessageConversation.getConversationByNumber(TVNumber);
+        LogUtil.i(TAG, "Peer name: " + mMessageConversation.getPeerName());
+        Intent intent = new Intent();
+        intent.putExtra(MessageConversation.PARAM_SEND_TEXT_PAGE_MODE, true);
+        intent.putExtra(Conversation.PARAM_SERVICE_KIND, Conversation.SERVICE_KIND_THROUGH_SEND_MSG);
+        mMessageConversation.sendText(CaaSUtil.buildMessage(CaaSUtil.CmdType.BIND, "" + 1, CaaSUtil.OpCode.BIND, null), intent);
+    }
+
     private boolean isNewVersion(VersionInfo versionInfo) {
         if (versionInfo == null) {
             return false;
@@ -145,5 +254,27 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             return true;
         }
         return false;
+    }
+
+    public void registerMessageReceiver() {
+        LocalBroadcastManager.getInstance(getContext())
+                .registerReceiver(mMessageReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_INCOMING));
+        LocalBroadcastManager.getInstance(getContext())
+                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
+        LocalBroadcastManager.getInstance(getContext())
+                .registerReceiver(mMessageStatusChangedReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_STATUS_CHANGED));
+    }
+
+    public void unRegisterMessageReceiver() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageStatusChangedReceiver);
+    }
+
+    public String getOpCode(String toParse) {
+        return XmlParseUtil.getElemString(toParse, "OpCode");
+    }
+
+    public String getCmdType(String toParse) {
+        return XmlParseUtil.getElemString(toParse, "CmdType");
     }
 }

@@ -2,19 +2,13 @@ package com.chinamobile.hejiaqin.business.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
-import com.customer.framework.utils.LogUtil;
+import com.chinamobile.hejiaqin.tv.R;
 
 public class MainActivity extends BasicActivity {
 
@@ -25,11 +19,11 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (loginLogic.hasLogined()) {
-//            jumpToMainFragmentActivity();
-//        } else {
+        if (loginLogic.hasLogined()) {
+            jumpToMainFragmentActivity();
+        } else {
             jumpToLoginActivity();
-//        }
+        }
 
     }
 
