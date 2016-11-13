@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
@@ -483,7 +484,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private void showDialNumberDialog() {
         final DialNumberDialog dialNumberDialog = new DialNumberDialog(this, R.style.CalendarDialog
-                , mContactsInfo);
+                , mContactsInfo,((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
+                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)));
         Window window = dialNumberDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();

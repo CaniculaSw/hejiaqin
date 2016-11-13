@@ -1,26 +1,30 @@
 package com.chinamobile.hejiaqin.business.ui.basic.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
+import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.logic.ILogic;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallSession;
 import com.squareup.picasso.Picasso;
@@ -34,6 +38,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class VideoOutDialog extends Dialog {
 
+    public static final String TAG = VideoOutDialog.class.getSimpleName();
+
     private CircleImageView mCallerIv;
     private TextView mCallerNameTv;
     private TextView mCallerNumberTv;
@@ -44,6 +50,13 @@ public class VideoOutDialog extends Dialog {
     private CallSession mCallSession = null;
     private boolean closed;
     private Handler handler = new Handler();
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (mHandler != null) {
+                VideoOutDialog.this.handleStateMessage(msg);
+            }
+        }
+    };
     private MyToast myToast;
     private Context mContext;
 
@@ -53,13 +66,14 @@ public class VideoOutDialog extends Dialog {
         this.mCalleeNumber = calleeNumber;
         this.mVoipLogic = voipLogic;
         this.mContactsLogic = contactsLogic;
-        myToast = new MyToast(context.getApplicationContext());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((ILogic)this.mVoipLogic).addHandler(mHandler);
         setContentView(R.layout.popwindow_video_out);
+        myToast = new MyToast(mContext.getApplicationContext());
         mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
         mCallerNameTv = (TextView) findViewById(R.id.caller_name_tv);
         mCallerNumberTv = (TextView) findViewById(R.id.caller_number_tv);
@@ -68,6 +82,10 @@ public class VideoOutDialog extends Dialog {
 
             @Override
             public void onClick(View v) {
+                if (closed) {
+                    LogUtil.w(TAG, "is closed");
+                    return;
+                }
                 mVoipLogic.hangup(mCallSession, false, false, 0);
                 VideoOutDialog.this.dismiss();
             }
@@ -144,6 +162,58 @@ public class VideoOutDialog extends Dialog {
 
     protected void showToast(int resId, int duration, MyToast.Position pos) {
         myToast.showToast(resId, duration, pos);
+    }
+
+    private void handleStateMessage(Message msg) {
+        switch (msg.what) {
+            case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
+                Intent intentTalking = new Intent(getContext(), VideoCallActivity.class);
+                mContext.startActivity(intentTalking);
+                break;
+            case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
+                if (msg.obj != null) {
+                    CallSession session = (CallSession) msg.obj;
+                    if (mCallSession != null && mCallSession.equals(session)) {
+                        mVoipLogic.dealOnClosed(mCallSession, false, false, 0);
+                        closed = true;
+                        if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
+                        } else if ((mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
+                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
+                            showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
+                        }
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                VideoOutDialog.this.dismiss();
+                            }
+                        }, 2000);
+                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                        mVoipLogic.dealOnClosed(session, true, false,0);
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void dismiss() {
+        ((ILogic)this.mVoipLogic).removeHandler(mHandler);
+        super.dismiss();
+    }
+
+    public static void show(Context context, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic)
+    {
+        VideoOutDialog videoOutDialog = new VideoOutDialog(context, R.style.CalendarDialog,calleeNumber,voipLogic,contactsLogic );
+        Window window = videoOutDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
+        videoOutDialog.setCancelable(false);
+        videoOutDialog.show();
     }
 
 }

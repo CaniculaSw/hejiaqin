@@ -1,11 +1,13 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
@@ -13,7 +15,11 @@ import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
 import com.chinamobile.hejiaqin.tv.R;
 
@@ -27,7 +33,7 @@ public class CallRecordFragment extends BasicFragment{
     private static final String TAG = "CallRecordFragment";
 
     private HeaderView headerView;
-    private RecyclerView callRecordRecyclerView;
+    private ListView callRecordListView;
     private LinearLayout deleteLayout;
 
     private IVoipLogic mVoipLogic;
@@ -35,6 +41,16 @@ public class CallRecordFragment extends BasicFragment{
     private IContactsLogic mContactsLogic;
 
     private CallRecordAdapter mCallRecordAdapter;
+
+    private int selection;
+
+    private View moreView;
+
+    private View recordDetail;
+
+    private View delRecordLayout;
+
+    private View recordCancelLayout;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -63,6 +79,12 @@ public class CallRecordFragment extends BasicFragment{
             case BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID:
                 mCallRecordAdapter.refreshData(null);
                 break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_DEL_MSG_ID:
+                if(msg.obj!=null)
+                {
+                    mCallRecordAdapter.delData((String[])msg.obj);
+                }
+                break;
         }
     }
 
@@ -76,13 +98,63 @@ public class CallRecordFragment extends BasicFragment{
         headerView = (HeaderView) view.findViewById(R.id.header_view_id);
         headerView.title.setText(R.string.call_record_title);
 
-        deleteLayout =(LinearLayout)view.findViewById(R.id.delete_layout);
-        callRecordRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_recycler_view);
+        deleteLayout =(LinearLayout)view.findViewById(R.id.delete_all_layout);
+        deleteLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                mVoipLogic.delAllCallRecord();
+            }
+        });
+        callRecordListView = (ListView)view.findViewById(R.id.call_record_recycler_view);
+        moreView = view.findViewById(R.id.call_record_more_layout);
+        recordDetail = view.findViewById(R.id.record_detail);
+        delRecordLayout = view.findViewById(R.id.del_record_layout);
+        recordCancelLayout = view.findViewById(R.id.record_cancel_layout);
 
-        mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
-        callRecordRecyclerView.setAdapter(mCallRecordAdapter);
-        callRecordRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        callRecordRecyclerView.setHasFixedSize(true);
+        mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic,new CallRecordAdapter.onClickListen()
+        {
+            public void onClick(CallRecord info)
+            {
+                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic);
+            }
+
+            @Override
+            public void onLongClick(int position) {
+                CallRecordFragment.this.selection = position;
+                showMoreView();
+                moreView.findViewById(R.id.record_detail).requestFocus();
+            }
+        });
+        recordDetail.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                if (mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo() != null) {
+                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo());
+                    FragmentMgr.getInstance().showRecentFragment(fragment);
+                } else {
+                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getPeerNumber());
+                    FragmentMgr.getInstance().showRecentFragment(fragment);
+                }
+            }
+        });
+        delRecordLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mVoipLogic.delCallRecord(new String[]{mCallRecordAdapter.getData(CallRecordFragment.this.selection).getId()});
+                dismissMoreView();
+            }
+        });
+        recordCancelLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dismissMoreView();
+                callRecordListView.setSelection(CallRecordFragment.this.selection);
+                callRecordListView.setFocusable(true);
+                callRecordListView.requestFocus();
+            }
+        });
+
+        callRecordListView.setAdapter(mCallRecordAdapter);
         FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
     }
 
@@ -104,5 +176,12 @@ public class CallRecordFragment extends BasicFragment{
         mVoipLogic.getCallRecord();
     }
 
+    private void showMoreView() {
+        moreView.setVisibility(View.VISIBLE);
+    }
+
+    private void dismissMoreView() {
+        moreView.setVisibility(View.GONE);
+    }
 
 }

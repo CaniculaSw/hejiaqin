@@ -9,9 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
-import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
@@ -49,6 +47,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private Map<String,String> recordMap = new HashMap<String,String>();
 
     private CallRecordDbAdapter mCallRecordDbAdapter;
+
+    private boolean isTv;
 
     private BroadcastReceiver mLoginStatusChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -113,13 +113,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 callRecord.setRead(BussinessConstants.DictInfo.YES);
                 CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
                 recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
-
-                Intent inComingIntent = new Intent();
-                inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
-                inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
-                inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, callSession.getSessionId());
-                inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getContext().startActivity(inComingIntent);
+                if (isTv()) {
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                } else {
+                    Intent inComingIntent = new Intent();
+                    inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
+                    inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
+                    inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, callSession.getSessionId());
+                    inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(inComingIntent);
+                }
             }
         }
     };
@@ -134,7 +137,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
                     break;
                 case CallSession.STATUS_IDLE:
-                    LogUtil.d(TAG,"SIP_CAUSE:"+ callSession.getSipCause());
+                    LogUtil.d(TAG, "SIP_CAUSE:" + callSession.getSipCause());
                     VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID, callSession);
                     break;
                 default:
@@ -263,7 +266,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.DURATION, callTime);
-            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,contentValues);
+            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
         }else if(isInComing){
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_REJECT);
@@ -318,6 +321,17 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         });
     }
 
+    public void delCallRecord(final String[] ids)
+    {
+        ThreadPoolUtil.execute(new ThreadTask() {
+            @Override
+            public void run() {
+                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).delById(ids);
+                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_DEL_MSG_ID, ids);
+            }
+        });
+    }
+
     public void getCallRecord()
     {
         ThreadPoolUtil.execute(new ThreadTask() {
@@ -329,4 +343,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         });
     }
 
+    public boolean isTv() {
+        return isTv;
+    }
+
+    public void setIsTv(boolean isTv) {
+        this.isTv = isTv;
+    }
 }

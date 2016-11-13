@@ -112,6 +112,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private boolean closed;
 
+    private boolean onClickAnswer;
+
     private IContactsLogic mContactsLogic;
 
     /* display the video stream which arrived from remote. */
@@ -553,6 +555,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     public void onClick(View v) {
         if (closed) {
             LogUtil.w(TAG, "is closed");
+            return;
         }
         switch (v.getId()) {
             case R.id.hangup_layout:
@@ -561,7 +564,12 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.coming_answer_call_btn:
+                if(onClickAnswer)
+                {
+                    return;
+                }
                 mVoipLogic.answerVideo(mCallSession);
+                onClickAnswer = true;
                 break;
             case R.id.coming_reject_call_btn:
                 mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking, callTime);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/call_record_item"
     android:layout_width="match_parent"
     android:layout_height="66dp"
     android:layout_marginTop="10dp"
@@ -8,7 +9,7 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:layout_width="66dp"
+        android:layout_width="480dp"
         android:layout_height="66dp"
         android:gravity="center"
         android:background="@drawable/dial_num_btn_bg">

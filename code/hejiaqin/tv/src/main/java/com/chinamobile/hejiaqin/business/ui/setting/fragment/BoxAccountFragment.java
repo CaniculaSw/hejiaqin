@@ -48,7 +48,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         super.initLogics();
         loginLogic = (ILoginLogic) getLogicByInterfaceClass(ILoginLogic.class);
         mVoipLogic = (IVoipLogic) getLogicByInterfaceClass(IVoipLogic.class);
-        settingLogic = (ISettingLogic)getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (ISettingLogic) getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -58,14 +58,14 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
 
     @Override
     protected void handleLogicMsg(Message msg) {
-        switch (msg.what){
+        switch (msg.what) {
             case BussinessConstants.SettingMsgID.GET_BIND_LIST_SUCCESSFUL:
-                if (msg.obj != null){
+                if (msg.obj != null) {
                     List<UserInfo> userInfoList = new ArrayList<UserInfo>();
                     userInfoList.addAll((List<UserInfo>) msg.obj);
                     StringBuilder sb = new StringBuilder();
                     Iterator<UserInfo> iterator = userInfoList.iterator();
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         UserInfo bindedUser = iterator.next();
                         sb.append(bindedUser.getPhone());
                         sb.append(" ");
@@ -121,7 +121,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     @Override
     protected void initData() {
         UserInfo userInfo = (UserInfo) UserInfoCacheManager.getUserInfo(getContext());
-        if (userInfo != null){
+        if (userInfo != null) {
             boxAccount.setText(userInfo.getTvAccount());
             createQRCode(userInfo.getTvAccount(), 1400, qrCode);
         }

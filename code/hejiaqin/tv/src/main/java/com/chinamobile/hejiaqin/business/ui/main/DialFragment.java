@@ -166,16 +166,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                break;
            case R.id.dial_video_layout:
                if(inputNumber.length()>0) {
-                   VideoOutDialog videoOutDialog = new VideoOutDialog(getActivity(), R.style.CalendarDialog,inputNumber.getText().toString(),mVoipLogic,mContactsLogic );
-                   Window window = videoOutDialog.getWindow();
-                   window.getDecorView().setPadding(0, 0, 0, 0);
-                   WindowManager.LayoutParams params = window.getAttributes();
-                   params.width = WindowManager.LayoutParams.MATCH_PARENT;
-                   params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                   params.gravity = Gravity.CENTER;
-                   window.setAttributes(params);
-                   videoOutDialog.setCancelable(false);
-                   videoOutDialog.show();
+                   VideoOutDialog.show(getActivity(),inputNumber.getText().toString(),mVoipLogic,mContactsLogic);
                }
                break;
        }

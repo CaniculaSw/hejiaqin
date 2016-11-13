@@ -26,6 +26,9 @@ import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseActivity;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 
 /**
  * desc:Basic Actity,处理系统初始化以及将LogicBuilder传入底层框架
@@ -153,7 +156,15 @@ public abstract class BasicActivity extends BaseActivity {
                     this.finishAllActivity(LoginActivity.class.getName());
                     break;
                 case BussinessConstants.SettingMsgID.BIND_REQUEST:
-
+                    break;
+                case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                    if (msg.obj != null) {
+                        long incomingSessionId = (long) msg.obj;
+                        VideoInComingDialog.show(this, incomingSessionId,
+                                ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
+                                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)));
+                    }
+                    break;
                 default:
                     break;
             }

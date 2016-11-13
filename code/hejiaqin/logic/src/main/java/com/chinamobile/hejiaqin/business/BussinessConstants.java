@@ -325,6 +325,9 @@ public class BussinessConstants {
         int CALL_RECORD_DEL_ALL_MSG_ID = BASE_MSG_ID + 10;
         int CALL_RECORD_GET_ALL_MSG_ID = BASE_MSG_ID + 11;
 
+        int CALL_ON_TV_INCOMING_MSG_ID = BASE_MSG_ID + 12;
+        int CALL_RECORD_DEL_MSG_ID = BASE_MSG_ID + 13;
+
     }
 
 

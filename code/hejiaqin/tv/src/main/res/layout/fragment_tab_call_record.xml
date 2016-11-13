@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:orientation="horizontal">
         <LinearLayout
-            android:id="@+id/delete_layout"
+            android:id="@+id/delete_all_layout"
             android:layout_width="81dp"
             android:layout_height="54dp"
             android:orientation="horizontal"
@@ -37,13 +37,96 @@
                 android:text="@string/call_record_clear"/>
         </LinearLayout>
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/call_record_recycler_view"
         android:layout_below="@id/delete_parent_layout"
-        android:layout_width="490dp"
+        android:layout_width="492dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@color/transparent"
         android:scrollbars="none" />
+
+    <RelativeLayout
+        android:id="@+id/call_record_more_layout"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="150dp"
+        android:layout_toRightOf="@+id/delete_parent_layout"
+        android:layout_below="@+id/delete_parent_layout"
+        android:background="@drawable/contact_info_more_bg"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/record_detail"
+            android:layout_width="206dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_setting_bg"
+            android:nextFocusLeft="@null"
+            android:nextFocusRight="@null"
+            android:focusable="true">
+
+            <Button
+                android:layout_width="202dp"
+                android:layout_height="63dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/contact_list_item_bg"
+                android:focusable="false"
+                android:gravity="center"
+                android:text="详情"
+                android:textColor="@color/contact_list_username_text_color"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/del_record_layout"
+            android:layout_width="206dp"
+            android:layout_height="67dp"
+            android:layout_below="@+id/record_detail"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_setting_bg"
+            android:nextFocusLeft="@null"
+            android:nextFocusRight="@null"
+            android:focusable="true">
+
+            <Button
+                android:layout_width="202dp"
+                android:layout_height="63dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/contact_list_item_bg"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/contact_list_username_text_color"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/record_cancel_layout"
+            android:layout_width="206dp"
+            android:layout_height="67dp"
+            android:layout_below="@+id/del_record_layout"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_setting_bg"
+            android:nextFocusLeft="@null"
+            android:nextFocusRight="@null"
+            android:focusable="true">
+
+            <Button
+                android:layout_width="202dp"
+                android:layout_height="63dp"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/contact_list_item_bg"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/contact_list_username_text_color"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
