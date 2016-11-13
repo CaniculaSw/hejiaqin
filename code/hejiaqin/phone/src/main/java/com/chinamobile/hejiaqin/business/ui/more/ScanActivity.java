@@ -202,6 +202,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
             finish();
         }else {
             showToast("错误的二维码", Toast.LENGTH_SHORT, null);
+            mQRCodeView.startSpotAndShowRect();
         }
     }
 

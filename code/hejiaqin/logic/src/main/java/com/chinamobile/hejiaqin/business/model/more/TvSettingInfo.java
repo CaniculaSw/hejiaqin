@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.model.more;
 
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 /**
@@ -17,7 +18,7 @@ public class TvSettingInfo {
     }
 
     public void setNumberOne(String numberOne) {
-        this.numberOne = numberOne;
+        this.numberOne = CommonUtils.getPhoneNumber(numberOne);
     }
 
     public String getNumberTwo() {
@@ -25,7 +26,7 @@ public class TvSettingInfo {
     }
 
     public void setNumberTwo(String numberTwo) {
-        this.numberTwo = numberTwo;
+        this.numberTwo = CommonUtils.getPhoneNumber(numberTwo);
     }
 
     public String getNumberThree() {
@@ -33,7 +34,7 @@ public class TvSettingInfo {
     }
 
     public void setNumberThree(String numberThree) {
-        this.numberThree = numberThree;
+        this.numberThree = CommonUtils.getPhoneNumber(numberThree);
     }
 
     public String getNumberFour() {
@@ -41,7 +42,7 @@ public class TvSettingInfo {
     }
 
     public void setNumberFour(String numberFour) {
-        this.numberFour = numberFour;
+        this.numberFour = CommonUtils.getPhoneNumber(numberFour);
     }
 
 
@@ -54,12 +55,13 @@ public class TvSettingInfo {
     }
 
     public boolean isInAutoAnswerList(String inNumber) {
-        if (!isAutoAnswer || (StringUtil.isNullOrEmpty(numberOne) && StringUtil.isNullOrEmpty(numberTwo) && StringUtil.isNullOrEmpty(numberThree) && StringUtil.isNullOrEmpty(numberFour))) {
+
+        if (!isAutoAnswer) {
             return false;
-        }else if (StringUtil.isNullOrEmpty(numberOne) && StringUtil.isNullOrEmpty(numberTwo) && StringUtil.isNullOrEmpty(numberThree) && StringUtil.isNullOrEmpty(numberFour)){
+        } else if (StringUtil.isNullOrEmpty(numberOne) && StringUtil.isNullOrEmpty(numberTwo) && StringUtil.isNullOrEmpty(numberThree) && StringUtil.isNullOrEmpty(numberFour)) {
             return true;
-        }else {
-            return inNumber.equals(numberOne) || inNumber.equals(numberTwo)|| inNumber.equals(numberThree)||inNumber.equals(numberFour);
+        } else {
+            return inNumber.equals(numberOne) || inNumber.equals(numberTwo) || inNumber.equals(numberThree) || inNumber.equals(numberFour);
         }
     }
 }
