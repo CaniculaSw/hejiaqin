@@ -13,9 +13,11 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.SearchView;
+import com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
@@ -26,8 +28,11 @@ import java.util.List;
 public class AppContactListFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "AppContactListFragment";
     private IContactsLogic contactsLogic;
+    private StickyListHeadersListView contactListView;
     private AppContactAdapter adapter;
     private TextView searchText;
+    private SideBarView sideBarView;
+    private TextView tipText;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -54,7 +59,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
     protected void initView(View view) {
         Context context = getContext();
 
-        StickyListHeadersListView contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
+        contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
 
         // 添加搜索框
         LayoutInflater inflater = (LayoutInflater) context.getSystemService
@@ -69,6 +74,39 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
         // 添加adapter
         adapter = new AppContactAdapter(context);
         contactListView.setAdapter(adapter);
+
+        tipText = (TextView) view.findViewById(R.id.tip);
+        sideBarView = (SideBarView) view.findViewById(R.id.sidebar);
+        sideBarView.setOnLetterSelectListen(new SideBarView.LetterSelectListener() {
+            @Override
+            public void onLetterSelected(String letter) {
+                int position = adapter.getPositionByLetter(letter);
+                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
+                        + position);
+                tipText.setText(letter);
+                tipText.setVisibility(View.VISIBLE);
+                if (position >= 0) {
+                    contactListView.setSelection(position);
+                }
+            }
+
+            @Override
+            public void onLetterChanged(String letter) {
+                int position = adapter.getPositionByLetter(letter);
+                Logger.i(TAG, "onLetterChanged: " + letter + "; position: "
+                        + position);
+                tipText.setText(letter);
+                tipText.setVisibility(View.VISIBLE);
+                if (position >= 0) {
+                    contactListView.setSelection(position);
+                }
+            }
+
+            @Override
+            public void onLetterReleased(String letter) {
+                tipText.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

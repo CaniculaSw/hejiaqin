@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="86dp"
         android:layout_marginTop="116dp"
-        android:focusable="true"
+        android:focusable="false"
         android:gravity="center_vertical"
         android:nextFocusDown="@+id/contact_name_layout">
 

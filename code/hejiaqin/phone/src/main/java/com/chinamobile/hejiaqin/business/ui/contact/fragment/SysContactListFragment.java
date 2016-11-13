@@ -2,7 +2,10 @@ package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,9 +15,11 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.SysContactAdapter;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
@@ -30,6 +35,9 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     private TextView searchText;
     private StickyListHeadersListView contactListView;
     private View empty_view;
+
+    private SideBarView sideBarView;
+    private TextView tipText;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -73,6 +81,48 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         contactListView.setAdapter(adapter);
 
         empty_view = view.findViewById(R.id.empty_view);
+
+        tipText = (TextView) view.findViewById(R.id.tip);
+        sideBarView = (SideBarView) view.findViewById(R.id.sidebar);
+        sideBarView.setOnLetterSelectListen(new SideBarView.LetterSelectListener() {
+            @Override
+            public void onLetterSelected(String letter) {
+                int position = adapter.getPositionByLetter(letter);
+                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
+                        + position);
+                tipText.setText(letter);
+                tipText.setVisibility(View.VISIBLE);
+                if (position >= 0) {
+                    contactListView.setSelection(position);
+                }
+            }
+
+            @Override
+            public void onLetterChanged(String letter) {
+                int position = adapter.getPositionByLetter(letter);
+                Logger.i(TAG, "onLetterChanged: " + letter + "; position: "
+                        + position);
+                tipText.setText(letter);
+                tipText.setVisibility(View.VISIBLE);
+                if (position >= 0) {
+                    contactListView.setSelection(position);
+                }
+            }
+
+            @Override
+            public void onLetterReleased(String letter) {
+                tipText.setVisibility(View.GONE);
+            }
+        });
+
+        getActivity().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, mObserver);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().getContentResolver().unregisterContentObserver(mObserver);
     }
 
     @Override
@@ -113,4 +163,14 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         }
     }
 
+    //监听联系人数据的监听对象
+    private ContentObserver mObserver = new ContentObserver(
+            new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            // 当联系人表发生变化时进行相应的操作
+            LogUtil.d(TAG, "sys contact list changed: " + selfChange);
+            contactsLogic.fetchLocalContactLst();
+        }
+    };
 }
