@@ -106,7 +106,7 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
                 if (mName.getText().length() <= 0 || mNumber.getText().length() <= 0) {
                     break;
                 } else {
-                    showToast("正在发送请求...", Toast.LENGTH_SHORT,null);
+                    showToast("正在等待同意您的请求", Toast.LENGTH_LONG,null);
                     settingLogic.sendBindReq(mNumber.getText().toString(), UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
                 }
                 break;

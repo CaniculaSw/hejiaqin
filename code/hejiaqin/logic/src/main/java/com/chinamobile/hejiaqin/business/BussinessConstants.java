@@ -377,6 +377,7 @@ public class BussinessConstants {
         int BIND_SUCCESS = BASE_MSG_ID + 12;
         int BIND_DENIED = BASE_MSG_ID + 13;
         int SAVE_BIND_REQUEST_SUCCESS = BASE_MSG_ID + 14;
+        int GET_BIND_LIST_SUCCESSFUL = BASE_MSG_ID + 15;
 
     }
 
