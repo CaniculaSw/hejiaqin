@@ -42,10 +42,11 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
                     bindedList = new ArrayList<>();
                     bindedList.addAll((List<UserInfo>) msg.obj);
                     adapter.setData(bindedList);
+                    adapter.notifyDataSetChanged();
                 }
                 break;
             case BussinessConstants.SettingMsgID.BIND_SUCCESS:
-                showToast("绑定成功", Toast.LENGTH_SHORT,null);
+                showToast("绑定成功", Toast.LENGTH_SHORT, null);
                 settingLogic.getDeviceList();
                 break;
             default:
@@ -73,11 +74,6 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
     @Override
     protected void initDate() {
         settingLogic.getDeviceList();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
