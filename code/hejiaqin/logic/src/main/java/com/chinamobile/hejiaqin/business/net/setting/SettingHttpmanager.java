@@ -5,6 +5,7 @@ import android.content.Context;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
+import com.chinamobile.hejiaqin.business.model.more.req.GetBindListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
@@ -36,6 +37,7 @@ public class SettingHttpmanager extends AbsHttpManager {
     private final int check_android_version = action_base + 1;
     private final int get_device_list = action_base + 2;
     private final int save_bind_request = action_base + 3;
+    private final int get_bind_list = action_base + 4;
 
     /**
      * 请求action
@@ -66,6 +68,9 @@ public class SettingHttpmanager extends AbsHttpManager {
             case save_bind_request:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/bind";
                 break;
+            case get_bind_list:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/getBindList";
+                break;
             default:
                 break;
         }
@@ -83,6 +88,7 @@ public class SettingHttpmanager extends AbsHttpManager {
             case check_android_version:
             case get_device_list:
             case save_bind_request:
+            case get_bind_list:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -117,6 +123,8 @@ public class SettingHttpmanager extends AbsHttpManager {
                 //TODO
             case save_bind_request:
                 //TODO
+            case get_bind_list:
+                //TODO
             default:
                 break;
         }
@@ -150,6 +158,10 @@ public class SettingHttpmanager extends AbsHttpManager {
                         obj = gson.fromJson(data, new TypeToken<List<UserInfo>>() {
                         }.getType());
                         break;
+                    case get_bind_list:
+                        obj = gson.fromJson(data, new TypeToken<List<UserInfo>>() {
+                        }.getType());
+                        break;
                     case save_bind_request:
                         break;
                     default:
@@ -174,9 +186,16 @@ public class SettingHttpmanager extends AbsHttpManager {
         this.mData = req;
         send(invoker, callBack);
     }
-    public void saveBindRequest(final Object invoker, final SaveBindRequest req, final IHttpCallBack callBack){
+
+    public void getBindList(final Object invoker, final GetBindListReq req, final IHttpCallBack callBack) {
+        this.mAction = get_bind_list;
+        this.mData = req;
+        send(invoker, callBack);
+    }
+
+    public void saveBindRequest(final Object invoker, final SaveBindRequest req, final IHttpCallBack callBack) {
         this.mAction = save_bind_request;
         this.mData = req;
-        send(invoker,callBack);
+        send(invoker, callBack);
     }
 }

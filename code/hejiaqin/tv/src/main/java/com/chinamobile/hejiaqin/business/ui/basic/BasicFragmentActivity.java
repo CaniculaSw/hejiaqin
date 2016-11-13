@@ -114,9 +114,6 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     TextMessage message = (TextMessage) msg.obj;
                     showBindRequest(message);
                     break;
-                case BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS:
-                    TextMessage originMessage = (TextMessage) msg.obj;
-                    break;
                 case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
                     if (msg.obj != null) {
                         long incomingSessionId = (long) msg.obj;

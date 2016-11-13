@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
@@ -23,12 +25,17 @@ import com.customer.framework.component.qrCode.QRCodeEncoder;
 import com.customer.framework.component.qrCode.core.DisplayUtils;
 import com.customer.framework.utils.LogUtil;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by eshaohu on 16/8/30.
  */
 public class BoxAccountFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "BoxAccountFragment";
     private ILoginLogic loginLogic;
+    private ISettingLogic settingLogic;
     private IVoipLogic mVoipLogic;
     TextView boxAccount;
     TextView password;
@@ -41,6 +48,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         super.initLogics();
         loginLogic = (ILoginLogic) getLogicByInterfaceClass(ILoginLogic.class);
         mVoipLogic = (IVoipLogic) getLogicByInterfaceClass(IVoipLogic.class);
+        settingLogic = (ISettingLogic) getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -50,6 +58,25 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
 
     @Override
     protected void handleLogicMsg(Message msg) {
+        switch (msg.what) {
+            case BussinessConstants.SettingMsgID.GET_BIND_LIST_SUCCESSFUL:
+                if (msg.obj != null) {
+                    List<UserInfo> userInfoList = new ArrayList<UserInfo>();
+                    userInfoList.addAll((List<UserInfo>) msg.obj);
+                    StringBuilder sb = new StringBuilder();
+                    Iterator<UserInfo> iterator = userInfoList.iterator();
+                    while (iterator.hasNext()) {
+                        UserInfo bindedUser = iterator.next();
+                        sb.append(bindedUser.getPhone());
+                        sb.append(" ");
+                    }
+
+                    bindedAccount.setText(sb.toString());
+                }
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -86,9 +113,15 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        settingLogic.getBindList();
+    }
+
+    @Override
     protected void initData() {
         UserInfo userInfo = (UserInfo) UserInfoCacheManager.getUserInfo(getContext());
-        if (userInfo != null){
+        if (userInfo != null) {
             boxAccount.setText(userInfo.getTvAccount());
             createQRCode(userInfo.getTvAccount(), 1400, qrCode);
         }
@@ -99,7 +132,6 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.logout_btn:
-                LogUtil.i(TAG, "will logout!");
                 loginLogic.logout();
                 mVoipLogic.logout();
                 FragmentMgr.resetFragmentMgr();

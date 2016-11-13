@@ -11,6 +11,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
+import com.chinamobile.hejiaqin.business.model.more.req.GetBindListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
@@ -157,6 +158,26 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
+            }
+        });
+    }
+    @Override
+    public void getBindList() {
+        final GetBindListReq reqBody = new GetBindListReq();
+        new SettingHttpmanager(getContext()).getBindList(null, reqBody, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_BIND_LIST_SUCCESSFUL, obj);
             }
 
             @Override
