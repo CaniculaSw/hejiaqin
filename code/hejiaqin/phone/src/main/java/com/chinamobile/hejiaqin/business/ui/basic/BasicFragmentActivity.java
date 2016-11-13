@@ -38,6 +38,7 @@ import com.customer.framework.utils.PermissionsChecker;
  */
 public abstract class BasicFragmentActivity extends BaseFragmentActivity {
 
+    private static final String TAG = "BasicFragmentActivity";
     private MyToast myToast;
 
     private Dialog waitDialog;
@@ -112,6 +113,9 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
                     new UpdateManger(BasicFragmentActivity.this).showNoticeDialog((VersionInfo)msg.obj);
                     break;
+                case BussinessConstants.SettingMsgID.BIND_DENIED:
+                    LogUtil.i(TAG,"对方不同意你的绑定请求");
+                    showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
                 default:
                     break;
             }

@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 
@@ -86,6 +88,15 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
     }
 
     @Override
+    protected void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+        switch (msg.what){
+            default:
+                break;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_iv:
@@ -95,8 +106,8 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
                 if (mName.getText().length() <= 0 || mNumber.getText().length() <= 0) {
                     break;
                 } else {
-                    showToast("OK", Toast.LENGTH_LONG, null);
-                    settingLogic.sendBindReq(mNumber.getText().toString());
+                    showToast("正在发送请求...", Toast.LENGTH_SHORT,null);
+                    settingLogic.sendBindReq(mNumber.getText().toString(), UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
                 }
                 break;
             default:

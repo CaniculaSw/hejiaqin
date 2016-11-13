@@ -109,10 +109,10 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     break;
                 case BussinessConstants.SettingMsgID.BIND_REQUEST:
                     TextMessage message = (TextMessage) msg.obj;
-//                    bindRequestDialog = new BindRequestDialog(getApplicationContext(),R.style.Dialog,message);
                     showBindRequest(message);
-//                    bindRequestDialog.show();
                     break;
+                case BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS:
+                    TextMessage originMessage = (TextMessage) msg.obj;
                 default:
                     break;
             }

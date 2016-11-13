@@ -12,6 +12,7 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
+import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
@@ -25,6 +26,8 @@ import com.huawei.rcs.message.Message;
 import com.huawei.rcs.message.MessageConversation;
 import com.huawei.rcs.message.MessagingApi;
 import com.huawei.rcs.message.TextMessage;
+
+import java.util.Map;
 
 /**
  * Created by eshaohu on 16/5/24.
@@ -43,7 +46,6 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             }
             msg.read();
             LogUtil.i(TAG, "Message received.");
-            Toast.makeText(getContext(), "Message received.", Toast.LENGTH_LONG).show();
             int msgType = msg.getType();
             switch (msgType) {
                 case Message.MESSAGE_TYPE_TEXT: { // 文本消息
@@ -65,11 +67,13 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     private BroadcastReceiver mMessageStatusChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtil.i(TAG, "Message status changed.");
             Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
 
             if (null != msg) {
-                LogUtil.i(TAG, "Status: " + msg.getStatus() + " body: " + msg.getBody());
+                switch (msg.getStatus()){
+                    case Message.STATUS_DELIVERY_OK:
+                        break;
+                }
                 return;
             }
         }
@@ -211,13 +215,49 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     }
 
     @Override
-    public void sendBindReq(String TVNumber) {
-        MessageConversation mMessageConversation = MessageConversation.getConversationByNumber(TVNumber);
-        LogUtil.i(TAG, "Peer name: " + mMessageConversation.getPeerName());
+    public void saveBindRequest(final TextMessage message) {
+        SaveBindRequest req = new SaveBindRequest();
+        req.setPhone(XmlParseUtil.getElemString(message.getContent(),"Phone"));
+        new SettingHttpmanager(getContext()).saveBindRequest(null, req, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                LogUtil.d(TAG, "Save the bind request success");
+                sendMessage(BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS,message);
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                LogUtil.i(TAG, "Save failed");
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
+            }
+        });
+    }
+
+    @Override
+    public void sendBindReq(String tvNumber, String phoneNum) {
+        sendTextMessage(tvNumber, CaaSUtil.CmdType.BIND, CaaSUtil.OpCode.BIND, phoneNum);
+    }
+
+    @Override
+    public void sendBindResult(String toNumber, String opCode) {
+        sendTextMessage(toNumber, CaaSUtil.CmdType.BIND, opCode, null);
+    }
+
+    private void sendTextMessage(String toNumber, String cmdType, String opCode, String phone) {
+        sendTextMessage(toNumber, cmdType, "1", opCode, phone, null);
+    }
+
+    private void sendTextMessage(String toNumber, String cmdType, String seq, String opCode, String phoneNum, Map<String, String> params) {
+        MessageConversation mMessageConversation = MessageConversation.getConversationByNumber(toNumber);
+        LogUtil.d(TAG, "Peer name: " + mMessageConversation.getPeerName());
         Intent intent = new Intent();
         intent.putExtra(MessageConversation.PARAM_SEND_TEXT_PAGE_MODE, true);
         intent.putExtra(Conversation.PARAM_SERVICE_KIND, Conversation.SERVICE_KIND_THROUGH_SEND_MSG);
-        mMessageConversation.sendText(CaaSUtil.buildMessage(CaaSUtil.CmdType.BIND, "" + 1, CaaSUtil.OpCode.BIND, null), intent);
+        mMessageConversation.sendText(CaaSUtil.buildMessage(cmdType, seq, opCode, phoneNum, params), intent);
     }
 
     private boolean isNewVersion(VersionInfo versionInfo) {
@@ -276,5 +316,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
 
     public String getCmdType(String toParse) {
         return XmlParseUtil.getElemString(toParse, "CmdType");
+    }
+    public String getPhone(String toParse){
+        return XmlParseUtil.getElemString(toParse, "Phone");
     }
 }

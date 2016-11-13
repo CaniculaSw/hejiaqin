@@ -50,9 +50,13 @@ public class CaaSUtil {
         return content;
     }
 
-    public static String buildMessage(String cmdType, String seq, String opCode, Map<String, String> params) {
+    public static String buildMessage(String cmdType, String seq, String opCode, String phoneNum, Map<String, String> params) {
         StringBuilder content = setMainBody(cmdType, seq, opCode);
-
+        if (null != phoneNum) {
+            content.append("<Phone>");
+            content.append(phoneNum);
+            content.append("</Phone>");
+        }
         if (params != null && !params.isEmpty()) {
             Set<Map.Entry<String, String>> allSet = params.entrySet();
             Iterator<Map.Entry<String, String>> iter = allSet.iterator();

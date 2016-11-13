@@ -51,7 +51,7 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         mViewHolder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_binded_tv, position);
-        mViewHolder.setText(R.id.tv_name, mBindedTV.get(position).getName());
+        mViewHolder.setText(R.id.tv_name, mBindedTV.get(position).getUserName());
         Picasso.with(mContext).load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + mBindedTV.get(position).getPhotoSm())
                 .placeholder(R.mipmap.pic80)
                 .error(R.mipmap.pic80).into((CircleImageView) mViewHolder.getView(R.id.tv_avatar_ci));
@@ -78,5 +78,6 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
             mBindedTV.clear();
             mBindedTV.addAll(bindedTVList);
         }
+        notifyDataSetChanged();
     }
 }

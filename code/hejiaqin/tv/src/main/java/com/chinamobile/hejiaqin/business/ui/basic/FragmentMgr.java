@@ -1,10 +1,8 @@
 package com.chinamobile.hejiaqin.business.ui.basic;
 
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.FocusFinder;
 import android.view.View;
 
 import com.customer.framework.component.log.Logger;
@@ -20,7 +18,7 @@ import java.util.Stack;
  */
 public class FragmentMgr {
     private static final String TAG = "FragmentMgr";
-    private static final FragmentMgr instance =
+    private static FragmentMgr instance =
             new FragmentMgr();
 
     int leftContainerResId;
@@ -44,6 +42,10 @@ public class FragmentMgr {
         return instance;
     }
 
+    public static void resetFragmentMgr() {
+        instance = null;
+        instance = new FragmentMgr();
+    }
 
     public void init(FragmentActivity activity, int leftContainerResId) {
         mFragmentManager = activity.getSupportFragmentManager();
