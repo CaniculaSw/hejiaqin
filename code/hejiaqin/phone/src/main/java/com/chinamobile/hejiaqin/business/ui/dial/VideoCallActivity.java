@@ -116,6 +116,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private IContactsLogic mContactsLogic;
 
+    private boolean isDeleteLocal;
+
     /* display the video stream which arrived from remote. */
     private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
         @Override
@@ -630,7 +632,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                             public void run() {
                                 finish();
                             }
-                        }, 2000);
+                        }, 2500);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
@@ -707,6 +709,12 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             CallApi.deleteRemoteVideoView(remoteVideoView);
             remoteVideoView = null;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
     }
 
 }

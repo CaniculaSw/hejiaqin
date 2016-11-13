@@ -443,4 +443,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+
+    }
+
 }

@@ -220,7 +220,7 @@ public class VideoInComingDialog extends Dialog {
                             public void run() {
                                 VideoInComingDialog.this.dismiss();
                             }
-                        }, 2000);
+                        }, 2500);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
