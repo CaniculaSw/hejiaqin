@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
@@ -26,6 +27,7 @@ import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragmentActivity;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
+import com.huawei.rcs.message.TextMessage;
 
 /**
  * desc:
@@ -105,6 +107,12 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     dismissWaitDailog();
                     showToast(R.string.server_side_error, Toast.LENGTH_SHORT, null);
                     break;
+                case BussinessConstants.SettingMsgID.BIND_REQUEST:
+                    TextMessage message = (TextMessage) msg.obj;
+                    showBindRequest(message);
+                    break;
+                case BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS:
+                    TextMessage originMessage = (TextMessage) msg.obj;
                 default:
                     break;
             }
@@ -209,4 +217,9 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         this.networkConnected = false;
     }
 
+    private void showBindRequest(TextMessage message) {
+        Intent intent = new Intent(BasicFragmentActivity.this,BindRequestDialog.class);
+        intent.putExtra("message",message);
+        startActivity(intent);
+    }
 }

@@ -1,24 +1,19 @@
 package com.chinamobile.hejiaqin.business.net.setting;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
+import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
-import com.chinamobile.hejiaqin.business.net.NVPReqBody;
-import com.chinamobile.hejiaqin.business.net.ReqBody;
-import com.chinamobile.hejiaqin.business.net.ReqToken;
 import com.customer.framework.component.net.NameValuePair;
 import com.customer.framework.component.net.NetRequest;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.utils.LogUtil;
 import com.google.gson.Gson;
-import com.google.gson.internal.ObjectConstructor;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
@@ -40,6 +35,7 @@ public class SettingHttpmanager extends AbsHttpManager {
 
     private final int check_android_version = action_base + 1;
     private final int get_device_list = action_base + 2;
+    private final int save_bind_request = action_base + 3;
 
     /**
      * 请求action
@@ -67,6 +63,9 @@ public class SettingHttpmanager extends AbsHttpManager {
             case get_device_list:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/getDeviceList";
                 break;
+            case save_bind_request:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/bind";
+                break;
             default:
                 break;
         }
@@ -83,6 +82,7 @@ public class SettingHttpmanager extends AbsHttpManager {
         switch (this.mAction) {
             case check_android_version:
             case get_device_list:
+            case save_bind_request:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -115,6 +115,8 @@ public class SettingHttpmanager extends AbsHttpManager {
                 //TODO
             case get_device_list:
                 //TODO
+            case save_bind_request:
+                //TODO
             default:
                 break;
         }
@@ -136,7 +138,7 @@ public class SettingHttpmanager extends AbsHttpManager {
                 JSONObject rootJsonObj = new JSONObject(response.getData());
                 if (rootJsonObj.has("data")) {
                     data = rootJsonObj.get("data").toString();
-                }else if (rootJsonObj.has("dataList")){
+                } else if (rootJsonObj.has("dataList")) {
                     data = rootJsonObj.get("dataList").toString();
                 }
                 Gson gson = new Gson();
@@ -145,7 +147,10 @@ public class SettingHttpmanager extends AbsHttpManager {
                         obj = gson.fromJson(data, VersionInfo.class);
                         break;
                     case get_device_list:
-                        obj = gson.fromJson(data,new TypeToken<List<UserInfo>>(){}.getType());
+                        obj = gson.fromJson(data, new TypeToken<List<UserInfo>>() {
+                        }.getType());
+                        break;
+                    case save_bind_request:
                         break;
                     default:
                         break;
@@ -168,5 +173,10 @@ public class SettingHttpmanager extends AbsHttpManager {
         this.mAction = get_device_list;
         this.mData = req;
         send(invoker, callBack);
+    }
+    public void saveBindRequest(final Object invoker, final SaveBindRequest req, final IHttpCallBack callBack){
+        this.mAction = save_bind_request;
+        this.mData = req;
+        send(invoker,callBack);
     }
 }

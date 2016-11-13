@@ -257,7 +257,6 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 sdkuserInfo.countryCode="+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-
                 //TODO TEST
                 if(Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
                     sdkuserInfo.username = "2886544004";
@@ -273,8 +272,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 voipLogic.login(sdkuserInfo,null,null);
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
-                this.startActivity(intent);
                 intent.putExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, true);
+                this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
@@ -302,12 +301,6 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 break;
         }
     }
-    private void jumpToMainFragmentActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
-        LogUtil.d(TAG, "Init the CMIM SDK");
-        loginLogic.initCMIMSdk();
-        startActivity(intent);
-        finish();
-    }
+
 }
 

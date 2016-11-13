@@ -18,11 +18,10 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
-import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.AddContactDialog;
@@ -45,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactInfoActivity extends BasicFragmentActivity implements View.OnClickListener {
     public static final int REQUEST_CODE_EDIT_CONTACT = 10001;
-
+    private static final String TAG = "ContactInfoActivity";
     private HeaderView titleLayout;
     private TextView mContactNameText;
     private CircleImageView mContactHeadImg;

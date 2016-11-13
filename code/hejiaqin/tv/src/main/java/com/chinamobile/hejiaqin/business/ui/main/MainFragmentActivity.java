@@ -181,8 +181,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 }
                 break;
         }
-
-        LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
+//        LogUtil.i("MainFragmentActivity","toIndex:"+toIndex);
+//        LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
 
         mMenuViews[mCurrentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[toIndex].setBackgroundColor(getResources().getColor(R.color.transparent));

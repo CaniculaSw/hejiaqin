@@ -32,7 +32,9 @@ import android.os.Environment;
 import android.os.StatFs;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.customer.framework.component.storage.StorageMgr;
 
 import java.io.File;
@@ -141,15 +143,12 @@ public class CommonUtils {
 
     public static String getCountryPhoneNumber(String number) {
         String outNumber = number;
-        if(number.startsWith("0086"))
-        {
+        if (number.startsWith("0086")) {
             outNumber = number;
-        }
-        else if (number.startsWith("+86")) {
+        } else if (number.startsWith("+86")) {
             outNumber = number;
-        }
-        else{
-            outNumber ="+86" + number;
+        } else {
+            outNumber = "+86" + number;
         }
         return outNumber;
     }
@@ -157,11 +156,24 @@ public class CommonUtils {
     public static String getPhoneNumber(String countryNumber) {
         String outNumber = countryNumber;
         if (countryNumber.startsWith("+86")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("+86")+3);
+            outNumber = countryNumber.substring(countryNumber.indexOf("+86") + 3);
         } else if (countryNumber.startsWith("0086")) {
-            outNumber = countryNumber.substring(countryNumber.indexOf("0086")+4);
+            outNumber = countryNumber.substring(countryNumber.indexOf("0086") + 4);
         }
         return outNumber;
     }
 
+    public static boolean isAutoAnswer(Context context, String incomingNum) {
+        TvSettingInfo settingInfo = UserInfoCacheManager.getUserSettingInfo(context);
+
+        if (!settingInfo.isAutoAnswer()) {
+            return false;
+        }
+
+        if (settingInfo.isInAutoAnswerList(getPhoneNumber(incomingNum))) {
+            return true;
+        }
+
+        return false;
+    }
 }

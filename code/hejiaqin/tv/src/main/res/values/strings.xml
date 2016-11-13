@@ -239,4 +239,8 @@
     <string name="server_side_error">系统异常</string>
     <string name="prompt_empty_feedback_content">请输入反馈内容</string>
     <string name="prompt_feedback_ok">提交成功</string>
+    <string name="prompt_bind_hint">手机（%s）即将绑定你的机顶盒</string>
+    <string name="setting_agree">同意</string>
+    <string name="setting_denied">拒绝</string>
+    <string name="setting_hint">提示</string>
 </resources>

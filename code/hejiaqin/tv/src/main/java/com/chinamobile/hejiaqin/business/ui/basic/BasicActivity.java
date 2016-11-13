@@ -152,6 +152,8 @@ public abstract class BasicActivity extends BaseActivity {
                     this.startActivity(intent);
                     this.finishAllActivity(LoginActivity.class.getName());
                     break;
+                case BussinessConstants.SettingMsgID.BIND_REQUEST:
+
                 default:
                     break;
             }

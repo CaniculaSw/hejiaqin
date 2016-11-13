@@ -42,10 +42,9 @@ public class HeApplication extends RCSApplication {
         MessagingApi.setAllowSendDisplayStatus(true);
         MessagingApi.openTolistUncompletedMessage();
 //        //设置为IM不同源
-//设置为IM不同源
         MessagingApi.setConfig(
                 MessagingApi.CONFIG_MAJOR_USE_SYS_SMS,
-                MessagingApi.CONFIG_MINOR_TYPE_DEFAULT,"0");
+                MessagingApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
 //        SysApi.loadStg(new SvnStgHelper());
 
 //        CaasOmp.init();

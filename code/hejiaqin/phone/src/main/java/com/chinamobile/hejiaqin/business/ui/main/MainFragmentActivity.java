@@ -30,7 +30,7 @@ import com.customer.framework.utils.LogUtil;
  * Created: 2016/4/22.
  */
 public class MainFragmentActivity extends BasicFragmentActivity {
-
+    private static final String TAG = "MainFragmentActivity";
     private static final int DIAL_STATUS_NORMAL = 1;
 
     private static final int DIAL_STATUS_SHOW_KEYBORD = 2;
@@ -86,7 +86,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     MainFragmentActivity.this.finishAllActivity(LoginActivity.class.getName());
                     break;
                 case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID:
-                    if(mDialStatus == DIAL_STATUS_CALL) {
+                    if (mDialStatus == DIAL_STATUS_CALL) {
                         return;
                     }
                     mImageViews[mDialIndex].setVisibility(View.GONE);
@@ -161,8 +161,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     protected void initDate() {
         settingLogic.checkVersion();
-        if(!getIntent().getBooleanExtra(BussinessConstants.Login.INTENT_FROM_LONGIN,false)) {
-            LogUtil.d(TAG,"autoLogin");
+        if (!getIntent().getBooleanExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, false)) {
+            LogUtil.d(TAG, "autoLogin");
             mVoipLogic.autoLogin();
         }
     }
@@ -258,9 +258,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             mDialSeleted = false;
             if (mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
                 mDialStatus = DIAL_STATUS_NORMAL;
-            }
-            else if(mDialStatus == DIAL_STATUS_CALL)
-            {
+            } else if (mDialStatus == DIAL_STATUS_CALL) {
                 mImageViews[mDialIndex].setVisibility(View.VISIBLE);
                 mTextViews[mDialIndex].setVisibility(View.VISIBLE);
                 mDialCallImage.setVisibility(View.GONE);
@@ -293,13 +291,13 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initLogics() {
-        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
         settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     private void showPopupWindow() {
 
-        if(mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
+        if (mDialStatus == DIAL_STATUS_SHOW_KEYBORD) {
             mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
             mDialStatus = DIAL_STATUS_NORMAL;
             //收起拨号盘
@@ -360,7 +358,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            showToast(R.string.quit_app_toast_msg, Toast.LENGTH_SHORT,null);
+            showToast(R.string.quit_app_toast_msg, Toast.LENGTH_SHORT, null);
             exitTime = System.currentTimeMillis();
             return;
         }

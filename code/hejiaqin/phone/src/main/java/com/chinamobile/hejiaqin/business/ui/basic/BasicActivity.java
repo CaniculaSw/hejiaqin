@@ -37,7 +37,7 @@ import com.customer.framework.utils.PermissionsChecker;
  * Created: 2016/4/8.
  */
 public abstract class BasicActivity extends BaseActivity {
-
+    private static final String TAG = "BasicActivity";
     private MyToast myToast;
 
     private Dialog waitDialog;
@@ -160,6 +160,9 @@ public abstract class BasicActivity extends BaseActivity {
                 case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
                     new UpdateManger(BasicActivity.this).showNoticeDialog((VersionInfo)msg.obj);
                     break;
+                case BussinessConstants.SettingMsgID.BIND_DENIED:
+                    LogUtil.i(TAG,"对方不同意你的绑定请求");
+                    showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
                 default:
                     break;
             }

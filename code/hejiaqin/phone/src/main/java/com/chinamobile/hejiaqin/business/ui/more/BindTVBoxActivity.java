@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -24,6 +25,7 @@ import java.util.List;
  * Created by eshaohu on 16/5/30.
  */
 public class BindTVBoxActivity extends BasicActivity implements View.OnClickListener {
+    private static final String TAG = "BindTVBoxActivity";
     private HeaderView mHeaderView;
     private RelativeLayout mBindTVBtn;
     private ListView mBindedTVList;
@@ -40,7 +42,12 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
                     bindedList = new ArrayList<>();
                     bindedList.addAll((List<UserInfo>) msg.obj);
                     adapter.setData(bindedList);
+                    adapter.notifyDataSetChanged();
                 }
+                break;
+            case BussinessConstants.SettingMsgID.BIND_SUCCESS:
+                showToast("绑定成功", Toast.LENGTH_SHORT, null);
+                settingLogic.getDeviceList();
                 break;
             default:
                 break;
@@ -67,7 +74,6 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
     @Override
     protected void initDate() {
         settingLogic.getDeviceList();
-
     }
 
     @Override

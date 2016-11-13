@@ -9,12 +9,8 @@ import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.customer.framework.component.storage.StorageMgr;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 

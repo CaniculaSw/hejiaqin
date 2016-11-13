@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
@@ -31,6 +33,7 @@ import java.io.InputStream;
 public class ScanActivity extends BasicActivity implements View.OnClickListener, QRCodeView.Delegate, QRCodeDecoder.Delegate {
     private HeaderView mHeaderView;
     private QRCodeView mQRCodeView;
+    private ISettingLogic settingLogic;
     private final static String TAG = "ScanActivity";
     public static final String IMAGE_TYPE = "image/*";
     public static final int IMAGE_CODE = 1;//相册
@@ -68,7 +71,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
 
     @Override
     protected void initLogics() {
-
+        settingLogic = (ISettingLogic) getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -191,10 +194,16 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
     @Override
     public void onScanQRCodeSuccess(String result) {
         Log.i(TAG, "result:" + result);
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         vibrate();
-        mQRCodeView.startSpotAndShowRect();
+//        mQRCodeView.startSpotAndShowRect();
         //TODO finish();
+        if (result.length() > 0) {
+            settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
+            finish();
+        }else {
+            showToast("错误的二维码", Toast.LENGTH_SHORT, null);
+            mQRCodeView.startSpotAndShowRect();
+        }
     }
 
     @Override
