@@ -131,6 +131,7 @@
     <string name="sip_temporarily_unavailable">对方暂时无法接通，您可以稍后再拨</string>
     <string name="sip_busy_here">对方正在通话中，您可以稍后再拨</string>
     <string name="voip_register_fail">登录失败，请稍后再试</string>
+    <string name="auto_answer_status">自动接听...</string>
 
     <!-- 更多 -->
     <!-- TV-->

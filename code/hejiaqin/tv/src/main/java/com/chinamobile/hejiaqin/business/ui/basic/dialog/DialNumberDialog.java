@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
@@ -24,10 +26,14 @@ public class DialNumberDialog extends Dialog {
     public LinearLayout addLayout;
     public LinearLayout cancelLayout;
     public ContactsInfo mContactsInfo;
+    private IVoipLogic mVoipLogic;
+    private IContactsLogic mContactsLogic;
 
-    public DialNumberDialog(Context context, int theme, ContactsInfo contactsInfo) {
+    public DialNumberDialog(Context context, int theme, ContactsInfo contactsInfo,IVoipLogic voipLogic,IContactsLogic contactsLogic) {
         super(context, theme);
         mContactsInfo = contactsInfo;
+        this.mVoipLogic = voipLogic;
+        this.mContactsLogic = contactsLogic;
     }
 
     @Override
@@ -49,11 +55,7 @@ public class DialNumberDialog extends Dialog {
                 numberInfoView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
-                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, number);
-                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, name);
-                        getContext().startActivity(outingIntent);
-                        dismiss();
+                        VideoOutDialog.show(getContext(), number, mVoipLogic, mContactsLogic);
                     }
                 });
 

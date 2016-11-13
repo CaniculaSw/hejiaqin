@@ -28,5 +28,11 @@ public interface IVoipLogic {
 
     public void delAllCallRecord();
 
+    public void delCallRecord(final String[] ids);
+
     public void getCallRecord();
+
+    public boolean isTv();
+
+    public void setIsTv(boolean isTv);
 }

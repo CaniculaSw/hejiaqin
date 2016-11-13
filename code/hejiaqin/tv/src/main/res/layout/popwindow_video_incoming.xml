@@ -25,6 +25,7 @@
         android:text="包宏浩"
         android:textSize="26sp"
         android:layout_marginTop="12dp"
+        android:visibility="invisible"
         android:textColor="#ebecef" />
 
     <TextView
@@ -46,6 +47,7 @@
         android:textColor="#aaafbc" />
 
     <RelativeLayout
+        android:id="@+id/call_operation_layout"
         android:layout_marginTop="58dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +67,7 @@
             <Button
                 android:layout_width="148dp"
                 android:layout_height="60dp"
-                android:text="@string/call_reject"
+                android:text="@string/call_answer"
                 android:textSize="22sp"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -93,4 +95,24 @@
                 android:background="@drawable/border_btn_hangupcall_bg" />
         </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/auto_reject_call_layout"
+        android:layout_marginTop="58dp"
+        android:layout_width="336dp"
+        android:layout_height="72dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:focusable="true"
+        android:background="@drawable/selector_dial_bg">
+
+        <Button
+            android:layout_width="324dp"
+            android:layout_height="60dp"
+            android:text="@string/call_reject"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/border_btn_hangupcall_bg" />
+    </LinearLayout>
 </LinearLayout>

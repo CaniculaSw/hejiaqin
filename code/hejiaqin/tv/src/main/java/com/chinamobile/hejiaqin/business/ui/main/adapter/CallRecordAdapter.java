@@ -1,23 +1,18 @@
 package com.chinamobile.hejiaqin.business.ui.main.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.tv.R;
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
-import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -26,46 +21,105 @@ import java.util.List;
 /**
  * Created by  on 2016/7/20.
  */
-public class CallRecordAdapter extends RecyclerView.Adapter {
+public class CallRecordAdapter extends BaseAdapter {
     private Context mContext;
     private IContactsLogic mContactsLogic;
     private List<CallRecord> mData;
+    private onClickListen mListen;
 
-    public CallRecordAdapter(Context context, IContactsLogic contactsLogic) {
+    public CallRecordAdapter(Context context, IContactsLogic contactsLogic,onClickListen listen) {
         this.mContext = context;
         this.mContactsLogic = contactsLogic;
         mData = new ArrayList<CallRecord>();
+        this.mListen = listen;
+    }
+
+    public void refreshData(List<CallRecord> data) {
+        if (data != null) {
+            mData = data;
+        } else {
+            mData.clear();
+        }
+        notifyDataSetChanged();
+    }
+
+    public CallRecord getData(int position)
+    {
+        if (mData == null) {
+            return null;
+        }
+        return mData.get(position);
+    }
+
+    public void delData(String[] ids)
+    {
+        if (mData == null) {
+            return;
+        }
+        for(int i=0;i<ids.length;i++)
+        {
+            for(int j=0;i<mData.size();j++)
+            {
+                if(ids[i].equals(mData.get(j).getId()))
+                {
+                    mData.remove(j);
+                    break;
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holer = null;
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_call_record, parent, false);
-        holer = new HolderView(view);
-        return holer;
+    public int getCount() {
+        if (mData == null) {
+            return 0;
+        }
+        return mData.size();
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public Object getItem(int position) {
+        if (mData == null) {
+            return null;
+        }
+        return mData.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         CallRecord info = mData.get(position);
         if (info != null) {
-            HolderView tHolder = (HolderView) holder;
+            HolderView tHolder = null;
+            if (convertView == null) {
+
+                convertView = LayoutInflater.from(this.mContext).inflate(R.layout.item_call_record, null);
+                tHolder = new HolderView(convertView);
+                convertView.setTag(tHolder);
+
+            } else {
+                tHolder = (HolderView) convertView.getTag();
+            }
             tHolder.itemView.setTag(position);
             tHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
-                    if (mData.get(position).getContactsInfo() != null) {
-                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
-                        intent.putExtras(bundle);
-                        mContext.startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                        intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
-                        mContext.startActivity(intent);
-                    }
+                    mListen.onClick(mData.get(position));
+                }
+            });
+            tHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = (int) v.getTag();
+                    mListen.onLongClick(position);
+                    return true;
                 }
             });
             if (info.getType() == CallRecord.TYPE_VIDEO_INCOMING) {
@@ -82,8 +136,7 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                 boolean isMatch = false;
                 List<ContactsInfo> localcontactsInfos = mContactsLogic.getCacheLocalContactLst();
                 for (ContactsInfo contactsInfo : localcontactsInfos) {
-                    if(isMatch)
-                    {
+                    if (isMatch) {
                         break;
                     }
                     if (contactsInfo.getNumberLst() != null) {
@@ -91,7 +144,7 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                             if (info.getNoCountryNumber().equals(numberInfo.getNumberNoCountryCode())) {
                                 info.setPeerName(contactsInfo.getName());
                                 info.setContactsInfo(contactsInfo);
-                                isMatch =true;
+                                isMatch = true;
                             }
                         }
                     }
@@ -101,38 +154,30 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
             tHolder.callRecordNumberTv.setText(info.getPeerNumber());
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
+        return convertView;
     }
-
-    public void refreshData(List<CallRecord> data) {
-        if (data != null) {
-            mData = data;
-        } else {
-            mData.clear();
-        }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        if (mData == null) {
-            return 0;
-        }
-        return mData.size();
-    }
-
-    public class HolderView extends RecyclerView.ViewHolder {
+    public class HolderView {
 
         private ImageView callRecordTypeIv;
         private TextView callRecordNameTv;
         private TextView callRecordNumberTv;
         private TextView callRecordTimeTv;
+        private View itemView;
 
         public HolderView(View view) {
-            super(view);
             callRecordTypeIv = (ImageView) view.findViewById(R.id.call_record_type_iv);
             callRecordNameTv = (TextView) view.findViewById(R.id.call_record_name_tv);
             callRecordNumberTv = (TextView) view.findViewById(R.id.call_record_number_tv);
             callRecordTimeTv = (TextView) view.findViewById(R.id.call_record_time_tv);
+            itemView = view.findViewById(R.id.call_record_item);
+
         }
+    }
+
+    public static abstract class onClickListen
+    {
+        public abstract void onClick(CallRecord info);
+
+        public abstract void onLongClick(int position);
     }
 }

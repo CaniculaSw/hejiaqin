@@ -28,6 +28,9 @@ import com.customer.framework.ui.BaseFragmentActivity;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
 import com.huawei.rcs.message.TextMessage;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 
 /**
  * desc:
@@ -113,6 +116,15 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     break;
                 case BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS:
                     TextMessage originMessage = (TextMessage) msg.obj;
+                    break;
+                case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                    if (msg.obj != null) {
+                        long incomingSessionId = (long) msg.obj;
+                        VideoInComingDialog.show(this, incomingSessionId,
+                                ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
+                                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)));
+                    }
+                    break;
                 default:
                     break;
             }
