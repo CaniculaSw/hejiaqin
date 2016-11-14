@@ -34,7 +34,7 @@ public class MainActivity extends BasicActivity {
 
     @Override
     protected void initDate() {
-
+        settingLogic.getBindList();
     }
 
     @Override

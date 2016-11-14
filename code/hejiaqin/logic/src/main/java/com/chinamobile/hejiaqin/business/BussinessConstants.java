@@ -344,6 +344,8 @@ public class BussinessConstants {
 
         String VERSION_INFO_KEY = "versionInfoKey";
         String USER_SETTING_KEY = "userSettingInfo";
+        String BINDED_APP_KEY = "bindedAppKey";
+        String BINDED_DEVICE_KEY = "bindedDeviceKey";
         String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
         String APP_IMG_DEFAULT_NAME = "hejiaqin_app_default_img.jpg"; //头像图片默认名字
         String MORE_SHARE_APP_URL = "http://www.baidu.com";
@@ -381,6 +383,9 @@ public class BussinessConstants {
         int BIND_DENIED = BASE_MSG_ID + 13;
         int SAVE_BIND_REQUEST_SUCCESS = BASE_MSG_ID + 14;
         int GET_BIND_LIST_SUCCESSFUL = BASE_MSG_ID + 15;
+        int SEND_CONTACT_REQUEST = BASE_MSG_ID + 16;
+        int SEND_CONTACT_RESPOND_SUCCESS = BASE_MSG_ID + 17;
+        int SEND_CONTACT_RESPOND_DENIED = BASE_MSG_ID + 18;
 
     }
 

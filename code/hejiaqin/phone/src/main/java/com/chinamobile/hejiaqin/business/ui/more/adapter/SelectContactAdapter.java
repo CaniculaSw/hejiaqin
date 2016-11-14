@@ -136,6 +136,10 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
         notifyCheckedNum();
     }
 
+    public Set<ContactsInfo> getSelectedContactSet(){
+        return this.selectedSet;
+    }
+
     private void notifyCheckedNum() {
         Message msg = new Message();
         msg.what = BussinessConstants.SettingMsgID.CONTACT_CHECKED_STATED_CHANGED;

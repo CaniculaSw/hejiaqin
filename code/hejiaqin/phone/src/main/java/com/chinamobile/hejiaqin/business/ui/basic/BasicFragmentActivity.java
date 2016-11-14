@@ -116,6 +116,13 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.SettingMsgID.BIND_DENIED:
                     LogUtil.i(TAG,"对方不同意你的绑定请求");
                     showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
+                    break;
+                case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_DENIED:
+                    showToast("发送联系人被拒绝",Toast.LENGTH_LONG,null);
+                    break;
+                case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
+                    showToast("发送联系人成功",Toast.LENGTH_LONG,null);
+                    break;
                 default:
                     break;
             }

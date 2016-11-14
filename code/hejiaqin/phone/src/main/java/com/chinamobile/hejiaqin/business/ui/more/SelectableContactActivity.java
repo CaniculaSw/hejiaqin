@@ -1,20 +1,29 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectContactAdapter;
+import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -24,11 +33,13 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
 
     private static final String TAG = "SelectableContactActivity";
 
+    private String tvAccount;
     private HeaderView mHeaderView;
     private Context mContext;
     private StickyListHeadersListView mContactListView;
     private SelectContactAdapter adapter;
     private IContactsLogic contactsLogic;
+    private ISettingLogic settingLogic;
     private TextView mSelectAll;
     private TextView mSelectCount;
     private int mSelectedContactNum;
@@ -63,7 +74,7 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
     protected void initView() {
         mContext = getApplicationContext();
         mHeaderView = (HeaderView) findViewById(R.id.more_select_contact_header);
-        mHeaderView.title.setText(R.string.more_choose_contact);
+        mHeaderView.title.setText(R.string.more_choose_contact_in_list);
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_close);
         mHeaderView.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
 
@@ -79,6 +90,8 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         contactsLogic.fetchAppContactLst();
         mSelectedContactNum = 0;
         updateSelectedHint(mSelectedContactNum);
+        Intent intent = getIntent();
+        tvAccount = intent.getStringExtra("tvAccount");
     }
 
     @Override
@@ -94,6 +107,7 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
     @Override
     protected void initLogics() {
         contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
+        settingLogic = (ISettingLogic) getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -113,8 +127,35 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         }
     }
 
-    private void sendContacts(){
+    private void sendContacts() {
+        mHeaderView.rightBtn.setClickable(false);
+        Set<ContactsInfo> contacts = adapter.getSelectedContactSet();
+        if (contacts.size() == 0) {
+            return;
+        }
+        settingLogic.sendContact(tvAccount, CaaSUtil.OpCode.SEND_CONTACT, getParam(contacts));
+        mHeaderView.rightBtn.setClickable(true);
+        showToast("正在发送", Toast.LENGTH_SHORT, null);
+    }
 
+    private Map<String, String> getParam(Set<ContactsInfo> contacts) {
+        Map<String, String> params = new HashMap<String, String>();
+        StringBuilder names = new StringBuilder();
+        StringBuilder numbers = new StringBuilder();
+        Iterator<ContactsInfo> iterator = contacts.iterator();
+        while (iterator.hasNext()) {
+            ContactsInfo contact = iterator.next();
+            names.append(contact.getName()).append(";");
+            numbers.append(contact.getPhone()).append(";");
+        }
+        names.deleteCharAt(names.lastIndexOf(";"));
+        numbers.deleteCharAt(numbers.lastIndexOf(";"));
+
+        params.put("Param1", names.toString());
+        params.put("Param2", numbers.toString());
+        params.put("Param3", UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
+
+        return params;
     }
 
     private void updateSelectedHint(int num) {

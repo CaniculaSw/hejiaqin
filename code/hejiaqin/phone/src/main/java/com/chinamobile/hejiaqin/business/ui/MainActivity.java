@@ -21,6 +21,7 @@ public class MainActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingLogic.checkVersion();
+        settingLogic.getDeviceList();
         if (loginLogic.hasLogined()) {
             jumpToMainFragmentActivity();
         } else {
