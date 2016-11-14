@@ -77,6 +77,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     private ISettingLogic settingLogic;
 
+    private boolean isHideCall;
+
     private BasicFragment.BackListener listener = new BasicFragment.BackListener() {
         public void onAction(int actionId, Object obj) {
             switch (actionId) {
@@ -100,6 +102,22 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mImageViews[mDialIndex].setVisibility(View.VISIBLE);
                     mTextViews[mDialIndex].setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
+                    break;
+                case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID:
+                    mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+                    mDialCallImage.setVisibility(View.GONE);
+                    mImageViews[mDialIndex].setVisibility(View.VISIBLE);
+                    mTextViews[mDialIndex].setVisibility(View.VISIBLE);
+                    mDialStatus = DIAL_STATUS_NORMAL;
+                    isHideCall = false;
+                    break;
+                case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID:
+                    mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+                    mDialCallImage.setVisibility(View.GONE);
+                    mImageViews[mDialIndex].setVisibility(View.VISIBLE);
+                    mTextViews[mDialIndex].setVisibility(View.VISIBLE);
+                    mDialStatus = DIAL_STATUS_NORMAL;
+                    isHideCall =true;
                     break;
                 // 显示导航栏
                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID:
@@ -185,6 +203,13 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                         case DIAL_STATUS_NORMAL:
                             mImageViews[mDialIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
                             mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
+                            if(isHideCall)
+                            {
+                                mImageViews[mDialIndex].setVisibility(View.GONE);
+                                mTextViews[mDialIndex].setVisibility(View.GONE);
+                                mDialCallImage.setVisibility(View.VISIBLE);
+                                mDialStatus = DIAL_STATUS_CALL;
+                            }
                             //显示拨号盘
                             msg = new Message();
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID;

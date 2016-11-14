@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
@@ -17,6 +18,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
@@ -50,22 +52,32 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
         CallRecord info = mData.get(position);
         if (info != null) {
             HolderView tHolder = (HolderView) holder;
-            tHolder.itemView.setTag(position);
-            tHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            tHolder.call_record_type_layout.setTag(position);
+            tHolder.call_record_content_layout.setTag(position);
+            tHolder.call_record_time_layout.setTag(position);
+            tHolder.call_record_arrow_layout.setTag(position);
+            tHolder.call_record_type_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = (int) v.getTag();
-                    if (mData.get(position).getContactsInfo() != null) {
-                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
-                        intent.putExtras(bundle);
-                        mContext.startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                        intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
-                        mContext.startActivity(intent);
-                    }
+                    callVideo(v);
+                }
+            });
+            tHolder.call_record_content_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callVideo(v);
+                }
+            });
+            tHolder.call_record_time_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDetail(v);
+                }
+            });
+            tHolder.call_record_arrow_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDetail(v);
                 }
             });
             if (info.getType() == CallRecord.TYPE_VIDEO_INCOMING) {
@@ -97,9 +109,38 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                     }
                 }
             }
-            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerName());
-            tHolder.callRecordNumberTv.setText(info.getPeerNumber());
+            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
+            tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
+        }
+    }
+
+    private void callVideo(View v) {
+        int position = (int) v.getTag();
+        if (mData.get(position).getContactsInfo() != null) {
+            Intent outingIntent = new Intent(mContext, VideoCallActivity.class);
+            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, mData.get(position).getPeerNumber());
+            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mData.get(position).getContactsInfo().getName());
+            mContext.startActivity(outingIntent);
+        } else {
+            Intent outingIntent = new Intent(mContext, VideoCallActivity.class);
+            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, mData.get(position).getPeerNumber());
+            mContext.startActivity(outingIntent);
+        }
+    }
+
+    private void showDetail(View v) {
+        int position = (int) v.getTag();
+        if (mData.get(position).getContactsInfo() != null) {
+            Intent intent = new Intent(mContext, ContactInfoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
+        } else {
+            Intent intent = new Intent(mContext, ContactInfoActivity.class);
+            intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
+            mContext.startActivity(intent);
         }
     }
 
@@ -126,6 +167,10 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
         private TextView callRecordNameTv;
         private TextView callRecordNumberTv;
         private TextView callRecordTimeTv;
+        private LinearLayout call_record_type_layout;
+        private LinearLayout call_record_content_layout;
+        private LinearLayout call_record_time_layout;
+        private LinearLayout call_record_arrow_layout;
 
         public HolderView(View view) {
             super(view);
@@ -133,6 +178,10 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
             callRecordNameTv = (TextView) view.findViewById(R.id.call_record_name_tv);
             callRecordNumberTv = (TextView) view.findViewById(R.id.call_record_number_tv);
             callRecordTimeTv = (TextView) view.findViewById(R.id.call_record_time_tv);
+            call_record_type_layout = (LinearLayout)view.findViewById(R.id.call_record_type_layout);;
+            call_record_content_layout= (LinearLayout)view.findViewById(R.id.call_record_content_layout);;
+            call_record_time_layout= (LinearLayout)view.findViewById(R.id.call_record_time_layout);
+            call_record_arrow_layout = (LinearLayout)view.findViewById(R.id.call_record_arrow_layout);
         }
     }
 }

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -61,6 +62,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     RelativeLayout dialSaveContactLayout;
     LinearLayout dialSaveContactArrowLayout;
+    LinearLayout blankLayout;
 
     LinearLayout inputNumberAboveLine;
     LinearLayout inputNumberLayout;
@@ -143,8 +145,10 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                     //正式代码需要在查询结果后进行判断是否显示
                     if(resultContacts.getContactsInfos()!=null && resultContacts.getContactsInfos().size()>0) {
                         dialSaveContactLayout.setVisibility(View.GONE);
+                        dialContactRecyclerView.setVisibility(View.VISIBLE);
                     }else{
                         dialSaveContactLayout.setVisibility(View.VISIBLE);
+                        dialContactRecyclerView.setVisibility(View.GONE);
                     }
                 }
                 break;
@@ -167,7 +171,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         dialContactRecyclerView = (RecyclerView)view.findViewById(R.id.dial_contact_recycler_view);
         dialSaveContactLayout = (RelativeLayout)view.findViewById(R.id.dial_save_contact_layout);
 
-        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);;
+        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
+        blankLayout = (LinearLayout)view.findViewById(R.id.blank_layout);
         inputNumberAboveLine = (LinearLayout)view.findViewById(R.id.input_number_above_line);
         inputNumberLayout = (LinearLayout)view.findViewById(R.id.input_number_layout);
         inputNumber = (DigitsEditText)view.findViewById(R.id.input_number);
@@ -175,7 +180,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         dialNumberDelIv = (ImageView)view.findViewById(R.id.dial_number_del_iv);
         inputNumberBelowLine = (LinearLayout)view.findViewById(R.id.input_number_below_line);
         digitKeypad = (DialDigitKeypadView)view.findViewById(R.id.digit_keypad);
-        dialSaveContactArrowLayout.setOnClickListener(this);
+        dialSaveContactLayout.setOnClickListener(this);
         digitKeypad.setDigitKeyPressEvent(new BaseDigitKeypadView.DigitKeyPressEvent() {
 
             @Override
@@ -264,11 +269,39 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         callRecordRecyclerView.setAdapter(mCallRecordAdapter);
         callRecordRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         callRecordRecyclerView.setHasFixedSize(true);
-
+        callRecordRecyclerView.addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                hideKeyPad();
+                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
+            }
+        });
         mDialContactAdapter = new DialContactAdapter (getContext());
         dialContactRecyclerView.setAdapter(mDialContactAdapter);
         dialContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dialContactRecyclerView.setHasFixedSize(true);
+        dialContactRecyclerView.addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                hideKeyPad();
+                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
+            }
+        });
+
+        blankLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyPad();
+                if (inputNumber.length() > 0) {
+                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID, null);
+                }else{
+                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
+                }
+            }
+        });
+
     }
 
     private String stringFilter(String str)
@@ -375,13 +408,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                    inputNumber.setCursorVisible(false);
                }
                break;
-           case R.id.dial_save_contact_arrow_layout:
+           case R.id.dial_save_contact_layout:
                // 保存联系人
                if(inputNumber.length()>0) {
                    Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,inputNumber.getText().toString() );
                    getActivity().startActivity(intent);
                }
+               break;
        }
     }
 

@@ -187,7 +187,7 @@ public class VideoOutDialog extends Dialog {
                             public void run() {
                                 VideoOutDialog.this.dismiss();
                             }
-                        }, 2000);
+                        }, 2500);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false,0);
                     }
