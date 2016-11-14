@@ -67,7 +67,7 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
         mHeaderView.title.setText(getString(R.string.more_bind_tv_btn_text));
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
         mHeaderView.backImageView.setClickable(true);
-        adapter = new BindedTVListAdapter(getApplicationContext());
+        adapter = new BindedTVListAdapter(this);
         mBindedTVList.setAdapter(adapter);
     }
 

@@ -20,6 +20,7 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingLogic.checkVersion();
         if (loginLogic.hasLogined()) {
             jumpToMainFragmentActivity();
         } else {
