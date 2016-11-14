@@ -68,16 +68,6 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         mHeaderView.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
 
         mContactListView = (StickyListHeadersListView) findViewById(R.id.list);
-<<<<<<< HEAD
-
-        // 添加搜索框
-//        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
-//                (Context.LAYOUT_INFLATER_SERVICE);
-//        View searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
-//        mContactListView.addHeaderView(searchLayout);
-
-=======
->>>>>>> master
         adapter = new SelectContactAdapter(this, getHandler());
         mContactListView.setAdapter(adapter);
         mSelectCount = (TextView) findViewById(R.id.more_chosen);
