@@ -195,7 +195,6 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
     public void onScanQRCodeSuccess(String result) {
         Log.i(TAG, "result:" + result);
         vibrate();
-//        mQRCodeView.startSpotAndShowRect();
         //TODO finish();
         if (result.length() > 0) {
             settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
@@ -214,10 +213,14 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
 
     @Override
     public void onDecodeQRCodeSuccess(String result) {
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         vibrate();
-        mQRCodeView.startSpotAndShowRect();
-        //TODO finish();
+        if (result.length() > 0) {
+            settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
+            finish();
+        }else {
+            showToast("错误的二维码", Toast.LENGTH_SHORT, null);
+            mQRCodeView.startSpotAndShowRect();
+        }
     }
 
     @Override

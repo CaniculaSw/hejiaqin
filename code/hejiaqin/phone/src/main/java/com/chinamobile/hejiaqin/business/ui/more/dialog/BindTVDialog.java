@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.ui.more.SelectableContactActivity;
 import com.chinamobile.hejiaqin.business.ui.more.InputAcountActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ScanActivity;
+import com.chinamobile.hejiaqin.business.ui.more.SelectContactAndBindActivity;
 
 
 /**
@@ -74,7 +74,7 @@ public class BindTVDialog extends Dialog {
                     break;
                 case R.id.more_bind_tv_dialog_contact:
                     dismiss();
-                    Intent intentChoose = new Intent(mContext, SelectableContactActivity.class);
+                    Intent intentChoose = new Intent(mContext, SelectContactAndBindActivity.class);
                     mContext.startActivity(intentChoose);
                     break;
                 default:

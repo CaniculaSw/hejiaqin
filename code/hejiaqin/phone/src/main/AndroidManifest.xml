@@ -62,6 +62,8 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
 
+    <permission android:name="android.permission.WRITE_APN_SETTINGS" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -109,40 +111,64 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".business.ui.contact.ContactInfoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.ui.contact.ModifyContactActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.ui.contact.ContactSearchActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.ui.contact.InputInfoActivity"
+        <activity
+            android:name=".business.ui.contact.ContactInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.ui.contact.ModifyContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.ui.contact.ContactSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.ui.contact.InputInfoActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.MoreFunActivity"
+        <activity
+            android:name=".business.ui.more.MoreFunActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.ShareAppActivity"
+        <activity
+            android:name=".business.ui.more.ShareAppActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.MessageActivity"
+        <activity
+            android:name=".business.ui.more.MessageActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.AboutActivity"
+        <activity
+            android:name=".business.ui.more.AboutActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.SysMessageDetailActivity"
+        <activity
+            android:name=".business.ui.more.SysMessageDetailActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.UserInfoActivity"
+        <activity
+            android:name=".business.ui.more.UserInfoActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.BindTVBoxActivity"
+        <activity
+            android:name=".business.ui.more.BindTVBoxActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.ScanActivity"
+        <activity
+            android:name=".business.ui.more.ScanActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.InputAcountActivity"
+        <activity
+            android:name=".business.ui.more.InputAcountActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.SelectableContactActivity"
+        <activity
+            android:name=".business.ui.more.SelectableContactActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.login.ResetPasswordFirstStepActivity"
+        <activity
+            android:name=".business.ui.login.ResetPasswordFirstStepActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.FeedBackActivity"
+        <activity
+            android:name=".business.ui.more.FeedBackActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".business.ui.more.ShowContractActivity"
+        <activity
+            android:name=".business.ui.more.ShowContractActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".business.ui.more.SelectContactAndBindActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".business.ui.more.MoreContactSearchActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".business.ui.dial.VideoCallActivity"
             android:launchMode="singleTask"
@@ -152,10 +178,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <service
+            android:name="com.chinamobile.hejiaqin.business.HeService"
             android:enabled="true"
-            android:exported="false"
-            android:name="com.chinamobile.hejiaqin.business.HeService" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.chinamobile.hejiaqin.business.heservice" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.ui.contact.fragment;
+package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,54 +11,37 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
-import com.chinamobile.hejiaqin.business.ui.contact.ContactSearchActivity;
-import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.component.log.Logger;
+import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectContactAndBindAdapter;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
 
 /**
- * 应用联系人列表界面
+ * Created by eshaohu on 16/11/14.
  */
-public class AppContactListFragment extends BasicFragment implements View.OnClickListener {
-    private static final String TAG = "AppContactListFragment";
+public class SelectContactAndBindActivity extends BasicActivity implements View.OnClickListener {
+    private static final String TAG = "SelectContactAndBindActivity";
     private IContactsLogic contactsLogic;
     private StickyListHeadersListView contactListView;
-    private AppContactAdapter adapter;
+    private SelectContactAndBindAdapter adapter;
     private TextView searchText;
     private SideBarView sideBarView;
     private TextView tipText;
 
-    @Override
-    protected void handleFragmentMsg(Message msg) {
-
-    }
 
     @Override
-    protected void handleLogicMsg(Message msg) {
-        switch (msg.what) {
-            case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
-                List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
-                adapter.setData(contactsInfoList);
-                searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
-                break;
-        }
-    }
-
-    @Override
-    protected int getLayoutResId() {
+    protected int getLayoutId() {
         return R.layout.fragment_app_contact_list;
     }
 
     @Override
-    protected void initView(View view) {
-        Context context = getContext();
+    protected void initView() {
+        Context context = this;
 
-        contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
+        contactListView = (StickyListHeadersListView) findViewById(R.id.list);
 
         // 添加搜索框
         LayoutInflater inflater = (LayoutInflater) context.getSystemService
@@ -71,11 +54,11 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
         searchLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
 
         // 添加adapter
-        adapter = new AppContactAdapter(context);
+        adapter = new SelectContactAndBindAdapter(context);
         contactListView.setAdapter(adapter);
 
-        tipText = (TextView) view.findViewById(R.id.tip);
-        sideBarView = (SideBarView) view.findViewById(R.id.sidebar);
+        tipText = (TextView) findViewById(R.id.tip);
+        sideBarView = (SideBarView) findViewById(R.id.sidebar);
         sideBarView.setOnLetterSelectListen(new SideBarView.LetterSelectListener() {
             @Override
             public void onLetterSelected(String letter) {
@@ -92,7 +75,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterChanged(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                Logger.i(TAG, "onLetterChanged: " + letter + "; position: "
+                LogUtil.i(TAG, "onLetterChanged: " + letter + "; position: "
                         + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);
@@ -109,12 +92,29 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
     }
 
     @Override
+    protected void initListener() {
+
+    }
+
+    @Override
     protected void initLogics() {
         contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
-    protected void initData() {
+    protected void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+        switch (msg.what) {
+            case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
+                List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
+                adapter.setData(contactsInfoList);
+                searchText.setText(String.format(this.getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                break;
+        }
+    }
+
+    @Override
+    protected void initDate() {
         contactsLogic.fetchAppContactLst();
     }
 
@@ -135,9 +135,11 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
     }
 
     private void enterSearchView() {
-        Intent intent = new Intent(getContext(), ContactSearchActivity.class);
-        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        Intent intent = new Intent(this, MoreContactSearchActivity.class);
+        intent.putExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
+                , MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
         startActivity(intent);
     }
+
+
 }

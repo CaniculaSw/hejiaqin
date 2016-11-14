@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.more.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.ListAdapter;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.ui.more.SelectableContactActivity;
 import com.customer.framework.ui.AdapterViewHolder;
 import com.customer.framework.utils.LogUtil;
 import com.squareup.picasso.Picasso;
@@ -59,7 +61,8 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
         mViewHolder.getView(R.id.send_contact_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogUtil.d(TAG,"Will jump to select contact activity.");
+                Intent intent = new Intent(mContext, SelectableContactActivity.class);
+                mContext.startActivity(intent);
             }
         });
 
