@@ -45,6 +45,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
                 searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                sideBarView.setVisibility(adapter.isEmpty() ? View.GONE : View.VISIBLE);
                 break;
         }
     }
@@ -76,6 +77,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
 
         tipText = (TextView) view.findViewById(R.id.tip);
         sideBarView = (SideBarView) view.findViewById(R.id.sidebar);
+        sideBarView.setVisibility(View.GONE);
         sideBarView.setOnLetterSelectListen(new SideBarView.LetterSelectListener() {
             @Override
             public void onLetterSelected(String letter) {
