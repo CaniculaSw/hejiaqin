@@ -10,22 +10,29 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.LogUtil;
+import android.os.Handler;
 
 public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
     private ISettingLogic settingLogic;
     private static final String TAG = "MainActivity";
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        settingLogic.checkVersion();
-        if (loginLogic.hasLogined()) {
-            jumpToMainFragmentActivity();
-        } else {
-            jumpToLoginActivity();
-        }
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                settingLogic.checkVersion();
+                if (loginLogic.hasLogined()) {
+                    jumpToMainFragmentActivity();
+                } else {
+                    jumpToLoginActivity();
+                }
+            }
+        }, 2000);
     }
 
     @Override
