@@ -99,7 +99,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     private void handleSendContact(TextMessage msg) {
         switch (getOpCode(msg.getContent())) {
             case CaaSUtil.OpCode.SEND_CONTACT:
-                LogUtil.d(TAG, "Will send the SEND_CONTACT message to UI");
+                LogUtil.d(TAG, "Will send the SEND_CONTACT_REQUEST message to UI");
                 sendMessage(BussinessConstants.SettingMsgID.SEND_CONTACT_REQUEST, msg);
                 break;
             case CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS:
