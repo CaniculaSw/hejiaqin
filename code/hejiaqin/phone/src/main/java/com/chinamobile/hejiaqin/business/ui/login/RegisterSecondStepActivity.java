@@ -13,7 +13,6 @@ import android.widget.EditText;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
@@ -28,7 +27,7 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
 
     private Button registerActionBtn;
     private ILoginLogic loginLogic;
-    private IVoipLogic voipLogic;
+//    private IVoipLogic voipLogic;
     private RegisterSecondStepInfo registerSecondStepInfo;
 
     private EditText passwordEt;
@@ -40,7 +39,7 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) this.getLogicByInterfaceClass(ILoginLogic.class);
-        voipLogic = (IVoipLogic) this.getLogicByInterfaceClass(IVoipLogic.class);
+//        voipLogic = (IVoipLogic) this.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
