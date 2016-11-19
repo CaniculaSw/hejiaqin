@@ -145,6 +145,9 @@
             android:name=".business.ui.more.BindTVBoxActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".business.ui.more.BindTVBoxFirstActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".business.ui.more.ScanActivity"
             android:screenOrientation="portrait"></activity>
         <activity

@@ -130,6 +130,14 @@ public class UserInfoCacheManager {
         }
     }
 
+    public static boolean isBinded(Context context){
+        UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_DEVICE_KEY);
+        if (userList == null || userList.getUsers().size() <= 0){
+            return false;
+        }
+        return true;
+    }
+
     public static boolean isBindedApp(Context context, String num) {
         UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_APP_KEY);
         List<UserInfo> userInfoList = userList.getUsers();
@@ -217,7 +225,7 @@ public class UserInfoCacheManager {
     }
 
     public static void clearUserInfo(Context context) {
-        String[] keys = new String[]{BussinessConstants.Login.USER_INFO_KEY, BussinessConstants.Login.TOKEN_DATE};
+        String[] keys = new String[]{BussinessConstants.Login.USER_INFO_KEY, BussinessConstants.Login.TOKEN_DATE,BussinessConstants.Setting.BINDED_DEVICE_KEY};
         StorageMgr.getInstance().getMemStorage().remove(keys);
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }

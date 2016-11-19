@@ -184,6 +184,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             public void onSuccessful(Object invoker, Object obj) {
                 UserList userList = new UserList();
                 userList.setUsers((List<UserInfo>) obj);
+                LogUtil.i(TAG,"obj size "+ ((List<UserInfo>) obj).size());
                 UserInfoCacheManager.saveBindDeviceToLoacl(getContext(), userList);
                 UserInfoCacheManager.saveBindDeviceToMem(getContext(), userList);
                 SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);

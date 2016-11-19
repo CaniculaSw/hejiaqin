@@ -2,6 +2,7 @@ package com.chinamobile.hejiaqin.business.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
@@ -10,7 +11,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.LogUtil;
-import android.os.Handler;
 
 public class MainActivity extends BasicActivity {
 
@@ -26,7 +26,6 @@ public class MainActivity extends BasicActivity {
             @Override
             public void run() {
                 settingLogic.checkVersion();
-                settingLogic.getDeviceList();
                 if (loginLogic.hasLogined()) {
                     jumpToMainFragmentActivity();
                 } else {

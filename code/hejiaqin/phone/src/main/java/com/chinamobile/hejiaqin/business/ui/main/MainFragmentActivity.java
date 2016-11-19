@@ -182,6 +182,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             LogUtil.d(TAG, "autoLogin");
             mVoipLogic.autoLogin();
         }
+        settingLogic.getDeviceList();
     }
 
     @Override
