@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:text="@string/more_choose_contact"
             android:textColor="@color/more_black_404040"
-            android:textSize="32px" />
+            android:textSize="16sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         android:paddingLeft="16sp"
         android:text="@string/more_my_tv_box"
         android:textColor="@color/more_black_404040"
-        android:textSize="28px" />
+        android:textSize="14sp" />
 
     <ListView
         android:id="@+id/binded_tv_list"
