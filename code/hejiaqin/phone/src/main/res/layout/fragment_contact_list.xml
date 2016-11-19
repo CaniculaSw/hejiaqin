@@ -20,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/app_contact_logo"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:src="@mipmap/logo_small" />
