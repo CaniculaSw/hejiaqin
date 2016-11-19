@@ -9,7 +9,9 @@ import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
+import com.chinamobile.hejiaqin.business.model.more.UserList;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetBindListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
@@ -28,6 +30,7 @@ import com.huawei.rcs.message.MessageConversation;
 import com.huawei.rcs.message.MessagingApi;
 import com.huawei.rcs.message.TextMessage;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,9 +72,9 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         @Override
         public void onReceive(Context context, Intent intent) {
             Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
-
+            LogUtil.d(TAG, "Message status change to: " + msg.getStatus());
             if (null != msg) {
-                switch (msg.getStatus()){
+                switch (msg.getStatus()) {
                     case Message.STATUS_DELIVERY_OK:
                         break;
                 }
@@ -86,7 +89,29 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             case CaaSUtil.CmdType.BIND:
                 handleBindRequest(msg);
                 break;
+            case CaaSUtil.CmdType.SEND_CONTACT:
+                handleSendContact(msg);
+                break;
 
+        }
+    }
+
+    private void handleSendContact(TextMessage msg) {
+        switch (getOpCode(msg.getContent())) {
+            case CaaSUtil.OpCode.SEND_CONTACT:
+                LogUtil.d(TAG, "Will send the SEND_CONTACT_REQUEST message to UI");
+                sendMessage(BussinessConstants.SettingMsgID.SEND_CONTACT_REQUEST, msg);
+                break;
+            case CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS:
+                LogUtil.d(TAG, "Will send the SEND_CONTACT_RESPOND_SUCCESS message to UI");
+                sendMessage(BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS, msg);
+                break;
+            case CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE:
+                LogUtil.d(TAG, "Will send the SEND_CONTACT_RESPOND_DENIDE message to UI");
+                sendMessage(BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_DENIED, msg);
+                break;
+            default:
+                break;
         }
     }
 
@@ -157,6 +182,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         new SettingHttpmanager(getContext()).getDeviceList(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                UserList userList = new UserList();
+                userList.setUsers((List<UserInfo>) obj);
+                LogUtil.i(TAG,"obj size "+ ((List<UserInfo>) obj).size());
+                UserInfoCacheManager.saveBindDeviceToLoacl(getContext(), userList);
+                UserInfoCacheManager.saveBindDeviceToMem(getContext(), userList);
                 SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);
             }
 
@@ -171,12 +201,17 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             }
         });
     }
+
     @Override
     public void getBindList() {
         final GetBindListReq reqBody = new GetBindListReq();
         new SettingHttpmanager(getContext()).getBindList(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                UserList userList = new UserList();
+                userList.setUsers((List<UserInfo>) obj);
+                UserInfoCacheManager.saveBindAppToLoacl(getContext(), userList);
+                UserInfoCacheManager.saveBindAppToMem(getContext(), userList);
                 SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_BIND_LIST_SUCCESSFUL, obj);
             }
 
@@ -238,17 +273,17 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     @Override
     public void saveBindRequest(final TextMessage message) {
         SaveBindRequest req = new SaveBindRequest();
-        req.setPhone(XmlParseUtil.getElemString(message.getContent(),"Phone"));
+        req.setPhone(XmlParseUtil.getElemString(message.getContent(), "Phone"));
         new SettingHttpmanager(getContext()).saveBindRequest(null, req, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 LogUtil.d(TAG, "Save the bind request success");
-                sendMessage(BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS,message);
+                sendMessage(BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS, message);
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LogUtil.i(TAG, "Save failed");
+                LogUtil.d(TAG, "Save failed");
             }
 
             @Override
@@ -266,6 +301,12 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     @Override
     public void sendBindResult(String toNumber, String opCode) {
         sendTextMessage(toNumber, CaaSUtil.CmdType.BIND, opCode, null);
+    }
+
+    @Override
+    public void sendContact(String toNumber, String opCode, Map<String, String> params) {
+        LogUtil.i(TAG, "send contact to:" + toNumber);
+        sendTextMessage(toNumber, CaaSUtil.CmdType.SEND_CONTACT, "1", opCode, null, params);
     }
 
     private void sendTextMessage(String toNumber, String cmdType, String opCode, String phone) {
@@ -338,7 +379,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     public String getCmdType(String toParse) {
         return XmlParseUtil.getElemString(toParse, "CmdType");
     }
-    public String getPhone(String toParse){
+
+    public String getPhone(String toParse) {
         return XmlParseUtil.getElemString(toParse, "Phone");
     }
 }

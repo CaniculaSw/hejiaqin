@@ -83,9 +83,6 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {
-            return;
-        }
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case PhotoManage.IMAGE_CODE:
@@ -93,6 +90,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
                 break;
             case PhotoManage.CAMERA_CODE:
                 if (CommonUtils.hasSdcard()) {
+                    LogUtil.i(TAG,"will launch the camera.");
                     File tempFile = new File(Environment.getExternalStorageDirectory() + BussinessConstants.Setting.APP_SAVE_PATH + BussinessConstants.Setting.APP_IMG_DEFAULT_NAME);
                     PhotoManage.getInstance(this).startPhotoZoom(Uri.fromFile(tempFile));
                 } else {

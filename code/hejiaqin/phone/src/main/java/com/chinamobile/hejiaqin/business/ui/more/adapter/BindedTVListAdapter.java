@@ -62,6 +62,7 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, SelectableContactActivity.class);
+                intent.putExtra("tvAccount",mBindedTV.get(position).getTvAccount());
                 mContext.startActivity(intent);
             }
         });

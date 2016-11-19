@@ -19,6 +19,9 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.model.more.UserList;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
@@ -28,6 +31,8 @@ import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragmentActivity;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
+
+import java.util.List;
 
 /**
  * desc:
@@ -116,6 +121,21 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.SettingMsgID.BIND_DENIED:
                     LogUtil.i(TAG,"对方不同意你的绑定请求");
                     showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
+                    break;
+                case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_DENIED:
+                    showToast("发送联系人被拒绝",Toast.LENGTH_LONG,null);
+                    break;
+                case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
+                    showToast("发送联系人成功",Toast.LENGTH_LONG,null);
+                    break;
+                case BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL:
+                    if (msg.obj != null) {
+                        UserList userList = new UserList();
+                        userList.setUsers((List<UserInfo>) msg.obj);
+                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(),userList);
+                        UserInfoCacheManager.saveBindDeviceToMem(getApplicationContext(),userList);
+                    }
+                    break;
                 default:
                     break;
             }

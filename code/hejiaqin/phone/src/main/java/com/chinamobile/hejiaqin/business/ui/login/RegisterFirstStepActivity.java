@@ -70,13 +70,13 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
         //如果上次计数还没有结束，则重新进入页面后继续
-        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
-            sendVerifyCodeTv.setEnabled(false);
-            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
-            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
-            countDownTimer.start();
-            continueCountDown = true;
-        }
+//        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
+//            sendVerifyCodeTv.setEnabled(false);
+//            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
+//            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
+//            countDownTimer.start();
+//            continueCountDown = true;
+//        }
     }
 
     @Override

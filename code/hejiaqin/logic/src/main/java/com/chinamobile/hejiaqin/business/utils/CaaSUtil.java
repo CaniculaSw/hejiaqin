@@ -27,6 +27,9 @@ public class CaaSUtil {
         String DEBIND_SUCCESS = "102";//TV->Phone
         String DEBIND_FAILED = "103";//TV->Phone
         String BIND_UNAVALIABLE = "104";//TV->Phone
+        String SEND_CONTACT = "0";
+        String SEND_CONTACT_RESPOND_SUCCESS = "1";
+        String SEND_CONTACT_RESPOND_DENIDE = "2";
     }
 
     public static StringBuilder setMainBody(String cmdType, String seq, String opCode) {
@@ -70,6 +73,7 @@ public class CaaSUtil {
         }
         content.append("</MsgBody>");
         content.append("</ControlMsg>");
+        LogUtil.d(TAG, "Message body: " + content.toString());
         return content.toString();
     }
 }

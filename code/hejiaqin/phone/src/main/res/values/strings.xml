@@ -168,6 +168,7 @@
     <string name="more_send_the_contact">发送联系人</string>
     <string name="more_add_contact">机顶盒添加联系人, 轻松搞定</string>
     <string name="more_bind_tv_btn_text">TV协助</string>
+    <string name="more_bind_tv_btn_text_no_binded">绑定机顶盒</string>
     <string name="more_bind_tv_dialog_choose_bind_method">请选择一种绑定机顶盒的方式</string>
     <string name="more_bind_tv_dialog_by_scan">扫一扫</string>
     <string name="more_album">相册</string>
@@ -177,6 +178,7 @@
     <string name="more_scan_hint">将取景框对准二维码, 即可自动扫描</string>
     <string name="more_input_account">手动输入账号</string>
     <string name="more_choose_contact">选择机顶盒</string>
+    <string name="more_choose_contact_in_list">选择联系人</string>
     <string name="more_my_tv_box">我的机顶盒</string>
     <string name="send_contact">发送联系人</string>
     <string name="remote_monitor">TV远程看护</string>

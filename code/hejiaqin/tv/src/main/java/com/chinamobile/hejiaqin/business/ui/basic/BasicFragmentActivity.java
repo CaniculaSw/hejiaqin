@@ -16,10 +16,17 @@ import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
+import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
+import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog;
+import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.chinamobile.hejiaqin.tv.R;
@@ -27,10 +34,11 @@ import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragmentActivity;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.PermissionsChecker;
+import com.customer.framework.utils.XmlParseUtil;
 import com.huawei.rcs.message.TextMessage;
-import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * desc:
@@ -49,6 +57,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
 
     protected boolean networkConnected = true;
 
+    private ISettingLogic settingLogic;
     BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -113,6 +122,30 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.SettingMsgID.BIND_REQUEST:
                     TextMessage message = (TextMessage) msg.obj;
                     showBindRequest(message);
+                    break;
+                case BussinessConstants.SettingMsgID.SEND_CONTACT_REQUEST:
+                    settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+                    TextMessage req = (TextMessage) msg.obj;
+//                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(), XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
+//                        settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
+//                        break;
+//                    }
+                    IContactsLogic contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
+                    String names = XmlParseUtil.getElemString(req.getContent(), "Param1");
+                    String numbers = XmlParseUtil.getElemString(req.getContent(), "Param2");
+                    String nameList[] = names.split(";");
+                    String numList[] = numbers.split(";");
+//                    Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getResources().getResourcePackageName(R.drawable.contact_photo_default) + "/" + getResources().getResourceTypeName(R.drawable.contact_photo_default) + "/" + getResources().getResourceEntryName(R.drawable.contact_photo_default));
+                    List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
+                    for (int i = 0; i < nameList.length; i++) {
+                        ContactsInfo contactsInfo = new ContactsInfo();
+                        NumberInfo numberInfo = new NumberInfo();
+                        numberInfo.setNumber(numList[i]);
+                        contactsInfo.setName(nameList[i]);
+                        contactsInfo.addNumber(numberInfo);
+                    }
+                    contactsLogic.batchAddAppContacts(contactsInfoList);
+                    settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     break;
                 case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
                     if (msg.obj != null) {
@@ -227,8 +260,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     }
 
     private void showBindRequest(TextMessage message) {
-        Intent intent = new Intent(BasicFragmentActivity.this,BindRequestDialog.class);
-        intent.putExtra("message",message);
+        Intent intent = new Intent(BasicFragmentActivity.this, BindRequestDialog.class);
+        intent.putExtra("message", message);
         startActivity(intent);
     }
 }

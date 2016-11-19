@@ -128,7 +128,6 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
         switch (v.getId()) {
             case R.id.contact_search_layout:
                 // TODO
-                LogUtil.d(TAG, "start search");
                 enterSearchView();
                 break;
         }
