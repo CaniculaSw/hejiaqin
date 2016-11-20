@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -99,8 +101,7 @@ public class CallRecordFragment extends BasicFragment{
         headerView.title.setText(R.string.call_record_title);
 
         deleteLayout =(LinearLayout)view.findViewById(R.id.delete_all_layout);
-        deleteLayout.setOnClickListener(new View.OnClickListener()
-        {
+        deleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mVoipLogic.delAllCallRecord();
@@ -112,24 +113,9 @@ public class CallRecordFragment extends BasicFragment{
         delRecordLayout = view.findViewById(R.id.del_record_layout);
         recordCancelLayout = view.findViewById(R.id.record_cancel_layout);
 
-        mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic,new CallRecordAdapter.onClickListen()
-        {
-            public void onClick(CallRecord info)
-            {
-                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic);
-            }
-
-            @Override
-            public void onLongClick(int position) {
-                CallRecordFragment.this.selection = position;
-                showMoreView();
-                moreView.findViewById(R.id.record_detail).requestFocus();
-            }
-        });
-        recordDetail.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
+        recordDetail.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 if (mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo() != null) {
                     ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo());
                     FragmentMgr.getInstance().showRecentFragment(fragment);
@@ -155,6 +141,23 @@ public class CallRecordFragment extends BasicFragment{
         });
 
         callRecordListView.setAdapter(mCallRecordAdapter);
+        callRecordListView.setItemsCanFocus(true);
+        callRecordListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        callRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VideoOutDialog.show(getActivity(), mCallRecordAdapter.getData(position).getPeerNumber(), mVoipLogic, mContactsLogic);
+            }
+        });
+        callRecordListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CallRecordFragment.this.selection = position;
+                showMoreView();
+                moreView.findViewById(R.id.record_detail).requestFocus();
+                return true;
+            }
+        });
         FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
     }
 
