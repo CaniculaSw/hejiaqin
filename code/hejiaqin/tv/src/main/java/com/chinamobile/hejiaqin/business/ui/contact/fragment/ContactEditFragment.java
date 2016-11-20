@@ -11,6 +11,7 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
@@ -29,15 +30,17 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
     private View nameView;
     private EditText nameText;
     String newName;
+    String oldName;
 
     private View numberView;
     private EditText numberText;
     String newNumber;
-
+    String oldNumber;
 
     /**
      * 当前支持两种模式:新增联系人和修改联系人;
-     * 默认为新增联系人
+     * 默认为新增联系人.
+     * 新增联系人包括纯新增和拨号记录中过来的新增,不同处表现在是否携带号码
      */
     private boolean addContactMode = true;
 
@@ -78,7 +81,22 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void handleLogicMsg(Message msg) {
-
+        switch (msg.what) {
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_add_contact_success_toast);
+                FragmentMgr.getInstance().finishContactFragment(this);
+                break;
+            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_add_contact_failed_toast);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_success_toast);
+                FragmentMgr.getInstance().finishContactFragment(this);
+                break;
+            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
+                showToast(R.string.contact_info_edit_contact_failed_toast);
+                break;
+        }
     }
 
     @Override
@@ -100,7 +118,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         headView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                headImg.setBorderColorResource(hasFocus? R.color.contact_info_head_select: R.color.white);
+                headImg.setBorderColorResource(hasFocus ? R.color.contact_info_head_select : R.color.white);
             }
         });
 
@@ -143,19 +161,32 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         PhotoManage.getInstance(getContext()).setPhotoListener(mPhotoChangeListener);
 
         addContactMode = (null == editContactsInfo);
-        if (!addContactMode) {
-            nameText.setText(editContactsInfo.getName());
-            numberText.setText(editContactsInfo.getPhone());
+        // 新增联系人
+        if (addContactMode) {
+            // 添加带号码的陌生人
+            if (inputNumber != null) {
+                numberText.setText(inputNumber);
+                oldNumber = inputNumber;
+            }
+            // 纯添加联系人
+            else {
+
+            }
+        }
+        // 编辑联系人
+        else {
+            oldName = editContactsInfo.getName();
+            oldNumber = editContactsInfo.getPhone();
+            nameText.setText(oldName);
+            numberText.setText(oldNumber);
             Picasso.with(getContext())
                     .load(editContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(headImg);
-        } else if (inputNumber != null) {
-            numberText.setText(inputNumber);
-            newNumber = inputNumber;
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -190,6 +221,11 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
     }
 
     private void doClickSubmit() {
+        // 获取新的
+        newName = nameText.getText().toString();
+        newNumber = numberText.getText().toString();
+
+        // 添加联系人
         if (addContactMode) {
             if (StringUtil.isNullOrEmpty(newName)) {
                 // TODO
@@ -203,14 +239,18 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 return;
             }
             contactsLogic.addAppContact(newName, newNumber, newPhotoName);
-        } else {
-            if (StringUtil.isNullOrEmpty(newName) && StringUtil.isNullOrEmpty(newNumber)
-                    && StringUtil.isNullOrEmpty(newPhotoName)) {
-                return;
-            }
+        }
+        // 更新联系人
+        else {
+            boolean isNameValidAndChanged = !StringUtil.isNullOrEmpty(newName)
+                    && !newName.equals(oldName);
+            boolean isNumberValidAndChanged = !StringUtil.isNullOrEmpty(newNumber)
+                    && !newNumber.equals(oldNumber);
 
-            contactsLogic.updateAppContact(editContactsInfo.getContactId()
-                    , newName, newNumber, newPhotoName);
+            if (isNameValidAndChanged || isNumberValidAndChanged) {
+                contactsLogic.updateAppContact(editContactsInfo.getContactId()
+                        , newName, newNumber, newPhotoName);
+            }
         }
     }
 
