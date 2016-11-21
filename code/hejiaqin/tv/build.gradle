@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.sichuan.chinamobile.android.hejiaqin.tv"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 15
         versionCode 1
         versionName "V1.0"
     }
@@ -17,10 +17,18 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             buildConfigField "int", "LOG_LEVEL", "2"
         }
     }
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include 'x86'
+//            universalApk false
+//        }
+//    }
 }
 
 dependencies {

@@ -1,11 +1,15 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.ContactsContract;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
@@ -20,7 +25,11 @@ import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.DialNumberDialog;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
+import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
@@ -35,6 +44,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private LayoutInflater inflater;
 
     private TextView mContactNameText;
+    private TextView mContactNumberText;
     private CircleImageView mContactHeadImg;
     private View contactMoreView;
     private View strangerMoreView;
@@ -48,6 +58,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private boolean isStranger = false;
 
     private IContactsLogic contactsLogic;
+    private IVoipLogic voipLogic;
 
     public static ContactInfoFragment newInstance(String contactNumber) {
         ContactInfoFragment fragment = new ContactInfoFragment();
@@ -78,6 +89,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 break;
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_add_contact_failed_toast);
+                break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_del_contact_success_toast);
                 FragmentMgr.getInstance().finishContactFragment(this);
@@ -87,6 +99,13 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_success_toast);
+                ContactsInfo newContactsInfo = (ContactsInfo) msg.obj;
+                if (null == newContactsInfo) {
+                    return;
+                }
+
+                this.mContactsInfo = newContactsInfo;
+                showViews();
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_failed_toast);
@@ -114,6 +133,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     @Override
     protected void initLogics() {
         contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
+        voipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -123,6 +143,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
         // 联系人姓名
         mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
+        mContactNumberText = (TextView) view.findViewById(R.id.contact_number_text);
         // 联系人头像
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
@@ -150,7 +171,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         super.onResume();
         FocusManager.getInstance().requestFocus(dialCallBtn);
     }
-    
+
     @Override
     protected void initData() {
         Bundle argBundle = getArguments();
@@ -175,7 +196,17 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             isStranger = true;
         }
 
+        showViews();
+    }
+
+    private void showViews() {
         mContactNameText.setText(mContactsInfo.getName());
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (null != numberInfoList && !numberInfoList.isEmpty()) {
+            NumberInfo numberInfo = numberInfoList.get(0);
+            mContactNumberText.setText(numberInfo.getNumber());
+        }
+
         if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
             Picasso.with(getContext())
                     .load(mContactsInfo.getPhotoSm())
@@ -183,8 +214,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
 
-        // contactsLogic.queryContactCallRecords(mContactsInfo);
-        setDialInfo(genDialInfoGroup());
+        contactsLogic.queryContactCallRecords(mContactsInfo);
+//        setDialInfo(genDialInfoGroup());
         refreshView();
     }
 
@@ -243,6 +274,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             case R.id.stranger_cancel_btn:
                 dismissMoreView();
                 break;
+            case R.id.dial_call_btn:
+                startVideoCall();
+                break;
         }
     }
 
@@ -269,6 +303,47 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         dismissMoreView();
     }
 
+
+    private void startVideoCall() {
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (numberInfoList.isEmpty()) {
+            Logger.w(TAG, "startVideoCall, no number info.");
+            return;
+        }
+
+        if (numberInfoList.size() > 1) {
+            showDialNumberDialog();
+            return;
+        }
+
+
+        NumberInfo numberInfo = numberInfoList.get(0);
+        VideoOutDialog.show(getContext(), numberInfo.getNumber(), voipLogic, contactsLogic);
+
+    }
+
+
+    private void showDialNumberDialog() {
+        final DialNumberDialog dialNumberDialog = new DialNumberDialog(getContext(), R.style.CalendarDialog
+                , mContactsInfo, voipLogic, contactsLogic);
+        Window window = dialNumberDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+        dialNumberDialog.setCancelable(true);
+        dialNumberDialog.show();
+
+
+        dialNumberDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialNumberDialog.dismiss();
+            }
+        });
+    }
 
     public void setContactsInfo(ContactsInfo contactsInfo) {
         mContactsInfo = contactsInfo;
