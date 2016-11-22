@@ -20,6 +20,7 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
@@ -126,10 +127,10 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_REQUEST:
                     settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
                     TextMessage req = (TextMessage) msg.obj;
-//                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(), XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
-//                        settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
-//                        break;
-//                    }
+                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(), XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
+                        settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
+                        break;
+                    }
                     IContactsLogic contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
                     String names = XmlParseUtil.getElemString(req.getContent(), "Param1");
                     String numbers = XmlParseUtil.getElemString(req.getContent(), "Param2");
