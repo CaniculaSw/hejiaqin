@@ -18,6 +18,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
+import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
