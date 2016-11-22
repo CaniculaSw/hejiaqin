@@ -151,17 +151,17 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         dialCallBtn = view.findViewById(R.id.dial_call_btn);
         view.findViewById(R.id.dial_call_layout).setOnClickListener(this);
 
-        view.findViewById(R.id.dial_more_btn).setOnClickListener(this);
-        view.findViewById(R.id.dial_clear_btn).setOnClickListener(this);
+        view.findViewById(R.id.dial_more_layout).setOnClickListener(this);
+        view.findViewById(R.id.dial_clear_layout).setOnClickListener(this);
 
         contactMoreView = view.findViewById(R.id.contact_more_layout);
-        view.findViewById(R.id.edit_contact_btn).setOnClickListener(this);
-        view.findViewById(R.id.del_contact_btn).setOnClickListener(this);
-        view.findViewById(R.id.contact_cancel_btn).setOnClickListener(this);
+        view.findViewById(R.id.edit_contact_layout).setOnClickListener(this);
+        view.findViewById(R.id.del_contact_layout).setOnClickListener(this);
+        view.findViewById(R.id.contact_cancel_layout).setOnClickListener(this);
 
         strangerMoreView = view.findViewById(R.id.stranger_more_layout);
-        view.findViewById(R.id.add_contact_btn).setOnClickListener(this);
-        view.findViewById(R.id.stranger_cancel_btn).setOnClickListener(this);
+        view.findViewById(R.id.add_contact_layout).setOnClickListener(this);
+        view.findViewById(R.id.stranger_cancel_layout).setOnClickListener(this);
 
         mDialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
     }
@@ -249,29 +249,29 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             case R.id.back_iv:
                 FragmentMgr.getInstance().finishContactFragment(this);
                 break;
-            case R.id.dial_more_btn:
+            case R.id.dial_more_layout:
                 if (isStranger) {
                     showStrangerMoreView();
                 } else {
                     showContactMoreView();
                 }
                 break;
-            case R.id.dial_clear_btn:
+            case R.id.dial_clear_layout:
                 doDelCallRecords();
                 break;
-            case R.id.edit_contact_btn:
+            case R.id.edit_contact_layout:
                 doEditContact();
                 break;
-            case R.id.del_contact_btn:
+            case R.id.del_contact_layout:
                 doDelContact();
                 break;
-            case R.id.contact_cancel_btn:
+            case R.id.contact_cancel_layout:
                 dismissMoreView();
                 break;
-            case R.id.add_contact_btn:
+            case R.id.add_contact_layout:
                 doAddContact();
                 break;
-            case R.id.stranger_cancel_btn:
+            case R.id.stranger_cancel_layout:
                 dismissMoreView();
                 break;
             case R.id.dial_call_layout:

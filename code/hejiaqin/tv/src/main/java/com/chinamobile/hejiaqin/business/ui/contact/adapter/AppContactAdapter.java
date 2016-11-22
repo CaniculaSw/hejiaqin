@@ -65,6 +65,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
             convertView = inflater.inflate(R.layout.adapter_contact_app_view, parent, false);
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
             holder.image = (CircleImageView) convertView.findViewById(R.id.contact_photo_img);
+            holder.layoutView = convertView.findViewById(R.id.contact_info_layout);
             holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
@@ -85,7 +86,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
                 .placeholder(R.drawable.contact_photo_default)
                 .error(R.drawable.contact_photo_default).into(holder.image);
 
-        holder.convertView.setOnClickListener(new View.OnClickListener() {
+        holder.layoutView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(mContext, ContactInfoActivity.class);
@@ -142,6 +143,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
     class ViewHolder {
         TextView text;
         CircleImageView image;
+        View layoutView;
         View convertView;
     }
 
