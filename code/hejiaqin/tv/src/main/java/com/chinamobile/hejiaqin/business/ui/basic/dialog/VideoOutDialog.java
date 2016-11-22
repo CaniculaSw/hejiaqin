@@ -169,6 +169,7 @@ public class VideoOutDialog extends Dialog {
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
                 Intent intentTalking = new Intent(getContext(), VideoCallActivity.class);
                 mContext.startActivity(intentTalking);
+                dismiss();
                 break;
             case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
                 if (msg.obj != null) {

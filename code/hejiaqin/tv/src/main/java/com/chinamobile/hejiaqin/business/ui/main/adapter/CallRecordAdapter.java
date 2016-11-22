@@ -152,8 +152,8 @@ public class CallRecordAdapter extends BaseAdapter {
                     }
                 }
             }
-            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerName());
-            tHolder.callRecordNumberTv.setText(info.getPeerNumber());
+            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
+            tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
         return convertView;
