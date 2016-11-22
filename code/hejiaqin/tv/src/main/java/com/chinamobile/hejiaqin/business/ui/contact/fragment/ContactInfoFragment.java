@@ -149,7 +149,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
 
         dialCallBtn = view.findViewById(R.id.dial_call_btn);
-        dialCallBtn.setOnClickListener(this);
+        view.findViewById(R.id.dial_call_layout).setOnClickListener(this);
 
         view.findViewById(R.id.dial_more_btn).setOnClickListener(this);
         view.findViewById(R.id.dial_clear_btn).setOnClickListener(this);
@@ -274,7 +274,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             case R.id.stranger_cancel_btn:
                 dismissMoreView();
                 break;
-            case R.id.dial_call_btn:
+            case R.id.dial_call_layout:
                 startVideoCall();
                 break;
         }

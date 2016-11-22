@@ -65,7 +65,7 @@ public class SearchUnit implements Serializable {
     }
 
     private String hightMatchedText() {
-        String hightMatchedText = new String(this.originalText);
+        String hightMatchedText = (null == this.originalText ? "" : new String(this.originalText));
 
         StringBuffer matchedTextBuffer = new StringBuffer();
         matchedTextBuffer.append("<font color='#37c972'>").append(matchedText).append("</font>");

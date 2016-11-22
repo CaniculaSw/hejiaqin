@@ -143,7 +143,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         });
 
         // 保存按钮
-        view.findViewById(R.id.contact_info_save_btn).setOnClickListener(this);
+        view.findViewById(R.id.contact_info_save_layout).setOnClickListener(this);
 
     }
 
@@ -209,7 +209,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             case R.id.contact_head_layout:
                 doClickHeadLayout();
                 break;
-            case R.id.contact_info_save_btn:
+            case R.id.contact_info_save_layout:
                 doClickSubmit();
                 break;
         }
