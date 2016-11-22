@@ -175,7 +175,7 @@ public abstract class BasicActivity extends BaseActivity {
                     String nameList[] = names.split(";");
                     String numList[] = numbers.split(";");
                     for (int i = 0; i < nameList.length; i++) {
-                        contactsLogic.addAppContact(nameList[i], numList[i], "");
+                        contactsLogic.addAppContact(nameList[i],numList[i],null);
                     }
                     settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     break;
