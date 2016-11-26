@@ -100,6 +100,7 @@ public abstract class BasicActivity extends BaseActivity {
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
+        ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)).setIsTv(true);
     }
 
     @TargetApi(23)

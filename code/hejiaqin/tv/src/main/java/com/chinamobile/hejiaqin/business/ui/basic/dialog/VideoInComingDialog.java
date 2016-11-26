@@ -205,6 +205,7 @@ public class VideoInComingDialog extends Dialog {
                 Intent intentTalking = new Intent(getContext(), VideoCallActivity.class);
                 intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING,true);
                 mContext.startActivity(intentTalking);
+                dismiss();
                 break;
             case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
                 if (msg.obj != null) {

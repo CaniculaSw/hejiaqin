@@ -25,11 +25,13 @@ public class CallRecordAdapter extends BaseAdapter {
     private Context mContext;
     private IContactsLogic mContactsLogic;
     private List<CallRecord> mData;
+    private onClickListen mListen;
 
-    public CallRecordAdapter(Context context, IContactsLogic contactsLogic) {
+    public CallRecordAdapter(Context context, IContactsLogic contactsLogic,onClickListen listen) {
         this.mContext = context;
         this.mContactsLogic = contactsLogic;
         mData = new ArrayList<CallRecord>();
+        this.mListen = listen;
     }
 
     public void refreshData(List<CallRecord> data) {
@@ -96,13 +98,32 @@ public class CallRecordAdapter extends BaseAdapter {
             HolderView tHolder = null;
             if (convertView == null) {
 
-                convertView = LayoutInflater.from(this.mContext).inflate(R.layout.item_call_record, null);
+                convertView = LayoutInflater.from(this.mContext).inflate(R.layout.item_call_record, parent, false);
                 tHolder = new HolderView(convertView);
                 convertView.setTag(tHolder);
 
             } else {
                 tHolder = (HolderView) convertView.getTag();
             }
+
+            tHolder.itemView.setTag(position);
+            tHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = (int) v.getTag();
+                    mListen.onClick(mData.get(position));
+                }
+            });
+            tHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = (int) v.getTag();
+                    mListen.onLongClick(position);
+                    return true;
+                }
+            });
+
             if (info.getType() == CallRecord.TYPE_VIDEO_INCOMING) {
                 tHolder.callRecordTypeIv.setImageResource(R.drawable.icon_incoming);
             } else if (info.getType() == CallRecord.TYPE_VIDEO_MISSING) {
@@ -131,8 +152,8 @@ public class CallRecordAdapter extends BaseAdapter {
                     }
                 }
             }
-            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerName());
-            tHolder.callRecordNumberTv.setText(info.getPeerNumber());
+            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
+            tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
         return convertView;
@@ -143,14 +164,23 @@ public class CallRecordAdapter extends BaseAdapter {
         private TextView callRecordNameTv;
         private TextView callRecordNumberTv;
         private TextView callRecordTimeTv;
+        private View itemView;
 
         public HolderView(View view) {
             callRecordTypeIv = (ImageView) view.findViewById(R.id.call_record_type_iv);
             callRecordNameTv = (TextView) view.findViewById(R.id.call_record_name_tv);
             callRecordNumberTv = (TextView) view.findViewById(R.id.call_record_number_tv);
             callRecordTimeTv = (TextView) view.findViewById(R.id.call_record_time_tv);
+            itemView = view.findViewById(R.id.call_record_item);
 
         }
+    }
+
+    public static abstract class onClickListen
+    {
+        public abstract void onClick(CallRecord info);
+
+        public abstract void onLongClick(int position);
     }
 
 }
