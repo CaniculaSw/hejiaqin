@@ -56,15 +56,17 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             int old_status = intent.getIntExtra(LoginApi.PARAM_OLD_STATUS, -1);
             int new_status = intent.getIntExtra(LoginApi.PARAM_NEW_STATUS, -1);
             int reason = intent.getIntExtra(LoginApi.PARAM_REASON, -1);
-            LogUtil.d(VoipLogic.TAG, "the status is " + new_status);
             switch (new_status) {
                 case LoginApi.STATUS_CONNECTED:
+                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_CONNECTED");
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID);
                     break;
                 case LoginApi.STATUS_CONNECTING:
+                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_CONNECTING");
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTING_MSG_ID);
                     break;
                 case LoginApi.STATUS_DISCONNECTED:
+                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_DISCONNECTED");
                     if (reason == LoginApi.REASON_SRV_FORCE_LOGOUT) {
                         //服务器强制注销 如：同一账号在多终端上登录
                         VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID);
@@ -77,8 +79,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
                     break;
                 case LoginApi.STATUS_DISCONNECTING:
+                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_DISCONNECTING");
                     break;
                 case LoginApi.STATUS_IDLE:
+                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_IDLE");
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
                     break;
             }
@@ -114,8 +118,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
                 recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
                 if (isTv()) {
-                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                    LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID");
+                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
                 } else {
+                    LogUtil.d(TAG,"INTENT_INCOMING_SESSION_ID");
                     Intent inComingIntent = new Intent();
                     inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
                     inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
