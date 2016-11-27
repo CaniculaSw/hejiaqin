@@ -555,10 +555,6 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (closed) {
-            LogUtil.w(TAG, "is closed");
-            return;
-        }
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
@@ -566,6 +562,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.coming_answer_call_btn:
+                if (closed) {
+                    LogUtil.w(TAG, "is closed");
+                    return;
+                }
                 if(onClickAnswer)
                 {
                     return;
@@ -578,6 +578,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.mute_layout:
+                if (closed) {
+                    LogUtil.w(TAG, "is closed");
+                    return;
+                }
                 if (mute) {
                     mute = false;
                     if (mCallSession != null) {
@@ -593,6 +597,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 }
                 break;
             case R.id.camera_layout:
+                if (closed) {
+                    LogUtil.w(TAG, "is closed");
+                    return;
+                }
                 if (CallApi.getCameraCount() < 2) {
                     return;
                 }
@@ -632,7 +640,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                             public void run() {
                                 finish();
                             }
-                        }, 2500);
+                        }, 3000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }

@@ -15,10 +15,12 @@ import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.component.db.DatabaseInfo;
+import com.customer.framework.component.storage.StorageMgr;
 import com.customer.framework.component.time.DateTimeUtil;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
+import com.google.gson.Gson;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.login.LoginApi;
@@ -220,6 +222,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         loginCfg.isRememberPassword = true;
         loginCfg.isVerified = false;
         LoginApi.login(userInfo, loginCfg);
+        //TODO TEST:服务器没有保存SDK账号和密码
+        com.chinamobile.hejiaqin.business.model.login.UserInfo clientUserInfo = UserInfoCacheManager.getUserInfo(getContext());
+        clientUserInfo.setSdkAccount(userInfo.username);
+        clientUserInfo.setSdkPassword(userInfo.password);
+        HashMap map = new HashMap();
+        Gson gson = new Gson();
+        map.put(BussinessConstants.Login.USER_INFO_KEY, gson.toJson(clientUserInfo));
+        StorageMgr.getInstance().getSharedPStorage(getContext()).save(map);
+        StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Login.USER_INFO_KEY, clientUserInfo);
+        //TODO TEST:服务器没有保存SDK账号和密码
     }
 
     @Override

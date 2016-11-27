@@ -82,10 +82,6 @@ public class VideoOutDialog extends Dialog {
 
             @Override
             public void onClick(View v) {
-                if (closed) {
-                    LogUtil.w(TAG, "is closed");
-                    return;
-                }
                 mVoipLogic.hangup(mCallSession, false, false, 0);
                 VideoOutDialog.this.dismiss();
             }
@@ -104,7 +100,7 @@ public class VideoOutDialog extends Dialog {
                 public void run() {
                     VideoOutDialog.this.dismiss();
                 }
-            }, 2000);
+            }, 3000);
         }
     }
 
@@ -188,7 +184,7 @@ public class VideoOutDialog extends Dialog {
                             public void run() {
                                 VideoOutDialog.this.dismiss();
                             }
-                        }, 2500);
+                        }, 3000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false,0);
                     }

@@ -139,4 +139,28 @@ public class UserInfo {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("name:").append(name);
+        builder.append("tvAccount:").append(tvAccount);
+        builder.append("userId:").append(userId);
+        builder.append("userName:").append(userName);
+        builder.append("phone:").append(phone);
+
+        builder.append("sdkAccount:").append(sdkAccount);
+        builder.append("sdkPassword:").append(sdkPassword);
+        builder.append("imAccount:").append(imAccount);
+        builder.append("imPassword:").append(imPassword);
+
+        builder.append("token:").append(token);
+        builder.append("photoLg:").append(photoLg);
+        builder.append("photoSm:").append(photoSm);
+        builder.append("tokenExpire:").append(tokenExpire);
+        builder.append("type:").append(type);
+
+        return builder.toString();
+    }
 }
