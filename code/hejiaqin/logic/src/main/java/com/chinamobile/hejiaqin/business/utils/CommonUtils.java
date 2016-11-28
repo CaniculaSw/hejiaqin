@@ -166,7 +166,7 @@ public class CommonUtils {
     public static boolean isAutoAnswer(Context context, String incomingNum) {
         TvSettingInfo settingInfo = UserInfoCacheManager.getUserSettingInfo(context);
 
-        if (!settingInfo.isAutoAnswer()) {
+        if (settingInfo ==null || !settingInfo.isAutoAnswer()) {
             return false;
         }
 

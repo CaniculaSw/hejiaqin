@@ -364,7 +364,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                             public void run() {
                                 finish();
                             }
-                        }, 2000);
+                        }, 3000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false,0);
                     }

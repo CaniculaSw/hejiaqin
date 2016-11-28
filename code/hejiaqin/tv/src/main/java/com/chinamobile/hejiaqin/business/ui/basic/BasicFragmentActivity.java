@@ -102,6 +102,10 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
 
     @Override
     protected void handleStateMessage(Message msg) {
+        switch (msg.what) {
+            case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID 1");
+        }
         //只在当前activity处理
         if (MyActivityManager.getInstance().isCurrentActity(this.getClass().getName())) {
             switch (msg.what) {
@@ -149,6 +153,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     break;
                 case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                    LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
                         long incomingSessionId = (long) msg.obj;
                         VideoInComingDialog.show(this, incomingSessionId,
