@@ -65,7 +65,7 @@ public class UserInfoCacheManager {
     private static void saveUserSettingToLocal(Context context, TvSettingInfo setting) {
         HashMap map = new HashMap();
         Gson gson = new Gson();
-        map.put(BussinessConstants.Setting.USER_SETTING_KEY, gson.toJson(setting));
+        map.put(getUserInfo(context).getTvAccount()+BussinessConstants.Setting.USER_SETTING_KEY, gson.toJson(setting));
         StorageMgr.getInstance().getSharedPStorage(context).save(map);
     }
 
@@ -130,9 +130,9 @@ public class UserInfoCacheManager {
         }
     }
 
-    public static boolean isBinded(Context context){
+    public static boolean isBinded(Context context) {
         UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_DEVICE_KEY);
-        if (userList == null || userList.getUsers().size() <= 0){
+        if (userList == null || userList.getUsers().size() <= 0) {
             return false;
         }
         return true;
@@ -140,6 +140,9 @@ public class UserInfoCacheManager {
 
     public static boolean isBindedApp(Context context, String num) {
         UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_APP_KEY);
+        if (userList == null) {
+            return false;
+        }
         List<UserInfo> userInfoList = userList.getUsers();
         boolean flag = false;
         Iterator<UserInfo> iterator = userInfoList.iterator();
@@ -191,7 +194,7 @@ public class UserInfoCacheManager {
     }
 
     public static TvSettingInfo getUserSettingInfo(Context context) {
-        String settingStr = StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Setting.USER_SETTING_KEY);
+        String settingStr = StorageMgr.getInstance().getSharedPStorage(context).getString(getUserInfo(context).getTvAccount()+BussinessConstants.Setting.USER_SETTING_KEY);
         if (settingStr != null) {
             Gson gson = new Gson();
             return gson.fromJson(settingStr, TvSettingInfo.class);
@@ -225,7 +228,7 @@ public class UserInfoCacheManager {
     }
 
     public static void clearUserInfo(Context context) {
-        String[] keys = new String[]{BussinessConstants.Login.USER_INFO_KEY, BussinessConstants.Login.TOKEN_DATE,BussinessConstants.Setting.BINDED_DEVICE_KEY};
+        String[] keys = new String[]{BussinessConstants.Login.USER_INFO_KEY, BussinessConstants.Login.TOKEN_DATE, BussinessConstants.Setting.BINDED_DEVICE_KEY, BussinessConstants.Setting.BINDED_DEVICE_KEY};
         StorageMgr.getInstance().getMemStorage().remove(keys);
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }

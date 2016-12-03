@@ -44,6 +44,8 @@ import com.huawei.rcs.message.TextMessage;
  */
 public abstract class BasicActivity extends BaseActivity {
 
+    public static final String TAG = BasicActivity.class.getSimpleName();
+
     private MyToast myToast;
 
     private Dialog waitDialog;
@@ -100,6 +102,7 @@ public abstract class BasicActivity extends BaseActivity {
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
+        ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)).setIsTv(true);
     }
 
     @TargetApi(23)
@@ -142,6 +145,10 @@ public abstract class BasicActivity extends BaseActivity {
 
     @Override
     protected void handleStateMessage(Message msg) {
+        switch (msg.what) {
+            case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID 1");
+        }
         //只在当前activity处理
         if (MyActivityManager.getInstance().isCurrentActity(this.getClass().getName())) {
             switch (msg.what) {
@@ -175,11 +182,12 @@ public abstract class BasicActivity extends BaseActivity {
                     String nameList[] = names.split(";");
                     String numList[] = numbers.split(";");
                     for (int i = 0; i < nameList.length; i++) {
-                        contactsLogic.addAppContact(nameList[i], numList[i], "");
+                        contactsLogic.addAppContact(nameList[i],numList[i],null);
                     }
                     settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     break;
                 case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                    LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
                         long incomingSessionId = (long) msg.obj;
                         VideoInComingDialog.show(this, incomingSessionId,

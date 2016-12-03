@@ -62,6 +62,9 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
                     }
                 }
                 break;
+            case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
+                doBack();
+                break;
         }
     }
 

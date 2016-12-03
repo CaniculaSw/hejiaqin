@@ -126,7 +126,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
-        FocusManager.getInstance().requestFocus(addLayout);
+//        FocusManager.getInstance().requestFocus(addLayout);
     }
 
     /**

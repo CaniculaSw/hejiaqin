@@ -9,12 +9,12 @@ android {
         minSdkVersion 15
         targetSdkVersion 15
         versionCode 1
-        versionName "V1.0"
+        versionName "V0.91"
     }
     buildTypes {
         release {
             buildConfigField "int", "LOG_LEVEL", "5"
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {

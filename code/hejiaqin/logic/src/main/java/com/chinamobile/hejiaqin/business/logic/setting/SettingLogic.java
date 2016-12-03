@@ -19,6 +19,7 @@ import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.business.utils.SysInfoUtil;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
@@ -306,7 +307,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     @Override
     public void sendContact(String toNumber, String opCode, Map<String, String> params) {
         LogUtil.i(TAG, "send contact to:" + toNumber);
-        sendTextMessage(toNumber, CaaSUtil.CmdType.SEND_CONTACT, "1", opCode, null, params);
+        sendTextMessage(CommonUtils.getPhoneNumber(toNumber), CaaSUtil.CmdType.SEND_CONTACT, "1", opCode, null, params);
     }
 
     private void sendTextMessage(String toNumber, String cmdType, String opCode, String phone) {

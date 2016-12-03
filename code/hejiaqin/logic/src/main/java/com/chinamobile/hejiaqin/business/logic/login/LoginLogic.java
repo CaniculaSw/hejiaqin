@@ -184,6 +184,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
+                LogUtil.d(TAG,"UserInfo" + userInfo.toString());
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
                 initCMIMSdk();
