@@ -340,6 +340,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_add_contact_success_toast);
+                mContactsInfo.setContactMode(ContactsInfo.ContactMode.app);
+                showViewByCurIndex(currentIndex);
                 break;
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_add_contact_failed_toast);
