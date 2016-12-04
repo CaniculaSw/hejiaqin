@@ -20,6 +20,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
@@ -31,10 +32,9 @@ import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.DialContactAdapter;
-import com.chinamobile.hejiaqin.business.ui.more.MessageActivity;
 import com.customer.framework.utils.StringUtil;
-import com.huawei.rcs.login.UserInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,8 +43,6 @@ import java.util.regex.Pattern;
  * Created by eshaohu on 16/5/22.
  */
 public class DialFragment extends BasicFragment implements View.OnClickListener{
-
-    private static final String TAG = "DialFragment";
 
     /**
      * 号码输入框的字符串小于3位则不进行搜索
@@ -59,6 +57,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     HeaderView headerView;
     RecyclerView callRecordRecyclerView;
     RecyclerView dialContactRecyclerView;
+    RecyclerView callRecordSearchRecyclerView;
 
     RelativeLayout dialSaveContactLayout;
     LinearLayout dialSaveContactArrowLayout;
@@ -89,6 +88,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     private DialContactAdapter mDialContactAdapter;
 
+    private CallRecordAdapter mCallRecordSearchAdapter;
+
     @Override
     protected void handleFragmentMsg(Message msg) {
 
@@ -117,7 +118,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID:
                 //开始查询
-                mContactsLogic.searchAppContactLst(mSearchString, TAG);
+                mVoipLogic.search(mSearchString);
                 break;
             case BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID:
             case BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID:
@@ -138,17 +139,31 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             case BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID:
                 mCallRecordAdapter.refreshData(null);
                 break;
-            case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
+            case BussinessConstants.DialMsgID.SEARCH_CONTACTS_SUCCESS_MSG_ID:
                 SearchResultContacts resultContacts = (SearchResultContacts) msg.obj;
-                if(TAG.equals(resultContacts.getInvoker())) {
-                    mDialContactAdapter.refreshData(resultContacts.getContactsInfos());
-                    //正式代码需要在查询结果后进行判断是否显示
-                    if(resultContacts.getContactsInfos()!=null && resultContacts.getContactsInfos().size()>0) {
+                mCallRecordSearchAdapter.refreshData(new ArrayList<CallRecord>());
+                mDialContactAdapter.refreshData(resultContacts.getContactsInfos());
+                if (resultContacts.getContactsInfos() != null && resultContacts.getContactsInfos().size() > 0) {
+                    dialSaveContactLayout.setVisibility(View.GONE);
+                    callRecordSearchRecyclerView.setVisibility(View.GONE);
+                    dialContactRecyclerView.setVisibility(View.VISIBLE);
+                }
+                break;
+            case BussinessConstants.DialMsgID.CALL_RECORD_SEARCH_MSG_ID:
+                if(obj!=null)
+                {
+                    List<CallRecord> callRecords = (List<CallRecord>)obj;
+                    mDialContactAdapter.refreshData(new ArrayList<ContactsInfo>());
+                    mCallRecordSearchAdapter.refreshData(callRecords);
+                    if(callRecords!=null && callRecords.size() > 0)
+                    {
                         dialSaveContactLayout.setVisibility(View.GONE);
-                        dialContactRecyclerView.setVisibility(View.VISIBLE);
-                    }else{
-                        dialSaveContactLayout.setVisibility(View.VISIBLE);
                         dialContactRecyclerView.setVisibility(View.GONE);
+                        callRecordSearchRecyclerView.setVisibility(View.VISIBLE);
+                    }else{
+                        dialContactRecyclerView.setVisibility(View.GONE);
+                        callRecordSearchRecyclerView.setVisibility(View.GONE);
+                        dialSaveContactLayout.setVisibility(View.VISIBLE);
                     }
                 }
                 break;
@@ -169,6 +184,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
         callRecordRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_recycler_view);
         dialContactRecyclerView = (RecyclerView)view.findViewById(R.id.dial_contact_recycler_view);
+        callRecordSearchRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_search_recycler_view);
         dialSaveContactLayout = (RelativeLayout)view.findViewById(R.id.dial_save_contact_layout);
 
         dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
@@ -277,6 +293,20 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
             }
         });
+
+        mCallRecordSearchAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
+        callRecordSearchRecyclerView.setAdapter(mCallRecordSearchAdapter);
+        callRecordSearchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        callRecordSearchRecyclerView.setHasFixedSize(true);
+        callRecordSearchRecyclerView.addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                hideKeyPad();
+                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID, null);
+            }
+        });
+
         mDialContactAdapter = new DialContactAdapter (getContext());
         dialContactRecyclerView.setAdapter(mDialContactAdapter);
         dialContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -286,7 +316,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 hideKeyPad();
-                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
+                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID, null);
             }
         });
 
@@ -360,12 +390,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             dialSaveContactLayout.setVisibility(View.GONE);
             dialContactRecyclerView.setVisibility(View.GONE);
             callRecordRecyclerView.setVisibility(View.VISIBLE);
-        }else{
-            dialSaveContactLayout.setVisibility(View.GONE);
-            dialContactRecyclerView.setVisibility(View.VISIBLE);
-            callRecordRecyclerView.setVisibility(View.GONE);
+            callRecordSearchRecyclerView.setVisibility(View.GONE);
         }
-
         Handler handle = getHandler();
         if (null != handle)
         {
@@ -378,6 +404,9 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             if(!StringUtil.isNullOrEmpty(mSearchString)) {
 
                 handle.sendEmptyMessageDelayed(what, SEARCH_WORD_CHANGE_TIME);
+            }else{
+                mDialContactAdapter.refreshData(new ArrayList<ContactsInfo>());
+                mCallRecordSearchAdapter.refreshData(new ArrayList<CallRecord>());
             }
         }
     }

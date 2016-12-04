@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,8 +110,14 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                     }
                 }
             }
-            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
-            tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
+            if(info.getRecordSearchUnit()!=null)
+            {
+                tHolder.callRecordNameTv.setText(Html.fromHtml(info.getRecordSearchUnit().getNumberText()));
+                tHolder.callRecordNumberTv.setText("");
+            }else {
+                tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
+                tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
+            }
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
     }

@@ -328,6 +328,10 @@ public class BussinessConstants {
         int CALL_ON_TV_INCOMING_MSG_ID = BASE_MSG_ID + 12;
         int CALL_RECORD_DEL_MSG_ID = BASE_MSG_ID + 13;
 
+        // 搜索联系人成功的消息ID
+        int SEARCH_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 14;
+        int CALL_RECORD_SEARCH_MSG_ID = BASE_MSG_ID + 15;
+
     }
 
 

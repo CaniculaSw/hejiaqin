@@ -32,6 +32,8 @@ public interface IVoipLogic {
 
     public void getCallRecord();
 
+    void search(String input);
+
     public boolean isTv();
 
     public void setIsTv(boolean isTv);
