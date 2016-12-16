@@ -391,7 +391,10 @@ public class BussinessConstants {
         int SEND_CONTACT_REQUEST = BASE_MSG_ID + 16;
         int SEND_CONTACT_RESPOND_SUCCESS = BASE_MSG_ID + 17;
         int SEND_CONTACT_RESPOND_DENIED = BASE_MSG_ID + 18;
-
+        int STATUS_DELIVERY_OK = BASE_MSG_ID + 19;
+        int STATUS_DISPLAY_OK = BASE_MSG_ID + 20;
+        int STATUS_SEND_FAILED = BASE_MSG_ID + 21;
+        int STATUS_UNDELIVERED = BASE_MSG_ID + 22;
     }
 
 

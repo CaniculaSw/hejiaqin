@@ -48,6 +48,9 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
     private TextView mSelectCount;
     private int mSelectedContactNum;
     private TextView searchText;
+    private View searchLayout;
+    private View progressLayout;
+    private TextView progressTips;
 
     @Override
     protected void handleStateMessage(Message msg) {
@@ -69,8 +72,12 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
                 }
                 break;
             case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
-                doBack();
+                postSendContactSuccessfull(true);
                 break;
+            case BussinessConstants.SettingMsgID.STATUS_SEND_FAILED:
+                postSendContactSuccessfull(false);
+                break;
+
         }
     }
 
@@ -92,11 +99,14 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         // 添加搜索框
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
-        View searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
+        searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         mContactListView.addHeaderView(searchLayout);
         searchText = (TextView) searchLayout.findViewById(R.id.contact_search_text);
         // 添加点击事件
         searchLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
+
+        progressLayout = inflater.inflate(R.layout.layout_progress_tips, null);
+        progressTips = (TextView) progressLayout.findViewById(R.id.progress_text);
 
         adapter = new SelectContactAdapter(this, getHandler());
         mContactListView.setAdapter(adapter);
@@ -156,17 +166,17 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         Intent intent = new Intent(mContext, MoreSearchAndSendContactActivity.class);
         intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
                 , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
-        intent.putExtra("selected",(Serializable) adapter.getSelectedSet());
-        startActivityForResult(intent,BussinessConstants.Setting.SEND_CONTACT_SEARCH);
+        intent.putExtra("selected", (Serializable) adapter.getSelectedSet());
+        startActivityForResult(intent, BussinessConstants.Setting.SEND_CONTACT_SEARCH);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data == null){
+        if (data == null) {
             return;
         }
-        Set<String> selected =(Set<String>) data.getSerializableExtra("selected");
-        if (selected!=null){
+        Set<String> selected = (Set<String>) data.getSerializableExtra("selected");
+        if (selected != null) {
             adapter.setTheSelectedSet(selected);
         }
     }
@@ -177,9 +187,15 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         if (contacts.size() == 0) {
             return;
         }
+        mContactListView.removeHeaderView(searchLayout);
+        mContactListView.removeHeaderView(progressLayout);
+        mContactListView.addHeaderView(progressLayout);
+        progressTips.setText(getResources().getText(R.string.sending_contact));
         settingLogic.sendContact(tvAccount, CaaSUtil.OpCode.SEND_CONTACT, getParam(contacts));
-        mHeaderView.rightBtn.setClickable(true);
-        showToast("正在发送", Toast.LENGTH_SHORT, null);
+//        mHeaderView.rightBtn.setClickable(true);
+//        mContactListView.removeHeaderView(progressLayout);
+//        mContactListView.addHeaderView(searchLayout);
+
     }
 
     private Map<String, String> getParam(Set<ContactsInfo> contacts) {
@@ -204,5 +220,16 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
 
     private void updateSelectedHint(int num) {
         mSelectCount.setText(getString(R.string.more_chosen, num));
+    }
+
+    private void postSendContactSuccessfull(boolean isSuccessfull) {
+        mHeaderView.rightBtn.setClickable(true);
+        mContactListView.removeHeaderView(progressLayout);
+        mContactListView.addHeaderView(searchLayout);
+        if (isSuccessfull) {
+            adapter.selectAll(false);
+        } else {
+            Toast.makeText(mContext, getText(R.string.sending_contact_failed), Toast.LENGTH_LONG).show();
+        }
     }
 }

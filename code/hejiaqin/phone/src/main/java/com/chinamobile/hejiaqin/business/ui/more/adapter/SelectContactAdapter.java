@@ -14,12 +14,15 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.customer.framework.ui.AdapterViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -69,6 +72,13 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
     private void initView(int position, AdapterViewHolder holder) {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.setText(R.id.contact_name_text, contactsInfo.getName());
+
+        Picasso.with(mContext.getApplicationContext())
+                .load(contactsInfo.getPhotoSm())
+                .placeholder(R.drawable.contact_photo_default)
+                .error(R.drawable.contact_photo_default).into((CircleImageView) holder.getView(R.id.contact_photo_img));
+
+
         CheckBox checkBox = (CheckBox) holder.getView(R.id.more_select_contact_cb);
         if (contactsInfo != null) {
             if (this.selectedSet.contains(contactsInfo.getContactId())) {

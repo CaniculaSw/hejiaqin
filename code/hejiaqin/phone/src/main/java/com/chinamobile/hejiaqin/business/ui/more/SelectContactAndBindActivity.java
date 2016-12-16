@@ -12,10 +12,8 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectContactAndBindAdapter;
-import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
 
@@ -28,13 +26,12 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
     private StickyListHeadersListView contactListView;
     private SelectContactAndBindAdapter adapter;
     private TextView searchText;
-    private SideBarView sideBarView;
     private TextView tipText;
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_app_contact_list;
+        return R.layout.activity_select_contact_and_bind;
     }
 
     @Override
@@ -58,37 +55,7 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
         contactListView.setAdapter(adapter);
 
         tipText = (TextView) findViewById(R.id.tip);
-        sideBarView = (SideBarView) findViewById(R.id.sidebar);
-        sideBarView.setOnLetterSelectListen(new SideBarView.LetterSelectListener() {
-            @Override
-            public void onLetterSelected(String letter) {
-                int position = adapter.getPositionByLetter(letter);
-                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
-                        + position);
-                tipText.setText(letter);
-                tipText.setVisibility(View.VISIBLE);
-                if (position >= 0) {
-                    contactListView.setSelection(position);
-                }
-            }
 
-            @Override
-            public void onLetterChanged(String letter) {
-                int position = adapter.getPositionByLetter(letter);
-                LogUtil.i(TAG, "onLetterChanged: " + letter + "; position: "
-                        + position);
-                tipText.setText(letter);
-                tipText.setVisibility(View.VISIBLE);
-                if (position >= 0) {
-                    contactListView.setSelection(position);
-                }
-            }
-
-            @Override
-            public void onLetterReleased(String letter) {
-                tipText.setVisibility(View.GONE);
-            }
-        });
     }
 
     @Override

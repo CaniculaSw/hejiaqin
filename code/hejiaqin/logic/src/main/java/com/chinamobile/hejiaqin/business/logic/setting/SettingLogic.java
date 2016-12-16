@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
@@ -46,11 +45,10 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         public void onReceive(Context context, Intent intent) {
             Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
             if (msg == null) {
-                Toast.makeText(getContext(), "Message received.But message is null", Toast.LENGTH_LONG).show();
                 return;
             }
             msg.read();
-            LogUtil.i(TAG, "Message received.");
+            LogUtil.d(TAG, "Message received.");
             int msgType = msg.getType();
             switch (msgType) {
                 case Message.MESSAGE_TYPE_TEXT: { // 文本消息
@@ -73,10 +71,19 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         @Override
         public void onReceive(Context context, Intent intent) {
             Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
-            LogUtil.d(TAG, "Message status change to: " + msg.getStatus());
             if (null != msg) {
                 switch (msg.getStatus()) {
                     case Message.STATUS_DELIVERY_OK:
+                        sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK);
+                        break;
+                    case Message.STATUS_DISPLAY_OK:
+                        sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK);
+                        break;
+                    case Message.STATUS_SEND_FAILED:
+                        sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_SEND_FAILED);
+                        break;
+                    case Message.STATUS_UNDELIVERED:
+                        sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_UNDELIVERED);
                         break;
                 }
                 return;
@@ -185,7 +192,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             public void onSuccessful(Object invoker, Object obj) {
                 UserList userList = new UserList();
                 userList.setUsers((List<UserInfo>) obj);
-                LogUtil.i(TAG,"obj size "+ ((List<UserInfo>) obj).size());
+                LogUtil.i(TAG, "obj size " + ((List<UserInfo>) obj).size());
                 UserInfoCacheManager.saveBindDeviceToLoacl(getContext(), userList);
                 UserInfoCacheManager.saveBindDeviceToMem(getContext(), userList);
                 SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);
