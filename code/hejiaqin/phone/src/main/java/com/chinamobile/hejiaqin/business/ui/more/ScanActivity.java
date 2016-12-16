@@ -85,7 +85,8 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                 if (Build.VERSION.SDK_INT < 19) {
                     getAlbum.setAction(Intent.ACTION_GET_CONTENT);
                 } else {
-                    getAlbum.setAction(Intent.ACTION_OPEN_DOCUMENT);
+//                    getAlbum.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                    getAlbum.setAction(Intent.ACTION_PICK);
                 }
                 getAlbum.setType("image/*");
                 Intent wrapperIntent = Intent.createChooser(getAlbum, "选择二维码图片");
