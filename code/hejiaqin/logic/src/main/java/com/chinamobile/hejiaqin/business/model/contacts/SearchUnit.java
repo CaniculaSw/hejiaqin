@@ -65,6 +65,9 @@ public class SearchUnit implements Serializable {
     }
 
     private String hightMatchedText() {
+        if (null == this.matchedText) {
+            return "";
+        }
         String hightMatchedText = (null == this.originalText ? "" : new String(this.originalText));
 
         StringBuffer matchedTextBuffer = new StringBuffer();
