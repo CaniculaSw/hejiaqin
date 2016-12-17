@@ -9,7 +9,10 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
+import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
@@ -359,6 +362,24 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID, callRecords);
             }
         });
+    }
+
+    @Override
+    public void search(final String input) {
+        List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance().getCachedLocalContactInfo();
+        contactsInfoList.addAll(ContactsInfoManager.getInstance().getCachedAppContactInfo());
+        List<ContactsInfo> result = ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input);
+        if(result!=null && result.size()>0) {
+            sendMessage(BussinessConstants.DialMsgID.SEARCH_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts("", result));
+        }else {
+            ThreadPoolUtil.execute(new ThreadTask() {
+                @Override
+                public void run() {
+                    List<CallRecord> callRecords = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).searchNumbers(input);
+                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_SEARCH_MSG_ID, callRecords);
+                }
+            });
+        }
     }
 
     public boolean isTv() {

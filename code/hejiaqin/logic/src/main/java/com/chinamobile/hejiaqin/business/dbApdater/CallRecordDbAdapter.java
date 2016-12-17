@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
+import com.chinamobile.hejiaqin.business.model.dial.RecordSearchUnit;
 import com.customer.framework.component.db.DatabaseHelper;
 import com.customer.framework.component.db.DatabaseInfo;
 import com.customer.framework.component.db.operation.BaseDbAdapter;
@@ -192,6 +193,26 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         return list;
     }
 
+
+    public List<CallRecord> searchNumbers(String input) {
+        List<CallRecord> list = new ArrayList<CallRecord>();
+        if (StringUtil.isNullOrEmpty(input)) {
+            return list;
+        }
+        String selection = " where " + DatabaseInfo.CallRecord.PEER_NUMBER + " like ? ";
+        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection + " order by " + DatabaseInfo.CallRecord.BEGIN_TIME + " desc ";
+        Cursor cursor = super.rawQuery(sql, new String[]{"%"+ input + "%"});
+        CallRecord info;
+        while (cursor.moveToNext()) {
+            info = parseValuesToBean(cursor);
+            RecordSearchUnit searchUnit = new RecordSearchUnit();
+            searchUnit.setPeerNumber(info.getPeerNumber());
+            searchUnit.search(input);
+            info.setRecordSearchUnit(searchUnit);
+            list.add(info);
+        }
+        return list;
+    }
 
     /**
      * 根据ids删除

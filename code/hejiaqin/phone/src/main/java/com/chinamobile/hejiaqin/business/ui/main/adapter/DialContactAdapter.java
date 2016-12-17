@@ -2,7 +2,9 @@ package com.chinamobile.hejiaqin.business.ui.main.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,12 +51,14 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
                 public void onClick(View v) {
                     int position = (int) v.getTag();
                     Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position));
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position));
+                    intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }
             });
-            tHolder.contactNameTv.setText(info.getName());
-            tHolder.contactNumberTv.setText(StringUtil.isNullOrEmpty(info.getPhone())?"":info.getPhone());
+            tHolder.contactNameTv.setText(Html.fromHtml(info.getSearchUnit().getNameText()));
+            tHolder.contactNumberTv.setText(Html.fromHtml(info.getSearchUnit().getNumberText()));
         }
     }
 

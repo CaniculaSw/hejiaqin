@@ -35,6 +35,7 @@ public class CallRecord {
     private String peerHeaderImage;
     private int infoFlag;
     private ContactsInfo contactsInfo;
+    private RecordSearchUnit recordSearchUnit;
 
     public String getId() {
         return id;
@@ -201,5 +202,13 @@ public class CallRecord {
 
     public boolean isReaded() {
         return read == BussinessConstants.DictInfo.YES;
+    }
+
+    public RecordSearchUnit getRecordSearchUnit() {
+        return recordSearchUnit;
+    }
+
+    public void setRecordSearchUnit(RecordSearchUnit recordSearchUnit) {
+        this.recordSearchUnit = recordSearchUnit;
     }
 }
