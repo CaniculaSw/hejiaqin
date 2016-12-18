@@ -134,6 +134,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
             case R.id.logout_btn:
                 loginLogic.logout();
                 mVoipLogic.logout();
+                mVoipLogic.clearLogined();
                 FragmentMgr.resetFragmentMgr();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);

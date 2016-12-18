@@ -240,8 +240,13 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     @Override
     public void logout() {
-        UserInfoCacheManager.clearVoipLogined(getContext());
         LoginApi.logout();
+    }
+
+    @Override
+    public void clearLogined()
+    {
+        UserInfoCacheManager.clearVoipLogined(getContext());
     }
 
     /**
