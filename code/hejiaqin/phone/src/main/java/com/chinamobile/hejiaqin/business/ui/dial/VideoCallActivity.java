@@ -15,6 +15,7 @@ import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -117,6 +118,24 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private IContactsLogic mContactsLogic;
 
     private boolean isDeleteLocal;
+
+    private LinearLayout.LayoutParams localPreviewlayoutParams;
+
+    private BroadcastReceiver localVideoChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(mIsTalking || mIsInComing)
+            {
+                return;
+            }
+            localPreviewlayoutParams = getLocalPreviewViewMetrics
+                    (intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT,0),intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH,0));
+            if(localVideoView !=null) {
+                mLargeVideoLayout.updateViewLayout(localVideoView, localPreviewlayoutParams);
+                localVideoView.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 
     /* display the video stream which arrived from remote. */
     private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
@@ -309,6 +328,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void createLocalPreviewVideo() {
+        if(!mIsInComing) {
+            LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+                    localVideoChangeReceiver,
+                    new IntentFilter(CallApi.EVENT_CALL_VIDEO_ENCODERESOLUTION_CHANGE));
+        }
         OrientationEventListener listener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
 
             @Override
@@ -324,14 +348,42 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             LogUtil.e("V2OIP", "OrientationEventListener enable failed!!");
         }
         setCameraRotate();
-        if (localVideoView == null) {
+        if(localVideoView == null) {
             localVideoView = CallApi.createLocalVideoView(getApplicationContext());
+            localPreviewlayoutParams = getLocalPreviewViewMetrics(3, 4);
             localVideoView.setZOrderOnTop(false);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            mLargeVideoLayout.addView(localVideoView, layoutParams);
+            mLargeVideoLayout.addView(localVideoView, localPreviewlayoutParams);
+            localVideoView.setVisibility(View.GONE);
             mCallSession.prepareVideo();
         }
         registerReceivers();
+    }
+
+    private  LinearLayout.LayoutParams getLocalPreviewViewMetrics(int height,int width) {
+        int[] metrics = new int[2];
+        int rmtHeight = 0;
+        getDisplayMetrics(this, metrics);
+        LinearLayout.LayoutParams rp;
+        rmtHeight =  metrics[0]*width/height;
+        rp = new LinearLayout.LayoutParams((int)metrics[0], rmtHeight);
+        return rp;
+    }
+
+    private void getDisplayMetrics(Context context, int metrics[]) {
+        if (null == metrics) {
+            metrics = new int[2];
+        }
+
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int screenHeight = windowManager.getDefaultDisplay().getHeight();
+        int screenWidth = windowManager.getDefaultDisplay().getWidth();
+        if (screenHeight > screenWidth) {
+            int temp = screenWidth;
+            screenWidth = screenHeight;
+            screenHeight = temp;
+        }
+        metrics[0] = screenWidth;
+        metrics[1] = screenHeight;
     }
 
     private void showTalking() {
@@ -545,6 +597,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .unregisterReceiver(cameraSwitchedReceiver);
+
+        if(!mIsInComing) {
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
+                    localVideoChangeReceiver);
+        }
 
     }
 
