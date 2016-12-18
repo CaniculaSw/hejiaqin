@@ -43,6 +43,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
      * 新增联系人包括纯新增和拨号记录中过来的新增,不同处表现在是否携带号码
      */
     private boolean addContactMode = true;
+    // 是否来自拨号记录的添加联系人
+    private boolean isFromDialPage = false;
 
     private IContactsLogic contactsLogic;
 
@@ -84,7 +86,11 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_add_contact_success_toast);
-                FragmentMgr.getInstance().finishContactFragment(this);
+                if (isFromDialPage) {
+                    FragmentMgr.getInstance().finishDialFragment(this);
+                } else {
+                    FragmentMgr.getInstance().finishContactFragment(this);
+                }
                 break;
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_add_contact_failed_toast);
@@ -166,11 +172,13 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             // 添加带号码的陌生人
             if (inputNumber != null) {
                 numberText.setText(inputNumber);
+                numberText.setSelection(numberText.getEditableText().length());
                 oldNumber = inputNumber;
+                isFromDialPage = true;
             }
             // 纯添加联系人
             else {
-
+                isFromDialPage = false;
             }
         }
         // 编辑联系人
