@@ -37,7 +37,6 @@
                 android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/search_del"
                 android:background="@null"
-                android:hint="@string/contact_search_hint_text"
                 android:maxLength="32"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textColorHint="@color/contact_list_search_text_color"

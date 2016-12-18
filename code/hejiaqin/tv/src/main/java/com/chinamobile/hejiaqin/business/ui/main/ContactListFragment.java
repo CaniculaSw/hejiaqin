@@ -153,7 +153,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
 //        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
 //                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
 //        startActivity(intent);
-        ContactSearchFragment fragment = ContactSearchFragment.newInstance();
+        ContactSearchFragment fragment = ContactSearchFragment.newInstance(adapter.getCount());
         FragmentMgr.getInstance().showContactFragment(fragment);
     }
 

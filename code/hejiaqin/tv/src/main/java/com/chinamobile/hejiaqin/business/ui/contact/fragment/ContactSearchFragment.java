@@ -37,9 +37,16 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
     private IContactsLogic contactsLogic;
 
+    private int totalContactNum;
 
     public static ContactSearchFragment newInstance() {
         ContactSearchFragment fragment = new ContactSearchFragment();
+        return fragment;
+    }
+
+    public static ContactSearchFragment newInstance(int totalContactNum) {
+        ContactSearchFragment fragment = new ContactSearchFragment();
+        fragment.totalContactNum = totalContactNum;
         return fragment;
     }
 
@@ -62,6 +69,19 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
                 if (TAG.equals(resultContacts.getInvoker())) {
                     setData(resultContacts.getContactsInfos());
                 }
+                break;
+            case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
+                List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
+                totalContactNum = contactsInfoList == null ? 0 : contactsInfoList.size();
+                searchInput.setHint(String.format(getContext().getString(R.string.contact_search_hint_text), totalContactNum));
+                break;
+            case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
+                Editable inputText = searchInput.getText();
+                if (null == inputText || inputText.length() == 0) {
+                    return;
+                }
+
+                startSearch(inputText.toString().trim());
                 break;
         }
     }
@@ -103,6 +123,7 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         contactsListView.setItemsCanFocus(true);
         contactsListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
+        searchInput.setHint(String.format(getContext().getString(R.string.contact_search_hint_text), totalContactNum));
         searchInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -155,7 +176,6 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
     @Override
     protected void initData() {
-
     }
 
     @Override

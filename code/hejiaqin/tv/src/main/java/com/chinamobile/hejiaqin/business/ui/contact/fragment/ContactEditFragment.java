@@ -176,9 +176,13 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         // 编辑联系人
         else {
             oldName = editContactsInfo.getName();
-            oldNumber = editContactsInfo.getPhone();
             nameText.setText(oldName);
+            nameText.setSelection(nameText.getEditableText().length());
+
+            oldNumber = editContactsInfo.getPhone();
             numberText.setText(oldNumber);
+            numberText.setSelection(numberText.getEditableText().length());
+
             Picasso.with(getContext())
                     .load(editContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
