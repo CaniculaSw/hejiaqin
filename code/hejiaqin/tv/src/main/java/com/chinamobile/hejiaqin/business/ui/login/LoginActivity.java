@@ -3,7 +3,11 @@ package com.chinamobile.hejiaqin.business.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -18,9 +22,11 @@ import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
+import com.huawei.rcs.log.LogApi;
 
 
 public class LoginActivity extends BasicActivity implements View.OnClickListener {
@@ -131,6 +137,9 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 accountEditTv.requestFocus();
                 break;
             case R.id.login_ll:
+                if (logining) {
+                    return;
+                }
                 login();
                 break;
             default:
@@ -160,22 +169,25 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     }
 
     private void login() {
+        String account = accountEditTv.getText().toString();
+        if (TextUtils.isEmpty(account)) {
+            accountEditTv.requestFocus();
+//            displayErrorInfo(getString(R.string.prompt_phone_no));
+            showToast(R.string.prompt_phone_no, Toast.LENGTH_SHORT, null);
+            return;
+        }
+        String password = passwdEditTv.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            passwdEditTv.requestFocus();
+//            displayErrorInfo(getString(R.string.prompt_password));
+            showToast(R.string.prompt_password, Toast.LENGTH_SHORT, null);
+            return;
+        }
+        logining = true;
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId(accountEditTv.getText().toString());
         loginInfo.setTvToken(loginLogic.encryPassword(passwdEditTv.getText().toString()));
         loginLogic.tvLogin(loginInfo);
-//        String account = accountEditTv.getText().toString();
-//        if (TextUtils.isEmpty(account)) {
-//            accountEditTv.requestFocus();
-//            displayErrorInfo(getString(R.string.prompt_phone_no));
-//            return;
-//        }
-//        String password = passwdEditTv.getText().toString();
-//        if (TextUtils.isEmpty(password)) {
-//            passwdEditTv.requestFocus();
-//            displayErrorInfo(getString(R.string.prompt_password));
-//            return;
-//        }
 //        if (!StringUtil.isMobileNO(account)) {
 //            accountEditTv.requestFocus();
 //            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
@@ -195,15 +207,15 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     }
 
     private void displayErrorInfo(String errorText) {
-//        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
-//        Window window = dialog.getWindow();
-//        window.getDecorView().setPadding(0, 0, 0, 0);
-//        window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-//        WindowManager.LayoutParams params = window.getAttributes();
-//        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        window.setAttributes(params);
-//        dialog.show();
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+        dialog.show();
     }
 
     //TODO For test
@@ -295,6 +307,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
+                    LogApi.copyLastLog();
                     logining = false;
                 }
                 break;

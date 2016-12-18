@@ -6,9 +6,11 @@ import com.huawei.rcs.RCSApplication;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.hme.HmeAudio;
 import com.huawei.rcs.hme.HmeVideo;
+import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.login.LoginApi;
 import com.huawei.rcs.message.MessagingApi;
 import com.huawei.rcs.stg.NatStgHelper;
+import com.huawei.rcs.stg.SvnStgHelper;
 import com.huawei.rcs.system.SysApi;
 import com.huawei.rcs.tls.DefaultTlsHelper;
 import com.huawei.rcs.upgrade.UpgradeApi;
@@ -32,10 +34,15 @@ public class HeApplication extends RCSApplication {
         CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
         CallApi.setConfig(CallApi.CONFIG_MAJOR_PREVIEW_BEFORE_CONNED,
                 CallApi.CONFIG_MINOR_TYPE_DEFAULT, CallApi.CFG_VALUE_YES);
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_SRTP, CallApi.CONFIG_MINOR_TYPE_SRTP_ALL, CallApi.CFG_CALL_ENABLE_SRTP);
+//        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_TPT_TYPE, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, LoginApi.VALUE_MAJOR_TYPE_TPT_TLS);
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN ,LoginApi.CONFIG_MINOR_TYPE_DEFAULT,"2");
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_USE_IPV6 ,LoginApi.CONFIG_MINOR_TYPE_DEFAULT,"1");
         //设置不插入系统通话记录
         CallApi.setCustomCfg(CallApi.CFG_CALLLOG_INSERT_SYS_DB, CallApi.CFG_VALUE_NO);
         SysApi.loadTls(new DefaultTlsHelper());
         SysApi.loadStg(new NatStgHelper());
+//        SysApi.loadStg(new SvnStgHelper());
         SysApi.setDMVersion("V1.2.88.5-02230000");
         //initial message API
         MessagingApi.init(getApplicationContext());

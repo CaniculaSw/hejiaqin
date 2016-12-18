@@ -31,6 +31,7 @@ import com.chinamobile.hejiaqin.business.ui.login.dialog.VoipSettingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
+import com.huawei.rcs.log.LogApi;
 
 
 public class LoginActivity extends BasicActivity implements View.OnClickListener {
@@ -273,6 +274,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
+                    LogApi.copyLastLog();
                     logining = false;
                 }
                 break;

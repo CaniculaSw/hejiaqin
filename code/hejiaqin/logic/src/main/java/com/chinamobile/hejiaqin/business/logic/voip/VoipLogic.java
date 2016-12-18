@@ -64,6 +64,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             switch (new_status) {
                 case LoginApi.STATUS_CONNECTED:
                     LogUtil.d(VoipLogic.TAG, "the status is STATUS_CONNECTED");
+                    UserInfoCacheManager.saveVoipLogined(getContext());
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID);
                     break;
                 case LoginApi.STATUS_CONNECTING:
@@ -239,7 +240,18 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     @Override
     public void logout() {
+        UserInfoCacheManager.clearVoipLogined(getContext());
         LoginApi.logout();
+    }
+
+    /**
+     * 已经登录过
+     *
+     * @return 是否已经登录
+     */
+    @Override
+    public boolean hasLogined() {
+        return UserInfoCacheManager.getVoipLogined(getContext());
     }
 
     @Override
