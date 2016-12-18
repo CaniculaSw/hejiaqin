@@ -36,7 +36,7 @@ public class HeApplication extends RCSApplication {
                 CallApi.CONFIG_MINOR_TYPE_DEFAULT, CallApi.CFG_VALUE_YES);
         CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_SRTP, CallApi.CONFIG_MINOR_TYPE_SRTP_ALL, CallApi.CFG_CALL_ENABLE_SRTP);
 //        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_TPT_TYPE, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, LoginApi.VALUE_MAJOR_TYPE_TPT_TLS);
-        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN ,LoginApi.CONFIG_MINOR_TYPE_DEFAULT,"2");
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN ,LoginApi.CONFIG_MINOR_TYPE_DEFAULT,"5");
         LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_USE_IPV6 ,LoginApi.CONFIG_MINOR_TYPE_DEFAULT,"1");
         //设置不插入系统通话记录
         CallApi.setCustomCfg(CallApi.CFG_CALLLOG_INSERT_SYS_DB, CallApi.CFG_VALUE_NO);
