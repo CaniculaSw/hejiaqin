@@ -312,6 +312,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     }
 
     @Override
+    public void bindSuccNotify(){
+        sendEmptyMessage(BussinessConstants.SettingMsgID.UPDATE_DEVICE_LIST_REQUEST);
+    }
+
+    @Override
     public void sendContact(String toNumber, String opCode, Map<String, String> params) {
         LogUtil.i(TAG, "send contact to:" + toNumber);
         sendTextMessage(CommonUtils.getPhoneNumber(toNumber), CaaSUtil.CmdType.SEND_CONTACT, "1", opCode, null, params);

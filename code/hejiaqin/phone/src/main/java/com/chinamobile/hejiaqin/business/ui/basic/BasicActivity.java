@@ -169,6 +169,9 @@ public abstract class BasicActivity extends BaseActivity {
                     LogUtil.i(TAG,"对方不同意你的绑定请求");
                     showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
                     break;
+                case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
+                    showToast("发送联系人成功",Toast.LENGTH_LONG,null);
+                    break;
                 case BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL:
                     if (msg.obj != null) {
                         UserList userList = new UserList();

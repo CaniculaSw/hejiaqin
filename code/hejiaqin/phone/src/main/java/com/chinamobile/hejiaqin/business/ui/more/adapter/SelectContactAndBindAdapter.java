@@ -1,14 +1,15 @@
 package com.chinamobile.hejiaqin.business.ui.more.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
@@ -39,11 +40,13 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
 
     private Map<String, Integer> letterToPosition = new HashMap<>();
     private ISettingLogic settingLogic;
+    private Handler handler;
 
-    public SelectContactAndBindAdapter(Context context) {
+    public SelectContactAndBindAdapter(Context context, Handler handler) {
         mContext = context;
         inflater = LayoutInflater.from(context);
         settingLogic = (ISettingLogic) LogicBuilder.getInstance(context).getLogicByInterfaceClass(ISettingLogic.class);
+        this.handler = handler;
     }
 
     @Override
@@ -83,7 +86,7 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
             @Override
             public void onClick(View v) {
                 settingLogic.sendBindReq(contactsInfo.getPhone(), UserInfoCacheManager.getUserInfo(mContext).getPhone());
-                Toast.makeText(mContext, "正在等待对方接受你的请求", Toast.LENGTH_LONG).show();
+                handler.sendEmptyMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST);
             }
         });
     }

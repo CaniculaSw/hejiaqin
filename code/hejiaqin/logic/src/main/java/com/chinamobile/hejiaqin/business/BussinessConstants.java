@@ -395,6 +395,8 @@ public class BussinessConstants {
         int STATUS_DISPLAY_OK = BASE_MSG_ID + 20;
         int STATUS_SEND_FAILED = BASE_MSG_ID + 21;
         int STATUS_UNDELIVERED = BASE_MSG_ID + 22;
+        int SENDING_BIND_REQUEST = BASE_MSG_ID + 23;
+        int UPDATE_DEVICE_LIST_REQUEST = BASE_MSG_ID + 24;
     }
 
 

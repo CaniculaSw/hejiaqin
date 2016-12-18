@@ -123,7 +123,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         UserInfo userInfo = (UserInfo) UserInfoCacheManager.getUserInfo(getContext());
         if (userInfo != null) {
             boxAccount.setText(userInfo.getTvAccount());
-            createQRCode(userInfo.getTvAccount(), 1400, qrCode);
+            createQRCode(userInfo.getSdkAccount(), 1400, qrCode);
         }
 //        createQRCode("13776570335", 1400, qrCode);
     }

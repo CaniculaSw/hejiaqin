@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Message;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
@@ -37,6 +39,29 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
     private final static String TAG = "ScanActivity";
     public static final String IMAGE_TYPE = "image/*";
     public static final int IMAGE_CODE = 1;//相册
+
+
+    @Override
+    protected void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
+        switch (msg.what) {
+            case BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK:
+            case BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK:
+                showToast(R.string.waiting_for_respond);
+                break;
+            case BussinessConstants.SettingMsgID.STATUS_SEND_FAILED:
+            case BussinessConstants.SettingMsgID.STATUS_UNDELIVERED:
+                showToast(getString(R.string.sending_bind_request_failed), Toast.LENGTH_LONG, null);
+                break;
+            case BussinessConstants.SettingMsgID.BIND_SUCCESS:
+                showToast("绑定成功", Toast.LENGTH_SHORT, null);
+                settingLogic.bindSuccNotify();
+                doBack();
+                break;
+            default:
+                break;
+        }
+    }
 
     @Override
     protected int getLayoutId() {
@@ -194,12 +219,12 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Log.i(TAG, "result:" + result);
+        LogUtil.d(TAG, "result:" + result);
         vibrate();
         //TODO finish();
         if (result.length() > 0) {
             settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
-            finish();
+//            finish();
         }else {
             showToast("错误的二维码", Toast.LENGTH_SHORT, null);
             mQRCodeView.startSpotAndShowRect();
@@ -217,7 +242,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
         vibrate();
         if (result.length() > 0) {
             settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
-            finish();
+            //finish();
         }else {
             showToast("错误的二维码", Toast.LENGTH_SHORT, null);
             mQRCodeView.startSpotAndShowRect();
