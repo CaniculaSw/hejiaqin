@@ -27,7 +27,7 @@ public class BindTVBoxFirstActivity extends BasicActivity implements View.OnClic
     protected void initView() {
         headerView = (HeaderView) findViewById(R.id.more_bind_tv_header);
         bindTVBtn = (Button) findViewById(R.id.more_bind_tv_btn);
-        headerView.title.setText(R.string.more_choose_contact);
+        headerView.title.setText(R.string.more_send_to_tv);
         headerView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
     }
 

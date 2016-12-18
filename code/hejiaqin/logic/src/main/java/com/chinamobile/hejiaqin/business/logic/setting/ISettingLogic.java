@@ -25,4 +25,6 @@ public interface ISettingLogic {
     public void sendBindResult(String toNumber, String opCode);
 
     public void saveBindRequest(TextMessage message);
+
+    public void bindSuccNotify();
 }

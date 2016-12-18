@@ -10,6 +10,7 @@ public class MissCallMessage {
 
     private boolean isChecked;
 
+
     public String getFrom() {
         return from;
     }

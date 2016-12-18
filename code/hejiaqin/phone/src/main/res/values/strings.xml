@@ -192,4 +192,12 @@
     <string name="server_side_error">系统异常</string>
     <string name="prompt_empty_feedback_content">请输入反馈内容</string>
     <string name="prompt_feedback_ok">提交成功</string>
+    <string name="sending_contact">正在发送联系人...</string>
+    <string name="sending_contact_succ">发送联系人成功...</string>
+    <string name="sending_contact_failed">发送联系人失败...</string>
+    <string name="sending_bind_request">正在发送绑定请求...</string>
+    <string name="sending_bind_request_success">绑定请求发送成功...</string>
+    <string name="sending_bind_request_failed">绑定请求发送失败...</string>
+    <string name="waiting_for_respond">正在等待对方接受你的请求...</string>
+    <string name="bind_denied"></string>
 </resources>

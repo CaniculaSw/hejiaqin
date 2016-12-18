@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
+import android.content.Intent;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,20 +14,23 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.more.adapter.MoreSearchContactAdapter;
+import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectContactAdapter;
 import com.customer.framework.utils.LogUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
- * Created by eshaohu on 16/11/14.
+ * Created by eshaohu on 16/12/16.
  */
-public class MoreContactSearchActivity extends BasicActivity implements View.OnClickListener {
+public class MoreSearchAndSendContactActivity extends BasicActivity implements View.OnClickListener {
 
-    private static final String TAG = "MoreContactSearchActivity";
+    private static final String TAG = "MoreSearchAndSendContactActivity";
 
-    private MoreSearchContactAdapter adapter;
+    private SelectContactAdapter adapter;
     private EditText searchInput;
     private View searchDelete;
     private View searchCancel;
@@ -34,7 +38,7 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
 
     private IContactsLogic contactsLogic;
     private int contactType = Constant.CONTACT_TYPE_APP;
-
+    private Set<String> srcSelectedSet = new HashSet<>();
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +58,7 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
         View headView = getLayoutInflater().inflate(R.layout.layout_contact_search_contact_head_view, null);
         contactsListView.addHeaderView(headView);
 
-        adapter = new MoreSearchContactAdapter(this);
+        adapter = new SelectContactAdapter(this,getHandler());
         contactsListView.setAdapter(adapter);
     }
 
@@ -62,6 +66,10 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
     protected void initDate() {
         contactType = getIntent().getIntExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
                 , MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        if (getIntent().getSerializableExtra("selected") != null){
+            this.srcSelectedSet.addAll((Set<String>)getIntent().getSerializableExtra("selected"));
+            adapter.setTheSelectedSet(this.srcSelectedSet);
+        }
     }
 
     @Override
@@ -99,6 +107,9 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
         searchCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("selected", (Serializable) adapter.getSelectedSet());
+                setResult(RESULT_OK,intent);
                 doBack();
             }
         });
@@ -137,18 +148,18 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
         contactsLogic.searchLocalContactLst(input, TAG);
     }
 
+
     public void setData(List<ContactsInfo> contactsInfoList) {
         List<ContactsInfo> tmpContactsInfoList = new ArrayList<>();
         if (null != contactsInfoList) {
             tmpContactsInfoList.addAll(contactsInfoList);
         }
-        adapter.setData(tmpContactsInfoList);
+        adapter.setData(tmpContactsInfoList,false);
     }
 
     private boolean isAppContact() {
         return contactType == Constant.CONTACT_TYPE_APP;
     }
-
 
     public final class Constant {
         public static final String INTENT_DATA_CONTACT_TYPE = "intent_data_contact_type";

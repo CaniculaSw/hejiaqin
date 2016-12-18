@@ -353,6 +353,7 @@ public class BussinessConstants {
         String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
         String APP_IMG_DEFAULT_NAME = "hejiaqin_app_default_img.jpg"; //头像图片默认名字
         String MORE_SHARE_APP_URL = "http://www.baidu.com";
+        int SEND_CONTACT_SEARCH = 1;
     }
 
     /**
@@ -390,7 +391,12 @@ public class BussinessConstants {
         int SEND_CONTACT_REQUEST = BASE_MSG_ID + 16;
         int SEND_CONTACT_RESPOND_SUCCESS = BASE_MSG_ID + 17;
         int SEND_CONTACT_RESPOND_DENIED = BASE_MSG_ID + 18;
-
+        int STATUS_DELIVERY_OK = BASE_MSG_ID + 19;
+        int STATUS_DISPLAY_OK = BASE_MSG_ID + 20;
+        int STATUS_SEND_FAILED = BASE_MSG_ID + 21;
+        int STATUS_UNDELIVERED = BASE_MSG_ID + 22;
+        int SENDING_BIND_REQUEST = BASE_MSG_ID + 23;
+        int UPDATE_DEVICE_LIST_REQUEST = BASE_MSG_ID + 24;
     }
 
 

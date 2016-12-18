@@ -2,7 +2,6 @@ package com.chinamobile.hejiaqin.business.ui.setting.dialog;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -10,17 +9,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
-import com.chinamobile.hejiaqin.business.logic.setting.SettingLogic;
-import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
-import com.chinamobile.hejiaqin.business.model.login.UserInfo;
-import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.StringUtil;
 
 /**
  * Created by eshaohu on 16/8/26.
@@ -31,6 +26,7 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
     LinearLayout commitBtn;
     LinearLayout cancleBtn;
     ISettingLogic settingLogic;
+    RelativeLayout inputLayout;
 
     @Override
     protected int getLayoutId() {
@@ -43,6 +39,7 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
         deleteAllBtn = (ImageButton) findViewById(R.id.delete_all_btn);
         commitBtn = (LinearLayout) findViewById(R.id.btn_commit);
         cancleBtn = (LinearLayout) findViewById(R.id.btn_cancle);
+        inputLayout = (RelativeLayout) findViewById(R.id.input_number_layout);
     }
 
     @Override
@@ -81,8 +78,13 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
                 }
+//                    inputLayout.setBackgroundResource(R.drawable.btn_bg_selected);
+//                }else if(!cancleBtn.isFocused()){
+//                    inputLayout.setBackgroundResource(R.drawable.btn_bg_normal);
+//                }
             }
         });
+
     }
 
     @Override
@@ -111,7 +113,7 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
     private void doCommit() {
         String input = inputNumber.getText().toString();
         String id = getIntent().getStringExtra("id");
-        if (input.length() > 0) {
+        if (input.length() > 0 && StringUtil.isNumeric(input, false)) {
             settingLogic.handleCommit(getApplicationContext(), input, id);
             finish();
         }

@@ -35,7 +35,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:textColor="@color/more_black_404040"
-            android:textSize="32px" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <ImageView
@@ -80,7 +80,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/send_contact"
                 android:textColor="@color/more_black_404040"
-                android:textSize="28px" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,7 +106,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/remote_monitor"
                 android:textColor="@color/more_black_404040"
-                android:textSize="28px" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

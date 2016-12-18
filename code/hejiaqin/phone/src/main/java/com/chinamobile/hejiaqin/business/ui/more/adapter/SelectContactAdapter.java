@@ -14,11 +14,15 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.customer.framework.ui.AdapterViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -32,8 +36,8 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
     private AdapterViewHolder mListViewHolder;
     private AdapterViewHolder mHeaderViewHolder;
+    private Set<String> selectedSet = new HashSet<String>();
 
-    private Set<ContactsInfo> selectedSet = new HashSet<ContactsInfo>();
 
     public SelectContactAdapter(Context context, Handler handler) {
         mContext = context;
@@ -68,10 +72,16 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
     private void initView(int position, AdapterViewHolder holder) {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.setText(R.id.contact_name_text, contactsInfo.getName());
-        CheckBox checkBox = (CheckBox) holder.getView(R.id.more_select_contact_cb);
 
+        Picasso.with(mContext.getApplicationContext())
+                .load(contactsInfo.getPhotoSm())
+                .placeholder(R.drawable.contact_photo_default)
+                .error(R.drawable.contact_photo_default).into((CircleImageView) holder.getView(R.id.contact_photo_img));
+
+
+        CheckBox checkBox = (CheckBox) holder.getView(R.id.more_select_contact_cb);
         if (contactsInfo != null) {
-            if (selectedSet.contains(contactsInfo)) {
+            if (this.selectedSet.contains(contactsInfo.getContactId())) {
                 checkBox.setChecked(true);
             } else {
                 checkBox.setChecked(false);
@@ -83,10 +93,10 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
             public void onClick(View v) {
                 ((CheckBox) v).setChecked(((CheckBox) v).isChecked());
                 if (((CheckBox) v).isChecked()) {
-                    selectedSet.add(contactsInfo);
+                    selectedSet.add(contactsInfo.getContactId());
 
                 } else {
-                    selectedSet.remove(contactsInfo);
+                    selectedSet.remove(contactsInfo.getContactId());
                 }
                 notifyCheckedNum();
             }
@@ -110,23 +120,26 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
         return contactsInfo.getGroupName().charAt(0);
     }
 
-    public void setData(List<ContactsInfo> contactsInfoList) {
+    public void setData(List<ContactsInfo> contactsInfoList, boolean clearSelectedSet) {
         this.contactsInfoList.clear();
-        this.selectedSet.clear();
+        if (clearSelectedSet) {
+            this.selectedSet.clear();
+        }
         if (null != contactsInfoList) {
             this.contactsInfoList.addAll(contactsInfoList);
         }
         notifyDataSetChanged();
     }
 
-    public Set<ContactsInfo> getSelectedSet() {
-        return selectedSet;
+    public void setData(List<ContactsInfo> contactsInfoList) {
+        setData(contactsInfoList, true);
     }
 
     public void selectAll(boolean isSelectAll) {
         if (isSelectAll) {
-            if (!selectedSet.containsAll(this.contactsInfoList)) {
-                selectedSet.addAll(this.contactsInfoList);
+            Iterator<ContactsInfo> iterator = this.contactsInfoList.iterator();
+            while (iterator.hasNext()) {
+                selectedSet.add(iterator.next().getContactId());
             }
         } else {
             selectedSet.clear();
@@ -136,8 +149,48 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
         notifyCheckedNum();
     }
 
-    public Set<ContactsInfo> getSelectedContactSet(){
-        return this.selectedSet;
+    public Set<ContactsInfo> getSelectedContactSet() {
+        Set<ContactsInfo> set = new HashSet<>();
+        Iterator<String> iterator = this.selectedSet.iterator();
+        while (iterator.hasNext()) {
+            ContactsInfo info = getContactByContactID(iterator.next());
+            if (info != null) {
+                set.add(info);
+            }
+        }
+        return set;
+    }
+
+    public Set<String> getSelectedSet() {
+        Set<String> set = new HashSet<>();
+        set.addAll(this.selectedSet);
+
+        return set;
+    }
+
+    public List<ContactsInfo> getContactsInfoList() {
+        return this.contactsInfoList;
+    }
+
+    public void setTheSelectedSet(Set<String> src) {
+        if (src == null) {
+            return;
+        }
+        this.selectedSet.clear();
+        this.selectedSet.addAll(src);
+        notifyDataSetChanged();
+        notifyCheckedNum();
+    }
+
+    private ContactsInfo getContactByContactID(String contactID) {
+        Iterator<ContactsInfo> iterator = this.contactsInfoList.iterator();
+        while (iterator.hasNext()) {
+            ContactsInfo contactsInfo = iterator.next();
+            if (contactID.equals(contactsInfo.getContactId())) {
+                return contactsInfo;
+            }
+        }
+        return null;
     }
 
     private void notifyCheckedNum() {

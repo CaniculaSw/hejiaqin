@@ -61,17 +61,22 @@
             android:drawSelectorOnTop="true"
             android:fastScrollEnabled="false"
             android:overScrollMode="never"
-            android:scrollbars="none"
             android:padding="0dp"
-            android:scrollbarStyle="outsideOverlay" />
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="none" />
 
-        <com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView
-            android:id="@+id/sidebar"
-            android:layout_width="35dp"
+        <com.chinamobile.hejiaqin.business.ui.basic.view.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            phone:sidebar_text_color_nor="@color/contact_list_username_text_color"
-            phone:sidebar_text_color_press="@color/contact_list_search_text_color" />
+            android:visibility="gone"/>
+        <!--<com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView-->
+        <!--android:id="@+id/sidebar"-->
+        <!--android:layout_width="35dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--phone:sidebar_text_color_nor="@color/contact_list_username_text_color"-->
+        <!--phone:sidebar_text_color_press="@color/contact_list_search_text_color" />-->
 
 
         <TextView
@@ -84,6 +89,6 @@
             android:text="A"
             android:textSize="40sp"
             android:visibility="gone" />
-        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -147,7 +147,7 @@ public abstract class BasicActivity extends BaseActivity {
     protected void handleStateMessage(Message msg) {
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
-                LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID 1");
+                LogUtil.d(TAG, "CALL_ON_TV_INCOMING_MSG_ID 1");
         }
         //只在当前activity处理
         if (MyActivityManager.getInstance().isCurrentActity(this.getClass().getName())) {
@@ -182,12 +182,13 @@ public abstract class BasicActivity extends BaseActivity {
                     String nameList[] = names.split(";");
                     String numList[] = numbers.split(";");
                     for (int i = 0; i < nameList.length; i++) {
-                        contactsLogic.addAppContact(nameList[i],numList[i],null);
+                        contactsLogic.addAppContact(nameList[i], numList[i], null);
                     }
                     settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
+                    showToast("保存联系人成功", Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
-                    LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID");
+                    LogUtil.d(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
                         long incomingSessionId = (long) msg.obj;
                         VideoInComingDialog.show(this, incomingSessionId,

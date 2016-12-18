@@ -24,6 +24,7 @@
             android:textSize="24sp" />
 
         <RelativeLayout
+            android:id="@+id/input_number_layout"
             android:layout_width="321dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

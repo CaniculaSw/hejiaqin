@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.model.more.MissCallMessage;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.MissCallAdapter;
+import com.huawei.rcs.call.CallLogApi;
+import com.huawei.rcs.call.ContactCallLog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +24,6 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
     private MissCallAdapter adapter;
     TextView mDeleteButton;
     ListView msgListView;
-    List<MissCallMessage> mMissCallMessages;
 
     @Override
     protected void handleFragmentMsg(Message msg) {
@@ -78,9 +77,8 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
 
     @Override
     protected void initData() {
-        mMissCallMessages = new ArrayList<MissCallMessage>();
-
-
+        List<ContactCallLog> callLogList = CallLogApi.getAllContactCallLogList(CallLogApi.CALLLOG_TYPE_VIDEO,-1);
+//        LogUtil.i(TAG,"callLogList size is: "+callLogList.size());
 //        MissCallMessage testMessage1 = new MissCallMessage();
 //        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));
 //        testMessage1.setFrom("13776570335");
@@ -102,7 +100,7 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
 //        mMissCallMessages.add(testMessage3);
 //        mMissCallMessages.add(testMessage4);
 
-        adapter.setData(mMissCallMessages);
+//        adapter.setData(callLogList);
     }
 
     @Override

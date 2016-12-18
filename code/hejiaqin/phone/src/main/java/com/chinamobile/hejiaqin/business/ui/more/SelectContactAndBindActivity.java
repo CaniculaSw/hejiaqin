@@ -6,16 +6,17 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.basic.view.sidebar.SideBarView;
+import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.SelectContactAndBindAdapter;
-import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
 
@@ -25,16 +26,20 @@ import java.util.List;
 public class SelectContactAndBindActivity extends BasicActivity implements View.OnClickListener {
     private static final String TAG = "SelectContactAndBindActivity";
     private IContactsLogic contactsLogic;
+    private ISettingLogic settingLogic;
     private StickyListHeadersListView contactListView;
     private SelectContactAndBindAdapter adapter;
     private TextView searchText;
-    private SideBarView sideBarView;
     private TextView tipText;
-
+    private HeaderView headerView;
+    private View progressLayout;
+    private TextView progressTips;
+    private View searchLayout;
+    private boolean isProgressShowing;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_app_contact_list;
+        return R.layout.activity_select_contact_and_bind;
     }
 
     @Override
@@ -46,7 +51,7 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
         // 添加搜索框
         LayoutInflater inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
-        View searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
+        searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         contactListView.addHeaderView(searchLayout);
         // 设置搜索显示的文字
         searchText = (TextView) searchLayout.findViewById(R.id.contact_search_text);
@@ -54,41 +59,19 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
         searchLayout.findViewById(R.id.contact_search_layout).setOnClickListener(this);
 
         // 添加adapter
-        adapter = new SelectContactAndBindAdapter(context);
+        adapter = new SelectContactAndBindAdapter(context, getHandler());
         contactListView.setAdapter(adapter);
 
         tipText = (TextView) findViewById(R.id.tip);
-        sideBarView = (SideBarView) findViewById(R.id.sidebar);
-        sideBarView.setOnLetterSelectListen(new SideBarView.LetterSelectListener() {
-            @Override
-            public void onLetterSelected(String letter) {
-                int position = adapter.getPositionByLetter(letter);
-                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
-                        + position);
-                tipText.setText(letter);
-                tipText.setVisibility(View.VISIBLE);
-                if (position >= 0) {
-                    contactListView.setSelection(position);
-                }
-            }
 
-            @Override
-            public void onLetterChanged(String letter) {
-                int position = adapter.getPositionByLetter(letter);
-                LogUtil.i(TAG, "onLetterChanged: " + letter + "; position: "
-                        + position);
-                tipText.setText(letter);
-                tipText.setVisibility(View.VISIBLE);
-                if (position >= 0) {
-                    contactListView.setSelection(position);
-                }
-            }
+        headerView = (HeaderView) findViewById(R.id.header);
+        headerView.title.setText(R.string.more_choose_contact);
+        headerView.backImageView.setImageResource(R.mipmap.title_icon_close);
+        headerView.backImageView.setOnClickListener(this);
 
-            @Override
-            public void onLetterReleased(String letter) {
-                tipText.setVisibility(View.GONE);
-            }
-        });
+        progressLayout = inflater.inflate(R.layout.layout_progress_tips, null);
+        progressTips = (TextView) progressLayout.findViewById(R.id.progress_text);
+        isProgressShowing = false;
     }
 
     @Override
@@ -99,6 +82,7 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
     @Override
     protected void initLogics() {
         contactsLogic = (IContactsLogic) this.getLogicByInterfaceClass(IContactsLogic.class);
+        settingLogic = (ISettingLogic) this.getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -109,6 +93,25 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
                 searchText.setText(String.format(this.getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                break;
+            case BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST:
+                switchHeaderView(true, getString(R.string.sending_bind_request));
+            case BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK:
+            case BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK:
+                switchHeaderView(true, getString(R.string.waiting_for_respond));
+                break;
+            case BussinessConstants.SettingMsgID.STATUS_SEND_FAILED:
+            case BussinessConstants.SettingMsgID.STATUS_UNDELIVERED:
+                switchHeaderView(false, getString(R.string.sending_bind_request_failed));
+                showToast(getString(R.string.sending_bind_request_failed), Toast.LENGTH_LONG, null);
+                break;
+            case BussinessConstants.SettingMsgID.BIND_SUCCESS:
+                showToast("绑定成功", Toast.LENGTH_SHORT, null);
+                settingLogic.bindSuccNotify();
+                doBack();
+                break;
+            case BussinessConstants.SettingMsgID.BIND_DENIED:
+                switchHeaderView(false, null);
                 break;
         }
     }
@@ -130,6 +133,9 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
                 // TODO
                 enterSearchView();
                 break;
+            case R.id.back_iv:
+                doBack();
+                break;
         }
     }
 
@@ -140,5 +146,21 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
         startActivity(intent);
     }
 
-
+    private void switchHeaderView(boolean showProgress, String tips) {
+        if (showProgress) {
+            contactListView.removeHeaderView(searchLayout);
+            if (!isProgressShowing) {
+                contactListView.addHeaderView(progressLayout);
+            }
+            if (tips != null && tips.length() > 0) {
+                progressTips.setText(tips);
+            }
+            isProgressShowing = true;
+        } else {
+            contactListView.removeHeaderView(progressLayout);
+            contactListView.removeHeaderView(searchLayout);
+            contactListView.addHeaderView(searchLayout);
+            isProgressShowing = false;
+        }
+    }
 }

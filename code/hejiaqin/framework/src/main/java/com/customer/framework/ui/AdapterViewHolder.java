@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.text.Spanned;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -44,6 +45,12 @@ public class AdapterViewHolder {
 	}
 
 	public AdapterViewHolder setText(int viewId, String value) {
+		TextView view = retrieveView(viewId);
+		view.setText(value);
+		return this;
+	}
+
+	public AdapterViewHolder setText(int viewId, Spanned value) {
 		TextView view = retrieveView(viewId);
 		view.setText(value);
 		return this;
