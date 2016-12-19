@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
@@ -13,13 +14,14 @@ import com.chinamobile.hejiaqin.tv.R;
 public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
+    private IVoipLogic mVoipLogic;
     private ISettingLogic settingLogic;
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (loginLogic.hasLogined()) {
+        if (loginLogic.hasLogined() && mVoipLogic.hasLogined()) {
             jumpToMainFragmentActivity();
         } else {
             jumpToLoginActivity();
@@ -51,6 +53,7 @@ public class MainActivity extends BasicActivity {
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
         settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+        mVoipLogic =  (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     private void jumpToMainFragmentActivity() {

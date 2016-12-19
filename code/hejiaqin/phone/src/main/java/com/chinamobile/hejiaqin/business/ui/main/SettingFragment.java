@@ -203,6 +203,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     private void doQuit() {
         loginLogic.logout();
         mVoipLogic.logout();
+        mVoipLogic.clearLogined();
         Intent intent = new Intent(getContext(), LoginActivity.class);
         this.startActivity(intent);
         MyActivityManager.getInstance().finishAllActivity(LoginActivity.class.getName());

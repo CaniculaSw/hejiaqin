@@ -18,6 +18,10 @@ public interface IVoipLogic {
 
     public void logout();
 
+    public void clearLogined();
+
+    public boolean hasLogined();
+
     public CallSession call(String calleeNumber, boolean isVideoCall);
 
     public void hangup(CallSession callSession, boolean isInComing, boolean isTalking,int callTime);

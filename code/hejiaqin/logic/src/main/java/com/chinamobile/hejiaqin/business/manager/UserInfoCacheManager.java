@@ -237,4 +237,16 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Setting.VERSION_INFO_KEY});
     }
 
+    public static void saveVoipLogined(Context context) {
+        StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.VOIP_LOGINED_KEY, true);
+    }
+
+    public static void clearVoipLogined(Context context) {
+        StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.VOIP_LOGINED_KEY});
+    }
+
+    public static boolean getVoipLogined(Context context) {
+       return StorageMgr.getInstance().getSharedPStorage(context).getBoolean(BussinessConstants.Login.VOIP_LOGINED_KEY);
+    }
+
 }
