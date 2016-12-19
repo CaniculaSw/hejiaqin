@@ -173,7 +173,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         if (TextUtils.isEmpty(account)) {
             accountEditTv.requestFocus();
 //            displayErrorInfo(getString(R.string.prompt_phone_no));
-            showToast(R.string.prompt_phone_no, Toast.LENGTH_SHORT, null);
+            showToast(R.string.prompt_account, Toast.LENGTH_SHORT, null);
             return;
         }
         String password = passwdEditTv.getText().toString();

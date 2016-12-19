@@ -27,6 +27,7 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
     LinearLayout cancleBtn;
     ISettingLogic settingLogic;
     RelativeLayout inputLayout;
+    LinearLayout numberLayout;
 
     @Override
     protected int getLayoutId() {
@@ -40,6 +41,9 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
         commitBtn = (LinearLayout) findViewById(R.id.btn_commit);
         cancleBtn = (LinearLayout) findViewById(R.id.btn_cancle);
         inputLayout = (RelativeLayout) findViewById(R.id.input_number_layout);
+        numberLayout = (LinearLayout) findViewById(R.id.number_ll);
+        numberLayout.setBackgroundResource(R.drawable.btn_bg_selected);
+        inputLayout.setBackgroundResource(R.color.transparent);
     }
 
     @Override
@@ -77,11 +81,24 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
                     inputNumber.setSelection(inputNumber.getText().length());
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+                    numberLayout.setBackgroundResource(R.drawable.btn_bg_selected);
+                    inputLayout.setBackgroundResource(R.color.transparent);
+                } else {
+                    numberLayout.setBackgroundResource(R.color.transparent);
+                    inputLayout.setBackgroundResource(R.drawable.edittext_bg);
                 }
-//                    inputLayout.setBackgroundResource(R.drawable.btn_bg_selected);
-//                }else if(!cancleBtn.isFocused()){
-//                    inputLayout.setBackgroundResource(R.drawable.btn_bg_normal);
-//                }
+            }
+        });
+        deleteAllBtn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    numberLayout.setBackgroundResource(R.drawable.btn_bg_selected);
+                    inputLayout.setBackgroundResource(R.color.transparent);
+                } else {
+                    numberLayout.setBackgroundResource(R.color.transparent);
+                    inputLayout.setBackgroundResource(R.drawable.edittext_bg);
+                }
             }
         });
 
