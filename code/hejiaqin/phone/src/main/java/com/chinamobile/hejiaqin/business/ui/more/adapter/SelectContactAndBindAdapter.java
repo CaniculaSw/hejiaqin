@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
@@ -86,7 +85,7 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
             @Override
             public void onClick(View v) {
                 settingLogic.sendBindReq(contactsInfo.getPhone(), UserInfoCacheManager.getUserInfo(mContext).getPhone());
-                handler.sendEmptyMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST);
+//                handler.sendEmptyMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST);
             }
         });
     }

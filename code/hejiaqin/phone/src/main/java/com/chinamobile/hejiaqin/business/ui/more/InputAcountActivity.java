@@ -117,6 +117,9 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
             case BussinessConstants.SettingMsgID.BIND_DENIED:
                 progressLayout.setVisibility(View.INVISIBLE);
                 break;
+            case BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST:
+                progressTip.setText(getString(R.string.sending_bind_request));
+                break;
             default:
                 break;
         }
@@ -132,11 +135,8 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
                 if (mName.getText().length() <= 0 || mNumber.getText().length() <= 0) {
                     break;
                 } else {
-//                    showToast("正在等待同意您的请求", Toast.LENGTH_LONG,null);
                     settingLogic.sendBindReq(mNumber.getText().toString(), UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
                     progressLayout.setVisibility(View.VISIBLE);
-                    progressTip.setText(R.string.sending_bind_request);
-
                 }
                 break;
             default:
