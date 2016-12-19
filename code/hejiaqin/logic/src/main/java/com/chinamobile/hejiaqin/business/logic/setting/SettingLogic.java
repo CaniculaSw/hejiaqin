@@ -303,6 +303,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
 
     @Override
     public void sendBindReq(String tvNumber, String phoneNum) {
+        sendEmptyMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST);
         sendTextMessage(tvNumber, CaaSUtil.CmdType.BIND, CaaSUtil.OpCode.BIND, phoneNum);
     }
 

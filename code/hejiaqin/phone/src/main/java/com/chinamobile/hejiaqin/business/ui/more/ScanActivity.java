@@ -58,6 +58,9 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                 settingLogic.bindSuccNotify();
                 doBack();
                 break;
+            case BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST:
+                showToast(getString(R.string.sending_bind_request), Toast.LENGTH_SHORT, null);
+                break;
             default:
                 break;
         }

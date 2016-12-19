@@ -96,6 +96,7 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
                 break;
             case BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST:
                 switchHeaderView(true, getString(R.string.sending_bind_request));
+                break;
             case BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK:
             case BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK:
                 switchHeaderView(true, getString(R.string.waiting_for_respond));
