@@ -23,11 +23,7 @@ public class HeApplication extends RCSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        String version = LoginApi.DEFAULT_DM_VERSION;
-        LoginApi.init(this, version);
-
         UpgradeApi.init(getApplicationContext());
-
         HmeAudio.setup(this);
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
@@ -41,7 +37,7 @@ public class HeApplication extends RCSApplication {
         //设置不插入系统通话记录
         CallApi.setCustomCfg(CallApi.CFG_CALLLOG_INSERT_SYS_DB, CallApi.CFG_VALUE_NO);
         SysApi.loadTls(new DefaultTlsHelper());
-        SysApi.loadStg(new NatStgHelper());
+//        SysApi.loadStg(new NatStgHelper());
 //        SysApi.loadStg(new SvnStgHelper());
         SysApi.setDMVersion("V1.2.88.5-02230000");
         //initial message API
@@ -52,7 +48,6 @@ public class HeApplication extends RCSApplication {
         MessagingApi.setConfig(
                 MessagingApi.CONFIG_MAJOR_USE_SYS_SMS,
                 MessagingApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
-//        SysApi.loadStg(new SvnStgHelper());
 
 //        CaasOmp.init();
 //        CaasOmpCfg.setString(CaasOmpCfg.EN_OMP_CFG_SERVER_IP, "205.177.226.80");

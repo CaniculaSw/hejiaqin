@@ -100,6 +100,8 @@ public abstract class BasicActivity extends BaseActivity {
         LogUtil.setContext(getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
+        LogUtil.d(TAG, "device:" + Build.DEVICE);
+        LogUtil.d(TAG,"model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
         ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)).setIsTv(true);

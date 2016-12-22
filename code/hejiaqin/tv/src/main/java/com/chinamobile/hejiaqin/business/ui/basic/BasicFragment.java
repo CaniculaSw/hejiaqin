@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.basic;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import com.customer.framework.ui.BaseFragment;
  */
 public abstract class BasicFragment extends BaseFragment {
 
+    protected String TAG = this.getClass().getSimpleName();
+
     protected BackListener mListener;
 
     protected boolean isCreateView = false;
@@ -42,6 +45,8 @@ public abstract class BasicFragment extends BaseFragment {
         LogUtil.setContext(getActivity().getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
+        LogUtil.d(TAG, "device:" + Build.DEVICE);
+        LogUtil.d(TAG, "model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
         ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)).setIsTv(true);
