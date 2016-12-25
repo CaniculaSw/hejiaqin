@@ -1,1 +1,1 @@
-include ':phone', ':framework', ':logic', ':tv'
+include ':phone', ':framework', ':logic', ':tv', ':logic_voip'
