@@ -24,11 +24,11 @@ public interface IVoipLogic {
 
     public CallSession call(String calleeNumber, boolean isVideoCall);
 
-    public void hangup(CallSession callSession, boolean isInComing, boolean isTalking,int callTime);
+    public void hangup(CallSession callSession, boolean isInComing, boolean isTalking, int callTime);
 
     public void answerVideo(CallSession callSession);
 
-    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking,int callTime);
+    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking, int callTime);
 
     public void delAllCallRecord();
 
