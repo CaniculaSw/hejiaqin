@@ -11,7 +11,7 @@
         android:layout_width="442dp"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <SurfaceView
             android:id="@+id/large_video_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,7 +55,7 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <LinearLayout
+    <SurfaceView
         android:id="@+id/small_video_layout"
         android:layout_width="242dp"
         android:layout_height="142dp"

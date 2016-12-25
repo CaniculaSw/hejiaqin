@@ -54,4 +54,8 @@ dependencies {
     compile files('src/main/jniLibs/uspwatcher.jar')
     compile files('src/main/jniLibs/sa_im.jar')
     compile files('src/main/jniLibs/sci_im.jar')
+    compile files('src/main/jniLibs/sa_hme_audio_tv.jar')
+    compile files('src/main/jniLibs/sa_hme_video_tv.jar')
+    compile files('src/main/jniLibs/sci_hme_audio_tv.jar')
+    compile files('src/main/jniLibs/sci_hme_video_tv.jar')
 }
