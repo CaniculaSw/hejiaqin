@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chinamobile.hejiaqin.business.logic.voip">
+    package="com.chinamobile.hejiaqin.business.logic.voip.tv">
 
     <application
         android:allowBackup="true"
