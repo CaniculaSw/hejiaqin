@@ -38,6 +38,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
     private LinearLayout mHangupLayout;
 
+    private LinearLayout mBackLayout;
+
     //通话会话对象
     private CallSession mCallSession = null;
 
@@ -125,7 +127,9 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         localVideoSurface = (SurfaceView)findViewById(R.id.large_video_surface);
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
+        mBackLayout = (LinearLayout) findViewById(R.id.back_layout);
         mHangupLayout.setOnClickListener(this);
+        mBackLayout.setOnClickListener(this);
     }
 
     @Override
@@ -228,6 +232,9 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 closed = true;
                 mCallSession.terminate();
                 finish();
+                break;
+            case R.id.back_layout:
+                moveTaskToBack(true);
                 break;
         }
 
