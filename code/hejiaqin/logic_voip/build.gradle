@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 15
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile project(':logic')
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
+    compile files('src/main/jniLibs/HME_Audio.jar')
+    compile files('src/main/jniLibs/HME_Video.jar')
+    compile files('src/main/jniLibs/sa_base.jar')
+    compile files('src/main/jniLibs/sa_call.jar')
+    compile files('src/main/jniLibs/sa_default_tls.jar')
+    compile files('src/main/jniLibs/sa_hme_audio.jar')
+    compile files('src/main/jniLibs/sa_hme_video.jar')
+    compile files('src/main/jniLibs/sa_nat_stg.jar')
+    compile files('src/main/jniLibs/sa_omp.jar')
+    compile files('src/main/jniLibs/sa_socks5.jar')
+    compile files('src/main/jniLibs/sa_stun.jar')
+    compile files('src/main/jniLibs/sa_svn_stg.jar')
+    compile files('src/main/jniLibs/sa_tsc_stg.jar')
+    compile files('src/main/jniLibs/sci_base.jar')
+    compile files('src/main/jniLibs/sci_call.jar')
+    compile files('src/main/jniLibs/sci_default_tls.jar')
+    compile files('src/main/jniLibs/sci_hme_audio.jar')
+    compile files('src/main/jniLibs/sci_hme_video.jar')
+    compile files('src/main/jniLibs/uspbase.jar')
+    compile files('src/main/jniLibs/uspdma.jar')
+    compile files('src/main/jniLibs/uspimbs.jar')
+    compile files('src/main/jniLibs/usplogin.jar')
+    compile files('src/main/jniLibs/uspmqtt.jar')
+    compile files('src/main/jniLibs/uspomp.jar')
+    compile files('src/main/jniLibs/uspsocks5.jar')
+    compile files('src/main/jniLibs/uspstg.jar')
+    compile files('src/main/jniLibs/uspwatcher.jar')
+    compile files('src/main/jniLibs/sa_im.jar')
+    compile files('src/main/jniLibs/sci_im.jar')
+}

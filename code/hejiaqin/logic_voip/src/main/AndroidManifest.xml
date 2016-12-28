@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chinamobile.hejiaqin.business.logic.voip">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+        <provider android:name="com.huawei.rcs.message.provider.MessageProvider"
+            android:authorities="com.huawei.rcs.messaging"
+            android:exported="false" />
+    </application>
+
+</manifest>

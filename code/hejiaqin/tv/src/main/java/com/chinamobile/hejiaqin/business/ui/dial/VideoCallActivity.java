@@ -4,37 +4,32 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.SensorManager;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.media.AudioManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.Display;
-import android.view.OrientationEventListener;
-import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.CaaSSdkService;
+import com.chinamobile.hejiaqin.business.Const;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
 import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.system.SysApi;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,9 +37,6 @@ import java.util.TimerTask;
 public class VideoCallActivity extends BasicActivity implements View.OnClickListener {
 
     public static final String TAG = VideoCallActivity.class.getSimpleName();
-
-    private LinearLayout mLargeVideoLayout;
-    private LinearLayout mSmallVideoLayout;
 
     private TextView mTalkingTimeTv;
 
@@ -64,38 +56,101 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private int callTime;
     private Handler handler = new Handler();
 
-    /**
-     * 如果重力感应变化角度过小，则不处理.
-     */
-    private static final int ORIENTATION_SENSITIVITY = 45;
-
-    private int lastOrientation = 270;
-
-    private int lastDisplayRotation = Surface.ROTATION_0;
-
     private SurfaceView localVideoView;
     private SurfaceView remoteVideoView;
-
-    private boolean hasStoped = false;
 
     private boolean speakerState;
 
     private boolean closed;
 
+    private boolean m_isSmallVideoCreate_MPEG;
+    private boolean m_isBigVideoCreate_MPEG;
+
+    private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Rect rectLocal = new Rect();
+            int iState = intent.getIntExtra("state", -1);
+            LogApi.d(Const.TAG_UI, "camera stat change:" + iState);
+            if (1 == iState) {
+                rectLocal.left = 0;
+                rectLocal.top = 0;
+                rectLocal.right = 320;
+                rectLocal.bottom = 180;
+                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
+                CaaSSdkService.openLocalView();
+            } else {
+                CaaSSdkService.closeLocalView();
+            }
+        }
+    };
+
     /* display the video stream which arrived from remote. */
-    private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver remoteNetStatusChangeReciverr = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             if (!mCallSession.equals(session)) {
                 return;
             }
-            remoteVideoView.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            mLargeVideoLayout.updateViewLayout(remoteVideoView, layoutParams);
+            Bundle bundle = intent.getExtras();
+            int status = bundle.getInt(CallApi.PARAM_CALL_NET_STATUS);
+            if (status == 1) {
+                Rect rectLocal = new Rect();
+                rectLocal.left = 0;
+                rectLocal.top = 0;
+                rectLocal.right = 320;
+                rectLocal.bottom = 180;
+                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
+                CaaSSdkService.showRemoteVideoRender(true);
+            }
         }
     };
 
+    protected final SurfaceHolder.Callback surfaceCb = new SurfaceHolder.Callback() {
+        @Override
+        public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+        }
+
+        @Override
+        public void surfaceCreated(SurfaceHolder surfaceHolder) {
+            LogApi.d(Const.TAG_CALL, "surfaceCreated:");
+            if (localVideoView.getHolder() == surfaceHolder) {
+                m_isSmallVideoCreate_MPEG = true;
+            } else if (remoteVideoView.getHolder() == surfaceHolder) {
+                m_isBigVideoCreate_MPEG = true;
+            }
+            if (m_isSmallVideoCreate_MPEG && m_isBigVideoCreate_MPEG) {
+                showMpegView();
+            }
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder arg0) {
+            LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface");
+            if (localVideoView.getHolder() == arg0) {
+                LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
+                m_isSmallVideoCreate_MPEG = false;
+            } else if (remoteVideoView.getHolder() == arg0) {
+                LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
+                m_isBigVideoCreate_MPEG = false;
+            }
+        }
+
+        protected void showMpegView() {
+            if (mCallSession == null || localVideoView == null || remoteVideoView == null) {
+                LogApi.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svSmallVideo " + localVideoView + " m_svBigVideo " + remoteVideoView);
+                return;
+            }
+            LogApi.d(Const.TAG_CALL, "m_isSmallVideoCreate_MPEG: " + m_isSmallVideoCreate_MPEG + ", m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
+            if (m_isSmallVideoCreate_MPEG && m_isBigVideoCreate_MPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
+                int result1 = CallApi.createLocalVideoSurface(localVideoView.getHolder().getSurface());
+                int result2 = CallApi.createRemoteVideoSurface(remoteVideoView.getHolder().getSurface());
+                LogApi.d(Const.TAG_CALL, "result1: " + result1 + ", result2: " + result2);
+                mCallSession.showVideoWindow();
+            }
+        }
+    };
 
     @Override
     protected void initLogics() {
@@ -109,14 +164,12 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected void initView() {
+        CallApi.setPauseMode(1);
         //视频布局(呼出和通话中)
-        mLargeVideoLayout = (LinearLayout) findViewById(R.id.large_video_layout);
-        mSmallVideoLayout = (LinearLayout) findViewById(R.id.small_video_layout);
-
+        remoteVideoView = (SurfaceView) findViewById(R.id.large_video_layout);
+        localVideoView = (SurfaceView) findViewById(R.id.small_video_layout);
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
-
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
-
         mHangupLayout.setOnClickListener(this);
     }
 
@@ -134,152 +187,40 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showTalking() {
-        mIsTalking =true;
+        mIsTalking = true;
         AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         speakerState = audioManamger.isSpeakerphoneOn();
         if (!speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);
         }
-
-            OrientationEventListener listener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
-
-                @Override
-                public void onOrientationChanged(int orientation) {
-                    if (orientation != OrientationEventListener.ORIENTATION_UNKNOWN) {
-                        orientationChanged(orientation);
-                    }
-                }
-            };
-            if (listener.canDetectOrientation()) {
-                listener.enable();
-            } else {
-                LogUtil.e("V2OIP", "OrientationEventListener enable failed!!");
-            }
-
-        /* In order to properly display video, Camera rotate should be set. */
-        setCameraRotate();
         /* creat local video view and remote video view. */
         createVideoView();
         registerReceivers();
-        mCallSession.showVideoWindow();
         startCallTimeTask();
     }
 
-    private void setCameraRotate() {
-        Display display = this.getWindowManager().getDefaultDisplay();
-        int displayRotation = display.getRotation();
-        int cameraRotate = getCameraOrientation(displayRotation);
-        CallApi.setCameraRotate(cameraRotate);
-    }
-
     private void createVideoView() {
-
-        if (remoteVideoView == null) {
-            remoteVideoView = CallApi.createRemoteVideoView(getApplicationContext());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            remoteVideoView.setVisibility(View.GONE);
-            mLargeVideoLayout.addView(remoteVideoView, layoutParams);
-            remoteVideoView.setZOrderOnTop(false);
+        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+            mCallSession.showVideoWindow();
+            CaaSSdkService.setRemoteRenderPos(getFullScreenRect(), CallApi.VIDEO_LAYER_BOTTOM);
+            CaaSSdkService.showRemoteVideoRender(true);
+        }else{
+            remoteVideoView.getHolder().addCallback(surfaceCb);
+            localVideoView.getHolder().addCallback(surfaceCb);
+            localVideoView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+            localVideoView.setZOrderOnTop(true);
         }
-
-        if (localVideoView == null) {
-            localVideoView = CallApi.createLocalVideoView(getApplicationContext());
-            localVideoView.setZOrderOnTop(false);
-            localVideoView.setVisibility(View.GONE);
-        }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mSmallVideoLayout.addView(localVideoView, layoutParams);
-        localVideoView.setVisibility(View.VISIBLE);
-        mCallSession.showVideoWindow();
-
     }
 
-    private void orientationChanged(int orientation) {
-        int cameraRotate = 270;
-        int displayRotation = Surface.ROTATION_0;
-        if (Math.abs(orientation - lastOrientation) < ORIENTATION_SENSITIVITY
-                || Math.abs(orientation - lastOrientation - 360) < ORIENTATION_SENSITIVITY) {
-            return;
-        }
-
-        lastOrientation = orientation;
-
-        if (orientation < ORIENTATION_SENSITIVITY
-                || 360 - orientation < ORIENTATION_SENSITIVITY) {
-            displayRotation = Surface.ROTATION_0;
-        } else if (Math.abs(orientation - 90) <= ORIENTATION_SENSITIVITY) {
-            displayRotation = Surface.ROTATION_90;
-        } else if (Math.abs(orientation - 180) <= ORIENTATION_SENSITIVITY) {
-            displayRotation = Surface.ROTATION_180;
-        } else if (Math.abs(orientation - 270) <= ORIENTATION_SENSITIVITY) {
-            displayRotation = Surface.ROTATION_270;
-        } else {
-            LogUtil.e("V2OIP", "orientationChanged get wrong orientation:" + orientation + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
-            lastDisplayRotation = Surface.ROTATION_0;
-        }
-
-        if (lastDisplayRotation == displayRotation) {
-            return;
-        }
-
-        lastDisplayRotation = displayRotation;
-        cameraRotate = getCameraOrientation(lastDisplayRotation);
-        CallApi.setCameraRotate(cameraRotate);
+    private Rect getFullScreenRect() {
+        Rect rect = new Rect();
+        rect.left = 0;
+        rect.top = 0;
+        rect.right = 1280;
+        rect.bottom = 720;
+        return rect;
     }
 
-    /**
-     * get orientation to set camera orientation in this situation
-     *
-     * @param displayRotation get the displayRotation by Gravity sensor(onOrientationChanged event).
-     */
-    private int getCameraOrientation(int displayRotation) {
-
-        boolean isFrontCamera = true;
-        int cameraOrientation = 0;
-        int degrees = 0;
-        int result = 0;
-
-        if (CallApi.getCameraCount() < 2) {
-            isFrontCamera = false;
-            LogUtil.d("V2OIP", "getCameraOrientation getCameraCount " + CallApi.getCameraCount());
-        } else {
-            if (CallApi.getCamera() == CallApi.CAMERA_TYPE_FRONT) {
-                isFrontCamera = true;
-            } else {
-                isFrontCamera = false;
-            }
-        }
-
-        cameraOrientation = CallApi.getCameraRotate();
-
-        switch (displayRotation) {
-            case Surface.ROTATION_0:
-                degrees = 0;
-                break;
-            case Surface.ROTATION_90:
-                degrees = 270;
-                break;
-            case Surface.ROTATION_180:
-                degrees = 180;
-                break;
-            case Surface.ROTATION_270:
-                degrees = 90;
-                break;
-            default:
-                LogUtil.e("V2OIP", "getCameraOrientation wrong displayRotation " + displayRotation);
-                break;
-        }
-
-        CallApi.setVideoRenderRotate(degrees);
-
-        if (isFrontCamera) {
-            result = (cameraOrientation + degrees) % 360;
-        } else {
-            result = (cameraOrientation - degrees + 360) % 360;
-        }
-
-        return result;
-    }
 
     private void stopCallTimeTask() {
         if (timer != null) {
@@ -308,19 +249,18 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void registerReceivers() {
-
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-                remoteVideoStreamArrivedReceiver,
-                new IntentFilter(CallApi.EVENT_CALL_VIDEO_STREAM_ARRIVED));
-
-
+        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+            LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+                    remoteNetStatusChangeReciverr,
+                    new IntentFilter(CallApi.EVENT_CALL_VIDEO_NET_STATUS_CHANGE));
+        }
     }
 
     private void unRegisterReceivers() {
-
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(remoteVideoStreamArrivedReceiver);
-
+        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+            LocalBroadcastManager.getInstance(getApplicationContext())
+                    .unregisterReceiver(remoteNetStatusChangeReciverr);
+        }
     }
 
     @Override
@@ -336,7 +276,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
-                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking,callTime);
+                mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking, callTime);
                 finish();
                 break;
         }
@@ -366,7 +306,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                             }
                         }, 3000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-                        mVoipLogic.dealOnClosed(session, true, false,0);
+                        mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
                 break;
@@ -375,38 +315,14 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (!mIsTalking) {
-            return;
-        }
-        if ((null != localVideoView || null != remoteVideoView)
-                && CallSession.INVALID_ID != mCallSession.getSessionId()) {
-            if (hasStoped) {
-                mCallSession.showVideoWindow();
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                if (remoteVideoView != null) {
-                    mLargeVideoLayout.addView(remoteVideoView, layoutParams);
-                }
-                if (localVideoView != null) {
-                    mSmallVideoLayout.addView(localVideoView, layoutParams);
-                }
+    public void onResume() {
+        super.onResume();
+        if (mIsTalking) {
+            if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+                IntentFilter intent = new IntentFilter();
+                intent.addAction(Const.CAMERA_PLUG);
+                registerReceiver(mCameraPlugReciver, intent);
             }
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (!mIsTalking) {
-            return;
-        }
-        if ((null != localVideoView || null != remoteVideoView)
-                && CallSession.INVALID_ID != mCallSession.getSessionId()) {
-            mCallSession.hideVideoWindow();
-            mLargeVideoLayout.removeAllViews();
-            mSmallVideoLayout.removeAllViews();
-            hasStoped = true;
         }
     }
 
@@ -422,30 +338,21 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         stopCallTimeTask();
         if (mIsTalking) {
             unRegisterReceivers();
+            if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+                unregisterReceiver(mCameraPlugReciver);
+            }
         }
     }
 
     private void destroyVideoView() {
-
-        if (localVideoView != null) {
-            localVideoView.setVisibility(View.GONE);
-            mLargeVideoLayout.removeView(localVideoView);
-            mSmallVideoLayout.removeView(localVideoView);
-            CallApi.deleteRemoteVideoView(localVideoView);
-            localVideoView = null;
-        }
-
-        if (remoteVideoView != null) {
-            remoteVideoView.setVisibility(View.GONE);
-            mLargeVideoLayout.removeView(remoteVideoView);
-            CallApi.deleteRemoteVideoView(remoteVideoView);
-            remoteVideoView = null;
+        if (Const.DEVICE_TYPE == Const.TYPE_OTHER) {
+            CallApi.deleteLocalVideoSurface(localVideoView.getHolder().getSurface());
+            CallApi.deleteRemoteVideoSurface(remoteVideoView.getHolder().getSurface());
         }
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
 
     }
 
