@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/video_layout"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/large_video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
+        <SurfaceView
+            android:id="@+id/large_video_surface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/call_status_tv"
+            android:layout_alignParentTop="true"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="@string/nurse_calling"
+            android:textSize="22sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/talking_time_tv"
+            android:layout_below="@+id/call_status_tv"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="00:00"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:background="@drawable/border_videocall_times_bg"/>
+
+        <LinearLayout
+            android:id="@+id/call_operation_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:gravity="center">
+            <LinearLayout
+                android:id="@+id/back_layout"
+                android:layout_alignParentLeft="true"
+                android:layout_width="154dp"
+                android:layout_height="66dp"
+                android:layout_marginRight="44dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:focusable="true"
+                android:background="@drawable/selector_dial_bg">
+
+                <Button
+                    android:layout_width="148dp"
+                    android:layout_height="60dp"
+                    android:text="@string/nurse_call_back"
+                    android:textSize="22sp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/border_btn_answercall_bg" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hangup_layout"
+                android:layout_alignParentRight="true"
+                android:layout_width="154dp"
+                android:layout_height="66dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:focusable="true"
+                android:background="@drawable/selector_dial_bg">
+
+                <Button
+                    android:id="@+id/hangup_btn"
+                    android:layout_width="148dp"
+                    android:layout_height="60dp"
+                    android:text="@string/nurse_call_hangup"
+                    android:textSize="22sp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/border_btn_hangupcall_bg" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

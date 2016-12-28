@@ -23,6 +23,7 @@ import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
+import com.chinamobile.hejiaqin.business.ui.dial.NurseCallActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
@@ -98,10 +99,6 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
 
     @Override
     protected void handleStateMessage(Message msg) {
-        switch (msg.what) {
-            case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
-                LogUtil.d(TAG, "CALL_ON_TV_INCOMING_MSG_ID 1");
-        }
         //只在当前activity处理
         if (MyActivityManager.getInstance().isCurrentActity(this.getClass().getName())) {
             switch (msg.what) {
@@ -148,6 +145,13 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                         VideoInComingDialog.show(this, incomingSessionId,
                                 ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
                                 ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)));
+                    }
+                    break;
+                case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
+                    LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
+                    if (msg.obj != null) {
+                        Intent intent2 = new Intent(this, NurseCallActivity.class);
+                        this.startActivity(intent2);
                     }
                     break;
                 default:

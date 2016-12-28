@@ -10,9 +10,9 @@ import android.widget.ListAdapter;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
+import com.chinamobile.hejiaqin.business.ui.dial.NurseCallActivity;
 import com.chinamobile.hejiaqin.business.ui.more.SelectableContactActivity;
 import com.customer.framework.ui.AdapterViewHolder;
-import com.customer.framework.utils.LogUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -70,7 +70,10 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
         mViewHolder.getView(R.id.remote_monitor_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogUtil.d(TAG,"Will start remote monitor.");
+                Intent intent = new Intent(mContext, NurseCallActivity.class);
+                intent.putExtra("tvAccount",mBindedTV.get(position).getTvAccount());
+                intent.putExtra("tvName",mBindedTV.get(position).getName());
+                mContext.startActivity(intent);
             }
         });
 

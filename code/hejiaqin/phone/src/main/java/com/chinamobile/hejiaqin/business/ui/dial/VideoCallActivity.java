@@ -121,6 +121,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private LinearLayout.LayoutParams localPreviewlayoutParams;
 
+    private boolean hasRegistReceiver;
+
     private BroadcastReceiver localVideoChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -239,8 +241,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 mCallerNameTv.setText(info.getName());
                 mContactNameTv.setText(info.getName());
             } else {
-                mCallerNameTv.setText(incomingNumber);
-                mContactNameTv.setText(incomingNumber);
+                mCallerNameTv.setText(mCallSession.getPeer().getNumber());
+                mContactNameTv.setText(mCallSession.getPeer().getNumber());
             }
             if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
                 Picasso.with(this.getApplicationContext())
@@ -250,8 +252,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             }
 
         } else {
-            mCallerNameTv.setText(incomingNumber);
-            mContactNameTv.setText(incomingNumber);
+            mCallerNameTv.setText(mCallSession.getPeer().getNumber());
+            mContactNameTv.setText(mCallSession.getPeer().getNumber());
         }
 
         mIncomingLayout.setVisibility(View.VISIBLE);
@@ -586,7 +588,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                 cameraSwitchedReceiver,
                 new IntentFilter(CallApi.EVENT_CALL_CAMERA_SWITCHED));
-
+        hasRegistReceiver = true;
 
     }
 
@@ -612,9 +614,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        if (closed) {
+            LogUtil.w(TAG, "is closed");
+        }
         switch (v.getId()) {
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
+                closed = true;
                 mVoipLogic.hangup(mCallSession, mIsInComing, mIsTalking, callTime);
                 finish();
                 break;
@@ -753,7 +759,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
         destroyVideoView();
         stopCallTimeTask();
-        if (mIsTalking) {
+        if (hasRegistReceiver) {
             unRegisterReceivers();
         }
     }
@@ -764,7 +770,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             localVideoView.setVisibility(View.GONE);
             mLargeVideoLayout.removeView(localVideoView);
             mSmallVideoLayout.removeView(localVideoView);
-            CallApi.deleteRemoteVideoView(localVideoView);
+            CallApi.deleteLocalVideoView(localVideoView);
             localVideoView = null;
         }
 

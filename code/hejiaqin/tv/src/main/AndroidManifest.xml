@@ -119,6 +119,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.dial.NurseCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+        </activity>
 
         <service
             android:name="com.chinamobile.hejiaqin.business.HeService"

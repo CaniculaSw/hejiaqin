@@ -334,6 +334,10 @@ public class BussinessConstants {
         int SEARCH_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 14;
         int CALL_RECORD_SEARCH_MSG_ID = BASE_MSG_ID + 15;
 
+        int NURSE_CALL_ON_TALKING_MSG_ID = BASE_MSG_ID + 16;
+        int NURSE_CALL_CLOSED_MSG_ID = BASE_MSG_ID + 17;
+
+        int NURSE_ON_TV_INCOMING_MSG_ID = BASE_MSG_ID + 18;
     }
 
 

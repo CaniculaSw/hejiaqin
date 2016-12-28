@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/video_layout"
         android:layout_centerInParent="true"
-        android:layout_width="442dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <SurfaceView
@@ -58,7 +58,7 @@
     <SurfaceView
         android:id="@+id/small_video_layout"
         android:layout_width="242dp"
-        android:layout_height="142dp"
+        android:layout_height="136dp"
         android:orientation="horizontal"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"

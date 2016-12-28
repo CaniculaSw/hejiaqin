@@ -112,20 +112,39 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             }
             if (callSession.getType() == CallSession.TYPE_VIDEO) {
                 // 保存通话记录
-                CallRecord callRecord = new CallRecord();
-                String recordId = UUID.randomUUID().toString();
-                callRecord.setRecordId(recordId);
-                callRecord.setPeerNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
-                callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
-                callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
-                callRecord.setDuration(callSession.getDuration());
-                callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
-                callRecord.setRead(BussinessConstants.DictInfo.YES);
-                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
-                recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
+                if(!callSession.isNurse()) {
+                    CallRecord callRecord = new CallRecord();
+                    String recordId = UUID.randomUUID().toString();
+                    callRecord.setRecordId(recordId);
+                    callRecord.setPeerNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
+                    callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
+                    callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
+                    callRecord.setDuration(callSession.getDuration());
+                    callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
+                    callRecord.setRead(BussinessConstants.DictInfo.YES);
+                    CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
+                    recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
+                }
                 if (isTv()) {
-                    LogUtil.d(TAG,"CALL_ON_TV_INCOMING_MSG_ID");
-                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                    if(callSession.isNurse())
+                    {
+                        LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
+                        //远程看护是绑定APP启动UI
+                        if(UserInfoCacheManager.isBindedApp(getContext(),callSession.getPeer().getNumber()) ||
+                                UserInfoCacheManager.isBindedApp(getContext(),CommonUtils.getPhoneNumber(callSession.getPeer().getNumber())))
+                        {
+                            //远程看护不是绑定APP直接挂断
+                            LogUtil.i(TAG,"NURSE_ON_TV_INCOMING_MSG_ID BIND APP ");
+                            VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                        }else{
+                            //远程看护不是绑定APP直接挂断
+                            LogUtil.w(TAG,"NURSE_ON_TV_INCOMING_MSG_ID NO BIND APP ");
+                            callSession.terminate();
+                        }
+                    }else {
+                        LogUtil.d(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                    }
                 } else {
                     LogUtil.d(TAG,"INTENT_INCOMING_SESSION_ID");
                     Intent inComingIntent = new Intent();
@@ -146,11 +165,20 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             int newStatus = intent.getIntExtra(CallApi.PARAM_NEW_STATUS, CallSession.STATUS_IDLE);
             switch (newStatus) {
                 case CallSession.STATUS_CONNECTED:
-                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
+                    if(callSession.isNurse())
+                    {
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID, callSession);
+                    }else {
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
+                    }
                     break;
                 case CallSession.STATUS_IDLE:
                     LogUtil.d(TAG, "SIP_CAUSE:" + callSession.getSipCause());
-                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID, callSession);
+                    if (callSession.isNurse()) {
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID, callSession);
+                    } else{
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID, callSession);
+                    }
                     break;
                 default:
                     break;

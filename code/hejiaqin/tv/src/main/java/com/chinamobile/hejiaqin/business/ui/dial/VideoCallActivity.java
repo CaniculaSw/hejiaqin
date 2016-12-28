@@ -14,6 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private boolean m_isSmallVideoCreate_MPEG;
     private boolean m_isBigVideoCreate_MPEG;
 
+    private boolean hasRegistReceiver;
+
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -103,6 +106,20 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 rectLocal.bottom = 180;
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 CaaSSdkService.showRemoteVideoRender(true);
+            }
+        }
+    };
+
+    private BroadcastReceiver mOtherCameraPlugReciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Rect rectLocal = new Rect();
+            int iState = intent.getIntExtra("state", -1);
+            LogApi.d(Const.TAG_UI, "camera stat change:" + iState);
+            if (1 == iState) {
+                mCallSession.openLocalVideo();
+            } else {
+                mCallSession.closeLocalVideo();
             }
         }
     };
@@ -201,6 +218,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private void createVideoView() {
         if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+            remoteVideoView.setVisibility(View.GONE);
+            localVideoView.setVisibility(View.GONE);
             mCallSession.showVideoWindow();
             CaaSSdkService.setRemoteRenderPos(getFullScreenRect(), CallApi.VIDEO_LAYER_BOTTOM);
             CaaSSdkService.showRemoteVideoRender(true);
@@ -213,12 +232,27 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private Rect getFullScreenRect() {
+        int[] metrics = new int[2];
+        getDisplayMetrics(this, metrics);
+
         Rect rect = new Rect();
         rect.left = 0;
         rect.top = 0;
-        rect.right = 1280;
-        rect.bottom = 720;
+        rect.right = metrics[0];
+        rect.bottom = metrics[1];
         return rect;
+    }
+
+    private void getDisplayMetrics(Context context, int metrics[]) {
+        if (null == metrics) {
+            metrics = new int[2];
+        }
+
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int screenHeight = windowManager.getDefaultDisplay().getHeight();
+        int screenWidth = windowManager.getDefaultDisplay().getWidth();
+        metrics[0] = screenWidth;
+        metrics[1] = screenHeight;
     }
 
 
@@ -253,13 +287,25 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                     remoteNetStatusChangeReciverr,
                     new IntentFilter(CallApi.EVENT_CALL_VIDEO_NET_STATUS_CHANGE));
+            IntentFilter intent = new IntentFilter();
+            intent.addAction(Const.CAMERA_PLUG);
+            registerReceiver(mCameraPlugReciver, intent);
+        }else{
+            IntentFilter intent = new IntentFilter();
+            intent.addAction(Const.CAMERA_PLUG);
+            registerReceiver(mOtherCameraPlugReciver, intent);
         }
+        hasRegistReceiver = true;
     }
 
     private void unRegisterReceivers() {
         if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
             LocalBroadcastManager.getInstance(getApplicationContext())
                     .unregisterReceiver(remoteNetStatusChangeReciverr);
+            unregisterReceiver(mCameraPlugReciver);
+        }else{
+            IntentFilter intent = new IntentFilter();
+            unregisterReceiver(mOtherCameraPlugReciver);
         }
     }
 
@@ -315,18 +361,6 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (mIsTalking) {
-            if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
-                IntentFilter intent = new IntentFilter();
-                intent.addAction(Const.CAMERA_PLUG);
-                registerReceiver(mCameraPlugReciver, intent);
-            }
-        }
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         //还原免提设置
@@ -336,11 +370,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
         destroyVideoView();
         stopCallTimeTask();
-        if (mIsTalking) {
+        if (hasRegistReceiver) {
             unRegisterReceivers();
-            if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
-                unregisterReceiver(mCameraPlugReciver);
-            }
         }
     }
 
