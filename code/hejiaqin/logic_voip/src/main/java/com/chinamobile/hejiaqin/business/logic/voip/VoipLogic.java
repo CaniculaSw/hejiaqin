@@ -26,6 +26,7 @@ import com.customer.framework.utils.StringUtil;
 import com.google.gson.Gson;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
+import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.login.LoginApi;
 import com.huawei.rcs.login.LoginCfg;
 import com.huawei.rcs.login.UserInfo;
@@ -311,6 +312,9 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         if (callSession.getErrCode() == CallSession.ERRCODE_OK) {
             recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
         }else{
+            LogApi.copyLastLog();
+            LogUtil.d(TAG, "call errorcode:" + callSession.getErrCode());
+            LogUtil.d(TAG, "call sip causes:" + callSession.getSipCause());
             this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
         }
         return callSession;
