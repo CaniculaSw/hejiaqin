@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.chinamobile.hejiaqin.BuildConfig;
 import com.chinamobile.hejiaqin.business.HeApplication;
 import com.chinamobile.hejiaqin.business.HeService;
+import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.utils.LogUtil;
 
 /**
@@ -14,6 +15,10 @@ public class PhoneApplication extends HeApplication implements
         Thread.UncaughtExceptionHandler{
     @Override
     public void onCreate() {
+        //根据build.gradle设置日志级别
+        LogUtil.setContext(getApplicationContext());
+        LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
+        LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(this) + "/log/common/");
         super.onCreate();
         startService(new Intent(this,HeService.class));
         //设置Thread Exception Handler
