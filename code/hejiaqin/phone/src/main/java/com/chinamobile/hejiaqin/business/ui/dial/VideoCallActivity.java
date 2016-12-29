@@ -241,8 +241,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 mCallerNameTv.setText(info.getName());
                 mContactNameTv.setText(info.getName());
             } else {
-                mCallerNameTv.setText(mCallSession.getPeer().getNumber());
-                mContactNameTv.setText(mCallSession.getPeer().getNumber());
+                mCallerNameTv.setText(incomingNumber);
+                mContactNameTv.setText(incomingNumber);
             }
             if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
                 Picasso.with(this.getApplicationContext())
@@ -252,8 +252,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             }
 
         } else {
-            mCallerNameTv.setText(mCallSession.getPeer().getNumber());
-            mContactNameTv.setText(mCallSession.getPeer().getNumber());
+            mCallerNameTv.setText(incomingNumber);
+            mContactNameTv.setText(incomingNumber);
         }
 
         mIncomingLayout.setVisibility(View.VISIBLE);
@@ -600,7 +600,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .unregisterReceiver(cameraSwitchedReceiver);
 
-        if(!mIsInComing) {
+        if (!mIsInComing) {
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
                     localVideoChangeReceiver);
         }

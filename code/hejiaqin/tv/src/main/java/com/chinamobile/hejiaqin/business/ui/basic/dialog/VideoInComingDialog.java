@@ -146,7 +146,7 @@ public class VideoInComingDialog extends Dialog {
                 mCallerNameTv.setText(info.getName());
                 mCallerNameTv.setVisibility(View.VISIBLE);
             }
-            mCallerNumberTv.setText(mCallSession.getPeer().getNumber());
+            mCallerNumberTv.setText(incomingNumber);
             if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
                 Picasso.with(mContext.getApplicationContext())
                         .load(info.getPhotoSm())
@@ -154,7 +154,7 @@ public class VideoInComingDialog extends Dialog {
                         .error(R.drawable.contact_photo_default).into(mCallerIv);
             }
         } else {
-            mCallerNumberTv.setText(mCallSession.getPeer().getNumber());
+            mCallerNumberTv.setText(incomingNumber);
         }
     }
 
