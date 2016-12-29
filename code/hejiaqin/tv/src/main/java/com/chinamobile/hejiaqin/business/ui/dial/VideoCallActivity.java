@@ -217,7 +217,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void createVideoView() {
-        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+        if (Const.deviceType != Const.TYPE_OTHER) {
             remoteVideoView.setVisibility(View.GONE);
             localVideoView.setVisibility(View.GONE);
             mCallSession.showVideoWindow();
@@ -283,7 +283,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void registerReceivers() {
-        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+        if (Const.deviceType != Const.TYPE_OTHER) {
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                     remoteNetStatusChangeReciverr,
                     new IntentFilter(CallApi.EVENT_CALL_VIDEO_NET_STATUS_CHANGE));
@@ -299,7 +299,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void unRegisterReceivers() {
-        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+        if (Const.deviceType != Const.TYPE_OTHER) {
             LocalBroadcastManager.getInstance(getApplicationContext())
                     .unregisterReceiver(remoteNetStatusChangeReciverr);
             unregisterReceiver(mCameraPlugReciver);
@@ -376,7 +376,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void destroyVideoView() {
-        if (Const.DEVICE_TYPE == Const.TYPE_OTHER) {
+        if (Const.deviceType == Const.TYPE_OTHER) {
             CallApi.deleteLocalVideoSurface(localVideoView.getHolder().getSurface());
             CallApi.deleteRemoteVideoSurface(remoteVideoView.getHolder().getSurface());
         }

@@ -147,7 +147,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     private void acceptTalking() {
         //接受一键看护请求
         mCallSession.accept(CallSession.TYPE_VIDEO);
-        if (Const.DEVICE_TYPE != Const.TYPE_OTHER) {
+        if (Const.deviceType != Const.TYPE_OTHER) {
             //创建本端显示画面句柄
             localVideoSurface.setVisibility(View.GONE);
             localVideoView = CallApi.createLocalVideoView(getApplicationContext());
@@ -297,7 +297,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void destroyVideoView() {
-        if (Const.DEVICE_TYPE == Const.TYPE_OTHER) {
+        if (Const.deviceType == Const.TYPE_OTHER) {
             CallApi.deleteLocalVideoSurface(localVideoSurface.getHolder().getSurface());
         }else{
             if (localVideoView != null) {

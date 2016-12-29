@@ -44,7 +44,12 @@ public class HeApplication extends RCSApplication {
 
         HmeAudioTV.setup(this);
         String deviceName = getDevice();
-        HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_STB);
+        if(Const.deviceType == Const.TYPE_OTHER)
+        {
+            HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_VT);
+        }else {
+            HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_STB);
+        }
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
         DmVersionInfo  versionInfo = new DmVersionInfo("V1.0.0.96", SysApi.VALUE_MAJOR_TYPE_PLATFORM_STB,
@@ -77,31 +82,31 @@ public class HeApplication extends RCSApplication {
         LogUtil.d(Const.TAG_UI, "device=" + sDevice + "--sModel=" + sModel);
         if (sDevice.contains("Hi3716CV200"))
         {
-            Const.DEVICE_TYPE = Const.TYPE_3719C;
+            Const.deviceType = Const.TYPE_3719C;
         }
         else if (sDevice.contains("Hi3719CV100"))
         {
-            Const.DEVICE_TYPE = Const.TYPE_3719C;
+            Const.deviceType = Const.TYPE_3719C;
         }
         else if (sDevice.contains("Hi3719MV100"))
         {
-            Const.DEVICE_TYPE = Const.TYPE_3719M;
+            Const.deviceType = Const.TYPE_3719M;
         }
         else if (sDevice.contains("Hi3798MV100"))
         {
-            Const.DEVICE_TYPE = Const.TYPE_3798M;
+            Const.deviceType = Const.TYPE_3798M;
         }
         else
         {
             LogUtil.e(Const.TAG_UI, "the device is Other!");
-            Const.DEVICE_TYPE = Const.TYPE_OTHER;
+            Const.deviceType = Const.TYPE_OTHER;
         }
         String deviceName = null;
-        if (Const.TYPE_3798M == Const.DEVICE_TYPE)
+        if (Const.TYPE_3798M == Const.deviceType)
         {
             deviceName = "STB_3798M";
         }
-        else if (Const.TYPE_3719C == Const.DEVICE_TYPE || Const.TYPE_3719M == Const.DEVICE_TYPE)
+        else if (Const.TYPE_3719C == Const.deviceType || Const.TYPE_3719M == Const.deviceType)
         {
             deviceName = "STB_3719C";
         }

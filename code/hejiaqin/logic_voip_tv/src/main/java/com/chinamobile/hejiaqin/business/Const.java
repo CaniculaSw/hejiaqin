@@ -10,5 +10,5 @@ public class Const {
 	public static final int TYPE_3719M = 1;
 	public static final int TYPE_3798M = 2;
 	public static final int TYPE_OTHER = 3;
-	public static int DEVICE_TYPE = TYPE_3719C;
+	public static int deviceType = TYPE_3719C;
 }
