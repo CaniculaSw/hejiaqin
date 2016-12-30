@@ -1,5 +1,12 @@
 package com.chinamobile.hejiaqin.business;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Rect;
+import android.widget.Toast;
+
 import com.chinamobile.hejiaqin.business.logic.setting.SettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
@@ -23,6 +30,39 @@ import java.io.File;
  * Created by  on 2016/6/5.
  */
 public class HeApplication extends RCSApplication {
+
+    private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Rect rectLocal = new Rect();
+
+            int iState = intent.getIntExtra("state", -1);
+            LogUtil.d(Const.TAG_UI, "camera stat change:" + iState);
+
+            Toast.makeText(getApplicationContext(), "mCameraPlugReciver", Toast.LENGTH_SHORT).show();
+
+            if (1 == iState)
+            {
+                Toast.makeText(getApplicationContext(), "open the camera", Toast.LENGTH_SHORT).show();
+                LogUtil.d(Const.TAG_UI, "open the camera");
+                rectLocal.left = 0;
+                rectLocal.top = 0;
+                rectLocal.right = 1280;
+                rectLocal.bottom = 720;
+
+                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_BOTTOM);
+                CaaSSdkService.openLocalView();
+                CaaSSdkService.showLocalVideoRender(true);
+            }
+            else
+            {
+                LogUtil.d(Const.TAG_UI, "close the camera");
+                CaaSSdkService.closeLocalView();
+            }
+
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -57,7 +97,9 @@ public class HeApplication extends RCSApplication {
         SysApi.setDMVersion(versionInfo);
         CallApi.setConfig(CallApi.CONFIG_MAJOR_DEVICE_NAME, CallApi.CONFIG_MINOR_TYPE_DEFAULT, deviceName);
         CaaSSdkService.setVideoLevel(0);
-
+        IntentFilter filter=new IntentFilter();
+        filter.addAction(Const.CAMERA_PLUG);
+        registerReceiver(mCameraPlugReciver, filter);
         //initial message API
         MessagingApi.init(getApplicationContext());
         MessagingApi.setAllowSendDisplayStatus(true);
@@ -116,9 +158,11 @@ public class HeApplication extends RCSApplication {
         return deviceName;
     }
 
+
     @Override
     public void onTerminate() {
         super.onTerminate();
+        unregisterReceiver(mCameraPlugReciver);
         VoipLogic.getInstance(getApplicationContext()).unRegisterVoipReceiver();
         SettingLogic.getInstance(getApplicationContext()).unRegisterMessageReceiver();
         CMIMHelper.getCmAccountManager().doLogOut();

@@ -100,7 +100,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         @Override
         public void onReceive(Context context, Intent intent) {
             CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
-
+            LogUtil.d(TAG, "INCOMING");
             if (callSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
                 LogUtil.w(TAG,"VIDEO_SHARE");
                 callSession.terminate();
@@ -166,8 +166,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             int newStatus = intent.getIntExtra(CallApi.PARAM_NEW_STATUS, CallSession.STATUS_IDLE);
             switch (newStatus) {
                 case CallSession.STATUS_CONNECTED:
+                    LogUtil.d(TAG, "STATUS_CONNECTED");
                     if(callSession.isNurse())
                     {
+                        LogUtil.d(TAG, "nurse");
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID, callSession);
                     }else {
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
@@ -349,7 +351,9 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     @Override
     public void answerVideo(CallSession callSession) {
+        LogUtil.d(TAG,"answerVideo start");
         callSession.accept(CallSession.TYPE_VIDEO);
+        LogUtil.d(TAG, "answerVideo end");
     }
 
     @Override

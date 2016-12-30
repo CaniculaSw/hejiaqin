@@ -22,9 +22,9 @@ public class TVApplication extends HeApplication implements
         super.onCreate();
         startService(new Intent(this,HeService.class));
         //设置Thread Exception Handler
-        if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
+//        if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
             Thread.setDefaultUncaughtExceptionHandler(this);
-        }
+//        }
     }
 
     @Override
