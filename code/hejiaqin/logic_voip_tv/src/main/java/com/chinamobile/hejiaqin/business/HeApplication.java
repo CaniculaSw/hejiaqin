@@ -97,9 +97,11 @@ public class HeApplication extends RCSApplication {
         SysApi.setDMVersion(versionInfo);
         CallApi.setConfig(CallApi.CONFIG_MAJOR_DEVICE_NAME, CallApi.CONFIG_MINOR_TYPE_DEFAULT, deviceName);
         CaaSSdkService.setVideoLevel(0);
-        IntentFilter filter=new IntentFilter();
-        filter.addAction(Const.CAMERA_PLUG);
-        registerReceiver(mCameraPlugReciver, filter);
+        if(Const.deviceType != Const.TYPE_OTHER) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Const.CAMERA_PLUG);
+            registerReceiver(mCameraPlugReciver, filter);
+        }
         //initial message API
         MessagingApi.init(getApplicationContext());
         MessagingApi.setAllowSendDisplayStatus(true);
@@ -162,7 +164,9 @@ public class HeApplication extends RCSApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        unregisterReceiver(mCameraPlugReciver);
+        if(Const.deviceType != Const.TYPE_OTHER) {
+            unregisterReceiver(mCameraPlugReciver);
+        }
         VoipLogic.getInstance(getApplicationContext()).unRegisterVoipReceiver();
         SettingLogic.getInstance(getApplicationContext()).unRegisterMessageReceiver();
         CMIMHelper.getCmAccountManager().doLogOut();
