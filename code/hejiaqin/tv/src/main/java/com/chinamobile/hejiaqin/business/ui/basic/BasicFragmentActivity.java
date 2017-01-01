@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.Const;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
@@ -23,7 +24,8 @@ import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
-import com.chinamobile.hejiaqin.business.ui.dial.NurseCallActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.StbNurseCallActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.VtNurseCallActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
@@ -150,8 +152,13 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
                     LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
-                        Intent intent2 = new Intent(this, NurseCallActivity.class);
-                        this.startActivity(intent2);
+                        if(Const.deviceType == Const.TYPE_OTHER) {
+                            Intent intent2 = new Intent(this, VtNurseCallActivity.class);
+                            this.startActivity(intent2);
+                        } else {
+                            Intent intent2 = new Intent(this, StbNurseCallActivity.class);
+                            this.startActivity(intent2);
+                        }
                     }
                     break;
                 default:

@@ -115,12 +115,22 @@
             android:name="com.chinamobile.hejiaqin.business.ui.contact.InputInfoActivity"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity"
+            android:name="com.chinamobile.hejiaqin.business.ui.dial.StbVideoCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name="com.chinamobile.hejiaqin.business.ui.dial.NurseCallActivity"
+            android:name="com.chinamobile.hejiaqin.business.ui.dial.VtVideoCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.dial.StbNurseCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.dial.VtNurseCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
         </activity>

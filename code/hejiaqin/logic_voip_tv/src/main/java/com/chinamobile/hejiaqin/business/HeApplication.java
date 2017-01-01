@@ -45,19 +45,19 @@ public class HeApplication extends RCSApplication {
             {
                 Toast.makeText(getApplicationContext(), "open the camera", Toast.LENGTH_SHORT).show();
                 LogUtil.d(Const.TAG_UI, "open the camera");
-                rectLocal.left = 0;
-                rectLocal.top = 0;
-                rectLocal.right = 1280;
-                rectLocal.bottom = 720;
-
-                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_BOTTOM);
-                CaaSSdkService.openLocalView();
-                CaaSSdkService.showLocalVideoRender(true);
+//                rectLocal.left = 0;
+//                rectLocal.top = 0;
+//                rectLocal.right = 1280;
+//                rectLocal.bottom = 720;
+//
+//                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_BOTTOM);
+//                CaaSSdkService.openLocalView();
+//                CaaSSdkService.showLocalVideoRender(true);
             }
             else
             {
                 LogUtil.d(Const.TAG_UI, "close the camera");
-                CaaSSdkService.closeLocalView();
+//                CaaSSdkService.closeLocalView();
             }
 
         }

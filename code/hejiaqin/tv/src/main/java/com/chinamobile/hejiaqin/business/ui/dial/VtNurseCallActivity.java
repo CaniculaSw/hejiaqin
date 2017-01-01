@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,15 +29,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class NurseCallActivity extends BasicActivity implements View.OnClickListener {
+public class VtNurseCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = NurseCallActivity.class.getSimpleName();
+    public static final String TAG = VtNurseCallActivity.class.getSimpleName();
 
     private TextView mTalkingTimeTv;
 
     private LinearLayout mHangupLayout;
-
-    private LinearLayout mBackLayout;
 
     //通话会话对象
     private CallSession mCallSession = null;
@@ -47,8 +44,6 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     private int callTime;
     private Handler handler = new Handler();
 
-    private LinearLayout mLargeVideoLayout;
-    private SurfaceView localVideoView;
     private SurfaceView localVideoSurface;
 
     private boolean m_isBigVideoCreate_MPEG;
@@ -59,17 +54,42 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
     private boolean hasStoped = false;
 
-    private BroadcastReceiver mOtherCameraPlugReciver = new BroadcastReceiver() {
+    private boolean accepted;
+
+    private boolean bCameraClose = false;
+
+    private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Rect rectLocal = new Rect();
-            int iState = intent.getIntExtra("state", -1);
-            LogApi.d(Const.TAG_UI, "camera stat change:" + iState);
-            if (1 == iState) {
-                mCallSession.openLocalVideo();
-            } else {
-                mCallSession.closeLocalVideo();
+
+            Bundle bundle = intent.getExtras();
+            if (null == bundle)
+            {
+                LogUtil.d(TAG, "Enter ACTION_USB_CAMERA_PLUG_IN_OUT bundle is null");
+                return;
             }
+            int state = bundle.getInt(Const.USB_CAMERA_STATE);
+
+            LogUtil.d(TAG, "videotalk mCameraPlugReciver " + state);
+            if (mCallSession == null)return;
+            if (0 == state)
+            {
+                if (!bCameraClose)
+                {
+                    mCallSession.closeLocalVideo();
+                    bCameraClose = true;
+                }
+            }
+            else
+            {
+                if (bCameraClose)
+                {
+                    int iRet = mCallSession.openLocalVideo();
+                    LogUtil.d(TAG, "mCameraPlugReciver open localView " + iRet);
+                    bCameraClose = false;
+                }
+            }
+
         }
     };
 
@@ -101,7 +121,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 LogApi.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svBigVideo " + localVideoSurface);
                 return;
             }
-            LogApi.d(Const.TAG_CALL,  " m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
+            LogApi.d(Const.TAG_CALL, " m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
             if (m_isBigVideoCreate_MPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
                 int result1 = CallApi.createLocalVideoSurface(localVideoSurface.getHolder().getSurface());
                 LogApi.d(Const.TAG_CALL, "result1: " + result1);
@@ -117,19 +137,16 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_nurse_call;
+        return R.layout.activity_nurse_call_vt;
     }
 
     @Override
     protected void initView() {
         CallApi.setPauseMode(1);
-        mLargeVideoLayout = (LinearLayout) findViewById(R.id.large_video_layout);
-        localVideoSurface = (SurfaceView)findViewById(R.id.large_video_surface);
+        localVideoSurface = (SurfaceView) findViewById(R.id.large_video_surface);
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
-        mBackLayout = (LinearLayout) findViewById(R.id.back_layout);
         mHangupLayout.setOnClickListener(this);
-        mBackLayout.setOnClickListener(this);
     }
 
     @Override
@@ -145,35 +162,14 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void acceptTalking() {
+        accepted = true;
         //接受一键看护请求
         mCallSession.accept(CallSession.TYPE_VIDEO);
-        if (Const.deviceType != Const.TYPE_OTHER) {
-            //创建本端显示画面句柄
-            localVideoSurface.setVisibility(View.GONE);
-            localVideoView = CallApi.createLocalVideoView(getApplicationContext());
-            mCallSession.showVideoWindow();
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            mLargeVideoLayout.addView(localVideoView, layoutParams);
-            localVideoView.setZOrderOnTop(false);
-        }else{
-            localVideoSurface.getHolder().addCallback(surfaceCb);
-            localVideoSurface.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-            localVideoSurface.setZOrderOnTop(false);
-        }
+        localVideoSurface.getHolder().addCallback(surfaceCb);
+        localVideoSurface.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        localVideoSurface.setZOrderOnTop(false);
         registerReceivers();
         startCallTimeTask();
-    }
-
-    private void getDisplayMetrics(Context context, int metrics[]) {
-        if (null == metrics) {
-            metrics = new int[2];
-        }
-
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int screenHeight = windowManager.getDefaultDisplay().getHeight();
-        int screenWidth = windowManager.getDefaultDisplay().getWidth();
-        metrics[0] = screenWidth;
-        metrics[1] = screenHeight;
     }
 
 
@@ -204,16 +200,9 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void registerReceivers() {
-
-        IntentFilter intent = new IntentFilter();
-        intent.addAction(Const.CAMERA_PLUG);
-        registerReceiver(mOtherCameraPlugReciver, intent);
-        hasRegistReceiver = true;
     }
 
     private void unRegisterReceivers() {
-        IntentFilter intent = new IntentFilter();
-        unregisterReceiver(mOtherCameraPlugReciver);
     }
 
     @Override
@@ -232,9 +221,6 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 closed = true;
                 mCallSession.terminate();
                 finish();
-                break;
-            case R.id.back_layout:
-                moveTaskToBack(true);
                 break;
         }
 
@@ -263,49 +249,31 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (null != localVideoView && CallSession.INVALID_ID != mCallSession.getSessionId()) {
-            if (hasStoped) {
-                mCallSession.showVideoWindow();
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                if (localVideoView != null) {
-                    mLargeVideoLayout.addView(localVideoView, layoutParams);
-                }
-            }
+    public void onResume() {
+        super.onResume();
+        LogUtil.d(TAG, "onResume");
+        if(accepted) {
+            IntentFilter intent = new IntentFilter();
+            intent.addAction(Const.ACTION_USB_CAMERA_PLUG_IN_OUT);
+            registerReceiver(mCameraPlugReciver, intent);
         }
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (null != localVideoView && CallSession.INVALID_ID != mCallSession.getSessionId()) {
-            mCallSession.hideVideoWindow();
-            mLargeVideoLayout.removeAllViews();
-            hasStoped = true;
+    public void onPause() {
+        super.onPause();
+        LogUtil.d(TAG, "onPause");
+        if(accepted) {
+            unregisterReceiver(mCameraPlugReciver);
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        destroyVideoView();
         stopCallTimeTask();
         if (hasRegistReceiver) {
             unRegisterReceivers();
-        }
-    }
-
-    private void destroyVideoView() {
-        if (Const.deviceType == Const.TYPE_OTHER) {
-            CallApi.deleteLocalVideoSurface(localVideoSurface.getHolder().getSurface());
-        }else{
-            if (localVideoView != null) {
-                localVideoView.setVisibility(View.GONE);
-                mLargeVideoLayout.removeView(localVideoView);
-                CallApi.deleteLocalVideoView(localVideoView);
-                localVideoView = null;
-            }
         }
     }
 

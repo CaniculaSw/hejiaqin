@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.ContactsContract;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +25,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DialNumberDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
-import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;

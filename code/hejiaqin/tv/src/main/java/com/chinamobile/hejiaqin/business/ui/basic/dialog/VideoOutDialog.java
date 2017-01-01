@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.basic.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,16 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.Const;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
-import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.StbVideoCallActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.VtVideoCallActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.logic.ILogic;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallSession;
 import com.squareup.picasso.Picasso;
@@ -163,8 +163,13 @@ public class VideoOutDialog extends Dialog {
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                Intent intentTalking = new Intent(getContext(), VideoCallActivity.class);
-                mContext.startActivity(intentTalking);
+                if(Const.deviceType == Const.TYPE_OTHER) {
+                    Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
+                    mContext.startActivity(intentTalking);
+                } else {
+                    Intent intentTalking = new Intent(getContext(), StbVideoCallActivity.class);
+                    mContext.startActivity(intentTalking);
+                }
                 dismiss();
                 break;
             case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:

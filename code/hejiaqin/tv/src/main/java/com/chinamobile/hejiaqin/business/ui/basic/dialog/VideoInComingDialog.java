@@ -17,12 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.Const;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
-import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.StbVideoCallActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.VtVideoCallActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.logic.ILogic;
@@ -194,9 +196,15 @@ public class VideoInComingDialog extends Dialog {
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                Intent intentTalking = new Intent(getContext(), VideoCallActivity.class);
-                intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING,true);
-                mContext.startActivity(intentTalking);
+                if(Const.deviceType == Const.TYPE_OTHER) {
+                    Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
+                    intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
+                    mContext.startActivity(intentTalking);
+                } else{
+                    Intent intentTalking = new Intent(getContext(), StbVideoCallActivity.class);
+                    intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
+                    mContext.startActivity(intentTalking);
+                }
                 dismiss();
                 break;
             case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:

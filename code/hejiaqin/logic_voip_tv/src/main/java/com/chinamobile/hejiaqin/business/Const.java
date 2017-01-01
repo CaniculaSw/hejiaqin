@@ -11,4 +11,9 @@ public class Const {
 	public static final int TYPE_3798M = 2;
 	public static final int TYPE_OTHER = 3;
 	public static int deviceType = TYPE_3719C;
+
+	/** 热插拔广播*/
+	public static final String ACTION_USB_CAMERA_PLUG_IN_OUT = "android.hardware.usb.action.USB_CAMERA_PLUG_IN_OUT";
+	/** A40获取热插拔状态*/
+	public static final String USB_CAMERA_STATE = "UsbCameraState";
 }

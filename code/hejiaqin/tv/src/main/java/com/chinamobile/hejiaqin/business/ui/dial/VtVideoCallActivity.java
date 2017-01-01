@@ -10,17 +10,14 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.CaaSSdkService;
 import com.chinamobile.hejiaqin.business.Const;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
@@ -28,16 +25,15 @@ import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
-import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.system.SysApi;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class VideoCallActivity extends BasicActivity implements View.OnClickListener {
+public class VtVideoCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = VideoCallActivity.class.getSimpleName();
+    public static final String TAG = VtVideoCallActivity.class.getSimpleName();
 
     private TextView mTalkingTimeTv;
 
@@ -69,58 +65,40 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private boolean hasRegistReceiver;
 
+    private boolean bCameraClose = false;
+
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Rect rectLocal = new Rect();
-            int iState = intent.getIntExtra("state", -1);
-            LogApi.d(Const.TAG_UI, "camera stat change:" + iState);
-            if (1 == iState) {
-                rectLocal.left = 0;
-                rectLocal.top = 0;
-                rectLocal.right = 320;
-                rectLocal.bottom = 180;
-                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
-                CaaSSdkService.openLocalView();
-            } else {
-                CaaSSdkService.closeLocalView();
-            }
-        }
-    };
 
-    /* display the video stream which arrived from remote. */
-    private BroadcastReceiver remoteNetStatusChangeReciverr = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
-            if (!mCallSession.equals(session)) {
+            Bundle bundle = intent.getExtras();
+            if (null == bundle)
+            {
+                LogUtil.d(TAG, "Enter ACTION_USB_CAMERA_PLUG_IN_OUT bundle is null");
                 return;
             }
-            Bundle bundle = intent.getExtras();
-            int status = bundle.getInt(CallApi.PARAM_CALL_NET_STATUS);
-            if (status == 1) {
-                Rect rectLocal = new Rect();
-                rectLocal.left = 0;
-                rectLocal.top = 0;
-                rectLocal.right = 320;
-                rectLocal.bottom = 180;
-                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
-                CaaSSdkService.showRemoteVideoRender(true);
-            }
-        }
-    };
+            int state = bundle.getInt(Const.USB_CAMERA_STATE);
 
-    private BroadcastReceiver mOtherCameraPlugReciver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Rect rectLocal = new Rect();
-            int iState = intent.getIntExtra("state", -1);
-            LogApi.d(Const.TAG_UI, "camera stat change:" + iState);
-            if (1 == iState) {
-                mCallSession.openLocalVideo();
-            } else {
-                mCallSession.closeLocalVideo();
+            LogUtil.d(TAG, "videotalk mCameraPlugReciver " + state);
+            if (mCallSession == null)return;
+            if (0 == state)
+            {
+                if (!bCameraClose)
+                {
+                    mCallSession.closeLocalVideo();
+                    bCameraClose = true;
+                }
             }
+            else
+            {
+                if (bCameraClose)
+                {
+                    int iRet = mCallSession.openLocalVideo();
+                    LogUtil.d(TAG, "mCameraPlugReciver open localView " + iRet);
+                    bCameraClose = false;
+                }
+            }
+
         }
     };
 
@@ -131,7 +109,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
-            LogApi.d(Const.TAG_CALL, "surfaceCreated:");
+            LogUtil.d(Const.TAG_CALL, "surfaceCreated:");
             if (localVideoView.getHolder() == surfaceHolder) {
                 m_isSmallVideoCreate_MPEG = true;
             } else if (remoteVideoView.getHolder() == surfaceHolder) {
@@ -144,26 +122,26 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         @Override
         public void surfaceDestroyed(SurfaceHolder arg0) {
-            LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface");
+            LogUtil.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface");
             if (localVideoView.getHolder() == arg0) {
-                LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
+                LogUtil.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
                 m_isSmallVideoCreate_MPEG = false;
             } else if (remoteVideoView.getHolder() == arg0) {
-                LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
+                LogUtil.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
                 m_isBigVideoCreate_MPEG = false;
             }
         }
 
         protected void showMpegView() {
             if (mCallSession == null || localVideoView == null || remoteVideoView == null) {
-                LogApi.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svSmallVideo " + localVideoView + " m_svBigVideo " + remoteVideoView);
+                LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svSmallVideo " + localVideoView + " m_svBigVideo " + remoteVideoView);
                 return;
             }
-            LogApi.d(Const.TAG_CALL, "m_isSmallVideoCreate_MPEG: " + m_isSmallVideoCreate_MPEG + ", m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
+            LogUtil.d(Const.TAG_CALL, "m_isSmallVideoCreate_MPEG: " + m_isSmallVideoCreate_MPEG + ", m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
             if (m_isSmallVideoCreate_MPEG && m_isBigVideoCreate_MPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
                 int result1 = CallApi.createLocalVideoSurface(localVideoView.getHolder().getSurface());
                 int result2 = CallApi.createRemoteVideoSurface(remoteVideoView.getHolder().getSurface());
-                LogApi.d(Const.TAG_CALL, "result1: " + result1 + ", result2: " + result2);
+                LogUtil.d(Const.TAG_CALL, "result1: " + result1 + ", result2: " + result2);
                 mCallSession.showVideoWindow();
             }
         }
@@ -176,7 +154,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_video_call;
+        return R.layout.activity_video_call_vt;
     }
 
     @Override
@@ -217,44 +195,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void createVideoView() {
-        if (Const.deviceType != Const.TYPE_OTHER) {
-            remoteVideoView.setVisibility(View.GONE);
-            localVideoView.setVisibility(View.GONE);
-            mCallSession.showVideoWindow();
-            CaaSSdkService.setRemoteRenderPos(getFullScreenRect(), CallApi.VIDEO_LAYER_BOTTOM);
-            CaaSSdkService.showRemoteVideoRender(true);
-        }else{
-            remoteVideoView.getHolder().addCallback(surfaceCb);
-            localVideoView.getHolder().addCallback(surfaceCb);
-            localVideoView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-            localVideoView.setZOrderOnTop(true);
-        }
+        remoteVideoView.getHolder().addCallback(surfaceCb);
+        localVideoView.getHolder().addCallback(surfaceCb);
+        localVideoView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        localVideoView.setZOrderOnTop(true);
     }
-
-    private Rect getFullScreenRect() {
-        int[] metrics = new int[2];
-        getDisplayMetrics(this, metrics);
-
-        Rect rect = new Rect();
-        rect.left = 0;
-        rect.top = 0;
-        rect.right = metrics[0];
-        rect.bottom = metrics[1];
-        return rect;
-    }
-
-    private void getDisplayMetrics(Context context, int metrics[]) {
-        if (null == metrics) {
-            metrics = new int[2];
-        }
-
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int screenHeight = windowManager.getDefaultDisplay().getHeight();
-        int screenWidth = windowManager.getDefaultDisplay().getWidth();
-        metrics[0] = screenWidth;
-        metrics[1] = screenHeight;
-    }
-
 
     private void stopCallTimeTask() {
         if (timer != null) {
@@ -283,30 +228,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void registerReceivers() {
-        if (Const.deviceType != Const.TYPE_OTHER) {
-            LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-                    remoteNetStatusChangeReciverr,
-                    new IntentFilter(CallApi.EVENT_CALL_VIDEO_NET_STATUS_CHANGE));
-            IntentFilter intent = new IntentFilter();
-            intent.addAction(Const.CAMERA_PLUG);
-            registerReceiver(mCameraPlugReciver, intent);
-        }else{
-            IntentFilter intent = new IntentFilter();
-            intent.addAction(Const.CAMERA_PLUG);
-            registerReceiver(mOtherCameraPlugReciver, intent);
-        }
-        hasRegistReceiver = true;
+
     }
 
     private void unRegisterReceivers() {
-        if (Const.deviceType != Const.TYPE_OTHER) {
-            LocalBroadcastManager.getInstance(getApplicationContext())
-                    .unregisterReceiver(remoteNetStatusChangeReciverr);
-            unregisterReceiver(mCameraPlugReciver);
-        }else{
-            IntentFilter intent = new IntentFilter();
-            unregisterReceiver(mOtherCameraPlugReciver);
-        }
     }
 
     @Override
@@ -361,6 +286,22 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.d(TAG, "onResume");
+        IntentFilter intent=new IntentFilter();
+        intent.addAction(Const.ACTION_USB_CAMERA_PLUG_IN_OUT);
+        registerReceiver(mCameraPlugReciver, intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtil.d(TAG, "onPause");
+        unregisterReceiver(mCameraPlugReciver);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         //还原免提设置
@@ -368,17 +309,9 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             audioManamger.setSpeakerphoneOn(speakerState);
         }
-        destroyVideoView();
         stopCallTimeTask();
         if (hasRegistReceiver) {
             unRegisterReceivers();
-        }
-    }
-
-    private void destroyVideoView() {
-        if (Const.deviceType == Const.TYPE_OTHER) {
-            CallApi.deleteLocalVideoSurface(localVideoView.getHolder().getSurface());
-            CallApi.deleteRemoteVideoSurface(remoteVideoView.getHolder().getSurface());
         }
     }
 
