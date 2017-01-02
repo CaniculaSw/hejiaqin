@@ -177,6 +177,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     break;
                 case CallSession.STATUS_IDLE:
                     LogUtil.d(TAG, "SIP_CAUSE:" + callSession.getSipCause());
+                    LogApi.copyLastLog();
                     if (callSession.isNurse()) {
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID, callSession);
                     } else{
