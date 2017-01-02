@@ -197,10 +197,12 @@ public class VideoInComingDialog extends Dialog {
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
                 if(Const.deviceType == Const.TYPE_OTHER) {
+                    LogUtil.d(TAG,"VtVideoCallActivity incoming");
                     Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
                     mContext.startActivity(intentTalking);
                 } else{
+                    LogUtil.d(TAG,"VtVideoCallActivity incoming");
                     Intent intentTalking = new Intent(getContext(), StbVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
                     mContext.startActivity(intentTalking);

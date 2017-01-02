@@ -155,7 +155,7 @@ public class HeApplication extends RCSApplication {
             deviceName = "STB_3719C";
         }
         else{
-            deviceName = sDevice;
+            deviceName = "STB_A40";
         }
         return deviceName;
     }
