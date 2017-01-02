@@ -31,20 +31,22 @@ import java.io.File;
  */
 public class HeApplication extends RCSApplication {
 
+    private static final String TAG ="HeApplication";
+
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Rect rectLocal = new Rect();
 
             int iState = intent.getIntExtra("state", -1);
-            LogUtil.d(Const.TAG_UI, "camera stat change:" + iState);
+            LogUtil.d(TAG, "camera stat change:" + iState);
 
             Toast.makeText(getApplicationContext(), "mCameraPlugReciver", Toast.LENGTH_SHORT).show();
 
             if (1 == iState)
             {
                 Toast.makeText(getApplicationContext(), "open the camera", Toast.LENGTH_SHORT).show();
-                LogUtil.d(Const.TAG_UI, "open the camera");
+                LogUtil.d(TAG, "open the camera");
 //                rectLocal.left = 0;
 //                rectLocal.top = 0;
 //                rectLocal.right = 1280;
@@ -56,7 +58,7 @@ public class HeApplication extends RCSApplication {
             }
             else
             {
-                LogUtil.d(Const.TAG_UI, "close the camera");
+                LogUtil.d(TAG, "close the camera");
 //                CaaSSdkService.closeLocalView();
             }
 
@@ -67,13 +69,13 @@ public class HeApplication extends RCSApplication {
     public void onCreate() {
         super.onCreate();
         String hmeLogPath = DirUtil.getExternalFileDir(getApplicationContext()) + "/log/hme";
-        LogUtil.d(Const.TAG_UI, "The hmelogpath is " + hmeLogPath);
+        LogUtil.d(TAG, "The hmelogpath is " + hmeLogPath);
         File targetDir = new File(hmeLogPath);
         if (!targetDir.exists())
         {
             if (!targetDir.mkdirs())
             {
-                LogUtil.e(Const.TAG_UI, "mkdir failed: " + hmeLogPath);
+                LogUtil.e(TAG, "mkdir failed: " + hmeLogPath);
             }
         }
         MediaApi.setConfigString(UspCfg.JEN_UMME_CFG_HME_LOGPATH, hmeLogPath + "/");
@@ -84,6 +86,8 @@ public class HeApplication extends RCSApplication {
 
         HmeAudioTV.setup(this);
         String deviceName = getDevice();
+        LogUtil.d(TAG,"Const.deviceType:" +Const.deviceType);
+        LogUtil.d(TAG,"Const.deviceName:" + deviceName);
         if(Const.deviceType == Const.TYPE_OTHER)
         {
             HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_VT);
@@ -123,7 +127,7 @@ public class HeApplication extends RCSApplication {
     {
         String sDevice = android.os.Build.DEVICE;
         String sModel = android.os.Build.MODEL;
-        LogUtil.d(Const.TAG_UI, "device=" + sDevice + "--sModel=" + sModel);
+        LogUtil.d(TAG, "device=" + sDevice + "--sModel=" + sModel);
         if (sDevice.contains("Hi3716CV200"))
         {
             Const.deviceType = Const.TYPE_3719C;
@@ -142,7 +146,7 @@ public class HeApplication extends RCSApplication {
         }
         else
         {
-            LogUtil.e(Const.TAG_UI, "the device is Other!");
+            LogUtil.e(TAG, "the device is Other!");
             Const.deviceType = Const.TYPE_OTHER;
         }
         String deviceName = null;
