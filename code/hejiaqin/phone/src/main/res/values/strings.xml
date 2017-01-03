@@ -133,10 +133,10 @@
 
     <!-- 更多 -->
     <string name="about_version_update">版本更新</string>
-    <string name="about_version_new_to_update">检测到您有新版本，是否确认更新？</string>
-    <string name="about_hejiaqin_update"> 下载</string>
+    <string name="about_version_new_to_update">检测到新版本，是否升级？</string>
+    <string name="about_hejiaqin_update"> 更新</string>
     <string name="about_hejiaqin_download_error"> 下载错误</string>
-    <string name="about_hejiaqin_later_to_update"> 以后再说</string>
+    <string name="about_hejiaqin_later_to_update"> 取消</string>
     <string name="about_hejiaqin_version_warming"> 由于您的版本过低，需要更新，否则无法正常使用！</string>
     <string name="about_hejiaqin_update_now"> 马上更新</string>
     <string name="about_hejiaqin_progress_quit"> 退出程序</string>

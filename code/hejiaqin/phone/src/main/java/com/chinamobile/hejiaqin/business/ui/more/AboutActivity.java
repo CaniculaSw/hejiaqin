@@ -52,7 +52,7 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
     protected void initDate() {
         TextView packageVersion = (TextView) findViewById(R.id.about_package_version);
         packageVersion.setText(getString(R.string.more_about_version, SystemUtil.getPackageVersionName(getApplicationContext())));
-        if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) != null){
+        if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) != null) {
             updateTips.setVisibility(View.VISIBLE);
         }
     }
@@ -93,13 +93,15 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         }
     }
 
-    private void checkUpdate(){
-        if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) == null){
+    private void checkUpdate() {
+        if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) == null) {
             settingLogic.checkVersion();
-        }else {
-            new UpdateManger(AboutActivity.this).update(UserInfoCacheManager.getVersionInfo(getApplicationContext()),false);
+        } else {
+            new UpdateManger(AboutActivity.this).showNoticeDialog(UserInfoCacheManager.getVersionInfo(getApplicationContext()));
+//            new UpdateManger(AboutActivity.this).update(UserInfoCacheManager.getVersionInfo(getApplicationContext()),false);
         }
     }
+
     private void jumpToFeedBack() {
         Intent intent = new Intent(AboutActivity.this, FeedBackActivity.class);
         startActivity(intent);
@@ -113,9 +115,9 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
-        switch (msg.what){
+        switch (msg.what) {
             case BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE:
-                showToast(getString(R.string.about_hejiaqin_version_new), Toast.LENGTH_SHORT,null);
+                showToast(getString(R.string.about_hejiaqin_version_new), Toast.LENGTH_SHORT, null);
                 break;
             default:
                 break;
