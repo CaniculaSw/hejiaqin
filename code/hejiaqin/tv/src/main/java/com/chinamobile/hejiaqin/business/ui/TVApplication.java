@@ -1,8 +1,8 @@
 package com.chinamobile.hejiaqin.business.ui;
 
-import android.app.Application;
 import android.content.Intent;
 
+import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.chinamobile.hejiaqin.business.HeApplication;
 import com.chinamobile.hejiaqin.business.HeService;
@@ -15,12 +15,16 @@ public class TVApplication extends HeApplication implements
         Thread.UncaughtExceptionHandler{
     @Override
     public void onCreate() {
+        //根据build.gradle设置日志级别
+        LogUtil.setContext(getApplicationContext());
+        LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
+        LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(this) + "/log/common/");
         super.onCreate();
         startService(new Intent(this,HeService.class));
         //设置Thread Exception Handler
-        if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
+//        if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
             Thread.setDefaultUncaughtExceptionHandler(this);
-        }
+//        }
     }
 
     @Override
