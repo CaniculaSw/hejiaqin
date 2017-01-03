@@ -96,14 +96,14 @@
             android:textColor="@color/more_black_404040"
             android:textSize="16sp" />
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/about_new_version_tips_iv"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/about_check_update_tv"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/red_circle"
-            android:visibility="gone"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/icon_new"
+
             />
     </RelativeLayout>
 

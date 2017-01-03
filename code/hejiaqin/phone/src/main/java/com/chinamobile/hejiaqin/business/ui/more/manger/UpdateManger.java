@@ -83,7 +83,7 @@ public class UpdateManger {
     public void showNoticeDialog(final VersionInfo info) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
         builder.setCancelable(true);
-        builder.setTitle(R.string.about_version_update);
+//        builder.setTitle(R.string.about_version_update);
         builder.setMessage(R.string.about_version_new_to_update);
         builder.setPositiveButton(R.string.about_hejiaqin_update, new DialogInterface.OnClickListener() {
             @Override
@@ -106,7 +106,7 @@ public class UpdateManger {
     //强制更新下载窗口
     public void showForcedUpdateDialog(final VersionInfo info) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
-        builder.setTitle(R.string.about_version_update);
+//        builder.setTitle(R.string.about_version_update);
         builder.setMessage(R.string.about_hejiaqin_version_warming);
         builder.setPositiveButton(R.string.about_hejiaqin_update_now, new DialogInterface.OnClickListener() {
             @Override

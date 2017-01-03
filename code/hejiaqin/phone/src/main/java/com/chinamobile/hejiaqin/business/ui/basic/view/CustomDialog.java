@@ -188,6 +188,8 @@ public class CustomDialog extends Dialog {
                 // if no confirm button just set the visibility to GONE
                 layout.findViewById(R.id.positiveButton).setVisibility(
                         View.GONE);
+                layout.findViewById(R.id.divider).setVisibility(
+                        View.GONE);
             }
             // set the cancel button
             if (negativeButtonText != null) {

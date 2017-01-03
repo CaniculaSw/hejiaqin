@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        card_view:cardBackgroundColor="@color/maincolor"
+        card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -22,7 +22,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="1dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -39,7 +39,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_icon"
-                    android:text="提示"
                     android:textColor="@color/white"
                     android:textSize="@dimen/normal_font" />
             </RelativeLayout>
@@ -63,14 +62,15 @@
                     android:id="@+id/message"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:lineSpacingMultiplier="1.5"
                     android:minHeight="100dp"
                     android:paddingBottom="15.0dip"
                     android:paddingLeft="20.0dip"
                     android:paddingRight="20.0dip"
                     android:paddingTop="15.0dip"
-                    android:textColor="@color/navigation_unselected"
+                    android:textColor="@color/more_black_404040"
                     android:textSize="@dimen/normal_font" />
                        
             </LinearLayout>
@@ -82,36 +82,42 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/negativeButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/maincolor"
-                    android:gravity="center"
+                    android:background="@color/white"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="取消"
-                    android:textColor="@color/white"
+                    android:textColor="@color/maincolor"
                     android:textSize="@dimen/normal_font" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/navigation_unselected" />
 
                 <Button
                     android:id="@+id/positiveButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/maincolor"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:layout_gravity="center_vertical"
                     android:text="确定"
-                    android:textColor="@color/white"
+                    android:textColor="@color/maincolor"
+                    android:clickable="true"
                     android:textSize="@dimen/normal_font" />
             </LinearLayout>
         </LinearLayout>
