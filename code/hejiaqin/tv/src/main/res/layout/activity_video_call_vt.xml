@@ -15,7 +15,6 @@
             android:id="@+id/large_video_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#404040"
             android:orientation="horizontal" />
 
         <TextView
@@ -62,7 +61,6 @@
         android:orientation="horizontal"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:background="#404040"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp" />
 

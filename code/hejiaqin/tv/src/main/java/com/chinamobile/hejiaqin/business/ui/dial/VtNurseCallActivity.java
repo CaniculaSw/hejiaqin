@@ -22,7 +22,6 @@ import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
-import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.system.SysApi;
 
 import java.util.Timer;
@@ -100,7 +99,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
 
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
-            LogApi.d(Const.TAG_CALL, "surfaceCreated:");
+            LogUtil.d(Const.TAG_CALL, "surfaceCreated:");
             if (localVideoSurface.getHolder() == surfaceHolder) {
                 m_isBigVideoCreate_MPEG = true;
                 showMpegView();
@@ -109,22 +108,22 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
 
         @Override
         public void surfaceDestroyed(SurfaceHolder arg0) {
-            LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface");
+            LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface");
             if (localVideoSurface.getHolder() == arg0) {
-                LogApi.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
+                LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
                 m_isBigVideoCreate_MPEG = false;
             }
         }
 
         protected void showMpegView() {
             if (mCallSession == null || localVideoSurface == null) {
-                LogApi.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svBigVideo " + localVideoSurface);
+                LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svBigVideo " + localVideoSurface);
                 return;
             }
-            LogApi.d(Const.TAG_CALL, " m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
+            LogUtil.d(Const.TAG_CALL, " m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
             if (m_isBigVideoCreate_MPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
                 int result1 = CallApi.createLocalVideoSurface(localVideoSurface.getHolder().getSurface());
-                LogApi.d(Const.TAG_CALL, "result1: " + result1);
+                LogUtil.d(Const.TAG_CALL, "result1: " + result1);
                 mCallSession.showVideoWindow();
             }
         }

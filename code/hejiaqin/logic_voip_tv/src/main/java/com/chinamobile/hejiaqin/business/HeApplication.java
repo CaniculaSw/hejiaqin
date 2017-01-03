@@ -16,6 +16,7 @@ import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.MediaApi;
 import com.huawei.rcs.hme.HmeAudioTV;
 import com.huawei.rcs.hme.HmeVideo;
+import com.huawei.rcs.login.LoginApi;
 import com.huawei.rcs.message.MessagingApi;
 import com.huawei.rcs.system.DmVersionInfo;
 import com.huawei.rcs.system.SysApi;
@@ -33,57 +34,10 @@ public class HeApplication extends RCSApplication {
 
     private static final String TAG ="HeApplication";
 
-    private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Rect rectLocal = new Rect();
-
-            int iState = intent.getIntExtra("state", -1);
-            LogUtil.d(TAG, "camera stat change:" + iState);
-
-            Toast.makeText(getApplicationContext(), "mCameraPlugReciver", Toast.LENGTH_SHORT).show();
-
-            if (1 == iState)
-            {
-                Toast.makeText(getApplicationContext(), "open the camera", Toast.LENGTH_SHORT).show();
-                LogUtil.d(TAG, "open the camera");
-//                rectLocal.left = 0;
-//                rectLocal.top = 0;
-//                rectLocal.right = 1280;
-//                rectLocal.bottom = 720;
-//
-//                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_BOTTOM);
-//                CaaSSdkService.openLocalView();
-//                CaaSSdkService.showLocalVideoRender(true);
-            }
-            else
-            {
-                LogUtil.d(TAG, "close the camera");
-//                CaaSSdkService.closeLocalView();
-            }
-
-        }
-    };
-
     @Override
     public void onCreate() {
         super.onCreate();
-        String hmeLogPath = DirUtil.getExternalFileDir(getApplicationContext()) + "/log/hme";
-        LogUtil.d(TAG, "The hmelogpath is " + hmeLogPath);
-        File targetDir = new File(hmeLogPath);
-        if (!targetDir.exists())
-        {
-            if (!targetDir.mkdirs())
-            {
-                LogUtil.e(TAG, "mkdir failed: " + hmeLogPath);
-            }
-        }
-        MediaApi.setConfigString(UspCfg.JEN_UMME_CFG_HME_LOGPATH, hmeLogPath + "/");
-
-        SysApi.loadTls(new DefaultTlsHelper());
-
         UpgradeApi.init(getApplicationContext());
-
         HmeAudioTV.setup(this);
         String deviceName = getDevice();
         LogUtil.d(TAG,"Const.deviceType:" +Const.deviceType);
@@ -96,16 +50,18 @@ public class HeApplication extends RCSApplication {
         }
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
+        SysApi.loadTls(new DefaultTlsHelper());
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_SRTP, CallApi.CONFIG_MINOR_TYPE_SRTP_ALL, CallApi.CFG_CALL_ENABLE_SRTP);
+//        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_TPT_TYPE, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, LoginApi.VALUE_MAJOR_TYPE_TPT_TLS);
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "5");
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_USE_IPV6, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
+
         DmVersionInfo  versionInfo = new DmVersionInfo("V1.0.0.96", SysApi.VALUE_MAJOR_TYPE_PLATFORM_STB,
                 SysApi.VALUE_MAJOR_TYPE_OS_ANDROID, SysApi.VALUE_MAJOR_TYPE_APP_RCS, "00");
         SysApi.setDMVersion(versionInfo);
         CallApi.setConfig(CallApi.CONFIG_MAJOR_DEVICE_NAME, CallApi.CONFIG_MINOR_TYPE_DEFAULT, deviceName);
         CaaSSdkService.setVideoLevel(0);
-        if(Const.deviceType != Const.TYPE_OTHER) {
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(Const.CAMERA_PLUG);
-            registerReceiver(mCameraPlugReciver, filter);
-        }
         //initial message API
         MessagingApi.init(getApplicationContext());
         MessagingApi.setAllowSendDisplayStatus(true);
@@ -128,38 +84,40 @@ public class HeApplication extends RCSApplication {
         String sDevice = android.os.Build.DEVICE;
         String sModel = android.os.Build.MODEL;
         LogUtil.d(TAG, "device=" + sDevice + "--sModel=" + sModel);
-        if (sDevice.contains("Hi3716CV200"))
-        {
-            Const.deviceType = Const.TYPE_3719C;
-        }
-        else if (sDevice.contains("Hi3719CV100"))
-        {
-            Const.deviceType = Const.TYPE_3719C;
-        }
-        else if (sDevice.contains("Hi3719MV100"))
-        {
-            Const.deviceType = Const.TYPE_3719M;
-        }
-        else if (sDevice.contains("Hi3798MV100"))
-        {
-            Const.deviceType = Const.TYPE_3798M;
-        }
-        else
-        {
+
+//        if (sDevice.contains("Hi3716CV200"))
+//        {
+//            Const.deviceType = Const.TYPE_3719C;
+//        }
+//        else if (sDevice.contains("Hi3719CV100"))
+//        {
+//            Const.deviceType = Const.TYPE_3719C;
+//        }
+//        else if (sDevice.contains("Hi3719MV100"))
+//        {
+//            Const.deviceType = Const.TYPE_3719M;
+//        }
+//        else if (sDevice.contains("Hi3798MV100"))
+//        {
+//            Const.deviceType = Const.TYPE_3798M;
+//        }
+//        else
+//        {
+        //TODO:暂时只能使用非海思处理方式
             LogUtil.e(TAG, "the device is Other!");
             Const.deviceType = Const.TYPE_OTHER;
-        }
+//        }
         String deviceName = null;
         if (Const.TYPE_3798M == Const.deviceType)
         {
-            deviceName = "STB_3798M";
+            deviceName = CallApi.DEVICE_NAME_3798M;
         }
         else if (Const.TYPE_3719C == Const.deviceType || Const.TYPE_3719M == Const.deviceType)
         {
-            deviceName = "STB_3719C";
+            deviceName = CallApi.DEVICE_NAME_3719C;
         }
         else{
-            deviceName = "STB_A40";
+            deviceName = CallApi.DEVICE_NAME_TINYALSA;
         }
         return deviceName;
     }
@@ -168,9 +126,6 @@ public class HeApplication extends RCSApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if(Const.deviceType != Const.TYPE_OTHER) {
-            unregisterReceiver(mCameraPlugReciver);
-        }
         VoipLogic.getInstance(getApplicationContext()).unRegisterVoipReceiver();
         SettingLogic.getInstance(getApplicationContext()).unRegisterMessageReceiver();
         CMIMHelper.getCmAccountManager().doLogOut();

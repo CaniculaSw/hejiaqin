@@ -122,12 +122,12 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
 
         @Override
         public void surfaceDestroyed(SurfaceHolder arg0) {
-            LogUtil.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface");
+            LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface");
             if (localVideoView.getHolder() == arg0) {
-                LogUtil.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
+                LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
                 m_isSmallVideoCreate_MPEG = false;
             } else if (remoteVideoView.getHolder() == arg0) {
-                LogUtil.d("Const.TAG_CALL", "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
+                LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
                 m_isBigVideoCreate_MPEG = false;
             }
         }
@@ -196,6 +196,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
 
     private void createVideoView() {
         remoteVideoView.getHolder().addCallback(surfaceCb);
+        remoteVideoView.setZOrderOnTop(false);
         localVideoView.getHolder().addCallback(surfaceCb);
         localVideoView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         localVideoView.setZOrderOnTop(true);
