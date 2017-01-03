@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/framework/framework.iml" filepath="$PROJECT_DIR$/framework/framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/hejiaqin.iml" filepath="$PROJECT_DIR$/hejiaqin.iml" />
       <module fileurl="file://$PROJECT_DIR$/logic/logic.iml" filepath="$PROJECT_DIR$/logic/logic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/logic_voip/logic_voip.iml" filepath="$PROJECT_DIR$/logic_voip/logic_voip.iml" />
+      <module fileurl="file://$PROJECT_DIR$/logic_voip_tv/logic_voip_tv.iml" filepath="$PROJECT_DIR$/logic_voip_tv/logic_voip_tv.iml" />
       <module fileurl="file://$PROJECT_DIR$/phone/phone.iml" filepath="$PROJECT_DIR$/phone/phone.iml" />
       <module fileurl="file://$PROJECT_DIR$/tv/tv.iml" filepath="$PROJECT_DIR$/tv/tv.iml" />
     </modules>
