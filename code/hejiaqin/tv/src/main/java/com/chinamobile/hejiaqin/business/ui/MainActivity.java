@@ -50,15 +50,16 @@ public class MainActivity extends BasicActivity {
                 sdkuserInfo.countryCode = "+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                //TODO TEST
-                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
-                    sdkuserInfo.username = "2886544004";
-                    sdkuserInfo.password = "Vconf2015!";
-                } else {
-                    sdkuserInfo.username = "2886544005";
-                    sdkuserInfo.password = "Vconf2015!";
-                }
-                //TODO TEST
+//                //TODO TEST
+//                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
+//                    sdkuserInfo.username = "2886544004";
+//                    sdkuserInfo.password = "Vconf2015!";
+//                } else {
+//                    sdkuserInfo.username = "2886544005";
+//                    sdkuserInfo.password = "Vconf2015!";
+//                }
+                sdkuserInfo.username = "2886544000";
+//                //TODO TEST
                 LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;

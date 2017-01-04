@@ -36,6 +36,7 @@ import java.util.Date;
  * Created: 2016/4/8.
  */
 public class LoginLogic extends LogicImp implements ILoginLogic {
+    private static final String TAG = "LoginLogic";
 
     @Override
     public void getVerifyCode(String phone) {
@@ -184,7 +185,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
-                LogUtil.d(TAG,"UserInfo" + userInfo.toString());
+                LogUtil.d(TAG, "UserInfo" + userInfo.toString());
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
                 initCMIMSdk();
@@ -218,7 +219,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 UserInfo userInfo = (UserInfo) obj;
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
-                initCMIMSdk();
+//                initCMIMSdk();
                 LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
                 UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
             }
@@ -247,12 +248,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 String data = (String) obj;
-                switch (data){
+                LogUtil.d(TAG, "data is: " + data);
+                switch (data) {
                     case "0":
                         LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
                         break;
                     case "1":
-                        LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
+                        LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED);
                         break;
                     default:
                         LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
@@ -400,7 +402,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     }
 
     @Override
-    public void getUserInfo(NVPWithTokenReqBody reqBody){
+    public void getUserInfo(NVPWithTokenReqBody reqBody) {
         new LoginHttpManager(getContext()).getUserInfo(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
@@ -408,9 +410,10 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 UserInfo oldUserInfo = UserInfoCacheManager.getUserInfo(getContext());
                 newUserInfo.setToken(oldUserInfo.getToken());
                 UserInfoCacheManager.saveUserToLoacl(getContext(), newUserInfo, StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
-                UserInfoCacheManager.saveUserToMem(getContext(),newUserInfo,StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
+                UserInfoCacheManager.saveUserToMem(getContext(), newUserInfo, StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
                 LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.GET_USER_INFO_SUCCESS_MSG_ID);
             }
+
             @Override
             public void onFailure(Object invoker, String code, String desc) {
                 if (isCommonFailRes(code, desc)) {
@@ -428,6 +431,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             }
         });
     }
+
     @Override
     public void updatePassword(PasswordInfo pwdInfo) {
         new LoginHttpManager(getContext()).updatePassword(null, pwdInfo, new IHttpCallBack() {
@@ -491,7 +495,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_FAIL_MSG_ID,response);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_FAIL_MSG_ID, response);
             }
 
             @Override
