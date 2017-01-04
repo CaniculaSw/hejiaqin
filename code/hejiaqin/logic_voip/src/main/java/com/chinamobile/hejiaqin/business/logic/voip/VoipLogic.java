@@ -168,8 +168,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 case CallSession.STATUS_CONNECTED:
                     if(callSession.isNurse())
                     {
+                        LogUtil.d(TAG,"NURSE_CALL_ON_TALKING_MSG_ID");
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID, callSession);
                     }else {
+                        LogUtil.d(TAG,"CALL_ON_TALKING_MSG_ID");
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
                     }
                     break;

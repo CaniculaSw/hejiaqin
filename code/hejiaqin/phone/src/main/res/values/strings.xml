@@ -126,6 +126,7 @@
     <string name="sip_busy_here">对方正在通话中，您可以稍后再拨</string>
     <string name="voip_register_fail">登录失败，请稍后再试</string>
     <string name="nurse_call_outing">正在发起远程看护...</string>
+    <string name="nurse_call_talking">正在远程看护...</string>
     <string name="nurse_call_hangup">挂断看护</string>
     <string name="nurse_outing_error">发起远程看护失败，请稍后重试</string>
     <string name="nurse_temporarily_unavailable">对方暂时无法接通，您可以稍后再远程看护</string>

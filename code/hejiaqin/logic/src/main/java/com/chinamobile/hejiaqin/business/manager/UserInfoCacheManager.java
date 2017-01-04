@@ -139,21 +139,23 @@ public class UserInfoCacheManager {
     }
 
     public static boolean isBindedApp(Context context, String num) {
-        UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_APP_KEY);
-        if (userList == null) {
-            return false;
-        }
-        List<UserInfo> userInfoList = userList.getUsers();
-        boolean flag = false;
-        Iterator<UserInfo> iterator = userInfoList.iterator();
-        while (iterator.hasNext()) {
-            UserInfo userInfo = iterator.next();
-            if (CommonUtils.getPhoneNumber(num).equals(CommonUtils.getPhoneNumber(userInfo.getPhone()))) {
-                flag = true;
-                break;
-            }
-        }
-        return flag;
+        //TODO:因为服务器不OK，暂时返回true
+        return true;
+//        UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_APP_KEY);
+//        if (userList == null) {
+//            return false;
+//        }
+//        List<UserInfo> userInfoList = userList.getUsers();
+//        boolean flag = false;
+//        Iterator<UserInfo> iterator = userInfoList.iterator();
+//        while (iterator.hasNext()) {
+//            UserInfo userInfo = iterator.next();
+//            if (CommonUtils.getPhoneNumber(num).equals(CommonUtils.getPhoneNumber(userInfo.getPhone()))) {
+//                flag = true;
+//                break;
+//            }
+//        }
+//        return flag;
     }
 
     public static boolean isBindedDevice(Context context, String num) {
