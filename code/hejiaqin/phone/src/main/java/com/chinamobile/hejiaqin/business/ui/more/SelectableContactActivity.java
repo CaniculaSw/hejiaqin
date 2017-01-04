@@ -192,6 +192,12 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         mContactListView.addHeaderView(progressLayout);
         progressTips.setText(getResources().getText(R.string.sending_contact));
         LogUtil.d(TAG, "TvAccount: " + tvAccount);
+        //TODO:使用临时代码
+        if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
+            tvAccount = "2886544004";
+        }else{
+            tvAccount = "2886544005";
+        }
         settingLogic.sendContact(tvAccount, CaaSUtil.OpCode.SEND_CONTACT, getParam(contacts));
 //        mHeaderView.rightBtn.setClickable(true);
 //        mContactListView.removeHeaderView(progressLayout);
