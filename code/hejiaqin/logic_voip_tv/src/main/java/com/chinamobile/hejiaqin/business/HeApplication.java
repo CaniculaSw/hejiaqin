@@ -85,6 +85,7 @@ public class HeApplication extends RCSApplication {
         String sModel = android.os.Build.MODEL;
         LogUtil.d(TAG, "device=" + sDevice + "--sModel=" + sModel);
 
+        //非系统签名版本注销掉这段代码
         if (sDevice.contains("Hi3716CV200"))
         {
             Const.deviceType = Const.TYPE_3719C;
@@ -101,15 +102,7 @@ public class HeApplication extends RCSApplication {
         {
             Const.deviceType = Const.TYPE_3798M;
         }
-        else
-        {
-            LogUtil.e(TAG, "the device is Other!");
-            Const.deviceType = Const.TYPE_OTHER;
-        }
-
-//        //TODO:暂时只能使用非海思处理方式
-//        LogUtil.e(TAG, "the device is Other!");
-//        Const.deviceType = Const.TYPE_OTHER;
+        //非系统签名版本注销掉这段代码
 
         String deviceName = null;
         if (Const.TYPE_3798M == Const.deviceType)
