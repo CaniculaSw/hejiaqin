@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
@@ -146,7 +147,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     private void outingCall() {
         Intent extParas = new Intent();
         extParas.putExtra(CallApi.EN_CALL_VIDEO_EXTPARAS_NURSE, 1);
-        mCallSession = CallApi.initiateVideoCallWithExtParas(mCalleeNumber,extParas);
+        mCallSession = CallApi.initiateVideoCallWithExtParas(CommonUtils.getCountryPhoneNumber(mCalleeNumber), extParas);
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.nurse_outing_error, Toast.LENGTH_SHORT, null);
             closed = true;
