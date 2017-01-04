@@ -85,28 +85,32 @@ public class HeApplication extends RCSApplication {
         String sModel = android.os.Build.MODEL;
         LogUtil.d(TAG, "device=" + sDevice + "--sModel=" + sModel);
 
-//        if (sDevice.contains("Hi3716CV200"))
-//        {
-//            Const.deviceType = Const.TYPE_3719C;
-//        }
-//        else if (sDevice.contains("Hi3719CV100"))
-//        {
-//            Const.deviceType = Const.TYPE_3719C;
-//        }
-//        else if (sDevice.contains("Hi3719MV100"))
-//        {
-//            Const.deviceType = Const.TYPE_3719M;
-//        }
-//        else if (sDevice.contains("Hi3798MV100"))
-//        {
-//            Const.deviceType = Const.TYPE_3798M;
-//        }
-//        else
-//        {
-        //TODO:暂时只能使用非海思处理方式
+        if (sDevice.contains("Hi3716CV200"))
+        {
+            Const.deviceType = Const.TYPE_3719C;
+        }
+        else if (sDevice.contains("Hi3719CV100"))
+        {
+            Const.deviceType = Const.TYPE_3719C;
+        }
+        else if (sDevice.contains("Hi3719MV100"))
+        {
+            Const.deviceType = Const.TYPE_3719M;
+        }
+        else if (sDevice.contains("Hi3798MV100"))
+        {
+            Const.deviceType = Const.TYPE_3798M;
+        }
+        else
+        {
             LogUtil.e(TAG, "the device is Other!");
             Const.deviceType = Const.TYPE_OTHER;
-//        }
+        }
+
+//        //TODO:暂时只能使用非海思处理方式
+//        LogUtil.e(TAG, "the device is Other!");
+//        Const.deviceType = Const.TYPE_OTHER;
+
         String deviceName = null;
         if (Const.TYPE_3798M == Const.deviceType)
         {
