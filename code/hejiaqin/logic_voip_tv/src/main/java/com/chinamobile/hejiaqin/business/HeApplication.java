@@ -1,19 +1,10 @@
 package com.chinamobile.hejiaqin.business;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Rect;
-import android.widget.Toast;
-
 import com.chinamobile.hejiaqin.business.logic.setting.SettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
-import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.RCSApplication;
 import com.huawei.rcs.call.CallApi;
-import com.huawei.rcs.call.MediaApi;
 import com.huawei.rcs.hme.HmeAudioTV;
 import com.huawei.rcs.hme.HmeVideo;
 import com.huawei.rcs.login.LoginApi;
@@ -22,10 +13,7 @@ import com.huawei.rcs.system.DmVersionInfo;
 import com.huawei.rcs.system.SysApi;
 import com.huawei.rcs.tls.DefaultTlsHelper;
 import com.huawei.rcs.upgrade.UpgradeApi;
-import com.huawei.usp.UspCfg;
 import com.littlec.sdk.manager.CMIMHelper;
-
-import java.io.File;
 
 /**
  * Created by  on 2016/6/5.
@@ -86,22 +74,22 @@ public class HeApplication extends RCSApplication {
         LogUtil.d(TAG, "device=" + sDevice + "--sModel=" + sModel);
 
         //非系统签名版本注销掉这段代码
-        if (sDevice.contains("Hi3716CV200"))
-        {
-            Const.deviceType = Const.TYPE_3719C;
-        }
-        else if (sDevice.contains("Hi3719CV100"))
-        {
-            Const.deviceType = Const.TYPE_3719C;
-        }
-        else if (sDevice.contains("Hi3719MV100"))
-        {
-            Const.deviceType = Const.TYPE_3719M;
-        }
-        else if (sDevice.contains("Hi3798MV100"))
-        {
-            Const.deviceType = Const.TYPE_3798M;
-        }
+//        if (sDevice.contains("Hi3716CV200"))
+//        {
+//            Const.deviceType = Const.TYPE_3719C;
+//        }
+//        else if (sDevice.contains("Hi3719CV100"))
+//        {
+//            Const.deviceType = Const.TYPE_3719C;
+//        }
+//        else if (sDevice.contains("Hi3719MV100"))
+//        {
+//            Const.deviceType = Const.TYPE_3719M;
+//        }
+//        else if (sDevice.contains("Hi3798MV100"))
+//        {
+//            Const.deviceType = Const.TYPE_3798M;
+//        }
         //非系统签名版本注销掉这段代码
 
         String deviceName = null;

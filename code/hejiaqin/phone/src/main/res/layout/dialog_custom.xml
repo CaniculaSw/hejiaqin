@@ -92,12 +92,8 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:background="@color/white"
                     android:layout_gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:text="取消"
                     android:textColor="@color/maincolor"
                     android:textSize="@dimen/normal_font" />
