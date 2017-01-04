@@ -241,6 +241,43 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         });
     }
 
+    @Override
+    public void checkTvAccount(TvLoginInfo info) {
+        new LoginHttpManager(getContext()).checkTvAccount(null, info, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                String data = (String) obj;
+                switch (data){
+                    case "0":
+                        LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
+                        break;
+                    case "1":
+                        LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
+                        break;
+                    default:
+                        LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
+            }
+        });
+    }
+
 
     @Override
     public void logout() {

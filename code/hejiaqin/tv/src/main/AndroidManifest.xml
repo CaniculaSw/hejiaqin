@@ -107,6 +107,9 @@
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.login.LoginActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterActivity"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.setting.dialog.AutoAnswerNumberSettingDialog"

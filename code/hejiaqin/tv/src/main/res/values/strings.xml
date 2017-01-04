@@ -48,8 +48,9 @@
     <!-- 登录 -->
     <string name="action_sign_in">登录</string>
     <string name="action_forget_pwd">忘记密码 ?</string>
-    <string name="register">注册</string>
-    <string name="register_title">注册</string>
+    <string name="register">一键开户</string>
+    <string name="register_hint">尚未注册，请点击下方按钮进行注册</string>
+    <string name="registing">正在注册，请稍后…</string>
     <string name="prompt_account">请输入账号</string>
     <string name="prompt_password">请输入密码</string>
     <string name="prompt_confirm_password">请再次输入密码</string>

@@ -60,6 +60,8 @@ public interface ILoginLogic {
     void login(LoginInfo info);
 
     void tvLogin(TvLoginInfo info);
+
+    void checkTvAccount(TvLoginInfo info);
     /**
      * 用户注销
      */

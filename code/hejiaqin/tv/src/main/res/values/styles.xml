@@ -1,5 +1,13 @@
 <resources>
 
+    <style name="mProgress_circle">
+        <item name="android:indeterminateDrawable">@drawable/progress_circle</item>
+        <item name="android:minWidth">14dp</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:maxWidth">14dp</item>
+        <item name="android:maxHeight">14dp</item>
+    </style>
+
     <style name="Theme.hejiaqin" parent="Theme.AppCompat.Light">
         <item name="android:editTextStyle">@style/hejiaqinEditText</item>
     </style>

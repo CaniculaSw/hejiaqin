@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:id="@+id/logo_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/icon_login_logo" />
+
+    <TextView
+        android:id="@+id/register_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="55dp"
+        android:text="@string/register_hint"
+        android:textColor="@color/more_white_f4f4f4"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/register_ll"
+        android:layout_width="495dp"
+        android:layout_height="79dp"
+        android:layout_below="@+id/register_hint"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/selector_setting_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:nextFocusDown="@+id/register_ll"
+        android:nextFocusLeft="@+id/register_ll"
+        android:nextFocusRight="@+id/register_ll"
+        android:nextFocusUp="@+id/register_ll"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="480dp"
+            android:layout_height="64dp"
+            android:background="@drawable/dial_num_btn_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

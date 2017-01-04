@@ -39,6 +39,7 @@ public class SettingHttpmanager extends AbsHttpManager {
     private final int save_bind_request = action_base + 3;
     private final int get_bind_list = action_base + 4;
 
+
     /**
      * 请求action
      */

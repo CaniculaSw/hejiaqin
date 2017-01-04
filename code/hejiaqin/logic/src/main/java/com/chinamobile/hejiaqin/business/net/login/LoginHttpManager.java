@@ -94,6 +94,8 @@ public class LoginHttpManager extends AbsHttpManager {
 
     private final int tv_login_action = action_base + 14;
 
+    private final int check_tv_account = action_base + 15;
+
     /**
      * 请求action
      */
@@ -150,6 +152,8 @@ public class LoginHttpManager extends AbsHttpManager {
             case tv_login_action:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/tvLogin";
                 break;
+            case check_tv_account:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkTvAccount";
             default:
                 break;
         }
@@ -176,6 +180,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case feed_back:
             case get_user_info_action:
             case tv_login_action:
+            case check_tv_account:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -196,6 +201,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case check_forget_password_code_action:
             case update_pwd_action:
             case tv_login_action:
+            case check_tv_account:
                 flag = false;
                 break;
             default:
@@ -239,6 +245,9 @@ public class LoginHttpManager extends AbsHttpManager {
                     case tv_login_action:
                     case login_action:
                         obj = gson.fromJson(data, UserInfo.class);
+                        break;
+                    case check_tv_account:
+                        obj = data;
                         break;
                     case logout_action:
                         break;
@@ -343,6 +352,12 @@ public class LoginHttpManager extends AbsHttpManager {
 
     public void tvLogin(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
         this.mAction = tv_login_action;
+        this.mData = loginInfo;
+        send(invoker, callBack);
+    }
+
+    public void checkTvAccount(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
+        this.mAction = check_tv_account;
         this.mData = loginInfo;
         send(invoker, callBack);
     }
