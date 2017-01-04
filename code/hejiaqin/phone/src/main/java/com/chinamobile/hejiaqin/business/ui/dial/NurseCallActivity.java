@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.LogUtil;
@@ -45,6 +46,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     private TextView mContactNameTv;
     private LinearLayout mCallStatusLayout;
     private TextView mTalkingTimeTv;
+    private TextView mCallStatusTv;
 
     //底部布局(呼出和通话中)
     private LinearLayout mBottomLayout;
@@ -99,6 +101,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected void initLogics() {
+        //获取voiplogic,便于收到voiplogic通知
+        super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -116,6 +120,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         mTopLayout = (LinearLayout) findViewById(R.id.top_layout);
         mContactNameTv = (TextView) findViewById(R.id.contact_name_tv);
         mCallStatusLayout = (LinearLayout) findViewById(R.id.call_status_layout);
+        mCallStatusTv =(TextView)findViewById(R.id.call_status_tv);
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
 
         //底部布局(呼出和通话中)
@@ -277,6 +282,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         CallApi.setPauseMode(1);
         createVideoView();
         mCallSession.showVideoWindow();
+        mCallStatusTv.setText(R.string.nurse_call_talking);
         startCallTimeTask();
         mCallSession.mute();
     }
@@ -361,9 +367,12 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID:
+            case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
+                LogUtil.d(TAG,"NURSE_CALL_ON_TALKING_MSG_ID");
                 showTalking();
                 break;
             case BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID:
+            case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
                 if (msg.obj != null) {
                     CallSession session = (CallSession) msg.obj;
                     if (mCallSession != null && mCallSession.equals(session)) {
