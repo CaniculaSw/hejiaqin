@@ -66,7 +66,6 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                     sdkuserInfo.username = "2886544005";
                     sdkuserInfo.password = "Vconf2015!";
                 }
-//                sdkuserInfo.username = "2886544000";
 //                //TODO TEST
                 LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
@@ -81,7 +80,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
 //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
 //                accountEditTv.requestFocus();
-                showToast("Login Failed.", Toast.LENGTH_LONG, null);
+                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 logining = false;
                 break;
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:

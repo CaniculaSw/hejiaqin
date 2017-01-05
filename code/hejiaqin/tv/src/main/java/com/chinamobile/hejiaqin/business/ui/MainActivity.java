@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
@@ -26,7 +25,7 @@ public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
     private IVoipLogic mVoipLogic;
-    private ISettingLogic settingLogic;
+    //    private ISettingLogic settingLogic;
     private static final String TAG = "MainActivity";
     private boolean logining;
 
@@ -79,7 +78,7 @@ public class MainActivity extends BasicActivity {
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
 //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
 //                accountEditTv.requestFocus();
-                showToast("登陆失败", Toast.LENGTH_LONG, null);
+                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 logining = false;
                 break;
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
@@ -140,7 +139,7 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
-        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+//        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 

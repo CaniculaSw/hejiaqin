@@ -349,6 +349,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             return false;
         }
         if (currentVersioncode < versionCode) {
+            LogUtil.d(TAG,"currentVersioncode: "+ currentVersioncode + " , versionCode: "+versionCode);
             return true;
         }
         return false;
