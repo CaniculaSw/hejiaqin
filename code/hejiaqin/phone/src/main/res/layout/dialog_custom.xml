@@ -91,9 +91,9 @@
                     android:id="@+id/negativeButton"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:layout_gravity="center_vertical"
                     android:text="取消"
                     android:textColor="@color/maincolor"
                     android:textSize="@dimen/normal_font" />
@@ -108,12 +108,12 @@
                     android:id="@+id/positiveButton"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
                     android:text="确定"
                     android:textColor="@color/maincolor"
-                    android:clickable="true"
                     android:textSize="@dimen/normal_font" />
             </LinearLayout>
         </LinearLayout>

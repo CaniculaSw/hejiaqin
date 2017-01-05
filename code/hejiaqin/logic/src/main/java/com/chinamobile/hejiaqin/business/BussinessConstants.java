@@ -134,6 +134,10 @@ public class BussinessConstants {
         String INTENT_FROM_LONGIN = "fromLogin";
 
         String VOIP_LOGINED_KEY = "voipLogined";
+
+        String BASE_URI = "content://stbconfig/summary";
+        String TV_USERID_KEY = "UserID";
+        String TV_TOKEN_KEY = "UserToken";
     }
 
     /**
@@ -213,6 +217,12 @@ public class BussinessConstants {
         int GET_USER_INFO_SUCCESS_MSG_ID = BASE_MSG_ID + 26;
 
         int GET_USER_INFO_FAIL_MSG_ID = BASE_MSG_ID + 27;
+
+        int TV_ACCOUNT_REGISTERED = BASE_MSG_ID + 28;
+
+        int TV_ACCOUNT_UNREGISTERED = BASE_MSG_ID + 29;
+
+
     }
 
     /**

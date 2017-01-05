@@ -1,11 +1,9 @@
-package com.chinamobile.hejiaqin.business.ui;
+package com.chinamobile.hejiaqin.business.ui.login;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -15,35 +13,39 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.login.RegisterActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
 
-public class MainActivity extends BasicActivity {
-
+/**
+ * Created by eshaohu on 17/1/4.
+ */
+public class RegisterActivity extends BasicActivity implements View.OnClickListener {
+    private LinearLayout registerLayout;
     private ILoginLogic loginLogic;
     private IVoipLogic mVoipLogic;
-    //    private ISettingLogic settingLogic;
-    private static final String TAG = "MainActivity";
     private boolean logining;
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activiity_register;
+    }
+
+    @Override
+    protected void initView() {
+        registerLayout = (LinearLayout) findViewById(R.id.register_ll);
+        registerLayout.setClickable(true);
+        registerLayout.setOnClickListener(this);
+
+
+    }
 
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
-            case BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED:
-                jumpToRegisterActivity();
-                break;
-            case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-                if (loginLogic.hasLogined() && mVoipLogic.hasLogined()) {
-                    jumpToMainFragmentActivity();
-                } else {
-                    autoLogin();
-                }
-                break;
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
 //                jumpToMainFragmentActivity();
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
@@ -70,7 +72,7 @@ public class MainActivity extends BasicActivity {
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 logining = true;
-                Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, MainFragmentActivity.class);
                 intent.putExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, true);
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
@@ -100,34 +102,11 @@ public class MainActivity extends BasicActivity {
                 break;
             default:
                 break;
-
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSTBConfig();
-
-        //检查是否开户
-        TvLoginInfo tvLoginInfo = new TvLoginInfo();
-        tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-        tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
-        loginLogic.checkTvAccount(tvLoginInfo);
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
     protected void initDate() {
-
-    }
-
-    @Override
-    protected void initView() {
 
     }
 
@@ -139,7 +118,6 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
-//        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
@@ -150,31 +128,15 @@ public class MainActivity extends BasicActivity {
         loginLogic.tvLogin(loginInfo);
     }
 
-    private void jumpToMainFragmentActivity() {
-        Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
-    private void jumpToRegisterActivity() {
-        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private boolean getSTBConfig() {
-        boolean flag = true;
-        ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null, null, null, null);
-        if (cursor != null && cursor.moveToNext()) {
-            UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")));
-        } else {
-            flag = false;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.register_ll:
+                registerLayout.setFocusable(false);
+                RegistingDialog.show(this);
+                autoLogin();
+                break;
         }
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-
-        return flag;
     }
 }

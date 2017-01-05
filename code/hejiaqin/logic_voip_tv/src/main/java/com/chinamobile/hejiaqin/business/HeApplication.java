@@ -61,10 +61,7 @@ public class HeApplication extends RCSApplication {
 
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
         SettingLogic.getInstance(getApplicationContext()).registerMessageReceiver();
-        /**
-         * 初始化小溪推送SDK
-         */
-        CMIMHelper.getCmAccountManager().init(getApplicationContext(), BussinessConstants.CommonInfo.LITTLEC_APP_KEY);
+
     }
 
     public String getDevice()
