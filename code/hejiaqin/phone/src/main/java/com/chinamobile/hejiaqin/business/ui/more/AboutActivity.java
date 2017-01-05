@@ -118,6 +118,8 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         switch (msg.what) {
             case BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE:
                 showToast(getString(R.string.about_hejiaqin_version_new), Toast.LENGTH_SHORT, null);
+                updateTips.setVisibility(View.INVISIBLE);
+                UserInfoCacheManager.clearVersionInfo(this);
                 break;
             default:
                 break;

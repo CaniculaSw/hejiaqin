@@ -133,6 +133,9 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
         if (input.length() > 0 && StringUtil.isNumeric(input, false)) {
             settingLogic.handleCommit(getApplicationContext(), input, id);
             finish();
+        } else {
+            settingLogic.handleCommit(getApplicationContext(), "", id);
+            finish();
         }
     }
 
