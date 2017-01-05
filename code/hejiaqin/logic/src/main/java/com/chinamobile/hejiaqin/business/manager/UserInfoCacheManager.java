@@ -65,7 +65,7 @@ public class UserInfoCacheManager {
     private static void saveUserSettingToLocal(Context context, TvSettingInfo setting) {
         HashMap map = new HashMap();
         Gson gson = new Gson();
-        map.put(getUserInfo(context).getTvAccount()+BussinessConstants.Setting.USER_SETTING_KEY, gson.toJson(setting));
+        map.put(getUserInfo(context).getTvAccount() + BussinessConstants.Setting.USER_SETTING_KEY, gson.toJson(setting));
         StorageMgr.getInstance().getSharedPStorage(context).save(map);
     }
 
@@ -196,7 +196,7 @@ public class UserInfoCacheManager {
     }
 
     public static TvSettingInfo getUserSettingInfo(Context context) {
-        String settingStr = StorageMgr.getInstance().getSharedPStorage(context).getString(getUserInfo(context).getTvAccount()+BussinessConstants.Setting.USER_SETTING_KEY);
+        String settingStr = StorageMgr.getInstance().getSharedPStorage(context).getString(getUserInfo(context).getTvAccount() + BussinessConstants.Setting.USER_SETTING_KEY);
         if (settingStr != null) {
             Gson gson = new Gson();
             return gson.fromJson(settingStr, TvSettingInfo.class);
@@ -243,12 +243,28 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.VOIP_LOGINED_KEY, true);
     }
 
+    public static void saveSTBConfig(Context context, String userid, String token) {
+        StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_USERID_KEY, userid);
+        StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_TOKEN_KEY, token);
+    }
+
+//    public static void clearSTBConfig(Context context) {
+//        StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.TV_USERID_KEY, BussinessConstants.Login.TV_TOKEN_KEY});
+//    }
+
     public static void clearVoipLogined(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.VOIP_LOGINED_KEY});
     }
 
     public static boolean getVoipLogined(Context context) {
-       return StorageMgr.getInstance().getSharedPStorage(context).getBoolean(BussinessConstants.Login.VOIP_LOGINED_KEY);
+        return StorageMgr.getInstance().getSharedPStorage(context).getBoolean(BussinessConstants.Login.VOIP_LOGINED_KEY);
     }
 
+    public static String getTvUserID(Context context) {
+        return StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Login.TV_USERID_KEY);
+    }
+
+    public static String getTvToken(Context context) {
+        return StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Login.TV_TOKEN_KEY);
+    }
 }

@@ -135,8 +135,9 @@ public class BussinessConstants {
 
         String VOIP_LOGINED_KEY = "voipLogined";
 
-        String TV_USERID_URI = "content://stbconfig/summary/UserID";
-        String TV_TOKEN_URI = "content://stbconfig/summary/UserToken";
+        String BASE_URI = "content://stbconfig/summary";
+        String TV_USERID_KEY = "UserID";
+        String TV_TOKEN_KEY = "UserToken";
     }
 
     /**
