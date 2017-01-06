@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
@@ -24,6 +25,7 @@ import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.XmlParseUtil;
+import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.message.Conversation;
 import com.huawei.rcs.message.Message;
 import com.huawei.rcs.message.MessageConversation;
@@ -90,6 +92,16 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             }
         }
     };
+
+    private BroadcastReceiver MissCallReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "receive misscall", Toast.LENGTH_LONG).show();
+            LogUtil.i(TAG,"receive misscall");
+        }
+    };
+
 
     private void handleTextMessage(TextMessage msg) {
         String cmdType = getCmdType(msg.getContent());
@@ -313,7 +325,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     }
 
     @Override
-    public void bindSuccNotify(){
+    public void bindSuccNotify() {
         sendEmptyMessage(BussinessConstants.SettingMsgID.UPDATE_DEVICE_LIST_REQUEST);
     }
 
@@ -349,7 +361,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             return false;
         }
         if (currentVersioncode < versionCode) {
-            LogUtil.d(TAG,"currentVersioncode: "+ currentVersioncode + " , versionCode: "+versionCode);
+            LogUtil.d(TAG, "currentVersioncode: " + currentVersioncode + " , versionCode: " + versionCode);
             return true;
         }
         return false;
@@ -376,15 +388,18 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     public void registerMessageReceiver() {
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mMessageReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_INCOMING));
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
+//        LocalBroadcastManager.getInstance(getContext())
+//                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mMessageStatusChangedReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_STATUS_CHANGED));
+        LocalBroadcastManager.getInstance(getContext())
+                .registerReceiver(MissCallReceiver, new IntentFilter(CallApi.EVENT_MISS_CALL));
     }
 
     public void unRegisterMessageReceiver() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageStatusChangedReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(MissCallReceiver);
     }
 
     public String getOpCode(String toParse) {
