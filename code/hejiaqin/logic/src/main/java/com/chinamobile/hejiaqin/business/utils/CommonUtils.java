@@ -30,12 +30,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.StringUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -171,6 +173,19 @@ public class CommonUtils {
         String newPhoneNum1 = getPhoneNumber(phoneNumber1);
         String newPhoneNum2 = getPhoneNumber(phoneNumber2);
         return newPhoneNum1.equals(newPhoneNum2);
+    }
+
+    public static boolean isPhoneNumber(String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            return false;
+        }
+
+
+        String newPhoneNumber = getPhoneNumber(phoneNumber);
+        if(StringUtil.isMobileNO(newPhoneNumber)){
+            return true;
+        }
+        return false;
     }
 
     public static boolean isAutoAnswer(Context context, String incomingNum) {

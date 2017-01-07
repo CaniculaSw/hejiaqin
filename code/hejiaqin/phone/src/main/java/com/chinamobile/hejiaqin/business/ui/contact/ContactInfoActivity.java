@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -31,7 +32,9 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
+import com.chinamobile.hejiaqin.business.ui.dial.DialHelper;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
@@ -65,6 +68,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     private ImageView mDialInfoSelected;
 
     private ImageView mDialInfoUnSelected;
+
+    private ImageView dialImg;
 
     /**
      * 作为页面容器的ViewPager.
@@ -126,7 +131,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         mViewPager = (ViewPager) findViewById(R.id.id_stickynavlayout_viewpager);
 
-        ImageView dialImg = (ImageView) findViewById(R.id.dial_img);
+        dialImg = (ImageView) findViewById(R.id.dial_img);
         dialImg.setOnClickListener(this);
     }
 
@@ -170,6 +175,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         showViewByCurIndex(mViewPager.getCurrentItem());
+        dialImg.setImageResource(DialHelper.getInstance().isPhoneCall(mContactsInfo) ? R.mipmap.phone : R.mipmap.video);
 
         contactsLogic.queryContactCallRecords(mContactsInfo);
 
@@ -283,15 +289,15 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case R.id.dial_img:
                 // TODO
-                startVideoCall();
+                onClickDialBtn();
                 break;
         }
     }
 
-    private void startVideoCall() {
+    private void onClickDialBtn() {
         List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
         if (numberInfoList.isEmpty()) {
-            Logger.w(TAG, "startVideoCall, no number info.");
+            Logger.w(TAG, "onClickDialBtn, no number info.");
             return;
         }
 
@@ -302,11 +308,27 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
 
         NumberInfo numberInfo = numberInfoList.get(0);
-        Intent outingIntent = new Intent(this, VideoCallActivity.class);
-        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
-        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mContactsInfo.getName());
-        startActivity(outingIntent);
+        DialHelper.getInstance().call(this, numberInfo.getNumber(), mContactsInfo.getName());
+//        if (CommonUtils.isPhoneNumber(numberInfo.getNumber())) {
+//            startPhoneCall(numberInfo.getNumber());
+//        } else {
+//            startVideoCall(numberInfo);
+//        }
     }
+
+//    private void startVideoCall(NumberInfo numberInfo) {
+//        Intent outingIntent = new Intent(this, VideoCallActivity.class);
+//        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
+//        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mContactsInfo.getName());
+//        startActivity(outingIntent);
+//    }
+//
+//    private void startPhoneCall(String phoneNumber) {
+//        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
+//                phoneNumber));
+//        startActivity(intent);
+//    }
+
 
     private void doClickTitleRight() {
         // 拨号详情tab页
