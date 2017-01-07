@@ -354,7 +354,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
 
         NumberInfo numberInfo = numberInfoList.get(0);
-        VideoOutDialog.show(getContext(), numberInfo.getNumber(), voipLogic, contactsLogic,isAPP);
+        VideoOutDialog.show(getContext(), numberInfo.getNumber(), voipLogic, contactsLogic, isAPP);
 
     }
 
@@ -541,5 +541,21 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         dialInfo7.setDialDuration("1分10秒");
         dialInfoList.add(dialInfo7);
         return dialInfoList;
+    }
+
+    public View getFirstFouseView()
+    {
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (null != numberInfoList && !numberInfoList.isEmpty()) {
+            NumberInfo numberInfo = numberInfoList.get(0);
+            if(StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode()))
+            {
+               return mDialVideoAppLayout;
+            }else {
+                return mDialCallLayout;
+            }
+        }else {
+            return mDialCallLayout;
+        }
     }
 }

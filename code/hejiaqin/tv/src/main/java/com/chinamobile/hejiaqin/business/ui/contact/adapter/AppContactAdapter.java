@@ -13,11 +13,8 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.tv.R;
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
-import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
-import com.customer.framework.component.log.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -77,7 +77,6 @@ public class CallRecordFragment extends BasicFragment {
                 if (obj != null) {
                     List<CallRecord> callRecords = (List<CallRecord>) obj;
                     mCallRecordAdapter.refreshData(callRecords);
-                    deleteLayout.requestFocus();
                     if(mCallRecordAdapter!=null && mCallRecordAdapter.getCount()>0)
                     {
                         callRecordListView.setSelection(0);
@@ -185,7 +184,7 @@ public class CallRecordFragment extends BasicFragment {
                 return true;
             }
         });
-        FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
+//        FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
     }
 
 
@@ -241,5 +240,10 @@ public class CallRecordFragment extends BasicFragment {
                 confirmDialog.dismiss();
             }
         });
+    }
+
+    public View getFirstFouseView()
+    {
+        return deleteLayout;
     }
 }

@@ -214,4 +214,9 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         adapter.setData(tmpContactsInfoList);
     }
 
+    public View getFirstFouseView()
+    {
+        return searchInput;
+    }
+
 }
