@@ -66,7 +66,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
-            android:nextFocusDown="@+id/dial_more_btn">
+            android:nextFocusDown="@+id/dial_more_layout">
 
             <Button
                 android:id="@+id/dial_call_btn"
@@ -85,6 +85,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_alignParentLeft="true"
+            android:nextFocusDown="@+id/dial_more_layout"
             android:focusable="true"
             android:visibility="gone"
             android:background="@drawable/selector_dial_bg">
@@ -228,6 +229,7 @@
             android:layout_marginTop="8dp"
             android:nextFocusLeft="@+id/edit_contact_layout"
             android:nextFocusRight="@+id/edit_contact_layout"
+            android:nextFocusUp="@+id/edit_contact_layout"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true">
 
@@ -277,6 +279,7 @@
             android:layout_marginTop="8dp"
             android:nextFocusLeft="@+id/contact_cancel_layout"
             android:nextFocusRight="@+id/contact_cancel_layout"
+            android:nextFocusDown="@+id/contact_cancel_layout"
             android:background="@drawable/selector_setting_bg"
             android:focusable="true">
 
@@ -315,6 +318,7 @@
             android:background="@drawable/selector_setting_bg"
             android:nextFocusLeft="@+id/add_contact_layout"
             android:nextFocusRight="@+id/add_contact_layout"
+            android:nextFocusUp="@+id/add_contact_layout"
             android:focusable="true">
 
             <Button
@@ -339,6 +343,7 @@
             android:background="@drawable/selector_setting_bg"
             android:nextFocusLeft="@+id/stranger_cancel_layout"
             android:nextFocusRight="@+id/stranger_cancel_layout"
+            android:nextFocusDown="@+id/stranger_cancel_layout"
             android:focusable="true">
 
             <Button

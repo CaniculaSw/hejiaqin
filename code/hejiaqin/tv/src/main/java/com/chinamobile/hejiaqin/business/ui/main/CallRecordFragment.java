@@ -134,6 +134,7 @@ public class CallRecordFragment extends BasicFragment {
                     ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getPeerNumber());
                     FragmentMgr.getInstance().showRecentFragment(fragment);
                 }
+                dismissMoreView();
             }
         });
         delRecordLayout.setOnClickListener(new View.OnClickListener() {

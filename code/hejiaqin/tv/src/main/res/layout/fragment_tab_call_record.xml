@@ -68,6 +68,7 @@
             android:background="@drawable/selector_setting_bg"
             android:nextFocusLeft="@+id/record_detail"
             android:nextFocusRight="@+id/record_detail"
+            android:nextFocusUp="@+id/record_detail"
             android:focusable="true">
 
             <Button
@@ -115,6 +116,7 @@
             android:background="@drawable/selector_setting_bg"
             android:nextFocusLeft="@+id/record_cancel_layout"
             android:nextFocusRight="@+id/record_cancel_layout"
+            android:nextFocusDown="@+id/record_cancel_layout"
             android:focusable="true">
 
             <Button
