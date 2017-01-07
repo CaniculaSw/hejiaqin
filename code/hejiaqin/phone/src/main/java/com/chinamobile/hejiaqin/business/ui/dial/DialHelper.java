@@ -90,7 +90,7 @@ public final class DialHelper {
     }
 
     private void startPhoneCall(Context context, String phoneNumber) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +
                 phoneNumber));
         context.startActivity(intent);
     }

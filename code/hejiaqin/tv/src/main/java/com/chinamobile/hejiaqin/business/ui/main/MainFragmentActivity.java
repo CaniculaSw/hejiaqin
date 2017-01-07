@@ -152,7 +152,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     FragmentMgr.getInstance().showRecentFragment(mLeftFragments[toIndex]);
                 } else {
                     // FragmentMgr.getInstance().showRecentFragment(switchFragment);
-                    FragmentMgr.getInstance().finishAllFragment(toIndex);
+                    FragmentMgr.getInstance().showAndFinishAllFragment(toIndex);
                 }
                 break;
             case mContactsIndex:
@@ -162,7 +162,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     FragmentMgr.getInstance().showContactFragment(mLeftFragments[toIndex]);
                 } else {
                     // FragmentMgr.getInstance().showContactFragment(switchFragment);
-                    FragmentMgr.getInstance().finishAllFragment(toIndex);
+                    FragmentMgr.getInstance().showAndFinishAllFragment(toIndex);
                 }
                 break;
             case mDialIndex:
@@ -172,7 +172,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     FragmentMgr.getInstance().showDialFragment(mLeftFragments[toIndex]);
                 } else {
                     // FragmentMgr.getInstance().showDialFragment(switchFragment);
-                    FragmentMgr.getInstance().finishAllFragment(toIndex);
+                    FragmentMgr.getInstance().showAndFinishAllFragment(toIndex);
                 }
                 break;
             case mSettingIndex:
@@ -182,7 +182,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     FragmentMgr.getInstance().showSettingFragment(mLeftFragments[toIndex]);
                 } else {
                     // FragmentMgr.getInstance().showSettingFragment(switchFragment);
-                    FragmentMgr.getInstance().finishAllFragment(toIndex);
+                    FragmentMgr.getInstance().showAndFinishAllFragment(toIndex);
                 }
                 break;
         }

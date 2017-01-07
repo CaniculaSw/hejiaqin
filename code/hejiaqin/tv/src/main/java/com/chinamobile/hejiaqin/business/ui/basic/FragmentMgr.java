@@ -139,13 +139,19 @@ public class FragmentMgr {
         }
     }
 
-    public void finishAllFragment(int index) {
+    public void showAndFinishAllFragment(int index) {
         Stack<BaseFragment> fragments = (Stack) fragmentStackMap.get(index);
-        if (null == fragments || fragments.size() <= 1) {
+        if (null == fragments || fragments.size() < 1) {
             return;
         }
 
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        BaseFragment curTopFragment = curLeftShowFragment;
+        if (null != curTopFragment) {
+            LogUtil.d(TAG, "showFragment,  currentTopFragment is " + curTopFragment.getClass());
+            fragmentTransaction.hide(curTopFragment);
+        }
+
         while (fragments.size() > 1) {
             BaseFragment forRemovedFragment = fragments.pop();
             if (null != forRemovedFragment && forRemovedFragment.isAdded()) {
