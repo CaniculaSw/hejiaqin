@@ -31,57 +31,57 @@ public abstract class BaseDigitKeypadView extends LinearLayout
     /**
      * key 2
      */
-    protected LinearLayout btnTwo;
+    public LinearLayout btnTwo;
     
     /**
      * key 3
      */
-    protected LinearLayout btnThree;
+    public LinearLayout btnThree;
     
     /**
      * key 4
      */
-    protected LinearLayout btnFour;
+    public LinearLayout btnFour;
     
     /**
      * key 5
      */
-    protected LinearLayout btnFive;
+    public LinearLayout btnFive;
     
     /**
      * key 6
      */
-    protected LinearLayout btnSix;
+    public LinearLayout btnSix;
     
     /**
      * key 7
      */
-    protected LinearLayout btnSeven;
+    public LinearLayout btnSeven;
     
     /**
      * key8
      */
-    protected LinearLayout btnEight;
+    public LinearLayout btnEight;
     
     /**
      * key 9
      */
-    protected LinearLayout btnNine;
+    public LinearLayout btnNine;
     
     /**
      * key *
      */
-    protected LinearLayout btnAsterisk;
+    public LinearLayout btnAsterisk;
     
     /**
      * key 0
      */
-    protected LinearLayout btnZero;
+    public LinearLayout btnZero;
     
     /**
      * key #
      */
-    protected LinearLayout btnDot;
+    public LinearLayout btnDot;
     
     /**
      * context
@@ -343,10 +343,18 @@ public abstract class BaseDigitKeypadView extends LinearLayout
             
             if (keyCode > -1)
             {
-                mKeyPressEvent.onKeyPressed(keyCode, keyStr);
+                keyDown(keyCode, keyStr);
             }
         }
         
+    }
+
+    public void keyDown(int keyCode,String keyStr)
+    {
+         if(mKeyPressEvent!=null)
+         {
+             mKeyPressEvent.onKeyPressed(keyCode, keyStr);
+         }
     }
     
     /**
