@@ -11,6 +11,7 @@ import com.chinamobile.hejiaqin.business.model.more.UserList;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.google.gson.Gson;
 
@@ -94,6 +95,7 @@ public class UserInfoCacheManager {
             Gson gson = new Gson();
             map.put(BussinessConstants.Setting.VERSION_INFO_KEY, gson.toJson(info));
             StorageMgr.getInstance().getSharedPStorage(context).save(map);
+            LogUtil.d("UserInfoCacheManager","Version info is saved.");
         }
     }
 
@@ -237,6 +239,7 @@ public class UserInfoCacheManager {
 
     public static void clearVersionInfo(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Setting.VERSION_INFO_KEY});
+        LogUtil.d("UserInfoCacheManager","Version info is remove.");
     }
 
     public static void saveVoipLogined(Context context) {

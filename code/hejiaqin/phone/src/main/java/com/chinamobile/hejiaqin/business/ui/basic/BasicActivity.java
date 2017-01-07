@@ -160,24 +160,27 @@ public abstract class BasicActivity extends BaseActivity {
                     this.finishAllActivity(LoginActivity.class.getName());
                     break;
                 case BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE:
-                    new UpdateManger(BasicActivity.this).showForcedUpdateDialog((VersionInfo)msg.obj);
+                    new UpdateManger(BasicActivity.this).showForcedUpdateDialog((VersionInfo) msg.obj);
                     break;
                 case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
-                    new UpdateManger(BasicActivity.this).showNoticeDialog((VersionInfo)msg.obj);
+                    new UpdateManger(BasicActivity.this).showNoticeDialog((VersionInfo) msg.obj);
+                    break;
+                case BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE:
+                    UserInfoCacheManager.clearVersionInfo(getApplicationContext());
                     break;
                 case BussinessConstants.SettingMsgID.BIND_DENIED:
-                    LogUtil.i(TAG,"对方不同意你的绑定请求");
-                    showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
+                    LogUtil.i(TAG, "对方不同意你的绑定请求");
+                    showToast("对方不同意你的绑定请求", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
-                    showToast("发送联系人成功",Toast.LENGTH_LONG,null);
+                    showToast("发送联系人成功", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL:
                     if (msg.obj != null) {
                         UserList userList = new UserList();
                         userList.setUsers((List<UserInfo>) msg.obj);
-                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(),userList);
-                        UserInfoCacheManager.saveBindDeviceToMem(getApplicationContext(),userList);
+                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(), userList);
+                        UserInfoCacheManager.saveBindDeviceToMem(getApplicationContext(), userList);
                     }
                     break;
                 default:
