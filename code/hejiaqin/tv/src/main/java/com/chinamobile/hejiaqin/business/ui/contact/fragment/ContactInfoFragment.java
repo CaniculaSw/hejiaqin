@@ -49,6 +49,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private View mDialCallLayout;
     private View mDialVideoAppLayout;
     private View mDialVideoVolteLayout;
+    private View mMoreLayout;
 
     private LinearLayout mDialInfoLayout;
 
@@ -151,12 +152,13 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         mDialCallLayout = view.findViewById(R.id.dial_call_layout);
         mDialVideoAppLayout = view.findViewById(R.id.dial_video_app_layout);
         mDialVideoVolteLayout = view.findViewById(R.id.dial_video_volte_layout);
+        mMoreLayout =  view.findViewById(R.id.dial_more_layout);
 
         mDialCallLayout.setOnClickListener(this);
         mDialVideoAppLayout.setOnClickListener(this);
         mDialVideoVolteLayout.setOnClickListener(this);
 
-        view.findViewById(R.id.dial_more_layout).setOnClickListener(this);
+        mMoreLayout.setOnClickListener(this);
         view.findViewById(R.id.dial_clear_layout).setOnClickListener(this);
 
         contactMoreView = view.findViewById(R.id.contact_more_layout);
@@ -174,13 +176,17 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
-        if(mDialCallLayout.getVisibility() == View.VISIBLE)
-        {
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (null != numberInfoList && !numberInfoList.isEmpty()) {
+            NumberInfo numberInfo = numberInfoList.get(0);
+            if(StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode()))
+            {
+                FocusManager.getInstance().requestFocus(mDialVideoAppLayout);
+            }else {
+                FocusManager.getInstance().requestFocus(mDialCallLayout);
+            }
+        }else {
             FocusManager.getInstance().requestFocus(mDialCallLayout);
-        }
-        else
-        {
-            FocusManager.getInstance().requestFocus(mDialVideoAppLayout);
         }
     }
 
@@ -289,12 +295,14 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 break;
             case R.id.contact_cancel_layout:
                 dismissMoreView();
+                mMoreLayout.requestFocus();
                 break;
             case R.id.add_contact_layout:
                 doAddContact();
                 break;
             case R.id.stranger_cancel_layout:
                 dismissMoreView();
+                mMoreLayout.requestFocus();
                 break;
             case R.id.dial_call_layout:
             case R.id.dial_video_app_layout:
