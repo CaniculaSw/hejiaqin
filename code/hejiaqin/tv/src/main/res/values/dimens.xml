@@ -70,4 +70,8 @@
     <dimen name="main_navigation_more_image_height">50dp</dimen>
     <dimen name="main_navigation_text_size">20sp</dimen>
 
+    <dimen name="small_video_padding">20dp</dimen>
+    <dimen name="small_video_height">136dp</dimen>
+    <dimen name="small_video_width">242dp</dimen>
+
 </resources>

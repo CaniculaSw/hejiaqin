@@ -60,17 +60,24 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
 
     private boolean hasRegistReceiver;
 
+    private int mVideoPadding;
+    private int mVideoHeight;
+    private int mVideoWidth;
+
+    private int[] mMetrics = new int[2];
+
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Rect rectLocal = new Rect();
             int iState = intent.getIntExtra("state", -1);
             LogApi.d(Const.TAG_UI, "camera stat change:" + iState);
             if (1 == iState) {
-                rectLocal.left = 0;
-                rectLocal.top = 0;
-                rectLocal.right = 320;
-                rectLocal.bottom = 180;
+                getDisplayMetrics(StbVideoCallActivity.this);
+                Rect rectLocal = new Rect();
+                rectLocal.left = mVideoPadding;
+                rectLocal.top = mMetrics[1] - mVideoPadding - mVideoHeight;
+                rectLocal.right = mVideoPadding + mVideoWidth;
+                rectLocal.bottom = mMetrics[1] - mVideoPadding;
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 CaaSSdkService.openLocalView();
             } else {
@@ -90,11 +97,12 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
             Bundle bundle = intent.getExtras();
             int status = bundle.getInt(CallApi.PARAM_CALL_NET_STATUS);
             if (status == 1) {
+                getDisplayMetrics(StbVideoCallActivity.this);
                 Rect rectLocal = new Rect();
-                rectLocal.left = 0;
-                rectLocal.top = 0;
-                rectLocal.right = 320;
-                rectLocal.bottom = 180;
+                rectLocal.left = mVideoPadding;
+                rectLocal.top = mMetrics[1] - mVideoPadding - mVideoHeight;
+                rectLocal.right = mVideoPadding + mVideoWidth;
+                rectLocal.bottom = mMetrics[1] - mVideoPadding;
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 CaaSSdkService.showRemoteVideoRender(true);
             }
@@ -118,6 +126,10 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
         mHangupLayout.setOnClickListener(this);
+        mVideoPadding = StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_padding);
+        mVideoHeight =StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_height);
+        mVideoWidth= StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_width);
+
     }
 
     @Override
@@ -152,27 +164,26 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     }
 
     private Rect getFullScreenRect() {
-        int[] metrics = new int[2];
-        getDisplayMetrics(this, metrics);
+        getDisplayMetrics(this);
 
         Rect rect = new Rect();
         rect.left = 0;
         rect.top = 0;
-        rect.right = metrics[0];
-        rect.bottom = metrics[1];
+        rect.right = mMetrics[0];
+        rect.bottom = mMetrics[1];
         return rect;
     }
 
-    private void getDisplayMetrics(Context context, int metrics[]) {
-        if (null == metrics) {
-            metrics = new int[2];
-        }
+    private void getDisplayMetrics(Context context) {
 
+        if (mMetrics[0] > 0 && mMetrics[1] > 0) {
+            return;
+        }
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
-        metrics[0] = screenWidth;
-        metrics[1] = screenHeight;
+        mMetrics[0] = screenWidth;
+        mMetrics[1] = screenHeight;
     }
 
 
@@ -270,7 +281,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        IntentFilter intent=new IntentFilter();
+        IntentFilter intent = new IntentFilter();
         intent.addAction(Const.CAMERA_PLUG);
         registerReceiver(mCameraPlugReciver, intent);
     }
