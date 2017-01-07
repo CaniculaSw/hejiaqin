@@ -109,6 +109,8 @@
     <string name="contact_input_number_hint_text">输入手机号码</string>
     <string name="contact_name_input_empty_toast">姓名不能为空</string>
     <string name="contact_number_input_empty_toast">手机号码不能为空</string>
+    <string name="contact_app_txtx">APP</string>
+    <string name="contact_volte_txtx">VOLTE</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

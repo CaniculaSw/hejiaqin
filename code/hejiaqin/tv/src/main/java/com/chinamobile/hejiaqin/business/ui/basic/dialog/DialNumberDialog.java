@@ -25,12 +25,14 @@ public class DialNumberDialog extends Dialog {
     public ContactsInfo mContactsInfo;
     private IVoipLogic mVoipLogic;
     private IContactsLogic mContactsLogic;
+    private boolean mIsAPP;
 
-    public DialNumberDialog(Context context, int theme, ContactsInfo contactsInfo,IVoipLogic voipLogic,IContactsLogic contactsLogic) {
+    public DialNumberDialog(Context context, int theme, ContactsInfo contactsInfo,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isAPP) {
         super(context, theme);
         mContactsInfo = contactsInfo;
         this.mVoipLogic = voipLogic;
         this.mContactsLogic = contactsLogic;
+        this.mIsAPP = isAPP;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class DialNumberDialog extends Dialog {
                 numberInfoView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        VideoOutDialog.show(getContext(), number, mVoipLogic, mContactsLogic);
+                        VideoOutDialog.show(getContext(), number, mVoipLogic, mContactsLogic,mIsAPP);
                     }
                 });
 

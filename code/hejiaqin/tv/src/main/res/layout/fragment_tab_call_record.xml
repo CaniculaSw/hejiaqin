@@ -66,8 +66,8 @@
             android:layout_height="67dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/selector_setting_bg"
-            android:nextFocusLeft="@null"
-            android:nextFocusRight="@null"
+            android:nextFocusLeft="@+id/record_detail"
+            android:nextFocusRight="@+id/record_detail"
             android:focusable="true">
 
             <Button
@@ -90,8 +90,8 @@
             android:layout_below="@+id/record_detail"
             android:layout_marginTop="8dp"
             android:background="@drawable/selector_setting_bg"
-            android:nextFocusLeft="@null"
-            android:nextFocusRight="@null"
+            android:nextFocusLeft="@+id/del_record_layout"
+            android:nextFocusRight="@+id/del_record_layout"
             android:focusable="true">
 
             <Button
@@ -113,8 +113,8 @@
             android:layout_below="@+id/del_record_layout"
             android:layout_marginTop="8dp"
             android:background="@drawable/selector_setting_bg"
-            android:nextFocusLeft="@null"
-            android:nextFocusRight="@null"
+            android:nextFocusLeft="@+id/record_cancel_layout"
+            android:nextFocusRight="@+id/record_cancel_layout"
             android:focusable="true">
 
             <Button

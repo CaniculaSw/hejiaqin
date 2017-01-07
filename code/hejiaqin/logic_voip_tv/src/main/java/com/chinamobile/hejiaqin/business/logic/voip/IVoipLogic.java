@@ -22,7 +22,7 @@ public interface IVoipLogic {
 
     public boolean hasLogined();
 
-    public CallSession call(String calleeNumber, boolean isVideoCall);
+    public CallSession call(String calleeNumber, boolean isVideoCall,boolean isPhoneAPP);
 
     public void hangup(CallSession callSession, boolean isInComing, boolean isTalking, int callTime);
 

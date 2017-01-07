@@ -115,7 +115,7 @@ public class CallRecordFragment extends BasicFragment {
 
         mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic, new CallRecordAdapter.onClickListen() {
             public void onClick(CallRecord info) {
-                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic);
+                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic,true);
             }
 
             @Override
@@ -157,7 +157,7 @@ public class CallRecordFragment extends BasicFragment {
         callRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VideoOutDialog.show(getActivity(), mCallRecordAdapter.getData(position).getPeerNumber(), mVoipLogic, mContactsLogic);
+                VideoOutDialog.show(getActivity(), mCallRecordAdapter.getData(position).getPeerNumber(), mVoipLogic, mContactsLogic,true);
             }
         });
         callRecordListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

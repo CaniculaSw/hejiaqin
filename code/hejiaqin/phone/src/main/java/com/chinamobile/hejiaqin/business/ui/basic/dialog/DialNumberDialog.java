@@ -13,6 +13,7 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.ui.dial.DialHelper;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 
 import java.util.List;
@@ -49,10 +50,11 @@ public class DialNumberDialog extends Dialog {
                 numberInfoView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
-                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, number);
-                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, name);
-                        getContext().startActivity(outingIntent);
+                        DialHelper.getInstance().call(getContext(), number, name);
+//                        Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
+//                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, number);
+//                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, number);
+//                        getContext().startActivity(outingIntent);
                         dismiss();
                     }
                 });

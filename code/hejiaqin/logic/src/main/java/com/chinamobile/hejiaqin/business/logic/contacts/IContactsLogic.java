@@ -33,4 +33,6 @@ public interface IContactsLogic {
     void queryContactCallRecords(ContactsInfo contactsInfo);
 
     void deleteContactCallRecords(ContactsInfo contactsInfo);
+
+    boolean isAppContactExist(String phoneNumber);
 }

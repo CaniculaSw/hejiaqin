@@ -46,6 +46,7 @@ public class VideoOutDialog extends Dialog {
     public String mCalleeNumber;
     private IVoipLogic mVoipLogic;
     private IContactsLogic mContactsLogic;
+    private boolean mIsPhoneApp;
     //通话会话对象
     private CallSession mCallSession = null;
     private boolean closed;
@@ -60,12 +61,13 @@ public class VideoOutDialog extends Dialog {
     private MyToast myToast;
     private Context mContext;
 
-    public VideoOutDialog(Context context, int theme, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic) {
+    public VideoOutDialog(Context context, int theme, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isPhoneApp) {
         super(context, theme);
         this.mContext= context;
         this.mCalleeNumber = calleeNumber;
         this.mVoipLogic = voipLogic;
         this.mContactsLogic = contactsLogic;
+        this.mIsPhoneApp = isPhoneApp;
     }
 
     @Override
@@ -91,7 +93,7 @@ public class VideoOutDialog extends Dialog {
     }
 
     private void outingCall() {
-        mCallSession = mVoipLogic.call(mCalleeNumber, true);
+        mCallSession = mVoipLogic.call(mCalleeNumber, true,mIsPhoneApp);
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.call_outing_error, Toast.LENGTH_SHORT, null);
             closed = true;
@@ -204,9 +206,9 @@ public class VideoOutDialog extends Dialog {
         super.dismiss();
     }
 
-    public static void show(Context context, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic)
+    public static void show(Context context, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isPhoneApp)
     {
-        VideoOutDialog videoOutDialog = new VideoOutDialog(context, R.style.CalendarDialog,calleeNumber,voipLogic,contactsLogic );
+        VideoOutDialog videoOutDialog = new VideoOutDialog(context, R.style.CalendarDialog,calleeNumber,voipLogic,contactsLogic, isPhoneApp);
         Window window = videoOutDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();

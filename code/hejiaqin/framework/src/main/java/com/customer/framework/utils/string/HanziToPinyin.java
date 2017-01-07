@@ -99,8 +99,14 @@ public class HanziToPinyin {
             }
             spaceIndex = tempStr.indexOf(" ");
             commIndex = tempStr.indexOf(",");
-            if (spaceIndex != -1 && commIndex != -1) {
-                tempStr = tempStr.substring(spaceIndex + 1, commIndex);
+            try {
+                if (spaceIndex != -1 && commIndex != -1) {
+                    tempStr = tempStr.substring(spaceIndex + 1, commIndex);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
             }
             sb.append(tempStr);
         }
