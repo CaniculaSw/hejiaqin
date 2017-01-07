@@ -11,10 +11,6 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.more.adapter.MissCallAdapter;
-import com.huawei.rcs.call.CallLogApi;
-import com.huawei.rcs.call.ContactCallLog;
-
-import java.util.List;
 
 /**
  * Created by eshaohu on 16/5/25.
@@ -77,7 +73,7 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
 
     @Override
     protected void initData() {
-        List<ContactCallLog> callLogList = CallLogApi.getAllContactCallLogList(CallLogApi.CALLLOG_TYPE_VIDEO,-1);
+//        List<ContactCallLog> callLogList = CallLogApi.getAllContactCallLogList(CallLogApi.CALLLOG_TYPE_VIDEO,-1);
 //        LogUtil.i(TAG,"callLogList size is: "+callLogList.size());
 //        MissCallMessage testMessage1 = new MissCallMessage();
 //        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));

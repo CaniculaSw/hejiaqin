@@ -1,18 +1,13 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 
-import android.content.Intent;
 import android.media.ToneGenerator;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;

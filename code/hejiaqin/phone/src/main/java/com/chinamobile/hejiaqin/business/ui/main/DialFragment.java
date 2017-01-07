@@ -29,6 +29,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.BaseDigitKeypadVie
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText;
 import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
+import com.chinamobile.hejiaqin.business.ui.dial.DialHelper;
 import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.DialContactAdapter;
@@ -104,9 +105,10 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID:
                 // CALL
                 if(inputNumber.length()>0) {
-                    Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
-                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText().toString());
-                    getContext().startActivity(outingIntent);
+//                    Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
+//                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText().toString());
+//                    getContext().startActivity(outingIntent);
+                    DialHelper.getInstance().call(getContext(), inputNumber.getText().toString(), null);
                 }
                 break;
         }
