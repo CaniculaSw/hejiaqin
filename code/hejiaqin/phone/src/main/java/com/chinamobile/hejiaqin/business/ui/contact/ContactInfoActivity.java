@@ -142,7 +142,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         if (mContactsInfo == null) {
             //通话记录传入的号码
             String callRecordNumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
-            isStranger = contactsLogic.isAppContactExist(callRecordNumber);
+            isStranger = true;
             mContactsInfo = new ContactsInfo();
             NumberInfo numberInfo = new NumberInfo();
             numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
@@ -153,6 +153,13 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mContactsInfo.setPhotoSm("");
             mContactsInfo.addNumber(numberInfo);
             mContactsInfo.setContactMode(isStranger ? null : ContactsInfo.ContactMode.app);
+        }
+
+        if (!isAppContact()) {
+            boolean isContactExist = contactsLogic.isAppContactExist(mContactsInfo.getPhone());
+            mContactsInfo.setContactMode(isContactExist ?
+                    ContactsInfo.ContactMode.app :
+                    (isStranger ? null : ContactsInfo.ContactMode.system));
         }
 
         mContactNameText.setText(mContactsInfo.getName());
@@ -342,7 +349,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             return;
         }
 
-        if (isStranger) {
+        if (mContactsInfo.getContactMode() == null) {
             showAddStrangerDialog();
             return;
         }
