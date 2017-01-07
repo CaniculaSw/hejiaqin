@@ -185,7 +185,7 @@ public abstract class BaseDigitKeypadView extends LinearLayout
 //        });
     }
     
-    private void playTone(int tone)
+    public void playTone(int tone)
     {
         // 系统“按键操作音”未开启
         if (Settings.System.getInt(context.getContentResolver(),

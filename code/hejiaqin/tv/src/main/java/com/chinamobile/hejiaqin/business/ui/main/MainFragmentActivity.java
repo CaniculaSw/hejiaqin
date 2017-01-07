@@ -285,6 +285,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             case KeyEvent.KEYCODE_7:
             case KeyEvent.KEYCODE_8:
             case KeyEvent.KEYCODE_9:
+            case KeyEvent.KEYCODE_STAR:
+            case KeyEvent.KEYCODE_POUND:
             case KeyEvent.KEYCODE_DEL:
                 if(mCurrentIndex == mDialIndex && FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex))
                 {
