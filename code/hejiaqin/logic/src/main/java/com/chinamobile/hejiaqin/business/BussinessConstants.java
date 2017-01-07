@@ -441,6 +441,8 @@ public class BussinessConstants {
 
         int DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID = BASE_ACTION_ID + 11;
 
+        int TV_DAIL_FRAGMENT_KEY_CODE =  BASE_ACTION_ID + 12;
+
     }
 
 }
