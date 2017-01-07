@@ -151,7 +151,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mLeftFragments[toIndex].setActivityListener(listener);
                     FragmentMgr.getInstance().showRecentFragment(mLeftFragments[toIndex]);
                 } else {
-                    FragmentMgr.getInstance().showRecentFragment(switchFragment);
+                    // FragmentMgr.getInstance().showRecentFragment(switchFragment);
+                    FragmentMgr.getInstance().finishAllFragment(toIndex);
                 }
                 break;
             case mContactsIndex:
@@ -160,7 +161,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mLeftFragments[toIndex].setActivityListener(listener);
                     FragmentMgr.getInstance().showContactFragment(mLeftFragments[toIndex]);
                 } else {
-                    FragmentMgr.getInstance().showContactFragment(switchFragment);
+                    // FragmentMgr.getInstance().showContactFragment(switchFragment);
+                    FragmentMgr.getInstance().finishAllFragment(toIndex);
                 }
                 break;
             case mDialIndex:
@@ -169,7 +171,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mLeftFragments[toIndex].setActivityListener(listener);
                     FragmentMgr.getInstance().showDialFragment(mLeftFragments[toIndex]);
                 } else {
-                    FragmentMgr.getInstance().showDialFragment(switchFragment);
+                    // FragmentMgr.getInstance().showDialFragment(switchFragment);
+                    FragmentMgr.getInstance().finishAllFragment(toIndex);
                 }
                 break;
             case mSettingIndex:
@@ -178,7 +181,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mLeftFragments[toIndex].setActivityListener(listener);
                     FragmentMgr.getInstance().showSettingFragment(mLeftFragments[toIndex]);
                 } else {
-                    FragmentMgr.getInstance().showSettingFragment(switchFragment);
+                    // FragmentMgr.getInstance().showSettingFragment(switchFragment);
+                    FragmentMgr.getInstance().finishAllFragment(toIndex);
                 }
                 break;
         }
