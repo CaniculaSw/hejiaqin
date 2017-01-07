@@ -375,8 +375,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     public void registerMessageReceiver() {
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mMessageReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_INCOMING));
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
+//        LocalBroadcastManager.getInstance(getContext())
+//                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mMessageStatusChangedReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_STATUS_CHANGED));
     }

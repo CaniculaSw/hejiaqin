@@ -54,6 +54,8 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         packageVersion.setText(getString(R.string.more_about_version, SystemUtil.getPackageVersionName(getApplicationContext())));
         if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) != null) {
             updateTips.setVisibility(View.VISIBLE);
+        } else {
+            updateTips.setVisibility(View.GONE);
         }
     }
 
@@ -118,8 +120,8 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         switch (msg.what) {
             case BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE:
                 showToast(getString(R.string.about_hejiaqin_version_new), Toast.LENGTH_SHORT, null);
-                updateTips.setVisibility(View.INVISIBLE);
-                UserInfoCacheManager.clearVersionInfo(this);
+                updateTips.setVisibility(View.GONE);
+                UserInfoCacheManager.clearVersionInfo(getApplicationContext());
                 break;
             default:
                 break;

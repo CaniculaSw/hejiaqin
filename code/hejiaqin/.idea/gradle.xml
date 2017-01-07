@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/framework" />
             <option value="$PROJECT_DIR$/logic" />
+            <option value="$PROJECT_DIR$/logic_voip" />
+            <option value="$PROJECT_DIR$/logic_voip_tv" />
             <option value="$PROJECT_DIR$/phone" />
             <option value="$PROJECT_DIR$/tv" />
           </set>
@@ -19,6 +21,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/framework" />
             <option value="$PROJECT_DIR$/logic" />
+            <option value="$PROJECT_DIR$/logic_voip" />
+            <option value="$PROJECT_DIR$/logic_voip_tv" />
             <option value="$PROJECT_DIR$/phone" />
             <option value="$PROJECT_DIR$/tv" />
           </set>
