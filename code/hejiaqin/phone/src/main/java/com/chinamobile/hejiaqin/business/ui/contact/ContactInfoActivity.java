@@ -137,7 +137,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         if (mContactsInfo == null) {
             //通话记录传入的号码
             String callRecordNumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
-            isStranger = true;
+            isStranger = contactsLogic.isAppContactExist(callRecordNumber);
             mContactsInfo = new ContactsInfo();
             NumberInfo numberInfo = new NumberInfo();
             numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
@@ -147,6 +147,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mContactsInfo.setPhotoLg("");
             mContactsInfo.setPhotoSm("");
             mContactsInfo.addNumber(numberInfo);
+            mContactsInfo.setContactMode(isStranger ? null : ContactsInfo.ContactMode.app);
         }
 
         mContactNameText.setText(mContactsInfo.getName());
@@ -171,6 +172,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         showViewByCurIndex(mViewPager.getCurrentItem());
 
         contactsLogic.queryContactCallRecords(mContactsInfo);
+
     }
 
     private List<DialInfoGroup> genDialInfoGroup() {
@@ -543,7 +545,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     }
 
     private boolean isAppContact() {
-        return mContactsInfo.getContactMode() == ContactsInfo.ContactMode.app;
+        ContactsInfo.ContactMode contactMode = mContactsInfo.getContactMode();
+        return null != contactMode && contactMode == ContactsInfo.ContactMode.app;
     }
 
     //手动设置ViewPager要显示的视图

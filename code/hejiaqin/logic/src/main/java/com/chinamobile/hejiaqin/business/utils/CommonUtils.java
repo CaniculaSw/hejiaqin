@@ -163,10 +163,20 @@ public class CommonUtils {
         return outNumber;
     }
 
+    public static boolean isSamePhoneNumber(String phoneNumber1, String phoneNumber2) {
+        if (null == phoneNumber1 || null == phoneNumber2) {
+            return false;
+        }
+
+        String newPhoneNum1 = getPhoneNumber(phoneNumber1);
+        String newPhoneNum2 = getPhoneNumber(phoneNumber2);
+        return newPhoneNum1.equals(newPhoneNum2);
+    }
+
     public static boolean isAutoAnswer(Context context, String incomingNum) {
         TvSettingInfo settingInfo = UserInfoCacheManager.getUserSettingInfo(context);
 
-        if (settingInfo ==null || !settingInfo.isAutoAnswer()) {
+        if (settingInfo == null || !settingInfo.isAutoAnswer()) {
             return false;
         }
 

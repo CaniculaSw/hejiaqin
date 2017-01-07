@@ -1,5 +1,7 @@
 package com.chinamobile.hejiaqin.business.logic.contacts;
 
+import android.text.TextUtils;
+
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
 import com.chinamobile.hejiaqin.business.dbApdater.ContactsDbAdapter;
@@ -83,15 +85,15 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     @Override
-    public void searchLocalContactLst(String input,String invoker) {
+    public void searchLocalContactLst(String input, String invoker) {
         List<ContactsInfo> contactsInfoList = getCacheLocalContactLst();
-        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker,ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
     }
 
     @Override
-    public void searchAppContactLst(String input,String invoker) {
+    public void searchAppContactLst(String input, String invoker) {
         List<ContactsInfo> contactsInfoList = getCacheAppContactLst();
-        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker,ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
     }
 
     @Override
@@ -322,6 +324,28 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         });
     }
 
+    public boolean isAppContactExist(String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            return false;
+        }
+
+        List<ContactsInfo> cachedAppContacts = ContactsInfoManager.getInstance().getCachedAppContactInfo();
+        if (null == cachedAppContacts || cachedAppContacts.isEmpty()) {
+            return false;
+        }
+
+        for (ContactsInfo contactsInfo : cachedAppContacts) {
+            if (null == contactsInfo) {
+                continue;
+            }
+
+            if (CommonUtils.isSamePhoneNumber(phoneNumber, contactsInfo.getPhone())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void fetchAppContactFromDb() {
         List<ContactsInfo> newContactsInfoList = ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
                 .queryAll();
@@ -481,7 +505,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 dialInfoGroup.setDialInfoList(dialInfoList);
                 dialInfoMap.put(beginDay, dialInfoGroup);
                 dialInfoGroupList.add(dialInfoGroup);
-            }else{
+            } else {
                 dialInfoList = dialInfoGroup.getDialInfoList();
             }
 
