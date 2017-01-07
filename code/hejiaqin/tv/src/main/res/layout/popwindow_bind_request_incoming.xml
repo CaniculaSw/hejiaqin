@@ -44,9 +44,10 @@
             <LinearLayout
                 android:id="@+id/btn_agree"
                 android:layout_width="150dp"
-                android:layout_height="75dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/selector_setting_bg"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/selector_dial_bg"
                 android:clickable="true"
                 android:focusable="true"
                 android:nextFocusDown="@+id/btn_agree"
@@ -56,10 +57,10 @@
 
                 <LinearLayout
                     android:id="@+id/btn_agree_ll"
-                    android:layout_width="150dp"
+                    android:layout_width="138dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/btn_bg_normal"
+                    android:background="@drawable/dial_num_btn_bg"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -76,10 +77,10 @@
             <LinearLayout
                 android:id="@+id/btn_denied"
                 android:layout_width="150dp"
-                android:layout_height="75dp"
+                android:layout_height="72dp"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/selector_setting_bg"
+                android:gravity="center"
+                android:background="@drawable/selector_dial_bg"
                 android:clickable="true"
                 android:focusable="true"
                 android:nextFocusDown="@+id/btn_denied"
@@ -89,10 +90,10 @@
 
                 <LinearLayout
                     android:id="@+id/btn_denied_ll"
-                    android:layout_width="150dp"
+                    android:layout_width="138dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/btn_bg_normal"
+                    android:background="@drawable/dial_num_btn_bg"
                     android:gravity="center"
                     android:orientation="horizontal">
 
