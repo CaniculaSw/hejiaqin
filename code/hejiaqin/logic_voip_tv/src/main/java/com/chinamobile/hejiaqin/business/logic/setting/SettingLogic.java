@@ -24,6 +24,7 @@ import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.XmlParseUtil;
+import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.message.Conversation;
 import com.huawei.rcs.message.Message;
 import com.huawei.rcs.message.MessageConversation;
@@ -45,10 +46,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         public void onReceive(Context context, Intent intent) {
             Message msg = (Message) intent.getSerializableExtra(MessagingApi.PARAM_MESSAGE);
             if (msg == null) {
+                LogUtil.i(TAG, "Message received.but it is null");
                 return;
             }
             msg.read();
-            LogUtil.d(TAG, "Message received.");
+            LogUtil.i(TAG, "Message received.");
             int msgType = msg.getType();
             switch (msgType) {
                 case Message.MESSAGE_TYPE_TEXT: { // 文本消息
@@ -74,15 +76,21 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             if (null != msg) {
                 switch (msg.getStatus()) {
                     case Message.STATUS_DELIVERY_OK:
+                        LogUtil.i(TAG, "发送消息成功(Message.STATUS_DELIVERY_OK)，Message body：" + msg.getBody());
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK);
                         break;
                     case Message.STATUS_DISPLAY_OK:
+                        LogUtil.i(TAG, "发送消息成功(Message.STATUS_DISPLAY_OK)，Message body：" + msg.getBody());
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK);
                         break;
                     case Message.STATUS_SEND_FAILED:
+                        LogUtil.i(TAG, "发送消息失败(Message.STATUS_SEND_FAILED)，Message body：" + msg.getBody());
+                        LogApi.copyLastLog();
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_SEND_FAILED);
                         break;
                     case Message.STATUS_UNDELIVERED:
+                        LogUtil.i(TAG, "发送消息失败(Message.STATUS_UNDELIVERED)，Message body：" + msg.getBody());
+                        LogApi.copyLastLog();
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_UNDELIVERED);
                         break;
                 }
@@ -313,7 +321,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     }
 
     @Override
-    public void bindSuccNotify(){
+    public void bindSuccNotify() {
         sendEmptyMessage(BussinessConstants.SettingMsgID.UPDATE_DEVICE_LIST_REQUEST);
     }
 
