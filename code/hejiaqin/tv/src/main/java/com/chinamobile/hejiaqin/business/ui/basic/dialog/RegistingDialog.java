@@ -21,7 +21,6 @@ public class RegistingDialog extends Dialog {
 
     private MyToast myToast;
     private Context mContext;
-    //通话会话对象
     private Handler handler = new Handler();
 
     private Handler mHandler = new Handler() {
@@ -34,7 +33,6 @@ public class RegistingDialog extends Dialog {
 
     public RegistingDialog(Context context, int theme) {
         super(context, theme);
-
         this.mContext = context;
     }
 
@@ -152,7 +150,6 @@ public class RegistingDialog extends Dialog {
 //        return null;
 //    }
 
-
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
             default:
@@ -169,8 +166,7 @@ public class RegistingDialog extends Dialog {
         super.dismiss();
     }
 
-    public static void show(Activity activity)
-    {
+    public static void show(Activity activity) {
         RegistingDialog videoInComingDialog = new RegistingDialog(activity, R.style.CalendarDialog);
         Window window = videoInComingDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
