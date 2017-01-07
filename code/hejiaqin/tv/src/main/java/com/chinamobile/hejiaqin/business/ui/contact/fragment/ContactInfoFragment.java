@@ -288,21 +288,23 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 doDelCallRecords();
                 break;
             case R.id.edit_contact_layout:
+                mMoreLayout.requestFocus();
                 doEditContact();
                 break;
             case R.id.del_contact_layout:
                 doDelContact();
                 break;
             case R.id.contact_cancel_layout:
-                dismissMoreView();
                 mMoreLayout.requestFocus();
+                dismissMoreView();
                 break;
             case R.id.add_contact_layout:
+                mMoreLayout.requestFocus();
                 doAddContact();
                 break;
             case R.id.stranger_cancel_layout:
-                dismissMoreView();
                 mMoreLayout.requestFocus();
+                dismissMoreView();
                 break;
             case R.id.dial_call_layout:
             case R.id.dial_video_app_layout:

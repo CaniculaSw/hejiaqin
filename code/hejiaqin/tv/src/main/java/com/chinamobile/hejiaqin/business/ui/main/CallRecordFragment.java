@@ -77,6 +77,11 @@ public class CallRecordFragment extends BasicFragment {
                 if (obj != null) {
                     List<CallRecord> callRecords = (List<CallRecord>) obj;
                     mCallRecordAdapter.refreshData(callRecords);
+                    deleteLayout.requestFocus();
+                    if(mCallRecordAdapter!=null && mCallRecordAdapter.getCount()>0)
+                    {
+                        callRecordListView.setSelection(0);
+                    }
                 }
                 break;
             case BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID:
@@ -127,6 +132,12 @@ public class CallRecordFragment extends BasicFragment {
         });
         recordDetail.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                deleteLayout.requestFocus();
+                if(mCallRecordAdapter!=null && mCallRecordAdapter.getCount()>0)
+                {
+                    callRecordListView.setSelection(0);
+                }
+                dismissMoreView();
                 if (mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo() != null) {
                     ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo());
                     FragmentMgr.getInstance().showRecentFragment(fragment);
@@ -134,19 +145,23 @@ public class CallRecordFragment extends BasicFragment {
                     ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getPeerNumber());
                     FragmentMgr.getInstance().showRecentFragment(fragment);
                 }
-                dismissMoreView();
             }
         });
         delRecordLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mVoipLogic.delCallRecord(new String[]{mCallRecordAdapter.getData(CallRecordFragment.this.selection).getId()});
+                deleteLayout.requestFocus();
+                if(mCallRecordAdapter!=null && mCallRecordAdapter.getCount()>0)
+                {
+                    callRecordListView.setSelection(0);
+                }
                 dismissMoreView();
+                mVoipLogic.delCallRecord(new String[]{mCallRecordAdapter.getData(CallRecordFragment.this.selection).getId()});
             }
         });
         recordCancelLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dismissMoreView();
-                callRecordListView.setSelection(CallRecordFragment.this.selection);
+                callRecordListView.setSelection(0);
                 callRecordListView.setFocusable(true);
                 callRecordListView.requestFocus();
             }
