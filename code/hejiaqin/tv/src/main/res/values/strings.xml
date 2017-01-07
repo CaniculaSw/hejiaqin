@@ -72,6 +72,7 @@
     <string name="login_failed">登录失败，请稍后再试</string>
     <string name="login_network_error_tip">登录失败，请检查你的网络连接</string>
     <string name="kick_out">您已在别处登录，请重新登录</string>
+    <string name="update_tips">机顶盒无法使用该业务，快去更新啦</string>
     <!-- 联系人 -->
     <string name="contact_navigation_app_contacts">通讯录</string>
     <string name="contact_sys_contacts_empty_desc">您的手机通讯录为空哦</string>
@@ -173,6 +174,7 @@
     <string name="qr_code">二维码</string>
     <string name="empty">无</string>
     <string name="logout">退出登陆</string>
+    <string name="logout_app">退出</string>
     <string name="commit">提交</string>
     <string name="commit_failed">提交失败</string>
     <string name="auto_answer_num">自动接听号码</string>

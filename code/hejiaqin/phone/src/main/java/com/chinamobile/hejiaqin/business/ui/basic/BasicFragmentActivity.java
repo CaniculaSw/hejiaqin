@@ -64,6 +64,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,27 +114,30 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     showToast(R.string.server_side_error, Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE:
-                    new UpdateManger(BasicFragmentActivity.this).showForcedUpdateDialog((VersionInfo)msg.obj);
+                    new UpdateManger(BasicFragmentActivity.this).showForcedUpdateDialog((VersionInfo) msg.obj);
                     break;
                 case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
-                    new UpdateManger(BasicFragmentActivity.this).showNoticeDialog((VersionInfo)msg.obj);
+                    new UpdateManger(BasicFragmentActivity.this).showNoticeDialog((VersionInfo) msg.obj);
+                    break;
+                case BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE:
+                    UserInfoCacheManager.clearVersionInfo(getApplicationContext());
                     break;
                 case BussinessConstants.SettingMsgID.BIND_DENIED:
-                    LogUtil.i(TAG,"对方不同意你的绑定请求");
-                    showToast("对方不同意你的绑定请求",Toast.LENGTH_LONG,null);
+                    LogUtil.i(TAG, "对方不同意你的绑定请求");
+                    showToast("对方不同意你的绑定请求", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_DENIED:
-                    showToast("发送联系人被拒绝",Toast.LENGTH_LONG,null);
+                    showToast("发送联系人被拒绝", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
-                    showToast("发送联系人成功",Toast.LENGTH_LONG,null);
+                    showToast("发送联系人成功", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL:
                     if (msg.obj != null) {
                         UserList userList = new UserList();
                         userList.setUsers((List<UserInfo>) msg.obj);
-                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(),userList);
-                        UserInfoCacheManager.saveBindDeviceToMem(getApplicationContext(),userList);
+                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(), userList);
+                        UserInfoCacheManager.saveBindDeviceToMem(getApplicationContext(), userList);
                     }
                     break;
                 default:
@@ -159,13 +163,10 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             if (PermissionsChecker.lacksPermissions(getApplicationContext(), needPermissions)) {
                 startPermissionsActivity(needPermissions);
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
-        }else
-        {
+        } else {
             return true;
         }
     }
@@ -179,11 +180,9 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
-                if(resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission)
-                {
+                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
                     finish();
                 }
                 break;
@@ -226,7 +225,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new hejiaqinProgressDialog(this,null);
+        waitDialog = new hejiaqinProgressDialog(this, null);
         waitDialog.show();
     }
 

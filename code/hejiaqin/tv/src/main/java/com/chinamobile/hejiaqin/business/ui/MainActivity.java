@@ -15,10 +15,12 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.login.RegisterActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
+import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
 
 public class MainActivity extends BasicActivity {
@@ -156,6 +158,11 @@ public class MainActivity extends BasicActivity {
         finish();
     }
 
+    private void showUpdateDialog() {
+        UpdateDialog.show(this);
+//        finish();
+    }
+
     private void jumpToRegisterActivity() {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
@@ -167,6 +174,10 @@ public class MainActivity extends BasicActivity {
         ContentResolver contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null, null, null, null);
         if (cursor != null && cursor.moveToNext()) {
+            if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId"))) || StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
+                showUpdateDialog();
+                return false;
+            }
             UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")));
         } else {
             flag = false;

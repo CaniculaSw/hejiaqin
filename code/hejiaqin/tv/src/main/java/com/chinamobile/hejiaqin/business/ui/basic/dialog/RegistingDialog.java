@@ -9,18 +9,9 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.logic.ILogic;
-import com.huawei.rcs.call.CallSession;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by eshaohu on 17/1/4.
@@ -28,21 +19,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RegistingDialog extends Dialog {
     public static final String TAG = RegistingDialog.class.getSimpleName();
 
-    private CircleImageView mCallerIv;
-    private TextView mCallerNameTv;
-    private TextView mCallerNumberTv;
-    private RelativeLayout mOperationLayout;
-    private LinearLayout mAutoRejectLayout;
-
-    private IVoipLogic mVoipLogic;
-    private IContactsLogic mContactsLogic;
-    private long mIncomingSessionId;
-
     private MyToast myToast;
     private Context mContext;
-    private boolean closed;
-    //通话会话对象
-    private CallSession mCallSession = null;
     private Handler handler = new Handler();
 
     private Handler mHandler = new Handler() {
@@ -55,15 +33,13 @@ public class RegistingDialog extends Dialog {
 
     public RegistingDialog(Context context, int theme) {
         super(context, theme);
-//        this.mIncomingSessionId = incomingSessionId;
-//        this.mVoipLogic = voipLogic;
-//        this.mContactsLogic = contactsLogic;
         this.mContext = context;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 //        ((ILogic)this.mVoipLogic).addHandler(mHandler);
         setContentView(R.layout.popwindow_registing);
 //        mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
@@ -176,39 +152,6 @@ public class RegistingDialog extends Dialog {
 
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
-//            case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-//                if(Const.deviceType == Const.TYPE_OTHER) {
-//                    LogUtil.d(TAG,"VtVideoCallActivity incoming");
-//                    Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
-//                    intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
-//                    mContext.startActivity(intentTalking);
-//                } else{
-//                    LogUtil.d(TAG,"VtVideoCallActivity incoming");
-//                    Intent intentTalking = new Intent(getContext(), StbVideoCallActivity.class);
-//                    intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
-//                    mContext.startActivity(intentTalking);
-//                }
-//                dismiss();
-//                break;
-//            case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
-//                if (msg.obj != null) {
-//                    CallSession session = (CallSession) msg.obj;
-//                    if (mCallSession != null && mCallSession.equals(session)) {
-//                        mVoipLogic.dealOnClosed(mCallSession, true, false, 0);
-//                        closed = true;
-//                        if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-//                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-//                        }
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                VideoInComingDialog.this.dismiss();
-//                            }
-//                        }, 3000);
-//                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-//                        mVoipLogic.dealOnClosed(session, true, false, 0);
-//                    }
-//                }
             default:
                 break;
         }
@@ -220,12 +163,10 @@ public class RegistingDialog extends Dialog {
 
     @Override
     public void dismiss() {
-        ((ILogic)this.mVoipLogic).removeHandler(mHandler);
         super.dismiss();
     }
 
-    public static void show(Activity activity)
-    {
+    public static void show(Activity activity) {
         RegistingDialog videoInComingDialog = new RegistingDialog(activity, R.style.CalendarDialog);
         Window window = videoInComingDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
