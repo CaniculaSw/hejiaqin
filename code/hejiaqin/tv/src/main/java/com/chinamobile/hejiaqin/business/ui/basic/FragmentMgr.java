@@ -139,6 +139,31 @@ public class FragmentMgr {
         }
     }
 
+    public void finishAllFragment(int index) {
+        Stack<BaseFragment> fragments = (Stack) fragmentStackMap.get(index);
+        if (null == fragments || fragments.size() <= 1) {
+            return;
+        }
+
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        while (fragments.size() > 1) {
+            BaseFragment forRemovedFragment = fragments.pop();
+            if (null != forRemovedFragment && forRemovedFragment.isAdded()) {
+                fragmentTransaction.hide(forRemovedFragment);
+                fragmentTransaction.remove(forRemovedFragment);
+            }
+        }
+
+        BaseFragment lastFragment = fragments.peek();
+        fragmentTransaction.show(lastFragment);
+        curLeftShowFragment = lastFragment;
+        fragmentTransaction.commit();
+
+        if (isParentFragmentShowingOfCurrentIndex(index)) {
+            ((Stack) focusedViewBackStack.get(index)).clear();
+        }
+    }
+
     public boolean isParentFragmentShowingOfCurrentIndex(int index) {
         Stack<BaseFragment> stack = (Stack<BaseFragment>) fragmentStackMap.get(index);
         return stack.size() <= 1 ? true : false;
