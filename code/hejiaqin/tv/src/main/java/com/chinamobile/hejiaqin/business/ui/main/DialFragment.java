@@ -1,17 +1,12 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
 
-import android.content.Intent;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
@@ -51,7 +46,59 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     @Override
     protected void handleFragmentMsg(Message msg) {
-
+        switch (msg.what)
+        {
+            //响应联动
+            case BussinessConstants.FragmentActionId.TV_DAIL_FRAGMENT_KEY_CODE:
+                int keyCode = (Integer)msg.obj;
+                switch (keyCode)
+                {
+                    case KeyEvent.KEYCODE_0:
+                        digitKeypad.btnZero.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_0,KeyEvent.KEYCODE_0+"");
+                        break;
+                    case KeyEvent.KEYCODE_1:
+                        digitKeypad.btnOne.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_1,KeyEvent.KEYCODE_1+"");
+                        break;
+                    case KeyEvent.KEYCODE_2:
+                        digitKeypad.btnTwo.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_2,KeyEvent.KEYCODE_2+"");
+                        break;
+                    case KeyEvent.KEYCODE_3:
+                        digitKeypad.btnThree.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_3,KeyEvent.KEYCODE_3+"");
+                        break;
+                    case KeyEvent.KEYCODE_4:
+                        digitKeypad.btnFour.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_4,KeyEvent.KEYCODE_4+"");
+                        break;
+                    case KeyEvent.KEYCODE_5:
+                        digitKeypad.btnFive.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_5,KeyEvent.KEYCODE_5+"");
+                        break;
+                    case KeyEvent.KEYCODE_6:
+                        digitKeypad.btnSix.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_6,KeyEvent.KEYCODE_6+"");
+                        break;
+                    case KeyEvent.KEYCODE_7:
+                        digitKeypad.btnSeven.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_7,KeyEvent.KEYCODE_7+"");
+                        break;
+                    case KeyEvent.KEYCODE_8:
+                        digitKeypad.btnEight.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_8,KeyEvent.KEYCODE_8+"");
+                        break;
+                    case KeyEvent.KEYCODE_9:
+                        digitKeypad.btnNine.requestFocus();
+                        digitKeypad.keyDown(KeyEvent.KEYCODE_9,KeyEvent.KEYCODE_9+"");
+                        break;
+                    case KeyEvent.KEYCODE_DEL:
+                        delNum();
+                        break;
+                }
+                break;
+        }
     }
 
     @Override
@@ -142,20 +189,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                }
                break;
            case R.id.dial_number_del_layout:
-               if (inputNumber.length() > 0)
-               {
-                   inputNumber.setCursorVisible(true);
-               }
-               inputNumber.onKeyDown(KeyEvent.KEYCODE_DEL, new KeyEvent(
-                       KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-
-               //如果是输入框中无数字，将光标隐藏
-               final int length = inputNumber.length();
-               if (length == inputNumber.getSelectionStart()
-                       && length == inputNumber.getSelectionEnd())
-               {
-                   inputNumber.setCursorVisible(false);
-               }
+               delNum();
                break;
            case R.id.dial_save_contact_arrow_layout:
                // 保存联系人
@@ -170,6 +204,23 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                }
                break;
        }
+    }
+
+    private void delNum() {
+        if (inputNumber.length() > 0)
+        {
+            inputNumber.setCursorVisible(true);
+        }
+        inputNumber.onKeyDown(KeyEvent.KEYCODE_DEL, new KeyEvent(
+                KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+
+        //如果是输入框中无数字，将光标隐藏
+        final int length = inputNumber.length();
+        if (length == inputNumber.getSelectionStart()
+                && length == inputNumber.getSelectionEnd())
+        {
+            inputNumber.setCursorVisible(false);
+        }
     }
 
 }

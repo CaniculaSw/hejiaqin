@@ -232,7 +232,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         super.onBackPressed();
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         View focused = getCurrentFocus();
@@ -276,6 +275,30 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     }
                 }
                 break;
+            case KeyEvent.KEYCODE_0:
+            case KeyEvent.KEYCODE_1:
+            case KeyEvent.KEYCODE_2:
+            case KeyEvent.KEYCODE_3:
+            case KeyEvent.KEYCODE_4:
+            case KeyEvent.KEYCODE_5:
+            case KeyEvent.KEYCODE_6:
+            case KeyEvent.KEYCODE_7:
+            case KeyEvent.KEYCODE_8:
+            case KeyEvent.KEYCODE_9:
+            case KeyEvent.KEYCODE_DEL:
+                if(mCurrentIndex == mDialIndex && FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex))
+                {
+                    BaseFragment switchFragment = FragmentMgr.getInstance().getTopFragment(mCurrentIndex);
+                    if(switchFragment!=null)
+                    {
+                        Message msg = new Message();
+                        msg.what=BussinessConstants.FragmentActionId.TV_DAIL_FRAGMENT_KEY_CODE;
+                        msg.obj =keyCode;
+                        ((BasicFragment) switchFragment).recieveMsg(msg);
+                       return true;
+                    }
+                }
+
         }
         return super.onKeyDown(keyCode, event);
     }

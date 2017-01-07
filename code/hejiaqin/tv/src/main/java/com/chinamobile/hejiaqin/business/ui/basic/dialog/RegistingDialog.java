@@ -39,9 +39,116 @@ public class RegistingDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.popwindow_registing);
 
+//        ((ILogic)this.mVoipLogic).addHandler(mHandler);
+        setContentView(R.layout.popwindow_registing);
+//        mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
+//        mCallerNameTv = (TextView) findViewById(R.id.caller_name_tv);
+//        mCallerNumberTv = (TextView) findViewById(R.id.caller_number_tv);
+//        myToast = new MyToast(mContext.getApplicationContext());
+//        mCallSession = CallApi.getCallSessionById(this.mIncomingSessionId);
+//        if (mCallSession == null) {
+//            dismiss();
+//            return;
+//        }
+//        mOperationLayout = (RelativeLayout)findViewById(R.id.call_operation_layout);
+//        findViewById(R.id.answer_call_layout).setOnClickListener(new View.OnClickListener()
+//        {
+//
+//            @Override
+//            public void onClick(View v) {
+//                if (closed) {
+//                    LogUtil.w(TAG, "is closed");
+//                    return;
+//                }
+//                if(onClickAnswer)
+//                {
+//                    return;
+//                }
+//                mVoipLogic.answerVideo(mCallSession);
+//            }
+//        });
+//        findViewById(R.id.reject_call_layout).setOnClickListener(new View.OnClickListener()
+//        {
+//
+//            @Override
+//            public void onClick(View v) {
+//                mVoipLogic.hangup(mCallSession, true, false, 0);
+//                VideoInComingDialog.this.dismiss();
+//            }
+//        });
+//        mAutoRejectLayout = (LinearLayout)findViewById(R.id.auto_reject_call_layout);
+//        mAutoRejectLayout.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                mVoipLogic.hangup(mCallSession, true, false, 0);
+//                VideoInComingDialog.this.dismiss();
+//            }
+//        });
+//        showIncoming();
+//        if(CommonUtils.isAutoAnswer(getContext().getApplicationContext(),mCallSession.getPeer().getNumber()))
+//        {
+//            ((TextView)findViewById(R.id.call_status_tv)).setText(R.string.auto_answer_status);
+//            mOperationLayout.setVisibility(View.GONE);
+//            mAutoRejectLayout.setVisibility(View.VISIBLE);
+//            mVoipLogic.answerVideo(mCallSession);
+//        }
     }
+
+    private void showIncoming() {
+//        String incomingNumber = CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber());
+//        // 查询姓名和头像信息
+//        ContactsInfo info = searchContactInfo(incomingNumber);
+//        if (info != null) {
+//            if(!StringUtil.isNullOrEmpty(info.getName())) {
+//                mCallerNameTv.setText(info.getName());
+//                mCallerNameTv.setVisibility(View.VISIBLE);
+//            }
+//            mCallerNumberTv.setText(incomingNumber);
+//            if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
+//                Picasso.with(mContext.getApplicationContext())
+//                        .load(info.getPhotoSm())
+//                        .placeholder(R.drawable.contact_photo_default)
+//                        .error(R.drawable.contact_photo_default).into(mCallerIv);
+//            }
+//        } else {
+//            mCallerNumberTv.setText(incomingNumber);
+//        }
+    }
+
+//    private ContactsInfo searchContactInfo(String phoneNumber) {
+//        //遍历本地联系人
+//        boolean isMatch = false;
+//        List<ContactsInfo> appContactsInfos = mContactsLogic.getCacheAppContactLst();
+//        for (ContactsInfo contactsInfo : appContactsInfos) {
+//            if (isMatch) {
+//                break;
+//            }
+//            if (contactsInfo.getNumberLst() != null) {
+//                for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
+//                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+//                        return contactsInfo;
+//                    }
+//                }
+//            }
+//        }
+//        List<ContactsInfo> localContactsInfos = mContactsLogic.getCacheLocalContactLst();
+//        for (ContactsInfo contactsInfo : localContactsInfos) {
+//            if (isMatch) {
+//                break;
+//            }
+//            if (contactsInfo.getNumberLst() != null) {
+//                for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
+//                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+//                        return contactsInfo;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return null;
+//    }
 
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
@@ -59,8 +166,7 @@ public class RegistingDialog extends Dialog {
         super.dismiss();
     }
 
-    public static void show(Activity activity)
-    {
+    public static void show(Activity activity) {
         RegistingDialog videoInComingDialog = new RegistingDialog(activity, R.style.CalendarDialog);
         Window window = videoInComingDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);

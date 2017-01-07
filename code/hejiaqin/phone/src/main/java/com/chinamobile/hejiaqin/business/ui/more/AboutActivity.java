@@ -54,7 +54,7 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         packageVersion.setText(getString(R.string.more_about_version, SystemUtil.getPackageVersionName(getApplicationContext())));
         if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) != null) {
             updateTips.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             updateTips.setVisibility(View.GONE);
         }
     }
