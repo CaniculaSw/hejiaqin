@@ -25,6 +25,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DialNumberDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
@@ -45,7 +46,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private CircleImageView mContactHeadImg;
     private View contactMoreView;
     private View strangerMoreView;
-    private View dialCallBtn;
+    private View mDialCallLayout;
+    private View mDialVideoAppLayout;
+    private View mDialVideoVolteLayout;
 
     private LinearLayout mDialInfoLayout;
 
@@ -145,8 +148,13 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
 
-        dialCallBtn = view.findViewById(R.id.dial_call_btn);
-        view.findViewById(R.id.dial_call_layout).setOnClickListener(this);
+        mDialCallLayout = view.findViewById(R.id.dial_call_layout);
+        mDialVideoAppLayout = view.findViewById(R.id.dial_video_app_layout);
+        mDialVideoVolteLayout = view.findViewById(R.id.dial_video_volte_layout);
+
+        mDialCallLayout.setOnClickListener(this);
+        mDialVideoAppLayout.setOnClickListener(this);
+        mDialVideoVolteLayout.setOnClickListener(this);
 
         view.findViewById(R.id.dial_more_layout).setOnClickListener(this);
         view.findViewById(R.id.dial_clear_layout).setOnClickListener(this);
@@ -166,7 +174,14 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
-        FocusManager.getInstance().requestFocus(dialCallBtn);
+        if(mDialCallLayout.getVisibility() == View.VISIBLE)
+        {
+            FocusManager.getInstance().requestFocus(mDialCallLayout);
+        }
+        else
+        {
+            FocusManager.getInstance().requestFocus(mDialVideoAppLayout);
+        }
     }
 
     @Override
@@ -194,6 +209,16 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         }
 
         showViews();
+        List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
+        if (null != numberInfoList && !numberInfoList.isEmpty()) {
+            NumberInfo numberInfo = numberInfoList.get(0);
+            if(StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode()))
+            {
+                mDialCallLayout.setVisibility(View.GONE);
+                mDialVideoAppLayout.setVisibility(View.VISIBLE);
+                mDialVideoVolteLayout.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void showViews() {
@@ -272,7 +297,11 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 dismissMoreView();
                 break;
             case R.id.dial_call_layout:
-                startVideoCall();
+            case R.id.dial_video_app_layout:
+                startVideoCall(true);
+                break;
+            case R.id.dial_video_volte_layout:
+                startVideoCall(false);
                 break;
         }
     }
@@ -301,7 +330,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     }
 
 
-    private void startVideoCall() {
+    private void startVideoCall(boolean isAPP) {
         List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
         if (numberInfoList.isEmpty()) {
             Logger.w(TAG, "startVideoCall, no number info.");
@@ -309,20 +338,20 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         }
 
         if (numberInfoList.size() > 1) {
-            showDialNumberDialog();
+            showDialNumberDialog(isAPP);
             return;
         }
 
 
         NumberInfo numberInfo = numberInfoList.get(0);
-        VideoOutDialog.show(getContext(), numberInfo.getNumber(), voipLogic, contactsLogic);
+        VideoOutDialog.show(getContext(), numberInfo.getNumber(), voipLogic, contactsLogic,isAPP);
 
     }
 
 
-    private void showDialNumberDialog() {
+    private void showDialNumberDialog(boolean isAPP) {
         final DialNumberDialog dialNumberDialog = new DialNumberDialog(getContext(), R.style.CalendarDialog
-                , mContactsInfo, voipLogic, contactsLogic);
+                , mContactsInfo, voipLogic, contactsLogic,isAPP);
         Window window = dialNumberDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();

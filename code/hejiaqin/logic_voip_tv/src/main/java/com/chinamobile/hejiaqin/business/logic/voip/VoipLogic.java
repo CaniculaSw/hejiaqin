@@ -292,12 +292,19 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     }
 
     @Override
-    public CallSession call(String calleeNumber, boolean isVideoCall) {
+    public CallSession call(String calleeNumber, boolean isVideoCall,boolean isPhoneAPP) {
         CallSession callSession = null;
+        String tmpNumber = calleeNumber;
+        if(isPhoneAPP)
+        {
+            if(StringUtil.isMobileNO(CommonUtils.getPhoneNumber(tmpNumber))) {
+                tmpNumber = "995" + CommonUtils.getPhoneNumber(tmpNumber);
+            }
+        }
         if (isVideoCall) {
-            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(calleeNumber));
+            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(tmpNumber));
         } else {
-            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(calleeNumber));
+            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(tmpNumber));
         }
 
         // 保存通话记录

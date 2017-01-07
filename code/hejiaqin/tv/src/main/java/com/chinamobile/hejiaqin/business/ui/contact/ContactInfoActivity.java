@@ -485,7 +485,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     private void showDialNumberDialog() {
         final DialNumberDialog dialNumberDialog = new DialNumberDialog(this, R.style.CalendarDialog
                 , mContactsInfo,((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
-                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)));
+                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)),true);
         Window window = dialNumberDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();

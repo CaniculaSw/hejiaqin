@@ -51,30 +51,92 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/dial_call_layout"
+        android:id="@+id/dial_call_p_layout"
         android:layout_width="492dp"
         android:layout_height="78dp"
         android:layout_below="@+id/contact_info_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:background="@drawable/selector_setting_bg"
-        android:focusable="true"
-        android:nextFocusDown="@+id/dial_more_btn">
+        android:focusable="false">
 
-        <Button
-            android:id="@+id/dial_call_btn"
-            android:layout_width="482dp"
-            android:layout_height="67dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/contact_info_call"
-            android:focusable="false" />
+        <RelativeLayout
+            android:id="@+id/dial_call_layout"
+            android:layout_width="492dp"
+            android:layout_height="78dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector_setting_bg"
+            android:focusable="true"
+            android:nextFocusDown="@+id/dial_more_btn">
+
+            <Button
+                android:id="@+id/dial_call_btn"
+                android:layout_width="482dp"
+                android:layout_height="67dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/contact_info_call"
+                android:focusable="false" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/dial_video_app_layout"
+            android:layout_below="@+id/digit_keypad"
+            android:layout_width="242dp"
+            android:layout_height="78dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:background="@drawable/selector_dial_bg">
+
+            <LinearLayout
+                android:id="@+id/dial_video_app_childlayout"
+                android:layout_width="230dp"
+                android:layout_height="67dp"
+                android:gravity="center"
+                android:background="@drawable/fragment_dial_video_bg">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/icon_fragment_dial_video" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dial_video_volte_layout"
+            android:layout_below="@+id/digit_keypad"
+            android:layout_width="242dp"
+            android:layout_height="78dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:background="@drawable/selector_dial_bg">
+
+            <LinearLayout
+                android:id="@+id/dial_video_volte_childlayout"
+                android:layout_width="230dp"
+                android:layout_height="67dp"
+                android:gravity="center"
+                android:background="@drawable/fragment_dial_video_bg">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@mipmap/icon_fragment_dial_video" />
+            </LinearLayout>
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/dial_oper_layout"
         android:layout_width="492dp"
         android:layout_height="78dp"
-        android:layout_below="@+id/dial_call_layout"
+        android:layout_below="@+id/dial_call_p_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:focusable="false">
@@ -87,8 +149,7 @@
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:nextFocusDown="@+id/dial_clear_layout"
-            android:nextFocusRight="@+id/dial_clear_layout"
-            android:nextFocusUp="@+id/dial_call_layout">
+            android:nextFocusRight="@+id/dial_clear_layout">
 
             <Button
                 android:id="@+id/dial_more_btn"
@@ -117,9 +178,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/selector_setting_bg"
-            android:focusable="true"
-            android:nextFocusLeft="@+id/dial_more_btn"
-            android:nextFocusUp="@+id/dial_call_layout">
+            android:focusable="true">
 
             <Button
                 android:id="@+id/dial_clear_btn"
@@ -139,7 +198,7 @@
         android:id="@+id/contact_more_layout"
         android:layout_width="222dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dial_call_layout"
+        android:layout_below="@+id/dial_call_p_layout"
         android:gravity="center"
         android:layout_marginRight="12dp"
         android:layout_marginTop="20dp"
@@ -219,7 +278,7 @@
         android:id="@+id/stranger_more_layout"
         android:layout_width="222dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dial_call_layout"
+        android:layout_below="@+id/dial_call_p_layout"
         android:gravity="center"
         android:layout_marginRight="12dp"
         android:layout_marginTop="20dp"
