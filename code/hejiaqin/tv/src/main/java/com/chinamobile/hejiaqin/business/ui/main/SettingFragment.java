@@ -70,7 +70,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         aboutLL.setOnClickListener(this);
         downloadAppLL.setOnClickListener(this);
 
-        FocusManager.getInstance().addFocusViewInLeftFrag("3", functionSettingLL);
+//        FocusManager.getInstance().addFocusViewInLeftFrag("3", functionSettingLL);
     }
 
     @Override
@@ -115,5 +115,10 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         switch (msg.what) {
 
         }
+    }
+
+    public View getFirstFouseView()
+    {
+        return functionSettingLL;
     }
 }

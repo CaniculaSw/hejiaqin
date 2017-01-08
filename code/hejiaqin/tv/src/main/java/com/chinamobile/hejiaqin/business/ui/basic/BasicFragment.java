@@ -138,4 +138,6 @@ public abstract class BasicFragment extends BaseFragment {
     protected void showToast(int resId, int duration, MyToast.Position pos) {
         myToast.showToast(resId, duration, pos);
     }
+
+    public abstract View getFirstFouseView();
 }

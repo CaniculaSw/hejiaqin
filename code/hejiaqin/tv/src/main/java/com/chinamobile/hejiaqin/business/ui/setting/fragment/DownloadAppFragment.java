@@ -52,7 +52,7 @@ public class DownloadAppFragment extends BasicFragment {
     }
 
     private void createQRCode(String url, int size, final ImageView view) {
-        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(getActivity(), size), Color.parseColor("#000000"),Color.parseColor("#878ea3") ,new QRCodeEncoder.Delegate() {
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(getActivity(), size), Color.parseColor("#000000"), Color.parseColor("#878ea3"), new QRCodeEncoder.Delegate() {
             @Override
             public void onEncodeQRCodeSuccess(Bitmap qrCode) {
                 view.setImageBitmap(qrCode);
@@ -63,5 +63,10 @@ public class DownloadAppFragment extends BasicFragment {
                 LogUtil.e(TAG, "生成中文二维码失败");
             }
         });
+    }
+
+    public View getFirstFouseView()
+    {
+        return null;
     }
 }

@@ -255,7 +255,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_RIGHT");
-                View leftFocusView = FocusManager.getInstance().getFocusViewInLeftFrag(String.valueOf(mCurrentIndex));
+                 BaseFragment topFragment = FragmentMgr.getInstance().getTopFragment(mCurrentIndex);
+                View leftFocusView = ((BasicFragment) topFragment).getFirstFouseView();
                 if (null != leftFocusView && mMenuViews[mCurrentIndex].isFocused()) {
                     FocusManager.getInstance().requestFocus(leftFocusView);
                     return true;

@@ -279,4 +279,9 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             }
         }
     };
+
+    public View getFirstFouseView()
+    {
+        return nameText;
+    }
 }

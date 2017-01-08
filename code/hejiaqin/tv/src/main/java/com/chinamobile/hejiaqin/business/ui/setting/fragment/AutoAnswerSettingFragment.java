@@ -169,4 +169,9 @@ public class AutoAnswerSettingFragment extends BasicFragment implements View.OnC
         intent.putExtra("id",id);
         startActivity(intent);
     }
+
+    public View getFirstFouseView()
+    {
+        return yes;
+    }
 }

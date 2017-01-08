@@ -155,4 +155,9 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
                 return R.string.contact_info_dial_incoming_text;
         }
     }
+
+    public View getFirstFouseView()
+    {
+        return null;
+    }
 }

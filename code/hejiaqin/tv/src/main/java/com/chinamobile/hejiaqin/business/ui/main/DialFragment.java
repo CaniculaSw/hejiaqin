@@ -186,7 +186,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 return true;
             }
         });
-        FocusManager.getInstance().addFocusViewInLeftFrag("2", digitKeypad.btnOne);
+//        FocusManager.getInstance().addFocusViewInLeftFrag("2", digitKeypad.btnOne);
     }
 
     @Override
@@ -245,4 +245,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         }
     }
 
+    public View getFirstFouseView()
+    {
+        return digitKeypad.btnOne;
+    }
 }

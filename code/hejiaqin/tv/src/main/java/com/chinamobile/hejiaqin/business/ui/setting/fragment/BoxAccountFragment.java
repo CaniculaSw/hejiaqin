@@ -152,4 +152,9 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         }
 
     }
+
+    public View getFirstFouseView()
+    {
+        return logout;
+    }
 }

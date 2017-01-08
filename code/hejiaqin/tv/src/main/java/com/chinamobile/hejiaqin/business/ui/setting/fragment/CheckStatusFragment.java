@@ -51,4 +51,9 @@ public class CheckStatusFragment extends BasicFragment {
     protected void initData() {
 
     }
+
+    public View getFirstFouseView()
+    {
+        return null;
+    }
 }

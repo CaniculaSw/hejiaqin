@@ -130,6 +130,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
             case BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID:
                 refreshCallRecord();
+                textChanged(mSearchString);
                 break;
             case BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID:
                 if(obj!=null)

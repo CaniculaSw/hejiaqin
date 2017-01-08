@@ -22,17 +22,17 @@ public class FocusManager {
         return instance;
     }
 
-    public void addFocusViewInLeftFrag(String fragName, View view) {
-        leftFragFocusViews.put(fragName, view);
-    }
-
-    public View getFocusViewInLeftFrag(String fragName) {
-        return leftFragFocusViews.get(fragName);
-    }
-
-    public boolean isExistInLeftFrag(String fragName) {
-        return leftFragFocusViews.containsKey(fragName);
-    }
+//    public void addFocusViewInLeftFrag(String fragName, View view) {
+//        leftFragFocusViews.put(fragName, view);
+//    }
+//
+//    public View getFocusViewInLeftFrag(String fragName) {
+//        return leftFragFocusViews.get(fragName);
+//    }
+//
+//    public boolean isExistInLeftFrag(String fragName) {
+//        return leftFragFocusViews.containsKey(fragName);
+//    }
 
     public void requestFocus(View view) {
         view.setFocusable(true);

@@ -45,4 +45,9 @@ public class AboutFragment extends BasicFragment {
     protected void initData() {
 
     }
+
+    public View getFirstFouseView()
+    {
+        return null;
+    }
 }
