@@ -24,6 +24,8 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
@@ -361,7 +363,13 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 mCallSession.terminate();
                 if(!isNurse)
                 {
-                    LogApi.copyLastLog();
+                    ThreadPoolUtil.execute(new ThreadTask() {
+
+                        @Override
+                        public void run() {
+                            LogApi.copyLastLog();
+                        }
+                    });
                 }
                 finish();
                 break;

@@ -20,6 +20,8 @@ import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.business.utils.SysInfoUtil;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
@@ -86,12 +88,24 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                         break;
                     case Message.STATUS_SEND_FAILED:
                         LogUtil.i(TAG, "发送消息失败(Message.STATUS_SEND_FAILED)，Message body：" + msg.getBody());
-                        LogApi.copyLastLog();
+                        ThreadPoolUtil.execute(new ThreadTask() {
+
+                            @Override
+                            public void run() {
+                                LogApi.copyLastLog();
+                            }
+                        });
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_SEND_FAILED);
                         break;
                     case Message.STATUS_UNDELIVERED:
                         LogUtil.i(TAG, "发送消息失败(Message.STATUS_UNDELIVERED)，Message body：" + msg.getBody());
-                        LogApi.copyLastLog();
+                        ThreadPoolUtil.execute(new ThreadTask() {
+
+                            @Override
+                            public void run() {
+                                LogApi.copyLastLog();
+                            }
+                        });
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_UNDELIVERED);
                         break;
                 }

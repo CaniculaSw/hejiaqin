@@ -19,6 +19,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.login.RegisterActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
@@ -96,7 +98,13 @@ public class MainActivity extends BasicActivity {
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
-                    LogApi.copyLastLog();
+                    ThreadPoolUtil.execute(new ThreadTask() {
+
+                        @Override
+                        public void run() {
+                            LogApi.copyLastLog();
+                        }
+                    });
                     logining = false;
                 }
                 break;

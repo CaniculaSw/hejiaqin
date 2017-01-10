@@ -316,7 +316,13 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         if (callSession.getErrCode() == CallSession.ERRCODE_OK) {
             recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
         }else{
-            LogApi.copyLastLog();
+            ThreadPoolUtil.execute(new ThreadTask() {
+
+                @Override
+                public void run() {
+                    LogApi.copyLastLog();
+                }
+            });
             LogUtil.d(TAG, "call errorcode:" + callSession.getErrCode());
             LogUtil.d(TAG, "call sip causes:" + callSession.getSipCause());
             this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
