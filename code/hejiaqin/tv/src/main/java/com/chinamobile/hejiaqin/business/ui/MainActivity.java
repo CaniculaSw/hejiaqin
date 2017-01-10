@@ -109,13 +109,13 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSTBConfig();
-
-        //检查是否开户
-        TvLoginInfo tvLoginInfo = new TvLoginInfo();
-        tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-        tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
-        loginLogic.checkTvAccount(tvLoginInfo);
+        if (getSTBConfig()) {
+            //检查是否开户
+            TvLoginInfo tvLoginInfo = new TvLoginInfo();
+            tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
+            tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
+            loginLogic.checkTvAccount(tvLoginInfo);
+        }
     }
 
     @Override
@@ -163,6 +163,11 @@ public class MainActivity extends BasicActivity {
 //        finish();
     }
 
+    private void showUpdateDialog(String text) {
+        UpdateDialog.show(this, text);
+//        finish();
+    }
+
     private void jumpToRegisterActivity() {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
@@ -175,11 +180,15 @@ public class MainActivity extends BasicActivity {
         Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null, null, null, null);
         if (cursor != null && cursor.moveToNext()) {
             if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId"))) || StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
-                showUpdateDialog();
+                showUpdateDialog(getString(R.string.exception_tips));
+                if (!cursor.isClosed()) {
+                    cursor.close();
+                }
                 return false;
             }
             UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")));
         } else {
+            showUpdateDialog(getString(R.string.exception_tips));
             flag = false;
         }
         if (cursor != null && !cursor.isClosed()) {

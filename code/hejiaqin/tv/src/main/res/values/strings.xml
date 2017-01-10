@@ -73,6 +73,7 @@
     <string name="login_network_error_tip">登录失败，请检查你的网络连接</string>
     <string name="kick_out">您已在别处登录，请重新登录</string>
     <string name="update_tips">机顶盒无法使用该业务，快去更新啦</string>
+    <string name="exception_tips">系统异常，请稍后再试</string>
     <!-- 联系人 -->
     <string name="contact_navigation_app_contacts">通讯录</string>
     <string name="contact_sys_contacts_empty_desc">您的手机通讯录为空哦</string>

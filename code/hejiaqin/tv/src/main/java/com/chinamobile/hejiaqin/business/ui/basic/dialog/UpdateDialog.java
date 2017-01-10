@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.utils.StringUtil;
 
 /**
  * Created by eshaohu on 17/1/7.
@@ -25,6 +27,8 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
     private MyToast myToast;
     private Context mContext;
     private Handler handler = new Handler();
+    private String tips = "";
+    private TextView tips_text;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -34,9 +38,14 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         }
     };
 
-    public UpdateDialog(Context context, int theme) {
+    private UpdateDialog(Context context, int theme) {
+        this(context, theme, "");
+    }
+
+    private UpdateDialog(Context context, int theme, String text) {
         super(context, theme);
         this.mContext = context;
+        tips = text;
     }
 
     @Override
@@ -45,6 +54,10 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.dialog_update_tip);
         logout = (Button) findViewById(R.id.logout_button);
         logout.setOnClickListener(this);
+        tips_text = (TextView) findViewById(R.id.tips_text);
+        if (!StringUtil.isNullOrEmpty(tips)) {
+            tips_text.setText(tips);
+        }
     }
 
     private void handleStateMessage(Message msg) {
@@ -76,9 +89,22 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         videoInComingDialog.show();
     }
 
+    public static void show(Activity activity, String text) {
+        UpdateDialog videoInComingDialog = new UpdateDialog(activity, R.style.CalendarDialog, text);
+        Window window = videoInComingDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
+        videoInComingDialog.setCancelable(false);
+        videoInComingDialog.show();
+    }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.logout_button:
                 MyActivityManager.getInstance().finishAllActivity(null);
                 break;
