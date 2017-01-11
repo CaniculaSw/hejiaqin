@@ -26,7 +26,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.dial.StbNurseCallActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VtNurseCallActivity;
-import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.setting.dialog.BindRequestDialog;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
@@ -110,9 +109,9 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID:
                     showToast(R.string.kick_out, Toast.LENGTH_SHORT, null);
                     ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).logout();
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    this.startActivity(intent);
-                    this.finishAllActivity(LoginActivity.class.getName());
+//                    Intent intent = new Intent(this, LoginActivity.class);
+//                    this.startActivity(intent);
+                    this.finishAllActivity(null);
                     break;
                 case BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR:
                     dismissWaitDailog();

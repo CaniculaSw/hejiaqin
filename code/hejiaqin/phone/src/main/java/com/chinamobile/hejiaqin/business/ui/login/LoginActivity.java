@@ -185,8 +185,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone(accountEditTv.getText().toString());
         loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
-        inputTheVOIPSetting(loginInfo);
-//        loginLogic.login(loginInfo);
+//        inputTheVOIPSetting(loginInfo);
+        loginLogic.login(loginInfo);
     }
 
     private void displayErrorInfo(String errorText) {
@@ -241,11 +241,11 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-                    LogUtil.i("LoginActivity","Update the voip setting");
-                    userInfo.setSdkAccount(voipUserName);
-                    userInfo.setSdkPassword(voipPassword);
-                }
+//                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
+//                    LogUtil.i("LoginActivity","Update the voip setting");
+//                    userInfo.setSdkAccount(voipUserName);
+//                    userInfo.setSdkPassword(voipPassword);
+//                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode="+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();

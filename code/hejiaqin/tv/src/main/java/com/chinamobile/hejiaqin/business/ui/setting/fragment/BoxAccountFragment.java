@@ -123,11 +123,12 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
             boxAccount.setText(userInfo.getTvAccount());
             String tvAccount = userInfo.getSdkAccount();
             //TODO:使用临时代码
-            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
-                tvAccount = "2886544004";
-            }else{
-                tvAccount = "2886544005";
-            }
+//            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
+//                tvAccount = "2886544004";
+//            }else{
+//                tvAccount = "2886544005";
+//            }
+            LogUtil.w(TAG, "sdk account: " + tvAccount);
             createQRCode(tvAccount, 1400, qrCode);
         }
 //        createQRCode("13776570335", 1400, qrCode);
@@ -151,8 +152,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
 
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return logout;
     }
 }
