@@ -24,10 +24,13 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.call.CallSession;
+import com.huawei.rcs.log.LogApi;
 import com.huawei.rcs.system.SysApi;
 
 import java.util.Timer;
@@ -153,6 +156,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         Intent extParas = new Intent();
         extParas.putExtra(CallApi.EN_CALL_VIDEO_EXTPARAS_NURSE, 1);
         mCallSession = CallApi.initiateVideoCallWithExtParas(CommonUtils.getCountryPhoneNumber(mCalleeNumber), extParas);
+        LogUtil.d(TAG,mCallSession.isNurse()? "nurse":"not nurse");
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.nurse_outing_error, Toast.LENGTH_SHORT, null);
             closed = true;
@@ -355,7 +359,18 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
             case R.id.hangup_layout:
                 //呼出和接通后的挂断
                 closed = true;
+                boolean isNurse = mCallSession.isNurse();
                 mCallSession.terminate();
+                if(!isNurse)
+                {
+                    ThreadPoolUtil.execute(new ThreadTask() {
+
+                        @Override
+                        public void run() {
+                            LogApi.copyLastLog();
+                        }
+                    });
+                }
                 finish();
                 break;
         }

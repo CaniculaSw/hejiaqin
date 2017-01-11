@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Message;
@@ -19,7 +18,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.qrCode.QRCodeEncoder;
 import com.customer.framework.component.qrCode.core.DisplayUtils;
@@ -125,11 +123,12 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
             boxAccount.setText(userInfo.getTvAccount());
             String tvAccount = userInfo.getSdkAccount();
             //TODO:使用临时代码
-            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
-                tvAccount = "2886544004";
-            }else{
-                tvAccount = "2886544005";
-            }
+//            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
+//                tvAccount = "2886544004";
+//            }else{
+//                tvAccount = "2886544005";
+//            }
+            LogUtil.d(TAG, "sdk account: " + tvAccount);
             createQRCode(tvAccount, 1400, qrCode);
         }
 //        createQRCode("13776570335", 1400, qrCode);
@@ -143,9 +142,9 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
                 mVoipLogic.logout();
                 mVoipLogic.clearLogined();
                 FragmentMgr.resetFragmentMgr();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                MyActivityManager.getInstance().finishAllActivity(LoginActivity.class.getName());
+//                Intent intent = new Intent(getContext(), LoginActivity.class);
+//                startActivity(intent);
+                MyActivityManager.getInstance().finishAllActivity(null);
                 break;
             default:
                 break;
@@ -153,8 +152,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
 
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return logout;
     }
 }

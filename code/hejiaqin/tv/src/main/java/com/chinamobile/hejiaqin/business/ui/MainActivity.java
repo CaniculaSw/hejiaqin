@@ -19,6 +19,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.login.RegisterActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
@@ -40,11 +42,11 @@ public class MainActivity extends BasicActivity {
                 jumpToRegisterActivity();
                 break;
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-                if (loginLogic.hasLogined() && mVoipLogic.hasLogined()) {
-                    jumpToMainFragmentActivity();
-                } else {
+//                if (loginLogic.hasLogined() && mVoipLogic.hasLogined()) {
+//                    jumpToMainFragmentActivity();
+//                } else {
                     autoLogin();
-                }
+//                }
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
 //                jumpToMainFragmentActivity();
@@ -59,13 +61,13 @@ public class MainActivity extends BasicActivity {
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
                 //TODO TEST
-                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
-                    sdkuserInfo.username = "2886544004";
-                    sdkuserInfo.password = "Vconf2015!";
-                } else {
-                    sdkuserInfo.username = "2886544005";
-                    sdkuserInfo.password = "Vconf2015!";
-                }
+//                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
+//                    sdkuserInfo.username = "2886544004";
+//                    sdkuserInfo.password = "Vconf2015!";
+//                } else {
+//                    sdkuserInfo.username = "2886544005";
+//                    sdkuserInfo.password = "Vconf2015!";
+//                }
 //                //TODO TEST
                 LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
@@ -96,7 +98,13 @@ public class MainActivity extends BasicActivity {
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
-                    LogApi.copyLastLog();
+                    ThreadPoolUtil.execute(new ThreadTask() {
+
+                        @Override
+                        public void run() {
+                            LogApi.copyLastLog();
+                        }
+                    });
                     logining = false;
                 }
                 break;
@@ -109,13 +117,13 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSTBConfig();
-
-        //检查是否开户
-        TvLoginInfo tvLoginInfo = new TvLoginInfo();
-        tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-        tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
-        loginLogic.checkTvAccount(tvLoginInfo);
+        if (getSTBConfig()) {
+            //检查是否开户
+            TvLoginInfo tvLoginInfo = new TvLoginInfo();
+            tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
+            tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
+            loginLogic.checkTvAccount(tvLoginInfo);
+        }
     }
 
     @Override
@@ -163,6 +171,11 @@ public class MainActivity extends BasicActivity {
 //        finish();
     }
 
+    private void showUpdateDialog(String text) {
+        UpdateDialog.show(this, text);
+//        finish();
+    }
+
     private void jumpToRegisterActivity() {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
@@ -175,11 +188,15 @@ public class MainActivity extends BasicActivity {
         Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null, null, null, null);
         if (cursor != null && cursor.moveToNext()) {
             if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId"))) || StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
-                showUpdateDialog();
+                showUpdateDialog(getString(R.string.exception_tips));
+                if (!cursor.isClosed()) {
+                    cursor.close();
+                }
                 return false;
             }
             UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")));
         } else {
+            showUpdateDialog(getString(R.string.exception_tips));
             flag = false;
         }
         if (cursor != null && !cursor.isClosed()) {

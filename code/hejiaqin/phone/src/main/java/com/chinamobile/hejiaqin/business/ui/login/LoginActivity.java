@@ -29,6 +29,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.VoipSettingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
@@ -183,8 +185,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone(accountEditTv.getText().toString());
         loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
-        inputTheVOIPSetting(loginInfo);
-//        loginLogic.login(loginInfo);
+//        inputTheVOIPSetting(loginInfo);
+        loginLogic.login(loginInfo);
     }
 
     private void displayErrorInfo(String errorText) {
@@ -239,11 +241,11 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-                    LogUtil.i("LoginActivity","Update the voip setting");
-                    userInfo.setSdkAccount(voipUserName);
-                    userInfo.setSdkPassword(voipPassword);
-                }
+//                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
+//                    LogUtil.i("LoginActivity","Update the voip setting");
+//                    userInfo.setSdkAccount(voipUserName);
+//                    userInfo.setSdkPassword(voipPassword);
+//                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode="+86";
                 sdkuserInfo.username = userInfo.getSdkAccount();
@@ -274,7 +276,13 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
-                    LogApi.copyLastLog();
+                    ThreadPoolUtil.execute(new ThreadTask() {
+
+                        @Override
+                        public void run() {
+                            LogApi.copyLastLog();
+                        }
+                    });
                     logining = false;
                 }
                 break;

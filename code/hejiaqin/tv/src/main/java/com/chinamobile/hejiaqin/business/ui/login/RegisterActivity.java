@@ -16,6 +16,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
+import com.customer.framework.component.ThreadPool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
 
@@ -59,13 +61,13 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
                 //TODO TEST
-                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
-                    sdkuserInfo.username = "2886544004";
-                    sdkuserInfo.password = "Vconf2015!";
-                } else {
-                    sdkuserInfo.username = "2886544005";
-                    sdkuserInfo.password = "Vconf2015!";
-                }
+//                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
+//                    sdkuserInfo.username = "2886544004";
+//                    sdkuserInfo.password = "Vconf2015!";
+//                } else {
+//                    sdkuserInfo.username = "2886544005";
+//                    sdkuserInfo.password = "Vconf2015!";
+//                }
 //                //TODO TEST
                 LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
@@ -96,7 +98,13 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
-                    LogApi.copyLastLog();
+                    ThreadPoolUtil.execute(new ThreadTask() {
+
+                        @Override
+                        public void run() {
+                            LogApi.copyLastLog();
+                        }
+                    });
                     logining = false;
                 }
                 break;
