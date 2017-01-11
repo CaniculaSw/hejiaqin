@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
@@ -29,15 +32,32 @@ public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
     private IVoipLogic mVoipLogic;
-    //    private ISettingLogic settingLogic;
+    private ISettingLogic settingLogic;
     private static final String TAG = "MainActivity";
     private boolean logining;
-
+    private ProgressBar progressBar;
 
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
+            case BussinessConstants.SettingMsgID.TEST_ADAPT_FAIL:
+                progressBar.setVisibility(View.INVISIBLE);
+                showUpdateDialog();
+                break;
+            case BussinessConstants.SettingMsgID.TEST_ADAPT_PASS:
+                if (getSTBConfig()) {
+                    //检查是否开户
+                    TvLoginInfo tvLoginInfo = new TvLoginInfo();
+                    tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
+                    tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
+                    loginLogic.checkTvAccount(tvLoginInfo);
+                }
+                break;
+            case BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR:
+                progressBar.setVisibility(View.INVISIBLE);
+                showUpdateDialog(getString(R.string.exception_tips));
+                break;
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED:
                 jumpToRegisterActivity();
                 break;
@@ -45,7 +65,7 @@ public class MainActivity extends BasicActivity {
 //                if (loginLogic.hasLogined() && mVoipLogic.hasLogined()) {
 //                    jumpToMainFragmentActivity();
 //                } else {
-                    autoLogin();
+                autoLogin();
 //                }
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
@@ -110,20 +130,13 @@ public class MainActivity extends BasicActivity {
                 break;
             default:
                 break;
-
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getSTBConfig()) {
-            //检查是否开户
-            TvLoginInfo tvLoginInfo = new TvLoginInfo();
-            tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-            tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
-            loginLogic.checkTvAccount(tvLoginInfo);
-        }
+        settingLogic.testAdapt();
     }
 
     @Override
@@ -138,7 +151,7 @@ public class MainActivity extends BasicActivity {
 
     @Override
     protected void initView() {
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
     @Override
@@ -149,7 +162,7 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
-//        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
@@ -188,6 +201,7 @@ public class MainActivity extends BasicActivity {
         Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null, null, null, null);
         if (cursor != null && cursor.moveToNext()) {
             if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId"))) || StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
+                progressBar.setVisibility(View.INVISIBLE);
                 showUpdateDialog(getString(R.string.exception_tips));
                 if (!cursor.isClosed()) {
                     cursor.close();
@@ -196,6 +210,7 @@ public class MainActivity extends BasicActivity {
             }
             UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")));
         } else {
+            progressBar.setVisibility(View.INVISIBLE);
             showUpdateDialog(getString(R.string.exception_tips));
             flag = false;
         }

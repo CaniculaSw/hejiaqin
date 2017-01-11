@@ -8,6 +8,7 @@ import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetBindListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
+import com.chinamobile.hejiaqin.business.model.more.req.TestAdaptReq;
 import com.chinamobile.hejiaqin.business.net.AbsHttpManager;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.customer.framework.component.net.NameValuePair;
@@ -38,7 +39,7 @@ public class SettingHttpmanager extends AbsHttpManager {
     private final int get_device_list = action_base + 2;
     private final int save_bind_request = action_base + 3;
     private final int get_bind_list = action_base + 4;
-
+    private final int test_adapt = action_base + 5;
 
     /**
      * 请求action
@@ -72,6 +73,9 @@ public class SettingHttpmanager extends AbsHttpManager {
             case get_bind_list:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/getBindList";
                 break;
+            case test_adapt:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/testAdapt";
+                break;
             default:
                 break;
         }
@@ -90,6 +94,7 @@ public class SettingHttpmanager extends AbsHttpManager {
             case get_device_list:
             case save_bind_request:
             case get_bind_list:
+            case test_adapt:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -103,6 +108,7 @@ public class SettingHttpmanager extends AbsHttpManager {
         boolean flag = true;
         switch (this.mAction) {
             case check_android_version:
+            case test_adapt:
                 flag = false;
                 break;
             default:
@@ -125,6 +131,8 @@ public class SettingHttpmanager extends AbsHttpManager {
             case save_bind_request:
                 //TODO
             case get_bind_list:
+                //TODO
+            case test_adapt:
                 //TODO
             default:
                 break;
@@ -165,6 +173,9 @@ public class SettingHttpmanager extends AbsHttpManager {
                         break;
                     case save_bind_request:
                         break;
+                    case test_adapt:
+                        obj = data;
+                        break;
                     default:
                         break;
                 }
@@ -196,6 +207,12 @@ public class SettingHttpmanager extends AbsHttpManager {
 
     public void saveBindRequest(final Object invoker, final SaveBindRequest req, final IHttpCallBack callBack) {
         this.mAction = save_bind_request;
+        this.mData = req;
+        send(invoker, callBack);
+    }
+
+    public void testAdapt(final Object invoker, final TestAdaptReq req, final IHttpCallBack callBack) {
+        this.mAction = test_adapt;
         this.mData = req;
         send(invoker, callBack);
     }

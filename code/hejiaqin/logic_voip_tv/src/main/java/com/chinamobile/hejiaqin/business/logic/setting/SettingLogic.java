@@ -15,6 +15,7 @@ import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetBindListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.GetDeviceListReq;
 import com.chinamobile.hejiaqin.business.model.more.req.SaveBindRequest;
+import com.chinamobile.hejiaqin.business.model.more.req.TestAdaptReq;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
@@ -228,6 +229,39 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
 
+            }
+        });
+    }
+
+    @Override
+    public void testAdapt() {
+        final TestAdaptReq req = new TestAdaptReq();
+        new SettingHttpmanager(getContext()).testAdapt(null, req, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                String data = (String) obj;
+                LogUtil.d(TAG, "data is: " + data);
+                switch (data) {
+                    case "0":
+                        SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_FAIL);
+                        break;
+                    case "1":
+                        SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_PASS);
+                        break;
+                    default:
+                        SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR);
             }
         });
     }
