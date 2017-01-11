@@ -68,7 +68,7 @@ public class HeApplication extends RCSApplication {
     {
         String sDevice = android.os.Build.DEVICE;
         String sModel = android.os.Build.MODEL;
-        LogUtil.d(TAG, "device=" + sDevice + "--sModel=" + sModel);
+        LogUtil.w(TAG, "device=" + sDevice + "--Model=" + sModel);
 
         //非系统签名版本注销掉这段代码
 //        if (sDevice.contains("Hi3716CV200"))
