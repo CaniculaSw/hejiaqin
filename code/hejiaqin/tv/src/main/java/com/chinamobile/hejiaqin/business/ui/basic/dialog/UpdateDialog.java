@@ -106,6 +106,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.logout_button:
+                dismiss();
                 MyActivityManager.getInstance().finishAllActivity(null);
                 break;
             default:
