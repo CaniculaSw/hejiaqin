@@ -243,6 +243,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         sdkuserInfo.countryCode="+86";
         sdkuserInfo.username = userInfo.getSdkAccount();
         sdkuserInfo.password = userInfo.getSdkPassword();
+        LogUtil.d(TAG,"autoLogin UserInfo:"+sdkuserInfo.username);
         LoginCfg loginCfg = new LoginCfg();
         //断网SDK自动重连设置
         loginCfg.isAutoLogin = true;
@@ -265,6 +266,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         loginCfg.isAutoLogin = true;
         loginCfg.isRememberPassword = true;
         loginCfg.isVerified = false;
+        LogUtil.d(TAG,"UserInfo:"+userInfo.username);
         LoginApi.login(userInfo, loginCfg);
         //TODO TEST:服务器没有保存SDK账号和密码
         com.chinamobile.hejiaqin.business.model.login.UserInfo clientUserInfo = UserInfoCacheManager.getUserInfo(getContext());
