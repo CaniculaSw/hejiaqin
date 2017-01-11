@@ -128,7 +128,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
 //            }else{
 //                tvAccount = "2886544005";
 //            }
-            LogUtil.w(TAG, "sdk account: " + tvAccount);
+            LogUtil.d(TAG, "sdk account: " + tvAccount);
             createQRCode(tvAccount, 1400, qrCode);
         }
 //        createQRCode("13776570335", 1400, qrCode);
