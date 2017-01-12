@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.basic.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -34,6 +33,13 @@ public class RegistingDialog extends Dialog {
     public RegistingDialog(Context context, int theme) {
         super(context, theme);
         this.mContext = context;
+        Window window = getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
     }
 
     @Override
@@ -166,16 +172,9 @@ public class RegistingDialog extends Dialog {
         super.dismiss();
     }
 
-    public static void show(Activity activity) {
-        RegistingDialog videoInComingDialog = new RegistingDialog(activity, R.style.CalendarDialog);
-        Window window = videoInComingDialog.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        params.gravity = Gravity.CENTER;
-        window.setAttributes(params);
-        videoInComingDialog.setCancelable(false);
-        videoInComingDialog.show();
+    @Override
+    public void show() {
+        setCancelable(false);
+        super.show();
     }
 }
