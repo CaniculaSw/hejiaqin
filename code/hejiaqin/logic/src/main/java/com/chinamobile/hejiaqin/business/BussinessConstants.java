@@ -45,7 +45,7 @@ public class BussinessConstants {
      */
     public interface ServerInfo {
 
-        String HTTP_ADDRESS = "http://218.205.115.220:8099/hjq";
+        String HTTP_ADDRESS = "http://223.86.3.64/hjqtest";
 
         String HTTPS_ADDRESS = "https://service.XXX.com";
     }
