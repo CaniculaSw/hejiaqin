@@ -73,7 +73,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTING_MSG_ID);
                     break;
                 case LoginApi.STATUS_DISCONNECTED:
-                    LogUtil.i(VoipLogic.TAG, "the status is STATUS_DISCONNECTED reason:+" +reason);
+                    LogUtil.i(VoipLogic.TAG, "the status is STATUS_DISCONNECTED reason:" + reason);
                     if (reason == LoginApi.REASON_SRV_FORCE_LOGOUT) {
                         //服务器强制注销 如：同一账号在多终端上登录
                         VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID);
