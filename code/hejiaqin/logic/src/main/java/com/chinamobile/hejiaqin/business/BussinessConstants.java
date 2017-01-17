@@ -45,7 +45,7 @@ public class BussinessConstants {
      */
     public interface ServerInfo {
 
-        String HTTP_ADDRESS = "http://218.205.115.220:8099/hjq";
+        String HTTP_ADDRESS = "http://223.86.3.64/hjqtest";
 
         String HTTPS_ADDRESS = "https://service.XXX.com";
     }
@@ -369,7 +369,7 @@ public class BussinessConstants {
         String BINDED_DEVICE_KEY = "bindedDeviceKey";
         String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
         String APP_IMG_DEFAULT_NAME = "hejiaqin_app_default_img.jpg"; //头像图片默认名字
-        String MORE_SHARE_APP_URL = "http://www.baidu.com";
+        String MORE_SHARE_APP_URL = "/version/androidQR";
         int SEND_CONTACT_SEARCH = 1;
     }
 

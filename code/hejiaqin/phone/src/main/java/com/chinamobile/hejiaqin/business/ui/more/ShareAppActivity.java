@@ -37,7 +37,7 @@ public class ShareAppActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initDate() {
-        createQRCode(BussinessConstants.Setting.MORE_SHARE_APP_URL, 150);
+        createQRCode(BussinessConstants.ServerInfo.HTTP_ADDRESS+BussinessConstants.Setting.MORE_SHARE_APP_URL, 150);
     }
 
     @Override

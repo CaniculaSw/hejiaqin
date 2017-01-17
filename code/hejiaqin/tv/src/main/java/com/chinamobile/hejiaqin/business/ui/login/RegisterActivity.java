@@ -29,6 +29,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
     private ILoginLogic loginLogic;
     private IVoipLogic mVoipLogic;
     private boolean logining;
+    private RegistingDialog registingDialog;
 
     @Override
     protected int getLayoutId() {
@@ -40,8 +41,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         registerLayout = (LinearLayout) findViewById(R.id.register_ll);
         registerLayout.setClickable(true);
         registerLayout.setOnClickListener(this);
-
-
+        registingDialog = new RegistingDialog(this, R.style.CalendarDialog);
     }
 
     @Override
@@ -50,6 +50,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
 //                jumpToMainFragmentActivity();
+
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
 //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
 //                    LogUtil.i(TAG,"Update the voip setting");
@@ -82,22 +83,30 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
 //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
 //                accountEditTv.requestFocus();
+                registerLayout.setFocusable(true);
+                registerLayout.requestFocus();
+                registingDialog.dismiss();
                 showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 logining = false;
                 break;
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
                 showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                 logining = false;
+                registerLayout.setFocusable(true);
+                registingDialog.dismiss();
+                registerLayout.requestFocus();
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID:
                 if (logining) {
-                    showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                     logining = false;
                 }
+                registerLayout.setFocusable(true);
+                registingDialog.dismiss();
+                registerLayout.requestFocus();
+                showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
                 if (logining) {
-                    showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
                     ThreadPoolUtil.execute(new ThreadTask() {
 
                         @Override
@@ -107,6 +116,10 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                     });
                     logining = false;
                 }
+                registerLayout.setFocusable(true);
+                registingDialog.dismiss();
+                registerLayout.requestFocus();
+                showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
                 break;
             default:
                 break;
@@ -142,7 +155,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.register_ll:
                 registerLayout.setFocusable(false);
-                RegistingDialog.show(this);
+                registingDialog.show();
                 autoLogin();
                 break;
         }

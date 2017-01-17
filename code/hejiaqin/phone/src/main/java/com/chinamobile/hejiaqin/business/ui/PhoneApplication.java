@@ -3,12 +3,10 @@ package com.chinamobile.hejiaqin.business.ui;
 import android.content.Intent;
 
 import com.chinamobile.hejiaqin.BuildConfig;
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.HeApplication;
 import com.chinamobile.hejiaqin.business.HeService;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
 import com.customer.framework.utils.LogUtil;
-import com.littlec.sdk.manager.CMIMHelper;
 
 /**
  * Created by  on 2016/6/5.
@@ -31,7 +29,7 @@ public class PhoneApplication extends HeApplication implements
         /**
          * 初始化小溪推送SDK
          */
-        CMIMHelper.getCmAccountManager().init(getApplicationContext(), BussinessConstants.CommonInfo.LITTLEC_APP_KEY);
+//        CMIMHelper.getCmAccountManager().init(getApplicationContext(), BussinessConstants.CommonInfo.LITTLEC_APP_KEY);
     }
 
     @Override

@@ -64,16 +64,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             int reason = intent.getIntExtra(LoginApi.PARAM_REASON, -1);
             switch (new_status) {
                 case LoginApi.STATUS_CONNECTED:
-                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_CONNECTED");
+                    LogUtil.i(VoipLogic.TAG, "the status is STATUS_CONNECTED");
                     UserInfoCacheManager.saveVoipLogined(getContext());
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID);
                     break;
                 case LoginApi.STATUS_CONNECTING:
-                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_CONNECTING");
+                    LogUtil.i(VoipLogic.TAG, "the status is STATUS_CONNECTING");
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTING_MSG_ID);
                     break;
                 case LoginApi.STATUS_DISCONNECTED:
-                    LogUtil.d(VoipLogic.TAG, "the status is STATUS_DISCONNECTED");
+                    LogUtil.i(VoipLogic.TAG, "the status is STATUS_DISCONNECTED reason:" + reason);
                     if (reason == LoginApi.REASON_SRV_FORCE_LOGOUT) {
                         //服务器强制注销 如：同一账号在多终端上登录
                         VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID);
@@ -100,7 +100,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         @Override
         public void onReceive(Context context, Intent intent) {
             CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
-            LogUtil.d(TAG, "INCOMING");
+            LogUtil.i(TAG, "INCOMING");
             if (callSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
                 LogUtil.w(TAG,"VIDEO_SHARE");
                 callSession.terminate();
@@ -129,7 +129,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 if (isTv()) {
                     if(callSession.isNurse())
                     {
-                        LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
+                        LogUtil.i(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
                         //远程看护是绑定APP启动UI
                         if(UserInfoCacheManager.isBindedApp(getContext(),callSession.getPeer().getNumber()) ||
                                 UserInfoCacheManager.isBindedApp(getContext(),CommonUtils.getPhoneNumber(callSession.getPeer().getNumber())))
@@ -143,11 +143,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                             callSession.terminate();
                         }
                     }else {
-                        LogUtil.d(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
+                        LogUtil.i(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
                     }
                 } else {
-                    LogUtil.d(TAG,"INTENT_INCOMING_SESSION_ID");
+                    LogUtil.i(TAG, "INTENT_INCOMING_SESSION_ID");
                     Intent inComingIntent = new Intent();
                     inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
                     inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
@@ -166,17 +166,17 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             int newStatus = intent.getIntExtra(CallApi.PARAM_NEW_STATUS, CallSession.STATUS_IDLE);
             switch (newStatus) {
                 case CallSession.STATUS_CONNECTED:
-                    LogUtil.d(TAG, "STATUS_CONNECTED");
+                    LogUtil.i(TAG, "CallSession STATUS_CONNECTED");
                     if(callSession.isNurse())
                     {
-                        LogUtil.d(TAG, "nurse");
+                        LogUtil.i(TAG, "nurse");
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID, callSession);
                     }else {
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
                     }
                     break;
                 case CallSession.STATUS_IDLE:
-                    LogUtil.d(TAG, "SIP_CAUSE:" + callSession.getSipCause());
+                    LogUtil.i(TAG, "SIP_CAUSE:" + callSession.getSipCause());
                     ThreadPoolUtil.execute(new ThreadTask() {
 
                         @Override
