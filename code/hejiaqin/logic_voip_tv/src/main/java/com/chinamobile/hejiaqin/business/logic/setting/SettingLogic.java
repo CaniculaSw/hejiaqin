@@ -236,6 +236,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     @Override
     public void testAdapt() {
         final TestAdaptReq req = new TestAdaptReq();
+        req.setVersion(UserInfoCacheManager.getSoftware(getContext()));
+        LogUtil.d(TAG, "TV software version is: " + UserInfoCacheManager.getSoftware(getContext()));
         new SettingHttpmanager(getContext()).testAdapt(null, req, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {

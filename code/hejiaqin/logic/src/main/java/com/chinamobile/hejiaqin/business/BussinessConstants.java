@@ -138,6 +138,7 @@ public class BussinessConstants {
         String BASE_URI = "content://stbconfig/summary";
         String TV_USERID_KEY = "UserID";
         String TV_TOKEN_KEY = "UserToken";
+        String TV_SOFT_WARE_KEY = "SoftwareVersion";
     }
 
     /**

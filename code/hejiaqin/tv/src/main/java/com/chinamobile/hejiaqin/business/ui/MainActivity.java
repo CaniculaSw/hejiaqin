@@ -46,13 +46,11 @@ public class MainActivity extends BasicActivity {
                 showUpdateDialog();
                 break;
             case BussinessConstants.SettingMsgID.TEST_ADAPT_PASS:
-                if (getSTBConfig()) {
                     //检查是否开户
                     TvLoginInfo tvLoginInfo = new TvLoginInfo();
                     tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
                     tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
                     loginLogic.checkTvAccount(tvLoginInfo);
-                }
                 break;
             case BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR:
                 progressBar.setVisibility(View.INVISIBLE);
@@ -136,6 +134,7 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSTBConfig();
         settingLogic.testAdapt();
     }
 
@@ -208,7 +207,7 @@ public class MainActivity extends BasicActivity {
                 }
                 return false;
             }
-            UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")));
+            UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")),cursor.getString(cursor.getColumnIndex("SoftwareVersion")));
         } else {
             progressBar.setVisibility(View.INVISIBLE);
             showUpdateDialog(getString(R.string.exception_tips));
