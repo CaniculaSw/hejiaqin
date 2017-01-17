@@ -95,7 +95,7 @@ public class UserInfoCacheManager {
             Gson gson = new Gson();
             map.put(BussinessConstants.Setting.VERSION_INFO_KEY, gson.toJson(info));
             StorageMgr.getInstance().getSharedPStorage(context).save(map);
-            LogUtil.d("UserInfoCacheManager","Version info is saved.");
+            LogUtil.d("UserInfoCacheManager", "Version info is saved.");
         }
     }
 
@@ -239,16 +239,17 @@ public class UserInfoCacheManager {
 
     public static void clearVersionInfo(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Setting.VERSION_INFO_KEY});
-        LogUtil.d("UserInfoCacheManager","Version info is remove.");
+        LogUtil.d("UserInfoCacheManager", "Version info is remove.");
     }
 
     public static void saveVoipLogined(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.VOIP_LOGINED_KEY, true);
     }
 
-    public static void saveSTBConfig(Context context, String userid, String token) {
+    public static void saveSTBConfig(Context context, String userid, String token, String softVersion) {
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_USERID_KEY, userid);
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_TOKEN_KEY, token);
+        StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_SOFT_WARE_KEY, softVersion);
     }
 
 //    public static void clearSTBConfig(Context context) {
@@ -269,5 +270,9 @@ public class UserInfoCacheManager {
 
     public static String getTvToken(Context context) {
         return StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Login.TV_TOKEN_KEY);
+    }
+
+    public static String getSoftware(Context context) {
+        return StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Login.TV_SOFT_WARE_KEY);
     }
 }

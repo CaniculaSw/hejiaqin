@@ -26,5 +26,7 @@ public interface ISettingLogic {
 
     public void saveBindRequest(TextMessage message);
 
+    public void testAdapt();
+
     public void bindSuccNotify();
 }

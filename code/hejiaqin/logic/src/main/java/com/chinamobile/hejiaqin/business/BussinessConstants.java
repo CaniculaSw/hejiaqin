@@ -138,6 +138,7 @@ public class BussinessConstants {
         String BASE_URI = "content://stbconfig/summary";
         String TV_USERID_KEY = "UserID";
         String TV_TOKEN_KEY = "UserToken";
+        String TV_SOFT_WARE_KEY = "SoftwareVersion";
     }
 
     /**
@@ -413,6 +414,9 @@ public class BussinessConstants {
         int STATUS_UNDELIVERED = BASE_MSG_ID + 22;
         int SENDING_BIND_REQUEST = BASE_MSG_ID + 23;
         int UPDATE_DEVICE_LIST_REQUEST = BASE_MSG_ID + 24;
+        int TEST_ADAPT_PASS = BASE_MSG_ID + 25;
+        int TEST_ADAPT_FAIL = BASE_MSG_ID + 26;
+        int TEST_ADAPT_ERROR = BASE_MSG_ID + 27;
     }
 
 
@@ -441,7 +445,7 @@ public class BussinessConstants {
 
         int DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID = BASE_ACTION_ID + 11;
 
-        int TV_DAIL_FRAGMENT_KEY_CODE =  BASE_ACTION_ID + 12;
+        int TV_DAIL_FRAGMENT_KEY_CODE = BASE_ACTION_ID + 12;
 
     }
 
