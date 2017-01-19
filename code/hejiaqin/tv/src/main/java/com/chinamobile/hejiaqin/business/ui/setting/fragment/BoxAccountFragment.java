@@ -93,6 +93,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         qrCode = (ImageView) view.findViewById(R.id.account_qr_code_iv);
         logout = (Button) view.findViewById(R.id.logout_btn);
         logout.setOnClickListener(this);
+        password.setText("123456");
 
     }
 
