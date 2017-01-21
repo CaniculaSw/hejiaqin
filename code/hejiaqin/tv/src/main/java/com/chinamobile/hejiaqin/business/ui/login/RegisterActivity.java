@@ -58,7 +58,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
 //                    userInfo.setSdkPassword(voipPassword);
 //                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
-                sdkuserInfo.countryCode = "+86";
+                sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
                 //TODO TEST

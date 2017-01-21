@@ -234,7 +234,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_PORT);
         com.chinamobile.hejiaqin.business.model.login.UserInfo userInfo = CommonUtils.getLocalUserInfo();
         com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
-        sdkuserInfo.countryCode="+86";
+        sdkuserInfo.countryCode="";
         sdkuserInfo.username = userInfo.getSdkAccount();
         sdkuserInfo.password = userInfo.getSdkPassword();
         LogUtil.d(TAG,"autoLogin UserInfo:"+sdkuserInfo.username);
