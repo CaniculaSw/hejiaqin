@@ -15,6 +15,7 @@ import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
@@ -43,14 +44,20 @@ public class MainActivity extends BasicActivity {
         switch (msg.what) {
             case BussinessConstants.SettingMsgID.TEST_ADAPT_FAIL:
                 progressBar.setVisibility(View.INVISIBLE);
-                showUpdateDialog();
+                RespondInfo info = (RespondInfo) msg.obj;
+                if (!StringUtil.isNullOrEmpty(info.getMsg())) {
+                    LogUtil.d(TAG,"msg is: "+ info.getMsg());
+                    showUpdateDialog(info.getMsg());
+                } else {
+                    showUpdateDialog();
+                }
                 break;
             case BussinessConstants.SettingMsgID.TEST_ADAPT_PASS:
-                    //检查是否开户
-                    TvLoginInfo tvLoginInfo = new TvLoginInfo();
-                    tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-                    tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
-                    loginLogic.checkTvAccount(tvLoginInfo);
+                //检查是否开户
+                TvLoginInfo tvLoginInfo = new TvLoginInfo();
+                tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
+                tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
+                loginLogic.checkTvAccount(tvLoginInfo);
                 break;
             case BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR:
                 progressBar.setVisibility(View.INVISIBLE);
@@ -100,7 +107,7 @@ public class MainActivity extends BasicActivity {
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
 //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
 //                accountEditTv.requestFocus();
-                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+//                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 logining = false;
                 break;
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
@@ -207,7 +214,7 @@ public class MainActivity extends BasicActivity {
                 }
                 return false;
             }
-            UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")),cursor.getString(cursor.getColumnIndex("SoftwareVersion")));
+            UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")), cursor.getString(cursor.getColumnIndex("SoftwareVersion")));
         } else {
             progressBar.setVisibility(View.INVISIBLE);
             showUpdateDialog(getString(R.string.exception_tips));

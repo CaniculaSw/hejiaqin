@@ -10,10 +10,12 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
@@ -86,7 +88,9 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 registerLayout.setFocusable(true);
                 registerLayout.requestFocus();
                 registingDialog.dismiss();
-                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+//                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+                FailResponse response = (FailResponse) msg.obj;
+                showUpdateDialog(response.getMsg());
                 logining = false;
                 break;
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
@@ -159,5 +163,15 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 autoLogin();
                 break;
         }
+    }
+
+    private void showUpdateDialog() {
+        UpdateDialog.show(this);
+//        finish();
+    }
+
+    private void showUpdateDialog(String text) {
+        UpdateDialog.show(this, text);
+//        finish();
     }
 }

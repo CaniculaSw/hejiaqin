@@ -3,6 +3,7 @@ package com.chinamobile.hejiaqin.business.net.setting;
 import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.model.more.req.GetBindListReq;
@@ -174,7 +175,15 @@ public class SettingHttpmanager extends AbsHttpManager {
                     case save_bind_request:
                         break;
                     case test_adapt:
-                        obj = data;
+                        RespondInfo info = new RespondInfo();
+                        info.setData(data);
+                        if (rootJsonObj.has("msg")) {
+                            info.setMsg(rootJsonObj.get("msg").toString());
+                        }
+                        if (rootJsonObj.has("code")) {
+                            info.setCode(rootJsonObj.get("code").toString());
+                        }
+                        obj = info;
                         break;
                     default:
                         break;
