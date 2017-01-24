@@ -15,6 +15,7 @@ import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
@@ -46,7 +47,7 @@ public class MainActivity extends BasicActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 RespondInfo info = (RespondInfo) msg.obj;
                 if (!StringUtil.isNullOrEmpty(info.getMsg())) {
-                    LogUtil.d(TAG,"msg is: "+ info.getMsg());
+                    LogUtil.d(TAG, "msg is: " + info.getMsg());
                     showUpdateDialog(info.getMsg());
                 } else {
                     showUpdateDialog();
@@ -108,6 +109,18 @@ public class MainActivity extends BasicActivity {
 //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
 //                accountEditTv.requestFocus();
 //                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+
+                if (msg.obj != null) {
+                    FailResponse response = (FailResponse) msg.obj;
+                    if (!StringUtil.isNullOrEmpty(response.getMsg())) {
+                        showUpdateDialog(response.getMsg());
+                    } else {
+                        showUpdateDialog(getString(R.string.voip_register_fail));
+                    }
+                } else {
+                    showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+                }
+
                 logining = false;
                 break;
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
