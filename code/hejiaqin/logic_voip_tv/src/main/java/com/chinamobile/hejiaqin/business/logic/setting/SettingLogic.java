@@ -8,6 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.model.more.UserList;
@@ -241,11 +242,12 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         new SettingHttpmanager(getContext()).testAdapt(null, req, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                String data = (String) obj;
+
+                RespondInfo data = (RespondInfo) obj;
                 LogUtil.d(TAG, "data is: " + data);
-                switch (data) {
+                switch (data.getData()) {
                     case "0":
-                        SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_FAIL);
+                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_FAIL, data);
                         break;
                     case "1":
                         SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.TEST_ADAPT_PASS);

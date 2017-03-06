@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.OrientationEventListener;
 import android.view.Surface;
@@ -122,6 +123,39 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private LinearLayout.LayoutParams localPreviewlayoutParams;
 
     private boolean hasRegistReceiver;
+
+    private boolean hasRegistTalkingReceiver;
+
+
+    //远程视频码率（分辨率、大小）变换
+    private BroadcastReceiver callVideoReSolutionChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            LogUtil.e(TAG, "callVideoEncodeSolutionChangeReceiver");
+            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            if (!mCallSession.equals(session)) {
+                return;
+            }
+            // 视频横竖屏切换是否会调用该广播
+            int videoWidth = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH, -1);
+            int videoHeight = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT, -1);
+            LogUtil.e(TAG, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
+            if (videoWidth > 0 && videoHeight > 0) {
+                int screenHeight = VideoCallActivity.this.getScreenHeight(VideoCallActivity.this);
+                int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
+                LogUtil.e(TAG, "width: " + width + " | screenHeight: " + screenHeight);
+                if (remoteVideoView != null) {
+                    LogUtil.e(TAG, "setLayoutParams width: " + width + " | screenHeight: " + screenHeight);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLargeVideoLayout.getLayoutParams();
+                    layoutParams.width = width;
+                    layoutParams.height = screenHeight;
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                    mLargeVideoLayout.setLayoutParams(layoutParams);
+                }
+            }
+
+        }
+    };
 
     private BroadcastReceiver localVideoChangeReceiver = new BroadcastReceiver() {
         @Override
@@ -430,7 +464,23 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             registerReceivers();
         }
         mCallSession.showVideoWindow();
+        registerTalkingReceivers();
         startCallTimeTask();
+    }
+
+    private void registerTalkingReceivers() {
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+                callVideoReSolutionChangeReceiver,
+                new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
+        hasRegistTalkingReceiver = true;
+    }
+
+    private void unRegisterTalkReceivers() {
+        if(hasRegistTalkingReceiver) {
+            LocalBroadcastManager.getInstance(getApplicationContext())
+                    .unregisterReceiver(callVideoReSolutionChangeReceiver);
+            hasRegistTalkingReceiver = false;
+        }
     }
 
     private void setCameraRotate() {
@@ -762,6 +812,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         if (hasRegistReceiver) {
             unRegisterReceivers();
         }
+        unRegisterTalkReceivers();
     }
 
     private void destroyVideoView() {
@@ -786,6 +837,22 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     public void onBackPressed()
     {
 
+    }
+
+
+    /**
+     * 获得屏幕宽度
+     *
+     * @param context
+     * @return
+     */
+    private int getScreenHeight(Context context)
+    {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
     }
 
 }
