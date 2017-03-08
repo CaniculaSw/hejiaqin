@@ -469,18 +469,18 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void registerTalkingReceivers() {
-        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-                callVideoReSolutionChangeReceiver,
-                new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
-        hasRegistTalkingReceiver = true;
+//        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+//                callVideoReSolutionChangeReceiver,
+//                new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
+//        hasRegistTalkingReceiver = true;
     }
 
     private void unRegisterTalkReceivers() {
-        if(hasRegistTalkingReceiver) {
-            LocalBroadcastManager.getInstance(getApplicationContext())
-                    .unregisterReceiver(callVideoReSolutionChangeReceiver);
-            hasRegistTalkingReceiver = false;
-        }
+//        if(hasRegistTalkingReceiver) {
+//            LocalBroadcastManager.getInstance(getApplicationContext())
+//                    .unregisterReceiver(callVideoReSolutionChangeReceiver);
+//            hasRegistTalkingReceiver = false;
+//        }
     }
 
     private void setCameraRotate() {

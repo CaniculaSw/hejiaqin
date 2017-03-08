@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -83,7 +85,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
             int videoHeight = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT, -1);
             LogUtil.e(TAG, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
             if (videoWidth > 0 && videoHeight > 0) {
-                int screenHeight = ScreenUtils.getScreenHeight(VtVideoCallActivity.this);
+                int screenHeight = getScreenHeight(VtVideoCallActivity.this);
                 int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
                 LogUtil.e(TAG, "width: " + width + " | screenHeight: " + screenHeight);
                 if (remoteVideoView != null) {
@@ -197,7 +199,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
         mHangupLayout.setOnClickListener(this);
-        largeVideoContainer = (RelativeLayout) findViewById(R.id.rl_large_video_container);
+        largeVideoContainer = (RelativeLayout) findViewById(R.id.video_layout);
     }
 
     @Override
@@ -264,6 +266,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                 callVideoReSolutionChangeReceiver,
                 new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
+        hasRegistReceiver = true;
     }
 
     private void unRegisterReceivers() {
@@ -355,6 +358,21 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
 
+    }
+
+    /**
+     * 获得屏幕宽度
+     *
+     * @param context
+     * @return
+     */
+    private int getScreenHeight(Context context)
+    {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
     }
 
 }

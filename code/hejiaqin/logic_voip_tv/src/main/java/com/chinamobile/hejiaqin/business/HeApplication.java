@@ -39,7 +39,7 @@ public class HeApplication extends RCSApplication {
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
         SysApi.loadTls(new DefaultTlsHelper());
-        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
         CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_SRTP, CallApi.CONFIG_MINOR_TYPE_SRTP_ALL, CallApi.CFG_CALL_ENABLE_SRTP);
 //        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_TPT_TYPE, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, LoginApi.VALUE_MAJOR_TYPE_TPT_TLS);
         LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "5");
