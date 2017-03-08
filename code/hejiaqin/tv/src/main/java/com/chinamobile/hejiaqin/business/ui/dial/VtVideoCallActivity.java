@@ -5,15 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     private TextView mTalkingTimeTv;
 
     private LinearLayout mHangupLayout;
+    private RelativeLayout largeVideoContainer;
 
     //是否来电
     private boolean mIsInComing;
@@ -66,6 +68,35 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     private boolean hasRegistReceiver;
 
     private boolean bCameraClose = false;
+
+    //远程视频码率（分辨率、大小）变换
+    private BroadcastReceiver callVideoReSolutionChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            LogUtil.e(TAG, "callVideoEncodeSolutionChangeReceiver");
+            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            if (!mCallSession.equals(session)) {
+                return;
+            }
+            // 视频横竖屏切换是否会调用该广播
+            int videoWidth = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH, -1);
+            int videoHeight = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT, -1);
+            LogUtil.e(TAG, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
+            if (videoWidth > 0 && videoHeight > 0) {
+                int screenHeight = ScreenUtils.getScreenHeight(VtVideoCallActivity.this);
+                int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
+                LogUtil.e(TAG, "width: " + width + " | screenHeight: " + screenHeight);
+                if (remoteVideoView != null) {
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) largeVideoContainer.getLayoutParams();
+                    layoutParams.width = width;
+                    layoutParams.height = screenHeight;
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                    largeVideoContainer.setLayoutParams(layoutParams);
+                }
+            }
+
+        }
+    };
 
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
@@ -166,6 +197,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
         mHangupLayout.setOnClickListener(this);
+        largeVideoContainer = (RelativeLayout) findViewById(R.id.rl_large_video_container);
     }
 
     @Override
@@ -229,10 +261,14 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     }
 
     private void registerReceivers() {
-
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+                callVideoReSolutionChangeReceiver,
+                new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
     }
 
     private void unRegisterReceivers() {
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .unregisterReceiver(callVideoReSolutionChangeReceiver);
     }
 
     @Override
