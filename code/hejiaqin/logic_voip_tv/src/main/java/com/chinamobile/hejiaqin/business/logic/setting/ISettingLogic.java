@@ -29,4 +29,6 @@ public interface ISettingLogic {
     public void testAdapt();
 
     public void bindSuccNotify();
+
+    public void checkMicFinished(int inputVol);
 }

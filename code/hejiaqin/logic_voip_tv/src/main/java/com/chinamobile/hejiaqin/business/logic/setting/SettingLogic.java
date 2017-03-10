@@ -378,6 +378,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     }
 
     @Override
+    public void checkMicFinished(int inputVol) {
+        sendMessage(BussinessConstants.SettingMsgID.CHECK_MIC_FINISHED, inputVol);
+    }
+
+    @Override
     public void sendContact(String toNumber, String opCode, Map<String, String> params) {
         LogUtil.i(TAG, "send contact to:" + toNumber);
         sendTextMessage(CommonUtils.getPhoneNumber(toNumber), CaaSUtil.CmdType.SEND_CONTACT, "1", opCode, null, params);

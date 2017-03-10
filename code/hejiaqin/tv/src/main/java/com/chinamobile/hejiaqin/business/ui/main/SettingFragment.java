@@ -8,12 +8,12 @@ import android.widget.LinearLayout;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.AboutFragment;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.AutoAnswerSettingFragment;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.BoxAccountFragment;
+import com.chinamobile.hejiaqin.business.ui.setting.fragment.CheckMicStatusFragment;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.CheckStatusFragment;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.DownloadAppFragment;
 import com.chinamobile.hejiaqin.tv.R;
@@ -30,6 +30,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     HeaderView settingHeader;
     LinearLayout functionSettingLL;
     LinearLayout boxAccountLL;
+    LinearLayout checkMicStatusLL;
     LinearLayout checkStatusLL;
     LinearLayout aboutLL;
     LinearLayout downloadAppLL;
@@ -63,12 +64,14 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         checkStatusLL = (LinearLayout) view.findViewById(R.id.check_status_ll);
         aboutLL = (LinearLayout) view.findViewById(R.id.about_ll);
         downloadAppLL = (LinearLayout) view.findViewById(R.id.download_app_ll);
+        checkMicStatusLL = (LinearLayout) view.findViewById(R.id.check_mic_status_ll);
 
         functionSettingLL.setOnClickListener(this);
         boxAccountLL.setOnClickListener(this);
         checkStatusLL.setOnClickListener(this);
         aboutLL.setOnClickListener(this);
         downloadAppLL.setOnClickListener(this);
+        checkMicStatusLL.setOnClickListener(this);
 
 //        FocusManager.getInstance().addFocusViewInLeftFrag("3", functionSettingLL);
     }
@@ -97,6 +100,9 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
             case R.id.box_account_ll:
                 FragmentMgr.getInstance().showSettingFragment(new BoxAccountFragment());
                 break;
+            case R.id.check_mic_status_ll:
+                FragmentMgr.getInstance().showSettingFragment(new CheckMicStatusFragment());
+                break;
             default:
                 break;
         }
@@ -117,8 +123,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         }
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return functionSettingLL;
     }
 }
