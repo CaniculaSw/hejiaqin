@@ -32,6 +32,7 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
     TextView resultTextLine2;
     LinearLayout testAgainBtn;
     LinearLayout doneBtn;
+    RecordingDialog dialog;
 
     ISettingLogic settingLogic;
 
@@ -46,6 +47,11 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
             case BussinessConstants.SettingMsgID.CHECK_MIC_FINISHED:
                 int inputVol = (int) msg.obj;
                 showResult(CallApi.getCameraCount() > 0 && inputVol > 0);
+                break;
+            case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
                 break;
         }
     }
@@ -125,7 +131,7 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
     }
 
     private void showRecordingDialog() {
-        final RecordingDialog dialog = new RecordingDialog(this.getActivity(), R.style.CalendarDialog, settingLogic);
+        dialog = new RecordingDialog(this.getActivity(), R.style.CalendarDialog, settingLogic);
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);

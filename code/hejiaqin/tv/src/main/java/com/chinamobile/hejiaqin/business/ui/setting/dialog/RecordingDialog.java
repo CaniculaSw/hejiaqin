@@ -119,6 +119,7 @@ public class RecordingDialog extends Dialog {
         isRecording = false;
     }
 
+
     private void startRecTimer(RecordingCountDownTimer timer) {
         startRecTimer(timer, 10);
     }
@@ -212,6 +213,19 @@ public class RecordingDialog extends Dialog {
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void dismiss() {
+        AudioManager audioManamger = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        boolean speakerState = audioManamger.isSpeakerphoneOn();
+        if (speakerState) {
+            audioManamger.setSpeakerphoneOn(!speakerState);
+        }
+        pause();
+        CallSessionRecording.stopMediaRec();
+        CallSessionRecording.stopMediaPlay();
+        super.dismiss();
     }
 
     @Override

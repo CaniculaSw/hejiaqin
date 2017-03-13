@@ -187,7 +187,7 @@
     <string name="download_app_hint">与电视配合使用，您可以享受更多精彩服务</string>
     <string name="release_date">2016年2月25号</string>
     <string name="connect_normal">机顶盒与摄像头设备连接正常</string>
-    <string name="connect_abnormal">机顶盒与摄像头设备连接异常</string>
+    <string name="connect_abnormal">请检查摄像头连接是否正常</string>
     <string name="check_connect">请检查设备连接</string>
     <string name="box_password">密码</string>
     <string name="binded_account">绑定设备</string>

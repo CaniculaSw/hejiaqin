@@ -95,6 +95,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
                 FragmentMgr.getInstance().showSettingFragment(new AboutFragment());
                 break;
             case R.id.check_status_ll:
+//                Intent intent = new Intent(getActivity(), CheckCameraStatusActivity.class);
+//                this.startActivity(intent);
                 FragmentMgr.getInstance().showSettingFragment(new CheckStatusFragment());
                 break;
             case R.id.box_account_ll:
