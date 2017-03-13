@@ -50,7 +50,7 @@
             android:background="@drawable/selector_setting_bg"
             android:focusable="true"
             android:gravity="center"
-            android:nextFocusDown="@+id/check_status_ll"
+            android:nextFocusDown="@+id/check_mic_status_ll"
             android:nextFocusForward="@+id/box_account_ll"
             android:nextFocusRight="@+id/box_account_ll"
             android:nextFocusUp="@+id/function_setting_ll">
@@ -68,6 +68,30 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/check_mic_status_ll"
+            android:layout_width="496dp"
+            android:layout_height="80dp"
+            android:background="@drawable/selector_setting_bg"
+            android:focusable="true"
+            android:gravity="center"
+            android:nextFocusDown="@+id/check_status_ll"
+            android:nextFocusForward="@+id/check_mic_status_ll"
+            android:nextFocusRight="@+id/check_mic_status_ll"
+            android:nextFocusUp="@+id/box_account_ll">
+
+            <TextView
+                android:layout_width="481dp"
+                android:layout_height="65dp"
+                android:background="@drawable/btn_bg_normal"
+                android:drawableLeft="@drawable/mic"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="@string/check_mic_status"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/check_status_ll"
@@ -79,7 +103,7 @@
             android:nextFocusDown="@+id/about_ll"
             android:nextFocusForward="@+id/check_status_ll"
             android:nextFocusRight="@+id/check_status_ll"
-            android:nextFocusUp="@+id/box_account_ll">
+            android:nextFocusUp="@+id/check_mic_status_ll">
 
             <TextView
                 android:layout_width="481dp"
@@ -89,7 +113,7 @@
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="@string/check_status"
+                android:text="@string/check_video_status"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>

@@ -242,6 +242,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         new SettingHttpmanager(getContext()).testAdapt(null, req, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+
                 RespondInfo data = (RespondInfo) obj;
                 LogUtil.d(TAG, "data is: " + data);
                 switch (data.getData()) {
@@ -374,6 +375,11 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     @Override
     public void bindSuccNotify() {
         sendEmptyMessage(BussinessConstants.SettingMsgID.UPDATE_DEVICE_LIST_REQUEST);
+    }
+
+    @Override
+    public void checkMicFinished(int inputVol) {
+        sendMessage(BussinessConstants.SettingMsgID.CHECK_MIC_FINISHED, inputVol);
     }
 
     @Override

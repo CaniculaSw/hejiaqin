@@ -20,7 +20,7 @@ import com.littlec.sdk.manager.CMIMHelper;
  */
 public class HeApplication extends RCSApplication {
 
-    private static final String TAG ="HeApplication";
+    private static final String TAG = "HeApplication";
 
     @Override
     public void onCreate() {
@@ -28,14 +28,14 @@ public class HeApplication extends RCSApplication {
         UpgradeApi.init(getApplicationContext());
         HmeAudioTV.setup(this);
         String deviceName = getDevice();
-        LogUtil.d(TAG,"Const.deviceType:" +Const.deviceType);
-        LogUtil.d(TAG,"Const.deviceName:" + deviceName);
-        if(Const.deviceType == Const.TYPE_OTHER)
-        {
+        LogUtil.d(TAG, "Const.deviceType:" + Const.deviceType);
+        LogUtil.d(TAG, "Const.deviceName:" + deviceName);
+        if (Const.deviceType == Const.TYPE_OTHER) {
             HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_VT);
-        }else {
+        } else {
             HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_STB);
         }
+        HmeAudioTV.setup(this);
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
         SysApi.loadTls(new DefaultTlsHelper());
@@ -45,7 +45,7 @@ public class HeApplication extends RCSApplication {
         LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "5");
         LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_USE_IPV6, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
 
-        DmVersionInfo  versionInfo = new DmVersionInfo("V1.0.0.96", SysApi.VALUE_MAJOR_TYPE_PLATFORM_STB,
+        DmVersionInfo versionInfo = new DmVersionInfo("V1.0.0.96", SysApi.VALUE_MAJOR_TYPE_PLATFORM_STB,
                 SysApi.VALUE_MAJOR_TYPE_OS_ANDROID, SysApi.VALUE_MAJOR_TYPE_APP_RCS, "00");
         SysApi.setDMVersion(versionInfo);
         CallApi.setConfig(CallApi.CONFIG_MAJOR_DEVICE_NAME, CallApi.CONFIG_MINOR_TYPE_DEFAULT, deviceName);
@@ -64,8 +64,7 @@ public class HeApplication extends RCSApplication {
 
     }
 
-    public String getDevice()
-    {
+    public String getDevice() {
         String sDevice = android.os.Build.DEVICE;
         String sModel = android.os.Build.MODEL;
         LogUtil.w(TAG, "device=" + sDevice + "--Model=" + sModel);
@@ -90,15 +89,11 @@ public class HeApplication extends RCSApplication {
         //非系统签名版本注销掉这段代码
 
         String deviceName = null;
-        if (Const.TYPE_3798M == Const.deviceType)
-        {
+        if (Const.TYPE_3798M == Const.deviceType) {
             deviceName = CallApi.DEVICE_NAME_3798M;
-        }
-        else if (Const.TYPE_3719C == Const.deviceType || Const.TYPE_3719M == Const.deviceType)
-        {
+        } else if (Const.TYPE_3719C == Const.deviceType || Const.TYPE_3719M == Const.deviceType) {
             deviceName = CallApi.DEVICE_NAME_3719C;
-        }
-        else{
+        } else {
             deviceName = CallApi.DEVICE_NAME_TINYALSA;
         }
         return deviceName;

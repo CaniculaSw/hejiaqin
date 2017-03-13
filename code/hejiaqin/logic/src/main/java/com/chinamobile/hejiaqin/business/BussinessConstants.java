@@ -417,6 +417,7 @@ public class BussinessConstants {
         int TEST_ADAPT_PASS = BASE_MSG_ID + 25;
         int TEST_ADAPT_FAIL = BASE_MSG_ID + 26;
         int TEST_ADAPT_ERROR = BASE_MSG_ID + 27;
+        int CHECK_MIC_FINISHED = BASE_MSG_ID + 28;
     }
 
 

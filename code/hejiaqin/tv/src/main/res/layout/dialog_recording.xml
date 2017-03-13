@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="421dp"
+    android:layout_height="400dp"
+    android:background="@drawable/recording_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/speak_to_mic_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="@string/speak_to_mic"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tips_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="@string/recording"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/wave_bg">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/scan_line" />
+    </FrameLayout>
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/control_btn_ll"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:background="@drawable/recording_btn_bg"-->
+    <!--android:clickable="true"-->
+    <!--android:gravity="center"-->
+    <!--android:nextFocusDown="@+id/control_btn_ll"-->
+    <!--android:nextFocusForward="@+id/control_btn_ll"-->
+    <!--android:nextFocusLeft="@+id/control_btn_ll"-->
+    <!--android:nextFocusRight="@+id/control_btn_ll"-->
+    <!--android:nextFocusUp="@+id/control_btn_ll"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<requestFocus />-->
+
+    <TextView
+        android:id="@+id/control_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/recording_btn_bg"
+        android:gravity="center"
+        android:text="@string/stop_recording"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+    <!--</LinearLayout>-->
+
+</LinearLayout>
