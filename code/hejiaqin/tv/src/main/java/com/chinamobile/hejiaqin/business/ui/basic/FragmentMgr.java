@@ -50,6 +50,17 @@ public class FragmentMgr {
     public void init(FragmentActivity activity, int leftContainerResId) {
         mFragmentManager = activity.getSupportFragmentManager();
         this.leftContainerResId = leftContainerResId;
+        curLeftShowFragment = null;
+        fragmentStackMap = new HashMap();
+        focusedViewBackStack = new HashMap();
+        fragmentStackMap.put(0, new Stack<BaseFragment>());
+        fragmentStackMap.put(1, new Stack<BaseFragment>());
+        fragmentStackMap.put(2, new Stack<BaseFragment>());
+        fragmentStackMap.put(3, new Stack<BaseFragment>());
+        focusedViewBackStack.put(0, new Stack<View>());
+        focusedViewBackStack.put(1, new Stack<View>());
+        focusedViewBackStack.put(2, new Stack<View>());
+        focusedViewBackStack.put(3, new Stack<View>());
     }
 
     public void showRecentFragment(BaseFragment fragment) {
