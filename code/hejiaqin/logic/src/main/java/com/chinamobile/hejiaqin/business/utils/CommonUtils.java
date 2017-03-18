@@ -182,7 +182,7 @@ public class CommonUtils {
 
 
         String newPhoneNumber = getPhoneNumber(phoneNumber);
-        if(StringUtil.isMobileNO(newPhoneNumber)){
+        if (StringUtil.isMobileNO(newPhoneNumber)) {
             return true;
         }
         return false;
@@ -200,5 +200,25 @@ public class CommonUtils {
         }
 
         return false;
+    }
+
+    public static String formatTvNum(String tvNum) {
+        if (StringUtil.isNullOrEmpty(tvNum)) {
+            return "";
+        }
+        if (!tvNum.startsWith("0")) {
+            tvNum = "0" + tvNum;
+        }
+        return tvNum;
+    }
+
+    public static String getTvNum(String tvNum) {
+        if (StringUtil.isNullOrEmpty(tvNum)) {
+            return "";
+        }
+        if (tvNum.startsWith("0")) {
+            tvNum = tvNum.substring(1);
+        }
+        return tvNum;
     }
 }

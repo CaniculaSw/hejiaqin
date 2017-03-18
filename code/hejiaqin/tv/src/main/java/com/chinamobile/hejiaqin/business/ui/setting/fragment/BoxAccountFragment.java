@@ -18,6 +18,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.qrCode.QRCodeEncoder;
 import com.customer.framework.component.qrCode.core.DisplayUtils;
@@ -121,7 +122,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     protected void initData() {
         UserInfo userInfo = (UserInfo) UserInfoCacheManager.getUserInfo(getContext());
         if (userInfo != null) {
-            boxAccount.setText(userInfo.getTvAccount());
+            boxAccount.setText(CommonUtils.formatTvNum(userInfo.getTvAccount()));
             String tvAccount = userInfo.getSdkAccount();
             //TODO:使用临时代码
 //            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {

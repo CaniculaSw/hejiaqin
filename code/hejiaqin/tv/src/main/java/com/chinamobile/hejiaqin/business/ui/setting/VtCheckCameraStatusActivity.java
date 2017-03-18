@@ -18,7 +18,7 @@ import com.chinamobile.hejiaqin.tv.R;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.log.LogApi;
 
-public class CheckCameraStatusActivity extends BasicActivity {
+public class VtCheckCameraStatusActivity extends BasicActivity {
 
     private RelativeLayout abLayout;
     private int[] mMetrics = new int[2];
@@ -39,7 +39,7 @@ public class CheckCameraStatusActivity extends BasicActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_check_status;
+        return R.layout.activity_check_status_vt;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class CheckCameraStatusActivity extends BasicActivity {
 //        mLargeVideoLayout.addView(videoSurfaceView, getLocalPreviewViewMetrics(3, 4));
 //        videoSurfaceView.setVisibility(View.VISIBLE);
 //        mSession.prepareVideo();
-//        getDisplayMetrics(CheckCameraStatusActivity.this);
+//        getDisplayMetrics(VtCheckCameraStatusActivity.this);
 //
 //        CaaSSdkService.setLocalRenderPos(getFullScreenRect(), CallApi.VIDEO_LAYER_TOP);
 //        boolean falg = CaaSSdkService.openLocalView();
