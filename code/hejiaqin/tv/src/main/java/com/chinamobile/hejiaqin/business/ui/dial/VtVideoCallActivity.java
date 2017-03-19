@@ -298,6 +298,14 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
+            case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
+                if(!closed)
+                {
+                    mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
+                    closed = true;
+                }
+                finish();
+                break;
             case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
                 if (msg.obj != null) {
                     CallSession session = (CallSession) msg.obj;
@@ -329,7 +337,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     public void onResume() {
         super.onResume();
         LogUtil.d(TAG, "onResume");
-        IntentFilter intent=new IntentFilter();
+        IntentFilter intent = new IntentFilter();
         intent.addAction(Const.ACTION_USB_CAMERA_PLUG_IN_OUT);
         registerReceiver(mCameraPlugReciver, intent);
     }

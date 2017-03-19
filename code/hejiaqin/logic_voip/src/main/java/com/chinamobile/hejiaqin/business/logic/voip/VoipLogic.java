@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import android.os.Handler;
 
 /**
  * Created by  on 2016/6/5.
@@ -55,6 +57,22 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private CallRecordDbAdapter mCallRecordDbAdapter;
 
     private boolean isTv;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BussinessConstants.DialMsgID.CALL_INCOMING_MSG_ID:
+                Intent inComingIntent = new Intent();
+                inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
+                inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
+                inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, (long)msg.obj);
+                inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(inComingIntent);
+                return;
+            }
+        }
+    };
 
     private BroadcastReceiver mLoginStatusChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -147,13 +165,12 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
                     }
                 } else {
-                    LogUtil.d(TAG,"INTENT_INCOMING_SESSION_ID");
-                    Intent inComingIntent = new Intent();
-                    inComingIntent.setAction(BussinessConstants.Dial.CALL_ACTION);
-                    inComingIntent.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
-                    inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, callSession.getSessionId());
-                    inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(inComingIntent);
+                    LogUtil.d(TAG, "INTENT_INCOMING_SESSION_ID");
+                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID, callSession.getSessionId());
+                    Message message =  mHandler.obtainMessage();
+                    message.what = BussinessConstants.DialMsgID.CALL_INCOMING_MSG_ID;
+                    message.obj = callSession.getSessionId();
+                    mHandler.sendMessageDelayed(message, 100);
                 }
             }
         }

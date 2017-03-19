@@ -733,6 +733,14 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
+            case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
+                if(!closed)
+                {
+                    mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
+                    closed = true;
+                }
+                finish();
+                break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
                 showTalking();
                 break;
