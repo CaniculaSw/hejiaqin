@@ -143,8 +143,24 @@ public class CommonUtils {
         return (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
     }
 
-    public static String getCountryPhoneNumber(String number) {
+    public static String getTvNumber(String number) {
         String outNumber = number;
+        if (number.startsWith("028")) {
+            outNumber = number .substring(1);
+        }
+        return outNumber;
+    }
+
+    public static String getTvNumberWithZero(String number) {
+        String outNumber = number;
+        if (number.startsWith("28")) {
+            outNumber = "0" + number;
+        }
+        return outNumber;
+    }
+
+    public static String getCountryPhoneNumber(String number) {
+        String outNumber;
         if (number.startsWith("0086")) {
             outNumber = number;
         } else if (number.startsWith("+86")) {
@@ -195,7 +211,8 @@ public class CommonUtils {
             return false;
         }
 
-        if (settingInfo.isInAutoAnswerList(getPhoneNumber(incomingNum))) {
+        if (settingInfo.isInAutoAnswerList(getPhoneNumber(incomingNum)) ||
+                settingInfo.isInAutoAnswerList(CommonUtils.getTvNumberWithZero(getPhoneNumber(incomingNum)))) {
             return true;
         }
 

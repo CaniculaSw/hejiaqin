@@ -267,7 +267,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showIncoming() {
-        String incomingNumber = CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber());
+        String incomingNumber = CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber()));
         // 查询姓名和头像信息
         ContactsInfo info = searchContactInfo(incomingNumber);
         if (info != null) {

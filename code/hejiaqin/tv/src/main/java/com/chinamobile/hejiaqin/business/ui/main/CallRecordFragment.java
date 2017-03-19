@@ -116,7 +116,7 @@ public class CallRecordFragment extends BasicFragment {
         mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic, new CallRecordAdapter.onClickListen() {
             public void onClick(CallRecord info) {
                 deleteLayout.requestFocus();
-                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic,true);
+                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic,false);
             }
 
             @Override

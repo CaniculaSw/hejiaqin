@@ -117,8 +117,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     CallRecord callRecord = new CallRecord();
                     String recordId = UUID.randomUUID().toString();
                     callRecord.setRecordId(recordId);
-                    callRecord.setPeerNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
-                    callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()));
+                    callRecord.setPeerNumber(CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber())));
+                    callRecord.setNoCountryNumber(CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber())));
                     callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
                     callRecord.setDuration(callSession.getDuration());
                     callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
@@ -312,9 +312,9 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             }
         }
         if (isVideoCall) {
-            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(tmpNumber));
+            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(CommonUtils.getTvNumber(CommonUtils.getPhoneNumber(tmpNumber))));
         } else {
-            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(tmpNumber));
+            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(CommonUtils.getTvNumber(CommonUtils.getPhoneNumber(tmpNumber))));
         }
 
         // 保存通话记录
