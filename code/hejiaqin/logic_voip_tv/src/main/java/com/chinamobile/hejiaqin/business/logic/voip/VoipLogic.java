@@ -322,8 +322,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         CallRecord callRecord = new CallRecord();
         String recordId = UUID.randomUUID().toString();
         callRecord.setRecordId(recordId);
-        callRecord.setPeerNumber(calleeNumber);
-        callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(calleeNumber));
+        callRecord.setPeerNumber(tmpNumber);
+        callRecord.setNoCountryNumber(CommonUtils.getPhoneNumber(tmpNumber));
         callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
         callRecord.setDuration(callSession.getDuration());
         callRecord.setType(CallRecord.TYPE_VIDEO_OUTGOING);
