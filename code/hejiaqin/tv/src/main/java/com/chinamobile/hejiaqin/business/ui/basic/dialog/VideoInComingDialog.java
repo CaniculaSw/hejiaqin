@@ -195,6 +195,14 @@ public class VideoInComingDialog extends Dialog {
 
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
+            case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
+                if(!closed)
+                {
+                    mVoipLogic.dealOnClosed(mCallSession, true, false, 0);
+                    closed = true;
+                }
+                dismiss();
+                break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
                 if(Const.deviceType == Const.TYPE_OTHER) {
                     LogUtil.d(TAG,"VtVideoCallActivity incoming");
