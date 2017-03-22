@@ -145,7 +145,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     }else {
                         LogUtil.i(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
                         VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID, callSession.getSessionId());
-                        VoipLogic.this.sendMessageDelayed(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId(),200);
+                        VoipLogic.this.sendMessageDelayed(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId(),300);
                     }
                 } else {
                     LogUtil.i(TAG, "INTENT_INCOMING_SESSION_ID");

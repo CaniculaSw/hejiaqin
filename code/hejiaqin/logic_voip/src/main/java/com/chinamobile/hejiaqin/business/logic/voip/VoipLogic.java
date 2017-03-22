@@ -170,7 +170,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     Message message =  mHandler.obtainMessage();
                     message.what = BussinessConstants.DialMsgID.CALL_INCOMING_MSG_ID;
                     message.obj = callSession.getSessionId();
-                    mHandler.sendMessageDelayed(message, 200);
+                    mHandler.sendMessageDelayed(message, 300);
                 }
             }
         }
