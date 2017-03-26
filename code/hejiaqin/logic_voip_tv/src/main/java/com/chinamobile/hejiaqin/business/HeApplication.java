@@ -5,6 +5,7 @@ import com.chinamobile.hejiaqin.business.logic.voip.VoipLogic;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.RCSApplication;
 import com.huawei.rcs.call.CallApi;
+import com.huawei.rcs.call_recording.CallSessionRecording;
 import com.huawei.rcs.hme.HmeAudioTV;
 import com.huawei.rcs.hme.HmeVideo;
 import com.huawei.rcs.login.LoginApi;
@@ -58,7 +59,7 @@ public class HeApplication extends RCSApplication {
         MessagingApi.setConfig(
                 MessagingApi.CONFIG_MAJOR_USE_SYS_SMS,
                 MessagingApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
-
+        CallSessionRecording.setRecMode(true);
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
         SettingLogic.getInstance(getApplicationContext()).registerMessageReceiver();
 
