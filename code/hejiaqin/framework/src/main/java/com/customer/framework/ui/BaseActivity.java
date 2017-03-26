@@ -28,7 +28,7 @@ import java.util.Set;
 
 public abstract class BaseActivity extends Activity {
 
-    private static final String TAG = "BaseActivity";
+    protected String TAG = this.getClass().getSimpleName();
     /**
      * 缓存持有的logic对象的集合
      */

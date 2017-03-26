@@ -46,8 +46,6 @@ import com.huawei.rcs.message.TextMessage;
  */
 public abstract class BasicActivity extends BaseActivity {
 
-    public static final String TAG = BasicActivity.class.getSimpleName();
-
     private MyToast myToast;
 
     private Dialog waitDialog;

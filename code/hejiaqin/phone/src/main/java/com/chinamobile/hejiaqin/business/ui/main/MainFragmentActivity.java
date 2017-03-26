@@ -30,7 +30,6 @@ import com.customer.framework.utils.LogUtil;
  * Created: 2016/4/22.
  */
 public class MainFragmentActivity extends BasicFragmentActivity {
-    private static final String TAG = "MainFragmentActivity";
     private static final int DIAL_STATUS_NORMAL = 1;
 
     private static final int DIAL_STATUS_SHOW_KEYBORD = 2;

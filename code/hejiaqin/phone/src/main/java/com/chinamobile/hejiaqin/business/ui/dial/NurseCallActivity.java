@@ -38,8 +38,6 @@ import java.util.TimerTask;
 
 public class NurseCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = NurseCallActivity.class.getSimpleName();
-
     //视频布局(呼出和通话中)
     private RelativeLayout mVideoLayout;
     private LinearLayout mLargeVideoLayout;

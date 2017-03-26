@@ -35,7 +35,6 @@ public class MainActivity extends BasicActivity {
     private ILoginLogic loginLogic;
     private IVoipLogic mVoipLogic;
     private ISettingLogic settingLogic;
-    private static final String TAG = "MainActivity";
     private boolean logining;
     private ProgressBar progressBar;
 

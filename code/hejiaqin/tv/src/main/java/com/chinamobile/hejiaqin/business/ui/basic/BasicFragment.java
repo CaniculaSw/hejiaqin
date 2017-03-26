@@ -29,8 +29,6 @@ import com.customer.framework.ui.BaseFragment;
  */
 public abstract class BasicFragment extends BaseFragment {
 
-    protected String TAG = this.getClass().getSimpleName();
-
     protected BackListener mListener;
 
     protected boolean isCreateView = false;

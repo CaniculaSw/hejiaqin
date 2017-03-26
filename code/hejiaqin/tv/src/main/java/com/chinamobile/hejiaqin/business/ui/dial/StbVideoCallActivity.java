@@ -34,8 +34,6 @@ import java.util.TimerTask;
 
 public class StbVideoCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = StbVideoCallActivity.class.getSimpleName();
-
     private TextView mTalkingTimeTv;
 
     private LinearLayout mHangupLayout;

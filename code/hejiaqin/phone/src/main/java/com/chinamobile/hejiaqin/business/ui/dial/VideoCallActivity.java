@@ -47,8 +47,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VideoCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = VideoCallActivity.class.getSimpleName();
-
     //视频布局(呼出和通话中)
     private RelativeLayout mVideoLayout;
     private LinearLayout mLargeVideoLayout;

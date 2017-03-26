@@ -42,7 +42,7 @@ import java.util.List;
  * Created: 2016/4/8.
  */
 public abstract class BasicActivity extends BaseActivity {
-    private static final String TAG = "BasicActivity";
+
     private MyToast myToast;
 
     private Dialog waitDialog;
@@ -94,6 +94,7 @@ public abstract class BasicActivity extends BaseActivity {
     @Override
     protected void initSystem(Context context) {
         //根据build.gradle设置日志级别
+        LogUtil.d(TAG,"start app");
         LogUtil.setContext(getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");

@@ -29,8 +29,6 @@ import java.util.TimerTask;
 
 public class StbNurseCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = StbNurseCallActivity.class.getSimpleName();
-
     private TextView mTalkingTimeTv;
 
     private LinearLayout mHangupLayout;

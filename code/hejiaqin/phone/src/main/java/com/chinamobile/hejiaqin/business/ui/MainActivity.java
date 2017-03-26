@@ -18,7 +18,6 @@ public class MainActivity extends BasicActivity {
     private ILoginLogic loginLogic;
     private ISettingLogic settingLogic;
     private IVoipLogic mVoipLogic;
-    private static final String TAG = "MainActivity";
     private Handler mHandler = new Handler();
 
     @Override

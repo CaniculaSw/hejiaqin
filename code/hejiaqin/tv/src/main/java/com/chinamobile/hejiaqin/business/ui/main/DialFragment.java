@@ -28,9 +28,6 @@ import com.chinamobile.hejiaqin.tv.R;
  */
 public class DialFragment extends BasicFragment implements View.OnClickListener{
 
-    private static final String TAG = "DialFragment";
-
-
     HeaderView headerView;
 
 

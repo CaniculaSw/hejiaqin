@@ -43,7 +43,6 @@ import java.util.List;
  */
 public abstract class BasicFragmentActivity extends BaseFragmentActivity {
 
-    private static final String TAG = "BasicFragmentActivity";
     private MyToast myToast;
 
     private Dialog waitDialog;

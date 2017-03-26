@@ -22,9 +22,9 @@ public class PhoneApplication extends HeApplication implements
         super.onCreate();
         startService(new Intent(this,HeService.class));
         //设置Thread Exception Handler
-        if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
+//        if(BuildConfig.LOG_LEVEL>= LogUtil.WARN) {
             Thread.setDefaultUncaughtExceptionHandler(this);
-        }
+//        }
 
         /**
          * 初始化小溪推送SDK

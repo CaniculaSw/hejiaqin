@@ -30,8 +30,6 @@ import java.util.TimerTask;
 
 public class VtNurseCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = VtNurseCallActivity.class.getSimpleName();
-
     private TextView mTalkingTimeTv;
 
     private LinearLayout mHangupLayout;

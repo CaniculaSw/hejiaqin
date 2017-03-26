@@ -36,8 +36,6 @@ import java.util.TimerTask;
 
 public class VtVideoCallActivity extends BasicActivity implements View.OnClickListener {
 
-    public static final String TAG = VtVideoCallActivity.class.getSimpleName();
-
     private TextView mTalkingTimeTv;
 
     private LinearLayout mHangupLayout;
@@ -83,11 +81,11 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
             // 视频横竖屏切换是否会调用该广播
             int videoWidth = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH, -1);
             int videoHeight = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT, -1);
-            LogUtil.e(TAG, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
+            LogUtil.d(TAG, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
             if (videoWidth > 0 && videoHeight > 0) {
                 int screenHeight = getScreenHeight(VtVideoCallActivity.this);
                 int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
-                LogUtil.e(TAG, "width: " + width + " | screenHeight: " + screenHeight);
+                LogUtil.d(TAG, "width: " + width + " | screenHeight: " + screenHeight);
                 if (remoteVideoView != null) {
                     RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) largeVideoContainer.getLayoutParams();
                     layoutParams.width = width;
