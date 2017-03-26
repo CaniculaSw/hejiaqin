@@ -100,7 +100,7 @@ public class MainActivity extends BasicActivity {
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 logining = true;
                 Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
-                intent.putExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, true);
+                mVoipLogic.setNotNeedVoipLogin();
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;

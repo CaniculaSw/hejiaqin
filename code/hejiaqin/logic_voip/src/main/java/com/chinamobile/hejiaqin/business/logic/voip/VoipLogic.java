@@ -58,6 +58,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     private boolean isTv;
 
+    private boolean isNeedVoipLogin = true;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -467,5 +469,14 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     public void setIsTv(boolean isTv) {
         this.isTv = isTv;
+    }
+
+    public void setNotNeedVoipLogin(){
+        this.isNeedVoipLogin = false;
+    }
+
+    public boolean isNeedVoipLogin()
+    {
+        return this.isNeedVoipLogin;
     }
 }

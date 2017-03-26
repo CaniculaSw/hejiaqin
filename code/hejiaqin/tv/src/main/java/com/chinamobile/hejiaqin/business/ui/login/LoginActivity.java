@@ -287,7 +287,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
-                intent.putExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, true);
+                voipLogic.setNotNeedVoipLogin();
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;

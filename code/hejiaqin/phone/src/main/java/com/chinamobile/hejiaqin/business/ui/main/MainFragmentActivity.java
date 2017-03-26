@@ -177,11 +177,18 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     @Override
     protected void initDate() {
-        if (!getIntent().getBooleanExtra(BussinessConstants.Login.INTENT_FROM_LONGIN, false)) {
+        settingLogic.getDeviceList();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (mVoipLogic.isNeedVoipLogin()) {
             LogUtil.d(TAG, "autoLogin");
+            mVoipLogic.setNotNeedVoipLogin();
             mVoipLogic.autoLogin();
         }
-        settingLogic.getDeviceList();
     }
 
     @Override

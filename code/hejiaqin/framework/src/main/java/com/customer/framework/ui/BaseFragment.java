@@ -11,6 +11,7 @@ import android.util.Log;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.logic.ILBuilder;
 import com.customer.framework.logic.ILogic;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,6 +62,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        LogUtil.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         if (!isInit()) {
             setLogicBuilder(createLogicBuilder(this.getContext().getApplicationContext()));
@@ -75,7 +77,6 @@ public abstract class BaseFragment extends Fragment {
             Log.e(TAG, "Init logics failed :" + e.getMessage(), e);
         }
     }
-
 
     //是否将handler添加到所有的logic中
     protected boolean isHandlerToAllLogic() {

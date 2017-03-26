@@ -41,4 +41,8 @@ public interface IVoipLogic {
     public boolean isTv();
 
     public void setIsTv(boolean isTv);
+
+    public void setNotNeedVoipLogin();
+
+    public boolean isNeedVoipLogin();
 }

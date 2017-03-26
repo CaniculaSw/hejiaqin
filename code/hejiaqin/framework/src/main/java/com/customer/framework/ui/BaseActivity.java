@@ -21,6 +21,7 @@ import android.util.Log;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.logic.ILBuilder;
 import com.customer.framework.logic.ILogic;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +64,7 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtil.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         if (!isInit()) {
             setLogicBuilder(createLogicBuilder(this.getApplicationContext()));
@@ -74,8 +76,14 @@ public abstract class BaseActivity extends Activity {
         try {
             initLogics();
         } catch (Exception e) {
-            Log.e(TAG, "Init logics failed :" + e.getMessage(), e);
+            LogUtil.e(TAG, "Init logics failed :" + e.getMessage(), e);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        LogUtil.d(TAG, "onResume");
+        super.onResume();
     }
 
     //是否将handler添加到所有的logic中

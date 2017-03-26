@@ -21,6 +21,7 @@ import android.util.Log;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.logic.ILBuilder;
 import com.customer.framework.logic.ILogic;
+import com.customer.framework.utils.LogUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -52,6 +53,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
 
     protected void onCreate(Bundle savedInstanceState)
     {
+        LogUtil.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         if (!isInit())
         {
@@ -69,6 +71,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         {
             Log.e(TAG, "Init logics failed :" + e.getMessage(), e);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        LogUtil.d(TAG, "onResume");
+        super.onResume();
     }
 
     @Override

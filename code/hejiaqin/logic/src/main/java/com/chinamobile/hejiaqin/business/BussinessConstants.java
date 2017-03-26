@@ -131,8 +131,6 @@ public class BussinessConstants {
 
         String INTENT_LOGIN_ID = "registerLoginId";
 
-        String INTENT_FROM_LONGIN = "fromLogin";
-
         String VOIP_LOGINED_KEY = "voipLogined";
 
         String BASE_URI = "content://stbconfig/summary";
