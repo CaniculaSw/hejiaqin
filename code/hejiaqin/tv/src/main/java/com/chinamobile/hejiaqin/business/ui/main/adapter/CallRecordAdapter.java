@@ -143,7 +143,8 @@ public class CallRecordAdapter extends BaseAdapter {
                     }
                     if (contactsInfo.getNumberLst() != null) {
                         for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                            if (info.getNoCountryNumber().equals(numberInfo.getNumberNoCountryCode())) {
+                            if (info.getNoCountryNumber().equals(numberInfo.getNumberNoCountryCode()) ||
+                                    (info.getNoCountryNumber()).equals("92"+ numberInfo.getNumberNoCountryCode())) {
                                 info.setPeerName(contactsInfo.getName());
                                 info.setContactsInfo(contactsInfo);
                                 isMatch = true;

@@ -437,12 +437,14 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 }
 
                 final int numberSize = numberInfoList.size();
-                String[] numbers = new String[numberSize];
+                List<String> numberList = new ArrayList<String>();
                 for (int i = 0; i < numberSize; i++) {
                     String number = numberInfoList.get(i).getNumber();
-                    numbers[i] = CommonUtils.getPhoneNumber(number);
+                    numberList.add(CommonUtils.getPhoneNumber(number));
+                    numberList.add("92"+CommonUtils.getPhoneNumber(number));
                 }
-
+                String[] numbers = new String[numberList.size()];
+                numbers = numberList.toArray(numbers);
                 callRecordList = CallRecordDbAdapter.getInstance(getContext(),
                         UserInfoCacheManager.getUserId(getContext())).queryWithNumbers(numbers);
 
@@ -470,11 +472,14 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 }
 
                 final int numberSize = numberInfoList.size();
-                String[] numbers = new String[numberSize];
+                List<String> numberList = new ArrayList<String>();
                 for (int i = 0; i < numberSize; i++) {
                     String number = numberInfoList.get(i).getNumber();
-                    numbers[i] = CommonUtils.getPhoneNumber(number);
+                    numberList.add(CommonUtils.getPhoneNumber(number));
+                    numberList.add("92"+CommonUtils.getPhoneNumber(number));
                 }
+                String[] numbers = new String[numberList.size()];
+                numbers = numberList.toArray(numbers);
 
                 CallRecordDbAdapter.getInstance(getContext(),
                         UserInfoCacheManager.getUserId(getContext())).deleteByNumbers(numbers);

@@ -136,7 +136,8 @@ public class VideoOutDialog extends Dialog {
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())
+                            ||  CommonUtils.getPhoneNumber(phoneNumber).equals("92" + numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -149,7 +150,8 @@ public class VideoOutDialog extends Dialog {
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())
+                            ||  CommonUtils.getPhoneNumber(phoneNumber).equals("92" + numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
