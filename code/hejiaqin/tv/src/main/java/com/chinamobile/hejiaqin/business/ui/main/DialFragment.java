@@ -220,6 +220,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
            case R.id.dial_video_layout:
                if(inputNumber.length()>0) {
                    VideoOutDialog.show(getActivity(),inputNumber.getText().toString(),mVoipLogic,mContactsLogic,false);
+                   inputNumber.setText("");
                }
                break;
        }

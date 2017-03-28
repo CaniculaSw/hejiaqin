@@ -109,6 +109,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 //                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText().toString());
 //                    getContext().startActivity(outingIntent);
                     DialHelper.getInstance().call(getContext(), inputNumber.getText().toString(), null);
+                    inputNumber.setText("");
                 }
                 break;
         }
