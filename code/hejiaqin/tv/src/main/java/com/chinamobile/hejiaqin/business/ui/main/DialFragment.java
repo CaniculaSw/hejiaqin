@@ -213,7 +213,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
            case R.id.dial_save_contact_arrow_layout:
                // 保存联系人
                if(inputNumber.length()>0) {
-                   ContactEditFragment fragment = ContactEditFragment.newInstance(inputNumber.getText().toString());
+                   ContactEditFragment fragment = ContactEditFragment.newInstance(inputNumber.getText().toString(),true,false);
                    FragmentMgr.getInstance().showDialFragment(fragment);
                }
                break;

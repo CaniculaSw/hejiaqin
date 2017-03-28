@@ -60,19 +60,23 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     private IContactsLogic contactsLogic;
     private IVoipLogic voipLogic;
+    private String mCallRecordNumber;
+    private boolean mIsFromRecent;
 
-    public static ContactInfoFragment newInstance(String contactNumber) {
+    public static ContactInfoFragment newInstance(String contactNumber,boolean isFromRecent) {
         ContactInfoFragment fragment = new ContactInfoFragment();
         Bundle args = new Bundle();
         args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
+        args.putBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY, isFromRecent);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static ContactInfoFragment newInstance(ContactsInfo contactsInfo) {
+    public static ContactInfoFragment newInstance(ContactsInfo contactsInfo,boolean isFromRecent) {
         ContactInfoFragment fragment = new ContactInfoFragment();
         Bundle args = new Bundle();
         args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+        args.putBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY, isFromRecent);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,31 +90,42 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     protected void handleLogicMsg(Message msg) {
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
-                showToast(R.string.contact_info_add_contact_success_toast);
+                refreshContact();
+//                showToast(R.string.contact_info_add_contact_success_toast);
                 break;
-            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
-                showToast(R.string.contact_info_add_contact_failed_toast);
-                break;
+//            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
+//                showToast(R.string.contact_info_add_contact_failed_toast);
+//                break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_del_contact_success_toast);
-                FragmentMgr.getInstance().finishContactFragment(this);
+                if(mIsFromRecent)
+                {
+                    FragmentMgr.getInstance().finishRecentFragment(this);
+                }else {
+                    FragmentMgr.getInstance().finishContactFragment(this);
+                }
                 break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_del_contact_failed_toast);
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
-                showToast(R.string.contact_info_edit_contact_success_toast);
+//                showToast(R.string.contact_info_edit_contact_success_toast);
                 ContactsInfo newContactsInfo = (ContactsInfo) msg.obj;
                 if (null == newContactsInfo) {
                     return;
                 }
-
-                this.mContactsInfo = newContactsInfo;
-                showViews();
+                if(newContactsInfo.getNumberLst().size()==0 || mContactsInfo.getNumberLst().size() == 0)
+                {
+                    return;
+                }
+                if(newContactsInfo.getNumberLst().get(0).getNumberNoCountryCode().equals(mContactsInfo.getNumberLst().get(0).getNumberNoCountryCode())) {
+                    this.mContactsInfo = newContactsInfo;
+                    showViews();
+                }
                 break;
-            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
-                showToast(R.string.contact_info_edit_contact_failed_toast);
-                break;
+//            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
+//                showToast(R.string.contact_info_edit_contact_failed_toast);
+//                break;
             case BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID:
                 showDialData(null);
                 break;
@@ -124,6 +139,33 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 }
                 break;
         }
+    }
+
+    private void refreshContact()
+    {
+        //遍历本地联系人
+        boolean isMatch = false;
+        if(this.mContactsInfo.getNumberLst().size() ==0 )
+        {
+            return;
+        }
+        String phoneNumber = this.mContactsInfo.getNumberLst().get(0).getNumberNoCountryCode();
+        List<ContactsInfo> localcontactsInfos = contactsLogic.getCacheLocalContactLst();
+        for (ContactsInfo contactsInfo : localcontactsInfos) {
+            if (isMatch) {
+                break;
+            }
+            if (contactsInfo.getNumberLst() != null) {
+                for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
+                    if (phoneNumber.equals(numberInfo.getNumberNoCountryCode())) {
+                        this.mContactsInfo = contactsInfo;
+                        isStranger =false;
+                        isMatch = true;
+                    }
+                }
+            }
+        }
+        showViews();
     }
 
     @Override
@@ -197,15 +239,16 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             return;
         }
         mContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+        mIsFromRecent = argBundle.getBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY);
 
         if (mContactsInfo == null) {
             //通话记录传入的号码
-            String callRecordNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+            mCallRecordNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
             isStranger = true;
             mContactsInfo = new ContactsInfo();
             NumberInfo numberInfo = new NumberInfo();
             numberInfo.setType(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
-            numberInfo.setNumber(callRecordNumber);
+            numberInfo.setNumber(mCallRecordNumber);
             mContactsInfo.setContactId("");
             mContactsInfo.setName("");
             mContactsInfo.setPhotoLg("");
@@ -275,7 +318,12 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             case R.id.right_btn:
                 break;
             case R.id.back_iv:
-                FragmentMgr.getInstance().finishContactFragment(this);
+                if(mIsFromRecent)
+                {
+                    FragmentMgr.getInstance().finishRecentFragment(this);
+                }else {
+                    FragmentMgr.getInstance().finishContactFragment(this);
+                }
                 break;
             case R.id.dial_more_layout:
                 if (isStranger) {
@@ -323,8 +371,13 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     }
 
     private void doEditContact() {
-        ContactEditFragment fragment = ContactEditFragment.newInstance(mContactsInfo);
-        FragmentMgr.getInstance().showContactFragment(fragment);
+        ContactEditFragment fragment = ContactEditFragment.newInstance(mContactsInfo,mIsFromRecent);
+        if(mIsFromRecent)
+        {
+            FragmentMgr.getInstance().showRecentFragment(fragment);
+        }else {
+            FragmentMgr.getInstance().showContactFragment(fragment);
+        }
         dismissMoreView();
     }
 
@@ -334,8 +387,13 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     }
 
     private void doAddContact() {
-        ContactEditFragment fragment = ContactEditFragment.newInstance(mContactsInfo);
-        FragmentMgr.getInstance().showContactFragment(fragment);
+        ContactEditFragment fragment = ContactEditFragment.newInstance(mCallRecordNumber,false,mIsFromRecent);
+        if(mIsFromRecent)
+        {
+            FragmentMgr.getInstance().showRecentFragment(fragment);
+        }else {
+            FragmentMgr.getInstance().showContactFragment(fragment);
+        }
         dismissMoreView();
     }
 

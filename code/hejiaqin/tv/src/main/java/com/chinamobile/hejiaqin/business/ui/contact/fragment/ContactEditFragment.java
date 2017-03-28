@@ -54,24 +54,28 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
      * 待编辑的联系人信息
      */
     private ContactsInfo editContactsInfo;
+    private boolean mIsFromRecent;
 
     public static ContactEditFragment newInstance() {
         ContactEditFragment fragment = new ContactEditFragment();
         return fragment;
     }
 
-    public static ContactEditFragment newInstance(ContactsInfo contactsInfo) {
+    public static ContactEditFragment newInstance(ContactsInfo contactsInfo,boolean isFromRecent) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
         args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+        args.putBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY, isFromRecent);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static ContactEditFragment newInstance(String contactNumber) {
+    public static ContactEditFragment newInstance(String contactNumber,boolean isFromDialPage,boolean isFromRecent) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
         args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
+        args.putBoolean(BussinessConstants.Contact.INTENT_FROM_DAIL_KEY, isFromDialPage);
+        args.putBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY, isFromRecent);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,6 +92,9 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 showToast(R.string.contact_info_add_contact_success_toast);
                 if (isFromDialPage) {
                     FragmentMgr.getInstance().finishDialFragment(this);
+                }
+                else if(mIsFromRecent) {
+                    FragmentMgr.getInstance().finishRecentFragment(this);
                 } else {
                     FragmentMgr.getInstance().finishContactFragment(this);
                 }
@@ -97,7 +104,14 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_success_toast);
-                FragmentMgr.getInstance().finishContactFragment(this);
+                if (isFromDialPage) {
+                    FragmentMgr.getInstance().finishDialFragment(this);
+                }
+                else if(mIsFromRecent) {
+                    FragmentMgr.getInstance().finishRecentFragment(this);
+                } else {
+                    FragmentMgr.getInstance().finishContactFragment(this);
+                }
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_failed_toast);
@@ -162,6 +176,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             editContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
             //拨号传入的号码保存至和家亲
             inputNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+            isFromDialPage = argBundle.getBoolean(BussinessConstants.Contact.INTENT_FROM_DAIL_KEY);
+            mIsFromRecent = argBundle.getBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY);
         }
 
         PhotoManage.getInstance(getContext()).setPhotoListener(mPhotoChangeListener);
@@ -174,7 +190,6 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 numberText.setText(inputNumber);
                 numberText.setSelection(numberText.getEditableText().length());
                 oldNumber = inputNumber;
-                isFromDialPage = true;
             }
             // 纯添加联系人
             else {
@@ -216,7 +231,14 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             case R.id.right_btn:
                 break;
             case R.id.back_iv:
-                FragmentMgr.getInstance().finishContactFragment(this);
+                if (isFromDialPage) {
+                    FragmentMgr.getInstance().finishDialFragment(this);
+                }
+                else if(mIsFromRecent) {
+                    FragmentMgr.getInstance().finishRecentFragment(this);
+                } else {
+                    FragmentMgr.getInstance().finishContactFragment(this);
+                }
                 break;
             case R.id.contact_head_layout:
                 doClickHeadLayout();

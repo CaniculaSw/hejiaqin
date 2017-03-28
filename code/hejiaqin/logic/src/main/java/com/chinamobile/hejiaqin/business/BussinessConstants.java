@@ -233,6 +233,10 @@ public class BussinessConstants {
 
         String INTENT_CONTACT_NUMBER_KEY = "INTENT_CONTACT_NUMBER_KEY";
 
+        String INTENT_FROM_RECENT_KEY = "INTENT_FROM_RECENT_KEY";
+
+        String INTENT_FROM_DAIL_KEY = "INTENT_FROM_DAIL_KEY";
+
     }
 
     /**

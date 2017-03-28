@@ -92,7 +92,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
 //                intent.putExtras(bundle);
 //                mContext.startActivity(intent);
 
-                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo);
+                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo,false);
                 FragmentMgr.getInstance().showContactFragment(fragment);
             }
         });

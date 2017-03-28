@@ -88,7 +88,7 @@ public class SearchContactAdapter extends BaseAdapter {
 //                intent.putExtras(bundle);
 //                mContext.startActivity(intent);
 
-                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo);
+                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo,false);
                 FragmentMgr.getInstance().showContactFragment(fragment);
             }
         });

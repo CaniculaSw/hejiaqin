@@ -131,10 +131,10 @@ public class CallRecordFragment extends BasicFragment {
                 deleteLayout.requestFocus();
                 dismissMoreView();
                 if (mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo() != null) {
-                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo());
+                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo(),true);
                     FragmentMgr.getInstance().showRecentFragment(fragment);
                 } else {
-                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getPeerNumber());
+                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getPeerNumber(),true);
                     FragmentMgr.getInstance().showRecentFragment(fragment);
                 }
             }
