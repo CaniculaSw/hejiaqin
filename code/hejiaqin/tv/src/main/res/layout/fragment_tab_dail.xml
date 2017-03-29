@@ -38,9 +38,9 @@
 
                 <ImageView
                     android:id="@+id/dial_save_contact_arrow_iv"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@mipmap/dial_save_contact_arrow" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dial_save_contact_arrow" />
             </LinearLayout>
         </LinearLayout>
 
@@ -74,9 +74,9 @@
 
                 <ImageView
                     android:id="@+id/dial_number_del_iv"
-                    android:layout_width="32dp"
-                    android:layout_height="28dp"
-                    android:src="@mipmap/icon_dial_number_delete" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_dial_number_delete" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -111,9 +111,9 @@
             android:background="@drawable/fragment_dial_video_bg">
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@mipmap/icon_fragment_dial_video" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_fragment_dial_video" />
         </LinearLayout>
     </LinearLayout>
 
