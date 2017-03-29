@@ -28,6 +28,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.log.Logger;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
@@ -90,6 +91,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     protected void handleLogicMsg(Message msg) {
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
+                LogUtil.d(TAG,"ADD_APP_CONTACTS_SUCCESS_MSG_ID");
                 refreshContact();
 //                showToast(R.string.contact_info_add_contact_success_toast);
                 break;
@@ -150,7 +152,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             return;
         }
         String phoneNumber = this.mContactsInfo.getNumberLst().get(0).getNumberNoCountryCode();
-        List<ContactsInfo> localcontactsInfos = contactsLogic.getCacheLocalContactLst();
+        List<ContactsInfo> localcontactsInfos = contactsLogic.getCacheAppContactLst();
         for (ContactsInfo contactsInfo : localcontactsInfos) {
             if (isMatch) {
                 break;
@@ -158,6 +160,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
                     if (phoneNumber.equals(numberInfo.getNumberNoCountryCode())) {
+                        LogUtil.d(TAG,"isMatch");
                         this.mContactsInfo = contactsInfo;
                         isStranger =false;
                         isMatch = true;

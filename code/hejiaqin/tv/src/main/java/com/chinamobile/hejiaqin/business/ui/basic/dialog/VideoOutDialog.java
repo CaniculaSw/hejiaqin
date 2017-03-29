@@ -143,7 +143,7 @@ public class VideoOutDialog extends Dialog {
                 }
             }
         }
-        List<ContactsInfo> localContactsInfos = mContactsLogic.getCacheLocalContactLst();
+        List<ContactsInfo> localContactsInfos = mContactsLogic.getCacheAppContactLst();
         for (ContactsInfo contactsInfo : localContactsInfos) {
             if (isMatch) {
                 break;

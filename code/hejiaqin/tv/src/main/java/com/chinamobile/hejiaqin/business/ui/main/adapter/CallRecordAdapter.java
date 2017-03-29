@@ -136,7 +136,7 @@ public class CallRecordAdapter extends BaseAdapter {
             if (info.getContactsInfo() == null) {
                 //遍历本地联系人
                 boolean isMatch = false;
-                List<ContactsInfo> localcontactsInfos = mContactsLogic.getCacheLocalContactLst();
+                List<ContactsInfo> localcontactsInfos = mContactsLogic.getCacheAppContactLst();
                 for (ContactsInfo contactsInfo : localcontactsInfos) {
                     if (isMatch) {
                         break;
