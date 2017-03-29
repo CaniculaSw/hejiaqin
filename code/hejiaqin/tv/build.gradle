@@ -21,6 +21,10 @@ android {
             buildConfigField "int", "LOG_LEVEL", "2"
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
 //    splits {
 //        abi {
 //            enable true
