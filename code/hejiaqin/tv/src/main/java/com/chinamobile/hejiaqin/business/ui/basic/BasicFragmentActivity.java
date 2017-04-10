@@ -20,9 +20,7 @@ import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
-import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.dial.StbNurseCallActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VtNurseCallActivity;
@@ -139,15 +137,6 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     showToast("保存联系人成功", Toast.LENGTH_SHORT, null);
                     break;
-                case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
-                    LogUtil.d(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
-                    if (msg.obj != null) {
-                        long incomingSessionId = (long) msg.obj;
-                        VideoInComingDialog.show(this, incomingSessionId,
-                                ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
-                                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)));
-                    }
-                    break;
                 case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
                     LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
@@ -176,7 +165,6 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         LogUtil.d(TAG, "model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
-        ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)).setIsTv(true);
     }
 
     @TargetApi(23)

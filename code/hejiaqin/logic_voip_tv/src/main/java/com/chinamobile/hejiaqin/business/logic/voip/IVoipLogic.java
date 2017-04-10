@@ -38,10 +38,6 @@ public interface IVoipLogic {
 
     void search(String input);
 
-    public boolean isTv();
-
-    public void setIsTv(boolean isTv);
-
     public void setNotNeedVoipLogin();
 
     public boolean isNeedVoipLogin();

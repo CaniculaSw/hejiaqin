@@ -48,6 +48,7 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
                 int inputVol = (int) msg.obj;
                 showResult(CallApi.getCameraCount() > 0 && inputVol > 0);
                 break;
+            case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
             case BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID:
                 if (dialog != null) {
                     dialog.dismiss();

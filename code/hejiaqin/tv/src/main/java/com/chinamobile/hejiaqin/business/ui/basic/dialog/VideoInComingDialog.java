@@ -22,6 +22,7 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.dial.StbVideoCallActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VtVideoCallActivity;
@@ -41,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by  on 2016/6/25.
  */
-public class VideoInComingDialog extends Dialog {
+public class VideoInComingDialog extends BasicActivity {
 
     public static final String TAG = VideoInComingDialog.class.getSimpleName();
 
@@ -53,45 +54,33 @@ public class VideoInComingDialog extends Dialog {
 
     private IVoipLogic mVoipLogic;
     private IContactsLogic mContactsLogic;
-    private long mIncomingSessionId;
-    public ContactsInfo mContactsInfo;
 
-    private MyToast myToast;
-    private Context mContext;
     private boolean closed;
     private boolean onClickAnswer;
     //通话会话对象
     private CallSession mCallSession = null;
     private Handler handler = new Handler();
 
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            if (mHandler != null) {
-                VideoInComingDialog.this.handleStateMessage(msg);
-            }
-        }
-    };
-
-    public VideoInComingDialog(Context context, int theme,long incomingSessionId ,IVoipLogic voipLogic,IContactsLogic contactsLogic) {
-        super(context, theme);
-        this.mIncomingSessionId = incomingSessionId;
-        this.mVoipLogic = voipLogic;
-        this.mContactsLogic = contactsLogic;
-        this.mContext = context;
+    @Override
+    protected void initLogics() {
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+        mContactsLogic  = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((ILogic)this.mVoipLogic).addHandler(mHandler);
-        setContentView(R.layout.popwindow_video_incoming);
+    protected int getLayoutId() {
+        return R.layout.popwindow_video_incoming;
+    }
+
+    @Override
+    protected void initView() {
         mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
         mCallerNameTv = (TextView) findViewById(R.id.caller_name_tv);
         mCallerNumberTv = (TextView) findViewById(R.id.caller_number_tv);
-        myToast = new MyToast(mContext.getApplicationContext());
-        mCallSession = CallApi.getCallSessionById(this.mIncomingSessionId);
+        long sessionId = getIntent().getLongExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, CallSession.INVALID_ID);
+        mCallSession = CallApi.getCallSessionById(sessionId);
         if (mCallSession == null) {
-            dismiss();
+            finish();
             return;
         }
         mOperationLayout = (RelativeLayout)findViewById(R.id.call_operation_layout);
@@ -109,6 +98,7 @@ public class VideoInComingDialog extends Dialog {
                     return;
                 }
                 mVoipLogic.answerVideo(mCallSession);
+                onClickAnswer = true;
             }
         });
         findViewById(R.id.reject_call_layout).setOnClickListener(new View.OnClickListener()
@@ -117,7 +107,7 @@ public class VideoInComingDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 mVoipLogic.hangup(mCallSession, true, false, 0);
-                VideoInComingDialog.this.dismiss();
+                finish();
             }
         });
         mAutoRejectLayout = (LinearLayout)findViewById(R.id.auto_reject_call_layout);
@@ -126,17 +116,27 @@ public class VideoInComingDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 mVoipLogic.hangup(mCallSession, true, false, 0);
-                VideoInComingDialog.this.dismiss();
+                finish();
             }
         });
         showIncoming();
-        if(CommonUtils.isAutoAnswer(getContext().getApplicationContext(),mCallSession.getPeer().getNumber()))
+        if(CommonUtils.isAutoAnswer(getApplicationContext(), mCallSession.getPeer().getNumber()))
         {
             ((TextView)findViewById(R.id.call_status_tv)).setText(R.string.auto_answer_status);
             mOperationLayout.setVisibility(View.GONE);
             mAutoRejectLayout.setVisibility(View.VISIBLE);
             mVoipLogic.answerVideo(mCallSession);
         }
+    }
+
+    @Override
+    protected void initDate() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
     }
 
     private void showIncoming() {
@@ -150,7 +150,7 @@ public class VideoInComingDialog extends Dialog {
             }
             mCallerNumberTv.setText(incomingNumber);
             if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
-                Picasso.with(mContext.getApplicationContext())
+                Picasso.with(getApplicationContext())
                         .load(info.getPhotoSm())
                         .placeholder(R.drawable.contact_photo_default)
                         .error(R.drawable.contact_photo_default).into(mCallerIv);
@@ -195,7 +195,8 @@ public class VideoInComingDialog extends Dialog {
         return null;
     }
 
-    private void handleStateMessage(Message msg) {
+    public void handleStateMessage(Message msg) {
+        super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
                 if(!closed)
@@ -203,21 +204,21 @@ public class VideoInComingDialog extends Dialog {
                     mVoipLogic.dealOnClosed(mCallSession, true, false, 0);
                     closed = true;
                 }
-                dismiss();
+                finish();
                 break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
                 if(Const.deviceType == Const.TYPE_OTHER) {
                     LogUtil.d(TAG,"VtVideoCallActivity incoming");
-                    Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
+                    Intent intentTalking = new Intent(VideoInComingDialog.this, VtVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
-                    mContext.startActivity(intentTalking);
+                    startActivity(intentTalking);
                 } else{
                     LogUtil.d(TAG,"VtVideoCallActivity incoming");
-                    Intent intentTalking = new Intent(getContext(), StbVideoCallActivity.class);
+                    Intent intentTalking = new Intent(VideoInComingDialog.this, StbVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
-                    mContext.startActivity(intentTalking);
+                    startActivity(intentTalking);
                 }
-                dismiss();
+                finish();
                 break;
             case BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID:
                 if (msg.obj != null) {
@@ -231,7 +232,7 @@ public class VideoInComingDialog extends Dialog {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                VideoInComingDialog.this.dismiss();
+                                finish();
                             }
                         }, 3000);
                     } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
@@ -240,30 +241,6 @@ public class VideoInComingDialog extends Dialog {
                 }
                 break;
         }
-    }
-
-    protected void showToast(int resId, int duration, MyToast.Position pos) {
-        myToast.showToast(resId, duration, pos);
-    }
-
-    @Override
-    public void dismiss() {
-        ((ILogic)this.mVoipLogic).removeHandler(mHandler);
-        super.dismiss();
-    }
-
-    public static void show(Activity activity, long incomingSessionId,IVoipLogic voipLogic,IContactsLogic contactsLogic)
-    {
-        VideoInComingDialog videoInComingDialog = new VideoInComingDialog(activity, R.style.CalendarDialog,incomingSessionId,voipLogic,contactsLogic );
-        Window window = videoInComingDialog.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.gravity = Gravity.CENTER;
-        window.setAttributes(params);
-        videoInComingDialog.setCancelable(false);
-        videoInComingDialog.show();
     }
 
 }

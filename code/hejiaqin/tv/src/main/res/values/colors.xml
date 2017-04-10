@@ -47,6 +47,7 @@
     <color name="common_bg">#484c9f</color>
     <color name="navigator_bg">#181f54</color>
     <color name="navigator_select_bg">#484c9f</color>
+    <color name="hint_text_color">#a5a7b0</color>
 
     <!-- 联系人 -->
     <color name="contact_list_navigator_text_selected">#ffffffff</color>

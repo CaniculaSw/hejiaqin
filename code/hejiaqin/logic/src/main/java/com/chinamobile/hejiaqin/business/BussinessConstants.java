@@ -302,6 +302,8 @@ public class BussinessConstants {
 
         String CALL_ACTION = "android.intent.action.hejiaqin.dial.videocall";
 
+        String TV_CALL_ACTION = "android.intent.action.hejiaqin.dial.tv.videocall";
+
         String INTENT_CALLEE_NUMBER = "intent_callee_number";
 
         String INTENT_CALL_INCOMING = "intent_call_incoming";
