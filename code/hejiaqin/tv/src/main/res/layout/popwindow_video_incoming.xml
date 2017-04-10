@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg_in_dialog">
+    android:background="@color/dialog_background_transparent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -105,10 +105,11 @@
             android:id="@+id/auto_reject_call_layout"
             android:layout_marginTop="58dp"
             android:layout_width="336dp"
-            android:layout_height="72dp"
+            android:layout_height="66dp"
             android:orientation="horizontal"
             android:gravity="center"
             android:focusable="true"
+            android:visibility="gone"
             android:background="@drawable/selector_dial_bg">
 
             <Button
