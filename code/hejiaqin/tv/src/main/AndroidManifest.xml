@@ -144,7 +144,8 @@
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoInComingDialog"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.hejiaqin.dial.tv.videocall" />
                 <category android:name="android.intent.category.DEFAULT" />

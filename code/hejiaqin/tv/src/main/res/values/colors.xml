@@ -9,7 +9,6 @@
     <color name="blue">#ff1e90ff</color>
     <color name="red">#FF0000</color>
     <color name="transparent">#00000000</color>
-    <color name="dialog_background_transparent">#4D000000</color>
     <color name="button_disable_color">#9b9b9b</color>
     <color name="button_normal_color">#40c875</color>
 
