@@ -68,6 +68,7 @@
     <color name="input_number_layout_color">#f8f8f8</color>
     <color name="input_number_above_line_color">#b8b8b8</color>
     <color name="input_number_below_line_color">#e0e1e1</color>
+    <color name="video_default_color">#4c4c4c</color>
 
 
     <color name="contact_list_search_mask_bg_color">#60000000</color>
