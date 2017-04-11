@@ -227,9 +227,11 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     }
 
     private void createVideoView() {
-        remoteVideoView.getHolder().setFormat(PixelFormat.TRANSPARENT);
+        remoteVideoView.setVisibility(View.VISIBLE);
+        localVideoView.setVisibility(View.VISIBLE);
         remoteVideoView.getHolder().addCallback(surfaceCb);
-        remoteVideoView.setZOrderOnTop(false);
+        localVideoView.getHolder().setFormat(PixelFormat.TRANSPARENT);
+//        remoteVideoView.setZOrderOnTop(false);
         localVideoView.getHolder().addCallback(surfaceCb);
         localVideoView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         localVideoView.setZOrderOnTop(true);
