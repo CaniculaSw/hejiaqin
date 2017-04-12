@@ -111,7 +111,7 @@ public class CallRecordAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
-                    mListen.onClick(mData.get(position));
+                    mListen.onClick(mData.get(position),position);
                 }
             });
             tHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -179,7 +179,7 @@ public class CallRecordAdapter extends BaseAdapter {
 
     public static abstract class onClickListen
     {
-        public abstract void onClick(CallRecord info);
+        public abstract void onClick(CallRecord info,int position);
 
         public abstract void onLongClick(int position);
     }

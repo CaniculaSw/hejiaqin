@@ -114,8 +114,10 @@ public class CallRecordFragment extends BasicFragment {
         recordCancelLayout = view.findViewById(R.id.record_cancel_layout);
 
         mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic, new CallRecordAdapter.onClickListen() {
-            public void onClick(CallRecord info) {
-                deleteLayout.requestFocus();
+            public void onClick(CallRecord info,int position) {
+                callRecordListView.setSelection(position);
+                callRecordListView.setFocusable(true);
+                callRecordListView.requestFocus();
                 VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic,false);
             }
 
