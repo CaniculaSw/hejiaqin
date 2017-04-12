@@ -193,7 +193,9 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         CallApi.setPauseMode(1);
         //视频布局(呼出和通话中)
         remoteVideoView = (SurfaceView) findViewById(R.id.large_video_layout);
+        remoteVideoView.setZOrderMediaOverlay(false);
         localVideoView = (SurfaceView) findViewById(R.id.small_video_layout);
+        localVideoView.setZOrderMediaOverlay(false);
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
         mHangupLayout.setOnClickListener(this);
