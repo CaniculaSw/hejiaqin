@@ -1,5 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Message;
@@ -17,7 +18,9 @@ import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.MyActivityManager;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.qrCode.QRCodeEncoder;
@@ -41,6 +44,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     TextView bindedAccount;
     ImageView qrCode;
     Button logout;
+    RegistingDialog registingDialog;
 
     @Override
     protected void initLogics() {
@@ -95,6 +99,7 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         logout = (Button) view.findViewById(R.id.logout_btn);
         logout.setOnClickListener(this);
         password.setText("123456");
+        registingDialog = new RegistingDialog(getActivity(), R.style.CalendarDialog);
 
     }
 
@@ -140,13 +145,16 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.logout_btn:
+                registingDialog.show("正在退出，请稍后...");
                 loginLogic.logout();
                 mVoipLogic.logout();
                 mVoipLogic.clearLogined();
                 FragmentMgr.resetFragmentMgr();
-//                Intent intent = new Intent(getContext(), LoginActivity.class);
-//                startActivity(intent);
-                MyActivityManager.getInstance().finishAllActivity(null);
+                UserInfoCacheManager.saveTvLogout(getContext());
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                registingDialog.dismiss();
+                getActivity().startActivity(intent);
+                MyActivityManager.getInstance().finishAllActivity(LoginActivity.class.getName());
                 break;
             default:
                 break;

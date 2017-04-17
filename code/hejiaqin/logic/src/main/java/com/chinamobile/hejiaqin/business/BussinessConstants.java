@@ -137,6 +137,11 @@ public class BussinessConstants {
         String TV_USERID_KEY = "UserID";
         String TV_TOKEN_KEY = "UserToken";
         String TV_SOFT_WARE_KEY = "SoftwareVersion";
+        String TV_ACCOUNT_KEY = "TvAccount";
+        String TV_IS_LOGOUT_KEY = "TvIsLogou";
+        String download_url = "http://www.baidu.com";
+        String download_url_android = "http://www.baidu.com";
+        String download_url_ios = "http://www.baidu.com";
     }
 
     /**

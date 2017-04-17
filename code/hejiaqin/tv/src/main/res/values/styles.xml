@@ -39,6 +39,15 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="CustomCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/check_box</item>
+        <item name="android:background">@drawable/checkbox_bg</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+
+
+    </style>
+
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>

@@ -6,6 +6,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.tv.R;
@@ -47,8 +48,8 @@ public class DownloadAppFragment extends BasicFragment {
 
     @Override
     protected void initData() {
-        createQRCode("wwww.baidu.com/android",190,qrCodeAndroid);
-        createQRCode("wwww.baidu.com/ios",190,qrCodeIos);
+        createQRCode(BussinessConstants.Login.download_url_android,190,qrCodeAndroid);
+        createQRCode(BussinessConstants.Login.download_url_ios,190,qrCodeIos);
     }
 
     private void createQRCode(String url, int size, final ImageView view) {

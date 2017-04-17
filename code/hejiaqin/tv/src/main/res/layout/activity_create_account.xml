@@ -74,69 +74,84 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_login"
+                android:text="@string/create_account"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <ImageButton
+                android:layout_width="213dp"
                 android:layout_height="213dp"
                 android:layout_marginTop="60dp"
-                android:gravity="center">
+                android:background="@drawable/qr_bg"
+                android:src="@drawable/hejiaqin_logo" />
 
-                <LinearLayout
-                    android:layout_width="317.3dp"
-                    android:layout_height="96dp"
-                    android:background="@drawable/account_field_border"
-                    android:orientation="vertical"
-                    android:paddingLeft="13dp"
-                    android:paddingRight="13dp">
+            <LinearLayout
+                android:id="@+id/read_contract_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="41.3dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/account_info_title"
-                        android:textColor="#4f67a5"
-                        android:textSize="16sp" />
+                <CheckBox
+                    android:id="@+id/read"
+                    style="@style/CustomCheckBoxTheme"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:nextFocusDown="@+id/register_ll"
+                    android:nextFocusLeft="@+id/read"
+                    android:nextFocusRight="@+id/contract_content"
+                    android:nextFocusUp="@+id/read" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:src="#4f67a5" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/contract_tips"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/account"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/white"
-                        android:textSize="21.3sp" />
+                <TextView
+                    android:id="@+id/contract_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/register_ll"
+                    android:nextFocusLeft="@+id/read"
+                    android:nextFocusRight="@+id/contract_content"
+                    android:nextFocusUp="@+id/contract_content"
+                    android:text="@string/contract"
+                    android:textColor="@drawable/contract_selector"
+                    android:textSize="16sp">
 
-                </LinearLayout>
+                    <requestFocus />
+                </TextView>
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/login_ll"
+                android:id="@+id/register_ll"
                 android:layout_width="335dp"
                 android:layout_height="68.3dp"
-                android:layout_below="@+id/account_ll"
+                android:layout_below="@+id/read_contract_ll"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="98dp"
+                android:layout_marginTop="26.7dp"
                 android:background="@drawable/selector_setting_bg"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:nextFocusDown="@+id/login_ll"
-                android:nextFocusLeft="@+id/login_ll"
-                android:nextFocusRight="@+id/login_ll"
-                android:nextFocusUp="@+id/login_ll"
+                android:nextFocusDown="@+id/register_ll"
+                android:nextFocusLeft="@+id/register_ll"
+                android:nextFocusRight="@+id/register_ll"
+                android:nextFocusUp="@+id/contract_content"
                 android:orientation="horizontal">
-
-                <requestFocus />
 
                 <TextView
                     android:layout_width="320dp"
@@ -145,7 +160,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:text="@string/click_login"
+                    android:text="@string/register"
                     android:textColor="@color/white"
                     android:textSize="21.3sp" />
 

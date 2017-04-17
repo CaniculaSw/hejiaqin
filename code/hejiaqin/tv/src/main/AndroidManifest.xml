@@ -1,10 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<manifest xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--package="com.chinamobile.hejiaqin.tv"-->
-    <!--android:sharedUserId="android.uid.system">-->
-    <!--非系统签名版本去除android:sharedUserId ,系统签名版本需要机顶盒厂家重新签名-->
-    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.chinamobile.hejiaqin.tv">
+<?xml version="1.0" encoding="utf-8"?><!--<manifest xmlns:android="http://schemas.android.com/apk/res/android"--><!--package="com.chinamobile.hejiaqin.tv"--><!--android:sharedUserId="android.uid.system">--><!--非系统签名版本去除android:sharedUserId ,系统签名版本需要机顶盒厂家重新签名-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chinamobile.hejiaqin.tv">
 
     <supports-screens
         android:anyDensity="true"
@@ -23,7 +19,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- VOIP需要使用的权限 -->
     <permission android:name="com.huawei.android.permission.WRITE_DATABASE" />
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -85,7 +82,6 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
 
-
     <application
         android:name="com.chinamobile.hejiaqin.business.ui.TVApplication"
         android:allowBackup="true"
@@ -99,7 +95,6 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -110,7 +105,8 @@
         <!-- 登录、注册相关 -->
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.login.LoginActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+        </activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.login.RegisterActivity"
             android:screenOrientation="landscape" />
@@ -154,20 +150,21 @@
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.dial.StbVideoCallActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.dial.VtVideoCallActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.dial.StbNurseCallActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.dial.VtNurseCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name="com.chinamobile.hejiaqin.business.ui.login.CreateAccountActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
         </activity>

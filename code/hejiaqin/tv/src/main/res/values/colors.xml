@@ -70,7 +70,6 @@
     <color name="input_number_below_line_color">#e0e1e1</color>
     <color name="video_default_color">#4c4c4c</color>
 
-
     <color name="contact_list_search_mask_bg_color">#60000000</color>
     <color name="contact_info_head_select">#38b479</color>
 </resources>

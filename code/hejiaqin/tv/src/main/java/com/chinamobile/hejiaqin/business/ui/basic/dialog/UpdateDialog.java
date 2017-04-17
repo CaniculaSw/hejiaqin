@@ -29,6 +29,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
     private Handler handler = new Handler();
     private String tips = "";
     private TextView tips_text;
+    private static boolean canBack = false;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -102,12 +103,24 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         videoInComingDialog.show();
     }
 
+    public static void show(Activity activity, String text,boolean isCanBack){
+        canBack = isCanBack;
+        show(activity,text);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.logout_button:
-                dismiss();
-                MyActivityManager.getInstance().finishAllActivity(null);
+                if (canBack){
+                    canBack = false;
+                    dismiss();
+                }
+                else {
+                    canBack = false;
+                    dismiss();
+                    MyActivityManager.getInstance().finishAllActivity(null);
+                }
                 break;
             default:
                 break;

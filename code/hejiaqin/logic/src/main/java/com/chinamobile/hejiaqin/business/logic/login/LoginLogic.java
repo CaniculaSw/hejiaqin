@@ -219,6 +219,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 UserInfo userInfo = (UserInfo) obj;
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
+                UserInfoCacheManager.saveTvAccountToLoacl(getContext(), userInfo.getTvAccount());
 //                initCMIMSdk();
                 LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
                 UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
@@ -469,7 +470,11 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     private void clean() {
         UserInfoCacheManager.clearUserInfo(getContext());
-        CMIMHelper.getCmAccountManager().doLogOut();
+        try {
+            CMIMHelper.getCmAccountManager().doLogOut();
+        }catch (Exception e){
+            LogUtil.d(TAG,"小溪推送退出异常。");
+        }
     }
 
 

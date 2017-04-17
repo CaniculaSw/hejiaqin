@@ -113,6 +113,14 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).save(map);
     }
 
+    public static void saveTvAccountToLoacl(Context context, String account) {
+        if (!StringUtil.isNullOrEmpty(account)) {
+            HashMap map = new HashMap();
+            map.put(BussinessConstants.Login.TV_ACCOUNT_KEY, account);
+            StorageMgr.getInstance().getSharedPStorage(context).save(map);
+        }
+    }
+
     public static void saveBindDeviceToMem(Context context, UserList userList) {
         if (userList != null) {
             StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Setting.BINDED_DEVICE_KEY, userList);
@@ -215,6 +223,11 @@ public class UserInfoCacheManager {
         return userInfo.getToken();
     }
 
+    public static String getTvAccount(Context context) {
+        String account = (String) StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.Login.TV_ACCOUNT_KEY);
+        return StringUtil.isNullOrEmpty(account) ? "unknown" : account;
+    }
+
     public static String getUserId(Context context) {
         UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (null == userInfo) {
@@ -246,6 +259,10 @@ public class UserInfoCacheManager {
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.VOIP_LOGINED_KEY, true);
     }
 
+    public static void saveTvLogout(Context context) {
+        StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_IS_LOGOUT_KEY, true);
+    }
+
     public static void saveSTBConfig(Context context, String userid, String token, String softVersion) {
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_USERID_KEY, userid);
         StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.Login.TV_TOKEN_KEY, token);
@@ -262,6 +279,14 @@ public class UserInfoCacheManager {
 
     public static boolean getVoipLogined(Context context) {
         return StorageMgr.getInstance().getSharedPStorage(context).getBoolean(BussinessConstants.Login.VOIP_LOGINED_KEY);
+    }
+
+    public static void clearTvIsLogout(Context context) {
+        StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.TV_IS_LOGOUT_KEY});
+    }
+
+    public static boolean getTvIsLogout(Context context) {
+        return StorageMgr.getInstance().getSharedPStorage(context).getBoolean(BussinessConstants.Login.TV_IS_LOGOUT_KEY);
     }
 
     public static String getTvUserID(Context context) {

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="586.6dp"
+    android:layout_height="586dp"
+    android:layout_alignParentTop="true"
+    android:layout_centerVertical="true"
+    android:background="@drawable/popwindow_service_contract"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="@string/service_contract_title"
+        android:textColor="@color/white"
+        android:textSize="26.6sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="44dp"
+        android:paddingRight="44dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:lineSpacingExtra="8dp"
+            android:typeface="monospace"
+            android:text="@string/service_contract_1"
+            android:textColor="#95a6d6"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.7dp"
+            android:lineSpacingExtra="8dp"
+            android:typeface="monospace"
+            android:text="@string/service_contract_2"
+            android:textColor="#95a6d6"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.7dp"
+            android:typeface="monospace"
+            android:lineSpacingExtra="8dp"
+            android:text="@string/service_contract_3"
+            android:textColor="#95a6d6"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.7dp"
+            android:typeface="monospace"
+            android:lineSpacingExtra="8dp"
+            android:text="@string/service_contract_4"
+            android:textColor="#95a6d6"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.7dp"
+            android:typeface="monospace"
+            android:lineSpacingExtra="8dp"
+            android:text="@string/service_contract_5"
+            android:textColor="#95a6d6"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

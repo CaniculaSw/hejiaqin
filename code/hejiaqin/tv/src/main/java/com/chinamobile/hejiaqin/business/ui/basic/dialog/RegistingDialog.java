@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.tv.R;
@@ -21,7 +22,7 @@ public class RegistingDialog extends Dialog {
     private MyToast myToast;
     private Context mContext;
     private Handler handler = new Handler();
-
+    TextView tipText;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             if (mHandler != null) {
@@ -48,6 +49,7 @@ public class RegistingDialog extends Dialog {
 
 //        ((ILogic)this.mVoipLogic).addHandler(mHandler);
         setContentView(R.layout.popwindow_registing);
+        tipText = (TextView) findViewById(R.id.tips);
 //        mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
 //        mCallerNameTv = (TextView) findViewById(R.id.caller_name_tv);
 //        mCallerNumberTv = (TextView) findViewById(R.id.caller_number_tv);
@@ -176,5 +178,11 @@ public class RegistingDialog extends Dialog {
     public void show() {
         setCancelable(false);
         super.show();
+    }
+
+    public void show(String tips) {
+        setCancelable(false);
+        show();
+        tipText.setText(tips);
     }
 }

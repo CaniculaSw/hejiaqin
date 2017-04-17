@@ -21,7 +21,8 @@ import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
-import com.chinamobile.hejiaqin.business.ui.login.RegisterActivity;
+import com.chinamobile.hejiaqin.business.ui.login.CreateAccountActivity;
+import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
@@ -67,12 +68,25 @@ public class MainActivity extends BasicActivity {
                 jumpToRegisterActivity();
                 break;
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-//                if (loginLogic.hasLogined() && mVoipLogic.hasLogined()) {
-//                    jumpToMainFragmentActivity();
-//                } else {
-                autoLogin();
-//                }
+                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext()) && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals("unknown")) {
+                    jumpToLoginActivity();
+                } else {
+                    autoLogin();
+                }
                 break;
+            //TODO:TEST
+//            case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
+//                jumpToRegisterActivity();
+//                break;
+//            case BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED:
+//                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext()) && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals("unknown")) {
+//                    jumpToLoginActivity();
+//                } else {
+//                    autoLogin();
+//                }
+//                break;
+            //TODO:TEST
+
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
 //                jumpToMainFragmentActivity();
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
@@ -85,20 +99,12 @@ public class MainActivity extends BasicActivity {
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                //TODO TEST
-//                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
-//                    sdkuserInfo.username = "2886544004";
-//                    sdkuserInfo.password = "Vconf2015!";
-//                } else {
-//                    sdkuserInfo.username = "2886544005";
-//                    sdkuserInfo.password = "Vconf2015!";
-//                }
-//                //TODO TEST
                 LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 logining = true;
+                UserInfoCacheManager.clearTvIsLogout(getApplicationContext());
                 Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
                 mVoipLogic.setNotNeedVoipLogin();
                 this.startActivity(intent);
@@ -197,6 +203,12 @@ public class MainActivity extends BasicActivity {
         finish();
     }
 
+    private void jumpToLoginActivity() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finishAllActivity(LoginActivity.class.getName());
+    }
+
     private void showUpdateDialog() {
         UpdateDialog.show(this);
 //        finish();
@@ -208,7 +220,7 @@ public class MainActivity extends BasicActivity {
     }
 
     private void jumpToRegisterActivity() {
-        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        Intent intent = new Intent(MainActivity.this, CreateAccountActivity.class);
         startActivity(intent);
         finish();
     }

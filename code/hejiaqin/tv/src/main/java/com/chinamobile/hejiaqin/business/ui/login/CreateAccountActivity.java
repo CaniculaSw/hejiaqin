@@ -1,9 +1,15 @@
 package com.chinamobile.hejiaqin.business.ui.login;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Message;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -16,34 +22,54 @@ import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
+import com.chinamobile.hejiaqin.business.ui.login.dialog.ServiceContractDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
 import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.qrCode.QRCodeEncoder;
+import com.customer.framework.component.qrCode.core.DisplayUtils;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
 
 /**
- * Created by eshaohu on 17/1/4.
+ * Created by eshaohu on 17/4/14.
  */
-public class RegisterActivity extends BasicActivity implements View.OnClickListener {
-    private LinearLayout registerLayout;
-    private ILoginLogic loginLogic;
-    private IVoipLogic mVoipLogic;
+public class CreateAccountActivity extends BasicActivity implements View.OnClickListener {
+    CheckBox checkBox;
+    LinearLayout registerBtn;
+    TextView contractContent;
+    ILoginLogic loginLogic;
     private boolean logining;
+    IVoipLogic mVoipLogic;
+    ImageButton qrCode;
     private RegistingDialog registingDialog;
 
+    //
     @Override
     protected int getLayoutId() {
-        return R.layout.activiity_register;
+        return R.layout.activity_create_account;
     }
 
     @Override
     protected void initView() {
-        registerLayout = (LinearLayout) findViewById(R.id.register_ll);
-        registerLayout.setClickable(true);
-        registerLayout.setOnClickListener(this);
+        checkBox = (CheckBox) findViewById(R.id.read);
+        contractContent = (TextView) findViewById(R.id.contract_content);
+        registerBtn = (LinearLayout) findViewById(R.id.register_ll);
         registingDialog = new RegistingDialog(this, R.style.CalendarDialog);
+        qrCode = (ImageButton) findViewById(R.id.qrCode);
+
+    }
+
+    @Override
+    protected void initDate() {
+        createQRCode(BussinessConstants.Login.download_url, 210, qrCode);
+    }
+
+    @Override
+    protected void initListener() {
+        contractContent.setOnClickListener(this);
+        registerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -51,43 +77,27 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-//                jumpToMainFragmentActivity();
 
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-//                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-//                    LogUtil.i(TAG,"Update the voip setting");
-//                    userInfo.setSdkAccount(voipUserName);
-//                    userInfo.setSdkPassword(voipPassword);
-//                }
+
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                //TODO TEST
-//                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
-//                    sdkuserInfo.username = "2886544004";
-//                    sdkuserInfo.password = "Vconf2015!";
-//                } else {
-//                    sdkuserInfo.username = "2886544005";
-//                    sdkuserInfo.password = "Vconf2015!";
-//                }
-//                //TODO TEST
                 LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 logining = true;
-                Intent intent = new Intent(RegisterActivity.this, MainFragmentActivity.class);
+                Intent intent = new Intent(CreateAccountActivity.this, MainFragmentActivity.class);
                 mVoipLogic.setNotNeedVoipLogin();
-                UserInfoCacheManager.clearTvIsLogout(getApplicationContext());
+                registingDialog.dismiss();
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
-//                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
-//                accountEditTv.requestFocus();
-                registerLayout.setFocusable(true);
-                registerLayout.requestFocus();
+                registerBtn.setFocusable(true);
+                registerBtn.requestFocus();
                 registingDialog.dismiss();
 //                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 FailResponse response = (FailResponse) msg.obj;
@@ -97,17 +107,17 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
             case BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID:
                 showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                 logining = false;
-                registerLayout.setFocusable(true);
+                registerBtn.setFocusable(true);
                 registingDialog.dismiss();
-                registerLayout.requestFocus();
+                registerBtn.requestFocus();
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID:
                 if (logining) {
                     logining = false;
                 }
-                registerLayout.setFocusable(true);
+                registerBtn.setFocusable(true);
                 registingDialog.dismiss();
-                registerLayout.requestFocus();
+                registerBtn.requestFocus();
                 showToast(R.string.network_error_tip, Toast.LENGTH_SHORT, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID:
@@ -121,9 +131,9 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                     });
                     logining = false;
                 }
-                registerLayout.setFocusable(true);
+                registerBtn.setFocusable(true);
                 registingDialog.dismiss();
-                registerLayout.requestFocus();
+                registerBtn.requestFocus();
                 showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
                 break;
             default:
@@ -132,12 +142,19 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
     }
 
     @Override
-    protected void initDate() {
-
-    }
-
-    @Override
-    protected void initListener() {
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.contract_content:
+                showContract();
+                break;
+            case R.id.register_ll:
+                if (checkBox.isChecked()) {
+                    doRegister();
+                } else {
+                    showToast("请同意服务条款", Toast.LENGTH_SHORT, null);
+                }
+                break;
+        }
 
     }
 
@@ -154,25 +171,32 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         loginLogic.tvLogin(loginInfo);
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.register_ll:
-                registerLayout.setFocusable(false);
-                registingDialog.show();
-                autoLogin();
-                break;
-        }
+    private void showContract() {
+        ServiceContractDialog.show(this);
     }
 
-    private void showUpdateDialog() {
-        UpdateDialog.show(this);
-//        finish();
+    private void doRegister() {
+        registerBtn.setFocusable(false);
+        registingDialog.show();
+        autoLogin();
     }
 
     private void showUpdateDialog(String text) {
-        UpdateDialog.show(this, text);
+        UpdateDialog.show(this, text, true);
 //        finish();
+    }
+
+    private void createQRCode(String url, int size, final ImageView view) {
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(this, size), Color.parseColor("#000000"), Color.parseColor("#ffffff"), new QRCodeEncoder.Delegate() {
+            @Override
+            public void onEncodeQRCodeSuccess(Bitmap qrCode) {
+                view.setImageBitmap(qrCode);
+            }
+
+            @Override
+            public void onEncodeQRCodeFailure() {
+                LogUtil.e(TAG, "生成中文二维码失败");
+            }
+        });
     }
 }
