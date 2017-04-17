@@ -139,9 +139,9 @@ public class BussinessConstants {
         String TV_SOFT_WARE_KEY = "SoftwareVersion";
         String TV_ACCOUNT_KEY = "TvAccount";
         String TV_IS_LOGOUT_KEY = "TvIsLogou";
-        String download_url = "http://www.baidu.com";
-        String download_url_android = "http://www.baidu.com";
-        String download_url_ios = "http://www.baidu.com";
+        String download_url = ServerInfo.HTTP_ADDRESS + "/version/appQR";
+        String download_url_android = ServerInfo.HTTP_ADDRESS +"/version/androidQR";
+        String download_url_ios = ServerInfo.HTTP_ADDRESS +"/version/iosQR";
     }
 
     /**
