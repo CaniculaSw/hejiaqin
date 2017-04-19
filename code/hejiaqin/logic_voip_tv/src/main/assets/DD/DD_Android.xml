@@ -991,6 +991,9 @@
                 accessType="Get,Replace" />
 	  <node name="SupportVoLTE"
                 format="bool"
+                accessType="Get,Replace" />
+	  <node name="EnableDynamicResolution"
+                format="bool"
                 accessType="Get,Replace" />		
           <node name="CompactHdr"
                 format="bool"
@@ -1110,6 +1113,12 @@
                 format="chr"
                 accessType="Get,Replace" />
           <node name="CheckNonce"
+                format="chr"
+                accessType="Get,Replace" />
+          <node name="EpgAciton"
+                format="chr"
+                accessType="Get,Replace" />
+          <node name="EpgJumpUrl"
                 format="chr"
                 accessType="Get,Replace" /> 				
         </node>
@@ -1646,6 +1655,9 @@
                 accessType="Get,Replace" />
           <node name="StoreAddressList"
                 format="chr"
+                accessType="Get,Replace" />
+	  <node name="IsSupportAutoUplog"
+                format="bool"
                 accessType="Get,Replace" />
           <node name="StoreRetryTimer"
                 format="int"
