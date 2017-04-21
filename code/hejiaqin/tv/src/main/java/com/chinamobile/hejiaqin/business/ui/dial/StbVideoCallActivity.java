@@ -65,6 +65,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     private int mVideoHeight;
     private int mVideoWidth;
     private SurfaceView m_svLocalVideo;
+    private boolean m_localViewOpen = false;
 
     private int[] mMetrics = new int[2];
 
@@ -83,11 +84,11 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                 LogUtil.d(TAG,"mCameraPlugReciver rectLocal left" + rectLocal.left);
                 LogUtil.d(TAG,"mCameraPlugReciver rectLocal top"+ rectLocal.top);
                 LogUtil.d(TAG,"mCameraPlugReciver rectLocal right"+ rectLocal.right);
-                LogUtil.d(TAG,"mCameraPlugReciver rectLocal bottom"+ rectLocal.bottom);
+                LogUtil.d(TAG, "mCameraPlugReciver rectLocal bottom" + rectLocal.bottom);
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
-                CaaSSdkService.openLocalView();
+                openLocalVideo();
             } else {
-                CaaSSdkService.closeLocalView();
+                closeLocalVideo();
             }
         }
     };
@@ -178,6 +179,46 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
 
     private void createVideoView() {
         mCallSession.showVideoWindow();
+    }
+
+    private boolean openLocalVideo()
+    {
+
+        if (m_localViewOpen)
+        {
+            LogUtil.d(Const.TAG_CAAS, "openLocalVideo Camera already opened");
+            return true;
+        }
+
+        m_localViewOpen = true;
+
+        int iResult = -1;
+        iResult =  mCallSession.openLocalVideo();
+        if (0 != iResult)
+        {
+            m_localViewOpen = false;
+        }
+
+        LogUtil.d(Const.TAG_CAAS, "openLocalVideo Leave openCamera result is " + iResult);
+        return m_localViewOpen;
+    }
+
+    private boolean closeLocalVideo()
+    {
+        LogUtil.d(Const.TAG_CAAS, "closeLocalVideo Enter");
+
+        if (!m_localViewOpen)
+        {
+            LogUtil.d(Const.TAG_CAAS, "LocalVideo not opened");
+            return true;
+        }
+
+        int iResult = mCallSession.closeLocalVideo();
+        m_localViewOpen = false;
+
+        LogUtil.d(Const.TAG_CAAS, "Leave closeCamera result is " + iResult);
+
+        return 0 == iResult;
     }
 
     private Rect getFullScreenRect() {
