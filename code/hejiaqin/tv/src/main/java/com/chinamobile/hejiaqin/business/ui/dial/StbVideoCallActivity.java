@@ -178,7 +178,6 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     }
 
     private void createVideoView() {
-        openLocalVideo();
         mCallSession.showVideoWindow();
     }
 
