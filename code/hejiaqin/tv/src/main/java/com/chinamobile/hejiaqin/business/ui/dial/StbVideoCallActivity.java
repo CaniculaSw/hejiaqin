@@ -80,6 +80,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                 rectLocal.bottom = mMetrics[1] - mVideoPadding;
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 CaaSSdkService.openLocalView();
+                CaaSSdkService.showLocalVideoRender(true);
             } else {
                 CaaSSdkService.closeLocalView();
             }
