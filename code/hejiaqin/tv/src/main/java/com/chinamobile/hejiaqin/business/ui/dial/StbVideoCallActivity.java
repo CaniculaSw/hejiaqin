@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -61,6 +62,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     private int mVideoPadding;
     private int mVideoHeight;
     private int mVideoWidth;
+    private SurfaceView m_svLocalVideo;
 
     private int[] mMetrics = new int[2];
 
@@ -127,7 +129,6 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         mVideoPadding = StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_padding);
         mVideoHeight =StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_height);
         mVideoWidth= StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_width);
-
     }
 
     @Override
@@ -140,6 +141,8 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
             finish();
             return;
         }
+        m_svLocalVideo = (SurfaceView) findViewById(R.id.sv_localvideo);
+        m_svLocalVideo.setBackgroundDrawable(null);
         showTalking();
     }
 
