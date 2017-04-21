@@ -86,7 +86,6 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                 LogUtil.d(TAG,"mCameraPlugReciver rectLocal bottom"+ rectLocal.bottom);
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 CaaSSdkService.openLocalView();
-                CaaSSdkService.showLocalVideoRender(true);
             } else {
                 CaaSSdkService.closeLocalView();
             }
@@ -110,11 +109,18 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                 rectLocal.top = mMetrics[1] - mVideoPadding - mVideoHeight;
                 rectLocal.right = mVideoPadding + mVideoWidth;
                 rectLocal.bottom = mMetrics[1] - mVideoPadding;
-                LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal left" + rectLocal.left);
+                LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal left" + rectLocal.left);
                 LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal top"+ rectLocal.top);
                 LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal right"+ rectLocal.right);
                 LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal bottom"+ rectLocal.bottom);
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
+                CaaSSdkService.showLocalVideoRender(true);
+                Rect rectRemote = getFullScreenRect();
+                LogUtil.d(TAG,"rectRemote left" + rectRemote.left);
+                LogUtil.d(TAG,"rectRemote top"+ rectRemote.top);
+                LogUtil.d(TAG,"rectRemote right"+ rectRemote.right);
+                LogUtil.d(TAG, "rectRemote bottom" + rectRemote.bottom);
+                CaaSSdkService.setRemoteRenderPos(rectRemote, CallApi.VIDEO_LAYER_BOTTOM);
                 CaaSSdkService.showRemoteVideoRender(true);
             }
         }
@@ -172,12 +178,6 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
 
     private void createVideoView() {
         mCallSession.showVideoWindow();
-        Rect rectRemote = getFullScreenRect();
-        LogUtil.d(TAG,"rectRemote left" + rectRemote.left);
-        LogUtil.d(TAG,"rectRemote top"+ rectRemote.top);
-        LogUtil.d(TAG,"rectRemote right"+ rectRemote.right);
-        LogUtil.d(TAG,"rectRemote bottom"+ rectRemote.bottom);
-        CaaSSdkService.setRemoteRenderPos(rectRemote, CallApi.VIDEO_LAYER_BOTTOM);
     }
 
     private Rect getFullScreenRect() {
