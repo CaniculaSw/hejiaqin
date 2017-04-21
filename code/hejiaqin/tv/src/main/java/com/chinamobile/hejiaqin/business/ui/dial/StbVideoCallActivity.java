@@ -113,7 +113,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                 LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal left" + rectLocal.left);
                 LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal top"+ rectLocal.top);
                 LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal right"+ rectLocal.right);
-                LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal bottom"+ rectLocal.bottom);
+                LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal bottom" + rectLocal.bottom);
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 CaaSSdkService.showLocalVideoRender(true);
                 Rect rectRemote = getFullScreenRect();
@@ -178,6 +178,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     }
 
     private void createVideoView() {
+        openLocalVideo();
         mCallSession.showVideoWindow();
     }
 
