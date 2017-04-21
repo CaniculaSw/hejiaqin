@@ -71,22 +71,22 @@ public class HeApplication extends RCSApplication {
         LogUtil.w(TAG, "device=" + sDevice + "--Model=" + sModel);
 
         //非系统签名版本注销掉这段代码
-//        if (sDevice.contains("Hi3716CV200"))
-//        {
-//            Const.deviceType = Const.TYPE_3719C;
-//        }
-//        else if (sDevice.contains("Hi3719CV100"))
-//        {
-//            Const.deviceType = Const.TYPE_3719C;
-//        }
-//        else if (sDevice.contains("Hi3719MV100"))
-//        {
-//            Const.deviceType = Const.TYPE_3719M;
-//        }
-//        else if (sDevice.contains("Hi3798MV100"))
-//        {
-//            Const.deviceType = Const.TYPE_3798M;
-//        }
+        if (sDevice.contains("Hi3716CV200"))
+        {
+            Const.deviceType = Const.TYPE_3719C;
+        }
+        else if (sDevice.contains("Hi3719CV100"))
+        {
+            Const.deviceType = Const.TYPE_3719C;
+        }
+        else if (sDevice.contains("Hi3719MV100"))
+        {
+            Const.deviceType = Const.TYPE_3719M;
+        }
+        else if (sDevice.contains("Hi3798MV100"))
+        {
+            Const.deviceType = Const.TYPE_3798M;
+        }
         //非系统签名版本注销掉这段代码
 
         String deviceName = null;
