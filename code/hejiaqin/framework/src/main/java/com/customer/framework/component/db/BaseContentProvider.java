@@ -11,10 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteTransactionListener;
 import android.net.Uri;
 
-import java.util.ArrayList;
-
 import com.customer.framework.utils.LogUtil;
 
+import java.util.ArrayList;
+/***/
 public abstract class BaseContentProvider extends ContentProvider implements
         SQLiteTransactionListener
 {
@@ -372,7 +372,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
     {
         beforeTransactionCommit();
     }
-
+    /***/
     public void onRollback()
     {
     }

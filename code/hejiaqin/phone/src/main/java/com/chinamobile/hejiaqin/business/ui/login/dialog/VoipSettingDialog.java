@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-
+/***/
 public class VoipSettingDialog extends Dialog {
 
     public VoipSettingDialog(Context context) {
@@ -22,7 +22,7 @@ public class VoipSettingDialog extends Dialog {
     public VoipSettingDialog(Context context, int theme) {
         super(context, theme);
     }
-
+    /***/
     public static class Builder {
         private Context context;
         private String title;
@@ -46,10 +46,10 @@ public class VoipSettingDialog extends Dialog {
         private String userName;
         private String password;
         private int icon;
-        private String message;
+//        private String message;
         private boolean flag;
         private String positiveButtonText;
-        private View contentView;
+//        private View contentView;
         private OnClickListener positiveButtonClickListener;
         private String voipUserName;
         private String voipPassword;
@@ -59,7 +59,7 @@ public class VoipSettingDialog extends Dialog {
         }
 
         public Builder setMessage(String message) {
-            this.message = message;
+//            this.message = message;
             return this;
         }
 
@@ -69,7 +69,7 @@ public class VoipSettingDialog extends Dialog {
          * @return
          */
         public Builder setMessage(int message) {
-            this.message = (String) context.getText(message);
+//            this.message = (String) context.getText(message);
             return this;
         }
 
@@ -108,7 +108,7 @@ public class VoipSettingDialog extends Dialog {
         }
 
         public Builder setContentView(View v) {
-            this.contentView = v;
+//            this.contentView = v;
             return this;
         }
 
@@ -150,13 +150,13 @@ public class VoipSettingDialog extends Dialog {
             return this;
         }
 
-
+        /***/
         public VoipSettingDialog show() {
             final VoipSettingDialog dialog = create();
             dialog.show();
             return dialog;
         }
-
+        /***/
         public VoipSettingDialog create() {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -175,11 +175,11 @@ public class VoipSettingDialog extends Dialog {
                 tvTitle.setText(title);
             }
 
-            ImageView iv_icon = (ImageView) layout.findViewById(R.id.iv_icon);
+            ImageView ivIcon = (ImageView) layout.findViewById(R.id.iv_icon);
             if (icon == 0) {
-                iv_icon.setVisibility(View.GONE);
+                ivIcon.setVisibility(View.GONE);
             } else {
-                iv_icon.setVisibility(View.VISIBLE);
+                ivIcon.setVisibility(View.VISIBLE);
             }
 
             dialog.setCancelable(flag);

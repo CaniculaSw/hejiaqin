@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.basic.view;
 
 import android.content.Context;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -30,7 +29,7 @@ public class SelectableSearchView extends RelativeLayout {
     private ListView contactsListView;
     private View maskView;
     private ISearchListener listener;
-    private Handler handler;
+//    private Handler handler;
 
     public SelectableSearchView(Context context) {
         super(context);
@@ -143,10 +142,11 @@ public class SelectableSearchView extends RelativeLayout {
     public void setHint(String hint) {
         searchInput.setHint(hint);
     }
-
+    /***/
     public interface ISearchListener {
+        /***/
         void search(String input);
-
+        /***/
         void cancel();
     }
 

@@ -11,13 +11,13 @@ import android.os.CountDownTimer;
  */
 public class MyCountDownTimer extends CountDownTimer {
 
-    public static long MILL_IS_INFUTURE =60000;
+    public final static long MILL_IS_INFUTURE =60000;
 
-    public static long COUNTDOWN_INTERVAL =1000;
+    private final static long COUNTDOWN_INTERVAL =1000;
 
-    public static MyCountDownTimer myCountDownTimer;
+    private static MyCountDownTimer myCountDownTimer;
 
-    private long millisUntilFinished;
+    public long millisUntilFinished;
 
     /**
      * @param millisInFuture    总的时间
@@ -45,7 +45,7 @@ public class MyCountDownTimer extends CountDownTimer {
     public long getMillisUntilFinished() {
         return millisUntilFinished;
     }
-
+    /***/
     public void stop() {
         super.cancel();
         myCountDownTimer=null;

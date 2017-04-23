@@ -29,13 +29,13 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.VoipSettingDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
 
-
+/***/
 public class LoginActivity extends BasicActivity implements View.OnClickListener {
 
     private ILoginLogic loginLogic;
@@ -154,6 +154,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             case R.id.clear_btn:
                 accountEditTv.setText("");
                 accountEditTv.requestFocus();
+                break;
+            default:
                 break;
         }
     }

@@ -10,15 +10,15 @@ import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
+import com.chinamobile.hejiaqin.business.dbapdater.CallRecordDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.db.DatabaseInfo;
 import com.customer.framework.component.storage.StorageMgr;
 import com.customer.framework.component.time.DateTimeUtil;
@@ -70,6 +70,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getContext().startActivity(inComingIntent);
                     return;
+                default:
+                    break;
             }
         }
     };
@@ -77,10 +79,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private BroadcastReceiver mLoginStatusChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int old_status = intent.getIntExtra(LoginApi.PARAM_OLD_STATUS, -1);
-            int new_status = intent.getIntExtra(LoginApi.PARAM_NEW_STATUS, -1);
+            int oldStatus = intent.getIntExtra(LoginApi.PARAM_OLD_STATUS, -1);
+            int newStatus = intent.getIntExtra(LoginApi.PARAM_NEW_STATUS, -1);
             int reason = intent.getIntExtra(LoginApi.PARAM_REASON, -1);
-            switch (new_status) {
+            switch (newStatus) {
                 case LoginApi.STATUS_CONNECTED:
                     LogUtil.d(VoipLogic.TAG, "the status is STATUS_CONNECTED");
                     UserInfoCacheManager.saveVoipLogined(getContext());
@@ -109,6 +111,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 case LoginApi.STATUS_IDLE:
                     LogUtil.d(VoipLogic.TAG, "the status is STATUS_IDLE");
                     VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
+                    break;
+                default:
                     break;
             }
         }
@@ -195,17 +199,14 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
      * @param context 系统的context对象
      * @return LogicBuilder对象
      */
-    public static VoipLogic getInstance(Context context) {
+    public synchronized static VoipLogic getInstance(Context context) {
         if (instance == null) {
-            synchronized (VoipLogic.class) {
-                if (instance == null) {
-                    instance = new VoipLogic(context);
-                }
-            }
+            instance = new VoipLogic(context);
         }
         return instance;
     }
 
+    /***/
     public void registerVoipReceiver() {
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mLoginStatusChangedReceiver, new IntentFilter(LoginApi.EVENT_LOGIN_STATUS_CHANGED));
@@ -215,6 +216,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 .registerReceiver(mCallStatusChangedReceiver, new IntentFilter(CallApi.EVENT_CALL_STATUS_CHANGED));
     }
 
+    /***/
     public void unRegisterVoipReceiver() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mLoginStatusChangedReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallInvitationReceiver);
@@ -377,6 +379,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
     }
 
+    /***/
     public void delAllCallRecord() {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
@@ -387,6 +390,7 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         });
     }
 
+    /***/
     public void delCallRecord(final String[] ids) {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override

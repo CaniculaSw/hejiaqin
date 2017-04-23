@@ -38,8 +38,9 @@ import com.chinamobile.hejiaqin.tv.R;
  * @author Emil Sjölander
  */
 public class StickyListHeadersListView extends FrameLayout {
-
+    /***/
     public interface OnHeaderClickListener {
+        /***/
         void onHeaderClick(StickyListHeadersListView l, View header,
                            int itemPosition, long headerId, boolean currentlySticky);
     }
@@ -594,7 +595,7 @@ public class StickyListHeadersListView extends FrameLayout {
         // invalidating the list will trigger dispatchDraw()
         mList.invalidate();
     }
-
+    /***/
     public boolean areHeadersSticky() {
         return mAreHeadersSticky;
     }
@@ -781,15 +782,15 @@ public class StickyListHeadersListView extends FrameLayout {
     public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener) {
         mList.setOnItemSelectedListener(listener);
     }
-
+    /***/
     public void addHeaderView(View v, Object data, boolean isSelectable) {
         mList.addHeaderView(v, data, isSelectable);
     }
-
+    /***/
     public void addHeaderView(View v) {
         mList.addHeaderView(v);
     }
-
+    /***/
     public void removeHeaderView(View v) {
         mList.removeHeaderView(v);
     }
@@ -797,15 +798,15 @@ public class StickyListHeadersListView extends FrameLayout {
     public int getHeaderViewsCount() {
         return mList.getHeaderViewsCount();
     }
-    
+    /***/
     public void addFooterView(View v, Object data, boolean isSelectable) {
         mList.addFooterView(v, data, isSelectable);
     }
-
+    /***/
     public void addFooterView(View v) {
         mList.addFooterView(v);
     }
-
+    /***/
     public void removeFooterView(View v) {
         mList.removeFooterView(v);
     }
@@ -860,21 +861,21 @@ public class StickyListHeadersListView extends FrameLayout {
             }
         }
     }
-
+    /***/
     @TargetApi(Build.VERSION_CODES.FROYO)
     public void smoothScrollBy(int distance, int duration) {
         if (requireSdkVersion(Build.VERSION_CODES.FROYO)) {
             mList.smoothScrollBy(distance, duration);
         }
     }
-
+    /***/
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void smoothScrollByOffset(int offset) {
         if (requireSdkVersion(Build.VERSION_CODES.HONEYCOMB)) {
             mList.smoothScrollByOffset(offset);
         }
     }
-
+    /***/
     @SuppressLint("NewApi")
     @TargetApi(Build.VERSION_CODES.FROYO)
     public void smoothScrollToPosition(int position) {
@@ -888,14 +889,14 @@ public class StickyListHeadersListView extends FrameLayout {
             }
         }
     }
-
+    /***/
     @TargetApi(Build.VERSION_CODES.FROYO)
     public void smoothScrollToPosition(int position, int boundPosition) {
         if (requireSdkVersion(Build.VERSION_CODES.FROYO)) {
             mList.smoothScrollToPosition(position, boundPosition);
         }
     }
-
+    /***/
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void smoothScrollToPositionFromTop(int position, int offset) {
         if (requireSdkVersion(Build.VERSION_CODES.HONEYCOMB)) {
@@ -904,7 +905,7 @@ public class StickyListHeadersListView extends FrameLayout {
             mList.smoothScrollToPositionFromTop(position, offset);
         }
     }
-
+    /***/
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void smoothScrollToPositionFromTop(int position, int offset,
                                               int duration) {
@@ -1004,7 +1005,7 @@ public class StickyListHeadersListView extends FrameLayout {
     public boolean showContextMenu() {
         return mList.showContextMenu();
     }
-
+    /***/
     public void invalidateViews() {
         mList.invalidateViews();
     }

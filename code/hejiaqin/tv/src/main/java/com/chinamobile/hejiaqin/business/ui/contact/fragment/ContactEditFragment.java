@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
@@ -21,7 +18,7 @@ import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
+/***/
 public class ContactEditFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactEditFragment";
     private View headView;
@@ -55,12 +52,12 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
      */
     private ContactsInfo editContactsInfo;
     private boolean mIsFromRecent;
-
+    /***/
     public static ContactEditFragment newInstance() {
         ContactEditFragment fragment = new ContactEditFragment();
         return fragment;
     }
-
+    /***/
     public static ContactEditFragment newInstance(ContactsInfo contactsInfo,boolean isFromRecent) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
@@ -69,7 +66,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         fragment.setArguments(args);
         return fragment;
     }
-
+    /***/
     public static ContactEditFragment newInstance(String contactNumber,boolean isFromDialPage,boolean isFromRecent) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
@@ -115,6 +112,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_failed_toast);
+                break;
+            default:
                 break;
         }
     }
@@ -245,6 +244,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 break;
             case R.id.contact_info_save_layout:
                 doClickSubmit();
+                break;
+            default:
                 break;
         }
     }

@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -33,8 +32,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.dial.DialHelper;
-import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
@@ -44,7 +41,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+/***/
 public class ContactInfoActivity extends BasicFragmentActivity implements View.OnClickListener {
     public static final int REQUEST_CODE_EDIT_CONTACT = 10001;
     private static final String TAG = "ContactInfoActivity";
@@ -78,8 +75,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private List<Fragment> fragmentList;
 
-    private final int CONTACT_INFO_INDEX = 0;
-    private final int DIAL_INFO_INDEX = 1;
+    private static final int CONTACTINFOINDEX = 0;
+    private static final int DIALINFOINDEX = 1;
     //当前选中的项
     int currentIndex = -1;
 
@@ -252,13 +249,13 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
 
-        ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACT_INFO_INDEX);
+        ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACTINFOINDEX);
         contactInfoFragment.setContactsInfo(mContactsInfo);
         contactInfoFragment.refreshView();
     }
 
     private void showDialData(List<DialInfoGroup> callRecordList) {
-        DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIAL_INFO_INDEX);
+        DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIALINFOINDEX);
 
         if (null == callRecordList) {
             callRecordList = new ArrayList<DialInfoGroup>();
@@ -285,18 +282,20 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 this.finish();
                 break;
             case R.id.contact_info_layout:
-                if (currentIndex != CONTACT_INFO_INDEX) {
-                    switchFragment(CONTACT_INFO_INDEX);
+                if (currentIndex != CONTACTINFOINDEX) {
+                    switchFragment(CONTACTINFOINDEX);
                 }
                 break;
             case R.id.dial_info_layout:
-                if (currentIndex != DIAL_INFO_INDEX) {
-                    switchFragment(DIAL_INFO_INDEX);
+                if (currentIndex != DIALINFOINDEX) {
+                    switchFragment(DIALINFOINDEX);
                 }
                 break;
             case R.id.dial_img:
                 // TODO
                 onClickDialBtn();
+                break;
+            default:
                 break;
         }
     }
@@ -339,7 +338,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private void doClickTitleRight() {
         // 拨号详情tab页
-        if (currentIndex == DIAL_INFO_INDEX) {
+        if (currentIndex == DIALINFOINDEX) {
             if (!isDialInfoHasData()) {
                 return;
             }
@@ -376,6 +375,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_add_contact_failed_toast);
+                this.finish();
+                break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_del_contact_success_toast);
                 this.finish();
@@ -400,6 +401,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 if (null != contactsLogic) {
                     contactsLogic.queryContactCallRecords(mContactsInfo);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -570,6 +573,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                     }
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -621,7 +626,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     }
 
     private void showViewByCurIndex(int currentItem) {
-        if (currentItem == CONTACT_INFO_INDEX) {
+        if (currentItem == CONTACTINFOINDEX) {
             mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_pre);
             mContactInfoSelected.setVisibility(View.VISIBLE);
             mContactInfoUnSelected.setVisibility(View.GONE);
@@ -630,7 +635,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mDialInfoUnSelected.setVisibility(View.VISIBLE);
             titleLayout.rightBtn.setImageResource(isAppContact()
                     ? R.mipmap.title_icon_more_nor : R.mipmap.title_icon_add_nor);
-        } else if (currentItem == DIAL_INFO_INDEX) {
+        } else if (currentItem == DIALINFOINDEX) {
             mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_nor);
             mContactInfoSelected.setVisibility(View.GONE);
             mContactInfoUnSelected.setVisibility(View.VISIBLE);
@@ -643,7 +648,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     }
 
     private boolean isDialInfoHasData() {
-        DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIAL_INFO_INDEX);
+        DialInfoFragment dialInfoFragment = (DialInfoFragment) fragmentList.get(DIALINFOINDEX);
         return dialInfoFragment.hasData();
     }
 }

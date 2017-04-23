@@ -22,7 +22,7 @@ public class MyToast {
     public MyToast(Context context) {
         this.mContext = context;
     }
-
+    /***/
     public void showToast(int resId, int duration, Position pos) {
         android.widget.Toast toast = new android.widget.Toast(this.mContext);
         LayoutInflater inflate = (LayoutInflater)
@@ -38,7 +38,7 @@ public class MyToast {
         }
         toast.show();
     }
-
+    /***/
     public void showToast(String text, int duration, Position pos) {
         android.widget.Toast toast = new android.widget.Toast(this.mContext);
         LayoutInflater inflate = (LayoutInflater)
@@ -54,7 +54,7 @@ public class MyToast {
         }
         toast.show();
     }
-
+    /***/
     public void showToast(View view, int duration, Position pos) {
         android.widget.Toast toast = new android.widget.Toast(this.mContext);
         toast.setView(view);
@@ -65,8 +65,8 @@ public class MyToast {
         }
         toast.show();
     }
-
-    public class Position {
+    /***/
+    static public class Position {
         //起点位置(默认底部居中)
         public int gravity = Gravity.BOTTOM | Gravity.CENTER;
 

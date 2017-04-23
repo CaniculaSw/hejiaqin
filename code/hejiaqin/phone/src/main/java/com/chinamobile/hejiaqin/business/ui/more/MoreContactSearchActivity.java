@@ -126,6 +126,8 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
                     setData(resultContacts.getContactsInfos());
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -149,8 +151,8 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
         return contactType == Constant.CONTACT_TYPE_APP;
     }
 
-
-    public final class Constant {
+    /***/
+   static public final class Constant {
         public static final String INTENT_DATA_CONTACT_TYPE = "intent_data_contact_type";
 
         public static final int CONTACT_TYPE_APP = 0;

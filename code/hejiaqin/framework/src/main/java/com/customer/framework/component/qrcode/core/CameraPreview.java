@@ -1,4 +1,4 @@
-package com.customer.framework.component.qrCode.core;
+package com.customer.framework.component.qrcode.core;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
+/***/
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = CameraPreview.class.getSimpleName();
     private Camera mCamera;
@@ -29,7 +29,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCameraConfigurationManager.initFromCameraParameters(mCamera);
         }
     }
-
+    /***/
     public void initCameraPreview() {
         if (mCamera != null) {
             getHolder().addCallback(this);
@@ -60,7 +60,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mSurfaceCreated = false;
         stopCameraPreview();
     }
-
+    /***/
     public void showCameraPreview() {
         if (mCamera != null) {
             try {
@@ -77,7 +77,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
         }
     }
-
+    /***/
     public void stopCameraPreview() {
         if (mCamera != null) {
             try {
@@ -90,13 +90,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
         }
     }
-
+    /***/
     public void openFlashlight() {
         if (flashLightAvaliable()) {
             mCameraConfigurationManager.openFlashlight(mCamera);
         }
     }
-
+    /***/
     public void closeFlashlight() {
         if (flashLightAvaliable()) {
             mCameraConfigurationManager.closeFlashlight(mCamera);

@@ -25,12 +25,12 @@ import com.chinamobile.hejiaqin.business.ui.login.CreateAccountActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
-
+/***/
 public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
@@ -47,7 +47,7 @@ public class MainActivity extends BasicActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 RespondInfo info = (RespondInfo) msg.obj;
                 if (!StringUtil.isNullOrEmpty(info.getMsg())) {
-                    LogUtil.d(TAG, "msg is: " + info.getMsg());
+                    LogUtil.d(tag, "msg is: " + info.getMsg());
                     showUpdateDialog(info.getMsg());
                 } else {
                     showUpdateDialog();
@@ -91,7 +91,7 @@ public class MainActivity extends BasicActivity {
 //                jumpToMainFragmentActivity();
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
 //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-//                    LogUtil.i(TAG,"Update the voip setting");
+//                    LogUtil.i(tag,"Update the voip setting");
 //                    userInfo.setSdkAccount(voipUserName);
 //                    userInfo.setSdkPassword(voipPassword);
 //                }
@@ -99,7 +99,7 @@ public class MainActivity extends BasicActivity {
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
+                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:

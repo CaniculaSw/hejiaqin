@@ -114,6 +114,8 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
             case BussinessConstants.SettingMsgID.BIND_DENIED:
                 switchHeaderView(false, null);
                 break;
+            default:
+                break;
         }
     }
 
@@ -136,6 +138,8 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
                 break;
             case R.id.back_iv:
                 doBack();
+                break;
+            default:
                 break;
         }
     }

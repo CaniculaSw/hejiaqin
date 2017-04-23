@@ -38,7 +38,7 @@ public class RecordSearchUnit implements Serializable {
 
     }
 
-
+    /***/
     public boolean search(String input) {
         if (StringUtil.isNullOrEmpty(input)) {
             return false;

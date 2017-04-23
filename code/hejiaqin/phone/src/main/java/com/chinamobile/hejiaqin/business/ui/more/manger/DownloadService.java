@@ -11,10 +11,6 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
-import com.customer.framework.component.storage.StorageMgr;
-
 import java.io.File;
 
 /**
@@ -24,7 +20,7 @@ public class DownloadService extends Service {
     private DownloadManager dm;
     private long enqueue = -1L;
     private BroadcastReceiver receiver;
-    private VersionInfo versionInfo;
+//    private VersionInfo versionInfo;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -33,7 +29,7 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        versionInfo = (VersionInfo) StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getObject(BussinessConstants.Setting.VERSION_INFO_KEY);
+//        versionInfo = (VersionInfo) StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getObject(BussinessConstants.Setting.VERSION_INFO_KEY);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

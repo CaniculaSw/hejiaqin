@@ -1,6 +1,6 @@
 package com.customer.framework.component.net;
 
-
+/***/
 public interface INetCallBack
 {
     /**

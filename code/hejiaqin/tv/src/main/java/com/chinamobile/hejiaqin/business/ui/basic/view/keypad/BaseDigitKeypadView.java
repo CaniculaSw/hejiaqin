@@ -8,8 +8,8 @@ import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
+
 import com.chinamobile.hejiaqin.tv.R;
 
 /**
@@ -184,7 +184,7 @@ public abstract class BaseDigitKeypadView extends LinearLayout
 //            }
 //        });
     }
-    
+    /***/
     public void playTone(int tone)
     {
         // 系统“按键操作音”未开启
@@ -348,7 +348,7 @@ public abstract class BaseDigitKeypadView extends LinearLayout
         }
         
     }
-
+    /***/
     public void keyDown(int keyCode,String keyStr)
     {
          if(mKeyPressEvent!=null)

@@ -136,10 +136,11 @@ public class SearchView extends RelativeLayout {
     public void setHint(String hint) {
         searchInput.setHint(hint);
     }
-
+    /***/
     public interface ISearchListener {
+        /***/
         void search(String input);
-
+        /***/
         void cancel();
     }
 

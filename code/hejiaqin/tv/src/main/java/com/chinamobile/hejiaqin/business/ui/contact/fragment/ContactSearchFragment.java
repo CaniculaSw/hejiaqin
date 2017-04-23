@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
@@ -23,7 +22,7 @@ import com.chinamobile.hejiaqin.tv.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/***/
 public class ContactSearchFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactSearchFragment";
 
@@ -38,12 +37,12 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
     private IContactsLogic contactsLogic;
 
     private int totalContactNum;
-
+    /***/
     public static ContactSearchFragment newInstance() {
         ContactSearchFragment fragment = new ContactSearchFragment();
         return fragment;
     }
-
+    /***/
     public static ContactSearchFragment newInstance(int totalContactNum) {
         ContactSearchFragment fragment = new ContactSearchFragment();
         fragment.totalContactNum = totalContactNum;
@@ -82,6 +81,8 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
                 }
 
                 startSearch(inputText.toString().trim());
+                break;
+            default:
                 break;
         }
     }
@@ -198,6 +199,8 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
             case R.id.search_del:
                 searchInput.setText("");
                 FocusManager.getInstance().requestFocus(searchInput);
+                break;
+            default:
                 break;
         }
     }

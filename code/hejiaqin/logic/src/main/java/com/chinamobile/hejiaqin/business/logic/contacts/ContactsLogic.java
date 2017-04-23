@@ -3,8 +3,8 @@ package com.chinamobile.hejiaqin.business.logic.contacts;
 import android.text.TextUtils;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.dbApdater.CallRecordDbAdapter;
-import com.chinamobile.hejiaqin.business.dbApdater.ContactsDbAdapter;
+import com.chinamobile.hejiaqin.business.dbapdater.CallRecordDbAdapter;
+import com.chinamobile.hejiaqin.business.dbapdater.ContactsDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.ContactsInfoManager;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
@@ -19,22 +19,20 @@ import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
-import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
+import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
-import com.customer.framework.utils.StringUtil;
 import com.customer.framework.utils.TimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -416,7 +414,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             }
         });
     }
-
+    /***/
     public void queryContactCallRecords(final ContactsInfo contactsInfo) {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
@@ -454,7 +452,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             }
         });
     }
-
+    /***/
     public void deleteContactCallRecords(final ContactsInfo contactsInfo) {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override

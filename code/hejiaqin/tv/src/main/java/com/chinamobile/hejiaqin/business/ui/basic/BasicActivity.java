@@ -75,7 +75,7 @@ public abstract class BasicActivity extends BaseActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(connectionReceiver, intentFilter);
-        MyActivityManager.getInstance().AddActivity(this);
+        MyActivityManager.getInstance().addActivity(this);
     }
 
     @Override
@@ -98,8 +98,8 @@ public abstract class BasicActivity extends BaseActivity {
         LogUtil.setContext(getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
-        LogUtil.d(TAG, "device:" + Build.DEVICE);
-        LogUtil.d(TAG,"model:" + Build.MODEL);
+        LogUtil.d(tag, "device:" + Build.DEVICE);
+        LogUtil.d(tag,"model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }
@@ -133,6 +133,8 @@ public abstract class BasicActivity extends BaseActivity {
                 if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
                     finish();
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -174,8 +176,8 @@ public abstract class BasicActivity extends BaseActivity {
                     IContactsLogic contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
                     String names = XmlParseUtil.getElemString(req.getContent(), "Param1");
                     String numbers = XmlParseUtil.getElemString(req.getContent(), "Param2");
-                    String nameList[] = names.split(";");
-                    String numList[] = numbers.split(";");
+                    String[] nameList = names.split(";");
+                    String[] numList = numbers.split(";");
                     for (int i = 0; i < nameList.length; i++) {
                         contactsLogic.addAppContact(nameList[i], numList[i], null);
                     }
@@ -183,9 +185,9 @@ public abstract class BasicActivity extends BaseActivity {
                     showToast("保存联系人成功", Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
-                    LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
+                    LogUtil.d(tag, "NURSE_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
-                        if(Const.deviceType == Const.TYPE_OTHER) {
+                        if(Const.getDeviceType() == Const.TYPE_OTHER) {
                             Intent intent2 = new Intent(this, VtNurseCallActivity.class);
                             this.startActivity(intent2);
                         } else {
@@ -205,14 +207,14 @@ public abstract class BasicActivity extends BaseActivity {
     }
 
     protected void showToast(int resId) {
-        MyToast.Position position = myToast.new Position();
+        MyToast.Position position = new MyToast.Position();
         showToast(resId, Toast.LENGTH_SHORT, position);
     }
 
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
-
+    /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
     }
@@ -240,7 +242,7 @@ public abstract class BasicActivity extends BaseActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new hejiaqinProgressDialog(this, null);
+        waitDialog = new HejiaqinProgressDialog(this, null);
         waitDialog.show();
     }
 
@@ -257,7 +259,7 @@ public abstract class BasicActivity extends BaseActivity {
     protected void doNetworkDisConnect() {
 
     }
-
+    /***/
     public void startActivityForResult(Intent intent, int requestCode) {
         intent.putExtra("requestCode", requestCode);
         super.startActivityForResult(intent, requestCode);

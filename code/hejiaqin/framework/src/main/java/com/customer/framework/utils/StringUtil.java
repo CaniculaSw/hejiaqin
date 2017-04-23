@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/***/
 public class StringUtil {
     /**
      * 整型转换错误码
@@ -341,7 +341,7 @@ public class StringUtil {
         }
         return base64Str.replace('+', '_').replace('/', '-');
     }
-
+    /***/
     public static String bytes2Hex(byte[] input) {
         StringBuilder stringBuilder = new StringBuilder("");
         if (input == null || input.length <= 0) {
@@ -357,9 +357,9 @@ public class StringUtil {
         }
         return stringBuilder.toString();
     }
-
+    /***/
     public static byte[] hex2Bytes(String input) {
-        if (input == null || input.equals("")) {
+        if (input == null || "".equals(input)) {
             return null;
         }
         input = input.toUpperCase();

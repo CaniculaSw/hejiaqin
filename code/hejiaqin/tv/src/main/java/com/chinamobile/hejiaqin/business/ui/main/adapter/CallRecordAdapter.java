@@ -25,15 +25,15 @@ public class CallRecordAdapter extends BaseAdapter {
     private Context mContext;
     private IContactsLogic mContactsLogic;
     private List<CallRecord> mData;
-    private onClickListen mListen;
+    private OnClickListen mListen;
 
-    public CallRecordAdapter(Context context, IContactsLogic contactsLogic,onClickListen listen) {
+    public CallRecordAdapter(Context context, IContactsLogic contactsLogic,OnClickListen listen) {
         this.mContext = context;
         this.mContactsLogic = contactsLogic;
         mData = new ArrayList<CallRecord>();
         this.mListen = listen;
     }
-
+    /***/
     public void refreshData(List<CallRecord> data) {
         if (data != null) {
             mData = data;
@@ -50,7 +50,7 @@ public class CallRecordAdapter extends BaseAdapter {
         }
         return mData.get(position);
     }
-
+    /***/
     public void delData(String[] ids)
     {
         if (mData == null) {
@@ -159,7 +159,8 @@ public class CallRecordAdapter extends BaseAdapter {
         }
         return convertView;
     }
-    public class HolderView {
+    /***/
+   static public class HolderView {
 
         private ImageView callRecordTypeIv;
         private TextView callRecordNameTv;
@@ -176,11 +177,12 @@ public class CallRecordAdapter extends BaseAdapter {
 
         }
     }
-
-    public static abstract class onClickListen
+    /***/
+    public static abstract class OnClickListen
     {
+        /***/
         public abstract void onClick(CallRecord info,int position);
-
+        /***/
         public abstract void onLongClick(int position);
     }
 

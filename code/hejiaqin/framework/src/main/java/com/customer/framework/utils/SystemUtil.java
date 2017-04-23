@@ -16,7 +16,7 @@ import android.webkit.WebView;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
+/***/
 public final class SystemUtil {
 	private static final String TAG = "SystemUtil";
 	private static final String RESP_CACHE_CLASS_NAME = "android.net.http.HttpResponseCache";
@@ -100,7 +100,7 @@ public final class SystemUtil {
 		}
 		return packageInfo;
 	}
-
+	/***/
 	public static String getuserAgent(Context context) {
 		WebView webview;
 		webview = new WebView(context);
@@ -108,7 +108,7 @@ public final class SystemUtil {
 		WebSettings settings = webview.getSettings();
 		return settings.getUserAgentString();
 	}
-
+	/***/
 	public static void vibrate(Context context) {
 		Vibrator vibrator = (Vibrator) context
 				.getSystemService(Context.VIBRATOR_SERVICE);
@@ -118,7 +118,7 @@ public final class SystemUtil {
 		long[] pattern = { 0, 1000 };
 		vibrator.vibrate(pattern, -1);
 	}
-
+	/***/
 	public static boolean openApk(Context context, String packageName) {
 		try {
 			PackageManager packageManager = context.getPackageManager();
@@ -132,14 +132,14 @@ public final class SystemUtil {
 		}
 		return false;
 	}
-
+	/***/
 	public static void goHome(Context ctx) {
 		Intent home = new Intent(Intent.ACTION_MAIN);
 		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		home.addCategory(Intent.CATEGORY_HOME);
 		ctx.startActivity(home);
 	}
-
+	/***/
 	public static void unInstallAPK(Context context, String packageName) {
 		try {
 			Uri packageURI = Uri.parse("package:" + packageName);
@@ -155,7 +155,7 @@ public final class SystemUtil {
 	public static int getAndroidSDKVersion() {
 		return Build.VERSION.SDK_INT;
 	}
-
+	/***/
 	public static void enableHttpResponseCache(Context context, long cacheSize) {
 		try {
 			File httpCacheDir = new File(context.getCacheDir(), "http");
@@ -167,7 +167,7 @@ public final class SystemUtil {
 			Log.i(TAG, "enableHttpResponseCache:no cache");
 		}
 	}
-
+	/***/
 	public static void flushRespCache() {
 		try {
 			Object respCache = Class.forName(RESP_CACHE_CLASS_NAME)
@@ -181,7 +181,7 @@ public final class SystemUtil {
 			Log.i(TAG, "flushRespCache:nocache");
 		}
 	}
-
+	/***/
 	public static void printCachehitCount() {
 		try {
 			Object respCache = Class.forName(RESP_CACHE_CLASS_NAME)

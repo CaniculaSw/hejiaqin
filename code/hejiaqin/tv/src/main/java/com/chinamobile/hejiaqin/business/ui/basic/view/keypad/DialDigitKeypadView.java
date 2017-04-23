@@ -3,7 +3,6 @@ package com.chinamobile.hejiaqin.business.ui.basic.view.keypad;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.chinamobile.hejiaqin.tv.R;

@@ -66,7 +66,7 @@ public class RegistingDialog extends Dialog {
 //            @Override
 //            public void onClick(View v) {
 //                if (closed) {
-//                    LogUtil.w(TAG, "is closed");
+//                    LogUtil.w(tagString, "is closed");
 //                    return;
 //                }
 //                if(onClickAnswer)
@@ -179,7 +179,7 @@ public class RegistingDialog extends Dialog {
         setCancelable(false);
         super.show();
     }
-
+    /***/
     public void show(String tips) {
         setCancelable(false);
         show();

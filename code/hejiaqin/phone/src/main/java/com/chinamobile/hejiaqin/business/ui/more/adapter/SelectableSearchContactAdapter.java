@@ -3,7 +3,6 @@ package com.chinamobile.hejiaqin.business.ui.more.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,7 +23,7 @@ import java.util.Set;
  */
 public class SelectableSearchContactAdapter extends BaseAdapter {
     private Context mContext;
-    private LayoutInflater inflater;
+//    private LayoutInflater inflater;
     private AdapterViewHolder holder;
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
     private CheckBox mCheckBox;
@@ -33,7 +32,7 @@ public class SelectableSearchContactAdapter extends BaseAdapter {
 
     public SelectableSearchContactAdapter(Context context, Handler handler) {
         mContext = context;
-        inflater = LayoutInflater.from(context);
+//        inflater = LayoutInflater.from(context);
         this.handler = handler;
     }
 
@@ -61,10 +60,11 @@ public class SelectableSearchContactAdapter extends BaseAdapter {
 
     private void initView(int position, AdapterViewHolder holder) {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
-        holder.setText(R.id.contact_name_text, contactsInfo.getName());
+
         mCheckBox = (CheckBox) holder.getView(R.id.more_select_contact_cb);
 
         if (contactsInfo != null) {
+            holder.setText(R.id.contact_name_text, contactsInfo.getName());
             if (selectedSet.contains(contactsInfo)) {
                 mCheckBox.setChecked(true);
             } else {

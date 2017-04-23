@@ -2,7 +2,6 @@ package com.chinamobile.hejiaqin.business.ui.more.adapter;
 
 import android.content.Context;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -29,7 +28,7 @@ import java.util.Set;
  */
 public class MissCallAdapter extends BaseAdapter implements ListAdapter {
 
-    private LayoutInflater inflater;
+//    private LayoutInflater inflater;
     private List<ContactCallLog> missCallmessages = new ArrayList<ContactCallLog>();
     private boolean isShow = false;
     private Context mContext;
@@ -39,7 +38,7 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
     public MissCallAdapter(Context context) {
         super();
         mContext = context;
-        inflater = LayoutInflater.from(context);
+//        inflater = LayoutInflater.from(context);
         selected = new HashSet<ContactCallLog>();
     }
 
@@ -107,7 +106,7 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         notifyDataSetChanged();
     }
 
-
+    /***/
     public void deleteSelectedData() {
         Iterator<ContactCallLog> iterator = selected.iterator();
         while (iterator.hasNext()) {
@@ -118,7 +117,7 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         }
         notifyDataSetChanged();
     }
-
+    /***/
     public void unSelectedAllData() {
         selected.clear();
         notifyDataSetChanged();

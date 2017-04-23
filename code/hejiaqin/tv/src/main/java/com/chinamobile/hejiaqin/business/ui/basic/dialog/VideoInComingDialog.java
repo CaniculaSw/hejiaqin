@@ -1,16 +1,9 @@
 package com.chinamobile.hejiaqin.business.ui.basic.dialog;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,12 +16,10 @@ import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.dial.StbVideoCallActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.VtVideoCallActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.logic.ILogic;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
@@ -194,7 +185,7 @@ public class VideoInComingDialog extends BasicActivity {
 
         return null;
     }
-
+    /***/
     public void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
@@ -207,7 +198,7 @@ public class VideoInComingDialog extends BasicActivity {
                 finish();
                 break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                if(Const.deviceType == Const.TYPE_OTHER) {
+                if(Const.getDeviceType() == Const.TYPE_OTHER) {
                     LogUtil.d(TAG,"VtVideoCallActivity incoming");
                     Intent intentTalking = new Intent(VideoInComingDialog.this, VtVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
@@ -239,6 +230,8 @@ public class VideoInComingDialog extends BasicActivity {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
+                break;
+            default:
                 break;
         }
     }

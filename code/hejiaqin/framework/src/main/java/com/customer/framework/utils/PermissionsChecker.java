@@ -13,7 +13,7 @@ import android.os.Build;
  */
 public class PermissionsChecker {
 
-
+    /***/
     public static boolean lacksPermissions(Context context,String... permissions) {
         for (String permission : permissions) {
             if (lacksPermission(context,permission)) {

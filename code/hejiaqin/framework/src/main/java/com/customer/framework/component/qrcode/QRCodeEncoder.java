@@ -1,4 +1,4 @@
-package com.customer.framework.component.qrCode;
+package com.customer.framework.component.qrcode;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -130,7 +130,7 @@ public class QRCodeEncoder {
         }
         return bitmap;
     }
-
+    /***/
     public interface Delegate {
         /**
          * 创建二维码图片成功

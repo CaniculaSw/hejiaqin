@@ -13,12 +13,12 @@ import com.chinamobile.hejiaqin.tv.R;
  * author:
  * Created: 2016/5/7.
  */
-public class hejiaqinProgressDialog extends Dialog {
-    public hejiaqinProgressDialog(Context context, String strMessage) {
+public class HejiaqinProgressDialog extends Dialog {
+    public HejiaqinProgressDialog(Context context, String strMessage) {
         this(context, R.style.CustomProgressDialog, strMessage);
     }
 
-    public hejiaqinProgressDialog(Context context, int theme, String strMessage) {
+    public HejiaqinProgressDialog(Context context, int theme, String strMessage) {
         super(context, theme);
         this.setContentView(R.layout.hejiaqin_progress_dialog);
         this.getWindow().getAttributes().gravity = Gravity.CENTER;

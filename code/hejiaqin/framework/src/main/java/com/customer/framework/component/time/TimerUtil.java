@@ -2,7 +2,7 @@ package com.customer.framework.component.time;
 
 import android.os.Handler;
 import android.os.Message;
-
+/***/
 public class TimerUtil extends Thread {
 	private int mInterval;
 	private Handler mHandler;
@@ -21,7 +21,7 @@ public class TimerUtil extends Thread {
 		this.mMessageID = messageID;
 		this.mTotalSecond = totalSecond;
 	}
-
+	/***/
 	public void cancel() {
 		mRunning = false;
 	}

@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-
+/***/
 public class CustomDialog extends Dialog {
 
     public CustomDialog(Context context) {
@@ -21,7 +21,7 @@ public class CustomDialog extends Dialog {
     public CustomDialog(Context context, int theme) {
         super(context, theme);
     }
-
+    /***/
     public static class Builder {
         private Context context;
         private String title;
@@ -135,13 +135,13 @@ public class CustomDialog extends Dialog {
             this.negativeButtonClickListener = listener;
             return this;
         }
-
+        /***/
         public CustomDialog show(){
             final CustomDialog dialog = create();
             dialog.show();
             return dialog;
         }
-
+        /***/
         public CustomDialog create() {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -160,12 +160,12 @@ public class CustomDialog extends Dialog {
                 tvTitle.setText(title);
             }
 
-            ImageView iv_icon = (ImageView)layout.findViewById(R.id.iv_icon);
+            ImageView ivIcon = (ImageView)layout.findViewById(R.id.iv_icon);
             if (icon == 0) {
-                iv_icon.setVisibility(View.GONE);
+                ivIcon.setVisibility(View.GONE);
             } else {
-                iv_icon.setVisibility(View.VISIBLE);
-                //ImageLoader.getInstance().displayImage("res:/" + icon, iv_icon, ImageLoadOptions.option);
+                ivIcon.setVisibility(View.VISIBLE);
+                //ImageLoader.getInstance().displayImage("res:/" + icon, ivIcon, ImageLoadOptions.option);
             }
 
             dialog.setCancelable(flag);

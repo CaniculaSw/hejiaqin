@@ -1,4 +1,4 @@
-package com.customer.framework.component.qrCode.core;
+package com.customer.framework.component.qrcode.core;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,7 +18,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.customer.framework.R;
-
+/***/
 public class ScanBoxView extends View {
     private static int mMoveStepDistance;
     private int mAnimDelayTime;
@@ -67,7 +67,7 @@ public class ScanBoxView extends View {
 
         mMoveStepDistance = DisplayUtils.dp2px(context, 2);
     }
-
+    /***/
     public void initCustomAttrs(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.QRCodeView);
         final int count = typedArray.getIndexCount();
@@ -123,7 +123,7 @@ public class ScanBoxView extends View {
         mAnimDelayTime = (int) ((1.0f * mAnimTime * mMoveStepDistance) / mRectWidth);
         mHalfCornerSize = 1.0f * mCornerSize / 2;
     }
-
+    /***/
     public static Bitmap makeTintBitmap(Bitmap src, int tintColor) {
         Bitmap result = Bitmap.createBitmap(src.getWidth(), src.getHeight(), src.getConfig());
         Canvas canvas = new Canvas(result);

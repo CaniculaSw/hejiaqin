@@ -24,8 +24,8 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.call.CallApi;
@@ -35,7 +35,7 @@ import com.huawei.rcs.system.SysApi;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
+/***/
 public class NurseCallActivity extends BasicActivity implements View.OnClickListener {
 
     //视频布局(呼出和通话中)
@@ -154,7 +154,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         Intent extParas = new Intent();
         extParas.putExtra(CallApi.EN_CALL_VIDEO_EXTPARAS_NURSE, 1);
         mCallSession = CallApi.initiateVideoCallWithExtParas(CommonUtils.getCountryPhoneNumber(mCalleeNumber), extParas);
-        LogUtil.d(TAG,mCallSession.isNurse()? "nurse":"not nurse");
+        LogUtil.d(tag,mCallSession.isNurse()? "nurse":"not nurse");
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.nurse_outing_error, Toast.LENGTH_SHORT, null);
             closed = true;
@@ -351,7 +351,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (closed) {
-            LogUtil.w(TAG, "is closed");
+            LogUtil.w(tag, "is closed");
         }
         switch (v.getId()) {
             case R.id.hangup_layout:
@@ -371,6 +371,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 }
                 finish();
                 break;
+            default:
+                break;
         }
 
     }
@@ -381,7 +383,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         switch (msg.what) {
             case BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID:
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                LogUtil.d(TAG,"NURSE_CALL_ON_TALKING_MSG_ID");
+                LogUtil.d(tag,"NURSE_CALL_ON_TALKING_MSG_ID");
                 showTalking();
                 break;
             case BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID:
@@ -404,6 +406,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                         }, 3000);
                     }
                 }
+                break;
+            default:
                 break;
         }
 

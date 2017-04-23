@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
+import com.chinamobile.hejiaqin.business.dbapdater.SystemMessageDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.SystemMessage;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;

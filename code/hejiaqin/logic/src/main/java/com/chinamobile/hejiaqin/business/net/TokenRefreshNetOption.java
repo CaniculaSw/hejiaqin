@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-
+/***/
 public class TokenRefreshNetOption extends NetOption {
 
     private String tokenRefreshUrl = "/user/refreshToken";
@@ -80,7 +80,7 @@ public class TokenRefreshNetOption extends NetOption {
     public Context getContext() {
         return mContext;
     }
-
+    /***/
     public void send(final INetCallBack httpCallback) {
         super.send(httpCallback);
     }

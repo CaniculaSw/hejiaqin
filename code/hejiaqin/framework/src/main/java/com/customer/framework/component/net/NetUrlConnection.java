@@ -33,6 +33,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+/***/
 public class NetUrlConnection {
     /**
      * 打印日志标示
@@ -223,24 +224,32 @@ public class NetUrlConnection {
 //                        os.writeBytes("Content-Transfer-Encoding: binary" + LINE_FEED);
                         sb.append(LINE_FEED);
                         os.write(sb.toString().getBytes("UTF-8"));
-
-                        FileInputStream inputStream = new FileInputStream(file);
-                        int bytesAvailable = inputStream.available();
-                        int maxBufferSize = 1024;
-                        int bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                        byte[] buffer = new byte[bufferSize];
                         int count = 0;
-                        // read file and write it into form...
-                        int bytesRead = inputStream.read(buffer, 0, bufferSize);
-                        while (bytesRead > 0) {
-                            count += bytesRead;
-                            os.write(buffer, 0, bufferSize);
-                            bytesAvailable = inputStream.available();
-                            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                            bytesRead = inputStream.read(buffer, 0, bufferSize);
+                        FileInputStream inputStream = null;
+                        try {
+                            inputStream = new FileInputStream(file);
+                            int bytesAvailable = inputStream.available();
+                            int maxBufferSize = 1024;
+                            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                            byte[] buffer = new byte[bufferSize];
+
+                            // read file and write it into form...
+                            int bytesRead = inputStream.read(buffer, 0, bufferSize);
+                            while (bytesRead > 0) {
+                                count += bytesRead;
+                                os.write(buffer, 0, bufferSize);
+                                bytesAvailable = inputStream.available();
+                                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                bytesRead = inputStream.read(buffer, 0, bufferSize);
+                            }
+                        } catch (Exception e) {
+                            LogUtil.d(TAG, e.getMessage());
+                        } finally {
+                            if (inputStream != null) {
+                                inputStream.close();
+                            }
                         }
-                        inputStream.close();
-                        inputStream = null;
+
                         LogUtil.i(TAG, "Writted byte is: " + count);
                         LogUtil.i(TAG, "The length of file is: " + file.length());
                         os.write(LINE_FEED.getBytes("UTF-8"));

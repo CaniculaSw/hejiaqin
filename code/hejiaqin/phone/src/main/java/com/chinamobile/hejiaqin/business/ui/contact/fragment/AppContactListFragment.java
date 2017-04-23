@@ -47,6 +47,8 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
                 searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
                 sideBarView.setVisibility(adapter.isEmpty() ? View.GONE : View.VISIBLE);
                 break;
+            default:
+                break;
         }
     }
 
@@ -132,6 +134,8 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
                 // TODO
                 LogUtil.d(TAG, "start search");
                 enterSearchView();
+                break;
+            default:
                 break;
         }
     }

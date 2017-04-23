@@ -5,8 +5,6 @@ import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
@@ -35,8 +33,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     LinearLayout aboutLL;
     LinearLayout downloadAppLL;
 
-    private ILoginLogic loginLogic;
-    private IVoipLogic mVoipLogic;
+//    private ILoginLogic loginLogic;
+//    private IVoipLogic mVoipLogic;
 
     private static final String TAG = "SettingFragment";
 
@@ -113,15 +111,16 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     protected void initLogics() {
-        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
-        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+//        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
+//        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
     public void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
-
+            default:
+                break;
         }
     }
 

@@ -5,19 +5,15 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
-import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
-
+/***/
 public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactInfoFragment";
 
@@ -67,7 +63,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     public void setContactsInfo(ContactsInfo contactsInfo) {
         mContactsInfo = contactsInfo;
     }
-
+    /***/
     public void refreshView() {
         if (null == mContactsInfo) {
             return;

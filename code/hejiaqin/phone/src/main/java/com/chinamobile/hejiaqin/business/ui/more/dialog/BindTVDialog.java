@@ -19,7 +19,10 @@ import com.chinamobile.hejiaqin.business.ui.more.SelectContactAndBindActivity;
 public class BindTVDialog extends Dialog {
     private Context mContext;
     private ClickListener mClickListener;
-    private TextView mByScanTv, mByInputTv, mByContactTv, mByCancleTv;
+    private TextView mByScanTv;
+    private TextView mByInputTv;
+    private TextView mByContactTv;
+    private TextView mByCancleTv;
 
     public BindTVDialog(Context context) {
         super(context);

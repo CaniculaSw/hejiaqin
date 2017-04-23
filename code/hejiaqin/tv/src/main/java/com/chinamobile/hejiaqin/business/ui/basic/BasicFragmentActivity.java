@@ -79,7 +79,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(connectionReceiver, intentFilter);
-        MyActivityManager.getInstance().AddActivity(this);
+        MyActivityManager.getInstance().addActivity(this);
     }
 
     @Override
@@ -129,8 +129,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     IContactsLogic contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
                     String names = XmlParseUtil.getElemString(req.getContent(), "Param1");
                     String numbers = XmlParseUtil.getElemString(req.getContent(), "Param2");
-                    String nameList[] = names.split(";");
-                    String numList[] = numbers.split(";");
+                    String[] nameList = names.split(";");
+                    String[] numList = numbers.split(";");
                     for (int i = 0; i < nameList.length; i++) {
                         contactsLogic.addAppContact(nameList[i], numList[i], null);
                     }
@@ -138,9 +138,9 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     showToast("保存联系人成功", Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
-                    LogUtil.d(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
+                    LogUtil.d(tagString, "NURSE_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
-                        if(Const.deviceType == Const.TYPE_OTHER) {
+                        if (Const.getDeviceType() == Const.TYPE_OTHER) {
                             Intent intent2 = new Intent(this, VtNurseCallActivity.class);
                             this.startActivity(intent2);
                         } else {
@@ -161,8 +161,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         LogUtil.setContext(getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
-        LogUtil.d(TAG, "device:" + Build.DEVICE);
-        LogUtil.d(TAG, "model:" + Build.MODEL);
+        LogUtil.d(tagString, "device:" + Build.DEVICE);
+        LogUtil.d(tagString, "model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }
@@ -197,6 +197,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     finish();
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -216,7 +218,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
-
+    /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
     }
@@ -236,7 +238,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new hejiaqinProgressDialog(this, null);
+        waitDialog = new HejiaqinProgressDialog(this, null);
         waitDialog.show();
     }
 
@@ -245,12 +247,12 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             waitDialog.cancel();
         }
     }
-
+    /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
-
+    /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;
     }

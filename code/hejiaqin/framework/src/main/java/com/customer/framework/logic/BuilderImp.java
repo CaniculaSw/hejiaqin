@@ -20,10 +20,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public abstract class BuilderImp implements ILBuilder
-{
+/***/
+public abstract class BuilderImp implements ILBuilder {
 
-    public static BuilderImp instance;
+    private static BuilderImp instance;
 
     private static final String TAG = "BaseLogicBuilder";
 
@@ -37,8 +37,7 @@ public abstract class BuilderImp implements ILBuilder
      *
      * @param context 系统的context对象
      */
-    protected BuilderImp(Context context)
-    {
+    protected BuilderImp(Context context) {
         init(context);
         initAllLogics(context);
     }
@@ -49,11 +48,9 @@ public abstract class BuilderImp implements ILBuilder
      *
      * @param context 系统的context对象
      */
-    private void initAllLogics(Context context)
-    {
+    private void initAllLogics(Context context) {
         Set<Entry<String, ILogic>> logics = mLogicCache.entrySet();
-        for (Entry<String, ILogic> logicEntry : logics)
-        {
+        for (Entry<String, ILogic> logicEntry : logics) {
             ILogic logic = logicEntry.getValue();
             logicEntry.getValue().init(context);
         }
@@ -66,8 +63,7 @@ public abstract class BuilderImp implements ILBuilder
      *
      * @param interfaceClass logic的接口类
      */
-    public void removeLogic(Class<?> interfaceClass)
-    {
+    public void removeLogic(Class<?> interfaceClass) {
         mLogicCache.remove(interfaceClass.getName());
     }
 
@@ -78,17 +74,13 @@ public abstract class BuilderImp implements ILBuilder
      * @param interfaceClass logic的接口类
      * @param logic          ILogic的实现类
      */
-    protected void registerLogic(Class<?> interfaceClass, ILogic logic)
-    {
+    protected void registerLogic(Class<?> interfaceClass, ILogic logic) {
         String interfaceName = interfaceClass.getName();
         Class<?> logicClass = logic.getClass();
         if (isInterface(logicClass, interfaceName)
-                && isInterface(logicClass, ILogic.class.getName()))
-        {
+                && isInterface(logicClass, ILogic.class.getName())) {
             mLogicCache.put(interfaceName, logic);
-        }
-        else
-        {
+        } else {
             Log.w(TAG, "Register logic(" + logicClass.getName()
                     + ") failed.", new Throwable());
         }
@@ -101,11 +93,9 @@ public abstract class BuilderImp implements ILBuilder
      *
      * @param handler UI的handler对象
      */
-    public void addHandlerToAllLogics(Handler handler)
-    {
+    public void addHandlerToAllLogics(Handler handler) {
         Set<Entry<String, ILogic>> logics = mLogicCache.entrySet();
-        for (Entry<String, ILogic> logicEntry : logics)
-        {
+        for (Entry<String, ILogic> logicEntry : logics) {
             ILogic logic = logicEntry.getValue();
             logic.addHandler(handler);
         }
@@ -118,11 +108,9 @@ public abstract class BuilderImp implements ILBuilder
      *
      * @param handler UI的handler对象
      */
-    public void removeHandlerToAllLogics(Handler handler)
-    {
+    public void removeHandlerToAllLogics(Handler handler) {
         Set<Entry<String, ILogic>> logics = mLogicCache.entrySet();
-        for (Entry<String, ILogic> logicEntry : logics)
-        {
+        for (Entry<String, ILogic> logicEntry : logics) {
             ILogic logic = logicEntry.getValue();
             logic.removeHandler(handler);
         }
@@ -135,8 +123,7 @@ public abstract class BuilderImp implements ILBuilder
      * @param interfaceClass logic接口类
      * @return logic对象
      */
-    public ILogic getLogicByInterfaceClass(Class<?> interfaceClass)
-    {
+    public ILogic getLogicByInterfaceClass(Class<?> interfaceClass) {
         return mLogicCache.get(interfaceClass.getName());
     }
 
@@ -147,33 +134,23 @@ public abstract class BuilderImp implements ILBuilder
      * @param szInterface 接口类名称
      * @return 是否实现了接口
      */
-    private boolean isInterface(Class<?> c, String szInterface)
-    {
+    private boolean isInterface(Class<?> c, String szInterface) {
         Class<?>[] face = c.getInterfaces();
-        for (int i = 0, j = face.length; i < j; i++)
-        {
-            if (face[i].getName().equals(szInterface))
-            {
+        for (int i = 0, j = face.length; i < j; i++) {
+            if (face[i].getName().equals(szInterface)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 Class<?>[] face1 = face[i].getInterfaces();
-                for (int x = 0; x < face1.length; x++)
-                {
-                    if (face1[x].getName().equals(szInterface))
-                    {
+                for (int x = 0; x < face1.length; x++) {
+                    if (face1[x].getName().equals(szInterface)) {
                         return true;
-                    }
-                    else if (isInterface(face1[x], szInterface))
-                    {
+                    } else if (isInterface(face1[x], szInterface)) {
                         return true;
                     }
                 }
             }
         }
-        if (null != c.getSuperclass())
-        {
+        if (null != c.getSuperclass()) {
             return isInterface(c.getSuperclass(), szInterface);
         }
         return false;
@@ -186,4 +163,13 @@ public abstract class BuilderImp implements ILBuilder
      * @param context 系统的context对象
      */
     protected abstract void init(Context context);
+
+    public static BuilderImp getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(BuilderImp instance) {
+        BuilderImp.instance = instance;
+    }
+
 }

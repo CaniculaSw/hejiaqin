@@ -1,29 +1,21 @@
 package com.chinamobile.hejiaqin.business.ui.contact.fragment;
 
-import android.content.Context;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.tv.R;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
-
+/***/
 public class DialInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "DialInfoFragment";
-    private LayoutInflater inflater;
-
-    private LinearLayout dialInfoLayout;
+//    private LayoutInflater inflater;
+//
+//    private LinearLayout dialInfoLayout;
 
     private List<DialInfoGroup> mDialInfoGroupList = new ArrayList<>();
 
@@ -44,9 +36,9 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
 
     @Override
     protected void initView(View view) {
-        inflater = (LayoutInflater) getContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
-        dialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
+//        inflater = (LayoutInflater) getContext().getSystemService
+//                (Context.LAYOUT_INFLATER_SERVICE);
+//        dialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
     }
 
     @Override
@@ -70,7 +62,7 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
         mDialInfoGroupList.clear();
         mDialInfoGroupList.addAll(dialInfoGroupList);
     }
-
+    /***/
     public void refreshView() {
 //        if(!super.isCreateView)
 //        {
@@ -115,7 +107,7 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
 //            }
 //        }
     }
-
+    /***/
     public boolean hasData() {
         return null != mDialInfoGroupList && !mDialInfoGroupList.isEmpty();
     }

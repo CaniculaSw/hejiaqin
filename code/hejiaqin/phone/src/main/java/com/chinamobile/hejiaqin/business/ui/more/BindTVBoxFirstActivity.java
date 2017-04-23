@@ -31,6 +31,8 @@ public class BindTVBoxFirstActivity extends BasicActivity implements View.OnClic
                 startActivity(intent);
                 finish();
                 break;
+            default:
+                break;
         }
     }
 

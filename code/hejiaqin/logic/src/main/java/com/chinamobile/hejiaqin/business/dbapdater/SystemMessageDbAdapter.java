@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.dbApdater;
+package com.chinamobile.hejiaqin.business.dbapdater;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -37,7 +37,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         }
         return mSystemMessageDbAdapter;
     }
-
+    /***/
     public void add(SystemMessage systemMessage) {
         if (null == systemMessage) {
             return;
@@ -51,7 +51,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
                         .withValues(contentValues).build());
         super.applyBatch(operationList);
     }
-
+    /***/
     public List<SystemMessage> queryAll() {
         List<SystemMessage> systemMessagesList = new ArrayList<SystemMessage>();
         String[] columns =  {"_ID","title","time"};
@@ -70,6 +70,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         }
         return systemMessagesList;
     }
+    /***/
     public SystemMessage querySystemMessageByID(String id) {
        SystemMessage systemMessage = new SystemMessage();
         String[] columns =  {"title","time","content"};
@@ -85,7 +86,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         }
         return systemMessage;
     }
-
+    /***/
     public void deleteSystemMessageByIDs(String[] ids) {
             if (ids == null || ids.length == 0) {
                 return;
@@ -98,7 +99,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
             }
             super.applyBatch(operationList);
     }
-
+    /***/
     public void deleteSystemMessageByID(String id) {
         if (id == null) {
             return;

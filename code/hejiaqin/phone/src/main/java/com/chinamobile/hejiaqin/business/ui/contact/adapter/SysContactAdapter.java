@@ -148,11 +148,11 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
         notifyDataSetChanged();
     }
 
-    class HeaderViewHolder {
+   static class HeaderViewHolder {
         TextView text;
     }
 
-    class ViewHolder {
+   static class ViewHolder {
         TextView text;
         View convertView;
     }

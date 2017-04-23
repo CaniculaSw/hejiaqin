@@ -6,7 +6,7 @@ import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/***/
 public class NetRequest
 {
     /**

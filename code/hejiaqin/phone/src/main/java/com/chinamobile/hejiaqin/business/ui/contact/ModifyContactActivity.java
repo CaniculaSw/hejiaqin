@@ -2,14 +2,11 @@ package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Message;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
@@ -18,16 +15,14 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
+/***/
 public class ModifyContactActivity extends BasicActivity implements View.OnClickListener {
 
     public static final int REQUEST_CODE_INPUT_NAME = 10001;
@@ -159,6 +154,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
             case R.id.contact_number_layout:
                 doClickNumberLayout();
                 break;
+            default:
+                break;
         }
     }
 
@@ -187,6 +184,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_edit_contact_failed_toast);
+                break;
+            default:
                 break;
         }
     }
@@ -234,6 +233,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                     numberText.setText(newNumber);
                     showTitleRightIcon();
                 }
+                break;
+            default:
                 break;
         }
     }

@@ -104,6 +104,8 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
                     PhotoManage.getInstance(this).sendPhotoEnd(data);
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -122,6 +124,7 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
                 break;
             case R.id.more_user_avatar_ci:
                 changeAvatar();
+                break;
             default:
                 break;
         }

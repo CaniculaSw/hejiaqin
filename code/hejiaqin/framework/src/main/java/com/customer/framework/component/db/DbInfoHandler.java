@@ -22,7 +22,7 @@ import javax.xml.parsers.SAXParserFactory;
  * Created by Administrator on 2016/3/3.
  */
 public class DbInfoHandler extends DefaultHandler {
-    private String strXmlTag = null;
+//    private String strXmlTag = null;
 
     private DatabaseInfo databaseInfo;
 
@@ -33,7 +33,7 @@ public class DbInfoHandler extends DefaultHandler {
     private DatabaseInfo.Table table;
 
     private DatabaseInfo.Field field;
-
+    /***/
     public void doParse(DatabaseInfo inDatabaseInfo, String inStrToParse)
             throws ParserConfigurationException, SAXException, IOException {
 
@@ -84,15 +84,15 @@ public class DbInfoHandler extends DefaultHandler {
      */
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
             throws SAXException {
-        strXmlTag = localName;
-        if (localName.equals("table")) {
+//        strXmlTag = localName;
+        if ("table".equals(localName)) {
             table = new DatabaseInfo.Table();
             tableList.add(table);
             fileList = new ArrayList<DatabaseInfo.Field>();
             table.setListFiled(fileList);
             table.setName(atts.getValue("name"));
         }
-        if (localName.equals("field")) {
+        if ("field".equals(localName)) {
             field = new DatabaseInfo.Field();
             field.setName(atts.getValue("name"));
             field.setType(atts.getValue("type"));
@@ -111,7 +111,7 @@ public class DbInfoHandler extends DefaultHandler {
      * @throws SAXException XML异常
      */
     public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-        strXmlTag = null;
+//        strXmlTag = null;
     }
 
     /**

@@ -23,13 +23,15 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
-import com.customer.framework.component.qrCode.QRCodeEncoder;
-import com.customer.framework.component.qrCode.core.DisplayUtils;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
+import com.customer.framework.component.qrcode.QRCodeEncoder;
+import com.customer.framework.component.qrcode.core.DisplayUtils;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
-
+/**
+ * Created by Administrator on 2015/12/21.
+ */
 
 public class LoginActivity extends BasicActivity implements View.OnClickListener {
     ImageButton qrCode;
@@ -62,7 +64,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
 
     @Override
     protected void initDate() {
-        createQRCode(BussinessConstants.Login.download_url, 210, qrCode);
+        createQRCode(BussinessConstants.Login.DOWNLOAD_URL, 210, qrCode);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
+                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
@@ -167,7 +169,7 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
 
             @Override
             public void onEncodeQRCodeFailure() {
-                LogUtil.e(TAG, "生成中文二维码失败");
+                LogUtil.e(tag, "生成中文二维码失败");
             }
         });
     }

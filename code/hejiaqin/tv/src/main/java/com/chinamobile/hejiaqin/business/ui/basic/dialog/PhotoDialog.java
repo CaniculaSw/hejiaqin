@@ -11,17 +11,15 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
+import com.chinamobile.hejiaqin.tv.R;
 
 import java.io.File;
 
 
-
+/***/
 public class PhotoDialog extends Dialog {
 
     private Context mContext;
@@ -31,13 +29,15 @@ public class PhotoDialog extends Dialog {
     public static final int CAMERA_CODE = 2;//相机
     public static final int CROP_CODE = 3;//裁剪
 
-    private static PhotoDialog mPhotoDialog;
+//    private static PhotoDialog mPhotoDialog;
 
     private FragmentActivity mContext2;
-    private TextView tv_photo, tv_camera, tv_dismiss;
-    private RelativeLayout rl_photo;
-    private RelativeLayout rl_camera;
-    private RelativeLayout rl_dismiss;
+//    private TextView tvPhoto;
+//    private TextView tvCamera;
+//    private TextView tvDismiss;
+    private RelativeLayout rlPhoto;
+    private RelativeLayout rlCamera;
+    private RelativeLayout rlDismiss;
     private ClickListener mClickListener;
 
     public PhotoDialog(Context context) {
@@ -64,12 +64,12 @@ public class PhotoDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_photo_layout);
         mClickListener = new ClickListener();
-        rl_photo = (RelativeLayout)findViewById(R.id.rl_photo);
-        rl_camera = (RelativeLayout)findViewById(R.id.rl_camera);
-        rl_dismiss = (RelativeLayout)findViewById(R.id.rl_dismiss);
-        rl_photo.setOnClickListener(mClickListener);
-        rl_camera.setOnClickListener(mClickListener);
-        rl_dismiss.setOnClickListener(mClickListener);
+        rlPhoto = (RelativeLayout)findViewById(R.id.rl_photo);
+        rlCamera = (RelativeLayout)findViewById(R.id.rl_camera);
+        rlDismiss = (RelativeLayout)findViewById(R.id.rl_dismiss);
+        rlPhoto.setOnClickListener(mClickListener);
+        rlCamera.setOnClickListener(mClickListener);
+        rlDismiss.setOnClickListener(mClickListener);
 
     }
 
@@ -114,6 +114,8 @@ public class PhotoDialog extends Dialog {
                 case R.id.rl_dismiss:
                     //取消键
                     dismiss();
+                    break;
+                default:
                     break;
             }
         }

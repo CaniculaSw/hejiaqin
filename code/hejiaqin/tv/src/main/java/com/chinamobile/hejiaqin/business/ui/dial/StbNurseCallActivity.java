@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceView;
@@ -26,7 +25,7 @@ import com.huawei.rcs.system.SysApi;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/***/
 public class StbNurseCallActivity extends BasicActivity implements View.OnClickListener {
 
     private TextView mTalkingTimeTv;
@@ -156,7 +155,7 @@ public class StbNurseCallActivity extends BasicActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (closed) {
-            LogUtil.w(TAG, "is closed");
+            LogUtil.w(tag, "is closed");
         }
         switch (v.getId()) {
             case R.id.hangup_layout:
@@ -167,6 +166,8 @@ public class StbNurseCallActivity extends BasicActivity implements View.OnClickL
                 break;
             case R.id.back_layout:
                 moveTaskToBack(true);
+                break;
+            default:
                 break;
         }
 
@@ -189,6 +190,8 @@ public class StbNurseCallActivity extends BasicActivity implements View.OnClickL
                         }, 3000);
                     }
                 }
+                break;
+            default:
                 break;
         }
 

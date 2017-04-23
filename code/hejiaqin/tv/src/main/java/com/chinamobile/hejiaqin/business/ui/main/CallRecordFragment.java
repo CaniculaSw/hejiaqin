@@ -16,7 +16,6 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordConfirmDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
@@ -87,6 +86,8 @@ public class CallRecordFragment extends BasicFragment {
                     mCallRecordAdapter.delData((String[]) msg.obj);
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -113,7 +114,7 @@ public class CallRecordFragment extends BasicFragment {
         delRecordLayout = view.findViewById(R.id.del_record_layout);
         recordCancelLayout = view.findViewById(R.id.record_cancel_layout);
 
-        mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic, new CallRecordAdapter.onClickListen() {
+        mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic, new CallRecordAdapter.OnClickListen() {
             public void onClick(CallRecord info,int position) {
                 deleteLayout.requestFocus();
                 VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic,false);

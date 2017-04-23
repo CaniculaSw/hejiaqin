@@ -76,7 +76,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(connectionReceiver, intentFilter);
-        MyActivityManager.getInstance().AddActivity(this);
+        MyActivityManager.getInstance().addActivity(this);
     }
 
     @Override
@@ -122,7 +122,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     UserInfoCacheManager.clearVersionInfo(getApplicationContext());
                     break;
                 case BussinessConstants.SettingMsgID.BIND_DENIED:
-                    LogUtil.i(TAG, "对方不同意你的绑定请求");
+                    LogUtil.i(tagString, "对方不同意你的绑定请求");
                     showToast("对方不同意你的绑定请求", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_DENIED:
@@ -185,6 +185,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     finish();
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -204,7 +206,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
-
+    /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
     }
@@ -224,7 +226,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new hejiaqinProgressDialog(this, null);
+        waitDialog = new HeJiaQinProgressDialog(this, null);
         waitDialog.show();
     }
 
@@ -233,12 +235,12 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             waitDialog.cancel();
         }
     }
-
+    /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
-
+    /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;
     }

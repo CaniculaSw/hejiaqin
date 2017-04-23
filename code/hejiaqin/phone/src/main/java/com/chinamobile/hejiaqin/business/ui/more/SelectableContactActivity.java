@@ -77,6 +77,8 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
             case BussinessConstants.SettingMsgID.STATUS_SEND_FAILED:
                 postSendContactSuccessfull(false);
                 break;
+            default:
+                break;
 
         }
     }

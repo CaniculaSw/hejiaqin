@@ -26,11 +26,11 @@ import com.customer.framework.utils.LogUtil;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/***/
 public abstract class BaseFragmentActivity extends FragmentActivity
 {
 
-    protected String TAG = this.getClass().getSimpleName();
+    protected String tagString = this.getClass().getSimpleName();
 
     /**
      * 该activity持有的handler类
@@ -53,7 +53,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
 
     protected void onCreate(Bundle savedInstanceState)
     {
-        LogUtil.d(TAG, "onCreate");
+        LogUtil.d(tagString, "onCreate");
         super.onCreate(savedInstanceState);
         if (!isInit())
         {
@@ -61,7 +61,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
             initSystem(getApplicationContext());
         }
         if (isHandlerToAllLogic()) {
-            BuilderImp.instance.addHandlerToAllLogics(getHandler());
+            BuilderImp.getInstance().addHandlerToAllLogics(getHandler());
         }
         try
         {
@@ -69,13 +69,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
         catch (Exception e)
         {
-            Log.e(TAG, "Init logics failed :" + e.getMessage(), e);
+            Log.e(tagString, "Init logics failed :" + e.getMessage(), e);
         }
     }
 
     @Override
     protected void onResume() {
-        LogUtil.d(TAG, "onResume");
+        LogUtil.d(tagString, "onResume");
         super.onResume();
     }
 
@@ -85,7 +85,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         //回收是不保存fragments
         if(outState!=null)
         {
-            String FRAGMENTS_TAG = "android:support:fragments";
+            final String FRAGMENTS_TAG = "android:support:fragments";
             outState.remove(FRAGMENTS_TAG);
         }
     }
@@ -180,7 +180,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     protected final boolean isInit()
     {
-        return BuilderImp.instance != null;
+        return BuilderImp.getInstance() != null;
     }
 
     /**
@@ -206,7 +206,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     public static ILBuilder getLogicBuilder()
     {
-        return BuilderImp.instance;
+        return BuilderImp.getInstance();
     }
 
     /**
@@ -224,14 +224,14 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     protected final ILogic getLogicByInterfaceClass(Class<?> interfaceClass)
     {
         ILogic logic =
-                BuilderImp.instance.getLogicByInterfaceClass(interfaceClass);
+                BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
         if (!isHandlerToAllLogic() && null != logic && !mLogicSet.contains(logic)) {
             logic.addHandler(getHandler());
             mLogicSet.add(logic);
         }
         if (logic == null)
         {
-            Log.e(TAG, "Not found logic by interface class (" + interfaceClass
+            Log.e(tagString, "Not found logic by interface class (" + interfaceClass
                     + ")", new Throwable());
             return null;
         }
@@ -245,7 +245,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     protected static final void setLogicBuilder(BuilderImp logicBuilder)
     {
-        BuilderImp.instance = logicBuilder;
+        BuilderImp.setInstance(logicBuilder);
     }
 
     /**
@@ -258,7 +258,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     {
 
     }
-
+    /***/
     public void finish()
     {
         removeHandler();
@@ -282,9 +282,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity
                     logic.removeHandler(this.mHandler);
                 }
             }
-            else if (BuilderImp.instance != null)
+            else if (BuilderImp.getInstance() != null)
             {
-                BuilderImp.instance.removeHandlerToAllLogics(this.mHandler);
+                BuilderImp.getInstance().removeHandlerToAllLogics(this.mHandler);
             }
             this.mHandler = null;
         }

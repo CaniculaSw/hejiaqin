@@ -19,7 +19,7 @@ import android.widget.OverScroller;
 import android.widget.ScrollView;
 
 import com.chinamobile.hejiaqin.R;
-
+/***/
 public class StickyNavLayout extends LinearLayout {
 
     private View mTop;
@@ -33,7 +33,8 @@ public class StickyNavLayout extends LinearLayout {
     private OverScroller mScroller;
     private VelocityTracker mVelocityTracker;
     private int mTouchSlop;
-    private int mMaximumVelocity, mMinimumVelocity;
+    private int mMaximumVelocity;
+    private int mMinimumVelocity;
 
     private float mLastY;
     private boolean mDragging;
@@ -133,6 +134,8 @@ public class StickyNavLayout extends LinearLayout {
 //				}
 //			}
                 break;
+            default:
+                break;
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -200,6 +203,8 @@ public class StickyNavLayout extends LinearLayout {
                 mDragging = false;
                 recycleVelocityTracker();
                 break;
+            default:
+                break;
         }
         return super.onInterceptTouchEvent(ev);
     }
@@ -233,14 +238,15 @@ public class StickyNavLayout extends LinearLayout {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                if (!mScroller.isFinished())
+                if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
+                }
                 mLastY = y;
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float dy = y - mLastY;
 
-                Log.e("TAG", "dy = " + dy + " , y = " + y + " , mLastY = " + mLastY);
+                Log.e("tag", "dy = " + dy + " , y = " + y + " , mLastY = " + mLastY);
 
                 if (!mDragging && Math.abs(dy) > mTouchSlop) {
                     mDragging = true;
@@ -274,11 +280,13 @@ public class StickyNavLayout extends LinearLayout {
                 }
                 recycleVelocityTracker();
                 break;
+            default:
+                break;
         }
 
         return super.onTouchEvent(event);
     }
-
+    /***/
     public void fling(int velocityY) {
         mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, mTopViewHeight);
         invalidate();

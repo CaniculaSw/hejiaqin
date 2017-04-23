@@ -82,6 +82,8 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
             case R.id.back_iv:
                 doBack();
                 break;
+            default:
+                break;
         }
     }
 
@@ -145,7 +147,7 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
                 break;
             case BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID:
                 FailResponse response = (FailResponse) msg.obj;
-                if (response.equals("1")) {
+                if (response.getCode().equals("1")) {
                     displayErrorInfo(response.getMsg());
                 }
                 break;

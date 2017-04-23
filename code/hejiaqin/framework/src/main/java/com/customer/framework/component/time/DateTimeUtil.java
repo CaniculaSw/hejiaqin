@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/***/
 public class DateTimeUtil {
     private static final String TAG = "TimeUtil";
     private static final String DATE_SPLIT = "-";
@@ -208,7 +208,7 @@ public class DateTimeUtil {
         return null == date ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                 : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
-
+    /***/
     public static Date parseSTANDARDFormatToDate(String timeString) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timeString);
     }
@@ -287,7 +287,7 @@ public class DateTimeUtil {
         float timeZone = (float) ((offset * 1.0f) / (1000 * 60 * 60));
         return Float.toString(timeZone);
     }
-
+    /***/
     public static long parseUTCToLong(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
             LogUtil.w(TAG, "[parseUTC]strDate is null.");
@@ -304,7 +304,7 @@ public class DateTimeUtil {
         }
         return time;
     }
-
+    /***/
     public static Date parseUTCTDate(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
             LogUtil.w(TAG, "[parseUTC]strDate is null.");
@@ -318,7 +318,7 @@ public class DateTimeUtil {
         }
         return null;
     }
-
+    /***/
     public static Date parseYYYYMMDDSSToDate(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
             LogUtil.w(TAG, "[parseYYYYMMDDSSToDate]strDate is null.");
@@ -333,7 +333,7 @@ public class DateTimeUtil {
 
         return null;
     }
-
+    /***/
     public static Date parseSyncUTVToDate(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
             LogUtil.w(TAG, "[parseSyncUTVToDate]strDate is null.");
@@ -348,7 +348,7 @@ public class DateTimeUtil {
 
         return null;
     }
-
+    /***/
     public static String changeEmailTimeToUtC(String dateStr) throws ParseException {
         if (dateStr == null || dateStr.length() < "yyyy-MM-ddTHH:mm:ss".length()) {
             return dateStr;
@@ -394,11 +394,11 @@ public class DateTimeUtil {
         String time = formatter.format(cal.getTime());
         return time;
     }
-
+    /***/
     public static Long changeMinToMillSecond(String min) {
         return Long.parseLong(min) * 60 * 1000;
     }
-
+    /***/
     public static Long changeSecondToMillSecond(String second) {
         return Long.parseLong(second) * 1000;
     }
@@ -506,7 +506,7 @@ public class DateTimeUtil {
         SimpleDateFormat simpleFormat = new SimpleDateFormat(format);
         return simpleFormat.format(new Date());
     }
-
+    /***/
     public static String parseDate2Str(Date date, String format) {
         if (null == date) {
             return "";
@@ -514,7 +514,7 @@ public class DateTimeUtil {
         SimpleDateFormat df = new SimpleDateFormat(format);
         return df.format(date);
     }
-
+    /***/
     public static Date parseStr2Date(String tempDate, String format) {
         SimpleDateFormat df = new SimpleDateFormat(format);
         Date date = null;
@@ -526,7 +526,7 @@ public class DateTimeUtil {
         }
         return date;
     }
-
+    /***/
     public static String formatDateStr(String time, SimpleDateFormat in, SimpleDateFormat out) {
         if (time == null || in == null | out == null) {
             return time;
@@ -538,14 +538,14 @@ public class DateTimeUtil {
         }
         return time;
     }
-
+    /***/
     public static String formatDateObject(Date date, SimpleDateFormat out) {
         if (date == null || out == null) {
             return null;
         }
         return out.format(date);
     }
-
+    /***/
     public static Date parseDateString(String time, SimpleDateFormat in) {
         if (time == null || in == null) {
             return null;

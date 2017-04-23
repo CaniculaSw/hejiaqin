@@ -37,64 +37,64 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     private static final String TAG = "LoginHttpManager";
 
-    private final int action_base = 0;
+    private static final int ACTION_BASE = 0;
     /**
      * 获取验证码网络请求
      */
-    private final int get_verify_code_action = action_base + 1;
+    private static final int GET_VERIFY_CODE_ACTION = ACTION_BASE + 1;
 
     /**
      * 获取验证码网络请求
      */
-    private final int check_verify_code_action = action_base + 2;
+    private static final int CHECK_VERIFY_CODE_ACTION = ACTION_BASE + 2;
 
 
     /**
      * 注册网络请求第二步
      */
-    private final int register_secondStep_action = action_base + 4;
+    private static final int REGISTER_SECOND_STEP_ACTION = ACTION_BASE + 4;
 
     /**
      * 登录网络请求
      */
-    private final int login_action = action_base + 5;
+    private static final int LOGIN_ACTION = ACTION_BASE + 5;
 
     /**
      * 登出网络请求
      */
-    private final int logout_action = action_base + 6;
+    private static final int LOGOUT_ACTION = ACTION_BASE + 6;
 
     /**
      * 修改密码请求
      */
-    private final int update_pwd_action = action_base + 7;
+    private static final int UPDATE_PWD_ACTION = ACTION_BASE + 7;
 
 
     /**
      * 修改用户头像
      */
-    private final int update_photo = action_base + 11;
+    private static final int UPDATE_PHOTO = ACTION_BASE + 11;
 
     /**
      * 用户反馈
      */
-    private final int feed_back = action_base + 12;
+    private static final int FEED_BACK = ACTION_BASE + 12;
 
     /**
      * 忘记密码-获取短信验证码
      */
-    private final int forget_password_code_action = action_base + 9;
+    private static final int FORGET_PASSWORD_CODE_ACTION = ACTION_BASE + 9;
 
     /**
      * 忘记密码-验证短信验证码
      */
-    private final int check_forget_password_code_action = action_base + 10;
+    private static final int CHECK_FORGET_PASSWORD_CODE_ACTION = ACTION_BASE + 10;
 
-    private final int get_user_info_action = action_base + 13;
+    private static final int GET_USER_INFO_ACTION = ACTION_BASE + 13;
 
-    private final int tv_login_action = action_base + 14;
+    private static final int TV_LOGIN_ACTION = ACTION_BASE + 14;
 
-    private final int check_tv_account = action_base + 15;
+    private static final int CHECK_TV_ACCOUNT = ACTION_BASE + 15;
 
     /**
      * 请求action
@@ -116,44 +116,45 @@ public class LoginHttpManager extends AbsHttpManager {
     protected String getUrl() {
         String url = null;
         switch (this.mAction) {
-            case get_verify_code_action:
+            case GET_VERIFY_CODE_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/registCode";
                 break;
-            case check_verify_code_action:
+            case CHECK_VERIFY_CODE_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkRegistCode";
                 break;
-            case register_secondStep_action:
+            case REGISTER_SECOND_STEP_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/regist";
                 break;
-            case login_action:
+            case LOGIN_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/login";
                 break;
-            case logout_action:
+            case LOGOUT_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/logout";
                 break;
-            case forget_password_code_action:
+            case FORGET_PASSWORD_CODE_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/forgetPasswordCode";
                 break;
-            case check_forget_password_code_action:
+            case CHECK_FORGET_PASSWORD_CODE_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkForgetPasswordCode";
                 break;
-            case update_pwd_action:
+            case UPDATE_PWD_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/resetPassword";
                 break;
-            case update_photo:
+            case UPDATE_PHOTO:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/updatePhoto";
                 break;
-            case feed_back:
+            case FEED_BACK:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/feedback";
                 break;
-            case get_user_info_action:
+            case GET_USER_INFO_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/info";
                 break;
-            case tv_login_action:
+            case TV_LOGIN_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/tvLogin";
                 break;
-            case check_tv_account:
+            case CHECK_TV_ACCOUNT:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkTvAccount";
+                break;
             default:
                 break;
         }
@@ -168,19 +169,19 @@ public class LoginHttpManager extends AbsHttpManager {
     protected NetRequest.RequestMethod getRequestMethod() {
         NetRequest.RequestMethod method = NetRequest.RequestMethod.GET;
         switch (this.mAction) {
-            case get_verify_code_action:
-            case check_verify_code_action:
-            case register_secondStep_action:
-            case logout_action:
-            case login_action:
-            case forget_password_code_action:
-            case check_forget_password_code_action:
-            case update_pwd_action:
-            case update_photo:
-            case feed_back:
-            case get_user_info_action:
-            case tv_login_action:
-            case check_tv_account:
+            case GET_VERIFY_CODE_ACTION:
+            case CHECK_VERIFY_CODE_ACTION:
+            case REGISTER_SECOND_STEP_ACTION:
+            case LOGOUT_ACTION:
+            case LOGIN_ACTION:
+            case FORGET_PASSWORD_CODE_ACTION:
+            case CHECK_FORGET_PASSWORD_CODE_ACTION:
+            case UPDATE_PWD_ACTION:
+            case UPDATE_PHOTO:
+            case FEED_BACK:
+            case GET_USER_INFO_ACTION:
+            case TV_LOGIN_ACTION:
+            case CHECK_TV_ACCOUNT:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -193,15 +194,15 @@ public class LoginHttpManager extends AbsHttpManager {
     protected boolean isNeedToken() {
         boolean flag = true;
         switch (this.mAction) {
-            case get_verify_code_action:
-            case check_verify_code_action:
-            case register_secondStep_action:
-            case login_action:
-            case forget_password_code_action:
-            case check_forget_password_code_action:
-            case update_pwd_action:
-            case tv_login_action:
-            case check_tv_account:
+            case GET_VERIFY_CODE_ACTION:
+            case CHECK_VERIFY_CODE_ACTION:
+            case REGISTER_SECOND_STEP_ACTION:
+            case LOGIN_ACTION:
+            case FORGET_PASSWORD_CODE_ACTION:
+            case CHECK_FORGET_PASSWORD_CODE_ACTION:
+            case UPDATE_PWD_ACTION:
+            case TV_LOGIN_ACTION:
+            case CHECK_TV_ACCOUNT:
                 flag = false;
                 break;
             default:
@@ -213,8 +214,10 @@ public class LoginHttpManager extends AbsHttpManager {
     @Override
     protected NetRequest.ContentType getContentType() {
         switch (this.mAction) {
-            case update_photo:
+            case UPDATE_PHOTO:
                 return NetRequest.ContentType.FORM_DATA;
+            default:
+                break;
         }
         return NetRequest.ContentType.FORM_URLENCODED;
     }
@@ -231,34 +234,34 @@ public class LoginHttpManager extends AbsHttpManager {
                 }
                 Gson gson = new Gson();
                 switch (this.mAction) {
-                    case get_verify_code_action:
+                    case GET_VERIFY_CODE_ACTION:
                         break;
-                    case check_verify_code_action:
+                    case CHECK_VERIFY_CODE_ACTION:
                         break;
-                    case forget_password_code_action:
+                    case FORGET_PASSWORD_CODE_ACTION:
                         break;
-                    case check_forget_password_code_action:
+                    case CHECK_FORGET_PASSWORD_CODE_ACTION:
                         obj = gson.fromJson(data, PasswordInfo.class);
                         break;
-                    case register_secondStep_action:
+                    case REGISTER_SECOND_STEP_ACTION:
                         break;
-                    case tv_login_action:
-                    case login_action:
+                    case TV_LOGIN_ACTION:
+                    case LOGIN_ACTION:
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
-                    case check_tv_account:
+                    case CHECK_TV_ACCOUNT:
                         obj = data;
                         break;
-                    case logout_action:
+                    case LOGOUT_ACTION:
                         break;
-                    case update_pwd_action:
+                    case UPDATE_PWD_ACTION:
                         break;
-                    case feed_back:
+                    case FEED_BACK:
                         break;
-                    case update_photo:
+                    case UPDATE_PHOTO:
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
-                    case get_user_info_action:
+                    case GET_USER_INFO_ACTION:
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
                     default:
@@ -280,7 +283,7 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack     回调监听
      */
     public void getVerifyCode(final Object invoker, final NVPReqBody phoneReqBody, final IHttpCallBack callBack) {
-        this.mAction = get_verify_code_action;
+        this.mAction = GET_VERIFY_CODE_ACTION;
         this.mData = phoneReqBody;
         send(invoker, callBack);
     }
@@ -293,7 +296,7 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack     回调监听
      */
     public void getResetPasswordCode(final Object invoker, final NVPReqBody phoneReqBody, final IHttpCallBack callBack) {
-        this.mAction = forget_password_code_action;
+        this.mAction = FORGET_PASSWORD_CODE_ACTION;
         this.mData = phoneReqBody;
         send(invoker, callBack);
     }
@@ -306,7 +309,7 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack   回调监听
      */
     public void checkVerifyCode(final Object invoker, final VerifyInfo verifyInfo, final IHttpCallBack callBack) {
-        this.mAction = check_verify_code_action;
+        this.mAction = CHECK_VERIFY_CODE_ACTION;
         this.mData = verifyInfo;
         send(invoker, callBack);
     }
@@ -319,7 +322,7 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack   回调监听
      */
     public void checkResetPasswordCode(final Object invoker, final VerifyInfo verifyInfo, final IHttpCallBack callBack) {
-        this.mAction = check_forget_password_code_action;
+        this.mAction = CHECK_FORGET_PASSWORD_CODE_ACTION;
         this.mData = verifyInfo;
         send(invoker, callBack);
     }
@@ -332,7 +335,7 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack     回调监听
      */
     public void registerSecondStep(final Object invoker, final RegisterSecondStepInfo registerInfo, final IHttpCallBack callBack) {
-        this.mAction = register_secondStep_action;
+        this.mAction = REGISTER_SECOND_STEP_ACTION;
         this.mData = registerInfo;
         send(invoker, callBack);
     }
@@ -345,19 +348,21 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack  回调监听
      */
     public void login(final Object invoker, final LoginInfo loginInfo, final IHttpCallBack callBack) {
-        this.mAction = login_action;
+        this.mAction = LOGIN_ACTION;
         this.mData = loginInfo;
         send(invoker, callBack);
     }
 
+    /***/
     public void tvLogin(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
-        this.mAction = tv_login_action;
+        this.mAction = TV_LOGIN_ACTION;
         this.mData = loginInfo;
         send(invoker, callBack);
     }
 
+    /***/
     public void checkTvAccount(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
-        this.mAction = check_tv_account;
+        this.mAction = CHECK_TV_ACCOUNT;
         this.mData = loginInfo;
         send(invoker, callBack);
     }
@@ -369,7 +374,7 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack 回调监听
      */
     public void logout(final Object invoker, final IHttpCallBack callBack) {
-        this.mAction = logout_action;
+        this.mAction = LOGOUT_ACTION;
         this.mData = new NVPWithTokenReqBody();
         send(invoker, callBack);
     }
@@ -381,25 +386,27 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param callBack 回调监听
      */
     public void updatePassword(final Object invoker, final PasswordInfo info, final IHttpCallBack callBack) {
-        this.mAction = update_pwd_action;
+        this.mAction = UPDATE_PWD_ACTION;
         this.mData = info;
         send(invoker, callBack);
     }
 
+    /***/
     public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto, final IHttpCallBack callBack) {
-        this.mAction = update_photo;
+        this.mAction = this.UPDATE_PHOTO;
         this.mData = updatePhoto;
         send(invoker, callBack);
     }
 
+    /***/
     public void feedBack(final Object invoker, final FeedBackReq feedBackReq, final IHttpCallBack callBack) {
-        this.mAction = feed_back;
+        this.mAction = FEED_BACK;
         this.mData = feedBackReq;
         send(invoker, callBack);
     }
 
     public void getUserInfo(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
-        this.mAction = get_user_info_action;
+        this.mAction = GET_USER_INFO_ACTION;
         this.mData = reqBody;
         send(invoker, callBack);
     }

@@ -18,8 +18,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
 
@@ -55,7 +55,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
 
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
 //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-//                    LogUtil.i(TAG,"Update the voip setting");
+//                    LogUtil.i(tag,"Update the voip setting");
 //                    userInfo.setSdkAccount(voipUserName);
 //                    userInfo.setSdkPassword(voipPassword);
 //                }
@@ -72,7 +72,7 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
 //                    sdkuserInfo.password = "Vconf2015!";
 //                }
 //                //TODO TEST
-                LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
+                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
@@ -163,13 +163,15 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 registingDialog.show();
                 autoLogin();
                 break;
+            default:
+                break;
         }
     }
 
-    private void showUpdateDialog() {
-        UpdateDialog.show(this);
-//        finish();
-    }
+//    private void showUpdateDialog() {
+//        UpdateDialog.show(this);
+////        finish();
+//    }
 
     private void showUpdateDialog(String text) {
         UpdateDialog.show(this, text);

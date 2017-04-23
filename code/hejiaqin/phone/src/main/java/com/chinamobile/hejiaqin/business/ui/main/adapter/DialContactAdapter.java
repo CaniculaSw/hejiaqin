@@ -8,15 +8,12 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
-import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +58,7 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
             tHolder.contactNumberTv.setText(Html.fromHtml(info.getSearchUnit().getNumberText()));
         }
     }
-
+    /***/
     public void refreshData(List<ContactsInfo> data) {
         if (data != null)  {
             mData = data;
@@ -78,7 +75,7 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
         }
         return mData.size();
     }
-
+    /***/
     public class HolderView extends RecyclerView.ViewHolder {
 
         private TextView contactNameTv;

@@ -58,9 +58,9 @@ public interface ILoginLogic {
      * @param info 登录信息
      */
     void login(LoginInfo info);
-
+    /***/
     void tvLogin(TvLoginInfo info);
-
+    /***/
     void checkTvAccount(TvLoginInfo info);
     /**
      * 用户注销
@@ -80,19 +80,19 @@ public interface ILoginLogic {
      * 修改密码
      */
     void updatePassword(PasswordInfo pwdInfo);
-
+    /***/
     void loadUserFromLocal();
-
+    /***/
     void loadHistoryFromLocal();
-
+    /***/
     void initCMIMSdk();
-
+    /***/
     void updatePhoto(UpdatePhotoReq updatePhoto);
-
+    /***/
     void feedBack(FeedBackReq feedBackReq);
-
+    /***/
     String encryPassword(String password);
-
+    /***/
     LoginHistory getLoginHistory(String loginid);
 
 }

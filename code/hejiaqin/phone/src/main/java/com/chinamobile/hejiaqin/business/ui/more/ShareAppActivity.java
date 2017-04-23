@@ -10,8 +10,8 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.customer.framework.component.qrCode.QRCodeEncoder;
-import com.customer.framework.component.qrCode.core.DisplayUtils;
+import com.customer.framework.component.qrcode.QRCodeEncoder;
+import com.customer.framework.component.qrcode.core.DisplayUtils;
 
 /**
  * Created by eshaohu on 16/5/24.

@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
@@ -159,11 +157,11 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
     }
 
 
-    class HeaderViewHolder {
+    static class HeaderViewHolder {
         TextView text;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView text;
         CircleImageView image;
         View convertView;

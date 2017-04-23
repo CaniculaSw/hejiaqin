@@ -3,8 +3,6 @@ package com.customer.framework.utils;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
-import com.customer.framework.utils.LogUtil;
-
 /**
  * Created by yupeng on 4/6/16.
  */
@@ -69,7 +67,8 @@ public class ImageUtil
         float srcHeight = srcBitmap.getHeight();
 
         // 裁剪原图,转换成目标图的等比例图片
-        float tmpWidth, tmpHeight;
+        float tmpWidth;
+        float tmpHeight;
         // 原图的宽度大于高度(换算成比例后)
         if (srcWidth > (destWidth / destHeight) * srcHeight)
         {

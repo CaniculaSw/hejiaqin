@@ -54,8 +54,8 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
     private ImageView[] mImageView = new ImageView[2];
     private ImageView addContactIv;
 
-    private final int mAppContactsIndex = 0;
-    private final int mSysContactsIndex = 1;
+    private static final int M_APP_CONTACTS_INDEX = 0;
+    private static final int M_SYS_CONTACTS_INDEX = 1;
     //当前选中的项
     int currentIndex = -1;
 
@@ -69,6 +69,8 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
                 case BussinessConstants.ContactMsgID.UI_SHOW_CCONTACT_LIST_TITLE_ID:
                     mContactTitleLay.setVisibility(View.VISIBLE);
                     mListener.onAction(BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID, null);
+                    break;
+                default:
                     break;
             }
         }
@@ -135,18 +137,20 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.app_contact_layout:
-                if (currentIndex != mAppContactsIndex) {
-                    switchFragment(mAppContactsIndex);
+                if (currentIndex != M_APP_CONTACTS_INDEX) {
+                    switchFragment(M_APP_CONTACTS_INDEX);
                 }
                 break;
             case R.id.sys_contact_layout:
-                if (currentIndex != mSysContactsIndex) {
-                    switchFragment(mSysContactsIndex);
+                if (currentIndex != M_SYS_CONTACTS_INDEX) {
+                    switchFragment(M_SYS_CONTACTS_INDEX);
                 }
                 break;
             case R.id.app_contact_add_img:
                 Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
                 getActivity().startActivity(intent);
+                break;
+            default:
                 break;
         }
     }
@@ -184,7 +188,7 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
 
             mTextView[currentItem].setTextColor(getResources().getColor(R.color.contact_list_navigator_text_selected));
             mImageView[currentItem].setVisibility(View.VISIBLE);
-            addContactIv.setVisibility((currentItem == mAppContactsIndex) ? View.VISIBLE : View.GONE);
+            addContactIv.setVisibility((currentItem == M_APP_CONTACTS_INDEX) ? View.VISIBLE : View.GONE);
 
             if (currentIndex != -1) {
                 mTextView[currentIndex].setTextColor(getResources().getColor(R.color.contact_list_navigator_text_unselected));

@@ -1,20 +1,17 @@
 package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.tv.R;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -63,7 +60,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
             holder.image = (CircleImageView) convertView.findViewById(R.id.contact_photo_img);
             holder.layoutView = convertView.findViewById(R.id.contact_info_layout);
-            holder.convertView = convertView;
+//            holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -133,15 +130,15 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
         notifyDataSetChanged();
     }
 
-    class HeaderViewHolder {
+    static class HeaderViewHolder {
         TextView text;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView text;
         CircleImageView image;
         View layoutView;
-        View convertView;
+//        View convertView;
     }
 
 }

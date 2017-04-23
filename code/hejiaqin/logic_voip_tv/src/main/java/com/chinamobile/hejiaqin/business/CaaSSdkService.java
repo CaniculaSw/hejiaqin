@@ -4,12 +4,12 @@ import android.graphics.Rect;
 
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.call.CallApi;
-
+/***/
 public class CaaSSdkService
 {
 
     private static boolean m_localViewOpen = false;
-
+    /***/
     public static boolean closeLocalView()
     {
         LogUtil.d(Const.TAG_CAAS, "closeLocalView Enter");
@@ -32,7 +32,7 @@ public class CaaSSdkService
     {
         return m_localViewOpen;
     }
-
+    /***/
     public static boolean openLocalView()
     {
 
@@ -86,14 +86,14 @@ public class CaaSSdkService
         }
     }
        
-    public static void setVideoLevel(int video_level_id)
+    public static void setVideoLevel(int videoLevelId)
     {
-        LogUtil.d(Const.TAG_CAAS, "Enter setVideoLevel: " + video_level_id);
+        LogUtil.d(Const.TAG_CAAS, "Enter setVideoLevel: " + videoLevelId);
       
         //在同一个profile level(如16，即VGA/4CIF)情况下分辨率可选情况下，设置优选4:3，与手机保持一致
         CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_PREFER_SIZE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "2");
         
-        switch (video_level_id)
+        switch (videoLevelId)
         {
             case 0:
                 CallApi.setVideoLevel(CallApi.VIDEO_LEVEL_720P_NOMAL);
@@ -125,13 +125,13 @@ public class CaaSSdkService
         }
 
     }
-
+    /***/
 
     public static void showLocalVideoRender(boolean show)
     {
         CallApi.setVisible(CallApi.VIDEO_TYPE_LOCAL, show);
     }
-    
+    /***/
     public static void showRemoteVideoRender(boolean show)
     {
        CallApi.setVisible(CallApi.VIDEO_TYPE_REMOTE, show);

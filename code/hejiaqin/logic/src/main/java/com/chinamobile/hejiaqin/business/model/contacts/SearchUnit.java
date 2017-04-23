@@ -82,7 +82,7 @@ public class SearchUnit implements Serializable {
         }
         return pinyinUnit.getChinesePinyin();
     }
-
+    /***/
     public boolean search(String input) {
         if (StringUtil.isNullOrEmpty(input)) {
             return false;

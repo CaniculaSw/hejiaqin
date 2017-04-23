@@ -175,7 +175,7 @@ public class VideoOutDialog extends Dialog {
                 dismiss();
                 break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                if(Const.deviceType == Const.TYPE_OTHER) {
+                if(Const.getDeviceType() == Const.TYPE_OTHER) {
                     Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
                     mContext.startActivity(intentTalking);
                 } else {
@@ -207,6 +207,8 @@ public class VideoOutDialog extends Dialog {
                     }
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -215,7 +217,7 @@ public class VideoOutDialog extends Dialog {
         ((ILogic)this.mVoipLogic).removeHandler(mHandler);
         super.dismiss();
     }
-
+    /***/
     public static void show(Context context, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isPhoneApp)
     {
         VideoOutDialog videoOutDialog = new VideoOutDialog(context, R.style.CalendarDialog,calleeNumber,voipLogic,contactsLogic, isPhoneApp);

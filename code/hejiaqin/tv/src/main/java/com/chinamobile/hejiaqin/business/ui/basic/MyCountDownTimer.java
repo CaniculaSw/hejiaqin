@@ -13,9 +13,9 @@ public class MyCountDownTimer extends CountDownTimer {
 
     public static long MILL_IS_INFUTURE =60000;
 
-    public static long COUNTDOWN_INTERVAL =1000;
+    public final static long COUNTDOWN_INTERVAL =1000;
 
-    public static MyCountDownTimer myCountDownTimer;
+    private static MyCountDownTimer myCountDownTimer;
 
     private long millisUntilFinished;
 
@@ -46,18 +46,18 @@ public class MyCountDownTimer extends CountDownTimer {
         return millisUntilFinished;
     }
 
-    public void stop() {
-        super.cancel();
-        myCountDownTimer=null;
-    }
+//    public void stop() {
+//        super.cancel();
+//        myCountDownTimer=null;
+//    }
 
-    public static long getMyMillisUntilFinished()
-    {
-        if(myCountDownTimer==null)
-        {
-            return 0;
-        }
-        return  myCountDownTimer.getMillisUntilFinished();
-    }
+//    public static long getMyMillisUntilFinished()
+//    {
+//        if(myCountDownTimer==null)
+//        {
+//            return 0;
+//        }
+//        return  myCountDownTimer.getMillisUntilFinished();
+//    }
 
 }

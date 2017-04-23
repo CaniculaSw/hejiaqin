@@ -34,7 +34,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     private SysContactAdapter adapter;
     private TextView searchText;
     private StickyListHeadersListView contactListView;
-    private View empty_view;
+    private View emptyView;
 
     private SideBarView sideBarView;
     private TextView tipText;
@@ -52,6 +52,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
                 adapter.setData(contactsInfoList);
                 searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
                 showView();
+                break;
+            default:
                 break;
         }
     }
@@ -80,7 +82,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         adapter = new SysContactAdapter(this.getContext());
         contactListView.setAdapter(adapter);
 
-        empty_view = view.findViewById(R.id.empty_view);
+        emptyView = view.findViewById(R.id.empty_view);
 
         tipText = (TextView) view.findViewById(R.id.tip);
         sideBarView = (SideBarView) view.findViewById(R.id.sidebar);
@@ -144,6 +146,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
                 LogUtil.d(TAG, "start search");
                 enterSearchView();
                 break;
+            default:
+                break;
         }
     }
 
@@ -156,11 +160,11 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
 
     private void showView() {
         if (adapter.isEmpty()) {
-            empty_view.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
             contactListView.setVisibility(View.GONE);
             sideBarView.setVisibility(View.GONE);
         } else {
-            empty_view.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
             contactListView.setVisibility(View.VISIBLE);
             sideBarView.setVisibility(View.VISIBLE);
         }

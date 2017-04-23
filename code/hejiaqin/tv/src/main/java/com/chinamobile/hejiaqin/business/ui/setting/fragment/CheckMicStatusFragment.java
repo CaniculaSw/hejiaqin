@@ -54,6 +54,8 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
                     dialog.dismiss();
                 }
                 break;
+            default:
+                break;
         }
     }
 

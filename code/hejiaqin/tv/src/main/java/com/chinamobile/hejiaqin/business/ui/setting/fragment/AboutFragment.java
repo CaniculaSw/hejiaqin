@@ -1,15 +1,12 @@
 package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
 import android.os.Message;
-import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.SystemUtil;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by eshaohu on 16/8/30.
@@ -46,8 +43,7 @@ public class AboutFragment extends BasicFragment {
 
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return null;
     }
 }

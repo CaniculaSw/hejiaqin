@@ -74,7 +74,7 @@ public abstract class BasicActivity extends BaseActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(connectionReceiver, intentFilter);
-        MyActivityManager.getInstance().AddActivity(this);
+        MyActivityManager.getInstance().addActivity(this);
     }
 
     @Override
@@ -94,7 +94,7 @@ public abstract class BasicActivity extends BaseActivity {
     @Override
     protected void initSystem(Context context) {
         //根据build.gradle设置日志级别
-        LogUtil.d(TAG,"start app");
+        LogUtil.d(tag,"start app");
         LogUtil.setContext(getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
@@ -132,6 +132,9 @@ public abstract class BasicActivity extends BaseActivity {
                     finish();
                 }
                 break;
+            default:
+                break;
+
         }
     }
 
@@ -170,7 +173,7 @@ public abstract class BasicActivity extends BaseActivity {
                     UserInfoCacheManager.clearVersionInfo(getApplicationContext());
                     break;
                 case BussinessConstants.SettingMsgID.BIND_DENIED:
-                    LogUtil.i(TAG, "对方不同意你的绑定请求");
+                    LogUtil.i(tag, "对方不同意你的绑定请求");
                     showToast("对方不同意你的绑定请求", Toast.LENGTH_LONG, null);
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_RESPOND_SUCCESS:
@@ -195,14 +198,14 @@ public abstract class BasicActivity extends BaseActivity {
     }
 
     protected void showToast(int resId) {
-        MyToast.Position position = myToast.new Position();
+        MyToast.Position position = new MyToast.Position();
         showToast(resId, Toast.LENGTH_SHORT, position);
     }
 
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
-
+    /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
     }
@@ -230,7 +233,7 @@ public abstract class BasicActivity extends BaseActivity {
         if (waitDialog != null) {
             waitDialog.cancel();
         }
-        waitDialog = new hejiaqinProgressDialog(this, null);
+        waitDialog = new HeJiaQinProgressDialog(this, null);
         waitDialog.show();
     }
 
@@ -247,7 +250,7 @@ public abstract class BasicActivity extends BaseActivity {
     protected void doNetworkDisConnect() {
 
     }
-
+    /***/
     public void startActivityForResult(Intent intent, int requestCode) {
         intent.putExtra("requestCode", requestCode);
         super.startActivityForResult(intent, requestCode);

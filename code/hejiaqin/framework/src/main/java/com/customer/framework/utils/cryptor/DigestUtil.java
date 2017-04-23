@@ -109,8 +109,9 @@ public class DigestUtil {
 		int i;
 
 		for (i = 0; i < bts.length; i++) {
-			if (((int) bts[i] & 0xff) < 0x10)
+			if (((int) bts[i] & 0xff) < 0x10) {
 				strbuf.append("0");
+			}
 
 			strbuf.append(Long.toString((int) bts[i] & 0xff, 16));
 		}
@@ -125,8 +126,9 @@ public class DigestUtil {
 	 * @return bytes array
 	 */
 	public static final byte[] asBin(String src) {
-		if (src == null || src.length() < 1)
-			return null;
+		if (src == null || src.length() < 1) {
+            return null;
+        }
 		byte[] encrypted = new byte[src.length() / 2];
 		for (int i = 0; i < src.length() / 2; i++) {
 			int high = Integer.parseInt(src.substring(i * 2, i * 2 + 1), 16);
@@ -177,15 +179,15 @@ public class DigestUtil {
     /**
      * 校验是否匹配
      *
-     * @param HmacMD5Key    HMAC-MD5加密后的字符串
+     * @param hmacMD5Key    HMAC-MD5加密后的字符串
      * @param key           密钥
      * @param livebosMD5Key livebosMD5加密后的字符串
      * @return 是否匹配
      */
-    public static boolean isMatchByLivebosMD5(String HmacMD5Key, String key, String livebosMD5Key) {
+    public static boolean isMatchByLivebosMD5(String hmacMD5Key, String key, String livebosMD5Key) {
         BigInteger bbb = new BigInteger(livebosMD5Key.toLowerCase(), 16);
         byte[] bbbc = bbb.toByteArray();
-        if (getHmacMd5Str(asHex(bbbc), key).equals(HmacMD5Key)) {
+        if (getHmacMd5Str(asHex(bbbc), key).equals(hmacMD5Key)) {
             return true;
         }
         for (int i = 0; i < bbbc.length; i++) {
@@ -195,11 +197,11 @@ public class DigestUtil {
                 bbbc[i] = (byte) (0 - bbbc[i] - 1);
             }
         }
-        if (getHmacMd5Str(asHex(bbbc), key).equals(HmacMD5Key)) {
+        if (getHmacMd5Str(asHex(bbbc), key).equals(hmacMD5Key)) {
             return true;
         }
         if (livebosMD5Key.startsWith("0")) {
-            return isMatchByLivebosMD5(key, HmacMD5Key, livebosMD5Key.substring(1));
+            return isMatchByLivebosMD5(key, hmacMD5Key, livebosMD5Key.substring(1));
         }
         return false;
     }

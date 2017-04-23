@@ -8,8 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
-import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
-import com.chinamobile.hejiaqin.business.logic.setting.SettingLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.TvSettingInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
@@ -22,19 +20,26 @@ import com.customer.framework.utils.StringUtil;
  * Created by eshaohu on 16/8/24.
  */
 public class AutoAnswerSettingFragment extends BasicFragment implements View.OnClickListener {
-    ISettingLogic settingLogic;
+//    ISettingLogic settingLogic;
     HeaderView headerView;
     LinearLayout yes;
     LinearLayout no;
     ImageView yesIv;
     ImageView noIv;
-    LinearLayout numberSettingLayout, numberOneBtn, numberTwoBtn, numberThreeBtn, numberFourBtn;
-    TextView numberOne, numberTwo, numberThree, numberFour;
+    LinearLayout numberSettingLayout;
+    LinearLayout numberOneBtn;
+    LinearLayout numberTwoBtn;
+    LinearLayout numberThreeBtn;
+    LinearLayout numberFourBtn;
+    TextView numberOne;
+    TextView numberTwo;
+    TextView numberThree;
+    TextView numberFour;
 
     @Override
     protected void initLogics() {
         super.initLogics();
-        settingLogic = (SettingLogic) getLogicBuilder().getLogicByInterfaceClass(ISettingLogic.class);
+//        settingLogic = (SettingLogic) getLogicBuilder().getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -170,8 +175,7 @@ public class AutoAnswerSettingFragment extends BasicFragment implements View.OnC
         startActivity(intent);
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return yes;
     }
 }

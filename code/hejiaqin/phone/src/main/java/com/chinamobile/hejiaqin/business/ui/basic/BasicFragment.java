@@ -6,15 +6,14 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.chinamobile.hejiaqin.BuildConfig;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragment;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * desc:
@@ -73,6 +72,7 @@ public abstract class BasicFragment extends BaseFragment {
      * 回调至父类(FragmentActivity或者BaseFragment)
      */
     public interface BackListener {
+        /***/
         void onAction(int actionId, Object obj);
     }
 
@@ -108,12 +108,12 @@ public abstract class BasicFragment extends BaseFragment {
     public void setActivityListener(BackListener listener) {
         this.mListener = listener;
     }
-
+    /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
-
+    /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;
     }

@@ -1,15 +1,13 @@
 package com.customer.framework.component.db.operation;
 
-import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
 import android.util.Log;
 
 import java.util.List;
-
+/***/
 public abstract class BaseDbAdapter {
     private static final int SLEEP_AFTER_YIELD_DELAY = 2000;
     private static final String TAG = "BaseDbAdapter";
@@ -118,7 +116,6 @@ public abstract class BaseDbAdapter {
      *
      * @param table 通用资源标志符 代表要操作的数据
      * @param value ContentValues 插入的数据值
-     * @see ContentProvider#insert(Uri, ContentValues)
      */
     protected void insert(String table, ContentValues value) {
         SQLiteDatabase db = getWritableDatabase();

@@ -36,7 +36,7 @@ public class ServiceContractDialog extends Dialog {
     public void dismiss() {
         super.dismiss();
     }
-
+    /***/
     public static void show(Activity activity) {
         ServiceContractDialog serviceContractDialog = new ServiceContractDialog(activity, R.style.CalendarDialog);
         Window window = serviceContractDialog.getWindow();
@@ -49,7 +49,7 @@ public class ServiceContractDialog extends Dialog {
         serviceContractDialog.setCancelable(true);
         serviceContractDialog.show();
     }
-
+    /***/
     public static void show(Activity activity, String text) {
         ServiceContractDialog serviceContractDialog = new ServiceContractDialog(activity, R.style.CalendarDialog, text);
         Window window = serviceContractDialog.getWindow();

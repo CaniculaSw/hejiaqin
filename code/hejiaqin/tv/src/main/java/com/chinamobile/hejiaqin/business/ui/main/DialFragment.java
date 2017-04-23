@@ -13,7 +13,6 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
-import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
@@ -115,7 +114,11 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                         dialNumberDelLayout.requestFocus();
                         delNum();
                         break;
+                    default:
+                        break;
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -222,6 +225,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                    VideoOutDialog.show(getActivity(),inputNumber.getText().toString(),mVoipLogic,mContactsLogic,false);
                    inputNumber.setText("");
                }
+               break;
+           default:
                break;
        }
     }

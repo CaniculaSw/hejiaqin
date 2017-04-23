@@ -34,13 +34,13 @@ public class SettingHttpmanager extends AbsHttpManager {
      */
     private static final String TAG = "SettingHttpmanager";
 
-    private final int action_base = 0;
+    private static final int ACTION_BASE = 0;
 
-    private final int check_android_version = action_base + 1;
-    private final int get_device_list = action_base + 2;
-    private final int save_bind_request = action_base + 3;
-    private final int get_bind_list = action_base + 4;
-    private final int test_adapt = action_base + 5;
+    private static final int CHECK_ANDROID_VERSION = ACTION_BASE + 1;
+    private static final int GET_DEVICE_LIST = ACTION_BASE + 2;
+    private static final int SAVE_BIND_REQUEST = ACTION_BASE + 3;
+    private static final int GET_BIND_LIST = ACTION_BASE + 4;
+    private static final int TEST_ADAPT = ACTION_BASE + 5;
 
     /**
      * 请求action
@@ -62,19 +62,19 @@ public class SettingHttpmanager extends AbsHttpManager {
     protected String getUrl() {
         String url = null;
         switch (this.mAction) {
-            case check_android_version:
+            case CHECK_ANDROID_VERSION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/version/android";
                 break;
-            case get_device_list:
+            case GET_DEVICE_LIST:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/getDeviceList";
                 break;
-            case save_bind_request:
+            case SAVE_BIND_REQUEST:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/bind";
                 break;
-            case get_bind_list:
+            case GET_BIND_LIST:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/getBindList";
                 break;
-            case test_adapt:
+            case TEST_ADAPT:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/device/testAdapt";
                 break;
             default:
@@ -91,11 +91,11 @@ public class SettingHttpmanager extends AbsHttpManager {
     protected NetRequest.RequestMethod getRequestMethod() {
         NetRequest.RequestMethod method = NetRequest.RequestMethod.GET;
         switch (this.mAction) {
-            case check_android_version:
-            case get_device_list:
-            case save_bind_request:
-            case get_bind_list:
-            case test_adapt:
+            case CHECK_ANDROID_VERSION:
+            case GET_DEVICE_LIST:
+            case SAVE_BIND_REQUEST:
+            case GET_BIND_LIST:
+            case TEST_ADAPT:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -108,8 +108,8 @@ public class SettingHttpmanager extends AbsHttpManager {
     protected boolean isNeedToken() {
         boolean flag = true;
         switch (this.mAction) {
-            case check_android_version:
-            case test_adapt:
+            case CHECK_ANDROID_VERSION:
+            case TEST_ADAPT:
                 flag = false;
                 break;
             default:
@@ -125,15 +125,15 @@ public class SettingHttpmanager extends AbsHttpManager {
             properties = new ArrayList<NameValuePair>();
         }
         switch (this.mAction) {
-            case check_android_version:
+            case CHECK_ANDROID_VERSION:
                 //TODO
-            case get_device_list:
+            case GET_DEVICE_LIST:
                 //TODO
-            case save_bind_request:
+            case SAVE_BIND_REQUEST:
                 //TODO
-            case get_bind_list:
+            case GET_BIND_LIST:
                 //TODO
-            case test_adapt:
+            case TEST_ADAPT:
                 //TODO
             default:
                 break;
@@ -161,20 +161,20 @@ public class SettingHttpmanager extends AbsHttpManager {
                 }
                 Gson gson = new Gson();
                 switch (this.mAction) {
-                    case check_android_version:
+                    case CHECK_ANDROID_VERSION:
                         obj = gson.fromJson(data, VersionInfo.class);
                         break;
-                    case get_device_list:
+                    case GET_DEVICE_LIST:
                         obj = gson.fromJson(data, new TypeToken<List<UserInfo>>() {
                         }.getType());
                         break;
-                    case get_bind_list:
+                    case GET_BIND_LIST:
                         obj = gson.fromJson(data, new TypeToken<List<UserInfo>>() {
                         }.getType());
                         break;
-                    case save_bind_request:
+                    case SAVE_BIND_REQUEST:
                         break;
-                    case test_adapt:
+                    case TEST_ADAPT:
                         RespondInfo info = new RespondInfo();
                         info.setData(data);
                         if (rootJsonObj.has("msg")) {
@@ -195,33 +195,33 @@ public class SettingHttpmanager extends AbsHttpManager {
         }
         return obj;
     }
-
+    /***/
     public void checkVersion(final Object invoker, final IHttpCallBack callBack) {
-        this.mAction = check_android_version;
+        this.mAction = CHECK_ANDROID_VERSION;
         this.mData = null;
         send(invoker, callBack);
     }
-
+    /***/
     public void getDeviceList(final Object invoker, final GetDeviceListReq req, final IHttpCallBack callBack) {
-        this.mAction = get_device_list;
+        this.mAction = GET_DEVICE_LIST;
         this.mData = req;
         send(invoker, callBack);
     }
-
+    /***/
     public void getBindList(final Object invoker, final GetBindListReq req, final IHttpCallBack callBack) {
-        this.mAction = get_bind_list;
+        this.mAction = GET_BIND_LIST;
         this.mData = req;
         send(invoker, callBack);
     }
-
+    /***/
     public void saveBindRequest(final Object invoker, final SaveBindRequest req, final IHttpCallBack callBack) {
-        this.mAction = save_bind_request;
+        this.mAction = SAVE_BIND_REQUEST;
         this.mData = req;
         send(invoker, callBack);
     }
-
+    /***/
     public void testAdapt(final Object invoker, final TestAdaptReq req, final IHttpCallBack callBack) {
-        this.mAction = test_adapt;
+        this.mAction = TEST_ADAPT;
         this.mData = req;
         send(invoker, callBack);
     }

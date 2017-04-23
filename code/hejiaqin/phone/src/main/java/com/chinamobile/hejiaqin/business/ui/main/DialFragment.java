@@ -30,7 +30,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadVie
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText;
 import com.chinamobile.hejiaqin.business.ui.contact.ModifyContactActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.DialHelper;
-import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.DialContactAdapter;
 import com.customer.framework.utils.StringUtil;
@@ -61,7 +60,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     RecyclerView callRecordSearchRecyclerView;
 
     RelativeLayout dialSaveContactLayout;
-    LinearLayout dialSaveContactArrowLayout;
+//    LinearLayout dialSaveContactArrowLayout;
     LinearLayout blankLayout;
 
     LinearLayout inputNumberAboveLine;
@@ -111,6 +110,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                     DialHelper.getInstance().call(getContext(), inputNumber.getText().toString(), null);
                     inputNumber.setText("");
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -171,6 +172,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                     }
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -191,7 +194,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         callRecordSearchRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_search_recycler_view);
         dialSaveContactLayout = (RelativeLayout)view.findViewById(R.id.dial_save_contact_layout);
 
-        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
+//        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
         blankLayout = (LinearLayout)view.findViewById(R.id.blank_layout);
         inputNumberAboveLine = (LinearLayout)view.findViewById(R.id.input_number_above_line);
         inputNumberLayout = (LinearLayout)view.findViewById(R.id.input_number_layout);
@@ -448,6 +451,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,inputNumber.getText().toString() );
                    getActivity().startActivity(intent);
                }
+               break;
+           default:
                break;
        }
     }

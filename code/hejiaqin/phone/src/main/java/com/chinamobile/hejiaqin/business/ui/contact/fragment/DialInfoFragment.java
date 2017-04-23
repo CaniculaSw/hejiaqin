@@ -11,14 +11,11 @@ import android.widget.TextView;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
-
+/***/
 public class DialInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "DialInfoFragment";
     private LayoutInflater inflater;
@@ -70,7 +67,7 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
         mDialInfoGroupList.clear();
         mDialInfoGroupList.addAll(dialInfoGroupList);
     }
-
+    /***/
     public void refreshView() {
         if(!super.isCreateView)
         {
@@ -115,7 +112,7 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
             }
         }
     }
-
+    /***/
     public boolean hasData() {
         return null != mDialInfoGroupList && !mDialInfoGroupList.isEmpty();
     }

@@ -21,7 +21,7 @@ public class MyActivityManager {
 
     private String currentActivityName;
 
-    private List<Activity> ActivityList = new ArrayList<Activity>();
+    private List<Activity> activityArrayList = new ArrayList<Activity>();
 
     public static MyActivityManager getInstance() {
         return sInstance;
@@ -34,17 +34,17 @@ public class MyActivityManager {
     public boolean isCurrentActity(String activityName) {
         return activityName.equals(currentActivityName);
     }
-
-    public void AddActivity(Activity activity) {
-        ActivityList.add(activity);
+    /***/
+    public void addActivity(Activity activity) {
+        activityArrayList.add(activity);
     }
-
+    /***/
     public void removeActivity(Activity activity) {
-        ActivityList.remove(activity);
+        activityArrayList.remove(activity);
     }
-
+    /***/
     public void finishAllActivity(String execptActivityName) {
-        for (Activity activity : ActivityList) {
+        for (Activity activity : activityArrayList) {
             LogUtil.d("MyActivityManager", activity.getClass().getName());
             if (execptActivityName == null || !execptActivityName.equals(activity.getClass().getName())) {
                 activity.finish();
@@ -52,9 +52,9 @@ public class MyActivityManager {
             }
         }
     }
-
+    /***/
     public void finishActivitys(String[] needFinishActivityNames) {
-        for (Activity activity : ActivityList) {
+        for (Activity activity : activityArrayList) {
             LogUtil.d("MyActivityManager", activity.getClass().getName());
             for(int i=0;i<needFinishActivityNames.length;i++)
             {

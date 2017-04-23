@@ -1,7 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.setting.fragment;
 
-import android.hardware.Camera;
-import android.hardware.camera2.CameraManager;
 import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,7 +7,7 @@ import android.widget.LinearLayout;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.huawei.rcs.call.CallApi;
-
+/***/
 public class CheckStatusFragment extends BasicFragment {
     LinearLayout normalLayout;
     LinearLayout abnormalLayout;

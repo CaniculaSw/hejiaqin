@@ -20,13 +20,14 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.customer.framework.utils.LogUtil;
-import com.customer.framework.component.qrCode.QRCodeDecoder;
-import com.customer.framework.component.qrCode.ZXingView;
-import com.customer.framework.component.qrCode.core.QRCodeView;
+import com.customer.framework.component.qrcode.QRCodeDecoder;
+import com.customer.framework.component.qrcode.ZXingView;
+import com.customer.framework.component.qrcode.core.QRCodeView;
 import com.customer.framework.utils.FileUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -141,9 +142,9 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
 
                 if (cursor.moveToFirst()) {
 
-                    int column_index = cursor
+                    int columnIndexOrThrow = cursor
                             .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    photoPath = cursor.getString(column_index);
+                    photoPath = cursor.getString(columnIndexOrThrow);
                     if (photoPath == null) {
                         photoPath = PhotoManage.getPath(getApplicationContext(),
                                 data.getData());
@@ -180,6 +181,14 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                 is = new FileInputStream(photoPath);
             } catch (FileNotFoundException e) {
                 LogUtil.e(TAG, "File not found", e);
+            }finally {
+                try {
+                    if (is != null) {
+                        is.close();
+                    }
+                } catch (IOException e) {
+                    LogUtil.i(tag,e.getMessage());
+                }
             }
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = false;

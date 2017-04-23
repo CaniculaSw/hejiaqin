@@ -44,7 +44,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
+/***/
 public class VideoCallActivity extends BasicActivity implements View.OnClickListener {
 
     //视频布局(呼出和通话中)
@@ -129,7 +129,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private BroadcastReceiver callVideoReSolutionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtil.e(TAG, "callVideoEncodeSolutionChangeReceiver");
+            LogUtil.e(tag, "callVideoEncodeSolutionChangeReceiver");
             CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             if (!mCallSession.equals(session)) {
                 return;
@@ -137,13 +137,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             // 视频横竖屏切换是否会调用该广播
             int videoWidth = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH, -1);
             int videoHeight = intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT, -1);
-            LogUtil.e(TAG, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
+            LogUtil.e(tag, "videoWidth: " + videoWidth + " | videoHeight: " + videoHeight);
             if (videoWidth > 0 && videoHeight > 0) {
                 int screenHeight = VideoCallActivity.this.getScreenHeight(VideoCallActivity.this);
                 int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
-                LogUtil.e(TAG, "width: " + width + " | screenHeight: " + screenHeight);
+                LogUtil.e(tag, "width: " + width + " | screenHeight: " + screenHeight);
                 if (remoteVideoView != null) {
-                    LogUtil.e(TAG, "setLayoutParams width: " + width + " | screenHeight: " + screenHeight);
+                    LogUtil.e(tag, "setLayoutParams width: " + width + " | screenHeight: " + screenHeight);
                     RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLargeVideoLayout.getLayoutParams();
                     layoutParams.width = width;
                     layoutParams.height = screenHeight;
@@ -403,7 +403,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         return rp;
     }
 
-    private void getDisplayMetrics(Context context, int metrics[]) {
+    private void getDisplayMetrics(Context context, int[] metrics) {
         if (null == metrics) {
             metrics = new int[2];
         }
@@ -663,7 +663,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (closed) {
-            LogUtil.w(TAG, "is closed");
+            LogUtil.w(tag, "is closed");
         }
         switch (v.getId()) {
             case R.id.hangup_layout:
@@ -674,7 +674,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 break;
             case R.id.coming_answer_call_btn:
                 if (closed) {
-                    LogUtil.w(TAG, "is closed");
+                    LogUtil.w(tag, "is closed");
                     return;
                 }
                 if(onClickAnswer)
@@ -690,7 +690,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 break;
             case R.id.mute_layout:
                 if (closed) {
-                    LogUtil.w(TAG, "is closed");
+                    LogUtil.w(tag, "is closed");
                     return;
                 }
                 if (mute) {
@@ -709,7 +709,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 break;
             case R.id.camera_layout:
                 if (closed) {
-                    LogUtil.w(TAG, "is closed");
+                    LogUtil.w(tag, "is closed");
                     return;
                 }
                 if (CallApi.getCameraCount() < 2) {
@@ -722,6 +722,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 LogUtil.d("V2OIP", "onClick_CameraSwitch displayRotation" + lastDisplayRotation);
                 int cameraRotate = getCameraOrientation(lastDisplayRotation);
                 CallApi.setCameraRotate(cameraRotate);
+                break;
+            default:
                 break;
         }
 
@@ -764,6 +766,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
+                break;
+            default:
                 break;
         }
 

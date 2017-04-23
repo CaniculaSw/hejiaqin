@@ -5,12 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
-
+/***/
 public class TimeZoneUtil {
 	public static final TimeZone getLocalTimeZone() {
 		return TimeZone.getDefault();
 	}
-
+	/***/
 	public static String timeZoneTransform(String timeStr, TimeZone startZone, TimeZone endZone) {
 		try {
 			if (timeStr == null || timeStr.trim().length() == 0) {

@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class MapStrReqBody implements ReqBody{
     private Map<String,String> map = new HashMap<String,String>();
-
+    /***/
     public void add(String name,String value)
     {
         if(TextUtils.isEmpty(name) || value ==null)

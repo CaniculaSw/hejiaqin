@@ -1,6 +1,6 @@
 
-package com.customer.framework.component.ThreadPool;
-
+package com.customer.framework.component.threadpool;
+/***/
 public abstract class ThreadTask implements Comparable<ThreadTask>, Runnable
 {
     
@@ -91,5 +91,10 @@ public abstract class ThreadTask implements Comparable<ThreadTask>, Runnable
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

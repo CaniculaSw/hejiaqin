@@ -1,16 +1,10 @@
 package com.chinamobile.hejiaqin.business.ui.basic.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.tv.R;
 
 /**

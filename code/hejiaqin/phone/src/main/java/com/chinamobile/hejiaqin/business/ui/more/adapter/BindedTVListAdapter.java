@@ -62,12 +62,6 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, SelectableContactActivity.class);
-                //TODO:使用临时代码
-//                if (Integer.parseInt(mBindedTV.get(position).getTvAccount().substring(mBindedTV.get(position).getTvAccount().length() - 1)) % 2 == 0) {
-//                    intent.putExtra("tvAccount", "2886544004");
-//                } else {
-//                    intent.putExtra("tvAccount", "2886544005");
-//                }
                 intent.putExtra("tvAccount", mBindedTV.get(position).getTvAccount());
                 intent.putExtra("tvName", mBindedTV.get(position).getName());
                 mContext.startActivity(intent);
@@ -78,12 +72,6 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, NurseCallActivity.class);
-                //TODO:使用临时代码
-//                if (Integer.parseInt(mBindedTV.get(position).getTvAccount().substring(mBindedTV.get(position).getTvAccount().length() - 1)) % 2 == 0) {
-//                    intent.putExtra("tvAccount", "2886544004");
-//                } else {
-//                    intent.putExtra("tvAccount", "2886544005");
-//                }
                 intent.putExtra("tvAccount", mBindedTV.get(position).getTvAccount());
                 intent.putExtra("tvName", mBindedTV.get(position).getName());
                 mContext.startActivity(intent);

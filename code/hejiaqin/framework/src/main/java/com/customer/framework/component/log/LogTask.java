@@ -307,7 +307,7 @@ public class LogTask
                 .append(']');
 
         //消息非空的时候输入
-        if (msg != null && !msg.equals(""))
+        if (msg != null && ! "".equals(msg))
         {
             sbr.append("  ").append(tag).append(": ").append(msg);
         }

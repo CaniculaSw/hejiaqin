@@ -36,15 +36,11 @@ public class LogicBuilder extends BuilderImp {
      * @param context 系统的context对象
      * @return LogicBuilder对象
      */
-    public static BuilderImp getInstance(Context context) {
-        if (instance == null) {
-            synchronized (LogicBuilder.class) {
-                if (instance == null) {
-                    instance = new LogicBuilder(context);
-                }
-            }
+    public static synchronized BuilderImp getInstance(Context context) {
+        if (getInstance() == null) {
+            setInstance(new LogicBuilder(context));
         }
-        return instance;
+        return getInstance();
     }
 
     @Override

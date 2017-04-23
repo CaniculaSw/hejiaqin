@@ -56,7 +56,7 @@ public class DialInfo {
     public void setType(Type type) {
         this.type = type;
     }
-
+    /***/
     public static Type convertType(int type) {
         switch (type) {
             case CallRecord.TYPE_VIDEO_INCOMING:

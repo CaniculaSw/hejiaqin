@@ -23,8 +23,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.qrCode.QRCodeEncoder;
-import com.customer.framework.component.qrCode.core.DisplayUtils;
+import com.customer.framework.component.qrcode.QRCodeEncoder;
+import com.customer.framework.component.qrcode.core.DisplayUtils;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -104,17 +104,21 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     }
 
     private void createQRCode(String url, int size, final ImageView view) {
-        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(getActivity(), size), Color.parseColor("#000000"), Color.parseColor("#878ea3"), new QRCodeEncoder.Delegate() {
-            @Override
-            public void onEncodeQRCodeSuccess(Bitmap qrCode) {
-                view.setImageBitmap(qrCode);
-            }
+        QRCodeEncoder.encodeQRCode(url,
+                DisplayUtils.dp2px(getActivity(), size),
+                Color.parseColor("#000000"),
+                Color.parseColor("#878ea3"),
+                new QRCodeEncoder.Delegate() {
+                    @Override
+                    public void onEncodeQRCodeSuccess(Bitmap qrCode) {
+                        view.setImageBitmap(qrCode);
+                    }
 
-            @Override
-            public void onEncodeQRCodeFailure() {
-                LogUtil.e(TAG, "生成二维码失败");
-            }
-        });
+                    @Override
+                    public void onEncodeQRCodeFailure() {
+                        LogUtil.e(TAG, "生成二维码失败");
+                    }
+                });
     }
 
     @Override

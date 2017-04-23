@@ -13,7 +13,7 @@ public final class StorageMgr {
 
     private static final String TAG = "StorageMgr";
 
-    private static final StorageMgr mInstance = new StorageMgr();
+    private static final StorageMgr INSTANCE = new StorageMgr();
 
     private IMemStorage memStorage = new MemStorage();
 
@@ -27,20 +27,16 @@ public final class StorageMgr {
     }
 
     public static StorageMgr getInstance() {
-        return mInstance;
+        return INSTANCE;
     }
 
     public IMemStorage getMemStorage() {
         return memStorage;
     }
 
-    public ISharedPStorage getSharedPStorage(Context context) {
+    public synchronized ISharedPStorage getSharedPStorage(Context context) {
         if (sharedPStorage == null) {
-            synchronized (SharedPStorage.class) {
-                if (sharedPStorage == null) {
-                    sharedPStorage = new SharedPStorage(context);
-                }
-            }
+            sharedPStorage = new SharedPStorage(context);
         }
         return sharedPStorage;
     }

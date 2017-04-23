@@ -101,10 +101,13 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
             FileUtil.closeStream(os);
             FileUtil.closeStream(bos);
         }
-
-
-        String valueStr = StringUtil.bytes2Hex(bos.toByteArray());
+        String valueStr = "";
+        if (bos != null) {
+            valueStr = StringUtil.bytes2Hex(bos.toByteArray());
+        }
         save(key, valueStr);
+
+
     }
 
     @Override
@@ -120,11 +123,9 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
                 editor.putInt(entry.getKey(), (Integer) entry.getValue());
             } else if (entry.getValue() instanceof Boolean) {
                 editor.putBoolean(entry.getKey(), (Boolean) entry.getValue());
-            }
-            else if (entry.getValue() instanceof Float) {
+            } else if (entry.getValue() instanceof Float) {
                 editor.putFloat(entry.getKey(), (Float) entry.getValue());
-            }
-            else if (entry.getValue() instanceof Long) {
+            } else if (entry.getValue() instanceof Long) {
                 editor.putLong(entry.getKey(), (Long) entry.getValue());
             }
         }
@@ -197,7 +198,7 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
         try {
             bis = new ByteArrayInputStream(StringUtil.hex2Bytes(valueStr));
             is = new ObjectInputStream(bis);
-            readObject = (Serializable)is.readObject();
+            readObject = (Serializable) is.readObject();
         } catch (ClassNotFoundException e) {
             LogUtil.w(TAG, "get object failed. ClassNotFoundException: ", e);
         } catch (IOException e) {
@@ -214,7 +215,7 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
     @Override
     public void remove(String[] key) {
         SharedPreferences.Editor editor = sharedPreferencesCache.edit();
-        for(int i =0;i<key.length;i++) {
+        for (int i = 0; i < key.length; i++) {
             editor.remove(key[i]);
         }
         editor.commit();

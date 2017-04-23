@@ -76,6 +76,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID:
                     mNavigatorLay.setVisibility(View.GONE);
                     break;
+                default:
+                    break;
             }
         }
     };
@@ -120,7 +122,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     {
         super.onResume();
         if (mVoipLogic.isNeedVoipLogin()) {
-            LogUtil.d(TAG, "autoLogin");
+            LogUtil.d(tagString, "autoLogin");
             mVoipLogic.setNotNeedVoipLogin();
             mVoipLogic.autoLogin();
         }
@@ -192,6 +194,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     FragmentMgr.getInstance().showAndFinishAllFragment(toIndex);
                 }
                 break;
+            default:
+                break;
         }
 //        LogUtil.i("MainFragmentActivity","toIndex:"+toIndex);
 //        LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
@@ -216,6 +220,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         super.handleStateMessage(msg);
         dismissWaitDailog();
         switch (msg.what) {
+            default:
+                break;
         }
     }
 
@@ -246,10 +252,10 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         View focused = getCurrentFocus();
-        LogUtil.d(TAG, "focused: " + focused);
+        LogUtil.d(tagString, "focused: " + focused);
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_LEFT");
+                LogUtil.d(tagString, "KeyEvent.KEYCODE_DPAD_LEFT");
                 View nextLeftFocuse = focused.focusSearch(View.FOCUS_LEFT);
                 //if (nextFocuse != null && nextFocuse.focusSearch(View.FOCUS_LEFT) != null) {
                 if (nextLeftFocuse != null && !isViewInMenus(nextLeftFocuse.getId())) {
@@ -261,7 +267,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_RIGHT");
+                LogUtil.d(tagString, "KeyEvent.KEYCODE_DPAD_RIGHT");
                  BaseFragment topFragment = FragmentMgr.getInstance().getTopFragment(mCurrentIndex);
                 View leftFocusView = ((BasicFragment) topFragment).getFirstFouseView();
                 if (null != leftFocusView && mMenuViews[mCurrentIndex].isFocused()) {
@@ -270,7 +276,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_UP");
+                LogUtil.d(tagString, "KeyEvent.KEYCODE_DPAD_UP");
                 if (!isViewInMenus(focused.getId())) {
                     View nextUpFocuse = focused.focusSearch(View.FOCUS_UP);
                     if (null != nextUpFocuse && isViewInMenus(nextUpFocuse.getId())) {
@@ -279,7 +285,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                LogUtil.d(TAG, "KeyEvent.KEYCODE_DPAD_DOWN");
+                LogUtil.d(tagString, "KeyEvent.KEYCODE_DPAD_DOWN");
                 if (!isViewInMenus(focused.getId())) {
                     View nextDownFocuse = focused.focusSearch(View.FOCUS_DOWN);
                     if (null != nextDownFocuse && isViewInMenus(nextDownFocuse.getId())) {
@@ -312,6 +318,9 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                        return true;
                     }
                 }
+                break;
+            default:
+                break;
 
         }
         return super.onKeyDown(keyCode, event);

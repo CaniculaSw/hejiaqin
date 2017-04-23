@@ -43,18 +43,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
+/***/
 public class CommonUtils {
 
 
-    //检测SD card是否存在
+    /**检测SD card是否存在*/
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     /**
@@ -74,8 +74,9 @@ public class CommonUtils {
     public static boolean isWifi(Context context) {
         NetworkInfo info = getNetworkInfo(context);
         if (info != null) {
-            if (info.getType() == ConnectivityManager.TYPE_WIFI)
+            if (info.getType() == ConnectivityManager.TYPE_WIFI) {
                 return true;
+            }
         }
         return false;
     }
@@ -86,8 +87,9 @@ public class CommonUtils {
     public static boolean isMobile(Context context) {
         NetworkInfo info = getNetworkInfo(context);
         if (info != null) {
-            if (info.getType() == ConnectivityManager.TYPE_MOBILE)
+            if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
                 return true;
+            }
         }
         return false;
     }
@@ -121,7 +123,9 @@ public class CommonUtils {
             e.printStackTrace();
         } finally {
             try {
-                fOut.close();
+                if (fOut!=null) {
+                    fOut.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -146,7 +150,7 @@ public class CommonUtils {
     public static String getTvNumber(String number) {
         String outNumber = number;
         if (number.startsWith("028")) {
-            outNumber = number .substring(1);
+            outNumber = number.substring(1);
         }
         return outNumber;
     }
@@ -218,7 +222,7 @@ public class CommonUtils {
 
         return false;
     }
-
+    /***/
     public static String formatTvNum(String tvNum) {
         if (StringUtil.isNullOrEmpty(tvNum)) {
             return "";

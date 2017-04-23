@@ -12,7 +12,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.LogUtil;
-
+/***/
 public class MainActivity extends BasicActivity {
 
     private ILoginLogic loginLogic;
@@ -64,7 +64,7 @@ public class MainActivity extends BasicActivity {
     }
     private void jumpToMainFragmentActivity(){
         Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
-        LogUtil.d(TAG, "Init the CMIM SDK");
+        LogUtil.d(tag, "Init the CMIM SDK");
         loginLogic.initCMIMSdk();
 //        settingLogic.checkVersion();
         startActivity(intent);

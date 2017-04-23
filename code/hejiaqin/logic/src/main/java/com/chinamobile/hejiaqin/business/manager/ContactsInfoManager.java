@@ -9,17 +9,15 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.PinyinUnit;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.customer.framework.utils.string.HanziToPinyin;
-import com.google.zxing.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+/***/
 public class ContactsInfoManager {
     private static final String TAG = "ContactsInfoManager";
     private static ContactsInfoManager instance = new ContactsInfoManager();
@@ -37,7 +35,7 @@ public class ContactsInfoManager {
     public List<ContactsInfo> getLocalContactLst(Context context) {
         ContactList contactList = new ContactList();
         ContentResolver cr = context.getContentResolver();
-        String str[] = {ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+        String[] str = {ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER,
                 ContactsContract.CommonDataKinds.Phone.TYPE};
@@ -78,7 +76,7 @@ public class ContactsInfoManager {
         return contactList.get();
     }
 
-
+    /***/
     public void sortContactsInfoLst(Context context, List<ContactsInfo> contactsInfoList) {
         if (null == contactsInfoList) {
             return;
@@ -116,14 +114,14 @@ public class ContactsInfoManager {
         });
         LogUtil.d(TAG, "sortContactsInfoLst: " + contactsInfoList);
     }
-
+    /***/
     public void cacheLocalContactInfo(List<ContactsInfo> localContactsInfoList) {
         mLocalContactsInfoList.clear();
         if (null != localContactsInfoList) {
             mLocalContactsInfoList.addAll(localContactsInfoList);
         }
     }
-
+    /***/
     public void cacheAppContactInfo(List<ContactsInfo> appContactsInfoList) {
         mAppContactsInfoList.clear();
         if (null != appContactsInfoList) {
@@ -142,7 +140,7 @@ public class ContactsInfoManager {
         appContactInfos.addAll(mAppContactsInfoList);
         return appContactInfos;
     }
-
+    /***/
     public List<ContactsInfo> searchContactsInfoLst(List<ContactsInfo> contactsInfoList, String input) {
         List<ContactsInfo> matchedContactsInfoList = new ArrayList<>();
 

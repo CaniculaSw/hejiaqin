@@ -33,7 +33,7 @@ public class BussinessConstants {
         int CALL_INCOMING_HANGUP = 2;
 
     }
-
+    /***/
     public interface ActivityRequestCode {
         int BASE_QEUEST_CODE = 1000;
         //权限申请的RequestCode
@@ -139,9 +139,9 @@ public class BussinessConstants {
         String TV_SOFT_WARE_KEY = "SoftwareVersion";
         String TV_ACCOUNT_KEY = "TvAccount";
         String TV_IS_LOGOUT_KEY = "TvIsLogou";
-        String download_url = ServerInfo.HTTP_ADDRESS + "/version/appQR";
-        String download_url_android = ServerInfo.HTTP_ADDRESS +"/version/androidQR";
-        String download_url_ios = ServerInfo.HTTP_ADDRESS +"/version/iosQR";
+        String DOWNLOAD_URL = ServerInfo.HTTP_ADDRESS + "/version/appQR";
+        String DOWNLOAD_URL_ANDROID = ServerInfo.HTTP_ADDRESS +"/version/androidQR";
+        String DOWNLOAD_URL_IOS = ServerInfo.HTTP_ADDRESS +"/version/iosQR";
     }
 
     /**
@@ -431,7 +431,7 @@ public class BussinessConstants {
         int CHECK_MIC_FINISHED = BASE_MSG_ID + 28;
     }
 
-
+    /***/
     public interface FragmentActionId {
         int BASE_ACTION_ID = 70001000;
 

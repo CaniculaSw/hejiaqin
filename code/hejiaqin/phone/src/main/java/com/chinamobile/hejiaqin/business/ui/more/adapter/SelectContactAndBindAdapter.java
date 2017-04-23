@@ -3,7 +3,6 @@ package com.chinamobile.hejiaqin.business.ui.more.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -31,7 +30,7 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
 
     private Context mContext;
 
-    private LayoutInflater inflater;
+//    private LayoutInflater inflater;
 
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
 
@@ -39,13 +38,13 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
 
     private Map<String, Integer> letterToPosition = new HashMap<>();
     private ISettingLogic settingLogic;
-    private Handler handler;
+//    private Handler handler;
 
     public SelectContactAndBindAdapter(Context context, Handler handler) {
         mContext = context;
-        inflater = LayoutInflater.from(context);
+//        inflater = LayoutInflater.from(context);
         settingLogic = (ISettingLogic) LogicBuilder.getInstance(context).getLogicByInterfaceClass(ISettingLogic.class);
-        this.handler = handler;
+//        this.handler = handler;
     }
 
     @Override

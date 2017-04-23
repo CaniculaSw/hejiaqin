@@ -22,11 +22,11 @@ public class SideBarView extends View {
             "W", "X", "Y", "Z", "#"};
     private int selectPos = -1;
 
-    private final int defaultNormalColor = Color.TRANSPARENT;
-    private final int defaultPressColor = Color.parseColor("#1F000000");
-    private final int defaultTextSize = 30;
-    private final int defaultNorTextColor = Color.parseColor("#404040");
-    private final int defaultPressTextColor = Color.parseColor("#ff000000");
+    private static final int DEFAULT_NORMAL_COLOR = Color.TRANSPARENT;
+    private static final int DEFAULT_PRESS_COLOR = Color.parseColor("#1F000000");
+    private static final int DEFAULT_TEXT_SIZE = 30;
+    private static final int DEFAULT_NOR_TEXT_COLOR = Color.parseColor("#404040");
+    private static final int DEFAULT_PRESS_TEXT_COLOR = Color.parseColor("#ff000000");
 
 
     private int sideBarBgNorColor;
@@ -49,11 +49,11 @@ public class SideBarView extends View {
         super(context, attrs, defStyleAttr);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SideBarView, defStyleAttr, 0);
-        sideBarBgNorColor = typedArray.getColor(R.styleable.SideBarView_sidebar_nor_background, defaultNormalColor);
-        sideBarBgPressColor = typedArray.getColor(R.styleable.SideBarView_sidebar_press_background, defaultPressColor);
-        sideBarTextSize = typedArray.getInt(R.styleable.SideBarView_sidebar_text_size, defaultTextSize);
-        sideBarNorTextColor = typedArray.getColor(R.styleable.SideBarView_sidebar_text_color_nor, defaultNorTextColor);
-        sideBarPressTextColor = typedArray.getColor(R.styleable.SideBarView_sidebar_text_color_press, defaultPressTextColor);
+        sideBarBgNorColor = typedArray.getColor(R.styleable.SideBarView_sidebar_nor_background, DEFAULT_NORMAL_COLOR);
+        sideBarBgPressColor = typedArray.getColor(R.styleable.SideBarView_sidebar_press_background, DEFAULT_PRESS_COLOR);
+        sideBarTextSize = typedArray.getInt(R.styleable.SideBarView_sidebar_text_size, DEFAULT_TEXT_SIZE);
+        sideBarNorTextColor = typedArray.getColor(R.styleable.SideBarView_sidebar_text_color_nor, DEFAULT_NOR_TEXT_COLOR);
+        sideBarPressTextColor = typedArray.getColor(R.styleable.SideBarView_sidebar_text_color_press, DEFAULT_PRESS_TEXT_COLOR);
 
         typedArray.recycle();
 
@@ -96,8 +96,9 @@ public class SideBarView extends View {
             case MotionEvent.ACTION_DOWN:
                 setBackgroundColor(sideBarBgPressColor);
                 selectPos = position;
-                if (listener != null)
+                if (listener != null) {
                     listener.onLetterSelected(data[selectPos]);
+                }
                 invalidate();
                 break;
 
@@ -106,8 +107,9 @@ public class SideBarView extends View {
                 if (position != selectPos) {
                     //切换到其他字母
                     selectPos = position;
-                    if (listener != null)
+                    if (listener != null) {
                         listener.onLetterChanged(data[selectPos]);
+                    }
                     invalidate();
                 }
 
@@ -120,6 +122,8 @@ public class SideBarView extends View {
                 if (listener != null) {
                     listener.onLetterReleased(data[selectPos]);
                 }
+                break;
+            default:
                 break;
         }
 
@@ -188,13 +192,15 @@ public class SideBarView extends View {
                 }
 
                 break;
+            default:
+                break;
         }
 
 
         return result;
     }
 
-
+    /***/
     public float dp2px(float dp) {
         final float scale = getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
@@ -205,12 +211,13 @@ public class SideBarView extends View {
         return (int) dp2px(25);
     }
 
-
+    /***/
     public interface LetterSelectListener {
+        /***/
         void onLetterSelected(String letter);
-
+        /***/
         void onLetterChanged(String letter);
-
+        /***/
         void onLetterReleased(String letter);
     }
 

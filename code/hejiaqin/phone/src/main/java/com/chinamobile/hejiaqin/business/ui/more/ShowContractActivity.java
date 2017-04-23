@@ -51,6 +51,7 @@ public class ShowContractActivity extends BasicActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.back_iv:
                 doBack();
+                break;
             default:
                 break;
         }

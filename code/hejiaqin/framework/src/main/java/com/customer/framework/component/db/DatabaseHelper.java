@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import com.customer.framework.utils.LogUtil;
-
+/***/
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**

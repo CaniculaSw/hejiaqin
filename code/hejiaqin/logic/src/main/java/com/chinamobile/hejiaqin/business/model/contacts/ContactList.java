@@ -3,7 +3,6 @@ package com.chinamobile.hejiaqin.business.model.contacts;
 import android.provider.ContactsContract;
 
 import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -16,17 +15,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ContactList {
     Map<String, ContactsInfo> contactsInfoMap = new ConcurrentHashMap<>();
-
+    /***/
     public List<ContactsInfo> get() {
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         contactsInfoList.addAll(contactsInfoMap.values());
         return contactsInfoList;
     }
-
+    /***/
     public void clear() {
         contactsInfoMap.clear();
     }
-
+    /***/
     public void addLocalContact(String name, NumberInfo numberInfo) {
         if (StringUtil.isNullOrEmpty(name) || null == numberInfo || null == numberInfo.getNumber()) {
             return;
@@ -45,7 +44,7 @@ public class ContactList {
         tmpContactsInfo.addNumber(numberInfo);
         contactsInfoMap.put(name, tmpContactsInfo);
     }
-
+    /***/
     public void addAppContact(ContactBean contactBean) {
         if (null == contactBean || StringUtil.isNullOrEmpty(contactBean.getName()) || StringUtil.isNullOrEmpty(contactBean.getPhone())) {
             return;
@@ -67,7 +66,7 @@ public class ContactList {
         tmpContactsInfo.addNumber(numberInfo);
         contactsInfoMap.put(contactBean.getContactId(), tmpContactsInfo);
     }
-
+    /***/
     public static ContactsInfo convert(ContactBean contactBean) {
         if (null == contactBean || null == contactBean.getContactId()
                 || null == contactBean.getName() || null == contactBean.getPhone()) {

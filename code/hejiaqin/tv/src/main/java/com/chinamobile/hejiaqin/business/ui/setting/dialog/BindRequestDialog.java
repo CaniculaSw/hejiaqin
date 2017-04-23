@@ -81,6 +81,8 @@ public class BindRequestDialog extends BasicActivity implements View.OnClickList
                 settingLogic.sendBindResult(message.getPeer().getNumber(), CaaSUtil.OpCode.BIND_DENIED);
                 finish();
                 break;
+            default:
+                break;
         }
     }
 }

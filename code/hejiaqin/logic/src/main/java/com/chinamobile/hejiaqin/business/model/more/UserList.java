@@ -17,7 +17,8 @@ public class UserList {
     }
 
     public void setUsers(List<UserInfo> users) {
-        if (users != null)
+        if (users != null) {
             this.users.addAll(users);
+        }
     }
 }

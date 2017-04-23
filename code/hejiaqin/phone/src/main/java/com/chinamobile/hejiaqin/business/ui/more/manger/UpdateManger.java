@@ -28,7 +28,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+/***/
 public class UpdateManger {
 
     private static final String TAG = "UpdateManger";
@@ -71,6 +71,8 @@ public class UpdateManger {
                     }
                     Toast.makeText(UpdateManger.this.mContext,UpdateManger.this.mContext.getString(R.string.about_hejiaqin_download_error),Toast.LENGTH_SHORT);
                     break;
+                default:
+                    break;
             }
             super.handleMessage(msg);
         }
@@ -79,7 +81,7 @@ public class UpdateManger {
     public UpdateManger(Context context) {
         this.mContext = context;
     }
-
+    /***/
     public void showNoticeDialog(final VersionInfo info) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
         builder.setCancelable(true);
@@ -103,7 +105,7 @@ public class UpdateManger {
         dialog.show();
     }
 
-    //强制更新下载窗口
+    /**强制更新下载窗口*/
     public void showForcedUpdateDialog(final VersionInfo info) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
 //        builder.setTitle(R.string.about_version_update);
@@ -127,7 +129,7 @@ public class UpdateManger {
         dialog.setCancelable(false);
         dialog.show();
     }
-
+    /***/
     public void update(VersionInfo info, boolean showDownloadDialog){
         downLoadUrl = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + info.getUrl();
         saveFileName = DirUtil.getExternalFileDir(mContext.getApplicationContext())
@@ -142,9 +144,9 @@ public class UpdateManger {
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.progress, null);
         mProgress = (ProgressBar) v.findViewById(R.id.progress);
-        TextView tv_title = (TextView) v.findViewById(R.id.progress_title);
-        tv_title.setText(R.string.about_hejiaqin_download);
-        tv_title.setVisibility(View.VISIBLE);
+        TextView tvTitle = (TextView) v.findViewById(R.id.progress_title);
+        tvTitle.setText(R.string.about_hejiaqin_download);
+        tvTitle.setVisibility(View.VISIBLE);
         builder.setContentView(v);
 //        builder.setView(v);// 设置对话框的内容为一个View
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -204,12 +206,12 @@ public class UpdateManger {
                     if (!file.exists()) {
                         file.mkdir();
                     }
-                    String apkFile = saveFileName + ".tmp";
-                    File ApkTmpFile = new File(apkFile);
-                    File ApkFile = new File(saveFileName);
-                    outStream = new FileOutputStream(ApkTmpFile);
+                    String apkFileName = saveFileName + ".tmp";
+                    File apkTmpFile = new File(apkFileName);
+                    File apkFile = new File(saveFileName);
+                    outStream = new FileOutputStream(apkTmpFile);
                     int count = 0;
-                    byte buf[] = new byte[1024];
+                    byte[] buf = new byte[1024];
                     do {
                         int numread = ins.read(buf);
                         count += numread;
@@ -220,10 +222,10 @@ public class UpdateManger {
                         if (numread <= 0) {
                             // 下载完成通知安装
                             mHandler.sendEmptyMessage(DOWN_OVER);
-                            if (ApkFile.exists()) {
-                                ApkFile.delete();
+                            if (apkFile.exists()) {
+                                apkFile.delete();
                             }
-                            ApkTmpFile.renameTo(ApkFile);
+                            apkTmpFile.renameTo(apkFile);
                             break;
                         }
                         outStream.write(buf, 0, numread);

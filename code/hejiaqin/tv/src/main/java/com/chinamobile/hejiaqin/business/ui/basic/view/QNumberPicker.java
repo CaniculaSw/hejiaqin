@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import com.chinamobile.hejiaqin.tv.R;
-
+/***/
 public class QNumberPicker extends NumberPicker {
 
     public QNumberPicker(Context context) {
@@ -40,7 +40,7 @@ public class QNumberPicker extends NumberPicker {
         super.addView(child, params);
         updateView(child);
     }
-
+    /***/
     public void updateView(View view) {
         if (view instanceof EditText) {
             //这里修改字体的属性

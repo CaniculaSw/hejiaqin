@@ -3,10 +3,6 @@ package com.chinamobile.hejiaqin.business.model.contacts.req;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.net.ReqBody;
 import com.chinamobile.hejiaqin.business.net.ReqToken;
-import com.customer.framework.utils.FileUtil;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Administrator on 2016/6/29 0029.

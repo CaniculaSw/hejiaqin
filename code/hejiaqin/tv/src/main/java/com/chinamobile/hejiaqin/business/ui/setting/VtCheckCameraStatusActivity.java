@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -17,12 +16,12 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.log.LogApi;
-
+/***/
 public class VtCheckCameraStatusActivity extends BasicActivity {
 
     private RelativeLayout abLayout;
     private int[] mMetrics = new int[2];
-    SurfaceView videoSurfaceView;
+//    SurfaceView videoSurfaceView;
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -45,7 +44,7 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
     @Override
     protected void initView() {
         abLayout = (RelativeLayout) findViewById(R.id.camera_ab_ll);
-        videoSurfaceView = (SurfaceView) findViewById(R.id.video_view);
+//        videoSurfaceView = (SurfaceView) findViewById(R.id.video_view);
         if (CallApi.getCameraCount() > 0) {
             createLocalView();
         } else {
@@ -92,7 +91,7 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
     }
 
 
-    private void getDisplayMetrics(Context context, int metrics[]) {
+    private void getDisplayMetrics(Context context, int[] metrics) {
         if (null == metrics) {
             metrics = new int[2];
         }

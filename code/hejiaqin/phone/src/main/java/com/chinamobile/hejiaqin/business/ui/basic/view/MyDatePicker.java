@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-
+/***/
 public class MyDatePicker extends FrameLayout {
 
     private static final String LOG_TAG = DatePicker.class.getSimpleName();
@@ -449,6 +449,7 @@ public class MyDatePicker extends FrameLayout {
      * @hide
      */
     public static interface ValidationCallback {
+        /***/
         void onValidationChanged(boolean valid);
     }
 

@@ -1,7 +1,7 @@
 package com.customer.framework.component.db;
 
 import java.util.List;
-
+/***/
 public class DatabaseInfo {
 
     /**
@@ -156,7 +156,7 @@ public class DatabaseInfo {
          */
         public static final String TABLE_DESC = "desc";
     }
-
+    /***/
     public interface UserConfig {
         public static final String TABLE_NAME = "UserConfig";
         /**
@@ -170,7 +170,7 @@ public class DatabaseInfo {
         public static final String VALUE = "value";
 
     }
-
+    /***/
     public interface CallRecord {
         public static final String TABLE_NAME = "CallRecord";
         /**
@@ -185,7 +185,7 @@ public class DatabaseInfo {
         public static final String TYPE = "type";
         public static final String READ = "read";
     }
-
+    /***/
     public interface ContactsInfo {
         public static final String TABLE_NAME = "ContactsInfo";
         /**
@@ -206,7 +206,7 @@ public class DatabaseInfo {
         public static final String SQL_SElECT_ALL = new StringBuffer("select * from ")
                 .append(TABLE_NAME).toString();
     }
-
+    /***/
     public interface SystemMessage {
         public static final String TABLE_NAME = "SystemMessage";
         /**

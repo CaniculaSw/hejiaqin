@@ -1,11 +1,11 @@
-package com.customer.framework.component.qrCode.core;
+package com.customer.framework.component.qrcode.core;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
-
+/***/
 public class DisplayUtils {
 
     public static Point getScreenResolution(Context context) {
@@ -19,7 +19,7 @@ public class DisplayUtils {
         }
         return screenResolution;
     }
-
+    /***/
     public static int dp2px(Context context, float dpValue) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
     }

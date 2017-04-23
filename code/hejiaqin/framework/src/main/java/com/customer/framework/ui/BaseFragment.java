@@ -1,7 +1,6 @@
 package com.customer.framework.ui;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +24,7 @@ import java.util.Set;
  */
 public abstract class BaseFragment extends Fragment {
 
-    protected String TAG = this.getClass().getSimpleName();
+    protected String tagString = this.getClass().getSimpleName();
 
     /**
      * 缓存持有的logic对象的集合
@@ -48,7 +47,7 @@ public abstract class BaseFragment extends Fragment {
      * @return 返回LogicBuilder对象
      */
     public static ILBuilder getLogicBuilder() {
-        return BuilderImp.instance;
+        return BuilderImp.getInstance();
     }
 
     /**
@@ -57,24 +56,24 @@ public abstract class BaseFragment extends Fragment {
      * @param logicBuilder logic建造管理类
      */
     protected static void setLogicBuilder(BuilderImp logicBuilder) {
-        BuilderImp.instance = logicBuilder;
+        BuilderImp.setInstance(logicBuilder);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        LogUtil.d(TAG, "onCreate");
+        LogUtil.d(tagString, "onCreate");
         super.onCreate(savedInstanceState);
         if (!isInit()) {
             setLogicBuilder(createLogicBuilder(this.getContext().getApplicationContext()));
             initSystem(this.getContext().getApplicationContext());
         }
         if (isHandlerToAllLogic()) {
-            BuilderImp.instance.addHandlerToAllLogics(getHandler());
+            BuilderImp.getInstance().addHandlerToAllLogics(getHandler());
         }
         try {
             initLogics();
         } catch (Exception e) {
-            Log.e(TAG, "Init logics failed :" + e.getMessage(), e);
+            Log.e(tagString, "Init logics failed :" + e.getMessage(), e);
         }
     }
 
@@ -90,7 +89,7 @@ public abstract class BaseFragment extends Fragment {
      * @return 是否加载了mLogicBuilder
      */
     protected final boolean isInit() {
-        return BuilderImp.instance != null;
+        return BuilderImp.getInstance() != null;
     }
 
     /**
@@ -210,19 +209,19 @@ public abstract class BaseFragment extends Fragment {
      */
     protected final ILogic getLogicByInterfaceClass(Class<?> interfaceClass) {
         ILogic logic =
-                BuilderImp.instance.getLogicByInterfaceClass(interfaceClass);
+                BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
         if (!isHandlerToAllLogic() && null != logic && !mLogicSet.contains(logic)) {
             logic.addHandler(getHandler());
             mLogicSet.add(logic);
         }
         if (logic == null) {
-            Log.e(TAG, "Not found logic by interface class (" + interfaceClass
+            Log.e(tagString, "Not found logic by interface class (" + interfaceClass
                     + ")", new Throwable());
             return null;
         }
         return logic;
     }
-
+    /***/
     public void onDestroy() {
         removeHandler();
         super.onDestroy();
@@ -234,8 +233,8 @@ public abstract class BaseFragment extends Fragment {
                 for (ILogic logic : mLogicSet) {
                     logic.removeHandler(this.mHandler);
                 }
-            } else if (BuilderImp.instance != null) {
-                BuilderImp.instance.removeHandlerToAllLogics(this.mHandler);
+            } else if (BuilderImp.getInstance() != null) {
+                BuilderImp.getInstance().removeHandlerToAllLogics(this.mHandler);
             }
             this.mHandler = null;
         }

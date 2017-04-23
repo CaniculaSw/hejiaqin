@@ -15,11 +15,9 @@ import android.widget.Toast;
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.customer.framework.component.storage.StorageMgr;
 
 /**
  * Created by eshaohu on 16/6/26.
@@ -111,6 +109,7 @@ public class FeedBackActivity extends BasicActivity implements View.OnClickListe
                 break;
             case R.id.feedback_submit_btn:
                 feedback();
+                break;
             default:
                 break;
         }

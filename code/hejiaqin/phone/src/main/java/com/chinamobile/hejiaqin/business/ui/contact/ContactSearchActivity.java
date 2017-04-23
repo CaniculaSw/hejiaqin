@@ -3,7 +3,6 @@ package com.chinamobile.hejiaqin.business.ui.contact;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -124,6 +123,8 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
                     setData(resultContacts.getContactsInfos());
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -147,8 +148,8 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
         return contactType == Constant.CONTACT_TYPE_APP;
     }
 
-
-    public final class Constant {
+    /***/
+    public static final class Constant {
         public static final String INTENT_DATA_CONTACT_TYPE = "intent_data_contact_type";
 
         public static final int CONTACT_TYPE_APP = 0;

@@ -139,6 +139,8 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
             case R.id.back_iv:
                 doBack();
                 break;
+            default:
+                break;
         }
     }
 

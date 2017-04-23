@@ -137,6 +137,8 @@ public class MoreSearchAndSendContactActivity extends BasicActivity implements V
                     setData(resultContacts.getContactsInfos());
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -160,8 +162,8 @@ public class MoreSearchAndSendContactActivity extends BasicActivity implements V
     private boolean isAppContact() {
         return contactType == Constant.CONTACT_TYPE_APP;
     }
-
-    public final class Constant {
+    /***/
+    public static final class Constant {
         public static final String INTENT_DATA_CONTACT_TYPE = "intent_data_contact_type";
 
         public static final int CONTACT_TYPE_APP = 0;

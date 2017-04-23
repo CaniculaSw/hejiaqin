@@ -29,9 +29,9 @@ public class HeApplication extends RCSApplication {
         UpgradeApi.init(getApplicationContext());
         HmeAudioTV.setup(this);
         String deviceName = getDevice();
-        LogUtil.d(TAG, "Const.deviceType:" + Const.deviceType);
+        LogUtil.d(TAG, "Const.deviceType:" + Const.getDeviceType());
         LogUtil.d(TAG, "Const.deviceName:" + deviceName);
-        if (Const.deviceType == Const.TYPE_OTHER) {
+        if (Const.getDeviceType() == Const.TYPE_OTHER) {
             HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_VT);
         } else {
             HmeVideo.setVideoMode(HmeVideo.VIDEO_MODE_STB);
@@ -73,26 +73,27 @@ public class HeApplication extends RCSApplication {
         //非系统签名版本注销掉这段代码
         if (sDevice.contains("Hi3716CV200"))
         {
-            Const.deviceType = Const.TYPE_3719C;
+            Const.setDeviceType(Const.TYPE_3719C);
         }
         else if (sDevice.contains("Hi3719CV100"))
         {
-            Const.deviceType = Const.TYPE_3719C;
+
+            Const.setDeviceType(Const.TYPE_3719C);
         }
         else if (sDevice.contains("Hi3719MV100"))
         {
-            Const.deviceType = Const.TYPE_3719M;
+            Const.setDeviceType(Const.TYPE_3719M);
         }
         else if (sDevice.contains("Hi3798MV100"))
         {
-            Const.deviceType = Const.TYPE_3798M;
+            Const.setDeviceType(Const.TYPE_3798M);
         }
         //非系统签名版本注销掉这段代码
 
         String deviceName = null;
-        if (Const.TYPE_3798M == Const.deviceType) {
+        if (Const.TYPE_3798M == Const.getDeviceType()) {
             deviceName = CallApi.DEVICE_NAME_3798M;
-        } else if (Const.TYPE_3719C == Const.deviceType || Const.TYPE_3719M == Const.deviceType) {
+        } else if (Const.TYPE_3719C == Const.getDeviceType() || Const.TYPE_3719M == Const.getDeviceType()) {
             deviceName = CallApi.DEVICE_NAME_3719C;
         } else {
             deviceName = CallApi.DEVICE_NAME_TINYALSA;

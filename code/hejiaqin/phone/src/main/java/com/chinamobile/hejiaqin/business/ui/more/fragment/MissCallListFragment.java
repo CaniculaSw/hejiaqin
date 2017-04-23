@@ -74,7 +74,7 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
     @Override
     protected void initData() {
 //        List<ContactCallLog> callLogList = CallLogApi.getAllContactCallLogList(CallLogApi.CALLLOG_TYPE_VIDEO,-1);
-//        LogUtil.i(TAG,"callLogList size is: "+callLogList.size());
+//        LogUtil.i(tagString,"callLogList size is: "+callLogList.size());
 //        MissCallMessage testMessage1 = new MissCallMessage();
 //        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));
 //        testMessage1.setFrom("13776570335");

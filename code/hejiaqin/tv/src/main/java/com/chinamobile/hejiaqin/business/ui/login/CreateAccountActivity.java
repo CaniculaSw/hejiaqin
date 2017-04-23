@@ -25,10 +25,10 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.ServiceContractDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
-import com.customer.framework.component.qrCode.QRCodeEncoder;
-import com.customer.framework.component.qrCode.core.DisplayUtils;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
+import com.customer.framework.component.qrcode.QRCodeEncoder;
+import com.customer.framework.component.qrcode.core.DisplayUtils;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
 
@@ -63,7 +63,7 @@ public class CreateAccountActivity extends BasicActivity implements View.OnClick
 
     @Override
     protected void initDate() {
-        createQRCode(BussinessConstants.Login.download_url, 210, qrCode);
+        createQRCode(BussinessConstants.Login.DOWNLOAD_URL, 210, qrCode);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class CreateAccountActivity extends BasicActivity implements View.OnClick
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                LogUtil.i(TAG, "SDK username: " + sdkuserInfo.username);
+                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
@@ -154,6 +154,8 @@ public class CreateAccountActivity extends BasicActivity implements View.OnClick
                     showToast("请同意服务条款", Toast.LENGTH_SHORT, null);
                 }
                 break;
+            default:
+                break;
         }
 
     }
@@ -195,7 +197,7 @@ public class CreateAccountActivity extends BasicActivity implements View.OnClick
 
             @Override
             public void onEncodeQRCodeFailure() {
-                LogUtil.e(TAG, "生成中文二维码失败");
+                LogUtil.e(tag, "生成中文二维码失败");
             }
         });
     }

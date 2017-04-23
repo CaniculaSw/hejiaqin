@@ -136,6 +136,8 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
             case R.id.back_iv:
                 doBack();
                 break;
+            default:
+                break;
         }
     }
 

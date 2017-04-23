@@ -3,7 +3,7 @@ package com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-
+/***/
 public interface StickyListHeadersAdapter extends ListAdapter {
 	/**
 	 * Get a View that displays the header data at the specified position in the

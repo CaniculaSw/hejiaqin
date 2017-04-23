@@ -15,15 +15,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
+import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
-import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfo;
 import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragmentActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.AddContactDialog;
@@ -33,6 +31,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.EditContactDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.DialInfoFragment;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +40,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+/***/
 public class ContactInfoActivity extends BasicFragmentActivity implements View.OnClickListener {
     public static final int REQUEST_CODE_EDIT_CONTACT = 10001;
 
@@ -73,8 +72,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private List<Fragment> fragmentList;
 
-    private final int CONTACT_INFO_INDEX = 0;
-    private final int DIAL_INFO_INDEX = 1;
+    private final static int CONTACT_INFO_INDEX = 0;
+    private final static int DIAL_INFO_INDEX = 1;
     //当前选中的项
     int currentIndex = -1;
 
@@ -150,7 +149,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         }
 
         mContactNameText.setText(mContactsInfo.getName());
-        if(!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+        if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
             Picasso.with(this.getApplicationContext())
                     .load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
@@ -230,7 +229,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
     private void showContactData() {
 
         mContactNameText.setText(mContactsInfo.getName());
-        if(!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
+        if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
             Picasso.with(this.getApplicationContext())
                     .load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
@@ -283,6 +282,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 // TODO
                 showDialNumberDialog();
                 break;
+            default:
+                break;
         }
     }
 
@@ -323,6 +324,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 break;
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
                 showToast(R.string.contact_info_add_contact_failed_toast);
+                this.finish();
+                break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_del_contact_success_toast);
                 this.finish();
@@ -347,6 +350,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                 if (null != contactsLogic) {
                     contactsLogic.queryContactCallRecords(mContactsInfo);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -484,8 +489,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private void showDialNumberDialog() {
         final DialNumberDialog dialNumberDialog = new DialNumberDialog(this, R.style.CalendarDialog
-                , mContactsInfo,((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
-                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)),true);
+                , mContactsInfo, ((IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class)),
+                ((IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class)), true);
         Window window = dialNumberDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -517,6 +522,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
                         showContactData();
                     }
                 }
+                break;
+            default:
                 break;
         }
     }

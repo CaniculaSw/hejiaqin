@@ -25,7 +25,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DialNumberDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.utils.LogUtil;
@@ -36,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
+/***/
 public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactInfoFragment";
 
@@ -63,7 +62,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private IVoipLogic voipLogic;
     private String mCallRecordNumber;
     private boolean mIsFromRecent;
-
+    /***/
     public static ContactInfoFragment newInstance(String contactNumber,boolean isFromRecent) {
         ContactInfoFragment fragment = new ContactInfoFragment();
         Bundle args = new Bundle();
@@ -72,7 +71,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         fragment.setArguments(args);
         return fragment;
     }
-
+    /***/
     public static ContactInfoFragment newInstance(ContactsInfo contactsInfo,boolean isFromRecent) {
         ContactInfoFragment fragment = new ContactInfoFragment();
         Bundle args = new Bundle();
@@ -139,6 +138,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 if (null != contactsLogic) {
                     contactsLogic.queryContactCallRecords(mContactsInfo);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -364,6 +365,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             case R.id.dial_video_volte_layout:
                 startVideoCall(false);
                 break;
+            default:
+                break;
         }
     }
 
@@ -445,7 +448,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     public void setContactsInfo(ContactsInfo contactsInfo) {
         mContactsInfo = contactsInfo;
     }
-
+    /***/
     public void refreshView() {
         if (null == mDialInfoGroupList) {
             return;

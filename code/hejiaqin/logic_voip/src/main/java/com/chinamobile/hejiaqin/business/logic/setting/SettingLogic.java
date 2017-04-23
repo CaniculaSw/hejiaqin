@@ -20,8 +20,8 @@ import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.business.utils.SysInfoUtil;
-import com.customer.framework.component.ThreadPool.ThreadPoolUtil;
-import com.customer.framework.component.ThreadPool.ThreadTask;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
@@ -108,13 +108,15 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                         });
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_UNDELIVERED);
                         break;
+                    default:
+                        break;
                 }
                 return;
             }
         }
     };
 
-    private BroadcastReceiver MissCallReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver missCallReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -132,6 +134,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                 break;
             case CaaSUtil.CmdType.SEND_CONTACT:
                 handleSendContact(msg);
+                break;
+            default:
                 break;
 
         }
@@ -170,6 +174,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                 LogUtil.d(TAG, "Will send the BIND_DENIED message to UI");
                 sendMessage(BussinessConstants.SettingMsgID.BIND_DENIED, msg);
                 break;
+            default:
+                break;
         }
     }
 
@@ -183,13 +189,9 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
      * @param context 系统的context对象
      * @return LogicBuilder对象
      */
-    public static SettingLogic getInstance(Context context) {
+    public synchronized static SettingLogic getInstance(Context context) {
         if (instance == null) {
-            synchronized (SettingLogic.class) {
-                if (instance == null) {
-                    instance = new SettingLogic(context);
-                }
-            }
+            instance = new SettingLogic(context);
         }
         return instance;
     }
@@ -210,6 +212,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                     break;
                 case "numberFour":
                     settingInfo.setNumberFour(inputNumber);
+                    break;
+                default:
                     break;
             }
             UserInfoCacheManager.updateUserSetting(context, settingInfo);
@@ -373,7 +377,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         if (versionInfo == null) {
             return false;
         }
-        int currentVersioncode, versionCode;
+        int currentVersioncode;
+        int versionCode;
         currentVersioncode = SysInfoUtil.getVersionCode(getContext());
         try {
             versionCode = Integer.parseInt(versionInfo.getVersionCode());
@@ -392,7 +397,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         if (versionInfo.getByForce() == 1) {
             return true;
         }
-        int currentVersioncode, forceVersionCode;
+        int currentVersioncode;
+        int forceVersionCode;
         currentVersioncode = SysInfoUtil.getVersionCode(getContext());
         try {
             forceVersionCode = Integer.parseInt(versionInfo.getForceVersionCode());
@@ -406,6 +412,7 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         return false;
     }
 
+    /***/
     public void registerMessageReceiver() {
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mMessageReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_INCOMING));
@@ -414,13 +421,14 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
         LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mMessageStatusChangedReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_STATUS_CHANGED));
         LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(MissCallReceiver, new IntentFilter(CallApi.EVENT_MISS_CALL));
+                .registerReceiver(missCallReceiver, new IntentFilter(CallApi.EVENT_MISS_CALL));
     }
 
+    /***/
     public void unRegisterMessageReceiver() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageStatusChangedReceiver);
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(MissCallReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(missCallReceiver);
     }
 
     public String getOpCode(String toParse) {

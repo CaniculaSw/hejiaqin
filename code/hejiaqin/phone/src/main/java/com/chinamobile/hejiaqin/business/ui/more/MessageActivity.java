@@ -138,6 +138,7 @@ public class MessageActivity extends BasicFragmentActivity implements View.OnCli
                 break;
             case R.id.more_sys_msg_back_btn:
                 finish();
+                break;
             default:
                 break;
         }

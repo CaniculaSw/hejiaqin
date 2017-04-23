@@ -6,21 +6,20 @@ import android.net.Uri;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 
 /**
  * Created by yupeng on 1/7/17.
  */
 public final class DialHelper {
-    private static final DialHelper instance = new DialHelper();
+    private static final DialHelper INSTANCE = new DialHelper();
 
     private DialHelper() {
 
     }
 
     public static DialHelper getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public boolean isPhoneCall(ContactsInfo contactsInfo) {
@@ -55,7 +54,7 @@ public final class DialHelper {
 //            startVideoCall(context, numberInfo, name);
 //        }
 //    }
-
+    /***/
     public void call(Context context, String number, String name) {
         if (null == context) {
             return;

@@ -17,13 +17,13 @@ import android.os.Message;
 
 import java.util.List;
 import java.util.Vector;
-
+/***/
 public abstract class LogicImp implements ILogic
 {
     /**
      * 日志标记
      */
-    protected String TAG = this.getClass().getSimpleName();
+    protected String tagString = this.getClass().getSimpleName();
 
     /**
      * logic对象中UI监听的handler缓存集合

@@ -2,24 +2,21 @@ package com.chinamobile.hejiaqin.business.ui.basic;
 
 import android.view.View;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by yupeng on 8/9/16.
  */
 public class FocusManager {
-    private static final FocusManager instance =
+    private static final FocusManager INSTANCE =
             new FocusManager();
 
-    private Map<String, View> leftFragFocusViews = new HashMap<>();
+//    private Map<String, View> leftFragFocusViews = new HashMap<>();
 
     private FocusManager() {
 
     }
 
     public static FocusManager getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
 //    public void addFocusViewInLeftFrag(String fragName, View view) {
@@ -33,7 +30,7 @@ public class FocusManager {
 //    public boolean isExistInLeftFrag(String fragName) {
 //        return leftFragFocusViews.containsKey(fragName);
 //    }
-
+    /***/
     public void requestFocus(View view) {
         view.setFocusable(true);
         view.requestFocus();

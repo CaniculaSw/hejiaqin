@@ -1,4 +1,4 @@
-package com.customer.framework.component.qrCode;
+package com.customer.framework.component.qrcode;
 
 /**
  * Created by eshaohu on 16/6/3.
@@ -101,7 +101,7 @@ public class QRCodeDecoder {
         }.execute();
     }
 
-
+    /***/
     public interface Delegate {
         /**
          * 解析二维码成功

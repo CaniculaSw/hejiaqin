@@ -55,21 +55,21 @@ public class PhotoManage {
         mPhotoManage.mContext = context;
         return mPhotoManage;
     }
-
+    /***/
     public void removeContext() {
         mPhotoManage.mContext = null;
     }
-
+    /***/
     public void setFragmentActivity(FragmentActivity fragment) {
         this.mContext2 = fragment;
     }
 
-    //添加裁剪照片监听
+    /**添加裁剪照片监听*/
     public void setPhotoListener(PhotoChangeListener listener) {
         mListener = listener;
     }
 
-    /* 通知照片裁剪完毕 */
+    /** 通知照片裁剪完毕 */
     public void sendPhotoEnd(Intent data) {
         Bundle extras = data.getExtras();
         if (extras != null) {
@@ -84,7 +84,7 @@ public class PhotoManage {
         }
     }
 
-    /*选择头像自定义dialog*/
+    /**选择头像自定义dialog*/
     public void showDialog() {
         //创建一个AlertDialog对象
         final PhotoDialog photoDialog = new PhotoDialog(mContext, R.style.CalendarDialog);
@@ -161,7 +161,7 @@ public class PhotoManage {
             else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                        Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
 
                 return getDataColumn(context, contentUri, null, null);
             }
@@ -191,8 +191,9 @@ public class PhotoManage {
         // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
             // Return the remote address
-            if (isGooglePhotosUri(uri))
+            if (isGooglePhotosUri(uri)) {
                 return uri.getLastPathSegment();
+            }
 
             return getDataColumn(context, uri, null, null);
         }
@@ -221,8 +222,9 @@ public class PhotoManage {
                 return cursor.getString(index);
             }
         } finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return null;
     }
@@ -260,8 +262,9 @@ public class PhotoManage {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-
+    /***/
     public interface PhotoChangeListener {
+        /***/
         void end(String url, Bitmap bitmap);
     }
 

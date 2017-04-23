@@ -7,18 +7,16 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
-import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.chinamobile.hejiaqin.business.logic.LogicBuilder;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
+import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.utils.DirUtil;
-import com.customer.framework.utils.LogUtil;
+import com.chinamobile.hejiaqin.tv.BuildConfig;
 import com.customer.framework.logic.BuilderImp;
 import com.customer.framework.ui.BaseFragment;
+import com.customer.framework.utils.LogUtil;
 
 /**
  * desc:
@@ -43,8 +41,8 @@ public abstract class BasicFragment extends BaseFragment {
         LogUtil.setContext(getActivity().getApplicationContext());
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
-        LogUtil.d(TAG, "device:" + Build.DEVICE);
-        LogUtil.d(TAG, "model:" + Build.MODEL);
+        LogUtil.d(tagString, "device:" + Build.DEVICE);
+        LogUtil.d(tagString, "model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }
@@ -82,6 +80,7 @@ public abstract class BasicFragment extends BaseFragment {
      * 回调至父类(FragmentActivity或者BaseFragment)
      */
     public interface BackListener {
+        /***/
         void onAction(int actionId, Object obj);
     }
 
@@ -117,18 +116,18 @@ public abstract class BasicFragment extends BaseFragment {
     public void setActivityListener(BackListener listener) {
         this.mListener = listener;
     }
-
+    /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
-
+    /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;
     }
 
     protected void showToast(int resId) {
-        MyToast.Position position = myToast.new Position();
+        MyToast.Position position = new MyToast.Position();
         showToast(resId, Toast.LENGTH_SHORT, position);
     }
 

@@ -91,10 +91,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param msg 打印信息
-     * @return 返回
      */
     public static void v(String tag, String msg) {
-        if(isLoggable(VERBOSE)) {
+        if (isLoggable(VERBOSE)) {
             if (hasPermissions()) {
                 Logger.v(tag, msg);
             } else {
@@ -109,10 +108,9 @@ public class LogUtil {
      * @param tag 打印TAG
      * @param msg 打印信息
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void v(String tag, String msg, Throwable tr) {
-        if(isLoggable(VERBOSE)) {
+        if (isLoggable(VERBOSE)) {
             if (hasPermissions()) {
                 Logger.v(tag, msg, tr);
             } else {
@@ -127,10 +125,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void v(String tag, Throwable tr) {
-        if(isLoggable(VERBOSE)) {
+        if (isLoggable(VERBOSE)) {
             if (hasPermissions()) {
                 Logger.v(tag, tr);
             } else {
@@ -144,10 +141,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param msg 打印信息
-     * @return 返回
      */
     public static void d(String tag, String msg) {
-        if(isLoggable(DEBUG)) {
+        if (isLoggable(DEBUG)) {
             if (hasPermissions()) {
                 Logger.d(tag, msg);
             } else {
@@ -162,10 +158,9 @@ public class LogUtil {
      * @param tag 打印TAG
      * @param msg 打印信息
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void d(String tag, String msg, Throwable tr) {
-        if(isLoggable(DEBUG)) {
+        if (isLoggable(DEBUG)) {
             if (hasPermissions()) {
                 Logger.d(tag, msg, tr);
             } else {
@@ -179,10 +174,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void d(String tag, Throwable tr) {
-        if(isLoggable(DEBUG)) {
+        if (isLoggable(DEBUG)) {
             if (hasPermissions()) {
                 Logger.d(tag, tr);
             } else {
@@ -196,10 +190,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param msg 打印信息
-     * @return 返回
      */
     public static void i(String tag, String msg) {
-        if(isLoggable(INFO)) {
+        if (isLoggable(INFO)) {
             if (hasPermissions()) {
                 Logger.i(tag, msg);
             } else {
@@ -214,10 +207,9 @@ public class LogUtil {
      * @param tag 打印TAG
      * @param msg 打印信息
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void i(String tag, String msg, Throwable tr) {
-        if(isLoggable(INFO)) {
+        if (isLoggable(INFO)) {
             if (hasPermissions()) {
                 Logger.i(tag, msg, tr);
             } else {
@@ -231,10 +223,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void i(String tag, Throwable tr) {
-        if(isLoggable(INFO)) {
+        if (isLoggable(INFO)) {
             if (hasPermissions()) {
                 Logger.i(tag, tr);
             } else {
@@ -248,10 +239,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param msg 打印信息
-     * @return 返回
      */
     public static void w(String tag, String msg) {
-        if(isLoggable(WARN)) {
+        if (isLoggable(WARN)) {
             if (hasPermissions()) {
                 Logger.w(tag, msg);
             } else {
@@ -266,10 +256,9 @@ public class LogUtil {
      * @param tag 打印TAG
      * @param msg 打印信息
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void w(String tag, String msg, Throwable tr) {
-        if(isLoggable(WARN)) {
+        if (isLoggable(WARN)) {
             if (hasPermissions()) {
                 Logger.w(tag, msg, tr);
             } else {
@@ -283,10 +272,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void w(String tag, Throwable tr) {
-        if(isLoggable(WARN)) {
+        if (isLoggable(WARN)) {
             if (hasPermissions()) {
                 Logger.w(tag, tr);
             } else {
@@ -300,10 +288,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param msg 打印信息
-     * @return 返回
      */
     public static void e(String tag, String msg) {
-        if(isLoggable(ERROR)) {
+        if (isLoggable(ERROR)) {
             if (hasPermissions()) {
                 Logger.e(tag, msg);
             } else {
@@ -318,10 +305,9 @@ public class LogUtil {
      * @param tag 打印TAG
      * @param msg 打印信息
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void e(String tag, String msg, Throwable tr) {
-        if(isLoggable(ERROR)) {
+        if (isLoggable(ERROR)) {
             if (hasPermissions()) {
                 Logger.e(tag, msg, tr);
             } else {
@@ -335,10 +321,9 @@ public class LogUtil {
      *
      * @param tag 打印TAG
      * @param tr  异常堆栈
-     * @return 返回
      */
     public static void e(String tag, Throwable tr) {
-        if(isLoggable(ERROR)) {
+        if (isLoggable(ERROR)) {
             if (hasPermissions()) {
                 Logger.e(tag, tr);
             } else {
@@ -360,7 +345,7 @@ public class LogUtil {
     @TargetApi(23)
     private static boolean hasPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
-            return mContext!=null && !PermissionsChecker.lacksPermissions(mContext, PERMISSIONS);
+            return mContext != null && !PermissionsChecker.lacksPermissions(mContext, PERMISSIONS);
         } else {
             return true;
         }

@@ -25,7 +25,7 @@ public class WrapperView extends ViewGroup {
 	WrapperView(Context c) {
 		super(c);
 	}
-
+	/***/
 	public boolean hasHeader() {
 		return mHeader != null;
 	}

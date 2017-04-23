@@ -6,19 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.chinamobile.hejiaqin.business.ui.basic.FocusManager;
-import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
-import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactEditFragment;
-import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactSearchFragment;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
+import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyListHeadersListView;
 import com.chinamobile.hejiaqin.business.ui.contact.adapter.AppContactAdapter;
-import com.customer.framework.component.log.Logger;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactEditFragment;
+import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactSearchFragment;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.List;
@@ -45,6 +43,8 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
+                break;
+            default:
                 break;
         }
     }
@@ -144,6 +144,8 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
                 break;
             case R.id.contact_add_layout:
                 enterAddView();
+                break;
+            default:
                 break;
         }
     }

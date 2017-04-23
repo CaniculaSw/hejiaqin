@@ -129,6 +129,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 case BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID:
                     showPopupWindow();
                     break;
+                default:
+                    break;
             }
         }
     };
@@ -185,7 +187,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     {
         super.onResume();
         if (mVoipLogic.isNeedVoipLogin()) {
-            LogUtil.d(TAG, "autoLogin");
+            LogUtil.d(tagString, "autoLogin");
             mVoipLogic.setNotNeedVoipLogin();
             mVoipLogic.autoLogin();
         }
@@ -235,6 +237,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                             msg.what = BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID;
                             mFragments[mDialIndex].recieveMsg(msg);
                             break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -273,6 +277,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 case mSettingIndex:
                     mFragments[toIndex] = new SettingFragment();
                     mFragments[toIndex].setActivityListener(listener);
+                    break;
+                default:
                     break;
             }
             ft.add(R.id.content, mFragments[toIndex]);
@@ -313,6 +319,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     mImageViews[toIndex].setVisibility(View.GONE);
                     mTextViews[toIndex].setVisibility(View.GONE);
                     mDialCallImage.setVisibility(View.VISIBLE);
+                    break;
+                default:
                     break;
 
             }
@@ -374,6 +382,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         super.handleStateMessage(msg);
         dismissWaitDailog();
         switch (msg.what) {
+            default:
+                break;
         }
     }
 

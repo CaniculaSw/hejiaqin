@@ -29,31 +29,31 @@ public class RecordingDialog extends Dialog {
     private Animation animation;
     private TextView speakTips;
     private TextView tips;
-    private RecordingCountDownTimer recordingCountDownTimer;
-    private PlayingCountDownTimer playingCountDownTimer;
+//    private RecordingCountDownTimer recordingCountDownTimer;
+//    private PlayingCountDownTimer playingCountDownTimer;
     private boolean isRecording;
     private TextView controlBtnText;
     private boolean isPaused;
     private ISettingLogic settingLogic;
-    private final String ptt_filename = SysApi.DEFAULT_FILE_STORED_LOCATION + "/receivedPtt/" + "record_audio.amr";
+    private final String pttFilename = SysApi.DEFAULT_FILE_STORED_LOCATION + "/receivedPtt/" + "record_audio.amr";
     private long duration;
     private long begin;
     private long end;
     private int inputVol;
 
-    public RecordingDialog(Context context, ISettingLogic settingLogic) {
+    public RecordingDialog(final Context context, ISettingLogic settingLogic) {
         super(context);
         this.mContext = context;
         this.settingLogic = settingLogic;
     }
 
-    public RecordingDialog(Context context, int themeResId, ISettingLogic settingLogic) {
+    public RecordingDialog(final Context context, int themeResId, ISettingLogic settingLogic) {
         super(context, themeResId);
         this.mContext = context;
         this.settingLogic = settingLogic;
     }
 
-    protected RecordingDialog(Context context, boolean cancelable, OnCancelListener cancelListener, ISettingLogic settingLogic) {
+    protected RecordingDialog(final Context context, boolean cancelable, OnCancelListener cancelListener, ISettingLogic settingLogic) {
         super(context, cancelable, cancelListener);
         this.mContext = context;
         this.settingLogic = settingLogic;
@@ -75,9 +75,9 @@ public class RecordingDialog extends Dialog {
 
 
     private void startRecording() {
-        if (!FileUtil.isFileExists(this.ptt_filename)) {
+        if (!FileUtil.isFileExists(this.pttFilename)) {
             try {
-                FileUtil.createFile(this.ptt_filename);
+                FileUtil.createFile(this.pttFilename);
             } catch (IOException e) {
                 Toast.makeText(mContext, "不能创建录音文件，请检查机顶盒存储空间。", Toast.LENGTH_LONG);
                 return;
@@ -86,11 +86,11 @@ public class RecordingDialog extends Dialog {
         isRecording = true;
         this.inputVol = 0;
         begin = System.currentTimeMillis();
-        CallSessionRecording.startMediaRec(this.ptt_filename);
+        CallSessionRecording.startMediaRec(this.pttFilename);
         tips.setText(R.string.recording);
         controlBtnText.setText(R.string.stop_recording);
         iv.startAnimation(animation);
-        startRecTimer(this.recordingCountDownTimer);
+        startRecTimer();
     }
 
     private void startPlayBack(long howLong) {
@@ -99,13 +99,13 @@ public class RecordingDialog extends Dialog {
         if (!speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);
         }
-        CallSessionRecording.startMediaPlay(this.ptt_filename);
+        CallSessionRecording.startMediaPlay(this.pttFilename);
         isRecording = false;
         tips.setText(R.string.playing);
         controlBtnText.setText(R.string.stop_playback);
         animation.setDuration(duration * 1000);
         iv.startAnimation(animation);
-        startPlayingTimer(this.playingCountDownTimer, duration);
+        startPlayingTimer(duration);
         isPaused = false;
     }
 
@@ -120,17 +120,17 @@ public class RecordingDialog extends Dialog {
     }
 
 
-    private void startRecTimer(RecordingCountDownTimer timer) {
-        startRecTimer(timer, 10);
+    private void startRecTimer() {
+        startRecTimer(10);
     }
 
-    private void startRecTimer(RecordingCountDownTimer timer, long howLong) {
-        timer = new RecordingCountDownTimer(howLong * 1000);
+    private void startRecTimer(long howLong) {
+        RecordingCountDownTimer timer = new RecordingCountDownTimer(howLong * 1000);
         timer.start();
     }
 
-    private void startPlayingTimer(PlayingCountDownTimer timer, long howLong) {
-        timer = new PlayingCountDownTimer(howLong * 1000);
+    private void startPlayingTimer(long howLong) {
+        PlayingCountDownTimer timer = new PlayingCountDownTimer(howLong * 1000);
         timer.start();
     }
 
@@ -211,6 +211,8 @@ public class RecordingDialog extends Dialog {
                     pause();
                 }
                 break;
+            default:
+                break;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -230,7 +232,8 @@ public class RecordingDialog extends Dialog {
 
     @Override
     public void onBackPressed() {
-        AudioManager audioManamger = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManamger =
+            (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         boolean speakerState = audioManamger.isSpeakerphoneOn();
         if (speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);

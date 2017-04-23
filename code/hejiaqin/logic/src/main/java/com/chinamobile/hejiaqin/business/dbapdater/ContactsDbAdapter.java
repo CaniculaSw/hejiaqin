@@ -1,10 +1,9 @@
-package com.chinamobile.hejiaqin.business.dbApdater;
+package com.chinamobile.hejiaqin.business.dbapdater;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
@@ -41,7 +40,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
         return mContactsDbAdapter;
     }
-
+    /***/
     public void add(List<ContactsInfo> contactsInfoList) {
         if (null == contactsInfoList || contactsInfoList.isEmpty()) {
             return;
@@ -60,7 +59,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
         super.applyBatch(operationList);
     }
-
+    /***/
     public void update(ContactsInfo contactsInfo) {
         if (null == contactsInfo) {
             return;
@@ -81,7 +80,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
         super.applyBatch(operationList);
     }
-
+    /***/
     public List<ContactsInfo> queryAll() {
         ContactList contactList = new ContactList();
 

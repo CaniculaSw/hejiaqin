@@ -28,7 +28,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private Handler handler = new Handler();
     private String tips = "";
-    private TextView tips_text;
+    private TextView tipsText;
     private static boolean canBack = false;
 
     private Handler mHandler = new Handler() {
@@ -55,9 +55,9 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.dialog_update_tip);
         logout = (Button) findViewById(R.id.logout_button);
         logout.setOnClickListener(this);
-        tips_text = (TextView) findViewById(R.id.tips_text);
+        tipsText = (TextView) findViewById(R.id.tips_text);
         if (!StringUtil.isNullOrEmpty(tips)) {
-            tips_text.setText(tips);
+            tipsText.setText(tips);
         }
     }
 
@@ -76,7 +76,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
     public void dismiss() {
         super.dismiss();
     }
-
+    /***/
     public static void show(Activity activity) {
         UpdateDialog videoInComingDialog = new UpdateDialog(activity, R.style.CalendarDialog);
         Window window = videoInComingDialog.getWindow();
@@ -89,7 +89,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         videoInComingDialog.setCancelable(false);
         videoInComingDialog.show();
     }
-
+    /***/
     public static void show(Activity activity, String text) {
         UpdateDialog videoInComingDialog = new UpdateDialog(activity, R.style.CalendarDialog, text);
         Window window = videoInComingDialog.getWindow();
@@ -102,7 +102,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         videoInComingDialog.setCancelable(false);
         videoInComingDialog.show();
     }
-
+    /***/
     public static void show(Activity activity, String text,boolean isCanBack){
         canBack = isCanBack;
         show(activity,text);

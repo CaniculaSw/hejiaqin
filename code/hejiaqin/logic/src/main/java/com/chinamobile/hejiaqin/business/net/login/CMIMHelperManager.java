@@ -2,7 +2,7 @@ package com.chinamobile.hejiaqin.business.net.login;
 
 import android.content.Context;
 
-import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
+import com.chinamobile.hejiaqin.business.dbapdater.SystemMessageDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.customer.framework.utils.LogUtil;
@@ -35,6 +35,7 @@ public class CMIMHelperManager {
     private Context getContext(){
         return this.mContext;
     }
+    /***/
     public void doLogin(UserInfo userInfo) {
         CMIMHelper.getCmAccountManager().doLogin(userInfo.getImAccount(), userInfo.getImPassword(), new CMChatListener.OnCMListener() {
             @Override

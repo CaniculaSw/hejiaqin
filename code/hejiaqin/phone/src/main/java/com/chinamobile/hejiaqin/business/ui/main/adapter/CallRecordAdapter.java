@@ -20,8 +20,6 @@ import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity;
 import com.chinamobile.hejiaqin.business.ui.dial.DialHelper;
-import com.chinamobile.hejiaqin.business.ui.dial.VideoCallActivity;
-import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -54,29 +52,29 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
         CallRecord info = mData.get(position);
         if (info != null) {
             HolderView tHolder = (HolderView) holder;
-            tHolder.call_record_type_layout.setTag(position);
-            tHolder.call_record_content_layout.setTag(position);
-            tHolder.call_record_time_layout.setTag(position);
-            tHolder.call_record_arrow_layout.setTag(position);
-            tHolder.call_record_type_layout.setOnClickListener(new View.OnClickListener() {
+            tHolder.callRecordTypeLayout.setTag(position);
+            tHolder.callRecordContentLayout.setTag(position);
+            tHolder.callRecordTimeLayout.setTag(position);
+            tHolder.callRecordArrowLayout.setTag(position);
+            tHolder.callRecordTypeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     callVideo(v);
                 }
             });
-            tHolder.call_record_content_layout.setOnClickListener(new View.OnClickListener() {
+            tHolder.callRecordContentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     callVideo(v);
                 }
             });
-            tHolder.call_record_time_layout.setOnClickListener(new View.OnClickListener() {
+            tHolder.callRecordTimeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showDetail(v);
                 }
             });
-            tHolder.call_record_arrow_layout.setOnClickListener(new View.OnClickListener() {
+            tHolder.callRecordArrowLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showDetail(v);
@@ -151,7 +149,7 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
             mContext.startActivity(intent);
         }
     }
-
+    /***/
     public void refreshData(List<CallRecord> data) {
         if (data != null) {
             mData = data;
@@ -168,17 +166,17 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
         }
         return mData.size();
     }
-
+    /***/
     public class HolderView extends RecyclerView.ViewHolder {
 
         private ImageView callRecordTypeIv;
         private TextView callRecordNameTv;
         private TextView callRecordNumberTv;
         private TextView callRecordTimeTv;
-        private LinearLayout call_record_type_layout;
-        private LinearLayout call_record_content_layout;
-        private LinearLayout call_record_time_layout;
-        private LinearLayout call_record_arrow_layout;
+        private LinearLayout callRecordTypeLayout;
+        private LinearLayout callRecordContentLayout;
+        private LinearLayout callRecordTimeLayout;
+        private LinearLayout callRecordArrowLayout;
 
         public HolderView(View view) {
             super(view);
@@ -186,12 +184,12 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
             callRecordNameTv = (TextView) view.findViewById(R.id.call_record_name_tv);
             callRecordNumberTv = (TextView) view.findViewById(R.id.call_record_number_tv);
             callRecordTimeTv = (TextView) view.findViewById(R.id.call_record_time_tv);
-            call_record_type_layout = (LinearLayout) view.findViewById(R.id.call_record_type_layout);
+            callRecordTypeLayout = (LinearLayout) view.findViewById(R.id.call_record_type_layout);
             ;
-            call_record_content_layout = (LinearLayout) view.findViewById(R.id.call_record_content_layout);
+            callRecordContentLayout = (LinearLayout) view.findViewById(R.id.call_record_content_layout);
             ;
-            call_record_time_layout = (LinearLayout) view.findViewById(R.id.call_record_time_layout);
-            call_record_arrow_layout = (LinearLayout) view.findViewById(R.id.call_record_arrow_layout);
+            callRecordTimeLayout = (LinearLayout) view.findViewById(R.id.call_record_time_layout);
+            callRecordArrowLayout = (LinearLayout) view.findViewById(R.id.call_record_arrow_layout);
         }
     }
 }

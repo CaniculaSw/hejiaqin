@@ -10,8 +10,8 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.qrCode.QRCodeEncoder;
-import com.customer.framework.component.qrCode.core.DisplayUtils;
+import com.customer.framework.component.qrcode.QRCodeEncoder;
+import com.customer.framework.component.qrcode.core.DisplayUtils;
 import com.customer.framework.utils.LogUtil;
 
 /**
@@ -48,8 +48,8 @@ public class DownloadAppFragment extends BasicFragment {
 
     @Override
     protected void initData() {
-        createQRCode(BussinessConstants.Login.download_url_android,190,qrCodeAndroid);
-        createQRCode(BussinessConstants.Login.download_url_ios,190,qrCodeIos);
+        createQRCode(BussinessConstants.Login.DOWNLOAD_URL_ANDROID,190,qrCodeAndroid);
+        createQRCode(BussinessConstants.Login.DOWNLOAD_URL_IOS,190,qrCodeIos);
     }
 
     private void createQRCode(String url, int size, final ImageView view) {

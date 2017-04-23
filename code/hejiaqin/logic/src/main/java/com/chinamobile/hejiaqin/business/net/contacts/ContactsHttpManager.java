@@ -80,6 +80,8 @@ public class ContactsHttpManager extends AbsHttpManager {
             case delete:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/contact/delete";
                 break;
+            default:
+                break;
         }
         return url;
     }
@@ -111,6 +113,8 @@ public class ContactsHttpManager extends AbsHttpManager {
             case add:
             case update:
                 return NetRequest.ContentType.FORM_DATA;
+            default:
+                break;
         }
         return NetRequest.ContentType.FORM_URLENCODED;
     }
@@ -173,35 +177,35 @@ public class ContactsHttpManager extends AbsHttpManager {
         return obj;
     }
 
-    // 查询联系人列表
+    /** 查询联系人列表*/
     public void list(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.list;
         this.mData = reqBody;
         send(invoker, callBack);
     }
 
-    // 添加联系人
+    /** 添加联系人*/
     public void add(final Object invoker, final AddContactReq reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.add;
         this.mData = reqBody;
         send(invoker, callBack);
     }
 
-    // 批量添加联系人
+    /** 批量添加联系人*/
     public void batchAdd(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.batchAdd;
         this.mData = reqBody;
         send(invoker, callBack);
     }
 
-    // 更新联系人
+    /** 更新联系人*/
     public void update(final Object invoker, final EditContactReq reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.update;
         this.mData = reqBody;
         send(invoker, callBack);
     }
 
-    // 删除联系人
+    /** 删除联系人*/
     public void delete(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
         this.mAction = Action.delete;
         this.mData = reqBody;

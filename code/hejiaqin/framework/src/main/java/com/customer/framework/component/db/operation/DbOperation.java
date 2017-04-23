@@ -3,7 +3,7 @@ package com.customer.framework.component.db.operation;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
+/***/
 public class DbOperation
 {
   private static final String TAG = "DbOperation";
@@ -32,32 +32,32 @@ public class DbOperation
     this.mSql = builder.mSql;
     this.mBindArgs = builder.mBindArgs;
   }
-
+  /***/
   public static DbOperation.Builder newDelete(String table)
   {
     return new DbOperation.Builder(TYPE_DELETE, table);
   }
-
+  /***/
   public static DbOperation.Builder newExecPreSql(String sql, Object[] bindArgs)
   {
     return new DbOperation.Builder(TYPE_EXEC_PRE_SQL, sql, bindArgs);
   }
-
+  /***/
   public static DbOperation.Builder newExecSql(String paramString)
   {
     return new DbOperation.Builder(TYPE_EXEC_SQL, paramString,null);
   }
-
+  /***/
   public static DbOperation.Builder newInsert(String table)
   {
     return new DbOperation.Builder(TYPE_INSERT, table);
   }
-
+  /***/
   public static DbOperation.Builder newUpdate(String table)
   {
     return new DbOperation.Builder(TYPE_UPDATE, table);
   }
-  
+  /***/
   public void apply(SQLiteDatabase sqlLiteDb)
   {
     if (this.mType == TYPE_INSERT)
@@ -95,7 +95,7 @@ public class DbOperation
   {
     return this.mYieldAllowed;
   }
-
+  /***/
   public static class Builder {
     private Object[] mBindArgs;
     private String mSelection;
@@ -127,7 +127,7 @@ public class DbOperation
       this.mSql = sql;
       this.mBindArgs = bindArgs;
     }
-
+    /***/
     public DbOperation build()
     {
       if (((this.mType == TYPE_UPDATE) || (this.mType == TYPE_INSERT)) && ((this.mValues == null) || (this.mValues.size() == 0))) {
@@ -135,7 +135,7 @@ public class DbOperation
       }
       return new DbOperation(this);
     }
-
+    /***/
     public Builder withSelection(String selection, String[] selectionArgs)
     {
       if ((this.mType != TYPE_UPDATE) && (this.mType != TYPE_DELETE)) {
@@ -151,7 +151,7 @@ public class DbOperation
       System.arraycopy(selectionArgs, 0, this.mSelectionArgs, 0, selectionArgs.length);
       return this;
     }
-
+    /***/
     public Builder withValue(String key, Object value)
     {
       if ((this.mType != TYPE_INSERT) && (this.mType != TYPE_UPDATE)) {
@@ -212,7 +212,7 @@ public class DbOperation
       }
       throw new IllegalArgumentException("bad value type: " + value.getClass().getName());
     }
-
+    /***/
     public Builder withValues(ContentValues values)
     {
       if ((this.mType != TYPE_INSERT) && (this.mType != TYPE_UPDATE)) {
@@ -224,7 +224,7 @@ public class DbOperation
       this.mValues.putAll(values);
       return this;
     }
-
+    /***/
     public Builder withYieldAllowed(boolean paramBoolean)
     {
       this.mYieldAllowed = paramBoolean;

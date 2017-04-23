@@ -1,7 +1,7 @@
 package com.customer.framework.component.net;
 
 import com.customer.framework.utils.StringUtil;
-
+/***/
 public class NetConnector
 {
     /**
@@ -19,7 +19,7 @@ public class NetConnector
         }
         return NetUrlConnection.connect(request);
     }
-
+    /***/
     public static NetResponse uploadDirect(NetRequest request)
     {
         if (StringUtil.isNullOrEmpty(request.getUrl()))

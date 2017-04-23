@@ -1,4 +1,4 @@
-package com.customer.framework.component.qrCode.core;
+package com.customer.framework.component.qrcode.core;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -104,6 +104,8 @@ final class CameraConfigurationManager {
                 break;
             case Surface.ROTATION_270:
                 degrees = 270;
+                break;
+            default:
                 break;
         }
 

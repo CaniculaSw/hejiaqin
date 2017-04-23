@@ -1,4 +1,4 @@
-package com.chinamobile.hejiaqin.business.dbApdater;
+package com.chinamobile.hejiaqin.business.dbapdater;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -57,7 +57,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         }
         super.applyBatch(operationList);
     }
-
+    /***/
     public List<CallRecord> queryWithNumbers(String[] numbers) {
         if (numbers == null || numbers.length == 0) {
             return null;
@@ -86,7 +86,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         }
         return list;
     }
-
+    /***/
     public void deleteByNumbers(String[] numbers) {
         String selection = "";
         if (numbers != null && numbers.length != 0) {
@@ -106,7 +106,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         }
         super.delete(DatabaseInfo.CallRecord.TABLE_NAME, selection, numbers);
     }
-
+    /***/
     public List<CallRecord> queryWithName() {
         List<CallRecord> list = new ArrayList<CallRecord>();
         StringBuffer sql = new StringBuffer();
@@ -193,7 +193,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         return list;
     }
 
-
+    /***/
     public List<CallRecord> searchNumbers(String input) {
         List<CallRecord> list = new ArrayList<CallRecord>();
         if (StringUtil.isNullOrEmpty(input)) {

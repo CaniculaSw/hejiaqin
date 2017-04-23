@@ -1,4 +1,4 @@
-package com.customer.framework.component.qrCode.core;
+package com.customer.framework.component.qrcode.core;
 
 import android.content.Context;
 import android.hardware.Camera;
@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-
+/***/
 public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCallback, ProcessDataTask.Delegate {
     protected Camera mCamera;
     protected CameraPreview mPreview;
@@ -186,7 +186,7 @@ public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCa
             }
         }
     };
-
+    /***/
     public interface Delegate {
         /**
          * 处理扫描结果

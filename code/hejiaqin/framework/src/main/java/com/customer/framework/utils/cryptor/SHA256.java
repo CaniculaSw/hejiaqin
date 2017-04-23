@@ -1,10 +1,10 @@
 package com.customer.framework.utils.cryptor;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * SHA256加密
@@ -12,7 +12,7 @@ import com.customer.framework.utils.StringUtil;
  */
 public final class SHA256 {
     private static final String TAG = "SHA256";
-
+    /***/
     public byte[] encrypt(byte[] input) {
         if (null == input) {
             return null;
@@ -28,7 +28,7 @@ public final class SHA256 {
         }
         return null;
     }
-
+    /***/
     public String encrypt2Str(byte[] input) {
         byte[] output = encrypt(input);
         if (null == output) {
@@ -36,11 +36,11 @@ public final class SHA256 {
         }
         return new String(output);
     }
-
+    /***/
     public String encrypt2Hex(byte[] input) {
         return StringUtil.bytes2Hex(encrypt(input));
     }
-
+    /***/
     public String encrypt2Base64(byte[] input) {
         return Base64.encode(input);
     }

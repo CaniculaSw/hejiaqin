@@ -9,7 +9,7 @@
  * 修改时间:
  * 修改内容：[修改内容]
  */
-package com.customer.framework.component.ThreadPool;
+package com.customer.framework.component.threadpool;
 
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;

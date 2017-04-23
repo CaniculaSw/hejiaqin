@@ -1,7 +1,5 @@
 package com.chinamobile.hejiaqin.business.model.contacts.req;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2016/7/2 0002.
  */

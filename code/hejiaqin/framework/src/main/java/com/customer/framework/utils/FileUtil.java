@@ -92,7 +92,7 @@ public final class FileUtil {
         }
         return false;
     }
-
+    /***/
     public static boolean fileCopy(String srcFilePath, String dstFilePath) {
         if (srcFilePath == null || dstFilePath == null) {
             LogUtil.w(TAG, "[copyFile] file path is null");
@@ -102,7 +102,7 @@ public final class FileUtil {
         File destFile = new File(dstFilePath);
         return fileCopy(originFile, destFile);
     }
-
+    /***/
     public static boolean fileCopy(int rid, Context context, String destFileName) {
         if (context == null || TextUtils.isEmpty(destFileName)) {
             return false;
@@ -117,7 +117,7 @@ public final class FileUtil {
 
         return false;
     }
-
+    /***/
     public static boolean fileCopy(File srcFile, File destFile) {
         if (srcFile == null || destFile == null) {
             return false;
@@ -145,7 +145,7 @@ public final class FileUtil {
         }
         return false;
     }
-
+    /***/
     public static boolean moveFile(File origin, File dest) {
         if (origin == null || dest == null) {
             return false;
@@ -173,14 +173,14 @@ public final class FileUtil {
         }
         return isSuc;
     }
-
+    /***/
     public static boolean deleteFile(String path) {
         if (path == null || path.trim().length() < 1) {
             return false;
         }
         return deleteFile(new File(path));
     }
-
+    /***/
     public static boolean deleteFile(File file) {
         try {
             if (file != null && file.exists() && file.isFile()) {
@@ -196,7 +196,7 @@ public final class FileUtil {
             return false;
         }
     }
-
+    /***/
     public static void deleteAllFile(String folderFullPath) {
         if (folderFullPath == null || folderFullPath.trim().length() == 0) {
             return;
@@ -230,7 +230,7 @@ public final class FileUtil {
         File file = getFileByPath(filePath);
         return file == null ? false : file.exists();
     }
-
+    /***/
     public static File createFile(String filePath) throws IOException {
         File file = getFileByPath(filePath);
         File parent = file.getParentFile();
@@ -292,36 +292,36 @@ public final class FileUtil {
 
     public static String getAttachType(String fileName) {
         String fileSuffix = FileUtil.getFileSuffix(fileName).toLowerCase(Locale.US);
-        if (fileSuffix.equals("png") || fileSuffix.equals("jpg") || fileSuffix.equals("jpeg")
-                || fileSuffix.equals("bmp") || fileSuffix.equals("gif")) {
+        if ("png".equals(fileSuffix) || "jpg".equals(fileSuffix) || "jpeg".equals(fileSuffix)
+                || "bmp".equals(fileSuffix) || "gif".equals(fileSuffix)) {
             return ATTACH_TYPE_PIC;
-        } else if (fileSuffix.equals("psd") || fileSuffix.equals("tif")) {
+        } else if ("psd".equals(fileSuffix) || "tif".equals(fileSuffix)) {
             return ATTACH_TYPE_PIC;
-        } else if (fileSuffix.equals("pdf")) {
+        } else if ("pdf".equals(fileSuffix)) {
             return ATTACH_TYPE_PDF;
-        } else if (fileSuffix.equals("avi") || fileSuffix.equals("mov") || fileSuffix.equals("mp4")
-                || fileSuffix.equals("dat") || fileSuffix.equals("rmvb")) {
+        } else if ("avi".equals(fileSuffix) || "mov".equals(fileSuffix) || "mp4".equals(fileSuffix)
+                || "dat".equals(fileSuffix) || "rmvb".equals(fileSuffix)) {
             return ATTACH_TYPE_VIDEO;
-        } else if (fileSuffix.equals("rm") || fileSuffix.equals("wmv") | fileSuffix.equals("3gp")
-                || fileSuffix.equals("vob") || fileSuffix.equals("flv")) {
+        } else if ("rm".equals(fileSuffix) || "wmv".equals(fileSuffix) | "3gp".equals(fileSuffix)
+                || "vob".equals(fileSuffix) || "flv".equals(fileSuffix)) {
             return ATTACH_TYPE_VIDEO;
-        } else if (fileSuffix.equals("dvd") || fileSuffix.equals("mpg") || fileSuffix.equals("swf")
-                || fileSuffix.equals("video") || fileSuffix.equals("wmp")) {
+        } else if ("dvd".equals(fileSuffix) || "mpg".equals(fileSuffix) || "swf".equals(fileSuffix)
+                || "video".equals(fileSuffix) || "wmp".equals(fileSuffix)) {
             return ATTACH_TYPE_VIDEO;
-        } else if (fileSuffix.equals("doc") || fileSuffix.equals("docx")) {
+        } else if ("doc".equals(fileSuffix) || "docx".equals(fileSuffix)) {
             return ATTACH_TYPE_DOC;
-        } else if (fileSuffix.equals("ppt") || fileSuffix.equals("pptx")) {
+        } else if ("ppt".equals(fileSuffix) || "pptx".equals(fileSuffix)) {
             return ATTACH_TYPE_PPT;
-        } else if (fileSuffix.equals("xls") || fileSuffix.equals("xlsx")) {
+        } else if ("xls".equals(fileSuffix) || "xlsx".equals(fileSuffix)) {
             return ATTACH_TYPE_XLS;
-        } else if (fileSuffix.equals("txt")) {
+        } else if ("txt".equals(fileSuffix)) {
             return ATTACH_TYPE_TXT;
-        } else if (fileSuffix.equals("rar") || fileSuffix.equals("zip")) {
+        } else if ("rar".equals(fileSuffix) || "zip".equals(fileSuffix)) {
             return ATTACH_TYPE_RAR;
-        } else if (fileSuffix.equals("html") || fileSuffix.equals("mht")) {
+        } else if ("html".equals(fileSuffix) || "mht".equals(fileSuffix)) {
             return ATTACH_TYPE_HTML;
-        } else if (fileSuffix.equals("mp3") || fileSuffix.equals("wma") || fileSuffix.equals("wav")
-                || fileSuffix.equals("aac") || fileSuffix.equals("wav")) {
+        } else if ("mp3".equals(fileSuffix) || "wma".equals(fileSuffix) || "wav".equals(fileSuffix)
+                || "aac".equals(fileSuffix) || "wav".equals(fileSuffix)) {
             return ATTACH_TYPE_AUDIO;
         } else {
             return ATTACH_TYPE_FILE;
@@ -353,19 +353,19 @@ public final class FileUtil {
         }
     }
 
-    public static String getFileNameWithSuffix(String fileFullPath) {
-        String fileName;
-        if (fileFullPath == null || fileFullPath.trim().length() < 1) {
-            fileName = null;
-        }
-        try {
-            File file = new File(fileFullPath);
-            fileName = file.getName();
-        } catch (Exception e) {
-            fileName = null;
-        }
-        return fileName;
-    }
+//    public static String getFileNameWithSuffix(String fileFullPath) {
+//        String fileName;
+//        if (fileFullPath == null || fileFullPath.trim().length() < 1) {
+//            fileName = null;
+//        }
+//        try {
+//            File file = new File(fileFullPath);
+//            fileName = file.getName();
+//        } catch (Exception e) {
+//            fileName = null;
+//        }
+//        return fileName;
+//    }
 
     public static long getFileSize(String fileFullPath) {
         if (fileFullPath == null || fileFullPath.trim().length() < 1) {
@@ -383,7 +383,7 @@ public final class FileUtil {
         long fileLength = getFileSize(fileFullPath);
         return convertFileSize(fileLength);
     }
-
+    /***/
     public static String convertFileSize(long size) {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         int kBSize = 1024;
@@ -398,7 +398,7 @@ public final class FileUtil {
             return "0B";
         }
     }
-
+    /***/
     public static byte[] fileToByte(String fileName) {
         try {
             return fileToByte(new File(fileName));
@@ -407,11 +407,11 @@ public final class FileUtil {
         }
         return new byte[]{};
     }
-
+    /***/
     public static byte[] fileToByte(File file) throws IOException {
         return fileToByte(file, DEFAULT_READ_FILE_BUFFER_SIZE);
     }
-
+    /***/
     public static byte[] fileToByte(File file, int bufferLen) {
         InputStream in = null;
         ByteArrayOutputStream buffer = null;
@@ -440,7 +440,7 @@ public final class FileUtil {
         }
     }
 
-
+    /***/
     public static File byteToFile(byte[] b, String fileName) {
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
@@ -481,7 +481,7 @@ public final class FileUtil {
         }
         return file;
     }
-
+    /***/
     public static void closeStream(Closeable beCloseStream) {
         if (beCloseStream != null) {
             try {
@@ -544,7 +544,7 @@ public final class FileUtil {
             return "";
         }
     }
-
+    /***/
     public Object unserialize(String filePath) {
         Object obj = new Object();
         File file = new File(filePath);
@@ -564,7 +564,7 @@ public final class FileUtil {
         }
         return obj;
     }
-
+    /***/
     public void serialize(Object obj, String filePath) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
@@ -609,7 +609,7 @@ public final class FileUtil {
         File file = new File(fullPath);
         return file.getParent();
     }
-
+    /***/
     public static String appendPath(String path, String name) {
         if (TextUtils.isEmpty(path)) {
             return name;
@@ -617,7 +617,7 @@ public final class FileUtil {
             return path + File.separator + name;
         }
     }
-
+    /***/
     public static boolean changeFileMode(String filePath, String mode) {
         String[] command = {"chmod", mode, filePath};
         ProcessBuilder builder = new ProcessBuilder(command);
@@ -629,11 +629,11 @@ public final class FileUtil {
         }
         return false;
     }
-
+    /***/
     public static boolean sdcardHasEnoughStorage() {
         return sdcardHasEnoughStorage(DEFAULT_MINUM_SDCARD_SIZE);
     }
-
+    /***/
     public static boolean sdcardHasEnoughStorage(long minSize) {
         if (isExternalStorageMounted()) {
             try {
@@ -649,7 +649,7 @@ public final class FileUtil {
         }
         return false;
     }
-
+    /***/
     public static boolean makeDirInAppDir(Context context, String dir) {
         File f = context.getDir(dir, Context.MODE_PRIVATE | Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
         if (f.exists() || f.mkdirs()) {

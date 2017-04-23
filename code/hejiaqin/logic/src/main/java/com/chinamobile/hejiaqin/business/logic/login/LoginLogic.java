@@ -386,7 +386,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 //        try {
 //            expire = sdf.parse(tokenExpire).getTime() - tokenDate;
 //        } catch (ParseException e) {
-//            LogUtil.e(TAG, e);
+//            LogUtil.e(tag, e);
 //        }
 //        //永不过期
 //        if (expire == -1) {
@@ -458,7 +458,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             }
         });
     }
-
+    /***/
     public void initCMIMSdk() {
         Object obj = StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (obj == null) {
@@ -531,7 +531,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     }
 
     private boolean isCommonFailRes(String code, String desc) {
-        if (code.equals("-4") || code.equals("-5")) {
+        if ("-4".equals(code) || "-5".equals(code)) {
             LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
             return true;
         }

@@ -103,7 +103,7 @@ public class ContactsInfo implements Serializable {
 
         this.photoSm = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + photoSm;
     }
-
+    /***/
     public void addNumber(NumberInfo numberInfo) {
         if (null == numberInfo) {
             return;
@@ -121,7 +121,7 @@ public class ContactsInfo implements Serializable {
     public SearchUnit getSearchUnit() {
         return searchUnit;
     }
-
+    /***/
     public void genSearchUnit(PinyinUnit pinyinUnit) {
         if (null == searchUnit) {
             searchUnit = new SearchUnit();

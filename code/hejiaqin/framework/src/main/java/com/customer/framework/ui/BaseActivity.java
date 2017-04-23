@@ -26,10 +26,10 @@ import com.customer.framework.utils.LogUtil;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/***/
 public abstract class BaseActivity extends Activity {
 
-    protected String TAG = this.getClass().getSimpleName();
+    protected String tag = this.getClass().getSimpleName();
     /**
      * 缓存持有的logic对象的集合
      */
@@ -51,7 +51,7 @@ public abstract class BaseActivity extends Activity {
      * @return 返回LogicBuilder对象
      */
     public static ILBuilder getLogicBuilder() {
-        return BuilderImp.instance;
+        return BuilderImp.getInstance();
     }
 
     /**
@@ -60,29 +60,29 @@ public abstract class BaseActivity extends Activity {
      * @param logicBuilder logic建造管理类
      */
     protected static void setLogicBuilder(BuilderImp logicBuilder) {
-        BuilderImp.instance = logicBuilder;
+        BuilderImp.setInstance(logicBuilder);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        LogUtil.d(TAG, "onCreate");
+        LogUtil.d(tag, "onCreate");
         super.onCreate(savedInstanceState);
         if (!isInit()) {
             setLogicBuilder(createLogicBuilder(this.getApplicationContext()));
             initSystem(getApplicationContext());
         }
         if (isHandlerToAllLogic()) {
-            BuilderImp.instance.addHandlerToAllLogics(getHandler());
+            BuilderImp.getInstance().addHandlerToAllLogics(getHandler());
         }
         try {
             initLogics();
         } catch (Exception e) {
-            LogUtil.e(TAG, "Init logics failed :" + e.getMessage(), e);
+            LogUtil.e(tag, "Init logics failed :" + e.getMessage(), e);
         }
     }
 
     @Override
     protected void onResume() {
-        LogUtil.d(TAG, "onResume");
+        LogUtil.d(tag, "onResume");
         super.onResume();
     }
 
@@ -192,7 +192,7 @@ public abstract class BaseActivity extends Activity {
      * @return 是否加载了mLogicBuilder
      */
     protected final boolean isInit() {
-        return BuilderImp.instance != null;
+        return BuilderImp.getInstance() != null;
     }
 
     /**
@@ -209,13 +209,13 @@ public abstract class BaseActivity extends Activity {
      */
     protected final ILogic getLogicByInterfaceClass(Class<?> interfaceClass) {
         ILogic logic =
-                BuilderImp.instance.getLogicByInterfaceClass(interfaceClass);
+                BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
         if (!isHandlerToAllLogic() && null != logic && !mLogicSet.contains(logic)) {
             logic.addHandler(getHandler());
             mLogicSet.add(logic);
         }
         if (logic == null) {
-            Log.e(TAG, "Not found logic by interface class (" + interfaceClass
+            Log.e(tag, "Not found logic by interface class (" + interfaceClass
                     + ")", new Throwable());
             return null;
         }
@@ -230,7 +230,7 @@ public abstract class BaseActivity extends Activity {
      */
     protected void handleStateMessage(Message msg) {
     }
-
+    /***/
     public void finish() {
         removeHandler();
         super.finish();
@@ -247,8 +247,8 @@ public abstract class BaseActivity extends Activity {
                 for (ILogic logic : mLogicSet) {
                     logic.removeHandler(this.mHandler);
                 }
-            } else if (BuilderImp.instance != null) {
-                BuilderImp.instance.removeHandlerToAllLogics(this.mHandler);
+            } else if (BuilderImp.getInstance() != null) {
+                BuilderImp.getInstance().removeHandlerToAllLogics(this.mHandler);
             }
             this.mHandler = null;
         }

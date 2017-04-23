@@ -1,18 +1,16 @@
 package com.chinamobile.hejiaqin.business.ui.contact.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.tv.R;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,7 +57,7 @@ public class SearchContactAdapter extends BaseAdapter {
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
             holder.image = (CircleImageView) convertView.findViewById(R.id.contact_photo_img);
             holder.layoutView = convertView.findViewById(R.id.contact_info_layout);
-            holder.convertView = convertView;
+//            holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -102,10 +100,10 @@ public class SearchContactAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    class ViewHolder {
+   static class ViewHolder {
         TextView text;
         CircleImageView image;
         View layoutView;
-        View convertView;
+//        View convertView;
     }
 }

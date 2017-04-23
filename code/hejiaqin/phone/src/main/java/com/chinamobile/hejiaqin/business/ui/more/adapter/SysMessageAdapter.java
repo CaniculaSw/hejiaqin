@@ -1,7 +1,6 @@
 package com.chinamobile.hejiaqin.business.ui.more.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ListAdapter;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.dbApdater.SystemMessageDbAdapter;
+import com.chinamobile.hejiaqin.business.dbapdater.SystemMessageDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.more.SystemMessage;
 import com.customer.framework.component.time.DateTimeUtil;
@@ -27,7 +26,7 @@ import java.util.Set;
  */
 public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
 
-    private LayoutInflater inflater;
+//    private LayoutInflater inflater;
     private List<SystemMessage> sysMessageList = new ArrayList<SystemMessage>();
     private boolean isShow = false;
     private Context context;
@@ -40,7 +39,7 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
     public SysMessageAdapter(Context context) {
         super();
         this.context = context;
-        inflater = LayoutInflater.from(context);
+//        inflater = LayoutInflater.from(context);
     }
 
     public boolean isShow() {
@@ -71,14 +70,16 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
 
         SystemMessage msg = (SystemMessage) getItem(position);
 
-        mViewHolder =  AdapterViewHolder.get(context, convertView, parent, R.layout.adapter_sys_message, position);
-        mViewHolder.setText(R.id.more_sys_msg_title_tv,msg.getTitle());
-        try {
-            mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(DateTimeUtil.parseSTANDARDFormatToDate(msg.getTime()),"yyyy-MM-dd"));
-        } catch (ParseException e) {
-            LogUtil.e(TAG,e);
-        }
 
+        mViewHolder =  AdapterViewHolder.get(context, convertView, parent, R.layout.adapter_sys_message, position);
+        if (msg != null) {
+            mViewHolder.setText(R.id.more_sys_msg_title_tv, msg.getTitle());
+            try {
+                mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(DateTimeUtil.parseSTANDARDFormatToDate(msg.getTime()), "yyyy-MM-dd"));
+            } catch (ParseException e) {
+                LogUtil.e(TAG, e);
+            }
+        }
         CheckBox delCb = (CheckBox) mViewHolder.getView(R.id.more_checkbox_sys_message_cb);
 
         if (msg != null) {
@@ -117,7 +118,7 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
         }
         notifyDataSetChanged();
     }
-
+    /***/
     public void delSelectedSystemMessage(){
         LogUtil.d(TAG,"The lentg of the selected system messages: "+selectedSet.size());
         for (SystemMessage systemMessage : selectedSet){
@@ -129,6 +130,7 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
         this.selectedSet.clear();
         notifyDataSetChanged();
     }
+    /***/
     public void unSelectAll() {
         selectedSet.clear();
         notifyDataSetChanged();

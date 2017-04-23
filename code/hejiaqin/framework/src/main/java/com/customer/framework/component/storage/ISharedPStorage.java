@@ -10,6 +10,7 @@ import java.io.Serializable;
  * Created: 2016/4/14.
  */
 public interface ISharedPStorage extends  IStorage {
+    /***/
     void save(String key, Serializable value);
     Serializable getObject(String key);
 }

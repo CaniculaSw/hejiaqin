@@ -8,5 +8,6 @@ package com.chinamobile.hejiaqin.business.net;
  * Created: 2016/4/28.
  */
 public interface ReqBody {
+    /***/
     String toBody();
 }

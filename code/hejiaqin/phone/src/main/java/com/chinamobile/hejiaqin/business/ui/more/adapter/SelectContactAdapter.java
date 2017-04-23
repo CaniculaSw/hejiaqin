@@ -3,7 +3,6 @@ package com.chinamobile.hejiaqin.business.ui.more.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -31,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SelectContactAdapter extends BaseAdapter implements StickyListHeadersAdapter {
     private final static String TAG = "SelectContactAdapter";
     private Context mContext;
-    private LayoutInflater inflater;
+//    private LayoutInflater inflater;
     private Handler handler;
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
     private AdapterViewHolder mListViewHolder;
@@ -41,7 +40,7 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
 
     public SelectContactAdapter(Context context, Handler handler) {
         mContext = context;
-        inflater = LayoutInflater.from(context);
+//        inflater = LayoutInflater.from(context);
         this.handler = handler;
     }
 
@@ -71,6 +70,9 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
 
     private void initView(int position, AdapterViewHolder holder) {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
+        if (holder == null || contactsInfo == null){
+            return;
+        }
         holder.setText(R.id.contact_name_text, contactsInfo.getName());
 
         Picasso.with(mContext.getApplicationContext())
@@ -134,7 +136,7 @@ public class SelectContactAdapter extends BaseAdapter implements StickyListHeade
     public void setData(List<ContactsInfo> contactsInfoList) {
         setData(contactsInfoList, true);
     }
-
+    /***/
     public void selectAll(boolean isSelectAll) {
         if (isSelectAll) {
             Iterator<ContactsInfo> iterator = this.contactsInfoList.iterator();

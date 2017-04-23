@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,7 +26,7 @@ import com.huawei.rcs.system.SysApi;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/***/
 public class VtNurseCallActivity extends BasicActivity implements View.OnClickListener {
 
     private TextView mTalkingTimeTv;
@@ -43,7 +42,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
 
     private SurfaceView localVideoSurface;
 
-    private boolean m_isBigVideoCreate_MPEG;
+    private boolean mIsBigVideoCreateMPEG;
 
     private boolean hasRegistReceiver;
 
@@ -62,27 +61,25 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
             Bundle bundle = intent.getExtras();
             if (null == bundle)
             {
-                LogUtil.d(TAG, "Enter ACTION_USB_CAMERA_PLUG_IN_OUT bundle is null");
+                LogUtil.d(tag, "Enter ACTION_USB_CAMERA_PLUG_IN_OUT bundle is null");
                 return;
             }
             int state = bundle.getInt(Const.USB_CAMERA_STATE);
 
-            LogUtil.d(TAG, "videotalk mCameraPlugReciver " + state);
-            if (mCallSession == null)return;
-            if (0 == state)
-            {
+            LogUtil.d(tag, "videotalk mCameraPlugReciver " + state);
+            if (mCallSession == null){
+                return;
+            }
+            if (0 == state) {
                 if (!bCameraClose)
                 {
                     mCallSession.closeLocalVideo();
                     bCameraClose = true;
                 }
-            }
-            else
-            {
-                if (bCameraClose)
-                {
+            } else {
+                if (bCameraClose) {
                     int iRet = mCallSession.openLocalVideo();
-                    LogUtil.d(TAG, "mCameraPlugReciver open localView " + iRet);
+                    LogUtil.d(tag, "mCameraPlugReciver open localView " + iRet);
                     bCameraClose = false;
                 }
             }
@@ -99,7 +96,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             LogUtil.d(Const.TAG_CALL, "surfaceCreated:");
             if (localVideoSurface.getHolder() == surfaceHolder) {
-                m_isBigVideoCreate_MPEG = true;
+                mIsBigVideoCreateMPEG = true;
                 showMpegView();
             }
         }
@@ -109,7 +106,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
             LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface");
             if (localVideoSurface.getHolder() == arg0) {
                 LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
-                m_isBigVideoCreate_MPEG = false;
+                mIsBigVideoCreateMPEG = false;
             }
         }
 
@@ -118,8 +115,8 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
                 LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svBigVideo " + localVideoSurface);
                 return;
             }
-            LogUtil.d(Const.TAG_CALL, " m_isBigVideoCreate_MPEG: " + m_isBigVideoCreate_MPEG);
-            if (m_isBigVideoCreate_MPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
+            LogUtil.d(Const.TAG_CALL, " mIsBigVideoCreateMPEG: " + mIsBigVideoCreateMPEG);
+            if (mIsBigVideoCreateMPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
                 int result1 = CallApi.createLocalVideoSurface(localVideoSurface.getHolder().getSurface());
                 LogUtil.d(Const.TAG_CALL, "result1: " + result1);
                 mCallSession.showVideoWindow();
@@ -210,7 +207,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (closed) {
-            LogUtil.w(TAG, "is closed");
+            LogUtil.w(tag, "is closed");
         }
         switch (v.getId()) {
             case R.id.hangup_layout:
@@ -218,6 +215,8 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
                 closed = true;
                 mCallSession.terminate();
                 finish();
+                break;
+            default:
                 break;
         }
 
@@ -241,6 +240,8 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
                     }
                 }
                 break;
+            default:
+                break;
         }
 
     }
@@ -248,7 +249,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
-        LogUtil.d(TAG, "onResume");
+        LogUtil.d(tag, "onResume");
         if(accepted) {
             IntentFilter intent = new IntentFilter();
             intent.addAction(Const.ACTION_USB_CAMERA_PLUG_IN_OUT);
@@ -259,7 +260,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
     @Override
     public void onPause() {
         super.onPause();
-        LogUtil.d(TAG, "onPause");
+        LogUtil.d(tag, "onPause");
         if(accepted) {
             unregisterReceiver(mCameraPlugReciver);
         }

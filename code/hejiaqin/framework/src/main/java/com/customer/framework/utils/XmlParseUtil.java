@@ -2,7 +2,7 @@ package com.customer.framework.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/***/
 
 public final class XmlParseUtil
 {
@@ -52,8 +52,8 @@ public final class XmlParseUtil
     public static int getXmlId(String param, String subString)
     {
         int id = -1;
-        if (param == null || param.equals("") || subString == null
-            || subString.equals(""))
+        if (param == null || "".equals(param) || subString == null
+            || "".equals(subString))
         {
             return id;
         }
@@ -64,7 +64,7 @@ public final class XmlParseUtil
         if (startIndex > 0 && endIndex > startIndex)
         {
             String subParam = param.substring(startIndex, endIndex);
-            id = Integer.valueOf(subParam);
+            id = Integer.parseInt(subParam);
         }
         return id;
     }
