@@ -146,7 +146,6 @@ public class SettingHttpmanager extends AbsHttpManager {
         return NetRequest.ContentType.FORM_URLENCODED;
     }
 
-
     @Override
     protected Object handleResponse(NetResponse response) {
         Object obj = null;
@@ -195,30 +194,38 @@ public class SettingHttpmanager extends AbsHttpManager {
         }
         return obj;
     }
+
     /***/
     public void checkVersion(final Object invoker, final IHttpCallBack callBack) {
         this.mAction = CHECK_ANDROID_VERSION;
         this.mData = null;
         send(invoker, callBack);
     }
+
     /***/
-    public void getDeviceList(final Object invoker, final GetDeviceListReq req, final IHttpCallBack callBack) {
+    public void getDeviceList(final Object invoker, final GetDeviceListReq req,
+                              final IHttpCallBack callBack) {
         this.mAction = GET_DEVICE_LIST;
         this.mData = req;
         send(invoker, callBack);
     }
+
     /***/
-    public void getBindList(final Object invoker, final GetBindListReq req, final IHttpCallBack callBack) {
+    public void getBindList(final Object invoker, final GetBindListReq req,
+                            final IHttpCallBack callBack) {
         this.mAction = GET_BIND_LIST;
         this.mData = req;
         send(invoker, callBack);
     }
+
     /***/
-    public void saveBindRequest(final Object invoker, final SaveBindRequest req, final IHttpCallBack callBack) {
+    public void saveBindRequest(final Object invoker, final SaveBindRequest req,
+                                final IHttpCallBack callBack) {
         this.mAction = SAVE_BIND_REQUEST;
         this.mData = req;
         send(invoker, callBack);
     }
+
     /***/
     public void testAdapt(final Object invoker, final TestAdaptReq req, final IHttpCallBack callBack) {
         this.mAction = TEST_ADAPT;

@@ -18,8 +18,7 @@ import java.util.Stack;
  */
 public class FragmentMgr {
     private static final String TAG = "FragmentMgr";
-    private static FragmentMgr instance =
-            new FragmentMgr();
+    private static FragmentMgr instance = new FragmentMgr();
 
     int leftContainerResId;
     FragmentManager mFragmentManager;
@@ -41,11 +40,13 @@ public class FragmentMgr {
     public static FragmentMgr getInstance() {
         return instance;
     }
+
     /***/
     public static void resetFragmentMgr() {
         instance = null;
         instance = new FragmentMgr();
     }
+
     /***/
     public void init(FragmentActivity activity, int leftContainerResId) {
         mFragmentManager = activity.getSupportFragmentManager();
@@ -62,10 +63,12 @@ public class FragmentMgr {
         focusedViewBackStack.put(2, new Stack<View>());
         focusedViewBackStack.put(3, new Stack<View>());
     }
+
     /***/
     public void showRecentFragment(BaseFragment fragment) {
         showFragment(0, fragment);
     }
+
     /***/
     public void showContactFragment(BaseFragment fragment) {
         showFragment(1, fragment);
@@ -75,14 +78,18 @@ public class FragmentMgr {
     public void showDialFragment(BaseFragment fragment) {
         showFragment(2, fragment);
     }
+
     /***/
     public void showSettingFragment(BaseFragment fragment) {
         showFragment(3, fragment);
     }
+
     /***/
     public void showFragment(int index, BaseFragment fragment) {
-        showFragment((Stack) fragmentStackMap.get(index), (Stack) focusedViewBackStack.get(index), fragment);
+        showFragment((Stack) fragmentStackMap.get(index), (Stack) focusedViewBackStack.get(index),
+                fragment);
     }
+
     /***/
     private void showFragment(Stack fragmentStack, Stack backStack, BaseFragment fragment) {
         Logger.d(TAG, "showFragment: " + fragment.getClass());
@@ -115,14 +122,17 @@ public class FragmentMgr {
 
         fragmentTransaction.commit();
     }
+
     /***/
     public BaseFragment getCurLeftShowFragment() {
         return curLeftShowFragment;
     }
+
     /***/
     public void finishRecentFragment(BaseFragment fragment) {
         finishFragment(0, fragment);
     }
+
     /***/
     public void finishContactFragment(BaseFragment fragment) {
         finishFragment(1, fragment);
@@ -132,10 +142,12 @@ public class FragmentMgr {
     public void finishDialFragment(BaseFragment fragment) {
         finishFragment(2, fragment);
     }
+
     /***/
     public void finishSettingFragment(BaseFragment fragment) {
         finishFragment(3, fragment);
     }
+
     /***/
     public void finishFragment(int index, BaseFragment fragment) {
         finishFragment((Stack) fragmentStackMap.get(index), fragment);
@@ -149,6 +161,7 @@ public class FragmentMgr {
             ((Stack) focusedViewBackStack.get(index)).clear();
         }
     }
+
     /***/
     public void showAndFinishAllFragment(int index) {
         Stack<BaseFragment> fragments = (Stack) fragmentStackMap.get(index);
@@ -180,14 +193,16 @@ public class FragmentMgr {
             ((Stack) focusedViewBackStack.get(index)).clear();
         }
     }
+
     /***/
     public boolean isParentFragmentShowingOfCurrentIndex(int index) {
         Stack<BaseFragment> stack = (Stack<BaseFragment>) fragmentStackMap.get(index);
         return stack.size() <= 1 ? true : false;
     }
+
     /***/
     private void finishFragment(Stack fragmentStack, BaseFragment fragment) {
-        if (fragment == null){
+        if (fragment == null) {
             return;
         }
         LogUtil.d(TAG, "finishFragment: " + fragment.getClass());
@@ -209,6 +224,7 @@ public class FragmentMgr {
         }
         fragmentTransaction.commit();
     }
+
     /***/
     public BaseFragment getTopFragment(int index) {
         return getTopFragment((Stack) fragmentStackMap.get(index));
@@ -223,6 +239,7 @@ public class FragmentMgr {
             return fragmentStack.peek();
         }
     }
+
     /***/
     private void addFragment(Stack<BaseFragment> fragmentStack, BaseFragment fragment) {
         synchronized (fragmentStack) {

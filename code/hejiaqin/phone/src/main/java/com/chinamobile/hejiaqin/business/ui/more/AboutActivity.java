@@ -51,7 +51,8 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
     @Override
     protected void initDate() {
         TextView packageVersion = (TextView) findViewById(R.id.about_package_version);
-        packageVersion.setText(getString(R.string.more_about_version, SystemUtil.getPackageVersionName(getApplicationContext())));
+        packageVersion.setText(getString(R.string.more_about_version,
+                SystemUtil.getPackageVersionName(getApplicationContext())));
         if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) != null) {
             updateTips.setVisibility(View.VISIBLE);
         } else {
@@ -99,8 +100,9 @@ public class AboutActivity extends BasicActivity implements View.OnClickListener
         if (UserInfoCacheManager.getVersionInfo(getApplicationContext()) == null) {
             settingLogic.checkVersion();
         } else {
-            new UpdateManger(AboutActivity.this).showNoticeDialog(UserInfoCacheManager.getVersionInfo(getApplicationContext()));
-//            new UpdateManger(AboutActivity.this).update(UserInfoCacheManager.getVersionInfo(getApplicationContext()),false);
+            new UpdateManger(AboutActivity.this).showNoticeDialog(UserInfoCacheManager
+                    .getVersionInfo(getApplicationContext()));
+            //            new UpdateManger(AboutActivity.this).update(UserInfoCacheManager.getVersionInfo(getApplicationContext()),false);
         }
     }
 

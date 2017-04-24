@@ -23,7 +23,7 @@ import java.util.Set;
  */
 public class SelectableSearchContactAdapter extends BaseAdapter {
     private Context mContext;
-//    private LayoutInflater inflater;
+    //    private LayoutInflater inflater;
     private AdapterViewHolder holder;
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
     private CheckBox mCheckBox;
@@ -32,7 +32,7 @@ public class SelectableSearchContactAdapter extends BaseAdapter {
 
     public SelectableSearchContactAdapter(Context context, Handler handler) {
         mContext = context;
-//        inflater = LayoutInflater.from(context);
+        //        inflater = LayoutInflater.from(context);
         this.handler = handler;
     }
 
@@ -53,7 +53,8 @@ public class SelectableSearchContactAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        holder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_select_contact, position);
+        holder = AdapterViewHolder.get(mContext, convertView, parent,
+                R.layout.adapter_select_contact, position);
         initView(position, holder);
         return holder.getView();
     }

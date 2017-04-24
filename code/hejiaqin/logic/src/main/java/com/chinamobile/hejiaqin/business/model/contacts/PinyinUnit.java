@@ -80,8 +80,10 @@ public class PinyinUnit implements Serializable {
         }
 
         if (null == firstCharIndexs || firstCharIndexs.length != chineseWords.length()) {
-            Logger.w(TAG, "isValid, invalid firstCharIndexs, firstCharIndexs is invalid, firstCharIndexs is "
-                    + Arrays.toString(firstCharIndexs) + ", chineseWords is " + chineseWords);
+            Logger.w(TAG,
+                    "isValid, invalid firstCharIndexs, firstCharIndexs is invalid, firstCharIndexs is "
+                            + Arrays.toString(firstCharIndexs) + ", chineseWords is "
+                            + chineseWords);
             return false;
         }
 

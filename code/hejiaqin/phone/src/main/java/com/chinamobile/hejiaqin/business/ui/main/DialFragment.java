@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
-
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +41,7 @@ import java.util.regex.Pattern;
 /**
  * Created by eshaohu on 16/5/22.
  */
-public class DialFragment extends BasicFragment implements View.OnClickListener{
+public class DialFragment extends BasicFragment implements View.OnClickListener {
 
     /**
      * 号码输入框的字符串小于3位则不进行搜索
@@ -60,7 +59,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     RecyclerView callRecordSearchRecyclerView;
 
     RelativeLayout dialSaveContactLayout;
-//    LinearLayout dialSaveContactArrowLayout;
+    //    LinearLayout dialSaveContactArrowLayout;
     LinearLayout blankLayout;
 
     LinearLayout inputNumberAboveLine;
@@ -93,8 +92,7 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     @Override
     protected void handleFragmentMsg(Message msg) {
 
-        switch (msg.what)
-        {
+        switch (msg.what) {
             case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_KEYBORD_MSG_ID:
                 showKeyPad();
                 break;
@@ -103,11 +101,12 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 break;
             case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CALL_MSG_ID:
                 // CALL
-                if(inputNumber.length()>0) {
-//                    Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
-//                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText().toString());
-//                    getContext().startActivity(outingIntent);
-                    DialHelper.getInstance().call(getContext(), inputNumber.getText().toString(), null);
+                if (inputNumber.length() > 0) {
+                    //                    Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
+                    //                    outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, inputNumber.getText().toString());
+                    //                    getContext().startActivity(outingIntent);
+                    DialHelper.getInstance().call(getContext(), inputNumber.getText().toString(),
+                            null);
                     inputNumber.setText("");
                 }
                 break;
@@ -135,9 +134,8 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 textChanged(mSearchString);
                 break;
             case BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID:
-                if(obj!=null)
-                {
-                    List<CallRecord> callRecords = (List<CallRecord>)obj;
+                if (obj != null) {
+                    List<CallRecord> callRecords = (List<CallRecord>) obj;
                     mCallRecordAdapter.refreshData(callRecords);
                 }
                 break;
@@ -148,24 +146,23 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 SearchResultContacts resultContacts = (SearchResultContacts) msg.obj;
                 mCallRecordSearchAdapter.refreshData(new ArrayList<CallRecord>());
                 mDialContactAdapter.refreshData(resultContacts.getContactsInfos());
-                if (resultContacts.getContactsInfos() != null && resultContacts.getContactsInfos().size() > 0) {
+                if (resultContacts.getContactsInfos() != null
+                        && resultContacts.getContactsInfos().size() > 0) {
                     dialSaveContactLayout.setVisibility(View.GONE);
                     callRecordSearchRecyclerView.setVisibility(View.GONE);
                     dialContactRecyclerView.setVisibility(View.VISIBLE);
                 }
                 break;
             case BussinessConstants.DialMsgID.CALL_RECORD_SEARCH_MSG_ID:
-                if(obj!=null)
-                {
-                    List<CallRecord> callRecords = (List<CallRecord>)obj;
+                if (obj != null) {
+                    List<CallRecord> callRecords = (List<CallRecord>) obj;
                     mDialContactAdapter.refreshData(new ArrayList<ContactsInfo>());
                     mCallRecordSearchAdapter.refreshData(callRecords);
-                    if(callRecords!=null && callRecords.size() > 0)
-                    {
+                    if (callRecords != null && callRecords.size() > 0) {
                         dialSaveContactLayout.setVisibility(View.GONE);
                         dialContactRecyclerView.setVisibility(View.GONE);
                         callRecordSearchRecyclerView.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         dialContactRecyclerView.setVisibility(View.GONE);
                         callRecordSearchRecyclerView.setVisibility(View.GONE);
                         dialSaveContactLayout.setVisibility(View.VISIBLE);
@@ -189,20 +186,21 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         headerView.title.setText(R.string.dial_title);
         headerView.rightBtn.setImageResource(R.drawable.selector_title_icon_delete);
 
-        callRecordRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_recycler_view);
-        dialContactRecyclerView = (RecyclerView)view.findViewById(R.id.dial_contact_recycler_view);
-        callRecordSearchRecyclerView = (RecyclerView)view.findViewById(R.id.call_record_search_recycler_view);
-        dialSaveContactLayout = (RelativeLayout)view.findViewById(R.id.dial_save_contact_layout);
+        callRecordRecyclerView = (RecyclerView) view.findViewById(R.id.call_record_recycler_view);
+        dialContactRecyclerView = (RecyclerView) view.findViewById(R.id.dial_contact_recycler_view);
+        callRecordSearchRecyclerView = (RecyclerView) view
+                .findViewById(R.id.call_record_search_recycler_view);
+        dialSaveContactLayout = (RelativeLayout) view.findViewById(R.id.dial_save_contact_layout);
 
-//        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
-        blankLayout = (LinearLayout)view.findViewById(R.id.blank_layout);
-        inputNumberAboveLine = (LinearLayout)view.findViewById(R.id.input_number_above_line);
-        inputNumberLayout = (LinearLayout)view.findViewById(R.id.input_number_layout);
-        inputNumber = (DigitsEditText)view.findViewById(R.id.input_number);
-        dialNumberDelLayout = (LinearLayout)view.findViewById(R.id.dial_number_del_layout);
-        dialNumberDelIv = (ImageView)view.findViewById(R.id.dial_number_del_iv);
-        inputNumberBelowLine = (LinearLayout)view.findViewById(R.id.input_number_below_line);
-        digitKeypad = (DialDigitKeypadView)view.findViewById(R.id.digit_keypad);
+        //        dialSaveContactArrowLayout = (LinearLayout)view.findViewById(R.id.dial_save_contact_arrow_layout);
+        blankLayout = (LinearLayout) view.findViewById(R.id.blank_layout);
+        inputNumberAboveLine = (LinearLayout) view.findViewById(R.id.input_number_above_line);
+        inputNumberLayout = (LinearLayout) view.findViewById(R.id.input_number_layout);
+        inputNumber = (DigitsEditText) view.findViewById(R.id.input_number);
+        dialNumberDelLayout = (LinearLayout) view.findViewById(R.id.dial_number_del_layout);
+        dialNumberDelIv = (ImageView) view.findViewById(R.id.dial_number_del_iv);
+        inputNumberBelowLine = (LinearLayout) view.findViewById(R.id.input_number_below_line);
+        digitKeypad = (DialDigitKeypadView) view.findViewById(R.id.digit_keypad);
         dialSaveContactLayout.setOnClickListener(this);
         digitKeypad.setDigitKeyPressEvent(new BaseDigitKeypadView.DigitKeyPressEvent() {
 
@@ -236,10 +234,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                     textChanged(txt);
                 }
                 if (txt.length() > 0) {
-                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID, null);
+                    DialFragment.this.mListener.onAction(
+                            BussinessConstants.FragmentActionId.DAIL_FRAGMENT_SHOW_CALL_ACTION_ID,
+                            null);
                     callRecordRecyclerView.setVisibility(View.GONE);
                 } else {
-                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID, null);
+                    DialFragment.this.mListener.onAction(
+                            BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID,
+                            null);
                     dialSaveContactLayout.setVisibility(View.GONE);
                     dialContactRecyclerView.setVisibility(View.GONE);
                     callRecordRecyclerView.setVisibility(View.VISIBLE);
@@ -284,11 +286,12 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
                 if (inputNumber.length() > 0) {
                     return;
                 }
-                mListener.onAction(BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID, null);
+                mListener.onAction(
+                        BussinessConstants.FragmentActionId.DAIL_SHOW_DEL_POP_WINDOW_MSG_ID, null);
             }
         });
 
-        mCallRecordAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
+        mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic);
         callRecordRecyclerView.setAdapter(mCallRecordAdapter);
         callRecordRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         callRecordRecyclerView.setHasFixedSize(true);
@@ -297,11 +300,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 hideKeyPad();
-                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
+                DialFragment.this.mListener
+                        .onAction(
+                                BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID,
+                                null);
             }
         });
 
-        mCallRecordSearchAdapter = new CallRecordAdapter(getContext(),mContactsLogic);
+        mCallRecordSearchAdapter = new CallRecordAdapter(getContext(), mContactsLogic);
         callRecordSearchRecyclerView.setAdapter(mCallRecordSearchAdapter);
         callRecordSearchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         callRecordSearchRecyclerView.setHasFixedSize(true);
@@ -310,11 +316,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 hideKeyPad();
-                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID, null);
+                DialFragment.this.mListener
+                        .onAction(
+                                BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID,
+                                null);
             }
         });
 
-        mDialContactAdapter = new DialContactAdapter (getContext());
+        mDialContactAdapter = new DialContactAdapter(getContext());
         dialContactRecyclerView.setAdapter(mDialContactAdapter);
         dialContactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dialContactRecyclerView.setHasFixedSize(true);
@@ -323,7 +332,10 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 hideKeyPad();
-                DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID, null);
+                DialFragment.this.mListener
+                        .onAction(
+                                BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID,
+                                null);
             }
         });
 
@@ -332,17 +344,22 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             public void onClick(View v) {
                 hideKeyPad();
                 if (inputNumber.length() > 0) {
-                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID, null);
-                }else{
-                    DialFragment.this.mListener.onAction(BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID, null);
+                    DialFragment.this.mListener
+                            .onAction(
+                                    BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID,
+                                    null);
+                } else {
+                    DialFragment.this.mListener
+                            .onAction(
+                                    BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID,
+                                    null);
                 }
             }
         });
 
     }
 
-    private String stringFilter(String str)
-    {
+    private String stringFilter(String str) {
         String regEx = "[\\s]";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
@@ -350,16 +367,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
         return m.replaceAll("");
     }
 
-    private void showKeyPad()
-    {
+    private void showKeyPad() {
         inputNumberAboveLine.setVisibility(View.VISIBLE);
         inputNumberLayout.setVisibility(View.VISIBLE);
         inputNumberBelowLine.setVisibility(View.VISIBLE);
         digitKeypad.setVisibility(View.VISIBLE);
     }
 
-    private void hideKeyPad()
-    {
+    private void hideKeyPad() {
         inputNumberAboveLine.setVisibility(View.GONE);
         inputNumberLayout.setVisibility(View.GONE);
         inputNumberBelowLine.setVisibility(View.GONE);
@@ -367,18 +382,17 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
     }
 
     @Override
-    protected void initLogics()
-    {
-        mVoipLogic = (IVoipLogic)super.getLogicByInterfaceClass(IVoipLogic.class);
-        mContactsLogic = (IContactsLogic)super.getLogicByInterfaceClass(IContactsLogic.class);
+    protected void initLogics() {
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+        mContactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
     }
+
     @Override
     protected void initData() {
         refreshCallRecord();
     }
 
-    private void refreshCallRecord()
-    {
+    private void refreshCallRecord() {
         mVoipLogic.getCallRecord();
     }
 
@@ -386,13 +400,11 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
      * 号码编辑框内容发生变化
      * @param nowText nowText
      */
-    private void textChanged(String nowText)
-    {
+    private void textChanged(String nowText) {
         mSearchString = nowText;
 
         // 号码输入小于三位，不进行搜索
-        if (StringUtil.isNullOrEmpty(mSearchString))
-        {
+        if (StringUtil.isNullOrEmpty(mSearchString)) {
             mSearchString = "";
             dialSaveContactLayout.setVisibility(View.GONE);
             dialContactRecyclerView.setVisibility(View.GONE);
@@ -400,18 +412,15 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
             callRecordSearchRecyclerView.setVisibility(View.GONE);
         }
         Handler handle = getHandler();
-        if (null != handle)
-        {
-            int what =
-                    BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID;
-            if (handle.hasMessages(what))
-            {
+        if (null != handle) {
+            int what = BussinessConstants.DialMsgID.CALL_RECORD_START_SERTCH_CONTACT_MSG_ID;
+            if (handle.hasMessages(what)) {
                 handle.removeMessages(what);
             }
-            if(!StringUtil.isNullOrEmpty(mSearchString)) {
+            if (!StringUtil.isNullOrEmpty(mSearchString)) {
 
                 handle.sendEmptyMessageDelayed(what, SEARCH_WORD_CHANGE_TIME);
-            }else{
+            } else {
                 mDialContactAdapter.refreshData(new ArrayList<ContactsInfo>());
                 mCallRecordSearchAdapter.refreshData(new ArrayList<CallRecord>());
             }
@@ -420,41 +429,38 @@ public class DialFragment extends BasicFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-       switch (v.getId())
-       {
-           case R.id.input_number:
-               if (inputNumber.length() > 0)
-               {
-                   inputNumber.setCursorVisible(true);
-               }
-               break;
-           case R.id.dial_number_del_layout:
-               if (inputNumber.length() > 0)
-               {
-                   inputNumber.setCursorVisible(true);
-               }
-               inputNumber.onKeyDown(KeyEvent.KEYCODE_DEL, new KeyEvent(
-                       KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+        switch (v.getId()) {
+            case R.id.input_number:
+                if (inputNumber.length() > 0) {
+                    inputNumber.setCursorVisible(true);
+                }
+                break;
+            case R.id.dial_number_del_layout:
+                if (inputNumber.length() > 0) {
+                    inputNumber.setCursorVisible(true);
+                }
+                inputNumber.onKeyDown(KeyEvent.KEYCODE_DEL, new KeyEvent(KeyEvent.ACTION_DOWN,
+                        KeyEvent.KEYCODE_DEL));
 
-               //如果是输入框中无数字，将光标隐藏
-               final int length = inputNumber.length();
-               if (length == inputNumber.getSelectionStart()
-                       && length == inputNumber.getSelectionEnd())
-               {
-                   inputNumber.setCursorVisible(false);
-               }
-               break;
-           case R.id.dial_save_contact_layout:
-               // 保存联系人
-               if(inputNumber.length()>0) {
-                   Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
-                   intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,inputNumber.getText().toString() );
-                   getActivity().startActivity(intent);
-               }
-               break;
-           default:
-               break;
-       }
+                //如果是输入框中无数字，将光标隐藏
+                final int length = inputNumber.length();
+                if (length == inputNumber.getSelectionStart()
+                        && length == inputNumber.getSelectionEnd()) {
+                    inputNumber.setCursorVisible(false);
+                }
+                break;
+            case R.id.dial_save_contact_layout:
+                // 保存联系人
+                if (inputNumber.length() > 0) {
+                    Intent intent = new Intent(getActivity(), ModifyContactActivity.class);
+                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,
+                            inputNumber.getText().toString());
+                    getActivity().startActivity(intent);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 }

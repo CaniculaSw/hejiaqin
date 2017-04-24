@@ -34,7 +34,6 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
     private IContactsLogic contactsLogic;
     private int contactType = Constant.CONTACT_TYPE_APP;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_contact_search;
@@ -50,7 +49,8 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
         searchCancel = findViewById(R.id.search_cancel);
 
         contactsListView = (ListView) findViewById(R.id.list);
-        View headView = getLayoutInflater().inflate(R.layout.layout_contact_search_contact_head_view, null);
+        View headView = getLayoutInflater().inflate(
+                R.layout.layout_contact_search_contact_head_view, null);
         contactsListView.addHeaderView(headView);
         adapter = new SearchContactAdapter(this);
         contactsListView.setAdapter(adapter);
@@ -58,8 +58,9 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
 
     @Override
     protected void initDate() {
-        contactType = getIntent().getIntExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        contactType = getIntent().getIntExtra(
+                ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                ContactSearchActivity.Constant.CONTACT_TYPE_APP);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
             case BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID:
             case BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID:
                 SearchResultContacts resultContacts = (SearchResultContacts) msg.obj;
-                if(TAG.equals(resultContacts.getInvoker())) {
+                if (TAG.equals(resultContacts.getInvoker())) {
                     setData(resultContacts.getContactsInfos());
                 }
                 break;
@@ -130,10 +131,10 @@ public class ContactSearchActivity extends BasicActivity implements View.OnClick
 
     private void startSearch(String input) {
         if (isAppContact()) {
-            contactsLogic.searchAppContactLst(input,TAG);
+            contactsLogic.searchAppContactLst(input, TAG);
             return;
         }
-        contactsLogic.searchLocalContactLst(input,TAG);
+        contactsLogic.searchLocalContactLst(input, TAG);
     }
 
     public void setData(List<ContactsInfo> contactsInfoList) {

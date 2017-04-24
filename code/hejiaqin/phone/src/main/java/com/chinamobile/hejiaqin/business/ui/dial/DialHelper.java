@@ -35,25 +35,25 @@ public final class DialHelper {
         return CommonUtils.isPhoneNumber(phoneNumber);
     }
 
-//    public void call(Context context, NumberInfo numberInfo, String name) {
-//        if (null == context) {
-//            return;
-//        }
-//
-//        if (null == numberInfo) {
-//            return;
-//        }
-//
-//        if (null == numberInfo.getNumber()) {
-//            return;
-//        }
-//
-//        if (isPhoneCall(numberInfo.getNumber())) {
-//            startPhoneCall(context, numberInfo.getNumber());
-//        } else {
-//            startVideoCall(context, numberInfo, name);
-//        }
-//    }
+    //    public void call(Context context, NumberInfo numberInfo, String name) {
+    //        if (null == context) {
+    //            return;
+    //        }
+    //
+    //        if (null == numberInfo) {
+    //            return;
+    //        }
+    //
+    //        if (null == numberInfo.getNumber()) {
+    //            return;
+    //        }
+    //
+    //        if (isPhoneCall(numberInfo.getNumber())) {
+    //            startPhoneCall(context, numberInfo.getNumber());
+    //        } else {
+    //            startVideoCall(context, numberInfo, name);
+    //        }
+    //    }
     /***/
     public void call(Context context, String number, String name) {
         if (null == context) {
@@ -64,7 +64,6 @@ public final class DialHelper {
             return;
         }
 
-
         if (isPhoneCall(number)) {
             startPhoneCall(context, number);
         } else {
@@ -72,12 +71,12 @@ public final class DialHelper {
         }
     }
 
-//    private void startVideoCall(Context context, NumberInfo numberInfo, String name) {
-//        Intent outingIntent = new Intent(context, VideoCallActivity.class);
-//        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
-//        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, name);
-//        context.startActivity(outingIntent);
-//    }
+    //    private void startVideoCall(Context context, NumberInfo numberInfo, String name) {
+    //        Intent outingIntent = new Intent(context, VideoCallActivity.class);
+    //        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
+    //        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, name);
+    //        context.startActivity(outingIntent);
+    //    }
 
     private void startVideoCall(Context context, String number, String name) {
         Intent outingIntent = new Intent(context, VideoCallActivity.class);
@@ -89,8 +88,7 @@ public final class DialHelper {
     }
 
     private void startPhoneCall(Context context, String phoneNumber) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +
-                phoneNumber));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
         context.startActivity(intent);
     }
 }

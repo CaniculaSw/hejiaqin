@@ -18,6 +18,7 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal">
+
             <Button
                 android:layout_width="150dp"
                 android:layout_height="64dp"

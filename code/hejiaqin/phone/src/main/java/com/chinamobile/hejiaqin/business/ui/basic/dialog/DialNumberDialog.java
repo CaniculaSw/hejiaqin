@@ -37,7 +37,8 @@ public class DialNumberDialog extends Dialog {
         if (null != mContactsInfo && null != mContactsInfo.getNumberLst()) {
             List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
             for (NumberInfo numberInfo : numberInfoList) {
-                View numberInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_number_info, null);
+                View numberInfoView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.view_number_info, null);
                 TextView textView = (TextView) numberInfoView.findViewById(R.id.text);
 
                 final String number = numberInfo.getNumber();
@@ -48,10 +49,10 @@ public class DialNumberDialog extends Dialog {
                     @Override
                     public void onClick(View v) {
                         DialHelper.getInstance().call(getContext(), number, name);
-//                        Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
-//                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, number);
-//                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, number);
-//                        getContext().startActivity(outingIntent);
+                        //                        Intent outingIntent = new Intent(getContext(), VideoCallActivity.class);
+                        //                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, number);
+                        //                        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, number);
+                        //                        getContext().startActivity(outingIntent);
                         dismiss();
                     }
                 });
@@ -61,6 +62,5 @@ public class DialNumberDialog extends Dialog {
         }
         cancelLayout = (LinearLayout) findViewById(R.id.cancel_layout);
     }
-
 
 }

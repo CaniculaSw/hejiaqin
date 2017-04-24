@@ -44,7 +44,6 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
 
     private VerifyCodeCountDownTimer countDownTimer;
 
-
     private boolean getVerifyRequestFailed;
     private boolean checkVerifyRequestFailed;
     private boolean continueCountDown;
@@ -70,13 +69,13 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
         //如果上次计数还没有结束，则重新进入页面后继续
-//        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
-//            sendVerifyCodeTv.setEnabled(false);
-//            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
-//            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
-//            countDownTimer.start();
-//            continueCountDown = true;
-//        }
+        //        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
+        //            sendVerifyCodeTv.setEnabled(false);
+        //            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
+        //            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
+        //            countDownTimer.start();
+        //            continueCountDown = true;
+        //        }
     }
 
     @Override
@@ -208,7 +207,8 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
     }
 
     private void displayErrorInfo(String errorText) {
-        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog,
+                errorText);
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -219,7 +219,6 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         dialog.show();
     }
 
-
     private void hideErrorInfo(View view) {
 
     }
@@ -227,7 +226,6 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
     private void displayRequestErrorInfo(int stringId, boolean isGet) {
 
     }
-
 
     /**
      * 获取验证码计时器
@@ -245,7 +243,10 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         public void onTick(long millisUntilFinished) {
             super.onTick(millisUntilFinished);
             sendVerifyCodeTv.setEnabled(false);
-            sendVerifyCodeTv.setText(millisUntilFinished / 1000 + RegisterFirstStepActivity.this.getResources().getString(R.string.resend_verify_code_unit));
+            sendVerifyCodeTv.setText(millisUntilFinished
+                    / 1000
+                    + RegisterFirstStepActivity.this.getResources().getString(
+                            R.string.resend_verify_code_unit));
         }
 
         @Override
@@ -292,8 +293,10 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
                 RegisterSecondStepInfo registerSecondStepInfo = new RegisterSecondStepInfo();
                 registerSecondStepInfo.setPhone(accountEditTx.getText().toString());
                 registerSecondStepInfo.setCode(verifyCodeEditTx.getText().toString());
-                Intent intent = new Intent(RegisterFirstStepActivity.this, RegisterSecondStepActivity.class);
-                intent.putExtra(BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY, registerSecondStepInfo);
+                Intent intent = new Intent(RegisterFirstStepActivity.this,
+                        RegisterSecondStepActivity.class);
+                intent.putExtra(BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY,
+                        registerSecondStepInfo);
                 startActivity(intent);
                 break;
             case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID:

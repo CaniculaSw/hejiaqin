@@ -37,7 +37,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     BasicFragment[] mLeftFragments = new BasicFragment[4];
 
-//    TextView[] mTextViews = new TextView[3];
+    //    TextView[] mTextViews = new TextView[3];
 
     View[] mMenuViews = new View[4];
 
@@ -118,8 +118,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         if (mVoipLogic.isNeedVoipLogin()) {
             LogUtil.d(tagString, "autoLogin");
@@ -197,8 +196,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             default:
                 break;
         }
-//        LogUtil.i("MainFragmentActivity","toIndex:"+toIndex);
-//        LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
+        //        LogUtil.i("MainFragmentActivity","toIndex:"+toIndex);
+        //        LogUtil.d("MainFragmentActivity", "commit:" + mLeftFragments[toIndex].getClass());
 
         mMenuViews[mCurrentIndex].setBackgroundResource(R.drawable.nav_btn_bg_normal);
         mMenuViews[toIndex].setBackgroundColor(getResources().getColor(R.color.transparent));
@@ -207,13 +206,11 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
     }
 
-
     @Override
     protected void initLogics() {
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
         settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
     }
-
 
     @Override
     protected void handleStateMessage(Message msg) {
@@ -224,7 +221,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 break;
         }
     }
-
 
     @Override
     public void doNetWorkConnect() {
@@ -268,7 +264,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 return true;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 LogUtil.d(tagString, "KeyEvent.KEYCODE_DPAD_RIGHT");
-                 BaseFragment topFragment = FragmentMgr.getInstance().getTopFragment(mCurrentIndex);
+                BaseFragment topFragment = FragmentMgr.getInstance().getTopFragment(mCurrentIndex);
                 View leftFocusView = ((BasicFragment) topFragment).getFirstFouseView();
                 if (null != leftFocusView && mMenuViews[mCurrentIndex].isFocused()) {
                     FocusManager.getInstance().requestFocus(leftFocusView);
@@ -306,16 +302,17 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             case KeyEvent.KEYCODE_STAR:
             case KeyEvent.KEYCODE_POUND:
             case KeyEvent.KEYCODE_DEL:
-                if(mCurrentIndex == mDialIndex && FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex))
-                {
-                    BaseFragment switchFragment = FragmentMgr.getInstance().getTopFragment(mCurrentIndex);
-                    if(switchFragment!=null)
-                    {
+                if (mCurrentIndex == mDialIndex
+                        && FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(
+                                mCurrentIndex)) {
+                    BaseFragment switchFragment = FragmentMgr.getInstance().getTopFragment(
+                            mCurrentIndex);
+                    if (switchFragment != null) {
                         Message msg = new Message();
-                        msg.what=BussinessConstants.FragmentActionId.TV_DAIL_FRAGMENT_KEY_CODE;
-                        msg.obj =keyCode;
+                        msg.what = BussinessConstants.FragmentActionId.TV_DAIL_FRAGMENT_KEY_CODE;
+                        msg.obj = keyCode;
                         ((BasicFragment) switchFragment).recieveMsg(msg);
-                       return true;
+                        return true;
                     }
                 }
                 break;

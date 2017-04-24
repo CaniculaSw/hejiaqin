@@ -18,6 +18,7 @@ import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 /***/
 public class ContactEditFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactEditFragment";
@@ -52,13 +53,15 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
      */
     private ContactsInfo editContactsInfo;
     private boolean mIsFromRecent;
+
     /***/
     public static ContactEditFragment newInstance() {
         ContactEditFragment fragment = new ContactEditFragment();
         return fragment;
     }
+
     /***/
-    public static ContactEditFragment newInstance(ContactsInfo contactsInfo,boolean isFromRecent) {
+    public static ContactEditFragment newInstance(ContactsInfo contactsInfo, boolean isFromRecent) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
         args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
@@ -66,8 +69,10 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         fragment.setArguments(args);
         return fragment;
     }
+
     /***/
-    public static ContactEditFragment newInstance(String contactNumber,boolean isFromDialPage,boolean isFromRecent) {
+    public static ContactEditFragment newInstance(String contactNumber, boolean isFromDialPage,
+                                                  boolean isFromRecent) {
         ContactEditFragment fragment = new ContactEditFragment();
         Bundle args = new Bundle();
         args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
@@ -89,8 +94,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 showToast(R.string.contact_info_add_contact_success_toast);
                 if (isFromDialPage) {
                     FragmentMgr.getInstance().finishDialFragment(this);
-                }
-                else if(mIsFromRecent) {
+                } else if (mIsFromRecent) {
                     FragmentMgr.getInstance().finishRecentFragment(this);
                 } else {
                     FragmentMgr.getInstance().finishContactFragment(this);
@@ -103,8 +107,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 showToast(R.string.contact_info_edit_contact_success_toast);
                 if (isFromDialPage) {
                     FragmentMgr.getInstance().finishDialFragment(this);
-                }
-                else if(mIsFromRecent) {
+                } else if (mIsFromRecent) {
                     FragmentMgr.getInstance().finishRecentFragment(this);
                 } else {
                     FragmentMgr.getInstance().finishContactFragment(this);
@@ -137,7 +140,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         headView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                headImg.setBorderColorResource(hasFocus ? R.color.contact_info_head_select : R.color.white);
+                headImg.setBorderColorResource(hasFocus ? R.color.contact_info_head_select
+                        : R.color.white);
             }
         });
 
@@ -147,7 +151,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                nameView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.color.transparent);
+                nameView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected
+                        : R.color.transparent);
             }
         });
 
@@ -157,7 +162,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         numberText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                numberView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.color.transparent);
+                numberView.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected
+                        : R.color.transparent);
             }
         });
 
@@ -172,7 +178,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         String inputNumber = null;
         Bundle argBundle = getArguments();
         if (null != argBundle) {
-            editContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+            editContactsInfo = (ContactsInfo) argBundle
+                    .getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
             //拨号传入的号码保存至和家亲
             inputNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
             isFromDialPage = argBundle.getBoolean(BussinessConstants.Contact.INTENT_FROM_DAIL_KEY);
@@ -205,8 +212,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             numberText.setText(oldNumber);
             numberText.setSelection(numberText.getEditableText().length());
 
-            Picasso.with(getContext())
-                    .load(editContactsInfo.getPhotoSm())
+            Picasso.with(getContext()).load(editContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(headImg);
         }
@@ -232,8 +238,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
             case R.id.back_iv:
                 if (isFromDialPage) {
                     FragmentMgr.getInstance().finishDialFragment(this);
-                }
-                else if(mIsFromRecent) {
+                } else if (mIsFromRecent) {
                     FragmentMgr.getInstance().finishRecentFragment(this);
                 } else {
                     FragmentMgr.getInstance().finishContactFragment(this);
@@ -249,7 +254,6 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 break;
         }
     }
-
 
     private void doClickHeadLayout() {
         PhotoManage.getInstance(this.getContext()).showDialog();
@@ -283,8 +287,8 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                     && !newNumber.equals(oldNumber);
 
             if (isNameValidAndChanged || isNumberValidAndChanged) {
-                contactsLogic.updateAppContact(editContactsInfo.getContactId()
-                        , newName, newNumber, newPhotoName);
+                contactsLogic.updateAppContact(editContactsInfo.getContactId(), newName, newNumber,
+                        newPhotoName);
             }
         }
     }
@@ -303,8 +307,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
         }
     };
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return nameText;
     }
 }

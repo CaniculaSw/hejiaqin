@@ -37,6 +37,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         }
         return mSystemMessageDbAdapter;
     }
+
     /***/
     public void add(SystemMessage systemMessage) {
         if (null == systemMessage) {
@@ -48,68 +49,83 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
             return;
         }
         operationList.add(DbOperation.newInsert(DatabaseInfo.SystemMessage.TABLE_NAME)
-                        .withValues(contentValues).build());
+                .withValues(contentValues).build());
         super.applyBatch(operationList);
     }
+
     /***/
     public List<SystemMessage> queryAll() {
         List<SystemMessage> systemMessagesList = new ArrayList<SystemMessage>();
-        String[] columns =  {"_ID","title","time"};
-        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns,null, null,null,null,DatabaseInfo.SystemMessage.TIME+" desc",null);
+        String[] columns = { "_ID", "title", "time" };
+        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns, null, null, null,
+                null, DatabaseInfo.SystemMessage.TIME + " desc", null);
         if (null == cursor) {
-            LogUtil.d("SystemMessageDbAdapter","cursor is null");
+            LogUtil.d("SystemMessageDbAdapter", "cursor is null");
             return systemMessagesList;
         }
-        LogUtil.d("SystemMessageDbAdapter","size of cursor is "+ cursor.getCount());
+        LogUtil.d("SystemMessageDbAdapter", "size of cursor is " + cursor.getCount());
         while (cursor.moveToNext()) {
             SystemMessage systemMessage = new SystemMessage();
-            systemMessage.setId(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TABLE_ID)));
-            systemMessage.setTime(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
-            systemMessage.setTitle(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TITLE)));
+            systemMessage.setId(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.SystemMessage.TABLE_ID)));
+            systemMessage.setTime(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
+            systemMessage.setTitle(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.SystemMessage.TITLE)));
             systemMessagesList.add(systemMessage);
         }
         return systemMessagesList;
     }
+
     /***/
     public SystemMessage querySystemMessageByID(String id) {
-       SystemMessage systemMessage = new SystemMessage();
-        String[] columns =  {"title","time","content"};
-        String[] selectionArgs = {id};
-        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns,"_ID=?", selectionArgs ,null,null,null,null);
+        SystemMessage systemMessage = new SystemMessage();
+        String[] columns = { "title", "time", "content" };
+        String[] selectionArgs = { id };
+        Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns, "_ID=?",
+                selectionArgs, null, null, null, null);
         if (null == cursor) {
             return systemMessage;
         }
         while (cursor.moveToNext()) {
-            systemMessage.setContent(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.CONTENT)));
-            systemMessage.setTime(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
-            systemMessage.setTitle(cursor.getString(cursor.getColumnIndex(DatabaseInfo.SystemMessage.TITLE)));
+            systemMessage.setContent(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.SystemMessage.CONTENT)));
+            systemMessage.setTime(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.SystemMessage.TIME)));
+            systemMessage.setTitle(cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.SystemMessage.TITLE)));
         }
         return systemMessage;
     }
+
     /***/
     public void deleteSystemMessageByIDs(String[] ids) {
-            if (ids == null || ids.length == 0) {
-                return;
-            }
-            List<DbOperation> operationList = new ArrayList<DbOperation>();
-            for (String id : ids) {
-                operationList.add(DbOperation.newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
-                        .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ", new String[]{id})
-                        .build());
-            }
-            super.applyBatch(operationList);
+        if (ids == null || ids.length == 0) {
+            return;
+        }
+        List<DbOperation> operationList = new ArrayList<DbOperation>();
+        for (String id : ids) {
+            operationList
+                    .add(DbOperation
+                            .newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
+                            .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ",
+                                    new String[] { id }).build());
+        }
+        super.applyBatch(operationList);
     }
+
     /***/
     public void deleteSystemMessageByID(String id) {
         if (id == null) {
             return;
         }
         List<DbOperation> operationList = new ArrayList<DbOperation>();
-            operationList.add(DbOperation.newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
-                    .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ", new String[]{id})
-                    .build());
+        operationList.add(DbOperation.newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
+                .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ", new String[] { id })
+                .build());
         super.applyBatch(operationList);
     }
+
     @NonNull
     private ContentValues getCVBySystemMessage(SystemMessage systemMessage) {
         ContentValues contentValues = new ContentValues();

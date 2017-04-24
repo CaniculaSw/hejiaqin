@@ -19,6 +19,7 @@ import android.widget.OverScroller;
 import android.widget.ScrollView;
 
 import com.chinamobile.hejiaqin.R;
+
 /***/
 public class StickyNavLayout extends LinearLayout {
 
@@ -47,10 +48,8 @@ public class StickyNavLayout extends LinearLayout {
 
         mScroller = new OverScroller(context);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mMaximumVelocity = ViewConfiguration.get(context)
-                .getScaledMaximumFlingVelocity();
-        mMinimumVelocity = ViewConfiguration.get(context)
-                .getScaledMinimumFlingVelocity();
+        mMaximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
+        mMinimumVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
 
     }
 
@@ -61,8 +60,7 @@ public class StickyNavLayout extends LinearLayout {
         mNav = findViewById(R.id.id_stickynavlayout_indicator);
         View view = findViewById(R.id.id_stickynavlayout_viewpager);
         if (!(view instanceof ViewPager)) {
-            throw new RuntimeException(
-                    "id_stickynavlayout_viewpager show used by ViewPager !");
+            throw new RuntimeException("id_stickynavlayout_viewpager show used by ViewPager !");
         }
         mViewPager = (ViewPager) view;
     }
@@ -95,8 +93,7 @@ public class StickyNavLayout extends LinearLayout {
                 getCurrentScrollView();
 
                 if (mInnerScrollView instanceof ScrollView) {
-                    if (mInnerScrollView.getScrollY() == 0 && isTopHidden && dy > 0
-                            && !isInControl) {
+                    if (mInnerScrollView.getScrollY() == 0 && isTopHidden && dy > 0 && !isInControl) {
                         isInControl = true;
                         ev.setAction(MotionEvent.ACTION_CANCEL);
                         MotionEvent ev2 = MotionEvent.obtain(ev);
@@ -109,8 +106,7 @@ public class StickyNavLayout extends LinearLayout {
                     ListView lv = (ListView) mInnerScrollView;
                     View c = lv.getChildAt(lv.getFirstVisiblePosition());
 
-                    if (!isInControl && c != null && c.getTop() == 0 && isTopHidden
-                            && dy > 0) {
+                    if (!isInControl && c != null && c.getTop() == 0 && isTopHidden && dy > 0) {
                         isInControl = true;
                         ev.setAction(MotionEvent.ACTION_CANCEL);
                         MotionEvent ev2 = MotionEvent.obtain(ev);
@@ -119,20 +115,20 @@ public class StickyNavLayout extends LinearLayout {
                         return dispatchTouchEvent(ev2);
                     }
                 }
-//			else if (mInnerScrollView instanceof RecyclerView) {
-//
-//				RecyclerView rv = (RecyclerView) mInnerScrollView;
-//
-//				if (!isInControl && android.support.v4.view.ViewCompat.canScrollVertically(rv, -1) && isTopHidden
-//						&& dy > 0) {
-//					isInControl = true;
-//					ev.setAction(MotionEvent.ACTION_CANCEL);
-//					MotionEvent ev2 = MotionEvent.obtain(ev);
-//					dispatchTouchEvent(ev);
-//					ev2.setAction(MotionEvent.ACTION_DOWN);
-//					return dispatchTouchEvent(ev2);
-//				}
-//			}
+                //			else if (mInnerScrollView instanceof RecyclerView) {
+                //
+                //				RecyclerView rv = (RecyclerView) mInnerScrollView;
+                //
+                //				if (!isInControl && android.support.v4.view.ViewCompat.canScrollVertically(rv, -1) && isTopHidden
+                //						&& dy > 0) {
+                //					isInControl = true;
+                //					ev.setAction(MotionEvent.ACTION_CANCEL);
+                //					MotionEvent ev2 = MotionEvent.obtain(ev);
+                //					dispatchTouchEvent(ev);
+                //					ev2.setAction(MotionEvent.ACTION_DOWN);
+                //					return dispatchTouchEvent(ev2);
+                //				}
+                //			}
                 break;
             default:
                 break;
@@ -160,8 +156,7 @@ public class StickyNavLayout extends LinearLayout {
                         // ���topViewû������
                         // ��sc��scrollY = 0 && topView���� && ������������
                         if (!isTopHidden
-                                || (mInnerScrollView.getScrollY() == 0
-                                && isTopHidden && dy > 0)) {
+                                || (mInnerScrollView.getScrollY() == 0 && isTopHidden && dy > 0)) {
 
                             initVelocityTrackerIfNotExists();
                             mVelocityTracker.addMovement(ev);
@@ -186,15 +181,15 @@ public class StickyNavLayout extends LinearLayout {
                             return true;
                         }
                     }
-//				else if (mInnerScrollView instanceof RecyclerView) {
-//					RecyclerView rv = (RecyclerView) mInnerScrollView;
-//					if (!isTopHidden || (!android.support.v4.view.ViewCompat.canScrollVertically(rv, -1) && isTopHidden && dy > 0)) {
-//						initVelocityTrackerIfNotExists();
-//						mVelocityTracker.addMovement(ev);
-//						mLastY = y;
-//						return true;
-//					}
-//				}
+                    //				else if (mInnerScrollView instanceof RecyclerView) {
+                    //					RecyclerView rv = (RecyclerView) mInnerScrollView;
+                    //					if (!isTopHidden || (!android.support.v4.view.ViewCompat.canScrollVertically(rv, -1) && isTopHidden && dy > 0)) {
+                    //						initVelocityTrackerIfNotExists();
+                    //						mVelocityTracker.addMovement(ev);
+                    //						mLastY = y;
+                    //						return true;
+                    //					}
+                    //				}
 
                 }
                 break;
@@ -215,14 +210,12 @@ public class StickyNavLayout extends LinearLayout {
         PagerAdapter a = mViewPager.getAdapter();
         if (a instanceof FragmentPagerAdapter) {
             FragmentPagerAdapter fadapter = (FragmentPagerAdapter) a;
-            Fragment item = (Fragment) fadapter.instantiateItem(mViewPager,
-                    currentItem);
+            Fragment item = (Fragment) fadapter.instantiateItem(mViewPager, currentItem);
             mInnerScrollView = (ViewGroup) (item.getView()
                     .findViewById(R.id.id_stickynavlayout_innerscrollview));
         } else if (a instanceof FragmentStatePagerAdapter) {
             FragmentStatePagerAdapter fsAdapter = (FragmentStatePagerAdapter) a;
-            Fragment item = (Fragment) fsAdapter.instantiateItem(mViewPager,
-                    currentItem);
+            Fragment item = (Fragment) fsAdapter.instantiateItem(mViewPager, currentItem);
             mInnerScrollView = (ViewGroup) (item.getView()
                     .findViewById(R.id.id_stickynavlayout_innerscrollview));
         }
@@ -286,6 +279,7 @@ public class StickyNavLayout extends LinearLayout {
 
         return super.onTouchEvent(event);
     }
+
     /***/
     public void fling(int velocityY) {
         mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, mTopViewHeight);

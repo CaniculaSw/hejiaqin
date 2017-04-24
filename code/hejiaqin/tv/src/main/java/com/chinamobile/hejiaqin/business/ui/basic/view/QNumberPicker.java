@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import com.chinamobile.hejiaqin.tv.R;
+
 /***/
 public class QNumberPicker extends NumberPicker {
 
@@ -29,8 +30,7 @@ public class QNumberPicker extends NumberPicker {
     }
 
     @Override
-    public void addView(View child, int index,
-                        android.view.ViewGroup.LayoutParams params) {
+    public void addView(View child, int index, android.view.ViewGroup.LayoutParams params) {
         super.addView(child, index, params);
         updateView(child);
     }
@@ -40,11 +40,13 @@ public class QNumberPicker extends NumberPicker {
         super.addView(child, params);
         updateView(child);
     }
+
     /***/
     public void updateView(View view) {
         if (view instanceof EditText) {
             //这里修改字体的属性
-           ((EditText) view).setTextSize(getResources().getDimensionPixelSize(R.dimen.date_picker_text_size));
+            ((EditText) view).setTextSize(getResources().getDimensionPixelSize(
+                    R.dimen.date_picker_text_size));
         }
     }
 

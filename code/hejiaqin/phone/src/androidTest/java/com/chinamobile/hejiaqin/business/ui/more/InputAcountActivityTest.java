@@ -29,7 +29,8 @@ public class InputAcountActivityTest extends ActivityUnitTestCase<InputAcountAct
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), InputAcountActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                InputAcountActivity.class);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

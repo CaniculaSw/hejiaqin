@@ -44,7 +44,9 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
-                searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                searchText.setText(String.format(
+                        getContext().getString(R.string.contact_search_hint_text),
+                        contactsInfoList.size()));
                 sideBarView.setVisibility(adapter.isEmpty() ? View.GONE : View.VISIBLE);
                 break;
             default:
@@ -64,8 +66,8 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
         contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
 
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         contactListView.addHeaderView(searchLayout);
         // 设置搜索显示的文字
@@ -84,8 +86,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterSelected(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
-                        + position);
+                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: " + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);
                 if (position >= 0) {
@@ -96,8 +97,7 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterChanged(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                Logger.i(TAG, "onLetterChanged: " + letter + "; position: "
-                        + position);
+                Logger.i(TAG, "onLetterChanged: " + letter + "; position: " + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);
                 if (position >= 0) {
@@ -142,8 +142,8 @@ public class AppContactListFragment extends BasicFragment implements View.OnClic
 
     private void enterSearchView() {
         Intent intent = new Intent(getContext(), ContactSearchActivity.class);
-        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                ContactSearchActivity.Constant.CONTACT_TYPE_APP);
         startActivity(intent);
     }
 }

@@ -10,12 +10,13 @@ import com.chinamobile.hejiaqin.tv.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /***/
 public class DialInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "DialInfoFragment";
-//    private LayoutInflater inflater;
-//
-//    private LinearLayout dialInfoLayout;
+    //    private LayoutInflater inflater;
+    //
+    //    private LinearLayout dialInfoLayout;
 
     private List<DialInfoGroup> mDialInfoGroupList = new ArrayList<>();
 
@@ -36,9 +37,9 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
 
     @Override
     protected void initView(View view) {
-//        inflater = (LayoutInflater) getContext().getSystemService
-//                (Context.LAYOUT_INFLATER_SERVICE);
-//        dialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
+        //        inflater = (LayoutInflater) getContext().getSystemService
+        //                (Context.LAYOUT_INFLATER_SERVICE);
+        //        dialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
     }
 
     @Override
@@ -62,51 +63,53 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
         mDialInfoGroupList.clear();
         mDialInfoGroupList.addAll(dialInfoGroupList);
     }
+
     /***/
     public void refreshView() {
-//        if(!super.isCreateView)
-//        {
-//            return;
-//        }
-//        if (null == mDialInfoGroupList) {
-//            return;
-//        }
-//
-//
-//        dialInfoLayout.removeAllViews();
-//        for (DialInfoGroup dialInfoGroup : mDialInfoGroupList) {
-//            if (null == dialInfoGroup.getGroupName() || null == dialInfoGroup.getDialInfoList()
-//                    || dialInfoGroup.getDialInfoList().isEmpty()) {
-//                continue;
-//            }
-//
-//            View dialInfoGroupView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
-//            TextView groupNameText = (TextView) dialInfoGroupView.findViewById(R.id.dial_group_name_text);
-//            groupNameText.setText(dialInfoGroup.getGroupName());
-//            groupNameText.setVisibility(View.VISIBLE);
-//            dialInfoGroupView.findViewById(R.id.dial_info_item_layout).setVisibility(View.GONE);
-//            dialInfoLayout.addView(dialInfoGroupView);
-//
-//            for (DialInfo dialInfo : dialInfoGroup.getDialInfoList()) {
-//                View dialInfoView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
-//                dialInfoView.findViewById(R.id.dial_group_name_text).setVisibility(View.GONE);
-//                dialInfoView.findViewById(R.id.dial_info_item_layout).setVisibility(View.VISIBLE);
-//
-//                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
-//                dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
-//
-//                TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
-//                dialTypeText.setText(getStringResIdByDialType(dialInfo.getType()));
-//
-//                TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
-//                dialTimeText.setText(dialInfo.getDialTime());
-//
-//                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
-//                dialDurationText.setText(dialInfo.getDialDuration());
-//                dialInfoLayout.addView(dialInfoView);
-//            }
-//        }
+        //        if(!super.isCreateView)
+        //        {
+        //            return;
+        //        }
+        //        if (null == mDialInfoGroupList) {
+        //            return;
+        //        }
+        //
+        //
+        //        dialInfoLayout.removeAllViews();
+        //        for (DialInfoGroup dialInfoGroup : mDialInfoGroupList) {
+        //            if (null == dialInfoGroup.getGroupName() || null == dialInfoGroup.getDialInfoList()
+        //                    || dialInfoGroup.getDialInfoList().isEmpty()) {
+        //                continue;
+        //            }
+        //
+        //            View dialInfoGroupView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
+        //            TextView groupNameText = (TextView) dialInfoGroupView.findViewById(R.id.dial_group_name_text);
+        //            groupNameText.setText(dialInfoGroup.getGroupName());
+        //            groupNameText.setVisibility(View.VISIBLE);
+        //            dialInfoGroupView.findViewById(R.id.dial_info_item_layout).setVisibility(View.GONE);
+        //            dialInfoLayout.addView(dialInfoGroupView);
+        //
+        //            for (DialInfo dialInfo : dialInfoGroup.getDialInfoList()) {
+        //                View dialInfoView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
+        //                dialInfoView.findViewById(R.id.dial_group_name_text).setVisibility(View.GONE);
+        //                dialInfoView.findViewById(R.id.dial_info_item_layout).setVisibility(View.VISIBLE);
+        //
+        //                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
+        //                dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
+        //
+        //                TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
+        //                dialTypeText.setText(getStringResIdByDialType(dialInfo.getType()));
+        //
+        //                TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
+        //                dialTimeText.setText(dialInfo.getDialTime());
+        //
+        //                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
+        //                dialDurationText.setText(dialInfo.getDialDuration());
+        //                dialInfoLayout.addView(dialInfoView);
+        //            }
+        //        }
     }
+
     /***/
     public boolean hasData() {
         return null != mDialInfoGroupList && !mDialInfoGroupList.isEmpty();
@@ -148,8 +151,7 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
         }
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return null;
     }
 }

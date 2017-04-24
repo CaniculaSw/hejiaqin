@@ -7,7 +7,6 @@ import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 
 /**
  * Created by Administrator on 2017/4/24 0024.

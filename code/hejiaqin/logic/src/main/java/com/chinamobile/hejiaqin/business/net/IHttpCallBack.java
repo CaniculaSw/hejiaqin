@@ -15,7 +15,7 @@ public interface IHttpCallBack {
      * @param invoker 调用者(用来区分不同的调用场景，差异化实现回调逻辑)
      * @param obj 服务器响应解析后的对象
      */
-    public void onSuccessful(final Object invoker,Object obj);
+    public void onSuccessful(final Object invoker, Object obj);
 
     /**
      * 网络请求业务失败响应
@@ -23,7 +23,7 @@ public interface IHttpCallBack {
      * @param code 业务错误码
      * @param desc 业务错误描述
      */
-    public void onFailure(final Object invoker,String code, String desc);
+    public void onFailure(final Object invoker, String code, String desc);
 
     /**
      * 网络请求网络失败响应
@@ -31,4 +31,3 @@ public interface IHttpCallBack {
      */
     public void onNetWorkError(NetResponse.ResponseCode errorCode);
 }
-

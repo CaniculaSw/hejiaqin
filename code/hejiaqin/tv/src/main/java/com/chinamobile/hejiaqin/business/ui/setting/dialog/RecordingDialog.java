@@ -29,13 +29,14 @@ public class RecordingDialog extends Dialog {
     private Animation animation;
     private TextView speakTips;
     private TextView tips;
-//    private RecordingCountDownTimer recordingCountDownTimer;
-//    private PlayingCountDownTimer playingCountDownTimer;
+    //    private RecordingCountDownTimer recordingCountDownTimer;
+    //    private PlayingCountDownTimer playingCountDownTimer;
     private boolean isRecording;
     private TextView controlBtnText;
     private boolean isPaused;
     private ISettingLogic settingLogic;
-    private final String pttFilename = SysApi.DEFAULT_FILE_STORED_LOCATION + "/receivedPtt/" + "record_audio.amr";
+    private final String pttFilename = SysApi.DEFAULT_FILE_STORED_LOCATION + "/receivedPtt/"
+            + "record_audio.amr";
     private long duration;
     private long begin;
     private long end;
@@ -53,7 +54,8 @@ public class RecordingDialog extends Dialog {
         this.settingLogic = settingLogic;
     }
 
-    protected RecordingDialog(final Context context, boolean cancelable, OnCancelListener cancelListener, ISettingLogic settingLogic) {
+    protected RecordingDialog(final Context context, boolean cancelable,
+                              OnCancelListener cancelListener, ISettingLogic settingLogic) {
         super(context, cancelable, cancelListener);
         this.mContext = context;
         this.settingLogic = settingLogic;
@@ -72,7 +74,6 @@ public class RecordingDialog extends Dialog {
         controlBtnText.requestFocus();
         startRecording();
     }
-
 
     private void startRecording() {
         if (!FileUtil.isFileExists(this.pttFilename)) {
@@ -94,7 +95,8 @@ public class RecordingDialog extends Dialog {
     }
 
     private void startPlayBack(long howLong) {
-        AudioManager audioManamger = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManamger = (AudioManager) mContext
+                .getSystemService(Context.AUDIO_SERVICE);
         boolean speakerState = audioManamger.isSpeakerphoneOn();
         if (!speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);
@@ -118,7 +120,6 @@ public class RecordingDialog extends Dialog {
         isPaused = true;
         isRecording = false;
     }
-
 
     private void startRecTimer() {
         startRecTimer(10);
@@ -147,7 +148,8 @@ public class RecordingDialog extends Dialog {
         public void onTick(long millisUntilFinished) {
             super.onTick(millisUntilFinished);
             RecordingDialog.this.inputVol += CallSessionRecording.getInputVolumeWave();
-            speakTips.setText(mContext.getString(R.string.speak_to_mic, millisUntilFinished / 1000));
+            speakTips
+                    .setText(mContext.getString(R.string.speak_to_mic, millisUntilFinished / 1000));
         }
 
         @Override
@@ -175,7 +177,8 @@ public class RecordingDialog extends Dialog {
         public void onTick(long millisUntilFinished) {
             super.onTick(millisUntilFinished);
             if (!isPaused) {
-                speakTips.setText(mContext.getString(R.string.playing_tips, millisUntilFinished / 1000));
+                speakTips.setText(mContext.getString(R.string.playing_tips,
+                        millisUntilFinished / 1000));
             }
         }
 
@@ -184,7 +187,8 @@ public class RecordingDialog extends Dialog {
             super.onFinish();
             if (!isPaused) {
                 CallSessionRecording.stopMediaPlay();
-                AudioManager audioManamger = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+                AudioManager audioManamger = (AudioManager) mContext
+                        .getSystemService(Context.AUDIO_SERVICE);
                 boolean speakerState = audioManamger.isSpeakerphoneOn();
                 if (speakerState) {
                     audioManamger.setSpeakerphoneOn(!speakerState);
@@ -219,7 +223,8 @@ public class RecordingDialog extends Dialog {
 
     @Override
     public void dismiss() {
-        AudioManager audioManamger = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManamger = (AudioManager) mContext
+                .getSystemService(Context.AUDIO_SERVICE);
         boolean speakerState = audioManamger.isSpeakerphoneOn();
         if (speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);
@@ -232,8 +237,8 @@ public class RecordingDialog extends Dialog {
 
     @Override
     public void onBackPressed() {
-        AudioManager audioManamger =
-            (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManamger = (AudioManager) mContext
+                .getSystemService(Context.AUDIO_SERVICE);
         boolean speakerState = audioManamger.isSpeakerphoneOn();
         if (speakerState) {
             audioManamger.setSpeakerphoneOn(!speakerState);

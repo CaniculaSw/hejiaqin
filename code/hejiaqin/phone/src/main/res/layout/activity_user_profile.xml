@@ -38,12 +38,12 @@
             app:civ_border_color="@color/more_white_f4f4f4" />
 
         <!--<ImageView-->
-            <!--android:id="@+id/more_user_avatar_ci"-->
-            <!--android:layout_width="60dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:src="@drawable/contact_photo_default" />-->
+        <!--android:id="@+id/more_user_avatar_ci"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:src="@drawable/contact_photo_default" />-->
     </RelativeLayout>
 
     <RelativeLayout

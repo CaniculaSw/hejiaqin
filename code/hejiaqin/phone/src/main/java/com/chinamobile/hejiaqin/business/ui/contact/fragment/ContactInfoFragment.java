@@ -13,6 +13,7 @@ import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 
 import java.util.List;
+
 /***/
 public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactInfoFragment";
@@ -40,8 +41,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initView(View view) {
-        inflater = (LayoutInflater) getContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contactInfoLayout = (LinearLayout) view.findViewById(R.id.contact_info_layout);
     }
 
@@ -49,7 +49,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     protected void initData() {
         refreshView();
     }
-
 
     /**
      * Called when a view has been clicked.
@@ -63,6 +62,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     public void setContactsInfo(ContactsInfo contactsInfo) {
         mContactsInfo = contactsInfo;
     }
+
     /***/
     public void refreshView() {
         if (null == mContactsInfo) {
@@ -76,7 +76,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
         contactInfoLayout.removeAllViews();
         for (NumberInfo numberInfo : numberInfoList) {
-            View contactNumberView = inflater.inflate(R.layout.layout_contact_number_info_view, null);
+            View contactNumberView = inflater.inflate(R.layout.layout_contact_number_info_view,
+                    null);
             TextView numberDesc = (TextView) contactNumberView.findViewById(R.id.number_desc_text);
             numberDesc.setText(numberInfo.getDesc());
             TextView number = (TextView) contactNumberView.findViewById(R.id.number_text);

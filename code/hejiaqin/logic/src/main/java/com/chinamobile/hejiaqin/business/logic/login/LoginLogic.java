@@ -46,7 +46,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -57,13 +58,16 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID, errorCode);
             }
         });
     }
@@ -76,7 +80,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -87,17 +92,20 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
-
 
     @Override
     public void checkVerifyCode(VerifyInfo verifyInfo) {
@@ -105,7 +113,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -116,41 +125,50 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID, response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
 
     @Override
     public void checkResetPasswordCode(VerifyInfo verifyInfo) {
-        new LoginHttpManager(getContext()).checkResetPasswordCode(null, verifyInfo, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).checkResetPasswordCode(null, verifyInfo,
+                new IHttpCallBack() {
 
-            @Override
-            public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID, obj);
-            }
+                    @Override
+                    public void onSuccessful(Object invoker, Object obj) {
+                        LoginLogic.this
+                                .sendMessage(
+                                        BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID,
+                                        obj);
+                    }
 
-            @Override
-            public void onFailure(Object invoker, String code, String desc) {
-                if (isCommonFailRes(code, desc)) {
-                    return;
-                }
-                FailResponse response = new FailResponse();
-                response.setCode(code);
-                response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID, response);
-            }
+                    @Override
+                    public void onFailure(Object invoker, String code, String desc) {
+                        if (isCommonFailRes(code, desc)) {
+                            return;
+                        }
+                        FailResponse response = new FailResponse();
+                        response.setCode(code);
+                        response.setMsg(desc);
+                        LoginLogic.this.sendMessage(
+                                BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID,
+                                response);
+                    }
 
-            @Override
-            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
-            }
-        });
+                    @Override
+                    public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                        LoginLogic.this.sendMessage(
+                                BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                    }
+                });
     }
 
     @Override
@@ -158,7 +176,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).registerSecondStep(null, info, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -169,12 +188,14 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_FAIL_MSG_ID, response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
@@ -189,7 +210,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
                 initCMIMSdk();
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
                 UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
             }
 
@@ -201,12 +223,14 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID,
+                        response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
             }
         });
     }
@@ -220,8 +244,9 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 Date now = new Date();
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
                 UserInfoCacheManager.saveTvAccountToLoacl(getContext(), userInfo.getTvAccount());
-//                initCMIMSdk();
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
+                //                initCMIMSdk();
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
                 UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
             }
 
@@ -233,12 +258,14 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID,
+                        response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
             }
         });
     }
@@ -252,13 +279,16 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 LogUtil.d(TAG, "data is: " + data);
                 switch (data) {
                     case "0":
-                        LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
+                        LoginLogic.this
+                                .sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
                         break;
                     case "1":
-                        LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED);
+                        LoginLogic.this
+                                .sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED);
                         break;
                     default:
-                        LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
+                        LoginLogic.this
+                                .sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
                         break;
                 }
             }
@@ -276,11 +306,11 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.CommonMsgId.LOGIN_NETWORK_ERROR_MSG_ID, errorCode);
             }
         });
     }
-
 
     @Override
     public void logout() {
@@ -315,26 +345,30 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void loadUserFromLocal() {
-        String infoCache = StorageMgr.getInstance().getSharedPStorage(getContext()).getString(BussinessConstants.Login.USER_INFO_KEY);
+        String infoCache = StorageMgr.getInstance().getSharedPStorage(getContext())
+                .getString(BussinessConstants.Login.USER_INFO_KEY);
         UserInfo info = null;
         if (infoCache != null) {
             Gson gson = new Gson();
             info = gson.fromJson(infoCache, UserInfo.class);
         }
-        long tokenDate = StorageMgr.getInstance().getSharedPStorage(getContext()).getLong(BussinessConstants.Login.TOKEN_DATE);
+        long tokenDate = StorageMgr.getInstance().getSharedPStorage(getContext())
+                .getLong(BussinessConstants.Login.TOKEN_DATE);
         UserInfoCacheManager.saveUserToMem(getContext(), info, tokenDate);
     }
 
     @Override
     public void loadHistoryFromLocal() {
-        String historyCache = StorageMgr.getInstance().getSharedPStorage(getContext()).getString(BussinessConstants.Login.LOGIN_HISTORY_LIST_KEY);
+        String historyCache = StorageMgr.getInstance().getSharedPStorage(getContext())
+                .getString(BussinessConstants.Login.LOGIN_HISTORY_LIST_KEY);
         LoginHistoryList historyList = null;
         if (historyCache != null) {
             Gson gson = new Gson();
             historyList = gson.fromJson(historyCache, LoginHistoryList.class);
         }
         if (historyList != null) {
-            StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Login.LOGIN_HISTORY_LIST_KEY, historyList);
+            StorageMgr.getInstance().getMemStorage()
+                    .save(BussinessConstants.Login.LOGIN_HISTORY_LIST_KEY, historyList);
         }
     }
 
@@ -354,7 +388,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public LoginHistory getLoginHistory(String loginid) {
-        Object obj = StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.LOGIN_HISTORY_LIST_KEY);
+        Object obj = StorageMgr.getInstance().getMemStorage()
+                .getObject(BussinessConstants.Login.LOGIN_HISTORY_LIST_KEY);
         LoginHistoryList historyList;
         if (obj == null) {
             historyList = new LoginHistoryList();
@@ -371,35 +406,36 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     }
 
     private boolean isExpired() {
-        Object obj = StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        Object obj = StorageMgr.getInstance().getMemStorage()
+                .getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (obj == null) {
             return true;
         }
         return false;
-//        UserInfo info = (UserInfo) obj;
-//        String tokenExpire = info.getTokenExpire();
-//        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//
-//        long expire = 0;
-//        try {
-//            expire = sdf.parse(tokenExpire).getTime() - tokenDate;
-//        } catch (ParseException e) {
-//            LogUtil.e(tag, e);
-//        }
-//        //永不过期
-//        if (expire == -1) {
-//            return false;
-//        }
-//        if (tokenDate != Long.MIN_VALUE) {
-//            Date now = new Date();
-//            //在有效期内
-//            if (now.getTime() - tokenDate < expire) {
-//                return false;
-//            }
-//        }
-//        return true;
+        //        UserInfo info = (UserInfo) obj;
+        //        String tokenExpire = info.getTokenExpire();
+        //        long tokenDate = StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE);
+        //
+        //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //
+        //        long expire = 0;
+        //        try {
+        //            expire = sdf.parse(tokenExpire).getTime() - tokenDate;
+        //        } catch (ParseException e) {
+        //            LogUtil.e(tag, e);
+        //        }
+        //        //永不过期
+        //        if (expire == -1) {
+        //            return false;
+        //        }
+        //        if (tokenDate != Long.MIN_VALUE) {
+        //            Date now = new Date();
+        //            //在有效期内
+        //            if (now.getTime() - tokenDate < expire) {
+        //                return false;
+        //            }
+        //        }
+        //        return true;
     }
 
     @Override
@@ -410,9 +446,14 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 UserInfo newUserInfo = (UserInfo) obj;
                 UserInfo oldUserInfo = UserInfoCacheManager.getUserInfo(getContext());
                 newUserInfo.setToken(oldUserInfo.getToken());
-                UserInfoCacheManager.saveUserToLoacl(getContext(), newUserInfo, StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
-                UserInfoCacheManager.saveUserToMem(getContext(), newUserInfo, StorageMgr.getInstance().getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.GET_USER_INFO_SUCCESS_MSG_ID);
+                UserInfoCacheManager
+                        .saveUserToLoacl(getContext(), newUserInfo, StorageMgr.getInstance()
+                                .getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
+                UserInfoCacheManager
+                        .saveUserToMem(getContext(), newUserInfo, StorageMgr.getInstance()
+                                .getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.GET_USER_INFO_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -423,12 +464,14 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.GET_USER_INFO_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.GET_USER_INFO_FAIL_MSG_ID, response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
@@ -438,7 +481,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).updatePassword(null, pwdInfo, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -449,18 +493,22 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID,
+                        response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
+
     /***/
     public void initCMIMSdk() {
-        Object obj = StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        Object obj = StorageMgr.getInstance().getMemStorage()
+                .getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (obj == null) {
             return;
         }
@@ -472,11 +520,10 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         UserInfoCacheManager.clearUserInfo(getContext());
         try {
             CMIMHelper.getCmAccountManager().doLogOut();
-        }catch (Exception e){
-            LogUtil.d(TAG,"小溪推送退出异常。");
+        } catch (Exception e) {
+            LogUtil.d(TAG, "小溪推送退出异常。");
         }
     }
-
 
     @Override
     public void updatePhoto(UpdatePhotoReq updatePhoto) {
@@ -484,12 +531,18 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
-                UserInfo oldUserInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                UserInfo oldUserInfo = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                        .getObject(BussinessConstants.Login.USER_INFO_KEY);
                 oldUserInfo.setPhotoLg(userInfo.getPhotoLg());
                 oldUserInfo.setPhotoSm(userInfo.getPhotoSm());
-                UserInfoCacheManager.saveUserToLoacl(getContext(), oldUserInfo, StorageMgr.getInstance().getSharedPStorage(getContext()).getLong(BussinessConstants.Login.TOKEN_DATE));
+                UserInfoCacheManager.saveUserToLoacl(
+                        getContext(),
+                        oldUserInfo,
+                        StorageMgr.getInstance().getSharedPStorage(getContext())
+                                .getLong(BussinessConstants.Login.TOKEN_DATE));
                 loadUserFromLocal();
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_SUCCESS_MSG_ID);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_SUCCESS_MSG_ID);
             }
 
             @Override
@@ -500,12 +553,14 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 FailResponse response = new FailResponse();
                 response.setCode(code);
                 response.setMsg(desc);
-                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_FAIL_MSG_ID, response);
+                LoginLogic.this.sendMessage(BussinessConstants.LoginMsgID.UPDATE_PHOTO_FAIL_MSG_ID,
+                        response);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
@@ -515,17 +570,20 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).feedBack(null, feedBackReq, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                LoginLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
+                LoginLogic.this
+                        .sendEmptyMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS);
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                LoginLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }

@@ -28,7 +28,7 @@
             android:textColor="@color/contact_list_username_text_color"
             android:textSize="16sp"
             android:layout_toRightOf="@+id/contact_photo_img"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp" />
 
     </RelativeLayout>
 

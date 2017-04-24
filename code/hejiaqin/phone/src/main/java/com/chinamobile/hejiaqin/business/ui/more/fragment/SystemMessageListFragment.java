@@ -35,7 +35,9 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
         switch (msg.what) {
             case BussinessConstants.SettingMsgID.EDIT_BUTTON_PRESSED:
                 unSelectedAllData();
-                mDeleteButton.setVisibility(mDeleteButton.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+                mDeleteButton
+                        .setVisibility(mDeleteButton.getVisibility() == View.VISIBLE ? View.INVISIBLE
+                                : View.VISIBLE);
                 adapter.setShow(adapter.isShow() ? false : true);
                 adapter.notifyDataSetChanged();
                 break;
@@ -90,8 +92,8 @@ public class SystemMessageListFragment extends BasicFragment implements View.OnC
     protected void initData() {
         mMessageList = new ArrayList<SystemMessage>();
 
-        mMessageList = SystemMessageDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
-                .queryAll();
+        mMessageList = SystemMessageDbAdapter.getInstance(getContext(),
+                UserInfoCacheManager.getUserId(getContext())).queryAll();
         adapter.setData(mMessageList);
     }
 

@@ -11,9 +11,9 @@ import android.os.CountDownTimer;
  */
 public class MyCountDownTimer extends CountDownTimer {
 
-    public final static long MILL_IS_INFUTURE =60000;
+    public final static long MILL_IS_INFUTURE = 60000;
 
-    private final static long COUNTDOWN_INTERVAL =1000;
+    private final static long COUNTDOWN_INTERVAL = 1000;
 
     private static MyCountDownTimer myCountDownTimer;
 
@@ -24,8 +24,7 @@ public class MyCountDownTimer extends CountDownTimer {
      */
     public MyCountDownTimer(long millisInFuture) {
         super(millisInFuture, COUNTDOWN_INTERVAL);
-        if(myCountDownTimer!=null)
-        {
+        if (myCountDownTimer != null) {
             myCountDownTimer.cancel();
         }
         myCountDownTimer = this;
@@ -45,19 +44,18 @@ public class MyCountDownTimer extends CountDownTimer {
     public long getMillisUntilFinished() {
         return millisUntilFinished;
     }
+
     /***/
     public void stop() {
         super.cancel();
-        myCountDownTimer=null;
+        myCountDownTimer = null;
     }
 
-    public static long getMyMillisUntilFinished()
-    {
-        if(myCountDownTimer==null)
-        {
+    public static long getMyMillisUntilFinished() {
+        if (myCountDownTimer == null) {
             return 0;
         }
-        return  myCountDownTimer.getMillisUntilFinished();
+        return myCountDownTimer.getMillisUntilFinished();
     }
 
 }

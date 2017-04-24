@@ -28,52 +28,55 @@ public class CMIMHelperManager {
 
     private Context mContext;
 
-    public CMIMHelperManager(Context mContext){
+    public CMIMHelperManager(Context mContext) {
         this.mContext = mContext;
     }
 
-    private Context getContext(){
+    private Context getContext() {
         return this.mContext;
     }
+
     /***/
     public void doLogin(UserInfo userInfo) {
-        CMIMHelper.getCmAccountManager().doLogin(userInfo.getImAccount(), userInfo.getImPassword(), new CMChatListener.OnCMListener() {
-            @Override
-            public void onSuccess() {
-                LogUtil.d(TAG, "LittleC login success");
-                addConnectionListener();
-                addMessageReceivedListener();
-            }
+        CMIMHelper.getCmAccountManager().doLogin(userInfo.getImAccount(), userInfo.getImPassword(),
+                new CMChatListener.OnCMListener() {
+                    @Override
+                    public void onSuccess() {
+                        LogUtil.d(TAG, "LittleC login success");
+                        addConnectionListener();
+                        addMessageReceivedListener();
+                    }
 
-            @Override
-            public void onFailed(String s) {
-                LogUtil.d(TAG, "LittleC login failed");
-            }
-        });
+                    @Override
+                    public void onFailed(String s) {
+                        LogUtil.d(TAG, "LittleC login failed");
+                    }
+                });
     }
 
     private void addConnectionListener() {
-        CMIMHelper.getCmAccountManager().addConnectionListener(new CMChatListener.OnConnectionListener() {
-            @Override
-            public void onReConnected() {
-                LogUtil.d(TAG, "小溪推送SDK--重连成功");
-            }
+        CMIMHelper.getCmAccountManager().addConnectionListener(
+                new CMChatListener.OnConnectionListener() {
+                    @Override
+                    public void onReConnected() {
+                        LogUtil.d(TAG, "小溪推送SDK--重连成功");
+                    }
 
-            @Override
-            public void onDisConnected() {
-                LogUtil.d(TAG, "小溪推送SDK--已断开");
-            }
+                    @Override
+                    public void onDisConnected() {
+                        LogUtil.d(TAG, "小溪推送SDK--已断开");
+                    }
 
-            @Override
-            public void onAccountConflict() {
-                LogUtil.d(TAG, "小溪推送SDK--用户冲突");
-            }
+                    @Override
+                    public void onAccountConflict() {
+                        LogUtil.d(TAG, "小溪推送SDK--用户冲突");
+                    }
 
-            @Override
-            public void onAccountDestroyed() {
-                LogUtil.d(TAG, "小溪推送SDK--账号已删除");
-            }
-        });
+                    @Override
+                    public void onAccountDestroyed() {
+                        LogUtil.d(TAG, "小溪推送SDK--账号已删除");
+                    }
+                });
     }
 
     private void addMessageReceivedListener() {
@@ -129,7 +132,8 @@ public class CMIMHelperManager {
             }
 
             @Override
-            public void onReceivedAddMembersMessage(CMMessage cmMessage, String s, List<CMMember> list) {
+            public void onReceivedAddMembersMessage(CMMessage cmMessage, String s,
+                                                    List<CMMember> list) {
                 LogUtil.d(TAG, "onReceivedAddMembersMessage");
             }
 
@@ -139,13 +143,14 @@ public class CMIMHelperManager {
                 try {
                     JSONObject systemMessageJSonObj = new JSONObject(systemMessage.getContent());
                     Gson gson = new Gson();
-                    com.chinamobile.hejiaqin.business.model.more.SystemMessage receivedSystemMessage =
-                            gson.fromJson(systemMessageJSonObj.getString("data"),
-                                          com.chinamobile.hejiaqin.business.model.more.SystemMessage.class);
-                    SystemMessageDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                    com.chinamobile.hejiaqin.business.model.more.SystemMessage receivedSystemMessage = gson.fromJson(
+                            systemMessageJSonObj.getString("data"),
+                            com.chinamobile.hejiaqin.business.model.more.SystemMessage.class);
+                    SystemMessageDbAdapter.getInstance(getContext(),
+                            UserInfoCacheManager.getUserId(getContext()))
                             .add(receivedSystemMessage);
                 } catch (JSONException e) {
-                    LogUtil.e(TAG,e);
+                    LogUtil.e(TAG, e);
                 }
             }
 
@@ -155,7 +160,8 @@ public class CMIMHelperManager {
             }
 
             @Override
-            public void onReceivedOwnerChangedMessage(CMMessage cmMessage, String s, CMMember cmMember) {
+            public void onReceivedOwnerChangedMessage(CMMessage cmMessage, String s,
+                                                      CMMember cmMember) {
                 LogUtil.d(TAG, "onReceivedOwnerChangedMessage");
             }
 

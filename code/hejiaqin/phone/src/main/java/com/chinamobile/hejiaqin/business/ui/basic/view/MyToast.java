@@ -22,13 +22,14 @@ public class MyToast {
     public MyToast(Context context) {
         this.mContext = context;
     }
+
     /***/
     public void showToast(int resId, int duration, Position pos) {
         android.widget.Toast toast = new android.widget.Toast(this.mContext);
-        LayoutInflater inflate = (LayoutInflater)
-                mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflate = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(R.layout.toast_view, null);
-        TextView tv = (TextView)v.findViewById(R.id.message);
+        TextView tv = (TextView) v.findViewById(R.id.message);
         tv.setText(resId);
         toast.setView(v);
         toast.setDuration(duration);
@@ -38,13 +39,14 @@ public class MyToast {
         }
         toast.show();
     }
+
     /***/
     public void showToast(String text, int duration, Position pos) {
         android.widget.Toast toast = new android.widget.Toast(this.mContext);
-        LayoutInflater inflate = (LayoutInflater)
-                mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflate = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(R.layout.toast_view, null);
-        TextView tv = (TextView)v.findViewById(R.id.message);
+        TextView tv = (TextView) v.findViewById(R.id.message);
         tv.setText(text);
         toast.setView(v);
         toast.setDuration(duration);
@@ -54,6 +56,7 @@ public class MyToast {
         }
         toast.show();
     }
+
     /***/
     public void showToast(View view, int duration, Position pos) {
         android.widget.Toast toast = new android.widget.Toast(this.mContext);
@@ -65,6 +68,7 @@ public class MyToast {
         }
         toast.show();
     }
+
     /***/
     static public class Position {
         //起点位置(默认底部居中)
@@ -81,7 +85,6 @@ public class MyToast {
 
         //以横向和纵向的百分比计算 竖直位移正上负下
         public float verticalMargin;
-
 
     }
 }

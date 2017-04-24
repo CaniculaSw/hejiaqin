@@ -45,7 +45,8 @@ public class SearchView extends RelativeLayout {
     }
 
     private void initView() {
-        this.searchView = LayoutInflater.from(getContext()).inflate(R.layout.layout_contact_search, this);
+        this.searchView = LayoutInflater.from(getContext()).inflate(R.layout.layout_contact_search,
+                this);
 
         // 设置搜索显示的文字
         searchInput = (EditText) findViewById(R.id.search_input);
@@ -136,23 +137,27 @@ public class SearchView extends RelativeLayout {
     public void setHint(String hint) {
         searchInput.setHint(hint);
     }
+
     /***/
     public interface ISearchListener {
         /***/
         void search(String input);
+
         /***/
         void cancel();
     }
 
     private void showSoftInput() {
 
-        InputMethodManager imm = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().getApplicationContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(searchInput, InputMethodManager.SHOW_FORCED);
     }
 
     private void hideSoftInput() {
 
-        InputMethodManager imm = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().getApplicationContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
     }
 }

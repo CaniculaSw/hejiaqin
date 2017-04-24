@@ -27,17 +27,21 @@ public class SysInfoUtil {
      * @return
      */
     public static String getAppUniqueId(Context context) {
-        String uniqueId = StorageMgr.getInstance().getMemStorage().getString(BussinessConstants.CommonInfo.APP_UNIQUE_ID);
+        String uniqueId = StorageMgr.getInstance().getMemStorage()
+                .getString(BussinessConstants.CommonInfo.APP_UNIQUE_ID);
         if (StringUtil.isNullOrEmpty(uniqueId)) {
-            uniqueId = StorageMgr.getInstance().getSharedPStorage(context).getString(BussinessConstants.CommonInfo.APP_UNIQUE_ID);
+            uniqueId = StorageMgr.getInstance().getSharedPStorage(context)
+                    .getString(BussinessConstants.CommonInfo.APP_UNIQUE_ID);
         } else {
             return uniqueId;
         }
         if (StringUtil.isNullOrEmpty(uniqueId)) {
             uniqueId = UUID.randomUUID().toString();
-            StorageMgr.getInstance().getSharedPStorage(context).save(BussinessConstants.CommonInfo.APP_UNIQUE_ID, uniqueId);
+            StorageMgr.getInstance().getSharedPStorage(context)
+                    .save(BussinessConstants.CommonInfo.APP_UNIQUE_ID, uniqueId);
         }
-        StorageMgr.getInstance().getMemStorage().save(BussinessConstants.CommonInfo.APP_UNIQUE_ID, uniqueId);
+        StorageMgr.getInstance().getMemStorage()
+                .save(BussinessConstants.CommonInfo.APP_UNIQUE_ID, uniqueId);
         return uniqueId;
     }
 

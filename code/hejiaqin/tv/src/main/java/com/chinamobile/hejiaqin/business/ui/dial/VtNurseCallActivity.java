@@ -59,20 +59,18 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
         public void onReceive(Context context, Intent intent) {
 
             Bundle bundle = intent.getExtras();
-            if (null == bundle)
-            {
+            if (null == bundle) {
                 LogUtil.d(tag, "Enter ACTION_USB_CAMERA_PLUG_IN_OUT bundle is null");
                 return;
             }
             int state = bundle.getInt(Const.USB_CAMERA_STATE);
 
             LogUtil.d(tag, "videotalk mCameraPlugReciver " + state);
-            if (mCallSession == null){
+            if (mCallSession == null) {
                 return;
             }
             if (0 == state) {
-                if (!bCameraClose)
-                {
+                if (!bCameraClose) {
                     mCallSession.closeLocalVideo();
                     bCameraClose = true;
                 }
@@ -105,19 +103,23 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
         public void surfaceDestroyed(SurfaceHolder arg0) {
             LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface");
             if (localVideoSurface.getHolder() == arg0) {
-                LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
+                LogUtil.d(Const.TAG_CALL,
+                        "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
                 mIsBigVideoCreateMPEG = false;
             }
         }
 
         protected void showMpegView() {
             if (mCallSession == null || localVideoSurface == null) {
-                LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svBigVideo " + localVideoSurface);
+                LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession
+                        + " m_svBigVideo " + localVideoSurface);
                 return;
             }
             LogUtil.d(Const.TAG_CALL, " mIsBigVideoCreateMPEG: " + mIsBigVideoCreateMPEG);
-            if (mIsBigVideoCreateMPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
-                int result1 = CallApi.createLocalVideoSurface(localVideoSurface.getHolder().getSurface());
+            if (mIsBigVideoCreateMPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED
+                    && mCallSession.getType() == CallSession.TYPE_VIDEO) {
+                int result1 = CallApi.createLocalVideoSurface(localVideoSurface.getHolder()
+                        .getSurface());
                 LogUtil.d(Const.TAG_CALL, "result1: " + result1);
                 mCallSession.showVideoWindow();
             }
@@ -165,7 +167,6 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
         registerReceivers();
         startCallTimeTask();
     }
-
 
     private void stopCallTimeTask() {
         if (timer != null) {
@@ -250,7 +251,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
     public void onResume() {
         super.onResume();
         LogUtil.d(tag, "onResume");
-        if(accepted) {
+        if (accepted) {
             IntentFilter intent = new IntentFilter();
             intent.addAction(Const.ACTION_USB_CAMERA_PLUG_IN_OUT);
             registerReceiver(mCameraPlugReciver, intent);
@@ -261,7 +262,7 @@ public class VtNurseCallActivity extends BasicActivity implements View.OnClickLi
     public void onPause() {
         super.onPause();
         LogUtil.d(tag, "onPause");
-        if(accepted) {
+        if (accepted) {
             unregisterReceiver(mCameraPlugReciver);
         }
     }

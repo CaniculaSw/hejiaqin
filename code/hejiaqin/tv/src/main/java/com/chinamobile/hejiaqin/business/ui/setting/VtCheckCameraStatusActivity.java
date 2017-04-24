@@ -16,12 +16,13 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.tv.R;
 import com.huawei.rcs.call.CallApi;
 import com.huawei.rcs.log.LogApi;
+
 /***/
 public class VtCheckCameraStatusActivity extends BasicActivity {
 
     private RelativeLayout abLayout;
     private int[] mMetrics = new int[2];
-//    SurfaceView videoSurfaceView;
+    //    SurfaceView videoSurfaceView;
     private BroadcastReceiver mCameraPlugReciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -35,7 +36,6 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
         }
     };
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_check_status_vt;
@@ -44,7 +44,7 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
     @Override
     protected void initView() {
         abLayout = (RelativeLayout) findViewById(R.id.camera_ab_ll);
-//        videoSurfaceView = (SurfaceView) findViewById(R.id.video_view);
+        //        videoSurfaceView = (SurfaceView) findViewById(R.id.video_view);
         if (CallApi.getCameraCount() > 0) {
             createLocalView();
         } else {
@@ -72,7 +72,8 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
         if (mMetrics[0] > 0 && mMetrics[1] > 0) {
             return;
         }
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         mMetrics[0] = screenWidth;
@@ -90,13 +91,13 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
         return rect;
     }
 
-
     private void getDisplayMetrics(Context context, int[] metrics) {
         if (null == metrics) {
             metrics = new int[2];
         }
 
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         if (screenHeight > screenWidth) {
@@ -118,29 +119,28 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
         return rp;
     }
 
-
     private void createLocalView() {
         abLayout.setVisibility(View.GONE);
-//        CaaSSdkService.setVideoLevel(0);
-//        CallApi.setVisible(CallApi.VIDEO_TYPE_LOCAL, true);
-//        CallApi.setRegion(CallApi.VIDEO_TYPE_LOCAL, 0, 0, 1280, 720, CallApi.VIDEO_LAYER_TOP);
-//        CallApi.switchCameraTo(CallApi.getCamera());
-//        CallApi.switchCamera();
-//        int result = CallApi.openLocalView();
-//        showToast("" + result, Toast.LENGTH_LONG, null);
-//        videoSurfaceView.setBackgroundDrawable(null);
+        //        CaaSSdkService.setVideoLevel(0);
+        //        CallApi.setVisible(CallApi.VIDEO_TYPE_LOCAL, true);
+        //        CallApi.setRegion(CallApi.VIDEO_TYPE_LOCAL, 0, 0, 1280, 720, CallApi.VIDEO_LAYER_TOP);
+        //        CallApi.switchCameraTo(CallApi.getCamera());
+        //        CallApi.switchCamera();
+        //        int result = CallApi.openLocalView();
+        //        showToast("" + result, Toast.LENGTH_LONG, null);
+        //        videoSurfaceView.setBackgroundDrawable(null);
 
-//        mSession = CallApi.initiateAudioCall(UserInfoCacheManager.getUserInfo(this).getSdkAccount());
-//        videoSurfaceView = CallApi.createLocalVideoView(getApplicationContext());
-//        videoSurfaceView.setZOrderOnTop(false);
-//        mLargeVideoLayout.addView(videoSurfaceView, getLocalPreviewViewMetrics(3, 4));
-//        videoSurfaceView.setVisibility(View.VISIBLE);
-//        mSession.prepareVideo();
-//        getDisplayMetrics(VtCheckCameraStatusActivity.this);
-//
-//        CaaSSdkService.setLocalRenderPos(getFullScreenRect(), CallApi.VIDEO_LAYER_TOP);
-//        boolean falg = CaaSSdkService.openLocalView();
-//        showToast(""+falg, Toast.LENGTH_LONG,null);
+        //        mSession = CallApi.initiateAudioCall(UserInfoCacheManager.getUserInfo(this).getSdkAccount());
+        //        videoSurfaceView = CallApi.createLocalVideoView(getApplicationContext());
+        //        videoSurfaceView.setZOrderOnTop(false);
+        //        mLargeVideoLayout.addView(videoSurfaceView, getLocalPreviewViewMetrics(3, 4));
+        //        videoSurfaceView.setVisibility(View.VISIBLE);
+        //        mSession.prepareVideo();
+        //        getDisplayMetrics(VtCheckCameraStatusActivity.this);
+        //
+        //        CaaSSdkService.setLocalRenderPos(getFullScreenRect(), CallApi.VIDEO_LAYER_TOP);
+        //        boolean falg = CaaSSdkService.openLocalView();
+        //        showToast(""+falg, Toast.LENGTH_LONG,null);
     }
 
     private void closeLocalView() {
@@ -152,7 +152,6 @@ public class VtCheckCameraStatusActivity extends BasicActivity {
     protected void initDate() {
 
     }
-
 
     @Override
     protected void initListener() {

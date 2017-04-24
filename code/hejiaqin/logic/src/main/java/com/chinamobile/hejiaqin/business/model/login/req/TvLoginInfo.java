@@ -26,7 +26,6 @@ public class TvLoginInfo implements ReqBody {
         this.tvId = tvId;
     }
 
-
     @Override
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();

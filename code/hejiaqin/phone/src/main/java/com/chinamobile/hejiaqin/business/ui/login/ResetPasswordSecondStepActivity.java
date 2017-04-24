@@ -34,14 +34,12 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
 
     private HeaderView mHeaderView;
 
-
     private int errorFromViewId;
     private boolean requestFailed;
 
-
     @Override
     protected void initLogics() {
-        loginLogic = (ILoginLogic)this.getLogicByInterfaceClass(ILoginLogic.class);
+        loginLogic = (ILoginLogic) this.getLogicByInterfaceClass(ILoginLogic.class);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
 
         registerActionBtn = (Button) findViewById(R.id.reset_action_button);
         passwordEt = (EditText) findViewById(R.id.password_et);
-        confirmPwdEt = (EditText)findViewById(R.id.repeat_password_et);
+        confirmPwdEt = (EditText) findViewById(R.id.repeat_password_et);
 
     }
 
@@ -87,8 +85,7 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
         }
     }
 
-    private void next()
-    {
+    private void next() {
         if (TextUtils.isEmpty(passwordEt.getText().toString())) {
             displayErrorInfo(getString(R.string.prompt_password));
             passwordEt.requestFocus();
@@ -99,7 +96,7 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
             confirmPwdEt.requestFocus();
             return;
         }
-        if (! StringUtil.equals(passwordEt.getText().toString(),confirmPwdEt.getText().toString())){
+        if (!StringUtil.equals(passwordEt.getText().toString(), confirmPwdEt.getText().toString())) {
             displayErrorInfo(getString(R.string.prompt_password_not_the_same));
             confirmPwdEt.requestFocus();
             return;
@@ -114,7 +111,8 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
     }
 
     private void displayErrorInfo(String errorText) {
-        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog,
+                errorText);
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -124,8 +122,6 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
         window.setAttributes(params);
         dialog.show();
     }
-
-
 
     private void hideErrorInfo(View view) {
 
@@ -141,7 +137,8 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.UPDATE_PWD_SUCCESS_MSG_ID:
                 super.dismissWaitDailog();
-                Intent intent = new Intent(ResetPasswordSecondStepActivity.this,LoginActivity.class);
+                Intent intent = new Intent(ResetPasswordSecondStepActivity.this,
+                        LoginActivity.class);
                 this.startActivity(intent);
                 this.finishAllActivity(LoginActivity.class.getName());
                 break;

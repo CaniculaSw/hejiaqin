@@ -2,16 +2,10 @@ package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
-import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

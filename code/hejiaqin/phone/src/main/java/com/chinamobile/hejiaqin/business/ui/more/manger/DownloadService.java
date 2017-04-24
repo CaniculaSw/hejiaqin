@@ -20,7 +20,8 @@ public class DownloadService extends Service {
     private DownloadManager dm;
     private long enqueue = -1L;
     private BroadcastReceiver receiver;
-//    private VersionInfo versionInfo;
+
+    //    private VersionInfo versionInfo;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -29,14 +30,16 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        versionInfo = (VersionInfo) StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getObject(BussinessConstants.Setting.VERSION_INFO_KEY);
+        //        versionInfo = (VersionInfo) StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getObject(BussinessConstants.Setting.VERSION_INFO_KEY);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (enqueue == intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID,0)) {
+                if (enqueue == intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)) {
                     intent = new Intent(Intent.ACTION_VIEW);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/download/myApp.apk")),
+                    intent.setDataAndType(
+                            Uri.fromFile(new File(Environment.getExternalStorageDirectory()
+                                    + "/download/myApp.apk")),
                             "application/vnd.android.package-archive");
                     startActivity(intent);
                     stopSelf();

@@ -50,7 +50,8 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
     protected void initDate() {
         Intent intent = getIntent();
         inputNumber.setText(intent.getStringExtra("number"));
-        inputNumber.setSelection(intent.getStringExtra("number") == null ? 0 : intent.getStringExtra("number").length());
+        inputNumber.setSelection(intent.getStringExtra("number") == null ? 0 : intent
+                .getStringExtra("number").length());
     }
 
     @Override
@@ -106,7 +107,8 @@ public class AutoAnswerNumberSettingDialog extends BasicActivity implements View
 
     @Override
     protected void initLogics() {
-        settingLogic = (ISettingLogic) LogicBuilder.getInstance(getApplicationContext()).getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (ISettingLogic) LogicBuilder.getInstance(getApplicationContext())
+                .getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override

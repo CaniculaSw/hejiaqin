@@ -50,7 +50,9 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
             case BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
-                searchText.setText(String.format(getContext().getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                searchText.setText(String.format(
+                        getContext().getString(R.string.contact_search_hint_text),
+                        contactsInfoList.size()));
                 showView();
                 break;
             default:
@@ -70,8 +72,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
         contactListView = (StickyListHeadersListView) view.findViewById(R.id.list);
 
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         contactListView.addHeaderView(searchLayout);
         // 设置搜索显示的文字
@@ -91,8 +93,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterSelected(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: "
-                        + position);
+                LogUtil.d(TAG, "onLetterSelected: " + letter + "; position: " + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);
                 if (position >= 0) {
@@ -103,8 +104,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
             @Override
             public void onLetterChanged(String letter) {
                 int position = adapter.getPositionByLetter(letter);
-                Logger.i(TAG, "onLetterChanged: " + letter + "; position: "
-                        + position);
+                Logger.i(TAG, "onLetterChanged: " + letter + "; position: " + position);
                 tipText.setText(letter);
                 tipText.setVisibility(View.VISIBLE);
                 if (position >= 0) {
@@ -118,7 +118,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
             }
         });
 
-        getActivity().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, mObserver);
+        getActivity().getContentResolver().registerContentObserver(
+                ContactsContract.Contacts.CONTENT_URI, true, mObserver);
 
     }
 
@@ -153,8 +154,8 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
 
     private void enterSearchView() {
         Intent intent = new Intent(getContext(), ContactSearchActivity.class);
-        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , ContactSearchActivity.Constant.CONTACT_TYPE_SYS);
+        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                ContactSearchActivity.Constant.CONTACT_TYPE_SYS);
         startActivity(intent);
     }
 
@@ -171,8 +172,7 @@ public class SysContactListFragment extends BasicFragment implements View.OnClic
     }
 
     //监听联系人数据的监听对象
-    private ContentObserver mObserver = new ContentObserver(
-            new Handler()) {
+    private ContentObserver mObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
             // 当联系人表发生变化时进行相应的操作

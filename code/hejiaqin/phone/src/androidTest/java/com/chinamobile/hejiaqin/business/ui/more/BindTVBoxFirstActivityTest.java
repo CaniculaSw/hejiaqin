@@ -24,7 +24,8 @@ public class BindTVBoxFirstActivityTest extends ActivityUnitTestCase<BindTVBoxFi
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), BindTVBoxFirstActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                BindTVBoxFirstActivity.class);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

@@ -18,14 +18,15 @@
         android:layout_height="32dp"
         android:gravity="center"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
             android:textColor="@color/hint_text_color"
-            android:text="@string/call_record_hint"
-            />
+            android:text="@string/call_record_hint" />
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/delete_parent_layout"
         android:layout_below="@id/hint"
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/delete_all_layout"
             android:layout_width="81dp"
@@ -42,6 +44,7 @@
             android:gravity="center"
             android:background="@drawable/selector_dial_bg"
             android:focusable="true">
+
             <Button
                 android:layout_width="69dp"
                 android:layout_height="42dp"
@@ -49,9 +52,10 @@
                 android:textSize="18dp"
                 android:textColor="@color/white"
                 android:background="@drawable/record_clear_btn_bg"
-                android:text="@string/call_record_clear"/>
+                android:text="@string/call_record_clear" />
         </LinearLayout>
     </RelativeLayout>
+
     <ListView
         android:id="@+id/call_record_recycler_view"
         android:layout_below="@id/delete_parent_layout"

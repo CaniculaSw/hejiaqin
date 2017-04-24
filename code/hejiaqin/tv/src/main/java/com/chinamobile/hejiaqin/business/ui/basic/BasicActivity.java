@@ -99,7 +99,7 @@ public abstract class BasicActivity extends BaseActivity {
         LogUtil.setLogLevel(BuildConfig.LOG_LEVEL);
         LogUtil.setLogCommonDir(DirUtil.getExternalFileDir(context) + "/log/common/");
         LogUtil.d(tag, "device:" + Build.DEVICE);
-        LogUtil.d(tag,"model:" + Build.MODEL);
+        LogUtil.d(tag, "model:" + Build.MODEL);
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadUserFromLocal();
         ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).loadHistoryFromLocal();
     }
@@ -122,15 +122,17 @@ public abstract class BasicActivity extends BaseActivity {
     private void startPermissionsActivity(String[] needPermissions) {
         Intent intent = new Intent(BasicActivity.this, PermissionsActivity.class);
         intent.putExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS, needPermissions);
-        startActivityForResult(intent, BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
+        startActivityForResult(intent,
+                BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        super.onActivityResult(requestCode, resultCode, data); // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         switch (requestCode) {
             case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
-                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
+                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED
+                        && mIsNecessaryPermission) {
                     finish();
                 }
                 break;
@@ -160,20 +162,24 @@ public abstract class BasicActivity extends BaseActivity {
                 case BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID:
                     showToast(R.string.kick_out, Toast.LENGTH_SHORT, null);
                     ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).logout();
-//                    Intent intent = new Intent(this, LoginActivity.class);
-//                    this.startActivity(intent);
+                    //                    Intent intent = new Intent(this, LoginActivity.class);
+                    //                    this.startActivity(intent);
                     this.finishAllActivity(null);
                     break;
                 case BussinessConstants.SettingMsgID.BIND_REQUEST:
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_REQUEST:
-                    ISettingLogic settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+                    ISettingLogic settingLogic = (ISettingLogic) super
+                            .getLogicByInterfaceClass(ISettingLogic.class);
                     TextMessage req = (TextMessage) msg.obj;
-                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(), XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
-                        settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
+                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(),
+                            XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
+                        settingLogic.sendContact(req.getPeer().getNumber(),
+                                CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
                         break;
                     }
-                    IContactsLogic contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
+                    IContactsLogic contactsLogic = (IContactsLogic) super
+                            .getLogicByInterfaceClass(IContactsLogic.class);
                     String names = XmlParseUtil.getElemString(req.getContent(), "Param1");
                     String numbers = XmlParseUtil.getElemString(req.getContent(), "Param2");
                     String[] nameList = names.split(";");
@@ -181,13 +187,14 @@ public abstract class BasicActivity extends BaseActivity {
                     for (int i = 0; i < nameList.length; i++) {
                         contactsLogic.addAppContact(nameList[i], numList[i], null);
                     }
-                    settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
+                    settingLogic.sendContact(req.getPeer().getNumber(),
+                            CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     showToast("保存联系人成功", Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
                     LogUtil.d(tag, "NURSE_ON_TV_INCOMING_MSG_ID");
                     if (msg.obj != null) {
-                        if(Const.getDeviceType() == Const.TYPE_OTHER) {
+                        if (Const.getDeviceType() == Const.TYPE_OTHER) {
                             Intent intent2 = new Intent(this, VtNurseCallActivity.class);
                             this.startActivity(intent2);
                         } else {
@@ -214,6 +221,7 @@ public abstract class BasicActivity extends BaseActivity {
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
+
     /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
@@ -259,6 +267,7 @@ public abstract class BasicActivity extends BaseActivity {
     protected void doNetworkDisConnect() {
 
     }
+
     /***/
     public void startActivityForResult(Intent intent, int requestCode) {
         intent.putExtra("requestCode", requestCode);

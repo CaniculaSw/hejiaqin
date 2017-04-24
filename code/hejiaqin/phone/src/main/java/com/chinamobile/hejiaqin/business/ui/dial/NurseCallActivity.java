@@ -35,6 +35,7 @@ import com.huawei.rcs.system.SysApi;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 /***/
 public class NurseCallActivity extends BasicActivity implements View.OnClickListener {
 
@@ -90,12 +91,14 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession session = (CallSession) intent
+                    .getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             if (!mCallSession.equals(session)) {
                 return;
             }
             remoteVideoView.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mLargeVideoLayout.updateViewLayout(remoteVideoView, layoutParams);
         }
     };
@@ -121,7 +124,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         mTopLayout = (LinearLayout) findViewById(R.id.top_layout);
         mContactNameTv = (TextView) findViewById(R.id.contact_name_tv);
         mCallStatusLayout = (LinearLayout) findViewById(R.id.call_status_layout);
-        mCallStatusTv =(TextView)findViewById(R.id.call_status_tv);
+        mCallStatusTv = (TextView) findViewById(R.id.call_status_tv);
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
 
         //底部布局(呼出和通话中)
@@ -153,8 +156,9 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     private void outingCall() {
         Intent extParas = new Intent();
         extParas.putExtra(CallApi.EN_CALL_VIDEO_EXTPARAS_NURSE, 1);
-        mCallSession = CallApi.initiateVideoCallWithExtParas(CommonUtils.getCountryPhoneNumber(mCalleeNumber), extParas);
-        LogUtil.d(tag,mCallSession.isNurse()? "nurse":"not nurse");
+        mCallSession = CallApi.initiateVideoCallWithExtParas(
+                CommonUtils.getCountryPhoneNumber(mCalleeNumber), extParas);
+        LogUtil.d(tag, mCallSession.isNurse() ? "nurse" : "not nurse");
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.nurse_outing_error, Toast.LENGTH_SHORT, null);
             closed = true;
@@ -165,7 +169,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 }
             }, 2000);
         } else {
-            OrientationEventListener listener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+            OrientationEventListener listener = new OrientationEventListener(this,
+                    SensorManager.SENSOR_DELAY_NORMAL) {
 
                 @Override
                 public void onOrientationChanged(int orientation) {
@@ -201,8 +206,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
         lastOrientation = orientation;
 
-        if (orientation < ORIENTATION_SENSITIVITY
-                || 360 - orientation < ORIENTATION_SENSITIVITY) {
+        if (orientation < ORIENTATION_SENSITIVITY || 360 - orientation < ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_0;
         } else if (Math.abs(orientation - 90) <= ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_90;
@@ -211,7 +215,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         } else if (Math.abs(orientation - 270) <= ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_270;
         } else {
-            LogUtil.e("V2OIP", "orientationChanged get wrong orientation:" + orientation + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
+            LogUtil.e("V2OIP", "orientationChanged get wrong orientation:" + orientation
+                    + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
             lastDisplayRotation = Surface.ROTATION_0;
         }
 
@@ -278,7 +283,6 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         return result;
     }
 
-
     private void showTalking() {
         mIsTalking = true;
         CallApi.setPauseMode(1);
@@ -293,7 +297,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
         if (remoteVideoView == null) {
             remoteVideoView = CallApi.createRemoteVideoView(getApplicationContext());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             remoteVideoView.setVisibility(View.GONE);
             mLargeVideoLayout.addView(remoteVideoView, layoutParams);
             remoteVideoView.setZOrderOnTop(false);
@@ -327,7 +332,6 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         }, 1000, 1000);
     }
 
-
     private void registerReceivers() {
 
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
@@ -338,8 +342,8 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
 
     private void unRegisterReceivers() {
 
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(remoteVideoStreamArrivedReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
+                remoteVideoStreamArrivedReceiver);
 
     }
 
@@ -359,8 +363,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                 closed = true;
                 boolean isNurse = mCallSession.isNurse();
                 mCallSession.terminate();
-                if(!isNurse)
-                {
+                if (!isNurse) {
                     ThreadPoolUtil.execute(new ThreadTask() {
 
                         @Override
@@ -383,7 +386,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         switch (msg.what) {
             case BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID:
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                LogUtil.d(tag,"NURSE_CALL_ON_TALKING_MSG_ID");
+                LogUtil.d(tag, "NURSE_CALL_ON_TALKING_MSG_ID");
                 showTalking();
                 break;
             case BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID:
@@ -393,9 +396,11 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
                     if (mCallSession != null && mCallSession.equals(session)) {
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-                            showToast(R.string.nurse_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-                        } else if ( !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
+                            showToast(R.string.nurse_temporarily_unavailable, Toast.LENGTH_SHORT,
+                                    null);
+                        } else if (!mIsTalking
+                                && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE || mCallSession
+                                        .getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
                             showToast(R.string.nurse_busy_here, Toast.LENGTH_SHORT, null);
                         }
                         getHandler().postDelayed(new Runnable() {
@@ -419,10 +424,11 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         if (!mIsTalking) {
             return;
         }
-        if ( null != remoteVideoView && CallSession.INVALID_ID != mCallSession.getSessionId()) {
+        if (null != remoteVideoView && CallSession.INVALID_ID != mCallSession.getSessionId()) {
             if (hasStoped) {
                 mCallSession.showVideoWindow();
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 if (remoteVideoView != null) {
                     mLargeVideoLayout.addView(remoteVideoView, layoutParams);
                 }
@@ -436,8 +442,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
         if (!mIsTalking) {
             return;
         }
-        if (null != remoteVideoView
-                && CallSession.INVALID_ID != mCallSession.getSessionId()) {
+        if (null != remoteVideoView && CallSession.INVALID_ID != mCallSession.getSessionId()) {
             mCallSession.hideVideoWindow();
             mLargeVideoLayout.removeAllViews();
             hasStoped = true;
@@ -464,8 +469,7 @@ public class NurseCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
 
     }
 

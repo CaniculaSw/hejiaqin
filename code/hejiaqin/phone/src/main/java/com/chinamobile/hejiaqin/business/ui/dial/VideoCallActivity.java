@@ -44,6 +44,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 /***/
 public class VideoCallActivity extends BasicActivity implements View.OnClickListener {
 
@@ -124,13 +125,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     private boolean hasRegistTalkingReceiver;
 
-
     //远程视频码率（分辨率、大小）变换
     private BroadcastReceiver callVideoReSolutionChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             LogUtil.e(tag, "callVideoEncodeSolutionChangeReceiver");
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession session = (CallSession) intent
+                    .getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             if (!mCallSession.equals(session)) {
                 return;
             }
@@ -143,8 +144,10 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
                 LogUtil.e(tag, "width: " + width + " | screenHeight: " + screenHeight);
                 if (remoteVideoView != null) {
-                    LogUtil.e(tag, "setLayoutParams width: " + width + " | screenHeight: " + screenHeight);
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLargeVideoLayout.getLayoutParams();
+                    LogUtil.e(tag, "setLayoutParams width: " + width + " | screenHeight: "
+                            + screenHeight);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLargeVideoLayout
+                            .getLayoutParams();
                     layoutParams.width = width;
                     layoutParams.height = screenHeight;
                     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -158,13 +161,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private BroadcastReceiver localVideoChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(mIsTalking || mIsInComing)
-            {
+            if (mIsTalking || mIsInComing) {
                 return;
             }
-            localPreviewlayoutParams = getLocalPreviewViewMetrics
-                    (intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT,0),intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH,0));
-            if(localVideoView !=null) {
+            localPreviewlayoutParams = getLocalPreviewViewMetrics(
+                    intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_HEIGHT, 0),
+                    intent.getIntExtra(CallApi.PARAM_CALL_VIDEO_RESOLUTION_WIDTH, 0));
+            if (localVideoView != null) {
                 mLargeVideoLayout.updateViewLayout(localVideoView, localPreviewlayoutParams);
                 localVideoView.setVisibility(View.VISIBLE);
             }
@@ -175,16 +178,17 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     private BroadcastReceiver remoteVideoStreamArrivedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession session = (CallSession) intent
+                    .getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             if (!mCallSession.equals(session)) {
                 return;
             }
             remoteVideoView.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mLargeVideoLayout.updateViewLayout(remoteVideoView, layoutParams);
         }
     };
-
 
     private BroadcastReceiver cameraSwitchedReceiver = new BroadcastReceiver() {
         @Override
@@ -244,9 +248,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
     @Override
     protected void initDate() {
-        mIsInComing = getIntent().getBooleanExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, false);
+        mIsInComing = getIntent().getBooleanExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING,
+                false);
         if (mIsInComing) {
-            long sessionId = getIntent().getLongExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, CallSession.INVALID_ID);
+            long sessionId = getIntent().getLongExtra(
+                    BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, CallSession.INVALID_ID);
             mCallSession = CallApi.getCallSessionById(sessionId);
             if (mCallSession == null) {
                 finish();
@@ -254,7 +260,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             }
             showIncoming();
         } else {
-            mCalleeNumber = getIntent().getStringExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER);
+            mCalleeNumber = getIntent()
+                    .getStringExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER);
             mCalleeName = getIntent().getStringExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME);
             outingCall();
             showOuting();
@@ -265,7 +272,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void showIncoming() {
-        String incomingNumber = CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber()));
+        String incomingNumber = CommonUtils.getTvNumberWithZero(CommonUtils
+                .getPhoneNumber(mCallSession.getPeer().getNumber()));
         // 查询姓名和头像信息
         ContactsInfo info = searchContactInfo(incomingNumber);
         if (info != null) {
@@ -277,8 +285,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 mContactNameTv.setText(incomingNumber);
             }
             if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
-                Picasso.with(this.getApplicationContext())
-                        .load(info.getPhotoSm())
+                Picasso.with(this.getApplicationContext()).load(info.getPhotoSm())
                         .placeholder(R.drawable.contact_photo_default)
                         .error(R.drawable.contact_photo_default).into(mCallerIv);
             }
@@ -308,7 +315,6 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         mBottomLayout.setVisibility(View.VISIBLE);
     }
 
-
     private ContactsInfo searchContactInfo(String phoneNumber) {
         //遍历本地联系人
         boolean isMatch = false;
@@ -319,7 +325,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(
+                            numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -332,7 +339,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(
+                            numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -362,12 +370,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void createLocalPreviewVideo() {
-        if(!mIsInComing) {
+        if (!mIsInComing) {
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
                     localVideoChangeReceiver,
                     new IntentFilter(CallApi.EVENT_CALL_VIDEO_ENCODERESOLUTION_CHANGE));
         }
-        OrientationEventListener listener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+        OrientationEventListener listener = new OrientationEventListener(this,
+                SensorManager.SENSOR_DELAY_NORMAL) {
 
             @Override
             public void onOrientationChanged(int orientation) {
@@ -382,7 +391,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             LogUtil.e("V2OIP", "OrientationEventListener enable failed!!");
         }
         setCameraRotate();
-        if(localVideoView == null) {
+        if (localVideoView == null) {
             localVideoView = CallApi.createLocalVideoView(getApplicationContext());
             localPreviewlayoutParams = getLocalPreviewViewMetrics(3, 4);
             localVideoView.setZOrderOnTop(false);
@@ -393,13 +402,13 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         registerReceivers();
     }
 
-    private  LinearLayout.LayoutParams getLocalPreviewViewMetrics(int height,int width) {
+    private LinearLayout.LayoutParams getLocalPreviewViewMetrics(int height, int width) {
         int[] metrics = new int[2];
         int rmtHeight = 0;
         getDisplayMetrics(this, metrics);
         LinearLayout.LayoutParams rp;
-        rmtHeight =  metrics[0]*width/height;
-        rp = new LinearLayout.LayoutParams((int)metrics[0], rmtHeight);
+        rmtHeight = metrics[0] * width / height;
+        rp = new LinearLayout.LayoutParams((int) metrics[0], rmtHeight);
         return rp;
     }
 
@@ -408,7 +417,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             metrics = new int[2];
         }
 
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         if (screenHeight > screenWidth) {
@@ -430,7 +440,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         }
 
         if (mIsInComing) {
-            OrientationEventListener listener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+            OrientationEventListener listener = new OrientationEventListener(this,
+                    SensorManager.SENSOR_DELAY_NORMAL) {
 
                 @Override
                 public void onOrientationChanged(int orientation) {
@@ -467,18 +478,18 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     private void registerTalkingReceivers() {
-//        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-//                callVideoReSolutionChangeReceiver,
-//                new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
-//        hasRegistTalkingReceiver = true;
+        //        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+        //                callVideoReSolutionChangeReceiver,
+        //                new IntentFilter(CallApi.EVENT_CALL_VIDEO_RESOLUTION_CHANGE));
+        //        hasRegistTalkingReceiver = true;
     }
 
     private void unRegisterTalkReceivers() {
-//        if(hasRegistTalkingReceiver) {
-//            LocalBroadcastManager.getInstance(getApplicationContext())
-//                    .unregisterReceiver(callVideoReSolutionChangeReceiver);
-//            hasRegistTalkingReceiver = false;
-//        }
+        //        if(hasRegistTalkingReceiver) {
+        //            LocalBroadcastManager.getInstance(getApplicationContext())
+        //                    .unregisterReceiver(callVideoReSolutionChangeReceiver);
+        //            hasRegistTalkingReceiver = false;
+        //        }
     }
 
     private void setCameraRotate() {
@@ -492,7 +503,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         if (remoteVideoView == null) {
             remoteVideoView = CallApi.createRemoteVideoView(getApplicationContext());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             remoteVideoView.setVisibility(View.GONE);
             mLargeVideoLayout.addView(remoteVideoView, layoutParams);
             remoteVideoView.setZOrderOnTop(false);
@@ -506,7 +518,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
             mLargeVideoLayout.removeView(localVideoView);
             localVideoView.setVisibility(View.GONE);
         }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mSmallVideoLayout.addView(localVideoView, layoutParams);
         localVideoView.setVisibility(View.VISIBLE);
         mCallSession.showVideoWindow();
@@ -523,8 +536,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
 
         lastOrientation = orientation;
 
-        if (orientation < ORIENTATION_SENSITIVITY
-                || 360 - orientation < ORIENTATION_SENSITIVITY) {
+        if (orientation < ORIENTATION_SENSITIVITY || 360 - orientation < ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_0;
         } else if (Math.abs(orientation - 90) <= ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_90;
@@ -533,7 +545,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         } else if (Math.abs(orientation - 270) <= ORIENTATION_SENSITIVITY) {
             displayRotation = Surface.ROTATION_270;
         } else {
-            LogUtil.e("V2OIP", "orientationChanged get wrong orientation:" + orientation + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
+            LogUtil.e("V2OIP", "orientationChanged get wrong orientation:" + orientation
+                    + ", getCameraOrientation with default displayRotation " + Surface.ROTATION_0);
             lastDisplayRotation = Surface.ROTATION_0;
         }
 
@@ -632,21 +645,19 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 remoteVideoStreamArrivedReceiver,
                 new IntentFilter(CallApi.EVENT_CALL_VIDEO_STREAM_ARRIVED));
 
-
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-                cameraSwitchedReceiver,
-                new IntentFilter(CallApi.EVENT_CALL_CAMERA_SWITCHED));
+                cameraSwitchedReceiver, new IntentFilter(CallApi.EVENT_CALL_CAMERA_SWITCHED));
         hasRegistReceiver = true;
 
     }
 
     private void unRegisterReceivers() {
 
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(remoteVideoStreamArrivedReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
+                remoteVideoStreamArrivedReceiver);
 
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(cameraSwitchedReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
+                cameraSwitchedReceiver);
 
         if (!mIsInComing) {
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
@@ -677,8 +688,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                     LogUtil.w(tag, "is closed");
                     return;
                 }
-                if(onClickAnswer)
-                {
+                if (onClickAnswer) {
                     return;
                 }
                 mVoipLogic.answerVideo(mCallSession);
@@ -734,8 +744,7 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
-                if(!closed)
-                {
+                if (!closed) {
                     mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
                     closed = true;
                 }
@@ -751,9 +760,12 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                         mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-                        } else if (!mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT,
+                                    null);
+                        } else if (!mIsInComing
+                                && !mIsTalking
+                                && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE || mCallSession
+                                        .getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
                             showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
                         }
                         getHandler().postDelayed(new Runnable() {
@@ -762,7 +774,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                                 finish();
                             }
                         }, 3000);
-                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                    } else if (session != null
+                            && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
@@ -783,7 +796,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                 && CallSession.INVALID_ID != mCallSession.getSessionId()) {
             if (hasStoped) {
                 mCallSession.showVideoWindow();
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 if (remoteVideoView != null) {
                     mLargeVideoLayout.addView(remoteVideoView, layoutParams);
                 }
@@ -844,11 +858,9 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
 
     }
-
 
     /**
      * 获得屏幕宽度
@@ -856,10 +868,8 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
      * @param context
      * @return
      */
-    private int getScreenHeight(Context context)
-    {
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
+    private int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;

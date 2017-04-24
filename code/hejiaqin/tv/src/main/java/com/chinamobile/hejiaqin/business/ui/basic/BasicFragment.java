@@ -66,7 +66,6 @@ public abstract class BasicFragment extends BaseFragment {
         return view;
     }
 
-
     /**
      * 初始化logic的方法，由子类实现<BR>
      * 在该方法里通过getLogicByInterfaceClass获取logic对象
@@ -112,15 +111,16 @@ public abstract class BasicFragment extends BaseFragment {
 
     protected abstract void initData();
 
-
     public void setActivityListener(BackListener listener) {
         this.mListener = listener;
     }
+
     /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
+
     /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;

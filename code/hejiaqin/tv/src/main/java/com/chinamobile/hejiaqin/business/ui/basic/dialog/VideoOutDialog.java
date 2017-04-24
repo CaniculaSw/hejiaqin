@@ -61,9 +61,10 @@ public class VideoOutDialog extends Dialog {
     private MyToast myToast;
     private Context mContext;
 
-    public VideoOutDialog(Context context, int theme, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isPhoneApp) {
+    public VideoOutDialog(Context context, int theme, String calleeNumber, IVoipLogic voipLogic,
+                          IContactsLogic contactsLogic, boolean isPhoneApp) {
         super(context, theme);
-        this.mContext= context;
+        this.mContext = context;
         this.mCalleeNumber = calleeNumber;
         this.mVoipLogic = voipLogic;
         this.mContactsLogic = contactsLogic;
@@ -73,14 +74,13 @@ public class VideoOutDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((ILogic)this.mVoipLogic).addHandler(mHandler);
+        ((ILogic) this.mVoipLogic).addHandler(mHandler);
         setContentView(R.layout.popwindow_video_out);
         myToast = new MyToast(mContext.getApplicationContext());
         mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
         mCallerNameTv = (TextView) findViewById(R.id.caller_name_tv);
         mCallerNumberTv = (TextView) findViewById(R.id.caller_number_tv);
-        findViewById(R.id.reject_call_layout).setOnClickListener(new View.OnClickListener()
-        {
+        findViewById(R.id.reject_call_layout).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -93,7 +93,7 @@ public class VideoOutDialog extends Dialog {
     }
 
     private void outingCall() {
-        mCallSession = mVoipLogic.call(mCalleeNumber, true,mIsPhoneApp);
+        mCallSession = mVoipLogic.call(mCalleeNumber, true, mIsPhoneApp);
         if (mCallSession.getErrCode() != CallSession.ERRCODE_OK) {
             showToast(R.string.call_outing_error, Toast.LENGTH_SHORT, null);
             closed = true;
@@ -108,22 +108,21 @@ public class VideoOutDialog extends Dialog {
 
     private void showOuting() {
         //TODO 查询姓名
-            ContactsInfo info = searchContactInfo(mCalleeNumber);
-            if (info != null) {
-                if(!StringUtil.isNullOrEmpty(info.getName())) {
-                    mCallerNameTv.setText(info.getName());
-                    mCallerNameTv.setVisibility(View.VISIBLE);
-                }
-                mCallerNumberTv.setText(mCalleeNumber);
-                if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
-                    Picasso.with(mContext.getApplicationContext())
-                            .load(info.getPhotoSm())
-                            .placeholder(R.drawable.contact_photo_default)
-                            .error(R.drawable.contact_photo_default).into(mCallerIv);
-                }
-            } else {
-                mCallerNumberTv.setText(mCalleeNumber);
+        ContactsInfo info = searchContactInfo(mCalleeNumber);
+        if (info != null) {
+            if (!StringUtil.isNullOrEmpty(info.getName())) {
+                mCallerNameTv.setText(info.getName());
+                mCallerNameTv.setVisibility(View.VISIBLE);
             }
+            mCallerNumberTv.setText(mCalleeNumber);
+            if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
+                Picasso.with(mContext.getApplicationContext()).load(info.getPhotoSm())
+                        .placeholder(R.drawable.contact_photo_default)
+                        .error(R.drawable.contact_photo_default).into(mCallerIv);
+            }
+        } else {
+            mCallerNumberTv.setText(mCalleeNumber);
+        }
     }
 
     private ContactsInfo searchContactInfo(String phoneNumber) {
@@ -136,8 +135,10 @@ public class VideoOutDialog extends Dialog {
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())
-                            ||  CommonUtils.getPhoneNumber(phoneNumber).equals("92" + numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(
+                            numberInfo.getNumberNoCountryCode())
+                            || CommonUtils.getPhoneNumber(phoneNumber).equals(
+                                    "92" + numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -150,8 +151,10 @@ public class VideoOutDialog extends Dialog {
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())
-                            ||  CommonUtils.getPhoneNumber(phoneNumber).equals("92" + numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(
+                            numberInfo.getNumberNoCountryCode())
+                            || CommonUtils.getPhoneNumber(phoneNumber).equals(
+                                    "92" + numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -167,15 +170,14 @@ public class VideoOutDialog extends Dialog {
     private void handleStateMessage(Message msg) {
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
-                if(!closed)
-                {
+                if (!closed) {
                     mVoipLogic.dealOnClosed(mCallSession, false, false, 0);
                     closed = true;
                 }
                 dismiss();
                 break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                if(Const.getDeviceType() == Const.TYPE_OTHER) {
+                if (Const.getDeviceType() == Const.TYPE_OTHER) {
                     Intent intentTalking = new Intent(getContext(), VtVideoCallActivity.class);
                     mContext.startActivity(intentTalking);
                 } else {
@@ -191,9 +193,10 @@ public class VideoOutDialog extends Dialog {
                         mVoipLogic.dealOnClosed(mCallSession, false, false, 0);
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-                        } else if ((mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT,
+                                    null);
+                        } else if ((mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE || mCallSession
+                                .getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
                             showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
                         }
                         handler.postDelayed(new Runnable() {
@@ -202,8 +205,9 @@ public class VideoOutDialog extends Dialog {
                                 VideoOutDialog.this.dismiss();
                             }
                         }, 3000);
-                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
-                        mVoipLogic.dealOnClosed(session, true, false,0);
+                    } else if (session != null
+                            && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                        mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
                 break;
@@ -214,13 +218,15 @@ public class VideoOutDialog extends Dialog {
 
     @Override
     public void dismiss() {
-        ((ILogic)this.mVoipLogic).removeHandler(mHandler);
+        ((ILogic) this.mVoipLogic).removeHandler(mHandler);
         super.dismiss();
     }
+
     /***/
-    public static void show(Context context, String calleeNumber,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isPhoneApp)
-    {
-        VideoOutDialog videoOutDialog = new VideoOutDialog(context, R.style.CalendarDialog,calleeNumber,voipLogic,contactsLogic, isPhoneApp);
+    public static void show(Context context, String calleeNumber, IVoipLogic voipLogic,
+                            IContactsLogic contactsLogic, boolean isPhoneApp) {
+        VideoOutDialog videoOutDialog = new VideoOutDialog(context, R.style.CalendarDialog,
+                calleeNumber, voipLogic, contactsLogic, isPhoneApp);
         Window window = videoOutDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();

@@ -97,13 +97,15 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     break;
                 case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_HIDE_CALL_ACTION_ID:
                     mDialCallImage.setVisibility(View.GONE);
-                    mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial_show);
+                    mImageViews[mDialIndex]
+                            .setBackgroundResource(R.mipmap.main_navigation_selected_dial_show);
                     mImageViews[mDialIndex].setVisibility(View.VISIBLE);
                     mTextViews[mDialIndex].setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
                     break;
                 case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_RECORD_HIDE_KEYBORD_MSG_ID:
-                    mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+                    mImageViews[mDialIndex]
+                            .setBackgroundResource(R.mipmap.main_navigation_selected_dial);
                     mDialCallImage.setVisibility(View.GONE);
                     mImageViews[mDialIndex].setVisibility(View.VISIBLE);
                     mTextViews[mDialIndex].setVisibility(View.VISIBLE);
@@ -111,12 +113,13 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     isHideCall = false;
                     break;
                 case BussinessConstants.FragmentActionId.DAIL_FRAGMENT_CONTACT_HIDE_KEYBORD_MSG_ID:
-                    mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+                    mImageViews[mDialIndex]
+                            .setBackgroundResource(R.mipmap.main_navigation_selected_dial);
                     mDialCallImage.setVisibility(View.GONE);
                     mImageViews[mDialIndex].setVisibility(View.VISIBLE);
                     mTextViews[mDialIndex].setVisibility(View.VISIBLE);
                     mDialStatus = DIAL_STATUS_NORMAL;
-                    isHideCall =true;
+                    isHideCall = true;
                     break;
                 // 显示导航栏
                 case BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID:
@@ -171,7 +174,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         FragmentTransaction ft = mFm.beginTransaction();
         ft.add(R.id.content, mFragments[mContactsIndex]);
         ft.commit();
-        mTextViews[mContactsIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
+        mTextViews[mContactsIndex].setTextColor(getResources()
+                .getColor(R.color.navigation_selected));
         mImageViews[mContactsIndex].setBackgroundResource(mImageSelectedBgResId[mContactsIndex]);
         mCurrentIndex = mContactsIndex;
 
@@ -183,8 +187,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         if (mVoipLogic.isNeedVoipLogin()) {
             LogUtil.d(tagString, "autoLogin");
@@ -209,10 +212,10 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                     Message msg;
                     switch (mDialStatus) {
                         case DIAL_STATUS_NORMAL:
-                            mImageViews[mDialIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
+                            mImageViews[mDialIndex]
+                                    .setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
                             mDialStatus = DIAL_STATUS_SHOW_KEYBORD;
-                            if(isHideCall)
-                            {
+                            if (isHideCall) {
                                 mImageViews[mDialIndex].setVisibility(View.GONE);
                                 mTextViews[mDialIndex].setVisibility(View.GONE);
                                 mDialCallImage.setVisibility(View.VISIBLE);
@@ -224,7 +227,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                             mFragments[mDialIndex].recieveMsg(msg);
                             break;
                         case DIAL_STATUS_SHOW_KEYBORD:
-                            mImageViews[mDialIndex].setBackgroundResource(R.mipmap.main_navigation_selected_dial);
+                            mImageViews[mDialIndex]
+                                    .setBackgroundResource(R.mipmap.main_navigation_selected_dial);
                             mDialStatus = DIAL_STATUS_NORMAL;
                             //收起拨号盘
                             msg = new Message();
@@ -285,7 +289,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
         }
         LogUtil.d("MainFragmentActivity", "commit:" + mFragments[toIndex].getClass());
         ft.commit();
-        mTextViews[mCurrentIndex].setTextColor(getResources().getColor(R.color.navigation_unselected));
+        mTextViews[mCurrentIndex].setTextColor(getResources().getColor(
+                R.color.navigation_unselected));
         mImageViews[mCurrentIndex].setBackgroundResource(mImageUnSelectedBgResId[mCurrentIndex]);
         if (toIndex != mDialIndex) {
             mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
@@ -305,7 +310,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             switch (mDialStatus) {
                 case DIAL_STATUS_NORMAL:
                     mDialCallImage.setVisibility(View.GONE);
-                    mTextViews[toIndex].setTextColor(getResources().getColor(R.color.navigation_selected));
+                    mTextViews[toIndex].setTextColor(getResources().getColor(
+                            R.color.navigation_selected));
                     mImageViews[toIndex].setBackgroundResource(mImageSelectedBgResId[mDialIndex]);
                     mImageViews[toIndex].setVisibility(View.VISIBLE);
                     mTextViews[toIndex].setVisibility(View.VISIBLE);
@@ -345,7 +351,8 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             mFragments[mDialIndex].recieveMsg(msg);
         }
 
-        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this, R.style.CalendarDialog);
+        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this,
+                R.style.CalendarDialog);
         Window window = delCallRecordDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -376,7 +383,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
 
     }
 
-
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
@@ -386,7 +392,6 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 break;
         }
     }
-
 
     @Override
     public void doNetWorkConnect() {

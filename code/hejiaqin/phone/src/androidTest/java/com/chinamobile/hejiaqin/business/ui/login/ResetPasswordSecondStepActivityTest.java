@@ -13,7 +13,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 /**
  * Created by Administrator on 2017/4/24 0024.
  */
-public class ResetPasswordSecondStepActivityTest extends ActivityUnitTestCase<ResetPasswordSecondStepActivity> {
+public class ResetPasswordSecondStepActivityTest extends
+        ActivityUnitTestCase<ResetPasswordSecondStepActivity> {
     private ResetPasswordSecondStepActivity mActivity;
 
     private Button registerActionBtn;
@@ -31,7 +32,8 @@ public class ResetPasswordSecondStepActivityTest extends ActivityUnitTestCase<Re
 
         PasswordInfo passwordInfo = new PasswordInfo();
         passwordInfo.setPassword("abcd123456");
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), ResetPasswordSecondStepActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                ResetPasswordSecondStepActivity.class);
         intent.putExtra(BussinessConstants.Login.PASSWORD_INFO_KEY, passwordInfo);
         startActivity(intent, null, null);
 

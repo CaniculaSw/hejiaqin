@@ -27,7 +27,7 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
 
     private Button registerActionBtn;
     private ILoginLogic loginLogic;
-//    private IVoipLogic voipLogic;
+    //    private IVoipLogic voipLogic;
     private RegisterSecondStepInfo registerSecondStepInfo;
 
     private EditText passwordEt;
@@ -35,11 +35,10 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
 
     private HeaderView mHeaderView;
 
-
     @Override
     protected void initLogics() {
         loginLogic = (ILoginLogic) this.getLogicByInterfaceClass(ILoginLogic.class);
-//        voipLogic = (IVoipLogic) this.getLogicByInterfaceClass(IVoipLogic.class);
+        //        voipLogic = (IVoipLogic) this.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override
@@ -61,7 +60,8 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
 
     @Override
     protected void initDate() {
-        registerSecondStepInfo = getIntent().getParcelableExtra(BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY);
+        registerSecondStepInfo = getIntent().getParcelableExtra(
+                BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY);
     }
 
     @Override
@@ -111,7 +111,8 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
     }
 
     private void displayErrorInfo(String errorText) {
-        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog,
+                errorText);
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -122,15 +123,14 @@ public class RegisterSecondStepActivity extends BasicActivity implements View.On
         dialog.show();
     }
 
-
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.REGISTER_SECOND_STEP_SUCCESS_MSG_ID:
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                intent.putExtra("phone",registerSecondStepInfo.getPhone());
-                intent.putExtra("password",registerSecondStepInfo.getPwd());
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.putExtra("phone", registerSecondStepInfo.getPhone());
+                intent.putExtra("password", registerSecondStepInfo.getPwd());
                 startActivity(intent);
                 finishAllActivity("");
                 break;

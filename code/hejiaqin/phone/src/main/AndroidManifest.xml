@@ -170,12 +170,10 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".business.ui.more.MoreContactSearchActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".business.ui.more.MoreSearchAndSendContactActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".business.ui.dial.VideoCallActivity"
             android:launchMode="singleTask"
@@ -188,8 +186,8 @@
         <activity
             android:name=".business.ui.dial.NurseCallActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
+
         <service
             android:name="com.chinamobile.hejiaqin.business.HeService"
             android:enabled="true"

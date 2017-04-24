@@ -12,27 +12,28 @@ import com.chinamobile.hejiaqin.tv.R;
  * Created by eshaohu on 16/6/27.
  */
 public class DisplayErrorDialog extends Dialog {
-//    private Context mContext;
+    //    private Context mContext;
     private TextView errorTextView;
     private TextView returnBtnTv;
     private String errorText;
     private ClickListener mClickListener;
 
-    public DisplayErrorDialog(Context context , String errorText) {
+    public DisplayErrorDialog(Context context, String errorText) {
         super(context);
-//        this.mContext = context;
+        //        this.mContext = context;
         this.errorText = errorText;
     }
 
     public DisplayErrorDialog(Context context, int themeResId, String errorText) {
         super(context, themeResId);
-//        this.mContext = context;
+        //        this.mContext = context;
         this.errorText = errorText;
     }
 
-    protected DisplayErrorDialog(Context context, boolean cancelable, OnCancelListener cancelListener, String errorText) {
+    protected DisplayErrorDialog(Context context, boolean cancelable,
+                                 OnCancelListener cancelListener, String errorText) {
         super(context, cancelable, cancelListener);
-//        this.mContext = context;
+        //        this.mContext = context;
         this.errorText = errorText;
     }
 

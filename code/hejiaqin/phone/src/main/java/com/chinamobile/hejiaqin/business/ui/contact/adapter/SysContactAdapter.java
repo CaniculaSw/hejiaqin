@@ -69,7 +69,6 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
             holder = (ViewHolder) convertView.getTag();
         }
 
-
         initView(position, holder);
 
         return convertView;
@@ -84,7 +83,8 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ContactInfoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY,
+                        contactsInfo);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -112,8 +112,8 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
     @Override
     public long getHeaderId(int position) {
         //return the first character of the country as ID because this is what headers are based upon
-//        ContactsInfo contactsInfo = contactsInfoList.get(position);
-//        return contactsInfo.getGroupName().charAt(0);
+        //        ContactsInfo contactsInfo = contactsInfoList.get(position);
+        //        return contactsInfo.getGroupName().charAt(0);
 
         String groupLetter = this.positionToLetter.get(position);
         return null == groupLetter ? -1 : groupLetter.charAt(0);
@@ -148,11 +148,11 @@ public class SysContactAdapter extends BaseAdapter implements StickyListHeadersA
         notifyDataSetChanged();
     }
 
-   static class HeaderViewHolder {
+    static class HeaderViewHolder {
         TextView text;
     }
 
-   static class ViewHolder {
+    static class ViewHolder {
         TextView text;
         View convertView;
     }

@@ -15,6 +15,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /***/
 public class DialInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "DialInfoFragment";
@@ -41,8 +42,7 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
 
     @Override
     protected void initView(View view) {
-        inflater = (LayoutInflater) getContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         dialInfoLayout = (LinearLayout) view.findViewById(R.id.dial_info_layout);
     }
 
@@ -67,16 +67,15 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
         mDialInfoGroupList.clear();
         mDialInfoGroupList.addAll(dialInfoGroupList);
     }
+
     /***/
     public void refreshView() {
-        if(!super.isCreateView)
-        {
+        if (!super.isCreateView) {
             return;
         }
         if (null == mDialInfoGroupList) {
             return;
         }
-
 
         dialInfoLayout.removeAllViews();
         for (DialInfoGroup dialInfoGroup : mDialInfoGroupList) {
@@ -86,7 +85,8 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
             }
 
             View dialInfoGroupView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
-            TextView groupNameText = (TextView) dialInfoGroupView.findViewById(R.id.dial_group_name_text);
+            TextView groupNameText = (TextView) dialInfoGroupView
+                    .findViewById(R.id.dial_group_name_text);
             groupNameText.setText(dialInfoGroup.getGroupName());
             groupNameText.setVisibility(View.VISIBLE);
             dialInfoGroupView.findViewById(R.id.dial_info_item_layout).setVisibility(View.GONE);
@@ -97,7 +97,8 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
                 dialInfoView.findViewById(R.id.dial_group_name_text).setVisibility(View.GONE);
                 dialInfoView.findViewById(R.id.dial_info_item_layout).setVisibility(View.VISIBLE);
 
-                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
+                ImageView dialTypeImage = (ImageView) dialInfoView
+                        .findViewById(R.id.dial_type_icon);
                 dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
 
                 TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
@@ -106,12 +107,14 @@ public class DialInfoFragment extends BasicFragment implements View.OnClickListe
                 TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
                 dialTimeText.setText(dialInfo.getDialTime());
 
-                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
+                TextView dialDurationText = (TextView) dialInfoView
+                        .findViewById(R.id.dial_duration_text);
                 dialDurationText.setText(dialInfo.getDialDuration());
                 dialInfoLayout.addView(dialInfoView);
             }
         }
     }
+
     /***/
     public boolean hasData() {
         return null != mDialInfoGroupList && !mDialInfoGroupList.isEmpty();

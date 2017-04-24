@@ -14,26 +14,37 @@ public interface IContactsLogic {
     List<ContactsInfo> getCacheLocalContactLst();
 
     List<ContactsInfo> getCacheAppContactLst();
+
     /***/
-    void searchLocalContactLst(String input,String invoker);
+    void searchLocalContactLst(String input, String invoker);
+
     /***/
-    void searchAppContactLst(String input,String invoker);
+    void searchAppContactLst(String input, String invoker);
+
     /***/
     void fetchAppContactLst();
+
     /***/
     void addAppContact(String name, String number, String photoFullPath);
+
     /***/
     void addAppContact(ContactsInfo contactsInfo);
+
     /***/
     void batchAddAppContacts(List<ContactsInfo> contactsInfoList);
+
     /***/
     void updateAppContact(String contactId, String name, String number, String photoFullPath);
+
     /***/
     void deleteAppContact(String contactId);
+
     /***/
     void queryContactCallRecords(ContactsInfo contactsInfo);
+
     /***/
     void deleteContactCallRecords(ContactsInfo contactsInfo);
+
     /***/
     boolean isAppContactExist(String phoneNumber);
 }

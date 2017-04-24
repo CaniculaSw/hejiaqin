@@ -12,7 +12,6 @@ import com.chinamobile.hejiaqin.business.ui.more.InputAcountActivity;
 import com.chinamobile.hejiaqin.business.ui.more.ScanActivity;
 import com.chinamobile.hejiaqin.business.ui.more.SelectContactAndBindActivity;
 
-
 /**
  * Created by eshaohu on 16/5/31.
  */

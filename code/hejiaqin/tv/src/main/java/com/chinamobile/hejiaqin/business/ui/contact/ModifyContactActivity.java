@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 /***/
 public class ModifyContactActivity extends BasicActivity implements View.OnClickListener {
 
@@ -103,16 +104,18 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
     protected void initDate() {
         PhotoManage.getInstance(this).setPhotoListener(mPhotoChangeListener);
 
-        editContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+        editContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(
+                BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
         //拨号传入的号码保存至和家亲
-        String inputNumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+        String inputNumber = getIntent().getStringExtra(
+                BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
         addContactMode = (null == editContactsInfo);
-        titleLayout.title.setText(addContactMode ? R.string.contact_modify_title_add_text : R.string.contact_modify_title_edit_text);
+        titleLayout.title.setText(addContactMode ? R.string.contact_modify_title_add_text
+                : R.string.contact_modify_title_edit_text);
         if (!addContactMode) {
             nameText.setText(editContactsInfo.getName());
             numberText.setText(editContactsInfo.getPhone());
-            Picasso.with(this.getApplicationContext())
-                    .load(editContactsInfo.getPhotoSm())
+            Picasso.with(this.getApplicationContext()).load(editContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(headImg);
         } else if (inputNumber != null) {
@@ -201,7 +204,9 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                 break;
             case PhotoManage.CAMERA_CODE:
                 if (CommonUtils.hasSdcard()) {
-                    File tempFile = new File(Environment.getExternalStorageDirectory() + BussinessConstants.Setting.APP_SAVE_PATH + BussinessConstants.Setting.APP_IMG_DEFAULT_NAME);
+                    File tempFile = new File(Environment.getExternalStorageDirectory()
+                            + BussinessConstants.Setting.APP_SAVE_PATH
+                            + BussinessConstants.Setting.APP_IMG_DEFAULT_NAME);
                     PhotoManage.getInstance(this).startPhotoZoom(Uri.fromFile(tempFile));
                 } else {
                     showToast(R.string.no_sdcard_update_header, 1, null);
@@ -266,8 +271,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
                 return;
             }
 
-            contactsLogic.updateAppContact(editContactsInfo.getContactId()
-                    , newName, newNumber, newPhotoName);
+            contactsLogic.updateAppContact(editContactsInfo.getContactId(), newName, newNumber,
+                    newPhotoName);
         }
     }
 
@@ -289,7 +294,8 @@ public class ModifyContactActivity extends BasicActivity implements View.OnClick
         Intent intent = new Intent(this, InputInfoActivity.class);
 
         if (!addContactMode) {
-            intent.putExtra(INTENT_DATA_EDIT_INFO, editContactsInfo.getNumberLst().get(0).getNumber());
+            intent.putExtra(INTENT_DATA_EDIT_INFO, editContactsInfo.getNumberLst().get(0)
+                    .getNumber());
         }
         startActivityForResult(intent, REQUEST_CODE_INPUT_NUMBER);
     }

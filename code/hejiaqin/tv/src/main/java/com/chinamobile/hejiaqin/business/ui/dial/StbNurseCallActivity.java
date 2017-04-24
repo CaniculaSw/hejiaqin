@@ -63,7 +63,6 @@ public class StbNurseCallActivity extends BasicActivity implements View.OnClickL
         }
     };
 
-
     @Override
     protected void initLogics() {
 
@@ -102,7 +101,8 @@ public class StbNurseCallActivity extends BasicActivity implements View.OnClickL
         mCallSession.accept(CallSession.TYPE_VIDEO);
         localVideoView = CallApi.createLocalVideoView(getApplicationContext());
         mCallSession.showVideoWindow();
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mLargeVideoLayout.addView(localVideoView, layoutParams);
         localVideoView.setZOrderOnTop(false);
         registerReceivers();
@@ -203,7 +203,8 @@ public class StbNurseCallActivity extends BasicActivity implements View.OnClickL
         if (null != localVideoView && CallSession.INVALID_ID != mCallSession.getSessionId()) {
             if (hasStoped) {
                 mCallSession.showVideoWindow();
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 if (localVideoView != null) {
                     mLargeVideoLayout.addView(localVideoView, layoutParams);
                 }

@@ -31,11 +31,12 @@ public class VerifyInfo implements ReqBody {
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
     }
+
     @Override
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();
-        reqBody.add("phone",getPhone());
-        reqBody.add("code",getVerifyCode());
+        reqBody.add("phone", getPhone());
+        reqBody.add("code", getVerifyCode());
 
         return reqBody.toBody();
     }

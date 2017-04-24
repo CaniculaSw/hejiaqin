@@ -99,7 +99,8 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                     }
                     if (contactsInfo.getNumberLst() != null) {
                         for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                            if (info.getNoCountryNumber().equals(numberInfo.getNumberNoCountryCode())) {
+                            if (info.getNoCountryNumber().equals(
+                                    numberInfo.getNumberNoCountryCode())) {
                                 info.setPeerName(contactsInfo.getName());
                                 info.setContactsInfo(contactsInfo);
                                 isMatch = true;
@@ -109,11 +110,16 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
                 }
             }
             if (info.getRecordSearchUnit() != null) {
-                tHolder.callRecordNameTv.setText(Html.fromHtml(info.getRecordSearchUnit().getNumberText()));
+                tHolder.callRecordNameTv.setText(Html.fromHtml(info.getRecordSearchUnit()
+                        .getNumberText()));
                 tHolder.callRecordNumberTv.setText("");
             } else {
-                tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
-                tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
+                tHolder.callRecordNameTv
+                        .setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info
+                                .getPeerNumber() : info.getPeerName());
+                tHolder.callRecordNumberTv
+                        .setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info
+                                .getPeerNumber());
             }
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
@@ -122,15 +128,16 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
     private void callVideo(View v) {
         int position = (int) v.getTag();
         if (mData.get(position).getContactsInfo() != null) {
-//            Intent outingIntent = new Intent(mContext, VideoCallActivity.class);
-//            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, mData.get(position).getPeerNumber());
-//            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mData.get(position).getContactsInfo().getName());
-//            mContext.startActivity(outingIntent);
-            DialHelper.getInstance().call(mContext, mData.get(position).getPeerNumber(), mData.get(position).getContactsInfo().getName());
+            //            Intent outingIntent = new Intent(mContext, VideoCallActivity.class);
+            //            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, mData.get(position).getPeerNumber());
+            //            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mData.get(position).getContactsInfo().getName());
+            //            mContext.startActivity(outingIntent);
+            DialHelper.getInstance().call(mContext, mData.get(position).getPeerNumber(),
+                    mData.get(position).getContactsInfo().getName());
         } else {
-//            Intent outingIntent = new Intent(mContext, VideoCallActivity.class);
-//            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, mData.get(position).getPeerNumber());
-//            mContext.startActivity(outingIntent);
+            //            Intent outingIntent = new Intent(mContext, VideoCallActivity.class);
+            //            outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, mData.get(position).getPeerNumber());
+            //            mContext.startActivity(outingIntent);
             DialHelper.getInstance().call(mContext, mData.get(position).getPeerNumber(), null);
         }
     }
@@ -140,15 +147,18 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
         if (mData.get(position).getContactsInfo() != null) {
             Intent intent = new Intent(mContext, ContactInfoActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position).getContactsInfo());
+            bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY,
+                    mData.get(position).getContactsInfo());
             intent.putExtras(bundle);
             mContext.startActivity(intent);
         } else {
             Intent intent = new Intent(mContext, ContactInfoActivity.class);
-            intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mData.get(position).getPeerNumber());
+            intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY,
+                    mData.get(position).getPeerNumber());
             mContext.startActivity(intent);
         }
     }
+
     /***/
     public void refreshData(List<CallRecord> data) {
         if (data != null) {
@@ -166,6 +176,7 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
         }
         return mData.size();
     }
+
     /***/
     public class HolderView extends RecyclerView.ViewHolder {
 
@@ -186,7 +197,8 @@ public class CallRecordAdapter extends RecyclerView.Adapter {
             callRecordTimeTv = (TextView) view.findViewById(R.id.call_record_time_tv);
             callRecordTypeLayout = (LinearLayout) view.findViewById(R.id.call_record_type_layout);
             ;
-            callRecordContentLayout = (LinearLayout) view.findViewById(R.id.call_record_content_layout);
+            callRecordContentLayout = (LinearLayout) view
+                    .findViewById(R.id.call_record_content_layout);
             ;
             callRecordTimeLayout = (LinearLayout) view.findViewById(R.id.call_record_time_layout);
             callRecordArrowLayout = (LinearLayout) view.findViewById(R.id.call_record_arrow_layout);

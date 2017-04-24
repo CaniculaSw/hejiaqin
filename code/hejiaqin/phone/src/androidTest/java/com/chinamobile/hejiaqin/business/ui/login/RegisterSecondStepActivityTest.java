@@ -13,7 +13,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 /**
  * Created by Administrator on 2017/4/24 0024.
  */
-public class RegisterSecondStepActivityTest extends ActivityUnitTestCase<RegisterSecondStepActivity> {
+public class RegisterSecondStepActivityTest extends
+        ActivityUnitTestCase<RegisterSecondStepActivity> {
     private RegisterSecondStepActivity mActivity;
 
     private Button registerActionBtn;
@@ -32,8 +33,10 @@ public class RegisterSecondStepActivityTest extends ActivityUnitTestCase<Registe
         RegisterSecondStepInfo registerSecondStepInfo = new RegisterSecondStepInfo();
         registerSecondStepInfo.setPhone("12346678");
         registerSecondStepInfo.setCode("123456");
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), RegisterSecondStepActivity.class);
-        intent.putExtra(BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY, registerSecondStepInfo);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                RegisterSecondStepActivity.class);
+        intent.putExtra(BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY,
+                registerSecondStepInfo);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

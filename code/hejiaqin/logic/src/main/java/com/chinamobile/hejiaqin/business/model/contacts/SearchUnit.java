@@ -10,7 +10,8 @@ import java.util.List;
  */
 public class SearchUnit implements Serializable {
     public enum SearchType {
-        searchByNumber, searchByName
+        searchByNumber,
+        searchByName
     }
 
     private List<NumberInfo> numberLst;
@@ -82,6 +83,7 @@ public class SearchUnit implements Serializable {
         }
         return pinyinUnit.getChinesePinyin();
     }
+
     /***/
     public boolean search(String input) {
         if (StringUtil.isNullOrEmpty(input)) {

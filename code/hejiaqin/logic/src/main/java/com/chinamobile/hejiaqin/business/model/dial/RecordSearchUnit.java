@@ -64,5 +64,4 @@ public class RecordSearchUnit implements Serializable {
         return false;
     }
 
-
 }

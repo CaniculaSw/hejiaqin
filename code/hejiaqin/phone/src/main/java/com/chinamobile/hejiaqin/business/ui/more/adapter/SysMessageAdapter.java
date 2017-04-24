@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
 
-//    private LayoutInflater inflater;
+    //    private LayoutInflater inflater;
     private List<SystemMessage> sysMessageList = new ArrayList<SystemMessage>();
     private boolean isShow = false;
     private Context context;
@@ -39,7 +39,7 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
     public SysMessageAdapter(Context context) {
         super();
         this.context = context;
-//        inflater = LayoutInflater.from(context);
+        //        inflater = LayoutInflater.from(context);
     }
 
     public boolean isShow() {
@@ -70,12 +70,13 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
 
         SystemMessage msg = (SystemMessage) getItem(position);
 
-
-        mViewHolder =  AdapterViewHolder.get(context, convertView, parent, R.layout.adapter_sys_message, position);
+        mViewHolder = AdapterViewHolder.get(context, convertView, parent,
+                R.layout.adapter_sys_message, position);
         if (msg != null) {
             mViewHolder.setText(R.id.more_sys_msg_title_tv, msg.getTitle());
             try {
-                mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(DateTimeUtil.parseSTANDARDFormatToDate(msg.getTime()), "yyyy-MM-dd"));
+                mViewHolder.setText(R.id.more_sys_msg_date_tv, DateTimeUtil.getFormatStrByDate(
+                        DateTimeUtil.parseSTANDARDFormatToDate(msg.getTime()), "yyyy-MM-dd"));
             } catch (ParseException e) {
                 LogUtil.e(TAG, e);
             }
@@ -118,18 +119,20 @@ public class SysMessageAdapter extends BaseAdapter implements ListAdapter {
         }
         notifyDataSetChanged();
     }
+
     /***/
-    public void delSelectedSystemMessage(){
-        LogUtil.d(TAG,"The lentg of the selected system messages: "+selectedSet.size());
-        for (SystemMessage systemMessage : selectedSet){
+    public void delSelectedSystemMessage() {
+        LogUtil.d(TAG, "The lentg of the selected system messages: " + selectedSet.size());
+        for (SystemMessage systemMessage : selectedSet) {
             this.sysMessageList.remove(systemMessage);
-            LogUtil.d(TAG,"Will delete system message with id: "+ systemMessage.getId());
+            LogUtil.d(TAG, "Will delete system message with id: " + systemMessage.getId());
             SystemMessageDbAdapter.getInstance(context, UserInfoCacheManager.getUserId(context))
                     .deleteSystemMessageByID(systemMessage.getId());
         }
         this.selectedSet.clear();
         notifyDataSetChanged();
     }
+
     /***/
     public void unSelectAll() {
         selectedSet.clear();

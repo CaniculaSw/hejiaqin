@@ -49,8 +49,7 @@ class AdapterWrapper extends BaseAdapter implements StickyListHeadersAdapter {
         }
     };
 
-    AdapterWrapper(Context context,
-                   StickyListHeadersAdapter delegate) {
+    AdapterWrapper(Context context, StickyListHeadersAdapter delegate) {
         this.mContext = context;
         this.mDelegate = delegate;
         delegate.registerDataSetObserver(mDataSetObserver);
@@ -156,13 +155,13 @@ class AdapterWrapper extends BaseAdapter implements StickyListHeadersAdapter {
      */
     private boolean previousPositionHasSameHeader(int position) {
         return position != 0
-                && mDelegate.getHeaderId(position) == mDelegate
-                .getHeaderId(position - 1);
+                && mDelegate.getHeaderId(position) == mDelegate.getHeaderId(position - 1);
     }
 
     @Override
     public WrapperView getView(int position, View convertView, ViewGroup parent) {
-        WrapperView wv = (convertView == null) ? new WrapperView(mContext) : (WrapperView) convertView;
+        WrapperView wv = (convertView == null) ? new WrapperView(mContext)
+                : (WrapperView) convertView;
         View item = mDelegate.getView(position, wv.mItem, parent);
         View header = null;
         if (previousPositionHasSameHeader(position)) {

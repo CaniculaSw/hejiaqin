@@ -24,7 +24,8 @@ public class ShowContractActivityTest extends ActivityUnitTestCase<ShowContractA
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), ShowContractActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                ShowContractActivity.class);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

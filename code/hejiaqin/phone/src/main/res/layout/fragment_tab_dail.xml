@@ -4,17 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dial_main_bg_color">
+
     <com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView
         android:id="@+id/header_view_id"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
+        android:layout_width="wrap_content" />
 
     <LinearLayout
         android:id="@+id/blank_layout"
         android:layout_below="@id/header_view_id"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/call_record_recycler_view"
@@ -31,7 +32,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:scrollbars="none"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/call_record_search_recycler_view"
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:scrollbars="none"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/dial_save_contact_layout"
@@ -51,6 +52,7 @@
         android:layout_below="@id/header_view_id"
         android:background="@color/white"
         android:visibility="gone">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -59,7 +61,8 @@
             android:gravity="center"
             android:singleLine="true"
             android:textSize="13sp"
-            android:textColor="@color/keypad_text_color"/>
+            android:textColor="@color/keypad_text_color" />
+
         <LinearLayout
             android:id="@+id/dial_save_contact_arrow_layout"
             android:layout_width="wrap_content"
@@ -67,6 +70,7 @@
             android:layout_alignParentRight="true"
             android:paddingRight="16dp"
             android:paddingLeft="14dp">
+
             <ImageView
                 android:id="@+id/dial_save_contact_arrow_iv"
                 android:layout_width="20dp"
@@ -88,7 +92,7 @@
         android:layout_height="1dp"
         android:orientation="horizontal"
         android:layout_above="@id/digit_keypad"
-        android:background="@color/input_number_below_line_color"/>
+        android:background="@color/input_number_below_line_color" />
 
     <LinearLayout
         android:id="@+id/input_number_layout"
@@ -98,6 +102,7 @@
         android:gravity="center_vertical"
         android:layout_above="@id/input_number_below_line"
         android:background="@color/input_number_layout_color">
+
         <com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText
             android:id="@+id/input_number"
             android:layout_width="0dip"
@@ -108,13 +113,15 @@
             android:ellipsize="start"
             android:singleLine="true"
             android:textSize="20sp"
-            android:textColor="@color/keypad_text_color"/>
+            android:textColor="@color/keypad_text_color" />
+
         <LinearLayout
             android:id="@+id/dial_number_del_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="20dp"
             android:paddingRight="16dp">
+
             <ImageView
                 android:id="@+id/dial_number_del_iv"
                 android:layout_width="20dp"
@@ -130,6 +137,6 @@
         android:layout_height="1dp"
         android:orientation="horizontal"
         android:layout_above="@id/input_number_layout"
-        android:background="@color/input_number_above_line_color"/>
+        android:background="@color/input_number_above_line_color" />
 
 </RelativeLayout>

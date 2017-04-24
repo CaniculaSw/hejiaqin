@@ -16,7 +16,6 @@ import com.chinamobile.hejiaqin.tv.R;
 public class ServiceContractDialog extends Dialog {
     public static final String TAG = ServiceContractDialog.class.getSimpleName();
 
-
     private ServiceContractDialog(Context context, int theme) {
         this(context, theme, "");
     }
@@ -31,14 +30,15 @@ public class ServiceContractDialog extends Dialog {
         setContentView(R.layout.pop_window_service_contract);
     }
 
-
     @Override
     public void dismiss() {
         super.dismiss();
     }
+
     /***/
     public static void show(Activity activity) {
-        ServiceContractDialog serviceContractDialog = new ServiceContractDialog(activity, R.style.CalendarDialog);
+        ServiceContractDialog serviceContractDialog = new ServiceContractDialog(activity,
+                R.style.CalendarDialog);
         Window window = serviceContractDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -49,9 +49,11 @@ public class ServiceContractDialog extends Dialog {
         serviceContractDialog.setCancelable(true);
         serviceContractDialog.show();
     }
+
     /***/
     public static void show(Activity activity, String text) {
-        ServiceContractDialog serviceContractDialog = new ServiceContractDialog(activity, R.style.CalendarDialog, text);
+        ServiceContractDialog serviceContractDialog = new ServiceContractDialog(activity,
+                R.style.CalendarDialog, text);
         Window window = serviceContractDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();

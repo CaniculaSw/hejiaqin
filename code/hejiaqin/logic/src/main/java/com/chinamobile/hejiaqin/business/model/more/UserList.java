@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.model.more;
 
-
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 
 import java.util.ArrayList;

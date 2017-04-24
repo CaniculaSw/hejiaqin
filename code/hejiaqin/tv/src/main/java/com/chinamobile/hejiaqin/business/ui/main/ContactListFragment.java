@@ -110,7 +110,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         contactListView.setItemsCanFocus(true);
         contactListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
-//        FocusManager.getInstance().addFocusViewInLeftFrag("1", addLayout);
+        //        FocusManager.getInstance().addFocusViewInLeftFrag("1", addLayout);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
-//        FocusManager.getInstance().requestFocus(addLayout);
+        //        FocusManager.getInstance().requestFocus(addLayout);
     }
 
     /**
@@ -151,10 +151,10 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
     }
 
     private void enterSearchView() {
-//        Intent intent = new Intent(getContext(), ContactSearchActivity.class);
-//        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-//                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
-//        startActivity(intent);
+        //        Intent intent = new Intent(getContext(), ContactSearchActivity.class);
+        //        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
+        //                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        //        startActivity(intent);
         ContactSearchFragment fragment = ContactSearchFragment.newInstance(adapter.getCount());
         FragmentMgr.getInstance().showContactFragment(fragment);
     }
@@ -164,8 +164,7 @@ public class ContactListFragment extends BasicFragment implements View.OnClickLi
         FragmentMgr.getInstance().showContactFragment(fragment);
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return addLayout;
     }
 }

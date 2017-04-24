@@ -26,7 +26,8 @@ public class SysMessageDetailActivityTest extends ActivityUnitTestCase<SysMessag
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), SysMessageDetailActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                SysMessageDetailActivity.class);
         intent.putExtra("msgID", "1243");
         startActivity(intent, null, null);
 

@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 /***/
 public class UpdateManger {
 
@@ -69,7 +70,8 @@ public class UpdateManger {
                     if (downloadDialog != null && downloadDialog.isShowing()) {
                         downloadDialog.dismiss();
                     }
-                    Toast.makeText(UpdateManger.this.mContext,UpdateManger.this.mContext.getString(R.string.about_hejiaqin_download_error),Toast.LENGTH_SHORT);
+                    Toast.makeText(UpdateManger.this.mContext, UpdateManger.this.mContext
+                            .getString(R.string.about_hejiaqin_download_error), Toast.LENGTH_SHORT);
                     break;
                 default:
                     break;
@@ -81,25 +83,28 @@ public class UpdateManger {
     public UpdateManger(Context context) {
         this.mContext = context;
     }
+
     /***/
     public void showNoticeDialog(final VersionInfo info) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
         builder.setCancelable(true);
-//        builder.setTitle(R.string.about_version_update);
+        //        builder.setTitle(R.string.about_version_update);
         builder.setMessage(R.string.about_version_new_to_update);
-        builder.setPositiveButton(R.string.about_hejiaqin_update, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                update(info,false);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton(R.string.about_hejiaqin_later_to_update, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton(R.string.about_hejiaqin_update,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        update(info, false);
+                        dialog.dismiss();
+                    }
+                });
+        builder.setNegativeButton(R.string.about_hejiaqin_later_to_update,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
         Dialog dialog = builder.create();
         dialog.show();
@@ -108,39 +113,43 @@ public class UpdateManger {
     /**强制更新下载窗口*/
     public void showForcedUpdateDialog(final VersionInfo info) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
-//        builder.setTitle(R.string.about_version_update);
+        //        builder.setTitle(R.string.about_version_update);
         builder.setMessage(R.string.about_hejiaqin_version_warming);
-        builder.setPositiveButton(R.string.about_hejiaqin_update_now, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                update(info,true);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton(R.string.about_hejiaqin_progress_quit, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //关闭所有Activity
-                MyActivityManager.getInstance().finishAllActivity(null);
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton(R.string.about_hejiaqin_update_now,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        update(info, true);
+                        dialog.dismiss();
+                    }
+                });
+        builder.setNegativeButton(R.string.about_hejiaqin_progress_quit,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //关闭所有Activity
+                        MyActivityManager.getInstance().finishAllActivity(null);
+                        dialog.dismiss();
+                    }
+                });
         Dialog dialog = builder.create();
         dialog.setCancelable(false);
         dialog.show();
     }
+
     /***/
-    public void update(VersionInfo info, boolean showDownloadDialog){
+    public void update(VersionInfo info, boolean showDownloadDialog) {
         downLoadUrl = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + info.getUrl();
         saveFileName = DirUtil.getExternalFileDir(mContext.getApplicationContext())
-                + BussinessConstants.Setting.APP_SAVE_PATH + mContext.getString(R.string.app_name) + ".apk";
+                + BussinessConstants.Setting.APP_SAVE_PATH + mContext.getString(R.string.app_name)
+                + ".apk";
         showDownloadDialog(showDownloadDialog);
     }
 
     protected void showDownloadDialog(final boolean isExit) {
         CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
-//        builder.setTitle("软件版本更新");
-//        builder.setMessage("正在下载中，请稍后...");
+        //        builder.setTitle("软件版本更新");
+        //        builder.setMessage("正在下载中，请稍后...");
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.progress, null);
         mProgress = (ProgressBar) v.findViewById(R.id.progress);
@@ -148,7 +157,7 @@ public class UpdateManger {
         tvTitle.setText(R.string.about_hejiaqin_download);
         tvTitle.setVisibility(View.VISIBLE);
         builder.setContentView(v);
-//        builder.setView(v);// 设置对话框的内容为一个View
+        //        builder.setView(v);// 设置对话框的内容为一个View
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -202,7 +211,8 @@ public class UpdateManger {
                         length = 1024 * 1024 * 10;
                     }
                     ins = conn.getInputStream();
-                    File file = new File(DirUtil.getExternalFileDir(mContext.getApplicationContext()) + BussinessConstants.Setting.APP_SAVE_PATH);
+                    File file = new File(DirUtil.getExternalFileDir(mContext
+                            .getApplicationContext()) + BussinessConstants.Setting.APP_SAVE_PATH);
                     if (!file.exists()) {
                         file.mkdir();
                     }

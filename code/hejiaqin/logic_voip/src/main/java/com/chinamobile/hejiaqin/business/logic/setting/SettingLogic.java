@@ -20,9 +20,9 @@ import com.chinamobile.hejiaqin.business.net.setting.SettingHttpmanager;
 import com.chinamobile.hejiaqin.business.utils.CaaSUtil;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.business.utils.SysInfoUtil;
+import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.component.threadpool.ThreadPoolUtil;
 import com.customer.framework.component.threadpool.ThreadTask;
-import com.customer.framework.component.net.NetResponse;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.XmlParseUtil;
@@ -58,7 +58,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             switch (msgType) {
                 case Message.MESSAGE_TYPE_TEXT: { // 文本消息
                     TextMessage textMessage = (TextMessage) msg;
-                    LogUtil.d(TAG, "receive message: " + msg.getBody() + " Peer name: " + msg.getPeer().getNumber());
+                    LogUtil.d(TAG, "receive message: " + msg.getBody() + " Peer name: "
+                            + msg.getPeer().getNumber());
                     handleTextMessage(textMessage);
                     break;
                 }
@@ -79,15 +80,18 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             if (null != msg) {
                 switch (msg.getStatus()) {
                     case Message.STATUS_DELIVERY_OK:
-                        LogUtil.i(TAG, "发送消息成功(Message.STATUS_DELIVERY_OK)，Message body：" + msg.getBody());
+                        LogUtil.i(TAG,
+                                "发送消息成功(Message.STATUS_DELIVERY_OK)，Message body：" + msg.getBody());
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK);
                         break;
                     case Message.STATUS_DISPLAY_OK:
-                        LogUtil.i(TAG, "发送消息成功(Message.STATUS_DISPLAY_OK)，Message body：" + msg.getBody());
+                        LogUtil.i(TAG,
+                                "发送消息成功(Message.STATUS_DISPLAY_OK)，Message body：" + msg.getBody());
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK);
                         break;
                     case Message.STATUS_SEND_FAILED:
-                        LogUtil.i(TAG, "发送消息失败(Message.STATUS_SEND_FAILED)，Message body：" + msg.getBody());
+                        LogUtil.i(TAG,
+                                "发送消息失败(Message.STATUS_SEND_FAILED)，Message body：" + msg.getBody());
                         ThreadPoolUtil.execute(new ThreadTask() {
 
                             @Override
@@ -98,7 +102,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                         sendEmptyMessage(BussinessConstants.SettingMsgID.STATUS_SEND_FAILED);
                         break;
                     case Message.STATUS_UNDELIVERED:
-                        LogUtil.i(TAG, "发送消息失败(Message.STATUS_UNDELIVERED)，Message body：" + msg.getBody());
+                        LogUtil.i(TAG,
+                                "发送消息失败(Message.STATUS_UNDELIVERED)，Message body：" + msg.getBody());
                         ThreadPoolUtil.execute(new ThreadTask() {
 
                             @Override
@@ -120,11 +125,10 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-//            Toast.makeText(context, "receive misscall", Toast.LENGTH_LONG).show();
+            //            Toast.makeText(context, "receive misscall", Toast.LENGTH_LONG).show();
             LogUtil.i(TAG, "receive misscall");
         }
     };
-
 
     private void handleTextMessage(TextMessage msg) {
         String cmdType = getCmdType(msg.getContent());
@@ -217,7 +221,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                     break;
             }
             UserInfoCacheManager.updateUserSetting(context, settingInfo);
-            SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.AUTO_ANSWER_SETTING_COMMIT);
+            SettingLogic.this
+                    .sendEmptyMessage(BussinessConstants.SettingMsgID.AUTO_ANSWER_SETTING_COMMIT);
         }
     }
 
@@ -232,7 +237,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                 LogUtil.i(TAG, "obj size " + ((List<UserInfo>) obj).size());
                 UserInfoCacheManager.saveBindDeviceToLoacl(getContext(), userList);
                 UserInfoCacheManager.saveBindDeviceToMem(getContext(), userList);
-                SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);
+                SettingLogic.this.sendMessage(
+                        BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, obj);
             }
 
             @Override
@@ -257,7 +263,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
                 userList.setUsers((List<UserInfo>) obj);
                 UserInfoCacheManager.saveBindAppToLoacl(getContext(), userList);
                 UserInfoCacheManager.saveBindAppToMem(getContext(), userList);
-                SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.GET_BIND_LIST_SUCCESSFUL, obj);
+                SettingLogic.this.sendMessage(
+                        BussinessConstants.SettingMsgID.GET_BIND_LIST_SUCCESSFUL, obj);
             }
 
             @Override
@@ -278,27 +285,30 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 VersionInfo info = (VersionInfo) obj;
-//                //TODO Test
-//                info = new VersionInfo();
-//                info.setVersionCode("1");
-//                info.setVersionName("版本1.0");
-//                info.setUrl("http://downsz.downcc.com/apk/dianxinxiangjia_downcc.apk");
-//                info.setTime("2016-03-01 15:17:42");
-//                info.setByForce(0);
-//                info.setForceVersionCode("1");
-//                //TODO Test End
+                //                //TODO Test
+                //                info = new VersionInfo();
+                //                info.setVersionCode("1");
+                //                info.setVersionName("版本1.0");
+                //                info.setUrl("http://downsz.downcc.com/apk/dianxinxiangjia_downcc.apk");
+                //                info.setTime("2016-03-01 15:17:42");
+                //                info.setByForce(0);
+                //                info.setForceVersionCode("1");
+                //                //TODO Test End
                 if (isNewVersion(info)) {
                     UserInfoCacheManager.saveVersionInfoToLoacl(getContext(), info);
                     if (isForceUpgrade(info)) {
                         LogUtil.i(TAG, "New force version found!");
-                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE, info);
+                        SettingLogic.this.sendMessage(
+                                BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE, info);
                     } else {
                         LogUtil.i(TAG, "New version found!");
-                        SettingLogic.this.sendMessage(BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE, info);
+                        SettingLogic.this.sendMessage(
+                                BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE, info);
                     }
                 } else {
                     UserInfoCacheManager.clearVersionInfo(getContext());
-                    SettingLogic.this.sendEmptyMessage(BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE);
+                    SettingLogic.this
+                            .sendEmptyMessage(BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE);
                 }
             }
 
@@ -310,7 +320,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
                 UserInfoCacheManager.clearVersionInfo(getContext());
-                SettingLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                SettingLogic.this.sendMessage(BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID,
+                        errorCode);
             }
         });
     }
@@ -357,20 +368,24 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
     @Override
     public void sendContact(String toNumber, String opCode, Map<String, String> params) {
         LogUtil.i(TAG, "send contact to:" + toNumber);
-        sendTextMessage(CommonUtils.getPhoneNumber(toNumber), CaaSUtil.CmdType.SEND_CONTACT, "1", opCode, null, params);
+        sendTextMessage(CommonUtils.getPhoneNumber(toNumber), CaaSUtil.CmdType.SEND_CONTACT, "1",
+                opCode, null, params);
     }
 
     private void sendTextMessage(String toNumber, String cmdType, String opCode, String phone) {
         sendTextMessage(toNumber, cmdType, "1", opCode, phone, null);
     }
 
-    private void sendTextMessage(String toNumber, String cmdType, String seq, String opCode, String phoneNum, Map<String, String> params) {
-        MessageConversation mMessageConversation = MessageConversation.getConversationByNumber(toNumber);
+    private void sendTextMessage(String toNumber, String cmdType, String seq, String opCode,
+                                 String phoneNum, Map<String, String> params) {
+        MessageConversation mMessageConversation = MessageConversation
+                .getConversationByNumber(toNumber);
         LogUtil.d(TAG, "Peer name: " + mMessageConversation.getPeerName());
         Intent intent = new Intent();
         intent.putExtra(MessageConversation.PARAM_SEND_TEXT_PAGE_MODE, true);
         intent.putExtra(Conversation.PARAM_SERVICE_KIND, Conversation.SERVICE_KIND_THROUGH_SEND_MSG);
-        mMessageConversation.sendText(CaaSUtil.buildMessage(cmdType, seq, opCode, phoneNum, params), intent);
+        mMessageConversation.sendText(
+                CaaSUtil.buildMessage(cmdType, seq, opCode, phoneNum, params), intent);
     }
 
     private boolean isNewVersion(VersionInfo versionInfo) {
@@ -387,7 +402,8 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
             return false;
         }
         if (currentVersioncode < versionCode) {
-            LogUtil.d(TAG, "currentVersioncode: " + currentVersioncode + " , versionCode: " + versionCode);
+            LogUtil.d(TAG, "currentVersioncode: " + currentVersioncode + " , versionCode: "
+                    + versionCode);
             return true;
         }
         return false;
@@ -414,20 +430,22 @@ public class SettingLogic extends LogicImp implements ISettingLogic {
 
     /***/
     public void registerMessageReceiver() {
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mMessageReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_INCOMING));
-//        LocalBroadcastManager.getInstance(getContext())
-//                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mMessageStatusChangedReceiver, new IntentFilter(MessagingApi.EVENT_MESSAGE_STATUS_CHANGED));
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(missCallReceiver, new IntentFilter(CallApi.EVENT_MISS_CALL));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(MessagingApi.EVENT_MESSAGE_INCOMING));
+        //        LocalBroadcastManager.getInstance(getContext())
+        //                .registerReceiver(mMessageReceiver, new IntentFilter("SMS_DELIVER_ACTION"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(
+                mMessageStatusChangedReceiver,
+                new IntentFilter(MessagingApi.EVENT_MESSAGE_STATUS_CHANGED));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(missCallReceiver,
+                new IntentFilter(CallApi.EVENT_MISS_CALL));
     }
 
     /***/
     public void unRegisterMessageReceiver() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageStatusChangedReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(
+                mMessageStatusChangedReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(missCallReceiver);
     }
 

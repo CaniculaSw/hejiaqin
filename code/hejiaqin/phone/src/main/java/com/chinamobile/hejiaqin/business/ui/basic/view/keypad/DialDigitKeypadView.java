@@ -8,35 +8,30 @@ import android.widget.LinearLayout;
 
 import com.chinamobile.hejiaqin.R;
 
-
 /**
  * 数字键盘界面
  * @author z00166692
  */
-public class DialDigitKeypadView extends BaseDigitKeypadView
-{
+public class DialDigitKeypadView extends BaseDigitKeypadView {
     /**
      * DialDigitKeypadView
      * @param context context
      * @param attrs attrs
      */
-    public DialDigitKeypadView(Context context, AttributeSet attrs)
-    {
+    public DialDigitKeypadView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void initView(Context context)
-    {
-        LinearLayout layoutShowDial =
-            (LinearLayout) LayoutInflater.from(context)
-                .inflate(R.layout.linearlayout_dial_digit_keypad, null);
-        
+    public void initView(Context context) {
+        LinearLayout layoutShowDial = (LinearLayout) LayoutInflater.from(context).inflate(
+                R.layout.linearlayout_dial_digit_keypad, null);
+
         addView(layoutShowDial, new LayoutParams(LayoutParams.MATCH_PARENT,
-            LayoutParams.MATCH_PARENT));
+                LayoutParams.MATCH_PARENT));
         // 实例化拨号盘中的按键
         btnOne = (Button) findViewById(R.id.key_one);
         btnTwo = (Button) findViewById(R.id.key_two);

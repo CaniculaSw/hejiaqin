@@ -9,7 +9,7 @@ import com.chinamobile.hejiaqin.business.net.ReqBody;
 /**
  *
  */
-public class PasswordInfo implements ReqBody , Parcelable {
+public class PasswordInfo implements ReqBody, Parcelable {
 
     private String resetToken;
     private String password;
@@ -33,8 +33,8 @@ public class PasswordInfo implements ReqBody , Parcelable {
     @Override
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();
-        reqBody.add("resetToken",getResetToken());
-        reqBody.add("password",getPassword());
+        reqBody.add("resetToken", getResetToken());
+        reqBody.add("password", getPassword());
         return reqBody.toBody();
     }
 
@@ -44,14 +44,17 @@ public class PasswordInfo implements ReqBody , Parcelable {
         public PasswordInfo createFromParcel(Parcel source) {
             return new PasswordInfo(source);
         }
+
         //重写createFromParcel方法，创建并返回一个获得了数据的user对象
         @Override
         public PasswordInfo[] newArray(int size) {
             return new PasswordInfo[size];
         }
     };
+
     public PasswordInfo() {
     }
+
     // 带参构造器方法私用化，本构造器仅供类的方法createFromParcel调用
     private PasswordInfo(Parcel source) {
         resetToken = source.readString();

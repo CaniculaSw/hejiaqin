@@ -40,24 +40,29 @@ public class HeApplication extends RCSApplication {
         HmeVideo.setup(this);
         CallApi.init(getApplicationContext());
         SysApi.loadTls(new DefaultTlsHelper());
-        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE, CallApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
-        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_SRTP, CallApi.CONFIG_MINOR_TYPE_SRTP_ALL, CallApi.CFG_CALL_ENABLE_SRTP);
-//        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_TPT_TYPE, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, LoginApi.VALUE_MAJOR_TYPE_TPT_TLS);
-        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "5");
-        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_USE_IPV6, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "1");
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_VIDEO_DISPLAY_TYPE,
+                CallApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_TYPE_SRTP, CallApi.CONFIG_MINOR_TYPE_SRTP_ALL,
+                CallApi.CFG_CALL_ENABLE_SRTP);
+        //        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_TPT_TYPE, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, LoginApi.VALUE_MAJOR_TYPE_TPT_TLS);
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_KEEP_ALIVE_RSP_TIMER_LEN,
+                LoginApi.CONFIG_MINOR_TYPE_DEFAULT, "5");
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_USE_IPV6, LoginApi.CONFIG_MINOR_TYPE_DEFAULT,
+                "1");
 
-        DmVersionInfo versionInfo = new DmVersionInfo("V1.0.0.96", SysApi.VALUE_MAJOR_TYPE_PLATFORM_STB,
-                SysApi.VALUE_MAJOR_TYPE_OS_ANDROID, SysApi.VALUE_MAJOR_TYPE_APP_RCS, "00");
+        DmVersionInfo versionInfo = new DmVersionInfo("V1.0.0.96",
+                SysApi.VALUE_MAJOR_TYPE_PLATFORM_STB, SysApi.VALUE_MAJOR_TYPE_OS_ANDROID,
+                SysApi.VALUE_MAJOR_TYPE_APP_RCS, "00");
         SysApi.setDMVersion(versionInfo);
-        CallApi.setConfig(CallApi.CONFIG_MAJOR_DEVICE_NAME, CallApi.CONFIG_MINOR_TYPE_DEFAULT, deviceName);
+        CallApi.setConfig(CallApi.CONFIG_MAJOR_DEVICE_NAME, CallApi.CONFIG_MINOR_TYPE_DEFAULT,
+                deviceName);
         CaaSSdkService.setVideoLevel(0);
         //initial message API
         MessagingApi.init(getApplicationContext());
         MessagingApi.setAllowSendDisplayStatus(true);
         MessagingApi.openTolistUncompletedMessage();
-//        //设置为IM不同源
-        MessagingApi.setConfig(
-                MessagingApi.CONFIG_MAJOR_USE_SYS_SMS,
+        //        //设置为IM不同源
+        MessagingApi.setConfig(MessagingApi.CONFIG_MAJOR_USE_SYS_SMS,
                 MessagingApi.CONFIG_MINOR_TYPE_DEFAULT, "0");
         CallSessionRecording.setRecMode(true);
         VoipLogic.getInstance(getApplicationContext()).registerVoipReceiver();
@@ -71,21 +76,14 @@ public class HeApplication extends RCSApplication {
         LogUtil.w(TAG, "device=" + sDevice + "--Model=" + sModel);
 
         //非系统签名版本注销掉这段代码
-        if (sDevice.contains("Hi3716CV200"))
-        {
+        if (sDevice.contains("Hi3716CV200")) {
             Const.setDeviceType(Const.TYPE_3719C);
-        }
-        else if (sDevice.contains("Hi3719CV100"))
-        {
+        } else if (sDevice.contains("Hi3719CV100")) {
 
             Const.setDeviceType(Const.TYPE_3719C);
-        }
-        else if (sDevice.contains("Hi3719MV100"))
-        {
+        } else if (sDevice.contains("Hi3719MV100")) {
             Const.setDeviceType(Const.TYPE_3719M);
-        }
-        else if (sDevice.contains("Hi3798MV100"))
-        {
+        } else if (sDevice.contains("Hi3798MV100")) {
             Const.setDeviceType(Const.TYPE_3798M);
         }
         //非系统签名版本注销掉这段代码
@@ -93,14 +91,14 @@ public class HeApplication extends RCSApplication {
         String deviceName = null;
         if (Const.TYPE_3798M == Const.getDeviceType()) {
             deviceName = CallApi.DEVICE_NAME_3798M;
-        } else if (Const.TYPE_3719C == Const.getDeviceType() || Const.TYPE_3719M == Const.getDeviceType()) {
+        } else if (Const.TYPE_3719C == Const.getDeviceType()
+                || Const.TYPE_3719M == Const.getDeviceType()) {
             deviceName = CallApi.DEVICE_NAME_3719C;
         } else {
             deviceName = CallApi.DEVICE_NAME_TINYALSA;
         }
         return deviceName;
     }
-
 
     @Override
     public void onTerminate() {

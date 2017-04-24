@@ -29,7 +29,6 @@ public class InputInfoActivityTest extends ActivityUnitTestCase<InputInfoActivit
         Intent intent = new Intent(getInstrumentation().getTargetContext(), InputInfoActivity.class);
         startActivity(intent, null, null);
 
-
         mActivity = getActivity();
         assertNotNull(mActivity);
 

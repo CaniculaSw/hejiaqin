@@ -52,11 +52,14 @@ public class BindedTVListAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        mViewHolder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_binded_tv, position);
+        mViewHolder = AdapterViewHolder.get(mContext, convertView, parent,
+                R.layout.adapter_binded_tv, position);
         mViewHolder.setText(R.id.tv_name, mBindedTV.get(position).getUserName());
-        Picasso.with(mContext).load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + mBindedTV.get(position).getPhotoSm())
-                .placeholder(R.mipmap.pic80)
-                .error(R.mipmap.pic80).into((CircleImageView) mViewHolder.getView(R.id.tv_avatar_ci));
+        Picasso.with(mContext)
+                .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/"
+                        + mBindedTV.get(position).getPhotoSm()).placeholder(R.mipmap.pic80)
+                .error(R.mipmap.pic80)
+                .into((CircleImageView) mViewHolder.getView(R.id.tv_avatar_ci));
 
         mViewHolder.getView(R.id.send_contact_btn).setOnClickListener(new View.OnClickListener() {
             @Override

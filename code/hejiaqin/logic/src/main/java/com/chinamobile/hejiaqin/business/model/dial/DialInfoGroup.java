@@ -10,7 +10,6 @@ public class DialInfoGroup {
 
     List<DialInfo> dialInfoList;
 
-
     public String getGroupName() {
         return groupName;
     }

@@ -18,7 +18,6 @@ import com.chinamobile.hejiaqin.tv.R;
 
 import java.io.File;
 
-
 /***/
 public class PhotoDialog extends Dialog {
 
@@ -29,12 +28,12 @@ public class PhotoDialog extends Dialog {
     public static final int CAMERA_CODE = 2;//相机
     public static final int CROP_CODE = 3;//裁剪
 
-//    private static PhotoDialog mPhotoDialog;
+    //    private static PhotoDialog mPhotoDialog;
 
     private FragmentActivity mContext2;
-//    private TextView tvPhoto;
-//    private TextView tvCamera;
-//    private TextView tvDismiss;
+    //    private TextView tvPhoto;
+    //    private TextView tvCamera;
+    //    private TextView tvDismiss;
     private RelativeLayout rlPhoto;
     private RelativeLayout rlCamera;
     private RelativeLayout rlDismiss;
@@ -51,28 +50,25 @@ public class PhotoDialog extends Dialog {
         this.mContext = context;
     }
 
-
     protected PhotoDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         this.mContext = context;
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_photo_layout);
         mClickListener = new ClickListener();
-        rlPhoto = (RelativeLayout)findViewById(R.id.rl_photo);
-        rlCamera = (RelativeLayout)findViewById(R.id.rl_camera);
-        rlDismiss = (RelativeLayout)findViewById(R.id.rl_dismiss);
+        rlPhoto = (RelativeLayout) findViewById(R.id.rl_photo);
+        rlCamera = (RelativeLayout) findViewById(R.id.rl_camera);
+        rlDismiss = (RelativeLayout) findViewById(R.id.rl_dismiss);
         rlPhoto.setOnClickListener(mClickListener);
         rlCamera.setOnClickListener(mClickListener);
         rlDismiss.setOnClickListener(mClickListener);
 
     }
-
 
     public void setFragmentActivity(FragmentActivity fragment) {
         this.mContext2 = fragment;
@@ -86,27 +82,29 @@ public class PhotoDialog extends Dialog {
         }
     }
 
-
-    class ClickListener implements View.OnClickListener{
+    class ClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.rl_photo:
                     //打开相册
                     dismiss();
-                    Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     getAlbum.setType(IMAGE_TYPE);
                     startActivity(getAlbum, IMAGE_CODE);
-                break;
+                    break;
                 case R.id.rl_camera:
                     //相机功能
                     dismiss();
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     // 判断存储卡是否可以用，可用进行存储
                     if (CommonUtils.hasSdcard()) {
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                Uri.fromFile(new File(Environment.getExternalStorageDirectory() + BussinessConstants.Setting.APP_SAVE_PATH, BussinessConstants.Setting.APP_IMG_DEFAULT_NAME)));
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
+                                .getExternalStorageDirectory()
+                                + BussinessConstants.Setting.APP_SAVE_PATH,
+                                BussinessConstants.Setting.APP_IMG_DEFAULT_NAME)));
                     }
 
                     startActivity(intent, CAMERA_CODE);

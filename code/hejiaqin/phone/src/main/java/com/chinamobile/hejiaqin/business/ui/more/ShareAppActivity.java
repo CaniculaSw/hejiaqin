@@ -61,16 +61,17 @@ public class ShareAppActivity extends BasicActivity implements View.OnClickListe
     }
 
     private void createQRCode(String url, int size) {
-        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(ShareAppActivity.this, size), Color.parseColor("#000000"), Color.WHITE, new QRCodeEncoder.Delegate() {
-            @Override
-            public void onEncodeQRCodeSuccess(Bitmap qrCode) {
-                qrCodeIv.setImageBitmap(qrCode);
-            }
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(ShareAppActivity.this, size),
+                Color.parseColor("#000000"), Color.WHITE, new QRCodeEncoder.Delegate() {
+                    @Override
+                    public void onEncodeQRCodeSuccess(Bitmap qrCode) {
+                        qrCodeIv.setImageBitmap(qrCode);
+                    }
 
-            @Override
-            public void onEncodeQRCodeFailure() {
-                showToast("生成中文二维码失败", Toast.LENGTH_SHORT, null);
-            }
-        });
+                    @Override
+                    public void onEncodeQRCodeFailure() {
+                        showToast("生成中文二维码失败", Toast.LENGTH_SHORT, null);
+                    }
+                });
     }
 }

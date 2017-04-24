@@ -64,11 +64,17 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
             switch (actionId) {
                 case BussinessConstants.ContactMsgID.UI_HIDE_CCONTACT_LIST_TITLE_ID:
                     mContactTitleLay.setVisibility(View.GONE);
-                    mListener.onAction(BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID, null);
+                    mListener
+                            .onAction(
+                                    BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_HIDE_NAVIGATOR_ACTION_ID,
+                                    null);
                     break;
                 case BussinessConstants.ContactMsgID.UI_SHOW_CCONTACT_LIST_TITLE_ID:
                     mContactTitleLay.setVisibility(View.VISIBLE);
-                    mListener.onAction(BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID, null);
+                    mListener
+                            .onAction(
+                                    BussinessConstants.FragmentActionId.CONTACT_FRAGMENT_SHOW_NAVIGATOR_ACTION_ID,
+                                    null);
                     break;
                 default:
                     break;
@@ -186,12 +192,15 @@ public class ContactsFragment extends BasicFragment implements View.OnClickListe
                 return;
             }
 
-            mTextView[currentItem].setTextColor(getResources().getColor(R.color.contact_list_navigator_text_selected));
+            mTextView[currentItem].setTextColor(getResources().getColor(
+                    R.color.contact_list_navigator_text_selected));
             mImageView[currentItem].setVisibility(View.VISIBLE);
-            addContactIv.setVisibility((currentItem == M_APP_CONTACTS_INDEX) ? View.VISIBLE : View.GONE);
+            addContactIv.setVisibility((currentItem == M_APP_CONTACTS_INDEX) ? View.VISIBLE
+                    : View.GONE);
 
             if (currentIndex != -1) {
-                mTextView[currentIndex].setTextColor(getResources().getColor(R.color.contact_list_navigator_text_unselected));
+                mTextView[currentIndex].setTextColor(getResources().getColor(
+                        R.color.contact_list_navigator_text_unselected));
                 mImageView[currentIndex].setVisibility(View.GONE);
             }
             currentIndex = mViewPager.getCurrentItem();

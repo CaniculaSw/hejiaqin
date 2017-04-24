@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/video_default_bg"/>
+        android:src="@drawable/video_default_bg" />
 
     <RelativeLayout
         android:id="@+id/video_layout"
@@ -36,7 +36,7 @@
             android:text="00:00"
             android:textSize="22sp"
             android:textColor="@color/white"
-            android:background="@drawable/border_videocall_times_bg"/>
+            android:background="@drawable/border_videocall_times_bg" />
 
         <LinearLayout
             android:id="@+id/hangup_layout"
@@ -62,6 +62,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+
     <SurfaceView
         android:id="@+id/small_video_layout"
         android:layout_width="242dp"

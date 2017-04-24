@@ -35,7 +35,6 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
     private IContactsLogic contactsLogic;
     private int contactType = Constant.CONTACT_TYPE_APP;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_contact_search;
@@ -51,7 +50,8 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
         searchCancel = findViewById(R.id.search_cancel);
 
         contactsListView = (ListView) findViewById(R.id.list);
-        View headView = getLayoutInflater().inflate(R.layout.layout_contact_search_contact_head_view, null);
+        View headView = getLayoutInflater().inflate(
+                R.layout.layout_contact_search_contact_head_view, null);
         contactsListView.addHeaderView(headView);
 
         adapter = new MoreSearchContactAdapter(this);
@@ -60,8 +60,9 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
 
     @Override
     protected void initDate() {
-        contactType = getIntent().getIntExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        contactType = getIntent().getIntExtra(
+                MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
     }
 
     @Override
@@ -152,7 +153,7 @@ public class MoreContactSearchActivity extends BasicActivity implements View.OnC
     }
 
     /***/
-   static public final class Constant {
+    static public final class Constant {
         public static final String INTENT_DATA_CONTACT_TYPE = "intent_data_contact_type";
 
         public static final int CONTACT_TYPE_APP = 0;

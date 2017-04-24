@@ -23,7 +23,7 @@ public class DelCallRecordConfirmDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_del_call_record_confirm);
         mConfirmLay = (LinearLayout) findViewById(R.id.btn_agree);
-        mCancelLayout = (LinearLayout)findViewById(R.id.btn_denied);
+        mCancelLayout = (LinearLayout) findViewById(R.id.btn_denied);
     }
 
 }

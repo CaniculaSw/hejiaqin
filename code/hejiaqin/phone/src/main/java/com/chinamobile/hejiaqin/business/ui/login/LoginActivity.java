@@ -143,11 +143,13 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
                 login();
                 break;
             case R.id.forget_pwd_tv:
-                Intent forgetIntent = new Intent(LoginActivity.this, ResetPasswordFirstStepActivity.class);
+                Intent forgetIntent = new Intent(LoginActivity.this,
+                        ResetPasswordFirstStepActivity.class);
                 startActivity(forgetIntent);
                 break;
             case R.id.register_button:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterFirstStepActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this,
+                        RegisterFirstStepActivity.class);
                 passwdEditTv.setText("");
                 startActivity(registerIntent);
                 break;
@@ -187,12 +189,13 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone(accountEditTv.getText().toString());
         loginInfo.setPassword(loginLogic.encryPassword(passwdEditTv.getText().toString()));
-//        inputTheVOIPSetting(loginInfo);
+        //        inputTheVOIPSetting(loginInfo);
         loginLogic.login(loginInfo);
     }
 
     private void displayErrorInfo(String errorText) {
-        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog,
+                errorText);
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -202,23 +205,21 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         window.setAttributes(params);
         dialog.show();
     }
+
     //TODO For test
-    private void inputTheVOIPSetting(final LoginInfo loginInfo){
+    private void inputTheVOIPSetting(final LoginInfo loginInfo) {
         final VoipSettingDialog.Builder builder = new VoipSettingDialog.Builder(LoginActivity.this);
-        if(voipUserName==null)
-        {
+        if (voipUserName == null) {
             String account = accountEditTv.getText().toString();
             //TODO TEST
-            if(Integer.parseInt(account.substring(account.length() - 1)) % 2 == 0) {
+            if (Integer.parseInt(account.substring(account.length() - 1)) % 2 == 0) {
                 builder.setDefaultInfo("2886544004", "Vconf2015!");
-            }
-            else
-            {
+            } else {
                 builder.setDefaultInfo("2886544005", "Vconf2015!");
             }
             //TODO TEST
-        }else{
-            builder.setDefaultInfo(voipUserName,voipPassword);
+        } else {
+            builder.setDefaultInfo(voipUserName, voipPassword);
         }
 
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -226,7 +227,8 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
             public void onClick(DialogInterface dialog, int which) {
                 voipUserName = builder.getUserName();
                 voipPassword = builder.getPassword();
-                LogUtil.i("LoginActivity","The VOIP user name is: "+voipUserName+" The VOIP password is: "+voipPassword);
+                LogUtil.i("LoginActivity", "The VOIP user name is: " + voipUserName
+                        + " The VOIP password is: " + voipPassword);
                 loginLogic.login(loginInfo);
                 dialog.dismiss();
             }
@@ -243,16 +245,16 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-//                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-//                    LogUtil.i("LoginActivity","Update the voip setting");
-//                    userInfo.setSdkAccount(voipUserName);
-//                    userInfo.setSdkPassword(voipPassword);
-//                }
+                //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
+                //                    LogUtil.i("LoginActivity","Update the voip setting");
+                //                    userInfo.setSdkAccount(voipUserName);
+                //                    userInfo.setSdkPassword(voipPassword);
+                //                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
-                sdkuserInfo.countryCode="";
+                sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
-                voipLogic.login(sdkuserInfo,null,null);
+                voipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 Intent intent = new Intent(LoginActivity.this, MainFragmentActivity.class);
@@ -294,4 +296,3 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
     }
 
 }
-

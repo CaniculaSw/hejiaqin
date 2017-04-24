@@ -7,8 +7,7 @@ package com.chinamobile.hejiaqin.business.model.login;
  * author:
  * Created: 2016/5/9.
  */
-public class LoginHistory
-{
+public class LoginHistory {
     private String loginid;
 
     private String avatar;

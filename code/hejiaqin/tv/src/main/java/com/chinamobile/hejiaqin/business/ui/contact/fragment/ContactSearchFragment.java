@@ -22,6 +22,7 @@ import com.chinamobile.hejiaqin.tv.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /***/
 public class ContactSearchFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactSearchFragment";
@@ -37,11 +38,13 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
     private IContactsLogic contactsLogic;
 
     private int totalContactNum;
+
     /***/
     public static ContactSearchFragment newInstance() {
         ContactSearchFragment fragment = new ContactSearchFragment();
         return fragment;
     }
+
     /***/
     public static ContactSearchFragment newInstance(int totalContactNum) {
         ContactSearchFragment fragment = new ContactSearchFragment();
@@ -72,7 +75,10 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 totalContactNum = contactsInfoList == null ? 0 : contactsInfoList.size();
-                searchInput.setHint(String.format(getContext().getString(R.string.contact_search_hint_text), totalContactNum));
+                searchInput
+                        .setHint(String.format(
+                                getContext().getString(R.string.contact_search_hint_text),
+                                totalContactNum));
                 break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
                 Editable inputText = searchInput.getText();
@@ -103,7 +109,6 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         searchInput = (EditText) view.findViewById(R.id.search_input);
         searchDelete = view.findViewById(R.id.search_del);
 
-
         // 搜索结果列表
         contactsListView = (ListView) view.findViewById(R.id.list);
         contactsListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,11 +129,13 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         contactsListView.setItemsCanFocus(true);
         contactsListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
-        searchInput.setHint(String.format(getContext().getString(R.string.contact_search_hint_text), totalContactNum));
+        searchInput.setHint(String.format(
+                getContext().getString(R.string.contact_search_hint_text), totalContactNum));
         searchInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                searchLayout.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected : R.color.transparent);
+                searchLayout.setBackgroundResource(hasFocus ? R.drawable.btn_bg_selected
+                        : R.color.transparent);
             }
         });
         searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -137,7 +144,8 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
                 if (hasFocus) {
                     searchLayout.setBackgroundResource(R.color.transparent);
                 }
-                searchDelete.setBackgroundResource(hasFocus ? R.drawable.delete_bg : R.color.transparent);
+                searchDelete.setBackgroundResource(hasFocus ? R.drawable.delete_bg
+                        : R.color.transparent);
             }
         });
         searchInput.addTextChangedListener(new TextWatcher() {
@@ -165,12 +173,12 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
 
         searchDelete.setOnClickListener(this);
         searchDelete.setBackgroundResource(R.drawable.delete_bg);
-//        searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                searchDelete.getBackground().setAlpha(hasFocus? 0 : 255);
-//            }
-//        });
+        //        searchDelete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        //            @Override
+        //            public void onFocusChange(View v, boolean hasFocus) {
+        //                searchDelete.getBackground().setAlpha(hasFocus? 0 : 255);
+        //            }
+        //        });
         titleLayout.backImageView.setOnClickListener(this);
 
     }
@@ -217,8 +225,7 @@ public class ContactSearchFragment extends BasicFragment implements View.OnClick
         adapter.setData(tmpContactsInfoList);
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return searchInput;
     }
 

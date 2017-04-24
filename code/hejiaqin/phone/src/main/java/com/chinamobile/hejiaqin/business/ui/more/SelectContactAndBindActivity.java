@@ -49,8 +49,8 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
         contactListView = (StickyListHeadersListView) findViewById(R.id.list);
 
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         contactListView.addHeaderView(searchLayout);
         // 设置搜索显示的文字
@@ -92,7 +92,8 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
                 adapter.setData(contactsInfoList);
-                searchText.setText(String.format(this.getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                searchText.setText(String.format(this.getString(R.string.contact_search_hint_text),
+                        contactsInfoList.size()));
                 break;
             case BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST:
                 switchHeaderView(true, getString(R.string.sending_bind_request));
@@ -146,8 +147,8 @@ public class SelectContactAndBindActivity extends BasicActivity implements View.
 
     private void enterSearchView() {
         Intent intent = new Intent(this, MoreContactSearchActivity.class);
-        intent.putExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        intent.putExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
         startActivity(intent);
     }
 

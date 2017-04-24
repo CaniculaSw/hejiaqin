@@ -28,7 +28,8 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowBackground">@drawable/main_bg_in_dialog</item><!--除去背景色-->
+        <item name="android:windowBackground">@drawable/main_bg_in_dialog</item>
+        <!--除去背景色-->
     </style>
 
     <style name="MoreDeleteMsgCheckBox" parent="android:style/Widget.CompoundButton.CheckBox">

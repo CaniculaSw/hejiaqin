@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.tv.R;
+
 /***/
 public class InputInfoActivity extends BasicActivity implements View.OnClickListener {
     private HeaderView titleLayout;
@@ -119,6 +120,5 @@ public class InputInfoActivity extends BasicActivity implements View.OnClickList
     private void doClickDelete() {
         input.setText("");
     }
-
 
 }

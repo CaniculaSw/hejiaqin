@@ -8,11 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
+import com.chinamobile.hejiaqin.tv.R;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -27,12 +27,13 @@ public class CallRecordAdapter extends BaseAdapter {
     private List<CallRecord> mData;
     private OnClickListen mListen;
 
-    public CallRecordAdapter(Context context, IContactsLogic contactsLogic,OnClickListen listen) {
+    public CallRecordAdapter(Context context, IContactsLogic contactsLogic, OnClickListen listen) {
         this.mContext = context;
         this.mContactsLogic = contactsLogic;
         mData = new ArrayList<CallRecord>();
         this.mListen = listen;
     }
+
     /***/
     public void refreshData(List<CallRecord> data) {
         if (data != null) {
@@ -43,25 +44,21 @@ public class CallRecordAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public CallRecord getData(int position)
-    {
+    public CallRecord getData(int position) {
         if (mData == null) {
             return null;
         }
         return mData.get(position);
     }
+
     /***/
-    public void delData(String[] ids)
-    {
+    public void delData(String[] ids) {
         if (mData == null) {
             return;
         }
-        for(int i=0;i<ids.length;i++)
-        {
-            for(int j=0;i<mData.size();j++)
-            {
-                if(ids[i].equals(mData.get(j).getId()))
-                {
+        for (int i = 0; i < ids.length; i++) {
+            for (int j = 0; i < mData.size(); j++) {
+                if (ids[i].equals(mData.get(j).getId())) {
                     mData.remove(j);
                     break;
                 }
@@ -98,7 +95,8 @@ public class CallRecordAdapter extends BaseAdapter {
             HolderView tHolder = null;
             if (convertView == null) {
 
-                convertView = LayoutInflater.from(this.mContext).inflate(R.layout.item_call_record, parent, false);
+                convertView = LayoutInflater.from(this.mContext).inflate(R.layout.item_call_record,
+                        parent, false);
                 tHolder = new HolderView(convertView);
                 convertView.setTag(tHolder);
 
@@ -111,7 +109,7 @@ public class CallRecordAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
-                    mListen.onClick(mData.get(position),position);
+                    mListen.onClick(mData.get(position), position);
                 }
             });
             tHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -143,8 +141,10 @@ public class CallRecordAdapter extends BaseAdapter {
                     }
                     if (contactsInfo.getNumberLst() != null) {
                         for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                            if (info.getNoCountryNumber().equals(numberInfo.getNumberNoCountryCode()) ||
-                                    (info.getNoCountryNumber()).equals("92"+ numberInfo.getNumberNoCountryCode())) {
+                            if (info.getNoCountryNumber().equals(
+                                    numberInfo.getNumberNoCountryCode())
+                                    || (info.getNoCountryNumber()).equals("92"
+                                            + numberInfo.getNumberNoCountryCode())) {
                                 info.setPeerName(contactsInfo.getName());
                                 info.setContactsInfo(contactsInfo);
                                 isMatch = true;
@@ -153,14 +153,17 @@ public class CallRecordAdapter extends BaseAdapter {
                     }
                 }
             }
-            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info.getPeerNumber() : info.getPeerName());
-            tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? "" : info.getPeerNumber());
+            tHolder.callRecordNameTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? info
+                    .getPeerNumber() : info.getPeerName());
+            tHolder.callRecordNumberTv.setText(StringUtil.isNullOrEmpty(info.getPeerName()) ? ""
+                    : info.getPeerNumber());
             tHolder.callRecordTimeTv.setText(info.getBeginTimeformatter());
         }
         return convertView;
     }
+
     /***/
-   static public class HolderView {
+    static public class HolderView {
 
         private ImageView callRecordTypeIv;
         private TextView callRecordNameTv;
@@ -177,11 +180,12 @@ public class CallRecordAdapter extends BaseAdapter {
 
         }
     }
+
     /***/
-    public static abstract class OnClickListen
-    {
+    public static abstract class OnClickListen {
         /***/
-        public abstract void onClick(CallRecord info,int position);
+        public abstract void onClick(CallRecord info, int position);
+
         /***/
         public abstract void onLongClick(int position);
     }

@@ -12,7 +12,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 /**
  * Created by Administrator on 2017/4/24 0024.
  */
-public class ResetPasswordFirstStepActivityTest extends ActivityUnitTestCase<ResetPasswordFirstStepActivity> {
+public class ResetPasswordFirstStepActivityTest extends
+        ActivityUnitTestCase<ResetPasswordFirstStepActivity> {
     private ResetPasswordFirstStepActivity mActivity;
 
     private EditText accountEditTx;
@@ -29,7 +30,8 @@ public class ResetPasswordFirstStepActivityTest extends ActivityUnitTestCase<Res
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), ResetPasswordFirstStepActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                ResetPasswordFirstStepActivity.class);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

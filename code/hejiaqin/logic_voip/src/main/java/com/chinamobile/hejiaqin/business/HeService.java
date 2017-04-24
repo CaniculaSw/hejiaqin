@@ -11,6 +11,7 @@ import com.huawei.rcs.RCSService;
 public class HeService extends RCSService {
 
     public final static String SERVICE_NAME = "com.chinamobile.hejiaqin.business.heservice";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("HeService", "HeService");

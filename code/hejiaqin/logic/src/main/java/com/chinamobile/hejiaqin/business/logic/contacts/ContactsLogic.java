@@ -22,10 +22,10 @@ import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.chinamobile.hejiaqin.business.net.contacts.ContactsHttpManager;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
-import com.customer.framework.component.threadpool.ThreadPoolUtil;
-import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.log.Logger;
 import com.customer.framework.component.net.NetResponse;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.TimeUtil;
 import com.google.gson.Gson;
@@ -47,15 +47,17 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-                List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance().getLocalContactLst(getContext());
-                ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(), contactsInfoList);
+                List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance()
+                        .getLocalContactLst(getContext());
+                ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(),
+                        contactsInfoList);
                 ContactsInfoManager.getInstance().cacheLocalContactInfo(contactsInfoList);
 
-                sendMessage(BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID, contactsInfoList);
+                sendMessage(BussinessConstants.ContactMsgID.GET_LOCAL_CONTACTS_SUCCESS_MSG_ID,
+                        contactsInfoList);
             }
         });
     }
-
 
     @Override
     public void fetchAppContactLst() {
@@ -71,7 +73,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         });
     }
 
-
     @Override
     public List<ContactsInfo> getCacheLocalContactLst() {
         return ContactsInfoManager.getInstance().getCachedLocalContactInfo();
@@ -85,13 +86,17 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     @Override
     public void searchLocalContactLst(String input, String invoker) {
         List<ContactsInfo> contactsInfoList = getCacheLocalContactLst();
-        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_LOCAL_CONTACTS_SUCCESS_MSG_ID,
+                new SearchResultContacts(invoker, ContactsInfoManager.getInstance()
+                        .searchContactsInfoLst(contactsInfoList, input)));
     }
 
     @Override
     public void searchAppContactLst(String input, String invoker) {
         List<ContactsInfo> contactsInfoList = getCacheAppContactLst();
-        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts(invoker, ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input)));
+        sendMessage(BussinessConstants.ContactMsgID.SEARCH_APP_CONTACTS_SUCCESS_MSG_ID,
+                new SearchResultContacts(invoker, ContactsInfoManager.getInstance()
+                        .searchContactsInfoLst(contactsInfoList, input)));
     }
 
     @Override
@@ -119,7 +124,8 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                         ContactList contactList = new ContactList();
                         contactList.addAppContact(contactBean);
                         // 增加数据库中的联系人信息
-                        ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                        ContactsDbAdapter.getInstance(getContext(),
+                                UserInfoCacheManager.getUserId(getContext()))
                                 .add(contactList.get());
                         // 重新获取数据库数据刷新联系人列表
                         fetchAppContactFromDb();
@@ -144,7 +150,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             }
         });
     }
-
 
     @Override
     public void addAppContact(ContactsInfo contactsInfo) {
@@ -179,13 +184,13 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 }
 
                 Gson gson = new Gson();
-                String contactJson = gson.toJson(simpleContactInfoList, new TypeToken<List<SimpleContactInfo>>() {
-                }.getType());
+                String contactJson = gson.toJson(simpleContactInfoList,
+                        new TypeToken<List<SimpleContactInfo>>() {
+                        }.getType());
 
-
-//                BatchAddContactReq reqBody = new BatchAddContactReq();
-//                reqBody.setToken(UserInfoCacheManager.getToken(getContext()));
-//                reqBody.setContactJson(contactJson);
+                //                BatchAddContactReq reqBody = new BatchAddContactReq();
+                //                reqBody.setToken(UserInfoCacheManager.getToken(getContext()));
+                //                reqBody.setContactJson(contactJson);
 
                 NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
                 reqBody.add("contactJson", contactJson);
@@ -200,7 +205,9 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                         // 将服务器的数据ContactBean转换成本地的ContactInfo
                         ContactList contactList = new ContactList();
                         if (null == contactBeanList) {
-                            sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, contactList.get());
+                            sendMessage(
+                                    BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID,
+                                    contactList.get());
                             return;
                         }
                         for (ContactBean contactBean : contactBeanList) {
@@ -208,8 +215,8 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                         }
                         List<ContactsInfo> contactsInfoList = contactList.get();
                         // 增加数据库中的联系人信息
-                        ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
-                                .add(contactsInfoList);
+                        ContactsDbAdapter.getInstance(getContext(),
+                                UserInfoCacheManager.getUserId(getContext())).add(contactsInfoList);
                         // 重新获取数据库数据刷新联系人列表
                         fetchAppContactFromDb();
                         sendEmptyMessage(BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID);
@@ -233,12 +240,11 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     @Override
-    public void updateAppContact(final String contactId, final String name, final String number
-            , final String photoFullPath) {
+    public void updateAppContact(final String contactId, final String name, final String number,
+                                 final String photoFullPath) {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-
 
                 EditContactReq request = new EditContactReq();
                 request.setName(name);
@@ -251,7 +257,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
 
-
                         ContactBean contactBean = (ContactBean) obj;
                         if (null == contactBean) {
                             sendEmptyMessage(BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID);
@@ -261,11 +266,14 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                         ContactsInfo contactsInfo = ContactList.convert(contactBean);
 
                         // 修改本地数据库联系人信息
-                        ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).update(contactsInfo);
+                        ContactsDbAdapter.getInstance(getContext(),
+                                UserInfoCacheManager.getUserId(getContext())).update(contactsInfo);
                         // 重新获取数据库数据刷新联系人列表
                         fetchAppContactFromDb();
                         // 发送UI消息更新界面
-                        sendMessage(BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID, contactsInfo);
+                        sendMessage(
+                                BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID,
+                                contactsInfo);
                     }
 
                     @Override
@@ -299,8 +307,9 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                     public void onSuccessful(Object invoker, Object obj) {
 
                         // 删除数据库中的联系人信息
-                        ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
-                                .delByContactId(contactId);
+                        ContactsDbAdapter.getInstance(getContext(),
+                                UserInfoCacheManager.getUserId(getContext())).delByContactId(
+                                contactId);
                         // 重新获取数据库数据刷新联系人列表
                         fetchAppContactFromDb();
                         sendEmptyMessage(BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID);
@@ -327,7 +336,8 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             return false;
         }
 
-        List<ContactsInfo> cachedAppContacts = ContactsInfoManager.getInstance().getCachedAppContactInfo();
+        List<ContactsInfo> cachedAppContacts = ContactsInfoManager.getInstance()
+                .getCachedAppContactInfo();
         if (null == cachedAppContacts || cachedAppContacts.isEmpty()) {
             return false;
         }
@@ -345,11 +355,12 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     }
 
     private void fetchAppContactFromDb() {
-        List<ContactsInfo> newContactsInfoList = ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
-                .queryAll();
+        List<ContactsInfo> newContactsInfoList = ContactsDbAdapter.getInstance(getContext(),
+                UserInfoCacheManager.getUserId(getContext())).queryAll();
         ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(), newContactsInfoList);
         ContactsInfoManager.getInstance().cacheAppContactInfo(newContactsInfoList);
-        sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, newContactsInfoList);
+        sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID,
+                newContactsInfoList);
     }
 
     private void fetchAppContactsFromServer() {
@@ -370,7 +381,8 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 // 将服务器的数据ContactBean转换成本地的ContactInfo
                 ContactList contactList = new ContactList();
                 if (null == contactBeanList) {
-                    sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, contactList.get());
+                    sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID,
+                            contactList.get());
                     return;
                 }
                 for (ContactBean contactBean : contactBeanList) {
@@ -379,14 +391,18 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 List<ContactsInfo> contactsInfoList = contactList.get();
 
                 // 汉字转拼音并进行排序
-                ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(), contactsInfoList);
+                ContactsInfoManager.getInstance().sortContactsInfoLst(getContext(),
+                        contactsInfoList);
                 // 替换数据库中的旧数据
-                ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).delAll();
-                ContactsDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).add(contactsInfoList);
+                ContactsDbAdapter.getInstance(getContext(),
+                        UserInfoCacheManager.getUserId(getContext())).delAll();
+                ContactsDbAdapter.getInstance(getContext(),
+                        UserInfoCacheManager.getUserId(getContext())).add(contactsInfoList);
                 ContactsInfoManager.getInstance().cacheAppContactInfo(contactsInfoList);
 
                 // 通知界面更新数据
-                sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID, contactsInfoList);
+                sendMessage(BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID,
+                        contactsInfoList);
             }
 
             /**
@@ -414,6 +430,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
             }
         });
     }
+
     /***/
     public void queryContactCallRecords(final ContactsInfo contactsInfo) {
         ThreadPoolUtil.execute(new ThreadTask() {
@@ -426,7 +443,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                     return;
                 }
 
-
                 List<NumberInfo> numberInfoList = contactsInfo.getNumberLst();
                 if (null == numberInfoList) {
                     sendMessage(BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID,
@@ -439,7 +455,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 for (int i = 0; i < numberSize; i++) {
                     String number = numberInfoList.get(i).getNumber();
                     numberList.add(CommonUtils.getPhoneNumber(number));
-                    numberList.add("92"+CommonUtils.getPhoneNumber(number));
+                    numberList.add("92" + CommonUtils.getPhoneNumber(number));
                 }
                 String[] numbers = new String[numberList.size()];
                 numbers = numberList.toArray(numbers);
@@ -448,10 +464,12 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
 
                 List<DialInfoGroup> dialInfoGroupList = callRecord2DialInfoGroup(callRecordList);
 
-                sendMessage(BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID, dialInfoGroupList);
+                sendMessage(BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID,
+                        dialInfoGroupList);
             }
         });
     }
+
     /***/
     public void deleteContactCallRecords(final ContactsInfo contactsInfo) {
         ThreadPoolUtil.execute(new ThreadTask() {
@@ -461,7 +479,6 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                     sendEmptyMessage(BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID);
                     return;
                 }
-
 
                 List<NumberInfo> numberInfoList = contactsInfo.getNumberLst();
                 if (null == numberInfoList) {
@@ -474,7 +491,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 for (int i = 0; i < numberSize; i++) {
                     String number = numberInfoList.get(i).getNumber();
                     numberList.add(CommonUtils.getPhoneNumber(number));
-                    numberList.add("92"+CommonUtils.getPhoneNumber(number));
+                    numberList.add("92" + CommonUtils.getPhoneNumber(number));
                 }
                 String[] numbers = new String[numberList.size()];
                 numbers = numberList.toArray(numbers);

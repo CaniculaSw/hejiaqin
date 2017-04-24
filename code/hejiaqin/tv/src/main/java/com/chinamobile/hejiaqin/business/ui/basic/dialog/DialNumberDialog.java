@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
-import com.chinamobile.hejiaqin.tv.R;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.tv.R;
 
 import java.util.List;
 
@@ -27,7 +27,8 @@ public class DialNumberDialog extends Dialog {
     private IContactsLogic mContactsLogic;
     private boolean mIsAPP;
 
-    public DialNumberDialog(Context context, int theme, ContactsInfo contactsInfo,IVoipLogic voipLogic,IContactsLogic contactsLogic,boolean isAPP) {
+    public DialNumberDialog(Context context, int theme, ContactsInfo contactsInfo,
+                            IVoipLogic voipLogic, IContactsLogic contactsLogic, boolean isAPP) {
         super(context, theme);
         mContactsInfo = contactsInfo;
         this.mVoipLogic = voipLogic;
@@ -44,7 +45,8 @@ public class DialNumberDialog extends Dialog {
         if (null != mContactsInfo && null != mContactsInfo.getNumberLst()) {
             List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
             for (NumberInfo numberInfo : numberInfoList) {
-                View numberInfoView = LayoutInflater.from(getContext()).inflate(R.layout.view_number_info, null);
+                View numberInfoView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.view_number_info, null);
                 TextView textView = (TextView) numberInfoView.findViewById(R.id.text);
 
                 final String number = numberInfo.getNumber();
@@ -54,7 +56,8 @@ public class DialNumberDialog extends Dialog {
                 numberInfoView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        VideoOutDialog.show(getContext(), number, mVoipLogic, mContactsLogic,mIsAPP);
+                        VideoOutDialog.show(getContext(), number, mVoipLogic, mContactsLogic,
+                                mIsAPP);
                     }
                 });
 
@@ -63,6 +66,5 @@ public class DialNumberDialog extends Dialog {
         }
         cancelLayout = (LinearLayout) findViewById(R.id.cancel_layout);
     }
-
 
 }

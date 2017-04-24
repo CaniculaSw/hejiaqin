@@ -113,10 +113,12 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     showToast(R.string.server_side_error, Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.SettingMsgID.NEW_FORCE_VERSION_AVAILABLE:
-                    new UpdateManger(BasicFragmentActivity.this).showForcedUpdateDialog((VersionInfo) msg.obj);
+                    new UpdateManger(BasicFragmentActivity.this)
+                            .showForcedUpdateDialog((VersionInfo) msg.obj);
                     break;
                 case BussinessConstants.SettingMsgID.NEW_VERSION_AVAILABLE:
-                    new UpdateManger(BasicFragmentActivity.this).showNoticeDialog((VersionInfo) msg.obj);
+                    new UpdateManger(BasicFragmentActivity.this)
+                            .showNoticeDialog((VersionInfo) msg.obj);
                     break;
                 case BussinessConstants.SettingMsgID.NO_NEW_VERSION_AVAILABLE:
                     UserInfoCacheManager.clearVersionInfo(getApplicationContext());
@@ -135,7 +137,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     if (msg.obj != null) {
                         UserList userList = new UserList();
                         userList.setUsers((List<UserInfo>) msg.obj);
-                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(), userList);
+                        UserInfoCacheManager.saveBindDeviceToLoacl(getApplicationContext(),
+                                userList);
                         UserInfoCacheManager.saveBindDeviceToMem(getApplicationContext(), userList);
                     }
                     break;
@@ -173,15 +176,17 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     private void startPermissionsActivity(String[] needPermissions) {
         Intent intent = new Intent(BasicFragmentActivity.this, PermissionsActivity.class);
         intent.putExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS, needPermissions);
-        startActivityForResult(intent, BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
+        startActivityForResult(intent,
+                BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        super.onActivityResult(requestCode, resultCode, data); // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         switch (requestCode) {
             case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
-                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
+                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED
+                        && mIsNecessaryPermission) {
                     finish();
                 }
                 break;
@@ -206,6 +211,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
+
     /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
@@ -235,11 +241,13 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             waitDialog.cancel();
         }
     }
+
     /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
+
     /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;

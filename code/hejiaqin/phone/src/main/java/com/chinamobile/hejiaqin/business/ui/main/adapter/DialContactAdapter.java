@@ -21,18 +21,20 @@ import java.util.List;
 /**
  * Created by on 2016/7/20.
  */
-public class DialContactAdapter extends RecyclerView.Adapter  {
+public class DialContactAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private List<ContactsInfo> mData ;
+    private List<ContactsInfo> mData;
 
     public DialContactAdapter(Context context) {
         this.mContext = context;
         mData = new ArrayList<ContactsInfo>();
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holer = null;
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_dial_contact, parent, false);
+        View view = LayoutInflater.from(mContext)
+                .inflate(R.layout.item_dial_contact, parent, false);
         holer = new HolderView(view);
         return holer;
     }
@@ -49,7 +51,8 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
                     int position = (int) v.getTag();
                     Intent intent = new Intent(mContext, ContactInfoActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position));
+                    bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY,
+                            mData.get(position));
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }
@@ -58,11 +61,12 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
             tHolder.contactNumberTv.setText(Html.fromHtml(info.getSearchUnit().getNumberText()));
         }
     }
+
     /***/
     public void refreshData(List<ContactsInfo> data) {
-        if (data != null)  {
+        if (data != null) {
             mData = data;
-        }else{
+        } else {
             mData.clear();
         }
         notifyDataSetChanged();
@@ -75,6 +79,7 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
         }
         return mData.size();
     }
+
     /***/
     public class HolderView extends RecyclerView.ViewHolder {
 

@@ -22,7 +22,6 @@ public class NumberInfo implements Serializable {
      */
     private int type;
 
-
     public String getNumber() {
         return number;
     }
@@ -65,10 +64,7 @@ public class NumberInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "NumberInfo{" +
-                "number='" + number + '\'' +
-                ", type=" + type +
-                ", desc='" + getDesc() + '\'' +
-                '}';
+        return "NumberInfo{" + "number='" + number + '\'' + ", type=" + type + ", desc='"
+                + getDesc() + '\'' + '}';
     }
 }

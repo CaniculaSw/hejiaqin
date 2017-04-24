@@ -76,6 +76,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
     public void dismiss() {
         super.dismiss();
     }
+
     /***/
     public static void show(Activity activity) {
         UpdateDialog videoInComingDialog = new UpdateDialog(activity, R.style.CalendarDialog);
@@ -89,6 +90,7 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         videoInComingDialog.setCancelable(false);
         videoInComingDialog.show();
     }
+
     /***/
     public static void show(Activity activity, String text) {
         UpdateDialog videoInComingDialog = new UpdateDialog(activity, R.style.CalendarDialog, text);
@@ -102,21 +104,21 @@ public class UpdateDialog extends Dialog implements View.OnClickListener {
         videoInComingDialog.setCancelable(false);
         videoInComingDialog.show();
     }
+
     /***/
-    public static void show(Activity activity, String text,boolean isCanBack){
+    public static void show(Activity activity, String text, boolean isCanBack) {
         canBack = isCanBack;
-        show(activity,text);
+        show(activity, text);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.logout_button:
-                if (canBack){
+                if (canBack) {
                     canBack = false;
                     dismiss();
-                }
-                else {
+                } else {
                     canBack = false;
                     dismiss();
                     MyActivityManager.getInstance().finishAllActivity(null);

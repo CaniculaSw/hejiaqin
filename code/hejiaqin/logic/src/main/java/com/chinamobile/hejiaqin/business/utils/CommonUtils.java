@@ -46,7 +46,6 @@ import java.io.IOException;
 /***/
 public class CommonUtils {
 
-
     /**检测SD card是否存在*/
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
@@ -123,7 +122,7 @@ public class CommonUtils {
             e.printStackTrace();
         } finally {
             try {
-                if (fOut!=null) {
+                if (fOut != null) {
                     fOut.close();
                 }
             } catch (IOException e) {
@@ -144,7 +143,8 @@ public class CommonUtils {
     }
 
     public static UserInfo getLocalUserInfo() {
-        return (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        return (UserInfo) StorageMgr.getInstance().getMemStorage()
+                .getObject(BussinessConstants.Login.USER_INFO_KEY);
     }
 
     public static String getTvNumber(String number) {
@@ -200,7 +200,6 @@ public class CommonUtils {
             return false;
         }
 
-
         String newPhoneNumber = getPhoneNumber(phoneNumber);
         if (StringUtil.isMobileNO(newPhoneNumber)) {
             return true;
@@ -215,13 +214,15 @@ public class CommonUtils {
             return false;
         }
 
-        if (settingInfo.isInAutoAnswerList(getPhoneNumber(incomingNum)) ||
-                settingInfo.isInAutoAnswerList(CommonUtils.getTvNumberWithZero(getPhoneNumber(incomingNum)))) {
+        if (settingInfo.isInAutoAnswerList(getPhoneNumber(incomingNum))
+                || settingInfo.isInAutoAnswerList(CommonUtils
+                        .getTvNumberWithZero(getPhoneNumber(incomingNum)))) {
             return true;
         }
 
         return false;
     }
+
     /***/
     public static String formatTvNum(String tvNum) {
         if (StringUtil.isNullOrEmpty(tvNum)) {

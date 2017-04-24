@@ -12,6 +12,7 @@ import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.customer.framework.utils.LogUtil;
+
 /***/
 public class MainActivity extends BasicActivity {
 
@@ -60,17 +61,19 @@ public class MainActivity extends BasicActivity {
     protected void initLogics() {
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
         settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
-        mVoipLogic =  (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
-    private void jumpToMainFragmentActivity(){
+
+    private void jumpToMainFragmentActivity() {
         Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
         LogUtil.d(tag, "Init the CMIM SDK");
         loginLogic.initCMIMSdk();
-//        settingLogic.checkVersion();
+        //        settingLogic.checkVersion();
         startActivity(intent);
         finish();
     }
-    private void jumpToLoginActivity(){
+
+    private void jumpToLoginActivity() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();

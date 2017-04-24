@@ -17,13 +17,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
 /***/
 public class TokenRefreshNetOption extends NetOption {
 
     private String tokenRefreshUrl = "/user/refreshToken";
     private Context mContext;
 
-    public TokenRefreshNetOption(Context context){
+    public TokenRefreshNetOption(Context context) {
         this.mContext = context;
     }
 
@@ -35,10 +36,11 @@ public class TokenRefreshNetOption extends NetOption {
     @Override
     protected String getBody() {
         NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
-        String infoStr =  StorageMgr.getInstance().getSharedPStorage(getContext()).getString(BussinessConstants.Login.USER_INFO_KEY);
+        String infoStr = StorageMgr.getInstance().getSharedPStorage(getContext())
+                .getString(BussinessConstants.Login.USER_INFO_KEY);
         if (infoStr != null) {
             Gson gson = new Gson();
-            UserInfo info = gson.fromJson(infoStr,UserInfo.class);
+            UserInfo info = gson.fromJson(infoStr, UserInfo.class);
             reqBody.setToken(info.getToken());
         }
         return reqBody.toBody();
@@ -62,14 +64,14 @@ public class TokenRefreshNetOption extends NetOption {
     @Override
     protected Object handleResponse(NetResponse response) {
         Object obj = null;
-        if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())){
+        if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())) {
             try {
                 String data = "";
                 JSONObject rootJsonObj = new JSONObject(response.getData());
                 Gson gson = new Gson();
                 data = rootJsonObj.get("data").toString();
                 obj = gson.fromJson(data, UserInfo.class);
-            }catch (JSONException e) {
+            } catch (JSONException e) {
                 LogUtil.e("TokenRefreshNetOption", e.toString());
             }
         }
@@ -80,6 +82,7 @@ public class TokenRefreshNetOption extends NetOption {
     public Context getContext() {
         return mContext;
     }
+
     /***/
     public void send(final INetCallBack httpCallback) {
         super.send(httpCallback);

@@ -45,7 +45,6 @@ public class TvSettingInfo {
         this.numberFour = CommonUtils.getPhoneNumber(numberFour);
     }
 
-
     public boolean isAutoAnswer() {
         return isAutoAnswer;
     }
@@ -58,10 +57,12 @@ public class TvSettingInfo {
 
         if (!isAutoAnswer) {
             return false;
-        } else if (StringUtil.isNullOrEmpty(numberOne) && StringUtil.isNullOrEmpty(numberTwo) && StringUtil.isNullOrEmpty(numberThree) && StringUtil.isNullOrEmpty(numberFour)) {
+        } else if (StringUtil.isNullOrEmpty(numberOne) && StringUtil.isNullOrEmpty(numberTwo)
+                && StringUtil.isNullOrEmpty(numberThree) && StringUtil.isNullOrEmpty(numberFour)) {
             return true;
         } else {
-            return inNumber.equals(numberOne) || inNumber.equals(numberTwo) || inNumber.equals(numberThree) || inNumber.equals(numberFour);
+            return inNumber.equals(numberOne) || inNumber.equals(numberTwo)
+                    || inNumber.equals(numberThree) || inNumber.equals(numberFour);
         }
     }
 }

@@ -9,8 +9,7 @@ public class SearchResultContacts {
     private String invoker;
     private List<ContactsInfo> contactsInfos;
 
-    public SearchResultContacts(String invoker,List<ContactsInfo> contactsInfos)
-    {
+    public SearchResultContacts(String invoker, List<ContactsInfo> contactsInfos) {
         this.invoker = invoker;
         this.contactsInfos = contactsInfos;
     }

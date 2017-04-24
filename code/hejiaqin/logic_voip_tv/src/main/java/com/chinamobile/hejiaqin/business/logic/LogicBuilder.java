@@ -20,7 +20,6 @@ import com.customer.framework.logic.BuilderImp;
  */
 public class LogicBuilder extends BuilderImp {
 
-
     /**
      * 构造方法，首先执行BaseLogicBuilder子类的init方法，然后对所有logic进行初始化。
      *

@@ -19,17 +19,18 @@ import java.util.List;
  */
 public abstract class AbsHttpManager extends NetOptionWithToken {
 
-
     protected void send(final Object invoker, final IHttpCallBack callBack) {
 
         super.send(new INetCallBack() {
             @Override
             public void onResult(NetResponse response) {
                 if (response.getResponseCode() == NetResponse.ResponseCode.Succeed) {
-                    if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response.getResultCode())) {
+                    if (BussinessConstants.HttpCommonCode.COMMON_SUCCESS_CODE.equals(response
+                            .getResultCode())) {
                         callBack.onSuccessful(invoker, response.getObj());
                     } else {
-                        callBack.onFailure(invoker, response.getResultCode(), response.getResultDesc());
+                        callBack.onFailure(invoker, response.getResultCode(),
+                                response.getResultDesc());
                     }
                 } else {
                     callBack.onNetWorkError(response.getResponseCode());
@@ -51,13 +52,19 @@ public abstract class AbsHttpManager extends NetOptionWithToken {
         }
 
         //增加IMEI值(使用IMEI+MAC地址)
-        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_IMEI, SysInfoUtil.getAppUniqueId(getContext())));
+        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_IMEI,
+                SysInfoUtil.getAppUniqueId(getContext())));
         //增加类型
-        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_MOBILE_TYPE, BussinessConstants.CommonInfo.MOBILE_TYPE_ANDROID));
+        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_MOBILE_TYPE,
+                BussinessConstants.CommonInfo.MOBILE_TYPE_ANDROID));
         //增加名称
-        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_MOBILE_NAME, SysInfoUtil.getModel()));
+        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_MOBILE_NAME,
+                SysInfoUtil.getModel()));
         //增加系统版本
-        properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_MOBILE_VERSION, SysInfoUtil.getOsRelease()));
+        properties
+                .add(new BasicNameValuePair(
+                        BussinessConstants.HttpHeaderInfo.HEADER_MOBILE_VERSION, SysInfoUtil
+                                .getOsRelease()));
         return properties;
     }
 

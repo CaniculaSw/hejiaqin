@@ -11,14 +11,15 @@
         android:layout_height="55dp"
         android:background="@color/white"
         android:orientation="horizontal">
+
         <CheckBox
             android:id="@+id/more_select_contact_cb"
             style="@style/MoreDeleteMsgCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            />
+            android:layout_marginLeft="16dp" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_photo_img"
             android:layout_width="40dp"

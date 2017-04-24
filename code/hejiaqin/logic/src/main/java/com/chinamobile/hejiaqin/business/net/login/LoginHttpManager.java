@@ -48,7 +48,6 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     private static final int CHECK_VERIFY_CODE_ACTION = ACTION_BASE + 2;
 
-
     /**
      * 注册网络请求第二步
      */
@@ -68,7 +67,6 @@ public class LoginHttpManager extends AbsHttpManager {
      * 修改密码请求
      */
     private static final int UPDATE_PWD_ACTION = ACTION_BASE + 7;
-
 
     /**
      * 修改用户头像
@@ -282,7 +280,8 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param phoneReqBody 用户id 手机号码
      * @param callBack     回调监听
      */
-    public void getVerifyCode(final Object invoker, final NVPReqBody phoneReqBody, final IHttpCallBack callBack) {
+    public void getVerifyCode(final Object invoker, final NVPReqBody phoneReqBody,
+                              final IHttpCallBack callBack) {
         this.mAction = GET_VERIFY_CODE_ACTION;
         this.mData = phoneReqBody;
         send(invoker, callBack);
@@ -295,7 +294,8 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param phoneReqBody 用户id 手机号码
      * @param callBack     回调监听
      */
-    public void getResetPasswordCode(final Object invoker, final NVPReqBody phoneReqBody, final IHttpCallBack callBack) {
+    public void getResetPasswordCode(final Object invoker, final NVPReqBody phoneReqBody,
+                                     final IHttpCallBack callBack) {
         this.mAction = FORGET_PASSWORD_CODE_ACTION;
         this.mData = phoneReqBody;
         send(invoker, callBack);
@@ -308,7 +308,8 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param verifyInfo 用户id 手机号码
      * @param callBack   回调监听
      */
-    public void checkVerifyCode(final Object invoker, final VerifyInfo verifyInfo, final IHttpCallBack callBack) {
+    public void checkVerifyCode(final Object invoker, final VerifyInfo verifyInfo,
+                                final IHttpCallBack callBack) {
         this.mAction = CHECK_VERIFY_CODE_ACTION;
         this.mData = verifyInfo;
         send(invoker, callBack);
@@ -321,7 +322,8 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param verifyInfo 用户id 手机号码
      * @param callBack   回调监听
      */
-    public void checkResetPasswordCode(final Object invoker, final VerifyInfo verifyInfo, final IHttpCallBack callBack) {
+    public void checkResetPasswordCode(final Object invoker, final VerifyInfo verifyInfo,
+                                       final IHttpCallBack callBack) {
         this.mAction = CHECK_FORGET_PASSWORD_CODE_ACTION;
         this.mData = verifyInfo;
         send(invoker, callBack);
@@ -334,7 +336,8 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param registerInfo 注册信息
      * @param callBack     回调监听
      */
-    public void registerSecondStep(final Object invoker, final RegisterSecondStepInfo registerInfo, final IHttpCallBack callBack) {
+    public void registerSecondStep(final Object invoker, final RegisterSecondStepInfo registerInfo,
+                                   final IHttpCallBack callBack) {
         this.mAction = REGISTER_SECOND_STEP_ACTION;
         this.mData = registerInfo;
         send(invoker, callBack);
@@ -354,14 +357,16 @@ public class LoginHttpManager extends AbsHttpManager {
     }
 
     /***/
-    public void tvLogin(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
+    public void tvLogin(final Object invoker, final TvLoginInfo loginInfo,
+                        final IHttpCallBack callBack) {
         this.mAction = TV_LOGIN_ACTION;
         this.mData = loginInfo;
         send(invoker, callBack);
     }
 
     /***/
-    public void checkTvAccount(final Object invoker, final TvLoginInfo loginInfo, final IHttpCallBack callBack) {
+    public void checkTvAccount(final Object invoker, final TvLoginInfo loginInfo,
+                               final IHttpCallBack callBack) {
         this.mAction = CHECK_TV_ACCOUNT;
         this.mData = loginInfo;
         send(invoker, callBack);
@@ -385,27 +390,31 @@ public class LoginHttpManager extends AbsHttpManager {
      * @param invoker  调用者(用来区分不同的调用场景，差异化实现回调逻辑)
      * @param callBack 回调监听
      */
-    public void updatePassword(final Object invoker, final PasswordInfo info, final IHttpCallBack callBack) {
+    public void updatePassword(final Object invoker, final PasswordInfo info,
+                               final IHttpCallBack callBack) {
         this.mAction = UPDATE_PWD_ACTION;
         this.mData = info;
         send(invoker, callBack);
     }
 
     /***/
-    public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto, final IHttpCallBack callBack) {
+    public void updatePhoto(final Object invoker, final UpdatePhotoReq updatePhoto,
+                            final IHttpCallBack callBack) {
         this.mAction = this.UPDATE_PHOTO;
         this.mData = updatePhoto;
         send(invoker, callBack);
     }
 
     /***/
-    public void feedBack(final Object invoker, final FeedBackReq feedBackReq, final IHttpCallBack callBack) {
+    public void feedBack(final Object invoker, final FeedBackReq feedBackReq,
+                         final IHttpCallBack callBack) {
         this.mAction = FEED_BACK;
         this.mData = feedBackReq;
         send(invoker, callBack);
     }
 
-    public void getUserInfo(final Object invoker, final NVPWithTokenReqBody reqBody, final IHttpCallBack callBack) {
+    public void getUserInfo(final Object invoker, final NVPWithTokenReqBody reqBody,
+                            final IHttpCallBack callBack) {
         this.mAction = GET_USER_INFO_ACTION;
         this.mData = reqBody;
         send(invoker, callBack);

@@ -20,7 +20,7 @@ import com.customer.framework.utils.StringUtil;
  * Created by eshaohu on 16/8/24.
  */
 public class AutoAnswerSettingFragment extends BasicFragment implements View.OnClickListener {
-//    ISettingLogic settingLogic;
+    //    ISettingLogic settingLogic;
     HeaderView headerView;
     LinearLayout yes;
     LinearLayout no;
@@ -39,7 +39,7 @@ public class AutoAnswerSettingFragment extends BasicFragment implements View.OnC
     @Override
     protected void initLogics() {
         super.initLogics();
-//        settingLogic = (SettingLogic) getLogicBuilder().getLogicByInterfaceClass(ISettingLogic.class);
+        //        settingLogic = (SettingLogic) getLogicBuilder().getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -106,10 +106,18 @@ public class AutoAnswerSettingFragment extends BasicFragment implements View.OnC
 
     private void updateSettingUI() {
         TvSettingInfo settingInfo = UserInfoCacheManager.getUserSettingInfo(getContext());
-        numberOne.setText(StringUtil.isNullOrEmpty(settingInfo.getNumberOne()) ? getString(R.string.number_one) : settingInfo.getNumberOne());
-        numberTwo.setText(StringUtil.isNullOrEmpty(settingInfo.getNumberTwo()) ? getString(R.string.number_two) : settingInfo.getNumberTwo());
-        numberThree.setText(StringUtil.isNullOrEmpty(settingInfo.getNumberThree()) ? getString(R.string.number_three) : settingInfo.getNumberThree());
-        numberFour.setText(StringUtil.isNullOrEmpty(settingInfo.getNumberFour()) ? getString(R.string.number_four) : settingInfo.getNumberFour());
+        numberOne
+                .setText(StringUtil.isNullOrEmpty(settingInfo.getNumberOne()) ? getString(R.string.number_one)
+                        : settingInfo.getNumberOne());
+        numberTwo
+                .setText(StringUtil.isNullOrEmpty(settingInfo.getNumberTwo()) ? getString(R.string.number_two)
+                        : settingInfo.getNumberTwo());
+        numberThree
+                .setText(StringUtil.isNullOrEmpty(settingInfo.getNumberThree()) ? getString(R.string.number_three)
+                        : settingInfo.getNumberThree());
+        numberFour
+                .setText(StringUtil.isNullOrEmpty(settingInfo.getNumberFour()) ? getString(R.string.number_four)
+                        : settingInfo.getNumberFour());
     }
 
     private void showNumberSettingBtn(boolean isYes) {
@@ -167,11 +175,10 @@ public class AutoAnswerSettingFragment extends BasicFragment implements View.OnC
         }
     }
 
-
-    private void inputNumberSetting(String number,String id) {
+    private void inputNumberSetting(String number, String id) {
         Intent intent = new Intent(getActivity(), AutoAnswerNumberSettingDialog.class);
         intent.putExtra("number", number);
-        intent.putExtra("id",id);
+        intent.putExtra("id", id);
         startActivity(intent);
     }
 

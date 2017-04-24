@@ -55,7 +55,7 @@ public class VideoInComingDialog extends BasicActivity {
     @Override
     protected void initLogics() {
         mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
-        mContactsLogic  = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
+        mContactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
     }
 
     @Override
@@ -68,15 +68,15 @@ public class VideoInComingDialog extends BasicActivity {
         mCallerIv = (CircleImageView) findViewById(R.id.caller_iv);
         mCallerNameTv = (TextView) findViewById(R.id.caller_name_tv);
         mCallerNumberTv = (TextView) findViewById(R.id.caller_number_tv);
-        long sessionId = getIntent().getLongExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, CallSession.INVALID_ID);
+        long sessionId = getIntent().getLongExtra(
+                BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, CallSession.INVALID_ID);
         mCallSession = CallApi.getCallSessionById(sessionId);
         if (mCallSession == null) {
             finish();
             return;
         }
-        mOperationLayout = (RelativeLayout)findViewById(R.id.call_operation_layout);
-        findViewById(R.id.answer_call_layout).setOnClickListener(new View.OnClickListener()
-        {
+        mOperationLayout = (RelativeLayout) findViewById(R.id.call_operation_layout);
+        findViewById(R.id.answer_call_layout).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -84,16 +84,14 @@ public class VideoInComingDialog extends BasicActivity {
                     LogUtil.w(TAG, "is closed");
                     return;
                 }
-                if(onClickAnswer)
-                {
+                if (onClickAnswer) {
                     return;
                 }
                 mVoipLogic.answerVideo(mCallSession);
                 onClickAnswer = true;
             }
         });
-        findViewById(R.id.reject_call_layout).setOnClickListener(new View.OnClickListener()
-        {
+        findViewById(R.id.reject_call_layout).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -101,7 +99,7 @@ public class VideoInComingDialog extends BasicActivity {
                 finish();
             }
         });
-        mAutoRejectLayout = (LinearLayout)findViewById(R.id.auto_reject_call_layout);
+        mAutoRejectLayout = (LinearLayout) findViewById(R.id.auto_reject_call_layout);
         mAutoRejectLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -111,9 +109,8 @@ public class VideoInComingDialog extends BasicActivity {
             }
         });
         showIncoming();
-        if(CommonUtils.isAutoAnswer(getApplicationContext(), mCallSession.getPeer().getNumber()))
-        {
-            ((TextView)findViewById(R.id.call_status_tv)).setText(R.string.auto_answer_status);
+        if (CommonUtils.isAutoAnswer(getApplicationContext(), mCallSession.getPeer().getNumber())) {
+            ((TextView) findViewById(R.id.call_status_tv)).setText(R.string.auto_answer_status);
             mOperationLayout.setVisibility(View.GONE);
             mAutoRejectLayout.setVisibility(View.VISIBLE);
             mVoipLogic.answerVideo(mCallSession);
@@ -131,18 +128,18 @@ public class VideoInComingDialog extends BasicActivity {
     }
 
     private void showIncoming() {
-        String incomingNumber = CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(mCallSession.getPeer().getNumber()));
+        String incomingNumber = CommonUtils.getTvNumberWithZero(CommonUtils
+                .getPhoneNumber(mCallSession.getPeer().getNumber()));
         // 查询姓名和头像信息
         ContactsInfo info = searchContactInfo(incomingNumber);
         if (info != null) {
-            if(!StringUtil.isNullOrEmpty(info.getName())) {
+            if (!StringUtil.isNullOrEmpty(info.getName())) {
                 mCallerNameTv.setText(info.getName());
                 mCallerNameTv.setVisibility(View.VISIBLE);
             }
             mCallerNumberTv.setText(incomingNumber);
             if (!StringUtil.isNullOrEmpty(info.getPhotoSm())) {
-                Picasso.with(getApplicationContext())
-                        .load(info.getPhotoSm())
+                Picasso.with(getApplicationContext()).load(info.getPhotoSm())
                         .placeholder(R.drawable.contact_photo_default)
                         .error(R.drawable.contact_photo_default).into(mCallerIv);
             }
@@ -161,8 +158,10 @@ public class VideoInComingDialog extends BasicActivity {
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())
-                            ||  CommonUtils.getPhoneNumber(phoneNumber).equals("92" + numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(
+                            numberInfo.getNumberNoCountryCode())
+                            || CommonUtils.getPhoneNumber(phoneNumber).equals(
+                                    "92" + numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -175,8 +174,10 @@ public class VideoInComingDialog extends BasicActivity {
             }
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
-                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(numberInfo.getNumberNoCountryCode())
-                            ||  CommonUtils.getPhoneNumber(phoneNumber).equals("92" + numberInfo.getNumberNoCountryCode())) {
+                    if (CommonUtils.getPhoneNumber(phoneNumber).equals(
+                            numberInfo.getNumberNoCountryCode())
+                            || CommonUtils.getPhoneNumber(phoneNumber).equals(
+                                    "92" + numberInfo.getNumberNoCountryCode())) {
                         return contactsInfo;
                     }
                 }
@@ -185,27 +186,29 @@ public class VideoInComingDialog extends BasicActivity {
 
         return null;
     }
+
     /***/
     public void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
-                if(!closed)
-                {
+                if (!closed) {
                     mVoipLogic.dealOnClosed(mCallSession, true, false, 0);
                     closed = true;
                 }
                 finish();
                 break;
             case BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID:
-                if(Const.getDeviceType() == Const.TYPE_OTHER) {
-                    LogUtil.d(TAG,"VtVideoCallActivity incoming");
-                    Intent intentTalking = new Intent(VideoInComingDialog.this, VtVideoCallActivity.class);
+                if (Const.getDeviceType() == Const.TYPE_OTHER) {
+                    LogUtil.d(TAG, "VtVideoCallActivity incoming");
+                    Intent intentTalking = new Intent(VideoInComingDialog.this,
+                            VtVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
                     startActivity(intentTalking);
-                } else{
-                    LogUtil.d(TAG,"VtVideoCallActivity incoming");
-                    Intent intentTalking = new Intent(VideoInComingDialog.this, StbVideoCallActivity.class);
+                } else {
+                    LogUtil.d(TAG, "VtVideoCallActivity incoming");
+                    Intent intentTalking = new Intent(VideoInComingDialog.this,
+                            StbVideoCallActivity.class);
                     intentTalking.putExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, true);
                     startActivity(intentTalking);
                 }
@@ -218,7 +221,8 @@ public class VideoInComingDialog extends BasicActivity {
                         mVoipLogic.dealOnClosed(mCallSession, true, false, 0);
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT,
+                                    null);
                         }
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -226,7 +230,8 @@ public class VideoInComingDialog extends BasicActivity {
                                 finish();
                             }
                         }, 3000);
-                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                    } else if (session != null
+                            && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }

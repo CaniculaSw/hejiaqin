@@ -107,8 +107,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                 case BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID:
                     showToast(R.string.kick_out, Toast.LENGTH_SHORT, null);
                     ((ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class)).logout();
-//                    Intent intent = new Intent(this, LoginActivity.class);
-//                    this.startActivity(intent);
+                    //                    Intent intent = new Intent(this, LoginActivity.class);
+                    //                    this.startActivity(intent);
                     this.finishAllActivity(null);
                     break;
                 case BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR:
@@ -120,13 +120,17 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     showBindRequest(message);
                     break;
                 case BussinessConstants.SettingMsgID.SEND_CONTACT_REQUEST:
-                    settingLogic = (ISettingLogic) super.getLogicByInterfaceClass(ISettingLogic.class);
+                    settingLogic = (ISettingLogic) super
+                            .getLogicByInterfaceClass(ISettingLogic.class);
                     TextMessage req = (TextMessage) msg.obj;
-                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(), XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
-                        settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
+                    if (!UserInfoCacheManager.isBindedApp(getApplicationContext(),
+                            XmlParseUtil.getElemString(req.getContent(), "Param3"))) {
+                        settingLogic.sendContact(req.getPeer().getNumber(),
+                                CaaSUtil.OpCode.SEND_CONTACT_RESPOND_DENIDE, null);
                         break;
                     }
-                    IContactsLogic contactsLogic = (IContactsLogic) super.getLogicByInterfaceClass(IContactsLogic.class);
+                    IContactsLogic contactsLogic = (IContactsLogic) super
+                            .getLogicByInterfaceClass(IContactsLogic.class);
                     String names = XmlParseUtil.getElemString(req.getContent(), "Param1");
                     String numbers = XmlParseUtil.getElemString(req.getContent(), "Param2");
                     String[] nameList = names.split(";");
@@ -134,7 +138,8 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
                     for (int i = 0; i < nameList.length; i++) {
                         contactsLogic.addAppContact(nameList[i], numList[i], null);
                     }
-                    settingLogic.sendContact(req.getPeer().getNumber(), CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
+                    settingLogic.sendContact(req.getPeer().getNumber(),
+                            CaaSUtil.OpCode.SEND_CONTACT_RESPOND_SUCCESS, null);
                     showToast("保存联系人成功", Toast.LENGTH_SHORT, null);
                     break;
                 case BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID:
@@ -185,15 +190,17 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     private void startPermissionsActivity(String[] needPermissions) {
         Intent intent = new Intent(BasicFragmentActivity.this, PermissionsActivity.class);
         intent.putExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS, needPermissions);
-        startActivityForResult(intent, BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
+        startActivityForResult(intent,
+                BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        super.onActivityResult(requestCode, resultCode, data); // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         switch (requestCode) {
             case BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE:
-                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED && mIsNecessaryPermission) {
+                if (resultCode == BussinessConstants.CommonInfo.PERMISSIONS_DENIED
+                        && mIsNecessaryPermission) {
                     finish();
                 }
                 break;
@@ -218,6 +225,7 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
     protected void showToast(String text, int duration, MyToast.Position pos) {
         myToast.showToast(text, duration, pos);
     }
+
     /***/
     public void showToast(View view, int duration, MyToast.Position pos) {
         myToast.showToast(view, duration, pos);
@@ -247,11 +255,13 @@ public abstract class BasicFragmentActivity extends BaseFragmentActivity {
             waitDialog.cancel();
         }
     }
+
     /***/
     public void doNetWorkConnect() {
         this.networkConnected = true;
 
     }
+
     /***/
     public void doNetworkDisConnect() {
         this.networkConnected = false;

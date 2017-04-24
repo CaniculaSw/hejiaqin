@@ -63,7 +63,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:visibility="visible"
-        android:layout_marginRight="6dp"/>
+        android:layout_marginRight="6dp" />
 
     <ImageView
         android:id="@+id/back_iv"
@@ -75,7 +75,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:visibility="visible"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp" />
 
     <ImageView
         android:id="@+id/logo_iv"

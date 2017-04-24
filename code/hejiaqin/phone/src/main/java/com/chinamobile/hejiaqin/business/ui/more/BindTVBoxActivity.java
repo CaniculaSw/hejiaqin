@@ -43,7 +43,7 @@ public class BindTVBoxActivity extends BasicActivity implements View.OnClickList
                     bindedList.addAll((List<UserInfo>) msg.obj);
                     adapter.setData(bindedList);
                     adapter.notifyDataSetChanged();
-//                    showToast("设备列表更新成功", Toast.LENGTH_SHORT, null);
+                    //                    showToast("设备列表更新成功", Toast.LENGTH_SHORT, null);
                 }
                 break;
             case BussinessConstants.SettingMsgID.UPDATE_DEVICE_LIST_REQUEST:

@@ -92,7 +92,7 @@ public class SearchContactAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-   static class ViewHolder {
+    static class ViewHolder {
         TextView nameText;
         TextView numberText;
         View convertView;

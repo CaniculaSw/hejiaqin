@@ -25,10 +25,10 @@ import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.ServiceContractDialog;
 import com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity;
 import com.chinamobile.hejiaqin.tv.R;
-import com.customer.framework.component.threadpool.ThreadPoolUtil;
-import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.qrcode.QRCodeEncoder;
 import com.customer.framework.component.qrcode.core.DisplayUtils;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.huawei.rcs.log.LogApi;
 
@@ -99,7 +99,7 @@ public class CreateAccountActivity extends BasicActivity implements View.OnClick
                 registerBtn.setFocusable(true);
                 registerBtn.requestFocus();
                 registingDialog.dismiss();
-//                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+                //                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 FailResponse response = (FailResponse) msg.obj;
                 showUpdateDialog(response.getMsg());
                 logining = false;
@@ -185,20 +185,22 @@ public class CreateAccountActivity extends BasicActivity implements View.OnClick
 
     private void showUpdateDialog(String text) {
         UpdateDialog.show(this, text, true);
-//        finish();
+        //        finish();
     }
 
     private void createQRCode(String url, int size, final ImageView view) {
-        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(this, size), Color.parseColor("#000000"), Color.parseColor("#ffffff"), new QRCodeEncoder.Delegate() {
-            @Override
-            public void onEncodeQRCodeSuccess(Bitmap qrCode) {
-                view.setImageBitmap(qrCode);
-            }
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(this, size),
+                Color.parseColor("#000000"), Color.parseColor("#ffffff"),
+                new QRCodeEncoder.Delegate() {
+                    @Override
+                    public void onEncodeQRCodeSuccess(Bitmap qrCode) {
+                        view.setImageBitmap(qrCode);
+                    }
 
-            @Override
-            public void onEncodeQRCodeFailure() {
-                LogUtil.e(tag, "生成中文二维码失败");
-            }
-        });
+                    @Override
+                    public void onEncodeQRCodeFailure() {
+                        LogUtil.e(tag, "生成中文二维码失败");
+                    }
+                });
     }
 }

@@ -56,6 +56,7 @@ public class DialInfo {
     public void setType(Type type) {
         this.type = type;
     }
+
     /***/
     public static Type convertType(int type) {
         switch (type) {

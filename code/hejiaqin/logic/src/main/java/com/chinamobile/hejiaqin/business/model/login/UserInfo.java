@@ -1,4 +1,5 @@
 package com.chinamobile.hejiaqin.business.model.login;
+
 /***/
 public class UserInfo {
 
@@ -139,9 +140,9 @@ public class UserInfo {
     public void setName(String name) {
         this.name = name;
     }
+
     /***/
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
 
         builder.append("name:").append(name);

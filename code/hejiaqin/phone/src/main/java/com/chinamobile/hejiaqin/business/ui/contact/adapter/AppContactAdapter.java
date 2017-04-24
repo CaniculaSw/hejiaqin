@@ -82,9 +82,7 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.text.setText(contactsInfo.getName());
 
-
-        Picasso.with(mContext.getApplicationContext())
-                .load(contactsInfo.getPhotoSm())
+        Picasso.with(mContext.getApplicationContext()).load(contactsInfo.getPhotoSm())
                 .placeholder(R.drawable.contact_photo_default)
                 .error(R.drawable.contact_photo_default).into(holder.image);
 
@@ -93,7 +91,8 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ContactInfoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY,
+                        contactsInfo);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -155,7 +154,6 @@ public class AppContactAdapter extends BaseAdapter implements StickyListHeadersA
 
         notifyDataSetChanged();
     }
-
 
     static class HeaderViewHolder {
         TextView text;

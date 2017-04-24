@@ -45,7 +45,8 @@ public class ModifyContactActivityTest extends ActivityUnitTestCase<ModifyContac
         numberInfo.setType(1);
         contactsInfo.addNumber(numberInfo);
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), ModifyContactActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                ModifyContactActivity.class);
         intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
         startActivity(intent, null, null);
 

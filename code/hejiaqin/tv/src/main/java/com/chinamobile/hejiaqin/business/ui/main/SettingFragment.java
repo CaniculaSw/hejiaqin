@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
-
 import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,7 +14,6 @@ import com.chinamobile.hejiaqin.business.ui.setting.fragment.CheckMicStatusFragm
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.CheckStatusFragment;
 import com.chinamobile.hejiaqin.business.ui.setting.fragment.DownloadAppFragment;
 import com.chinamobile.hejiaqin.tv.R;
-
 
 /**
  * desc: 设置
@@ -33,8 +31,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
     LinearLayout aboutLL;
     LinearLayout downloadAppLL;
 
-//    private ILoginLogic loginLogic;
-//    private IVoipLogic mVoipLogic;
+    //    private ILoginLogic loginLogic;
+    //    private IVoipLogic mVoipLogic;
 
     private static final String TAG = "SettingFragment";
 
@@ -71,7 +69,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         downloadAppLL.setOnClickListener(this);
         checkMicStatusLL.setOnClickListener(this);
 
-//        FocusManager.getInstance().addFocusViewInLeftFrag("3", functionSettingLL);
+        //        FocusManager.getInstance().addFocusViewInLeftFrag("3", functionSettingLL);
     }
 
     @Override
@@ -93,8 +91,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
                 FragmentMgr.getInstance().showSettingFragment(new AboutFragment());
                 break;
             case R.id.check_status_ll:
-//                Intent intent = new Intent(getActivity(), CheckCameraStatusActivity.class);
-//                this.startActivity(intent);
+                //                Intent intent = new Intent(getActivity(), CheckCameraStatusActivity.class);
+                //                this.startActivity(intent);
                 FragmentMgr.getInstance().showSettingFragment(new CheckStatusFragment());
                 break;
             case R.id.box_account_ll:
@@ -111,8 +109,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     protected void initLogics() {
-//        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
-//        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
+        //        loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
+        //        mVoipLogic = (IVoipLogic) super.getLogicByInterfaceClass(IVoipLogic.class);
     }
 
     @Override

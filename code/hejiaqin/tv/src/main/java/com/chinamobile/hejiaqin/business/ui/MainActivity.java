@@ -30,6 +30,7 @@ import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 import com.huawei.rcs.log.LogApi;
+
 /***/
 public class MainActivity extends BasicActivity {
 
@@ -68,33 +69,35 @@ public class MainActivity extends BasicActivity {
                 jumpToRegisterActivity();
                 break;
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext()) && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals("unknown")) {
+                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
+                        && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals(
+                                "unknown")) {
                     jumpToLoginActivity();
                 } else {
                     autoLogin();
                 }
                 break;
             //TODO:TEST
-//            case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-//                jumpToRegisterActivity();
-//                break;
-//            case BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED:
-//                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext()) && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals("unknown")) {
-//                    jumpToLoginActivity();
-//                } else {
-//                    autoLogin();
-//                }
-//                break;
+            //            case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
+            //                jumpToRegisterActivity();
+            //                break;
+            //            case BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED:
+            //                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext()) && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals("unknown")) {
+            //                    jumpToLoginActivity();
+            //                } else {
+            //                    autoLogin();
+            //                }
+            //                break;
             //TODO:TEST
 
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-//                jumpToMainFragmentActivity();
+                //                jumpToMainFragmentActivity();
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-//                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-//                    LogUtil.i(tag,"Update the voip setting");
-//                    userInfo.setSdkAccount(voipUserName);
-//                    userInfo.setSdkPassword(voipPassword);
-//                }
+                //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
+                //                    LogUtil.i(tag,"Update the voip setting");
+                //                    userInfo.setSdkAccount(voipUserName);
+                //                    userInfo.setSdkPassword(voipPassword);
+                //                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
@@ -111,9 +114,9 @@ public class MainActivity extends BasicActivity {
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
-//                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
-//                accountEditTv.requestFocus();
-//                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+                //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
+                //                accountEditTv.requestFocus();
+                //                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
 
                 if (msg.obj != null) {
                     FailResponse response = (FailResponse) msg.obj;
@@ -211,12 +214,12 @@ public class MainActivity extends BasicActivity {
 
     private void showUpdateDialog() {
         UpdateDialog.show(this);
-//        finish();
+        //        finish();
     }
 
     private void showUpdateDialog(String text) {
         UpdateDialog.show(this, text);
-//        finish();
+        //        finish();
     }
 
     private void jumpToRegisterActivity() {
@@ -228,9 +231,12 @@ public class MainActivity extends BasicActivity {
     private boolean getSTBConfig() {
         boolean flag = true;
         ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null, null, null, null);
+        Cursor cursor = contentResolver.query(Uri.parse(BussinessConstants.Login.BASE_URI), null,
+                null, null, null);
         if (cursor != null && cursor.moveToNext()) {
-            if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId"))) || StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
+            if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId")))
+                    || StringUtil
+                            .isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
                 progressBar.setVisibility(View.INVISIBLE);
                 showUpdateDialog(getString(R.string.exception_tips));
                 if (!cursor.isClosed()) {
@@ -238,7 +244,10 @@ public class MainActivity extends BasicActivity {
                 }
                 return false;
             }
-            UserInfoCacheManager.saveSTBConfig(this, cursor.getString(cursor.getColumnIndex("UserId")), cursor.getString(cursor.getColumnIndex("UserToken")), cursor.getString(cursor.getColumnIndex("SoftwareVersion")));
+            UserInfoCacheManager.saveSTBConfig(this,
+                    cursor.getString(cursor.getColumnIndex("UserId")),
+                    cursor.getString(cursor.getColumnIndex("UserToken")),
+                    cursor.getString(cursor.getColumnIndex("SoftwareVersion")));
         } else {
             progressBar.setVisibility(View.INVISIBLE);
             showUpdateDialog(getString(R.string.exception_tips));

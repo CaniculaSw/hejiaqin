@@ -21,6 +21,7 @@ public class DownloadAppFragment extends BasicFragment {
     ImageView qrCodeAndroid;
     ImageView qrCodeIos;
     private static final String TAG = "DownloadAppFragment";
+
     @Override
     protected void handleFragmentMsg(Message msg) {
 
@@ -42,32 +43,33 @@ public class DownloadAppFragment extends BasicFragment {
         headerView.title.setText(getText(R.string.downlaod_app_title));
         qrCodeAndroid = (ImageView) view.findViewById(R.id.qr_code_android);
         qrCodeIos = (ImageView) view.findViewById(R.id.qr_code_ios);
-//        qrCodeAndroid.setAlpha(150);
-//        qrCodeIos.setAlpha(150);
+        //        qrCodeAndroid.setAlpha(150);
+        //        qrCodeIos.setAlpha(150);
     }
 
     @Override
     protected void initData() {
-        createQRCode(BussinessConstants.Login.DOWNLOAD_URL_ANDROID,190,qrCodeAndroid);
-        createQRCode(BussinessConstants.Login.DOWNLOAD_URL_IOS,190,qrCodeIos);
+        createQRCode(BussinessConstants.Login.DOWNLOAD_URL_ANDROID, 190, qrCodeAndroid);
+        createQRCode(BussinessConstants.Login.DOWNLOAD_URL_IOS, 190, qrCodeIos);
     }
 
     private void createQRCode(String url, int size, final ImageView view) {
-        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(getActivity(), size), Color.parseColor("#000000"), Color.parseColor("#878ea3"), new QRCodeEncoder.Delegate() {
-            @Override
-            public void onEncodeQRCodeSuccess(Bitmap qrCode) {
-                view.setImageBitmap(qrCode);
-            }
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(getActivity(), size),
+                Color.parseColor("#000000"), Color.parseColor("#878ea3"),
+                new QRCodeEncoder.Delegate() {
+                    @Override
+                    public void onEncodeQRCodeSuccess(Bitmap qrCode) {
+                        view.setImageBitmap(qrCode);
+                    }
 
-            @Override
-            public void onEncodeQRCodeFailure() {
-                LogUtil.e(TAG, "生成中文二维码失败");
-            }
-        });
+                    @Override
+                    public void onEncodeQRCodeFailure() {
+                        LogUtil.e(TAG, "生成中文二维码失败");
+                    }
+                });
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return null;
     }
 }

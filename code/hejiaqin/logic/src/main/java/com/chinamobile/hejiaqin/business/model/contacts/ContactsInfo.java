@@ -103,6 +103,7 @@ public class ContactsInfo implements Serializable {
 
         this.photoSm = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + photoSm;
     }
+
     /***/
     public void addNumber(NumberInfo numberInfo) {
         if (null == numberInfo) {
@@ -121,6 +122,7 @@ public class ContactsInfo implements Serializable {
     public SearchUnit getSearchUnit() {
         return searchUnit;
     }
+
     /***/
     public void genSearchUnit(PinyinUnit pinyinUnit) {
         if (null == searchUnit) {
@@ -162,14 +164,9 @@ public class ContactsInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ContactsInfo{" +
-                "photoSm='" + photoSm + '\'' +
-                ", photoLg='" + photoLg + '\'' +
-                ", contactMode=" + contactMode +
-                ", numberLst=" + numberLst +
-                ", name='" + name + '\'' +
-                ", contactId='" + contactId + '\'' +
-                '}';
+        return "ContactsInfo{" + "photoSm='" + photoSm + '\'' + ", photoLg='" + photoLg + '\''
+                + ", contactMode=" + contactMode + ", numberLst=" + numberLst + ", name='" + name
+                + '\'' + ", contactId='" + contactId + '\'' + '}';
     }
 
 }

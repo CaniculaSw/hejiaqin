@@ -29,7 +29,8 @@ public class MoreSearchContactAdapter extends BaseAdapter {
 
     public MoreSearchContactAdapter(Context context) {
         mContext = context;
-        settingLogic = (ISettingLogic) LogicBuilder.getInstance(mContext).getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (ISettingLogic) LogicBuilder.getInstance(mContext).getLogicByInterfaceClass(
+                ISettingLogic.class);
     }
 
     @Override
@@ -49,7 +50,8 @@ public class MoreSearchContactAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        AdapterViewHolder holder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_contact_search_view, position);
+        AdapterViewHolder holder = AdapterViewHolder.get(mContext, convertView, parent,
+                R.layout.adapter_contact_search_view, position);
         initView(position, holder);
         return holder.getView();
     }
@@ -60,12 +62,14 @@ public class MoreSearchContactAdapter extends BaseAdapter {
         SearchUnit searchUnit = contactsInfo.getSearchUnit();
 
         holder.setText(R.id.contact_name_text, Html.fromHtml(searchUnit.getNameText()).toString());
-        holder.setText(R.id.contact_number_text, Html.fromHtml(searchUnit.getNumberText()).toString());
+        holder.setText(R.id.contact_number_text, Html.fromHtml(searchUnit.getNumberText())
+                .toString());
 
         holder.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingLogic.sendBindReq(contactsInfo.getPhone(), UserInfoCacheManager.getUserInfo(mContext).getPhone());
+                settingLogic.sendBindReq(contactsInfo.getPhone(),
+                        UserInfoCacheManager.getUserInfo(mContext).getPhone());
                 Toast.makeText(mContext, "正在等待对方接受你的请求", Toast.LENGTH_LONG).show();
             }
         });

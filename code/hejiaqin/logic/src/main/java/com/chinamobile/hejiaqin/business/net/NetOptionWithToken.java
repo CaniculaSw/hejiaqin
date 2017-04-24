@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 /***/
 public abstract class NetOptionWithToken extends NetOption {
 
@@ -37,6 +38,7 @@ public abstract class NetOptionWithToken extends NetOption {
             super.send(httpCallback);
         }
     }
+
     /**
      * 发送Http请求
      *
@@ -52,7 +54,8 @@ public abstract class NetOptionWithToken extends NetOption {
                     public void onResult(NetResponse response) {
                         //保存token
                         isRefreshTokening = false;
-                        UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                        UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                                .getObject(BussinessConstants.Login.USER_INFO_KEY);
                         if (response.getResultCode().equals("0") && info != null) {
                             UserInfo newInfo = (UserInfo) response.getObj(); //gson.fromJson(rootJsonObj.get("data").toString(),UserInfo.class);
                             info.setToken(newInfo.getToken());
@@ -87,11 +90,15 @@ public abstract class NetOptionWithToken extends NetOption {
         List<NameValuePair> properties = null;
         if (isNeedToken()) {
             properties = new ArrayList<NameValuePair>();
-            UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+            UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                    .getObject(BussinessConstants.Login.USER_INFO_KEY);
             if (info != null && info.getToken() != null) {
                 String unique = UUID.randomUUID().toString();
-                properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_TOKENID, AES.encrypt(info.getToken(), unique.substring(0, 8))));
-                properties.add(new BasicNameValuePair(BussinessConstants.HttpHeaderInfo.HEADER_UNIQ, unique));
+                properties.add(new BasicNameValuePair(
+                        BussinessConstants.HttpHeaderInfo.HEADER_TOKENID, AES.encrypt(
+                                info.getToken(), unique.substring(0, 8))));
+                properties.add(new BasicNameValuePair(
+                        BussinessConstants.HttpHeaderInfo.HEADER_UNIQ, unique));
             }
         }
         return properties;
@@ -102,7 +109,8 @@ public abstract class NetOptionWithToken extends NetOption {
         String body = null;
         if (mData != null) {
             if (mData instanceof ReqToken) {
-                UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                        .getObject(BussinessConstants.Login.USER_INFO_KEY);
                 if (info != null && info.getToken() != null) {
                     ((ReqToken) mData).setToken(info.getToken());
                 }
@@ -115,7 +123,8 @@ public abstract class NetOptionWithToken extends NetOption {
     protected abstract boolean isNeedToken();
 
     private boolean needRefresh() {
-        String infoCache = StorageMgr.getInstance().getSharedPStorage(getContext()).getString(BussinessConstants.Login.USER_INFO_KEY);
+        String infoCache = StorageMgr.getInstance().getSharedPStorage(getContext())
+                .getString(BussinessConstants.Login.USER_INFO_KEY);
         if (infoCache == null) {
             return false;
         }
@@ -124,7 +133,8 @@ public abstract class NetOptionWithToken extends NetOption {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long expire = 0;
-        long tokenDate = StorageMgr.getInstance().getSharedPStorage(getContext()).getLong(BussinessConstants.Login.TOKEN_DATE);
+        long tokenDate = StorageMgr.getInstance().getSharedPStorage(getContext())
+                .getLong(BussinessConstants.Login.TOKEN_DATE);
         try {
             expire = sdf.parse(tokenExpire).getTime() - tokenDate;
         } catch (ParseException e) {

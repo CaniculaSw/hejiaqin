@@ -131,7 +131,10 @@ public class MessageActivity extends BasicFragmentActivity implements View.OnCli
                 }
                 break;
             case R.id.more_sys_msg_edit:
-                editTv.setText(editTv.getText().equals(getResources().getString(R.string.more_edit)) ? getResources().getString(R.string.more_cancel) : getResources().getString(R.string.more_edit));
+                editTv.setText(editTv.getText()
+                        .equals(getResources().getString(R.string.more_edit)) ? getResources()
+                        .getString(R.string.more_cancel) : getResources().getString(
+                        R.string.more_edit));
                 Message msg = new Message();
                 msg.what = BussinessConstants.SettingMsgID.EDIT_BUTTON_PRESSED;
                 (fragmentList.get(currentIndex)).recieveMsg(msg);
@@ -175,11 +178,13 @@ public class MessageActivity extends BasicFragmentActivity implements View.OnCli
                 return;
             }
             editTv.setText(getString(R.string.more_edit));
-            mTextView[currentItem].setTextColor(getResources().getColor(R.color.more_sys_msg_navigator_text_selected));
+            mTextView[currentItem].setTextColor(getResources().getColor(
+                    R.color.more_sys_msg_navigator_text_selected));
             mImageView[currentItem].setVisibility(View.VISIBLE);
 
             if (currentIndex != -1) {
-                mTextView[currentIndex].setTextColor(getResources().getColor(R.color.more_sys_msg_navigator_text_unselected));
+                mTextView[currentIndex].setTextColor(getResources().getColor(
+                        R.color.more_sys_msg_navigator_text_unselected));
                 mImageView[currentIndex].setVisibility(View.GONE);
                 Message msg = new Message();
                 msg.what = BussinessConstants.SettingMsgID.MESSAGE_FRAGMENT_SWITCH_OFF;

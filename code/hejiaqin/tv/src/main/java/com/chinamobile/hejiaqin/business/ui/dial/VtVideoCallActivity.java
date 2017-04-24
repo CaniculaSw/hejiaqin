@@ -74,7 +74,8 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         @Override
         public void onReceive(Context context, Intent intent) {
             LogUtil.e(tag, "callVideoEncodeSolutionChangeReceiver");
-            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession session = (CallSession) intent
+                    .getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             if (!mCallSession.equals(session)) {
                 return;
             }
@@ -87,7 +88,8 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
                 int width = (int) (screenHeight * (1.0f * videoWidth / videoHeight));
                 LogUtil.d(tag, "width: " + width + " | screenHeight: " + screenHeight);
                 if (remoteVideoView != null) {
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) largeVideoContainer.getLayoutParams();
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) largeVideoContainer
+                            .getLayoutParams();
                     layoutParams.width = width;
                     layoutParams.height = screenHeight;
                     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -103,29 +105,23 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         public void onReceive(Context context, Intent intent) {
 
             Bundle bundle = intent.getExtras();
-            if (null == bundle)
-            {
+            if (null == bundle) {
                 LogUtil.d(tag, "Enter ACTION_USB_CAMERA_PLUG_IN_OUT bundle is null");
                 return;
             }
             int state = bundle.getInt(Const.USB_CAMERA_STATE);
 
             LogUtil.d(tag, "videotalk mCameraPlugReciver " + state);
-            if (mCallSession == null){
+            if (mCallSession == null) {
                 return;
             }
-            if (0 == state)
-            {
-                if (!bCameraClose)
-                {
+            if (0 == state) {
+                if (!bCameraClose) {
                     mCallSession.closeLocalVideo();
                     bCameraClose = true;
                 }
-            }
-            else
-            {
-                if (bCameraClose)
-                {
+            } else {
+                if (bCameraClose) {
                     int iRet = mCallSession.openLocalVideo();
                     LogUtil.d(tag, "mCameraPlugReciver open localView " + iRet);
                     bCameraClose = false;
@@ -157,23 +153,31 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         public void surfaceDestroyed(SurfaceHolder arg0) {
             LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface");
             if (localVideoView.getHolder() == arg0) {
-                LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
+                LogUtil.d(Const.TAG_CALL,
+                        "surfaceDestroyed deleteLocalVideoSurface==m_svSmallVideo.getHolder()");
                 mIsSmallVideoCreateMPEG = false;
             } else if (remoteVideoView.getHolder() == arg0) {
-                LogUtil.d(Const.TAG_CALL, "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
+                LogUtil.d(Const.TAG_CALL,
+                        "surfaceDestroyed deleteLocalVideoSurface==m_svBigVideo.getHolder()");
                 mIsBigVideoCreateMPEG = false;
             }
         }
 
         protected void showMpegView() {
             if (mCallSession == null || localVideoView == null || remoteVideoView == null) {
-                LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession + " m_svSmallVideo " + localVideoView + " m_svBigVideo " + remoteVideoView);
+                LogUtil.e(Const.TAG_CALL, "show view failed callSession " + mCallSession
+                        + " m_svSmallVideo " + localVideoView + " m_svBigVideo " + remoteVideoView);
                 return;
             }
-            LogUtil.d(Const.TAG_CALL, "mIsSmallVideoCreateMPEG: " + mIsSmallVideoCreateMPEG + ", mIsBigVideoCreateMPEG: " + mIsBigVideoCreateMPEG);
-            if (mIsSmallVideoCreateMPEG && mIsBigVideoCreateMPEG && mCallSession.getStatus() == CallSession.STATUS_CONNECTED && mCallSession.getType() == CallSession.TYPE_VIDEO) {
-                int result1 = CallApi.createLocalVideoSurface(localVideoView.getHolder().getSurface());
-                int result2 = CallApi.createRemoteVideoSurface(remoteVideoView.getHolder().getSurface());
+            LogUtil.d(Const.TAG_CALL, "mIsSmallVideoCreateMPEG: " + mIsSmallVideoCreateMPEG
+                    + ", mIsBigVideoCreateMPEG: " + mIsBigVideoCreateMPEG);
+            if (mIsSmallVideoCreateMPEG && mIsBigVideoCreateMPEG
+                    && mCallSession.getStatus() == CallSession.STATUS_CONNECTED
+                    && mCallSession.getType() == CallSession.TYPE_VIDEO) {
+                int result1 = CallApi.createLocalVideoSurface(localVideoView.getHolder()
+                        .getSurface());
+                int result2 = CallApi.createRemoteVideoSurface(remoteVideoView.getHolder()
+                        .getSurface());
                 LogUtil.d(Const.TAG_CALL, "result1: " + result1 + ", result2: " + result2);
                 mCallSession.showVideoWindow();
             }
@@ -206,7 +210,8 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
 
     @Override
     protected void initDate() {
-        mIsInComing = getIntent().getBooleanExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, false);
+        mIsInComing = getIntent().getBooleanExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING,
+                false);
         mCallSession = CallApi.getForegroudCallSession();
 
         if (null == mCallSession) {
@@ -232,7 +237,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
 
     private void createVideoView() {
         remoteVideoView.getHolder().addCallback(surfaceCb);
-//        remoteVideoView.setZOrderOnTop(false);
+        //        remoteVideoView.setZOrderOnTop(false);
         localVideoView.getHolder().addCallback(surfaceCb);
         localVideoView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         localVideoView.setZOrderOnTop(true);
@@ -272,8 +277,8 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
     }
 
     private void unRegisterReceivers() {
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(callVideoReSolutionChangeReceiver);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
+                callVideoReSolutionChangeReceiver);
     }
 
     @Override
@@ -303,8 +308,7 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID:
-                if(!closed)
-                {
+                if (!closed) {
                     mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
                     closed = true;
                 }
@@ -317,9 +321,12 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
                         mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-                        } else if (!mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT,
+                                    null);
+                        } else if (!mIsInComing
+                                && !mIsTalking
+                                && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE || mCallSession
+                                        .getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
                             showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
                         }
                         getHandler().postDelayed(new Runnable() {
@@ -328,7 +335,8 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
                                 finish();
                             }
                         }, 3000);
-                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                    } else if (session != null
+                            && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
@@ -380,10 +388,8 @@ public class VtVideoCallActivity extends BasicActivity implements View.OnClickLi
      * @param context
      * @return
      */
-    private int getScreenHeight(Context context)
-    {
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
+    private int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;

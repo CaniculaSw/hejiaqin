@@ -60,7 +60,8 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
 
     @Override
     protected void initDate() {
-        userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                .getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (null != userInfo) {
             mUserAccountTv.setText(userInfo.getUserName());
             Picasso.with(UserInfoActivity.this.getApplicationContext())
@@ -80,7 +81,6 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
         loginLogic = (ILoginLogic) super.getLogicByInterfaceClass(ILoginLogic.class);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -92,8 +92,10 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
                 break;
             case PhotoManage.CAMERA_CODE:
                 if (CommonUtils.hasSdcard()) {
-                    LogUtil.i(TAG,"will launch the camera.");
-                    File tempFile = new File(Environment.getExternalStorageDirectory() + BussinessConstants.Setting.APP_SAVE_PATH + BussinessConstants.Setting.APP_IMG_DEFAULT_NAME);
+                    LogUtil.i(TAG, "will launch the camera.");
+                    File tempFile = new File(Environment.getExternalStorageDirectory()
+                            + BussinessConstants.Setting.APP_SAVE_PATH
+                            + BussinessConstants.Setting.APP_IMG_DEFAULT_NAME);
                     PhotoManage.getInstance(this).startPhotoZoom(Uri.fromFile(tempFile));
                 } else {
                     showToast(R.string.no_sdcard_update_header, 1, null);
@@ -133,7 +135,6 @@ public class UserInfoActivity extends BasicActivity implements View.OnClickListe
     private void changeAvatar() {
         PhotoManage.getInstance(this).showDialog();
     }
-
 
     private Bitmap convertToBitmap(String url, int w, int h) {
         BitmapFactory.Options opts = new BitmapFactory.Options();

@@ -34,7 +34,8 @@ public class BatchAddContactReq extends ReqToken implements ReqBody {
         requestBody.append(getToken());
         requestBody.append("\r\n");
 
-        requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY).append("--");
+        requestBody.append("--").append(BussinessConstants.HttpHeaderInfo.HEADER_BOUNDARY)
+                .append("--");
         requestBody.append("\r\n\r\n");
 
         return requestBody.toString();

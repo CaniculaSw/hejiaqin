@@ -80,9 +80,9 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                 rectLocal.top = mMetrics[1] - mVideoPadding - mVideoHeight;
                 rectLocal.right = mVideoPadding + mVideoWidth;
                 rectLocal.bottom = mMetrics[1] - mVideoPadding;
-                LogUtil.d(TAG,"mCameraPlugReciver rectLocal left" + rectLocal.left);
-                LogUtil.d(TAG,"mCameraPlugReciver rectLocal top"+ rectLocal.top);
-                LogUtil.d(TAG,"mCameraPlugReciver rectLocal right"+ rectLocal.right);
+                LogUtil.d(TAG, "mCameraPlugReciver rectLocal left" + rectLocal.left);
+                LogUtil.d(TAG, "mCameraPlugReciver rectLocal top" + rectLocal.top);
+                LogUtil.d(TAG, "mCameraPlugReciver rectLocal right" + rectLocal.right);
                 LogUtil.d(TAG, "mCameraPlugReciver rectLocal bottom" + rectLocal.bottom);
                 CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
                 openLocalVideo();
@@ -97,35 +97,35 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     private BroadcastReceiver remoteNetStatusChangeReciverr = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-//            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
-//            if (!mCallSession.equals(session)) {
-//                return;
-//            }
-//            Bundle bundle = intent.getExtras();
-//            int status = bundle.getInt(CallApi.PARAM_CALL_NET_STATUS);
-//            if (status == 1) {
-//                getDisplayMetrics(StbVideoCallActivity.this);
-//                Rect rectLocal = new Rect();
-//                rectLocal.left = mVideoPadding;
-//                rectLocal.top = mMetrics[1] - mVideoPadding - mVideoHeight;
-//                rectLocal.right = mVideoPadding + mVideoWidth;
-//                rectLocal.bottom = mMetrics[1] - mVideoPadding;
-//                LogUtil.d(tag, "remoteNetStatusChangeReciverr rectLocal left" + rectLocal.left);
-//                LogUtil.d(tag,"remoteNetStatusChangeReciverr rectLocal top"+ rectLocal.top);
-//                LogUtil.d(tag, "remoteNetStatusChangeReciverr rectLocal right" + rectLocal.right);
-//                LogUtil.d(tag, "remoteNetStatusChangeReciverr rectLocal bottom" + rectLocal.bottom);
-//                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
-//                if(mLocalViewOpen) {
-//                    CaaSSdkService.showLocalVideoRender(true);
-//                }
-//                Rect rectRemote = getFullScreenRect();
-//                LogUtil.d(tag,"rectRemote left" + rectRemote.left);
-//                LogUtil.d(tag,"rectRemote top"+ rectRemote.top);
-//                LogUtil.d(tag,"rectRemote right"+ rectRemote.right);
-//                LogUtil.d(tag, "rectRemote bottom" + rectRemote.bottom);
-//                CaaSSdkService.setRemoteRenderPos(rectRemote, CallApi.VIDEO_LAYER_BOTTOM);
-//                CaaSSdkService.showRemoteVideoRender(true);
-//            }
+            //            CallSession session = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            //            if (!mCallSession.equals(session)) {
+            //                return;
+            //            }
+            //            Bundle bundle = intent.getExtras();
+            //            int status = bundle.getInt(CallApi.PARAM_CALL_NET_STATUS);
+            //            if (status == 1) {
+            //                getDisplayMetrics(StbVideoCallActivity.this);
+            //                Rect rectLocal = new Rect();
+            //                rectLocal.left = mVideoPadding;
+            //                rectLocal.top = mMetrics[1] - mVideoPadding - mVideoHeight;
+            //                rectLocal.right = mVideoPadding + mVideoWidth;
+            //                rectLocal.bottom = mMetrics[1] - mVideoPadding;
+            //                LogUtil.d(tag, "remoteNetStatusChangeReciverr rectLocal left" + rectLocal.left);
+            //                LogUtil.d(tag,"remoteNetStatusChangeReciverr rectLocal top"+ rectLocal.top);
+            //                LogUtil.d(tag, "remoteNetStatusChangeReciverr rectLocal right" + rectLocal.right);
+            //                LogUtil.d(tag, "remoteNetStatusChangeReciverr rectLocal bottom" + rectLocal.bottom);
+            //                CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
+            //                if(mLocalViewOpen) {
+            //                    CaaSSdkService.showLocalVideoRender(true);
+            //                }
+            //                Rect rectRemote = getFullScreenRect();
+            //                LogUtil.d(tag,"rectRemote left" + rectRemote.left);
+            //                LogUtil.d(tag,"rectRemote top"+ rectRemote.top);
+            //                LogUtil.d(tag,"rectRemote right"+ rectRemote.right);
+            //                LogUtil.d(tag, "rectRemote bottom" + rectRemote.bottom);
+            //                CaaSSdkService.setRemoteRenderPos(rectRemote, CallApi.VIDEO_LAYER_BOTTOM);
+            //                CaaSSdkService.showRemoteVideoRender(true);
+            //            }
         }
     };
 
@@ -146,14 +146,18 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         mTalkingTimeTv = (TextView) findViewById(R.id.talking_time_tv);
         mHangupLayout = (LinearLayout) findViewById(R.id.hangup_layout);
         mHangupLayout.setOnClickListener(this);
-        mVideoPadding = StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_padding);
-        mVideoHeight =StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_height);
-        mVideoWidth= StbVideoCallActivity.this.getResources().getDimensionPixelOffset(R.dimen.small_video_width);
+        mVideoPadding = StbVideoCallActivity.this.getResources().getDimensionPixelOffset(
+                R.dimen.small_video_padding);
+        mVideoHeight = StbVideoCallActivity.this.getResources().getDimensionPixelOffset(
+                R.dimen.small_video_height);
+        mVideoWidth = StbVideoCallActivity.this.getResources().getDimensionPixelOffset(
+                R.dimen.small_video_width);
     }
 
     @Override
     protected void initDate() {
-        mIsInComing = getIntent().getBooleanExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING, false);
+        mIsInComing = getIntent().getBooleanExtra(BussinessConstants.Dial.INTENT_CALL_INCOMING,
+                false);
         mCallSession = CallApi.getForegroudCallSession();
 
         if (null == mCallSession) {
@@ -166,8 +170,7 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         showTalking();
     }
 
-    private void  viewRemote()
-    {
+    private void viewRemote() {
         getDisplayMetrics(StbVideoCallActivity.this);
         Rect rectLocal = new Rect();
         rectLocal.left = mVideoPadding;
@@ -175,22 +178,23 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         rectLocal.right = mVideoPadding + mVideoWidth;
         rectLocal.bottom = mMetrics[1] - mVideoPadding;
         LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal left" + rectLocal.left);
-        LogUtil.d(TAG,"remoteNetStatusChangeReciverr rectLocal top"+ rectLocal.top);
+        LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal top" + rectLocal.top);
         LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal right" + rectLocal.right);
         LogUtil.d(TAG, "remoteNetStatusChangeReciverr rectLocal bottom" + rectLocal.bottom);
         CaaSSdkService.setLocalRenderPos(rectLocal, CallApi.VIDEO_LAYER_TOP);
         CaaSSdkService.showLocalVideoRender(true);
-//        if(mLocalViewOpen) {
-            CaaSSdkService.showLocalVideoRender(true);
-//        }
+        //        if(mLocalViewOpen) {
+        CaaSSdkService.showLocalVideoRender(true);
+        //        }
         Rect rectRemote = getFullScreenRect();
-        LogUtil.d(TAG,"rectRemote left" + rectRemote.left);
-        LogUtil.d(TAG,"rectRemote top"+ rectRemote.top);
-        LogUtil.d(TAG,"rectRemote right"+ rectRemote.right);
+        LogUtil.d(TAG, "rectRemote left" + rectRemote.left);
+        LogUtil.d(TAG, "rectRemote top" + rectRemote.top);
+        LogUtil.d(TAG, "rectRemote right" + rectRemote.right);
         LogUtil.d(TAG, "rectRemote bottom" + rectRemote.bottom);
         CaaSSdkService.setRemoteRenderPos(rectRemote, CallApi.VIDEO_LAYER_BOTTOM);
         CaaSSdkService.showRemoteVideoRender(true);
     }
+
     private void showTalking() {
         mIsTalking = true;
         AudioManager audioManamger = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -209,11 +213,9 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         viewRemote();
     }
 
-    private boolean openLocalVideo()
-    {
+    private boolean openLocalVideo() {
 
-        if (mLocalViewOpen)
-        {
+        if (mLocalViewOpen) {
             LogUtil.d(Const.TAG_CAAS, "openLocalVideo Camera already opened");
             return true;
         }
@@ -221,9 +223,8 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         mLocalViewOpen = true;
 
         int iResult = -1;
-        iResult =  mCallSession.openLocalVideo();
-        if (0 != iResult)
-        {
+        iResult = mCallSession.openLocalVideo();
+        if (0 != iResult) {
             mLocalViewOpen = false;
         }
 
@@ -231,12 +232,10 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         return mLocalViewOpen;
     }
 
-    private boolean closeLocalVideo()
-    {
+    private boolean closeLocalVideo() {
         LogUtil.d(Const.TAG_CAAS, "closeLocalVideo Enter");
 
-        if (!mLocalViewOpen)
-        {
+        if (!mLocalViewOpen) {
             LogUtil.d(Const.TAG_CAAS, "LocalVideo not opened");
             return true;
         }
@@ -265,13 +264,13 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         if (mMetrics[0] > 0 && mMetrics[1] > 0) {
             return;
         }
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         mMetrics[0] = screenWidth;
         mMetrics[1] = screenHeight;
     }
-
 
     private void stopCallTimeTask() {
         if (timer != null) {
@@ -300,15 +299,15 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
     }
 
     private void registerReceivers() {
-//        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
-//                remoteNetStatusChangeReciverr,
-//                new IntentFilter(CallApi.EVENT_CALL_VIDEO_NET_STATUS_CHANGE));
-//        hasRegistReceiver = true;
+        //        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+        //                remoteNetStatusChangeReciverr,
+        //                new IntentFilter(CallApi.EVENT_CALL_VIDEO_NET_STATUS_CHANGE));
+        //        hasRegistReceiver = true;
     }
 
     private void unRegisterReceivers() {
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(remoteNetStatusChangeReciverr);
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(
+                remoteNetStatusChangeReciverr);
 
     }
 
@@ -345,9 +344,12 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                         mVoipLogic.dealOnClosed(mCallSession, mIsInComing, mIsTalking, callTime);
                         closed = true;
                         if (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_TEMPORARILY_UNAVAILABLE) {
-                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT, null);
-                        } else if (!mIsInComing && !mIsTalking && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE
-                                || mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
+                            showToast(R.string.sip_temporarily_unavailable, Toast.LENGTH_SHORT,
+                                    null);
+                        } else if (!mIsInComing
+                                && !mIsTalking
+                                && (mCallSession.getSipCause() == BussinessConstants.DictInfo.SIP_BUSY_HERE || mCallSession
+                                        .getSipCause() == BussinessConstants.DictInfo.SIP_DECLINE)) {
                             showToast(R.string.sip_busy_here, Toast.LENGTH_SHORT, null);
                         }
                         getHandler().postDelayed(new Runnable() {
@@ -356,7 +358,8 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
                                 finish();
                             }
                         }, 3000);
-                    } else if (session != null && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
+                    } else if (session != null
+                            && session.getType() == CallSession.TYPE_VIDEO_INCOMING) {
                         mVoipLogic.dealOnClosed(session, true, false, 0);
                     }
                 }
@@ -366,7 +369,6 @@ public class StbVideoCallActivity extends BasicActivity implements View.OnClickL
         }
 
     }
-
 
     @Override
     public void onResume() {

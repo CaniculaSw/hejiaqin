@@ -13,19 +13,17 @@ import java.util.List;
  */
 public class NVPReqBody implements ReqBody {
     private List<String> list = new ArrayList<String>();
+
     /***/
-    public void add(String name,String value)
-    {
-        if(TextUtils.isEmpty(name) || value ==null)
-        {
+    public void add(String name, String value) {
+        if (TextUtils.isEmpty(name) || value == null) {
             return;
         }
-        list.add(new BasicNameValuePair(name,value).toString());
+        list.add(new BasicNameValuePair(name, value).toString());
     }
-
 
     @Override
     public String toBody() {
-        return StringUtil.listToString(list,"&");
+        return StringUtil.listToString(list, "&");
     }
 }

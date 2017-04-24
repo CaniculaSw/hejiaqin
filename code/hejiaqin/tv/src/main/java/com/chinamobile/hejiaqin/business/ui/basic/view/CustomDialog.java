@@ -1,4 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.basic.view;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.tv.R;
+
 /***/
 public class CustomDialog extends Dialog {
 
@@ -21,6 +23,7 @@ public class CustomDialog extends Dialog {
     public CustomDialog(Context context, int theme) {
         super(context, theme);
     }
+
     /***/
     public static class Builder {
         private Context context;
@@ -52,7 +55,6 @@ public class CustomDialog extends Dialog {
             this.message = (String) context.getText(message);
             return this;
         }
-
 
         /**
          * Set the Dialog title from resource
@@ -106,41 +108,37 @@ public class CustomDialog extends Dialog {
          * @param positiveButtonText
          * @return
          */
-        public Builder setPositiveButton(int positiveButtonText,
-                                         OnClickListener listener) {
-            this.positiveButtonText = (String) context
-                    .getText(positiveButtonText);
+        public Builder setPositiveButton(int positiveButtonText, OnClickListener listener) {
+            this.positiveButtonText = (String) context.getText(positiveButtonText);
             this.positiveButtonClickListener = listener;
             return this;
         }
 
-        public Builder setPositiveButton(String positiveButtonText,
-                                         OnClickListener listener) {
+        public Builder setPositiveButton(String positiveButtonText, OnClickListener listener) {
             this.positiveButtonText = positiveButtonText;
             this.positiveButtonClickListener = listener;
             return this;
         }
 
-        public Builder setNegativeButton(int negativeButtonText,
-                                         OnClickListener listener) {
-            this.negativeButtonText = (String) context
-                    .getText(negativeButtonText);
+        public Builder setNegativeButton(int negativeButtonText, OnClickListener listener) {
+            this.negativeButtonText = (String) context.getText(negativeButtonText);
             this.negativeButtonClickListener = listener;
             return this;
         }
 
-        public Builder setNegativeButton(String negativeButtonText,
-                                         OnClickListener listener) {
+        public Builder setNegativeButton(String negativeButtonText, OnClickListener listener) {
             this.negativeButtonText = negativeButtonText;
             this.negativeButtonClickListener = listener;
             return this;
         }
+
         /***/
-        public CustomDialog show(){
+        public CustomDialog show() {
             final CustomDialog dialog = create();
             dialog.show();
             return dialog;
         }
+
         /***/
         public CustomDialog create() {
             LayoutInflater inflater = (LayoutInflater) context
@@ -160,7 +158,7 @@ public class CustomDialog extends Dialog {
                 tvTitle.setText(title);
             }
 
-            ImageView ivIcon = (ImageView)layout.findViewById(R.id.iv_icon);
+            ImageView ivIcon = (ImageView) layout.findViewById(R.id.iv_icon);
             if (icon == 0) {
                 ivIcon.setVisibility(View.GONE);
             } else {
@@ -170,11 +168,9 @@ public class CustomDialog extends Dialog {
 
             dialog.setCancelable(flag);
 
-
             // set the confirm button
             if (positiveButtonText != null) {
-                ((Button) layout.findViewById(R.id.positiveButton))
-                        .setText(positiveButtonText);
+                ((Button) layout.findViewById(R.id.positiveButton)).setText(positiveButtonText);
                 if (positiveButtonClickListener != null) {
                     ((Button) layout.findViewById(R.id.positiveButton))
                             .setOnClickListener(new View.OnClickListener() {
@@ -186,13 +182,11 @@ public class CustomDialog extends Dialog {
                 }
             } else {
                 // if no confirm button just set the visibility to GONE
-                layout.findViewById(R.id.positiveButton).setVisibility(
-                        View.GONE);
+                layout.findViewById(R.id.positiveButton).setVisibility(View.GONE);
             }
             // set the cancel button
             if (negativeButtonText != null) {
-                ((Button) layout.findViewById(R.id.negativeButton))
-                        .setText(negativeButtonText);
+                ((Button) layout.findViewById(R.id.negativeButton)).setText(negativeButtonText);
                 if (negativeButtonClickListener != null) {
                     ((Button) layout.findViewById(R.id.negativeButton))
                             .setOnClickListener(new View.OnClickListener() {
@@ -204,8 +198,7 @@ public class CustomDialog extends Dialog {
                 }
             } else {
                 // if no confirm button just set the visibility to GONE
-                layout.findViewById(R.id.negativeButton).setVisibility(
-                        View.GONE);
+                layout.findViewById(R.id.negativeButton).setVisibility(View.GONE);
             }
             // set the content message
             if (message != null) {
@@ -213,15 +206,14 @@ public class CustomDialog extends Dialog {
             } else if (contentView != null) {
                 // if no message set
                 // addLocalContact the contentView to the dialog body
-                ((LinearLayout) layout.findViewById(R.id.content_left))
-                        .removeAllViews();
-                ((LinearLayout) layout.findViewById(R.id.content_left))
-                        .addView(contentView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                ((LinearLayout) layout.findViewById(R.id.content_left)).removeAllViews();
+                ((LinearLayout) layout.findViewById(R.id.content_left)).addView(contentView,
+                        new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                                ViewGroup.LayoutParams.FILL_PARENT));
             }
             dialog.setContentView(layout);
             return dialog;
         }
-
 
     }
 

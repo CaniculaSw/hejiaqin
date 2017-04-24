@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
-
 import android.content.Intent;
 import android.os.Message;
 import android.view.View;
@@ -29,7 +28,6 @@ import com.customer.framework.utils.StringUtil;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 /**
  * desc: 设置
@@ -106,7 +104,8 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-        userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+        userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                .getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (null != userInfo) {
             userAccountTv.setText(userInfo.getUserName());
             Picasso.with(SettingFragment.this.getContext())
@@ -156,10 +155,12 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.UPDATE_PHOTO_SUCCESS_MSG_ID:
-                userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage().getObject(BussinessConstants.Login.USER_INFO_KEY);
+                userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage()
+                        .getObject(BussinessConstants.Login.USER_INFO_KEY);
                 if (null != userInfo && !StringUtil.isNullOrEmpty(userInfo.getPhotoSm())) {
                     Picasso.with(SettingFragment.this.getActivity().getApplicationContext())
-                            .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/" + userInfo.getPhotoSm()).into(userAvatarIv);
+                            .load(BussinessConstants.ServerInfo.HTTP_ADDRESS + "/"
+                                    + userInfo.getPhotoSm()).into(userAvatarIv);
                 }
 
                 break;
@@ -167,7 +168,6 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
                 break;
         }
     }
-
 
     private void jumpToDetailUserProfile() {
         Intent intent = new Intent(getContext(), UserInfoActivity.class);
@@ -179,7 +179,7 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         Intent intent;
         if (UserInfoCacheManager.isBinded(getContext())) {
             intent = new Intent(getContext(), BindTVBoxActivity.class);
-        }else {
+        } else {
             intent = new Intent(getContext(), BindTVBoxFirstActivity.class);
         }
         this.startActivity(intent);
@@ -213,6 +213,5 @@ public class SettingFragment extends BasicFragment implements View.OnClickListen
         Intent intent = new Intent(getContext(), MessageActivity.class);
         this.startActivity(intent);
     }
-
 
 }

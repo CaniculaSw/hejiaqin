@@ -57,7 +57,6 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private ImageView mContactInfoUnSelected;
 
-
     private View mDialInfoLay;
 
     private ImageView mDialInfoIcon;
@@ -134,11 +133,13 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     @Override
     protected void initDate() {
-        mContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+        mContactsInfo = (ContactsInfo) getIntent().getSerializableExtra(
+                BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
 
         if (mContactsInfo == null) {
             //通话记录传入的号码
-            String callRecordNumber = getIntent().getStringExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+            String callRecordNumber = getIntent().getStringExtra(
+                    BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
             isStranger = true;
             mContactsInfo = new ContactsInfo();
             NumberInfo numberInfo = new NumberInfo();
@@ -154,15 +155,13 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         if (!isAppContact()) {
             boolean isContactExist = contactsLogic.isAppContactExist(mContactsInfo.getPhone());
-            mContactsInfo.setContactMode(isContactExist ?
-                    ContactsInfo.ContactMode.app :
-                    (isStranger ? null : ContactsInfo.ContactMode.system));
+            mContactsInfo.setContactMode(isContactExist ? ContactsInfo.ContactMode.app
+                    : (isStranger ? null : ContactsInfo.ContactMode.system));
         }
 
         mContactNameText.setText(mContactsInfo.getName());
         if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
-            Picasso.with(this.getApplicationContext())
-                    .load(mContactsInfo.getPhotoSm())
+            Picasso.with(this.getApplicationContext()).load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
@@ -179,7 +178,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         showViewByCurIndex(mViewPager.getCurrentItem());
-        dialImg.setImageResource(DialHelper.getInstance().isPhoneCall(mContactsInfo) ? R.mipmap.phone : R.mipmap.video);
+        dialImg.setImageResource(DialHelper.getInstance().isPhoneCall(mContactsInfo) ? R.mipmap.phone
+                : R.mipmap.video);
 
         contactsLogic.queryContactCallRecords(mContactsInfo);
 
@@ -187,7 +187,6 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private List<DialInfoGroup> genDialInfoGroup() {
         List<DialInfoGroup> dialInfoGroupList = new ArrayList<>();
-
 
         DialInfoGroup group1 = new DialInfoGroup();
         group1.setGroupName("今天");
@@ -198,7 +197,6 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         group2.setGroupName("周一");
         group2.setDialInfoList(genDialInfoList());
         dialInfoGroupList.add(group2);
-
 
         DialInfoGroup group3 = new DialInfoGroup();
         group3.setGroupName("周日");
@@ -243,13 +241,13 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
         mContactNameText.setText(mContactsInfo.getName());
         if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
-            Picasso.with(this.getApplicationContext())
-                    .load(mContactsInfo.getPhotoSm())
+            Picasso.with(this.getApplicationContext()).load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
 
-        ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList.get(CONTACTINFOINDEX);
+        ContactInfoFragment contactInfoFragment = (ContactInfoFragment) fragmentList
+                .get(CONTACTINFOINDEX);
         contactInfoFragment.setContactsInfo(mContactsInfo);
         contactInfoFragment.refreshView();
     }
@@ -312,29 +310,27 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             return;
         }
 
-
         NumberInfo numberInfo = numberInfoList.get(0);
         DialHelper.getInstance().call(this, numberInfo.getNumber(), mContactsInfo.getName());
-//        if (CommonUtils.isPhoneNumber(numberInfo.getNumber())) {
-//            startPhoneCall(numberInfo.getNumber());
-//        } else {
-//            startVideoCall(numberInfo);
-//        }
+        //        if (CommonUtils.isPhoneNumber(numberInfo.getNumber())) {
+        //            startPhoneCall(numberInfo.getNumber());
+        //        } else {
+        //            startVideoCall(numberInfo);
+        //        }
     }
 
-//    private void startVideoCall(NumberInfo numberInfo) {
-//        Intent outingIntent = new Intent(this, VideoCallActivity.class);
-//        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
-//        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mContactsInfo.getName());
-//        startActivity(outingIntent);
-//    }
-//
-//    private void startPhoneCall(String phoneNumber) {
-//        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
-//                phoneNumber));
-//        startActivity(intent);
-//    }
-
+    //    private void startVideoCall(NumberInfo numberInfo) {
+    //        Intent outingIntent = new Intent(this, VideoCallActivity.class);
+    //        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NUMBER, numberInfo.getNumber());
+    //        outingIntent.putExtra(BussinessConstants.Dial.INTENT_CALLEE_NAME, mContactsInfo.getName());
+    //        startActivity(outingIntent);
+    //    }
+    //
+    //    private void startPhoneCall(String phoneNumber) {
+    //        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" +
+    //                phoneNumber));
+    //        startActivity(intent);
+    //    }
 
     private void doClickTitleRight() {
         // 拨号详情tab页
@@ -362,7 +358,6 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         showAddContactDialog();
 
     }
-
 
     @Override
     protected void handleStateMessage(Message msg) {
@@ -409,7 +404,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     private void showDeleteDialDialog() {
 
-        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this, R.style.CalendarDialog);
+        final DelCallRecordDialog delCallRecordDialog = new DelCallRecordDialog(this,
+                R.style.CalendarDialog);
         Window window = delCallRecordDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -455,7 +451,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             public void onClick(View v) {
                 addContactDialog.dismiss();
                 Intent intent = new Intent(ContactInfoActivity.this, ModifyContactActivity.class);
-                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mContactsInfo.getNumberLst().get(0).getNumber());
+                intent.putExtra(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, mContactsInfo
+                        .getNumberLst().get(0).getNumber());
                 startActivity(intent);
             }
         });
@@ -496,9 +493,9 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         });
     }
 
-
     private void showEditContactDialog() {
-        final EditContactDialog editContactDialog = new EditContactDialog(this, R.style.CalendarDialog);
+        final EditContactDialog editContactDialog = new EditContactDialog(this,
+                R.style.CalendarDialog);
         Window window = editContactDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -534,13 +531,11 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             }
         });
 
-
     }
 
-
     private void showDialNumberDialog() {
-        final DialNumberDialog dialNumberDialog = new DialNumberDialog(this, R.style.CalendarDialog
-                , mContactsInfo);
+        final DialNumberDialog dialNumberDialog = new DialNumberDialog(this,
+                R.style.CalendarDialog, mContactsInfo);
         Window window = dialNumberDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -550,7 +545,6 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         window.setAttributes(params);
         dialNumberDialog.setCancelable(true);
         dialNumberDialog.show();
-
 
         dialNumberDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -566,7 +560,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
         switch (requestCode) {
             case REQUEST_CODE_EDIT_CONTACT:
                 if (null != data) {
-                    ContactsInfo newContactsInfo = (ContactsInfo) data.getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+                    ContactsInfo newContactsInfo = (ContactsInfo) data
+                            .getSerializableExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
                     if (null != newContactsInfo) {
                         mContactsInfo = newContactsInfo;
                         showContactData();
@@ -633,8 +628,8 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_nor);
             mDialInfoSelected.setVisibility(View.GONE);
             mDialInfoUnSelected.setVisibility(View.VISIBLE);
-            titleLayout.rightBtn.setImageResource(isAppContact()
-                    ? R.mipmap.title_icon_more_nor : R.mipmap.title_icon_add_nor);
+            titleLayout.rightBtn.setImageResource(isAppContact() ? R.mipmap.title_icon_more_nor
+                    : R.mipmap.title_icon_add_nor);
         } else if (currentItem == DIALINFOINDEX) {
             mContactInfoIcon.setImageResource(R.mipmap.icon_personal_data_nor);
             mContactInfoSelected.setVisibility(View.GONE);
@@ -642,8 +637,9 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
             mDialInfoIcon.setImageResource(R.mipmap.icon_call_record_pre);
             mDialInfoSelected.setVisibility(View.VISIBLE);
             mDialInfoUnSelected.setVisibility(View.GONE);
-            titleLayout.rightBtn.setImageResource(isDialInfoHasData() ? R.mipmap.title_icon_delete_nor
-                    : R.mipmap.title_icon_delete_dis);
+            titleLayout.rightBtn
+                    .setImageResource(isDialInfoHasData() ? R.mipmap.title_icon_delete_nor
+                            : R.mipmap.title_icon_delete_dis);
         }
     }
 

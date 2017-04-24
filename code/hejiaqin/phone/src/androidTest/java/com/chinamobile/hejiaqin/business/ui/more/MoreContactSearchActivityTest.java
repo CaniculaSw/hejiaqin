@@ -3,16 +3,10 @@ package com.chinamobile.hejiaqin.business.ui.more;
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
-
-import junit.framework.TestCase;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
@@ -33,9 +27,10 @@ public class MoreContactSearchActivityTest extends ActivityUnitTestCase<MoreCont
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), MoreContactSearchActivity.class);
-        intent.putExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                MoreContactSearchActivity.class);
+        intent.putExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

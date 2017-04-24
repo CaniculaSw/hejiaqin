@@ -25,9 +25,11 @@ public class BindRequestDialog extends BasicActivity implements View.OnClickList
     private LinearLayout deniedButton;
     private TextView tips;
     private ISettingLogic settingLogic;
+
     @Override
     protected void initLogics() {
-        settingLogic = (ISettingLogic) LogicBuilder.getInstance(this).getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (ISettingLogic) LogicBuilder.getInstance(this).getLogicByInterfaceClass(
+                ISettingLogic.class);
     }
 
     @Override
@@ -38,9 +40,10 @@ public class BindRequestDialog extends BasicActivity implements View.OnClickList
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
-        switch (msg.what){
+        switch (msg.what) {
             case BussinessConstants.SettingMsgID.SAVE_BIND_REQUEST_SUCCESS:
-                settingLogic.sendBindResult(message.getPeer().getNumber(), CaaSUtil.OpCode.BIND_SUCCESS);
+                settingLogic.sendBindResult(message.getPeer().getNumber(),
+                        CaaSUtil.OpCode.BIND_SUCCESS);
                 finish();
                 break;
             default:
@@ -52,8 +55,8 @@ public class BindRequestDialog extends BasicActivity implements View.OnClickList
     protected void initView() {
         Intent intent = getIntent();
         message = (TextMessage) intent.getSerializableExtra("message");
-//        fromNumber = message.getPeer().getNumber();
-        fromNumber = XmlParseUtil.getElemString(message.getContent(),"Phone");
+        //        fromNumber = message.getPeer().getNumber();
+        fromNumber = XmlParseUtil.getElemString(message.getContent(), "Phone");
         agreeButton = (LinearLayout) findViewById(R.id.btn_agree);
         deniedButton = (LinearLayout) findViewById(R.id.btn_denied);
         tips = (TextView) findViewById(R.id.hint);
@@ -78,7 +81,8 @@ public class BindRequestDialog extends BasicActivity implements View.OnClickList
                 settingLogic.saveBindRequest(message);
                 break;
             case R.id.btn_denied:
-                settingLogic.sendBindResult(message.getPeer().getNumber(), CaaSUtil.OpCode.BIND_DENIED);
+                settingLogic.sendBindResult(message.getPeer().getNumber(),
+                        CaaSUtil.OpCode.BIND_DENIED);
                 finish();
                 break;
             default:

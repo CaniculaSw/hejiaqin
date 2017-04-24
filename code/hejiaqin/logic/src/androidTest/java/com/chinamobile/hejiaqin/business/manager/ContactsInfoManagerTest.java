@@ -5,8 +5,6 @@ import android.test.AndroidTestCase;
 
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 
-import junit.framework.TestCase;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +76,8 @@ public class ContactsInfoManagerTest extends AndroidTestCase {
         contactsInfoList.add(contactsInfo4);
         ContactsInfoManager.getInstance().cacheLocalContactInfo(contactsInfoList);
 
-        List<ContactsInfo> cachedContactsInfoList = ContactsInfoManager.getInstance().getCachedLocalContactInfo();
+        List<ContactsInfo> cachedContactsInfoList = ContactsInfoManager.getInstance()
+                .getCachedLocalContactInfo();
         assertNotNull(cachedContactsInfoList);
         assertEquals(cachedContactsInfoList.size(), 4);
     }
@@ -110,11 +109,11 @@ public class ContactsInfoManagerTest extends AndroidTestCase {
         contactsInfoList.add(contactsInfo4);
         ContactsInfoManager.getInstance().cacheAppContactInfo(contactsInfoList);
 
-        List<ContactsInfo> cachedContactsInfoList = ContactsInfoManager.getInstance().getCachedAppContactInfo();
+        List<ContactsInfo> cachedContactsInfoList = ContactsInfoManager.getInstance()
+                .getCachedAppContactInfo();
         assertNotNull(cachedContactsInfoList);
         assertEquals(cachedContactsInfoList.size(), 4);
     }
-
 
     public void testSearchContactsInfoLst() throws Exception {
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
@@ -146,8 +145,8 @@ public class ContactsInfoManagerTest extends AndroidTestCase {
         assertNotNull(context);
         ContactsInfoManager.getInstance().sortContactsInfoLst(context, contactsInfoList);
 
-        List<ContactsInfo> hitContactsInfoList
-                = ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, "d");
+        List<ContactsInfo> hitContactsInfoList = ContactsInfoManager.getInstance()
+                .searchContactsInfoLst(contactsInfoList, "d");
 
         assertNotNull(hitContactsInfoList);
         assertEquals(hitContactsInfoList.size(), 1);

@@ -33,6 +33,7 @@ public class BussinessConstants {
         int CALL_INCOMING_HANGUP = 2;
 
     }
+
     /***/
     public interface ActivityRequestCode {
         int BASE_QEUEST_CODE = 1000;
@@ -140,8 +141,8 @@ public class BussinessConstants {
         String TV_ACCOUNT_KEY = "TvAccount";
         String TV_IS_LOGOUT_KEY = "TvIsLogou";
         String DOWNLOAD_URL = ServerInfo.HTTP_ADDRESS + "/version/appQR";
-        String DOWNLOAD_URL_ANDROID = ServerInfo.HTTP_ADDRESS +"/version/androidQR";
-        String DOWNLOAD_URL_IOS = ServerInfo.HTTP_ADDRESS +"/version/iosQR";
+        String DOWNLOAD_URL_ANDROID = ServerInfo.HTTP_ADDRESS + "/version/androidQR";
+        String DOWNLOAD_URL_IOS = ServerInfo.HTTP_ADDRESS + "/version/iosQR";
     }
 
     /**
@@ -205,7 +206,6 @@ public class BussinessConstants {
         //重置密码获取验证码网络失败消息ID
         int RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID = BASE_MSG_ID + 18;
 
-
         //检查验证码成功的消息ID
         int RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID = BASE_MSG_ID + 21;
         //检查验证码失败的消息ID
@@ -225,7 +225,6 @@ public class BussinessConstants {
         int TV_ACCOUNT_REGISTERED = BASE_MSG_ID + 28;
 
         int TV_ACCOUNT_UNREGISTERED = BASE_MSG_ID + 29;
-
 
     }
 
@@ -248,7 +247,6 @@ public class BussinessConstants {
      * 联系人模块网络接口错误码
      */
     public interface ContactHttpErrorCode {
-
 
     }
 
@@ -281,12 +279,10 @@ public class BussinessConstants {
         // 修改应用联系人失败的消息ID
         int EDIT_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 9;
 
-
         // 删除应用联系人成功的消息ID
         int DEL_APP_CONTACTS_SUCCESS_MSG_ID = BASE_MSG_ID + 10;
         // 删除应用联系人失败的消息ID
         int DEL_APP_CONTACTS_FAILED_MSG_ID = BASE_MSG_ID + 11;
-
 
         // 获取通话记录成功的消息ID
         int GET_CALL_RECORDS_SUCCESS_MSG_ID = BASE_MSG_ID + 12;
@@ -362,7 +358,6 @@ public class BussinessConstants {
         int CALL_INCOMING_MSG_ID = BASE_MSG_ID + 20;
     }
 
-
     /**
      * 设置模块常量
      */
@@ -378,7 +373,7 @@ public class BussinessConstants {
         String USER_SETTING_KEY = "userSettingInfo";
         String BINDED_APP_KEY = "bindedAppKey";
         String BINDED_DEVICE_KEY = "bindedDeviceKey";
-        String APP_SAVE_PATH = "/hejiaqin_app/";                  //头像保存路径
+        String APP_SAVE_PATH = "/hejiaqin_app/"; //头像保存路径
         String APP_IMG_DEFAULT_NAME = "hejiaqin_app_default_img.jpg"; //头像图片默认名字
         String MORE_SHARE_APP_URL = "/version/androidQR";
         int SEND_CONTACT_SEARCH = 1;
@@ -392,7 +387,6 @@ public class BussinessConstants {
         int BASE_ACTION_ID = 50002000;
 
     }
-
 
     /**
      * 设置模块消息ID
@@ -462,4 +456,3 @@ public class BussinessConstants {
     }
 
 }
-

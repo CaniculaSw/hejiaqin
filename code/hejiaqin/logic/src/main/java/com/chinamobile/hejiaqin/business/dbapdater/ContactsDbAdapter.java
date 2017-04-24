@@ -40,6 +40,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
         return mContactsDbAdapter;
     }
+
     /***/
     public void add(List<ContactsInfo> contactsInfoList) {
         if (null == contactsInfoList || contactsInfoList.isEmpty()) {
@@ -59,6 +60,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
         super.applyBatch(operationList);
     }
+
     /***/
     public void update(ContactsInfo contactsInfo) {
         if (null == contactsInfo) {
@@ -71,7 +73,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
 
         String selection = DatabaseInfo.ContactsInfo.CONTACT_ID + " = ? ";
-        String[] selectionArgs = {contactsInfo.getContactId()};
+        String[] selectionArgs = { contactsInfo.getContactId() };
 
         List<DbOperation> operationList = new ArrayList<DbOperation>();
         for (ContentValues contentValues : contentValuesList) {
@@ -80,6 +82,7 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         }
         super.applyBatch(operationList);
     }
+
     /***/
     public List<ContactsInfo> queryAll() {
         ContactList contactList = new ContactList();
@@ -108,7 +111,6 @@ public class ContactsDbAdapter extends BaseDbAdapter {
         return contactList.get();
     }
 
-
     /**
      * 根据conntactId删除
      *
@@ -119,9 +121,10 @@ public class ContactsDbAdapter extends BaseDbAdapter {
             return;
         }
         List<DbOperation> operationList = new ArrayList<DbOperation>();
-        operationList.add(DbOperation.newDelete(DatabaseInfo.ContactsInfo.TABLE_NAME)
-                .withSelection(DatabaseInfo.ContactsInfo.CONTACT_ID + " = ? ", new String[]{conntactId})
-                .build());
+        operationList.add(DbOperation
+                .newDelete(DatabaseInfo.ContactsInfo.TABLE_NAME)
+                .withSelection(DatabaseInfo.ContactsInfo.CONTACT_ID + " = ? ",
+                        new String[] { conntactId }).build());
         super.applyBatch(operationList);
     }
 
@@ -142,11 +145,14 @@ public class ContactsDbAdapter extends BaseDbAdapter {
 
         for (NumberInfo numberInfo : numberInfoList) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(DatabaseInfo.ContactsInfo.CONTACT_MODE, contactsInfo.getContactMode().ordinal());
+            contentValues.put(DatabaseInfo.ContactsInfo.CONTACT_MODE, contactsInfo.getContactMode()
+                    .ordinal());
             contentValues.put(DatabaseInfo.ContactsInfo.NAME, contactsInfo.getName());
-            contentValues.put(DatabaseInfo.ContactsInfo.NAME_IN_PINYIN, contactsInfo.getNameInPinyin());
+            contentValues.put(DatabaseInfo.ContactsInfo.NAME_IN_PINYIN,
+                    contactsInfo.getNameInPinyin());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER, numberInfo.getNumber());
-            contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_NO_COUNTRY_CODE, numberInfo.getNumberNoCountryCode());
+            contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_NO_COUNTRY_CODE,
+                    numberInfo.getNumberNoCountryCode());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_DESC, numberInfo.getDesc());
             contentValues.put(DatabaseInfo.ContactsInfo.NUMBER_TYPE, numberInfo.getType());
             contentValues.put(DatabaseInfo.ContactsInfo.CONTACT_ID, contactsInfo.getContactId());

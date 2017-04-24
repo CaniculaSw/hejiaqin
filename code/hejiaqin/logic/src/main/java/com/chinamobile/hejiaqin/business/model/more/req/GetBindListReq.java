@@ -11,7 +11,7 @@ public class GetBindListReq extends ReqToken implements ReqBody {
     @Override
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();
-        reqBody.add("token",getToken());
+        reqBody.add("token", getToken());
         return reqBody.toBody();
     }
 }

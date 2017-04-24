@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.0"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/key_one"
@@ -21,7 +22,8 @@
             android:textColor="@color/keypad_text_color"
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
@@ -39,10 +41,12 @@
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_three"
             android:layout_width="match_parent"
@@ -54,17 +58,19 @@
             android:textColor="@color/keypad_text_color"
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:soundEffectsEnabled="false" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/keypad_line_color" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.0"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/key_four"
@@ -78,10 +84,12 @@
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_five"
             android:layout_width="match_parent"
@@ -94,10 +102,12 @@
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_six"
             android:layout_width="match_parent"
@@ -111,15 +121,17 @@
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/keypad_line_color" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.0"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/key_seven"
@@ -133,10 +145,12 @@
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_eight"
             android:layout_width="match_parent"
@@ -149,10 +163,12 @@
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_nine"
             android:layout_width="match_parent"
@@ -166,15 +182,17 @@
             android:contentDescription="@null"
             android:soundEffectsEnabled="false" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/keypad_line_color" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.0"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/key_asterisk"
@@ -187,11 +205,13 @@
             android:textColor="@color/keypad_text_color"
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_zero"
             android:layout_width="match_parent"
@@ -203,11 +223,13 @@
             android:textColor="@color/keypad_text_color"
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:soundEffectsEnabled="false" />
+
         <LinearLayout
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/keypad_line_color" />
+
         <Button
             android:id="@+id/key_dot"
             android:layout_width="match_parent"
@@ -219,7 +241,7 @@
             android:textColor="@color/keypad_text_color"
             android:background="@drawable/digit_keypad_bg_selector"
             android:contentDescription="@null"
-            android:soundEffectsEnabled="false"/>
+            android:soundEffectsEnabled="false" />
     </LinearLayout>
 
 </LinearLayout>

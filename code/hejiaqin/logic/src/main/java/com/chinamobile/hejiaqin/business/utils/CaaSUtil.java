@@ -18,6 +18,7 @@ public class CaaSUtil {
         String SEND_CONTACT = "1";
         String TV_HELPER = "3";
     }
+
     /***/
     public interface OpCode {
         String BIND = "0"; //Phone -> TV
@@ -52,8 +53,10 @@ public class CaaSUtil {
 
         return content;
     }
+
     /***/
-    public static String buildMessage(String cmdType, String seq, String opCode, String phoneNum, Map<String, String> params) {
+    public static String buildMessage(String cmdType, String seq, String opCode, String phoneNum,
+                                      Map<String, String> params) {
         StringBuilder content = setMainBody(cmdType, seq, opCode);
         if (null != phoneNum) {
             content.append("<Phone>");

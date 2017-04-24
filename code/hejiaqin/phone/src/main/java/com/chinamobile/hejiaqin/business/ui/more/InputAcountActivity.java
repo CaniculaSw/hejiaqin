@@ -93,7 +93,8 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
 
     @Override
     protected void initLogics() {
-        settingLogic = (ISettingLogic) LogicBuilder.getInstance(getApplicationContext()).getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (ISettingLogic) LogicBuilder.getInstance(getApplicationContext())
+                .getLogicByInterfaceClass(ISettingLogic.class);
     }
 
     @Override
@@ -135,7 +136,8 @@ public class InputAcountActivity extends BasicActivity implements View.OnClickLi
                 if (mName.getText().length() <= 0 || mNumber.getText().length() <= 0) {
                     break;
                 } else {
-                    settingLogic.sendBindReq(mNumber.getText().toString(), UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
+                    settingLogic.sendBindReq(mNumber.getText().toString(), UserInfoCacheManager
+                            .getUserInfo(getApplicationContext()).getPhone());
                     progressLayout.setVisibility(View.VISIBLE);
                 }
                 break;

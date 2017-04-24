@@ -17,10 +17,10 @@ import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
-import com.customer.framework.component.threadpool.ThreadPoolUtil;
-import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.db.DatabaseInfo;
 import com.customer.framework.component.storage.StorageMgr;
+import com.customer.framework.component.threadpool.ThreadPoolUtil;
+import com.customer.framework.component.threadpool.ThreadTask;
 import com.customer.framework.component.time.DateTimeUtil;
 import com.customer.framework.logic.LogicImp;
 import com.customer.framework.utils.LogUtil;
@@ -63,7 +63,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 case BussinessConstants.DialMsgID.CALL_INCOMING_MSG_ID:
                     Intent inComingIntent = new Intent();
                     inComingIntent.setAction(BussinessConstants.Dial.TV_CALL_ACTION);
-                    inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID, (long) msg.obj);
+                    inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID,
+                            (long) msg.obj);
                     inComingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getContext().startActivity(inComingIntent);
                     return;
@@ -83,22 +84,27 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                 case LoginApi.STATUS_CONNECTED:
                     LogUtil.i(VoipLogic.TAG, "the status is STATUS_CONNECTED");
                     UserInfoCacheManager.saveVoipLogined(getContext());
-                    VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID);
+                    VoipLogic.this
+                            .sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID);
                     break;
                 case LoginApi.STATUS_CONNECTING:
                     LogUtil.i(VoipLogic.TAG, "the status is STATUS_CONNECTING");
-                    VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTING_MSG_ID);
+                    VoipLogic.this
+                            .sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTING_MSG_ID);
                     break;
                 case LoginApi.STATUS_DISCONNECTED:
                     LogUtil.i(VoipLogic.TAG, "the status is STATUS_DISCONNECTED reason:" + reason);
                     if (reason == LoginApi.REASON_SRV_FORCE_LOGOUT) {
                         //服务器强制注销 如：同一账号在多终端上登录
-                        VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID);
+                        VoipLogic.this
+                                .sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_KICK_OUT_MSG_ID);
                     } else if (reason == LoginApi.REASON_NET_UNAVAILABLE) {
                         //网络不可用
-                        VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID);
+                        VoipLogic.this
+                                .sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_NET_UNAVAILABLE_MSG_ID);
                     } else {
-                        VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
+                        VoipLogic.this
+                                .sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
                     }
 
                     break;
@@ -107,7 +113,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     break;
                 case LoginApi.STATUS_IDLE:
                     LogUtil.d(VoipLogic.TAG, "the status is STATUS_IDLE");
-                    VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
+                    VoipLogic.this
+                            .sendEmptyMessage(BussinessConstants.DialMsgID.VOIP_REGISTER_DISCONNECTED_MSG_ID);
                     break;
                 default:
                     break;
@@ -118,7 +125,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private BroadcastReceiver mCallInvitationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession callSession = (CallSession) intent
+                    .getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             LogUtil.i(TAG, "INCOMING");
             if (callSession.getType() == CallSession.TYPE_VIDEO_SHARE) {
                 LogUtil.w(TAG, "VIDEO_SHARE");
@@ -136,23 +144,30 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     CallRecord callRecord = new CallRecord();
                     String recordId = UUID.randomUUID().toString();
                     callRecord.setRecordId(recordId);
-                    callRecord.setPeerNumber(CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber())));
-                    callRecord.setNoCountryNumber(CommonUtils.getTvNumberWithZero(CommonUtils.getPhoneNumber(callSession.getPeer().getNumber())));
+                    callRecord.setPeerNumber(CommonUtils.getTvNumberWithZero(CommonUtils
+                            .getPhoneNumber(callSession.getPeer().getNumber())));
+                    callRecord.setNoCountryNumber(CommonUtils.getTvNumberWithZero(CommonUtils
+                            .getPhoneNumber(callSession.getPeer().getNumber())));
                     callRecord.setBeginTime(DateTimeUtil.getDateString(new Date()));
                     callRecord.setDuration(callSession.getDuration());
                     callRecord.setType(CallRecord.TYPE_VIDEO_INCOMING);
                     callRecord.setRead(BussinessConstants.DictInfo.YES);
-                    CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
+                    CallRecordDbAdapter.getInstance(getContext(),
+                            UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
                     recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
                 }
                 if (callSession.isNurse()) {
                     LogUtil.i(TAG, "NURSE_ON_TV_INCOMING_MSG_ID");
                     //远程看护是绑定APP启动UI
-                    if (UserInfoCacheManager.isBindedApp(getContext(), callSession.getPeer().getNumber()) ||
-                            UserInfoCacheManager.isBindedApp(getContext(), CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()))) {
+                    if (UserInfoCacheManager.isBindedApp(getContext(), callSession.getPeer()
+                            .getNumber())
+                            || UserInfoCacheManager.isBindedApp(getContext(),
+                                    CommonUtils.getPhoneNumber(callSession.getPeer().getNumber()))) {
                         //远程看护不是绑定APP直接挂断
                         LogUtil.i(TAG, "NURSE_ON_TV_INCOMING_MSG_ID BIND APP ");
-                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                        VoipLogic.this.sendMessage(
+                                BussinessConstants.DialMsgID.NURSE_ON_TV_INCOMING_MSG_ID,
+                                callSession.getSessionId());
                     } else {
                         //远程看护不是绑定APP直接挂断
                         LogUtil.w(TAG, "NURSE_ON_TV_INCOMING_MSG_ID NO BIND APP ");
@@ -160,8 +175,12 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                     }
                 } else {
                     LogUtil.i(TAG, "CALL_ON_TV_INCOMING_MSG_ID");
-                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID, callSession.getSessionId());
-                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID, callSession.getSessionId());
+                    VoipLogic.this.sendMessage(
+                            BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID,
+                            callSession.getSessionId());
+                    VoipLogic.this.sendMessage(
+                            BussinessConstants.DialMsgID.CALL_ON_TV_INCOMING_MSG_ID,
+                            callSession.getSessionId());
                     Message message = mHandler.obtainMessage();
                     message.what = BussinessConstants.DialMsgID.CALL_INCOMING_MSG_ID;
                     message.obj = callSession.getSessionId();
@@ -174,16 +193,20 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     private BroadcastReceiver mCallStatusChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            CallSession callSession = (CallSession) intent.getSerializableExtra(CallApi.PARAM_CALL_SESSION);
+            CallSession callSession = (CallSession) intent
+                    .getSerializableExtra(CallApi.PARAM_CALL_SESSION);
             int newStatus = intent.getIntExtra(CallApi.PARAM_NEW_STATUS, CallSession.STATUS_IDLE);
             switch (newStatus) {
                 case CallSession.STATUS_CONNECTED:
                     LogUtil.i(TAG, "CallSession STATUS_CONNECTED");
                     if (callSession.isNurse()) {
                         LogUtil.i(TAG, "nurse");
-                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID, callSession);
+                        VoipLogic.this.sendMessage(
+                                BussinessConstants.DialMsgID.NURSE_CALL_ON_TALKING_MSG_ID,
+                                callSession);
                     } else {
-                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
+                        VoipLogic.this.sendMessage(
+                                BussinessConstants.DialMsgID.CALL_ON_TALKING_MSG_ID, callSession);
                     }
                     break;
                 case CallSession.STATUS_IDLE:
@@ -196,9 +219,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
                         }
                     });
                     if (callSession.isNurse()) {
-                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID, callSession);
+                        VoipLogic.this.sendMessage(
+                                BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID, callSession);
                     } else {
-                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID, callSession);
+                        VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID,
+                                callSession);
                     }
                     break;
                 default:
@@ -207,7 +232,6 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             //TODO 修改通话记录
         }
     };
-
 
     private VoipLogic(Context context) {
         init(context.getApplicationContext());
@@ -228,26 +252,31 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     /***/
     public void registerVoipReceiver() {
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mLoginStatusChangedReceiver, new IntentFilter(LoginApi.EVENT_LOGIN_STATUS_CHANGED));
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mCallInvitationReceiver, new IntentFilter(CallApi.EVENT_CALL_INVITATION));
-        LocalBroadcastManager.getInstance(getContext())
-                .registerReceiver(mCallStatusChangedReceiver, new IntentFilter(CallApi.EVENT_CALL_STATUS_CHANGED));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(
+                mLoginStatusChangedReceiver, new IntentFilter(LoginApi.EVENT_LOGIN_STATUS_CHANGED));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mCallInvitationReceiver,
+                new IntentFilter(CallApi.EVENT_CALL_INVITATION));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(
+                mCallStatusChangedReceiver, new IntentFilter(CallApi.EVENT_CALL_STATUS_CHANGED));
     }
 
     /***/
     public void unRegisterVoipReceiver() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mLoginStatusChangedReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(
+                mLoginStatusChangedReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallInvitationReceiver);
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCallStatusChangedReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(
+                mCallStatusChangedReceiver);
     }
 
     @Override
     public void autoLogin() {
-        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_IP);
-        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_PORT);
-        com.chinamobile.hejiaqin.business.model.login.UserInfo userInfo = CommonUtils.getLocalUserInfo();
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT,
+                DEFAULT_IP);
+        LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT,
+                DEFAULT_PORT);
+        com.chinamobile.hejiaqin.business.model.login.UserInfo userInfo = CommonUtils
+                .getLocalUserInfo();
         com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
         sdkuserInfo.countryCode = "";
         sdkuserInfo.username = userInfo.getSdkAccount();
@@ -264,11 +293,15 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     @Override
     public void login(UserInfo userInfo, String ip, String port) {
         if (!StringUtil.isNullOrEmpty(ip) && !StringUtil.isNullOrEmpty(port)) {
-            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, ip);
-            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, port);
+            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP,
+                    LoginApi.CONFIG_MINOR_TYPE_DEFAULT, ip);
+            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT,
+                    LoginApi.CONFIG_MINOR_TYPE_DEFAULT, port);
         } else {
-            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_IP);
-            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT, LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_PORT);
+            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_IP,
+                    LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_IP);
+            LoginApi.setConfig(LoginApi.CONFIG_MAJOR_TYPE_DM_PORT,
+                    LoginApi.CONFIG_MINOR_TYPE_DEFAULT, DEFAULT_PORT);
         }
         LoginCfg loginCfg = new LoginCfg();
         //断网SDK自动重连设置
@@ -278,14 +311,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         LogUtil.d(TAG, "UserInfo:" + userInfo.username);
         LoginApi.login(userInfo, loginCfg);
         //TODO TEST:服务器没有保存SDK账号和密码
-        com.chinamobile.hejiaqin.business.model.login.UserInfo clientUserInfo = UserInfoCacheManager.getUserInfo(getContext());
+        com.chinamobile.hejiaqin.business.model.login.UserInfo clientUserInfo = UserInfoCacheManager
+                .getUserInfo(getContext());
         clientUserInfo.setSdkAccount(userInfo.username);
         clientUserInfo.setSdkPassword(userInfo.password);
         HashMap map = new HashMap();
         Gson gson = new Gson();
         map.put(BussinessConstants.Login.USER_INFO_KEY, gson.toJson(clientUserInfo));
         StorageMgr.getInstance().getSharedPStorage(getContext()).save(map);
-        StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Login.USER_INFO_KEY, clientUserInfo);
+        StorageMgr.getInstance().getMemStorage()
+                .save(BussinessConstants.Login.USER_INFO_KEY, clientUserInfo);
         //TODO TEST:服务器没有保存SDK账号和密码
     }
 
@@ -319,9 +354,11 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
             }
         }
         if (isVideoCall) {
-            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(CommonUtils.getTvNumber(CommonUtils.getPhoneNumber(tmpNumber))));
+            callSession = CallApi.initiateVideoCall(CommonUtils.getCountryPhoneNumber(CommonUtils
+                    .getTvNumber(CommonUtils.getPhoneNumber(tmpNumber))));
         } else {
-            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(CommonUtils.getTvNumber(CommonUtils.getPhoneNumber(tmpNumber))));
+            callSession = CallApi.initiateAudioCall(CommonUtils.getCountryPhoneNumber(CommonUtils
+                    .getTvNumber(CommonUtils.getPhoneNumber(tmpNumber))));
         }
 
         // 保存通话记录
@@ -334,7 +371,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         callRecord.setDuration(callSession.getDuration());
         callRecord.setType(CallRecord.TYPE_VIDEO_OUTGOING);
         callRecord.setRead(BussinessConstants.DictInfo.YES);
-        CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).insert(callRecord);
+        CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()))
+                .insert(callRecord);
 
         if (callSession.getErrCode() == CallSession.ERRCODE_OK) {
             recordMap.put(String.valueOf(callSession.getSessionId()), recordId);
@@ -367,12 +405,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         if (isTalking) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.DURATION, callTime);
-            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
+            CallRecordDbAdapter.getInstance(getContext(),
+                    UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,
+                    contentValues);
         } else if (isInComing) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_REJECT);
             contentValues.put(DatabaseInfo.CallRecord.READ, BussinessConstants.DictInfo.NO);
-            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
+            CallRecordDbAdapter.getInstance(getContext(),
+                    UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,
+                    contentValues);
         }
         this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
     }
@@ -385,7 +427,8 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
     }
 
     @Override
-    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking, int callTime) {
+    public void dealOnClosed(CallSession callSession, boolean isInComing, boolean isTalking,
+                             int callTime) {
         String recordId = "";
         if (recordMap.containsKey(String.valueOf(callSession.getSessionId()))) {
             recordId = recordMap.get(String.valueOf(callSession.getSessionId()));
@@ -398,12 +441,16 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         if (isTalking) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.DURATION, callTime);
-            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
+            CallRecordDbAdapter.getInstance(getContext(),
+                    UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,
+                    contentValues);
         } else if (isInComing) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseInfo.CallRecord.TYPE, CallRecord.TYPE_VIDEO_MISSING);
             contentValues.put(DatabaseInfo.CallRecord.READ, BussinessConstants.DictInfo.NO);
-            CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId, contentValues);
+            CallRecordDbAdapter.getInstance(getContext(),
+                    UserInfoCacheManager.getUserId(getContext())).updateByRecordId(recordId,
+                    contentValues);
         }
         this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID);
     }
@@ -413,8 +460,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).delAll();
-                VoipLogic.this.sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID);
+                CallRecordDbAdapter.getInstance(getContext(),
+                        UserInfoCacheManager.getUserId(getContext())).delAll();
+                VoipLogic.this
+                        .sendEmptyMessage(BussinessConstants.DialMsgID.CALL_RECORD_DEL_ALL_MSG_ID);
             }
         });
     }
@@ -424,8 +473,10 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-                CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).delById(ids);
-                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_DEL_MSG_ID, ids);
+                CallRecordDbAdapter.getInstance(getContext(),
+                        UserInfoCacheManager.getUserId(getContext())).delById(ids);
+                VoipLogic.this
+                        .sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_DEL_MSG_ID, ids);
             }
         });
     }
@@ -434,25 +485,32 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
         ThreadPoolUtil.execute(new ThreadTask() {
             @Override
             public void run() {
-                List<CallRecord> callRecords = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).queryWithName();
-                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID, callRecords);
+                List<CallRecord> callRecords = CallRecordDbAdapter.getInstance(getContext(),
+                        UserInfoCacheManager.getUserId(getContext())).queryWithName();
+                VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_GET_ALL_MSG_ID,
+                        callRecords);
             }
         });
     }
 
     @Override
     public void search(final String input) {
-        List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance().getCachedLocalContactInfo();
+        List<ContactsInfo> contactsInfoList = ContactsInfoManager.getInstance()
+                .getCachedLocalContactInfo();
         contactsInfoList.addAll(ContactsInfoManager.getInstance().getCachedAppContactInfo());
-        List<ContactsInfo> result = ContactsInfoManager.getInstance().searchContactsInfoLst(contactsInfoList, input);
+        List<ContactsInfo> result = ContactsInfoManager.getInstance().searchContactsInfoLst(
+                contactsInfoList, input);
         if (result != null && result.size() > 0) {
-            sendMessage(BussinessConstants.DialMsgID.SEARCH_CONTACTS_SUCCESS_MSG_ID, new SearchResultContacts("", result));
+            sendMessage(BussinessConstants.DialMsgID.SEARCH_CONTACTS_SUCCESS_MSG_ID,
+                    new SearchResultContacts("", result));
         } else {
             ThreadPoolUtil.execute(new ThreadTask() {
                 @Override
                 public void run() {
-                    List<CallRecord> callRecords = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext())).searchNumbers(input);
-                    VoipLogic.this.sendMessage(BussinessConstants.DialMsgID.CALL_RECORD_SEARCH_MSG_ID, callRecords);
+                    List<CallRecord> callRecords = CallRecordDbAdapter.getInstance(getContext(),
+                            UserInfoCacheManager.getUserId(getContext())).searchNumbers(input);
+                    VoipLogic.this.sendMessage(
+                            BussinessConstants.DialMsgID.CALL_RECORD_SEARCH_MSG_ID, callRecords);
                 }
             });
         }

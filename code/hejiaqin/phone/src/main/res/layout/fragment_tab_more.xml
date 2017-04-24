@@ -24,11 +24,11 @@
         android:background="@color/white">
 
         <!--<ImageView-->
-            <!--android:id="@+id/more_user_avatar_ci"-->
-            <!--android:layout_width="60dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginLeft="16dp" />-->
+        <!--android:id="@+id/more_user_avatar_ci"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginLeft="16dp" />-->
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/more_user_avatar_ci"

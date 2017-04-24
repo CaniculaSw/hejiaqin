@@ -30,7 +30,7 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
 
     private Context mContext;
 
-//    private LayoutInflater inflater;
+    //    private LayoutInflater inflater;
 
     private List<ContactsInfo> contactsInfoList = new ArrayList<ContactsInfo>();
 
@@ -38,13 +38,15 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
 
     private Map<String, Integer> letterToPosition = new HashMap<>();
     private ISettingLogic settingLogic;
-//    private Handler handler;
+
+    //    private Handler handler;
 
     public SelectContactAndBindAdapter(Context context, Handler handler) {
         mContext = context;
-//        inflater = LayoutInflater.from(context);
-        settingLogic = (ISettingLogic) LogicBuilder.getInstance(context).getLogicByInterfaceClass(ISettingLogic.class);
-//        this.handler = handler;
+        //        inflater = LayoutInflater.from(context);
+        settingLogic = (ISettingLogic) LogicBuilder.getInstance(context).getLogicByInterfaceClass(
+                ISettingLogic.class);
+        //        this.handler = handler;
     }
 
     @Override
@@ -64,7 +66,8 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        AdapterViewHolder holder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_contact_app_view, position);
+        AdapterViewHolder holder = AdapterViewHolder.get(mContext, convertView, parent,
+                R.layout.adapter_contact_app_view, position);
 
         initView(position, holder);
         return holder.getView();
@@ -74,24 +77,25 @@ public class SelectContactAndBindAdapter extends BaseAdapter implements StickyLi
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.setText(R.id.contact_name_text, contactsInfo.getName());
 
-
-        Picasso.with(mContext.getApplicationContext())
-                .load(contactsInfo.getPhotoSm())
+        Picasso.with(mContext.getApplicationContext()).load(contactsInfo.getPhotoSm())
                 .placeholder(R.drawable.contact_photo_default)
-                .error(R.drawable.contact_photo_default).into((CircleImageView) holder.getView(R.id.contact_photo_img));
+                .error(R.drawable.contact_photo_default)
+                .into((CircleImageView) holder.getView(R.id.contact_photo_img));
 
         holder.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingLogic.sendBindReq(contactsInfo.getPhone(), UserInfoCacheManager.getUserInfo(mContext).getPhone());
-//                handler.sendEmptyMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST);
+                settingLogic.sendBindReq(contactsInfo.getPhone(),
+                        UserInfoCacheManager.getUserInfo(mContext).getPhone());
+                //                handler.sendEmptyMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST);
             }
         });
     }
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
-        AdapterViewHolder holder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_contact_head_view, position);
+        AdapterViewHolder holder = AdapterViewHolder.get(mContext, convertView, parent,
+                R.layout.adapter_contact_head_view, position);
         //set header text as first char in name
         ContactsInfo contactsInfo = contactsInfoList.get(position);
         String headerText = contactsInfo.getGroupName();

@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.tv.R;
 import com.huawei.rcs.call.CallApi;
+
 /***/
 public class CheckStatusFragment extends BasicFragment {
     LinearLayout normalLayout;
@@ -32,7 +33,7 @@ public class CheckStatusFragment extends BasicFragment {
         normalLayout = (LinearLayout) view.findViewById(R.id.check_status_normal_ll);
         abnormalLayout = (LinearLayout) view.findViewById(R.id.check_status_abnormal_ll);
         //TODO: 根据摄像头检测结果决定显示那个Layout
-        setStatusLayout(CallApi.getCameraCount() > 0 ? true:false);
+        setStatusLayout(CallApi.getCameraCount() > 0 ? true : false);
     }
 
     private void setStatusLayout(boolean isNormal) {
@@ -50,8 +51,7 @@ public class CheckStatusFragment extends BasicFragment {
 
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return null;
     }
 }

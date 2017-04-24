@@ -19,11 +19,11 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.PhotoManage;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.qrcode.QRCodeDecoder;
 import com.customer.framework.component.qrcode.ZXingView;
 import com.customer.framework.component.qrcode.core.QRCodeView;
 import com.customer.framework.utils.FileUtil;
+import com.customer.framework.utils.LogUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,14 +33,14 @@ import java.io.InputStream;
 /**
  * Created by eshaohu on 16/6/1.
  */
-public class ScanActivity extends BasicActivity implements View.OnClickListener, QRCodeView.Delegate, QRCodeDecoder.Delegate {
+public class ScanActivity extends BasicActivity implements View.OnClickListener,
+        QRCodeView.Delegate, QRCodeDecoder.Delegate {
     private HeaderView mHeaderView;
     private QRCodeView mQRCodeView;
     private ISettingLogic settingLogic;
     private final static String TAG = "ScanActivity";
     public static final String IMAGE_TYPE = "image/*";
     public static final int IMAGE_CODE = 1;//相册
-
 
     @Override
     protected void handleStateMessage(Message msg) {
@@ -114,7 +114,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                 if (Build.VERSION.SDK_INT < 19) {
                     getAlbum.setAction(Intent.ACTION_GET_CONTENT);
                 } else {
-//                    getAlbum.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                    //                    getAlbum.setAction(Intent.ACTION_OPEN_DOCUMENT);
                     getAlbum.setAction(Intent.ACTION_PICK);
                 }
                 getAlbum.setType("image/*");
@@ -135,10 +135,9 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
         switch (requestCode) {
             case IMAGE_CODE:
                 String photoPath = null;
-                String[] proj = {MediaStore.Images.Media.DATA};
+                String[] proj = { MediaStore.Images.Media.DATA };
                 // 获取选中图片的路径
-                Cursor cursor = getContentResolver().query(data.getData(),
-                        proj, null, null, null);
+                Cursor cursor = getContentResolver().query(data.getData(), proj, null, null, null);
 
                 if (cursor.moveToFirst()) {
 
@@ -146,8 +145,7 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                             .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     photoPath = cursor.getString(columnIndexOrThrow);
                     if (photoPath == null) {
-                        photoPath = PhotoManage.getPath(getApplicationContext(),
-                                data.getData());
+                        photoPath = PhotoManage.getPath(getApplicationContext(), data.getData());
                         LogUtil.i(TAG, photoPath);
                     }
                     LogUtil.i(TAG, photoPath);
@@ -181,18 +179,18 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
                 is = new FileInputStream(photoPath);
             } catch (FileNotFoundException e) {
                 LogUtil.e(TAG, "File not found", e);
-            }finally {
+            } finally {
                 try {
                     if (is != null) {
                         is.close();
                     }
                 } catch (IOException e) {
-                    LogUtil.i(tag,e.getMessage());
+                    LogUtil.i(tag, e.getMessage());
                 }
             }
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = false;
-            options.inSampleSize = 10;   //width，hight设为原来的十分一
+            options.inSampleSize = 10; //width，hight设为原来的十分一
             bm = BitmapFactory.decodeStream(is, null, options);
         } else {
             bm = BitmapFactory.decodeFile(photoPath);
@@ -235,9 +233,10 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
         vibrate();
         //TODO finish();
         if (result.length() > 0) {
-            settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
-//            finish();
-        }else {
+            settingLogic.sendBindReq(result,
+                    UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
+            //            finish();
+        } else {
             showToast("错误的二维码", Toast.LENGTH_SHORT, null);
             mQRCodeView.startSpotAndShowRect();
         }
@@ -248,14 +247,14 @@ public class ScanActivity extends BasicActivity implements View.OnClickListener,
         Log.e(TAG, "打开相机出错");
     }
 
-
     @Override
     public void onDecodeQRCodeSuccess(String result) {
         vibrate();
         if (result.length() > 0) {
-            settingLogic.sendBindReq(result, UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
+            settingLogic.sendBindReq(result,
+                    UserInfoCacheManager.getUserInfo(getApplicationContext()).getPhone());
             //finish();
-        }else {
+        } else {
             showToast("错误的二维码", Toast.LENGTH_SHORT, null);
             mQRCodeView.startSpotAndShowRect();
         }

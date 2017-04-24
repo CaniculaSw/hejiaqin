@@ -23,8 +23,7 @@ public class AddContactDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popwindow_add_contact);
         addLayout = (LinearLayout) findViewById(R.id.add_contact_layout);
-        cancelLayout = (LinearLayout)findViewById(R.id.cancel_layout);
+        cancelLayout = (LinearLayout) findViewById(R.id.cancel_layout);
     }
-
 
 }

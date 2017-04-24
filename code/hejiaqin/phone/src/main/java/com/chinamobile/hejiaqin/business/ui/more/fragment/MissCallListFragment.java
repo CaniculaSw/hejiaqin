@@ -26,7 +26,9 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
         switch (msg.what) {
             case BussinessConstants.SettingMsgID.EDIT_BUTTON_PRESSED:
                 unSelectedAllData();
-                mDeleteButton.setVisibility(mDeleteButton.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+                mDeleteButton
+                        .setVisibility(mDeleteButton.getVisibility() == View.VISIBLE ? View.INVISIBLE
+                                : View.VISIBLE);
                 adapter.setShow(adapter.isShow() ? false : true);
                 adapter.notifyDataSetChanged();
                 break;
@@ -60,8 +62,8 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
 
         msgListView = (ListView) view.findViewById(R.id.more_miss_call_message_list);
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 添加adapter
         adapter = new MissCallAdapter(context);
@@ -73,35 +75,35 @@ public class MissCallListFragment extends BasicFragment implements View.OnClickL
 
     @Override
     protected void initData() {
-//        List<ContactCallLog> callLogList = CallLogApi.getAllContactCallLogList(CallLogApi.CALLLOG_TYPE_VIDEO,-1);
-//        LogUtil.i(tagString,"callLogList size is: "+callLogList.size());
-//        MissCallMessage testMessage1 = new MissCallMessage();
-//        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));
-//        testMessage1.setFrom("13776570335");
-//        MissCallMessage testMessage2 = new MissCallMessage();
-//
-//        testMessage2.setDate(DateTimeUtil.getYYYYMMDDHHMMSS(DateTimeUtil.getYesterdayDate()));
-//        testMessage2.setFrom("13776570335");
-//
-//        MissCallMessage testMessage3 = new MissCallMessage();
-//        testMessage3.setDate("2016-03-15 14:02:03");
-//        testMessage3.setFrom("13776570335");
-//
-//        MissCallMessage testMessage4 = new MissCallMessage();
-//        testMessage4.setDate("2015-03-15 14:02:03");
-//        testMessage4.setFrom("13776570335");
-//
-//        mMissCallMessages.add(testMessage1);
-//        mMissCallMessages.add(testMessage2);
-//        mMissCallMessages.add(testMessage3);
-//        mMissCallMessages.add(testMessage4);
+        //        List<ContactCallLog> callLogList = CallLogApi.getAllContactCallLogList(CallLogApi.CALLLOG_TYPE_VIDEO,-1);
+        //        LogUtil.i(tagString,"callLogList size is: "+callLogList.size());
+        //        MissCallMessage testMessage1 = new MissCallMessage();
+        //        testMessage1.setDate(DateTimeUtil.getCurrentDateString("yyyy-MM-dd HH:mm:ss"));
+        //        testMessage1.setFrom("13776570335");
+        //        MissCallMessage testMessage2 = new MissCallMessage();
+        //
+        //        testMessage2.setDate(DateTimeUtil.getYYYYMMDDHHMMSS(DateTimeUtil.getYesterdayDate()));
+        //        testMessage2.setFrom("13776570335");
+        //
+        //        MissCallMessage testMessage3 = new MissCallMessage();
+        //        testMessage3.setDate("2016-03-15 14:02:03");
+        //        testMessage3.setFrom("13776570335");
+        //
+        //        MissCallMessage testMessage4 = new MissCallMessage();
+        //        testMessage4.setDate("2015-03-15 14:02:03");
+        //        testMessage4.setFrom("13776570335");
+        //
+        //        mMissCallMessages.add(testMessage1);
+        //        mMissCallMessages.add(testMessage2);
+        //        mMissCallMessages.add(testMessage3);
+        //        mMissCallMessages.add(testMessage4);
 
-//        adapter.setData(callLogList);
+        //        adapter.setData(callLogList);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.more_miss_call_list_delete:
                 deleteSelectedData();
                 break;

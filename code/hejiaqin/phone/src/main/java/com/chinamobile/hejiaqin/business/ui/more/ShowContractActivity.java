@@ -31,7 +31,8 @@ public class ShowContractActivity extends BasicActivity implements View.OnClickL
 
     @Override
     protected void initDate() {
-        String content = FileUtil.getFileFromAssets("service_contract.txt", ShowContractActivity.this);
+        String content = FileUtil.getFileFromAssets("service_contract.txt",
+                ShowContractActivity.this);
         mContractContentTv.setText(content);
     }
 

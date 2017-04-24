@@ -1,4 +1,3 @@
-
 package com.chinamobile.hejiaqin.business.model.login.req;
 
 import android.os.Parcel;
@@ -20,14 +19,13 @@ public class RegisterSecondStepInfo implements ReqBody, Parcelable {
     //用户密码
     private String pwd;
 
-
-
     // 必须要创建一个名叫CREATOR的常量。
     public static final Parcelable.Creator<RegisterSecondStepInfo> CREATOR = new Parcelable.Creator<RegisterSecondStepInfo>() {
         @Override
         public RegisterSecondStepInfo createFromParcel(Parcel source) {
             return new RegisterSecondStepInfo(source);
         }
+
         //重写createFromParcel方法，创建并返回一个获得了数据的user对象
         @Override
         public RegisterSecondStepInfo[] newArray(int size) {
@@ -48,9 +46,9 @@ public class RegisterSecondStepInfo implements ReqBody, Parcelable {
     @Override
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();
-        reqBody.add("phone",getPhone());
-        reqBody.add("code",getCode());
-        reqBody.add("password",getPwd());
+        reqBody.add("phone", getPhone());
+        reqBody.add("code", getCode());
+        reqBody.add("password", getPwd());
         return reqBody.toBody();
     }
 

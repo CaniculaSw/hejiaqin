@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class MissCallAdapter extends BaseAdapter implements ListAdapter {
 
-//    private LayoutInflater inflater;
+    //    private LayoutInflater inflater;
     private List<ContactCallLog> missCallmessages = new ArrayList<ContactCallLog>();
     private boolean isShow = false;
     private Context mContext;
@@ -38,7 +38,7 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
     public MissCallAdapter(Context context) {
         super();
         mContext = context;
-//        inflater = LayoutInflater.from(context);
+        //        inflater = LayoutInflater.from(context);
         selected = new HashSet<ContactCallLog>();
     }
 
@@ -67,13 +67,18 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        mViewHolder = AdapterViewHolder.get(mContext, convertView, parent, R.layout.adapter_miss_call, position);
+        mViewHolder = AdapterViewHolder.get(mContext, convertView, parent,
+                R.layout.adapter_miss_call, position);
         CheckBox checkBox = (CheckBox) mViewHolder.getView(R.id.more_checkbox_miss_call);
 
         ContactCallLog msg = (ContactCallLog) getItem(position);
 
-        mViewHolder.setText(R.id.more_miss_call_item_text, Html.fromHtml("<font color='#44C8FF'> ("+msg.getPeerInfo().getName()+") "+msg.getPeerInfo().getNumber() +"</font>"));//Html.fromHtml("<font color='#44C8FF'>("+msg.getPeerInfo().getName()+") "+msg.getPeerInfo().getNumber() +"</font>"));
-        mViewHolder.setText(R.id.more_miss_call_date, formatTimeString(DateTimeUtil.getDateString(new Date(msg.getLastCallTimeLong()))));
+        mViewHolder.setText(
+                R.id.more_miss_call_item_text,
+                Html.fromHtml("<font color='#44C8FF'> (" + msg.getPeerInfo().getName() + ") "
+                        + msg.getPeerInfo().getNumber() + "</font>"));//Html.fromHtml("<font color='#44C8FF'>("+msg.getPeerInfo().getName()+") "+msg.getPeerInfo().getNumber() +"</font>"));
+        mViewHolder.setText(R.id.more_miss_call_date,
+                formatTimeString(DateTimeUtil.getDateString(new Date(msg.getLastCallTimeLong()))));
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -97,7 +102,6 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         return mViewHolder.getView();
     }
 
-
     public void setData(List<ContactCallLog> missCallInfoList) {
         this.missCallmessages.clear();
         if (null != missCallInfoList) {
@@ -111,12 +115,14 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         Iterator<ContactCallLog> iterator = selected.iterator();
         while (iterator.hasNext()) {
             ContactCallLog delete = iterator.next();
-            CallLogApi.removeCalllogsByNumberAndType(delete.getPeerInfo().getNumber(),CallLogApi.QUERY_FILTER_TYPE_MISSED);
+            CallLogApi.removeCalllogsByNumberAndType(delete.getPeerInfo().getNumber(),
+                    CallLogApi.QUERY_FILTER_TYPE_MISSED);
             iterator.remove();
             this.missCallmessages.remove(delete);
         }
         notifyDataSetChanged();
     }
+
     /***/
     public void unSelectedAllData() {
         selected.clear();

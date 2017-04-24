@@ -21,8 +21,8 @@ public class FeedBackReq extends ReqToken implements ReqBody {
     @Override
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();
-        reqBody.add("token",getToken());
-        reqBody.add("content",getContent());
+        reqBody.add("token", getToken());
+        reqBody.add("content", getContent());
 
         return reqBody.toBody();
     }

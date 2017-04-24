@@ -51,27 +51,27 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-//                jumpToMainFragmentActivity();
+                //                jumpToMainFragmentActivity();
 
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-//                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-//                    LogUtil.i(tag,"Update the voip setting");
-//                    userInfo.setSdkAccount(voipUserName);
-//                    userInfo.setSdkPassword(voipPassword);
-//                }
+                //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
+                //                    LogUtil.i(tag,"Update the voip setting");
+                //                    userInfo.setSdkAccount(voipUserName);
+                //                    userInfo.setSdkPassword(voipPassword);
+                //                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();
                 sdkuserInfo.password = userInfo.getSdkPassword();
                 //TODO TEST
-//                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
-//                    sdkuserInfo.username = "2886544004";
-//                    sdkuserInfo.password = "Vconf2015!";
-//                } else {
-//                    sdkuserInfo.username = "2886544005";
-//                    sdkuserInfo.password = "Vconf2015!";
-//                }
-//                //TODO TEST
+                //                if (Integer.parseInt(userInfo.getTvAccount().substring(userInfo.getTvAccount().length() - 1)) % 2 == 0) {
+                //                    sdkuserInfo.username = "2886544004";
+                //                    sdkuserInfo.password = "Vconf2015!";
+                //                } else {
+                //                    sdkuserInfo.username = "2886544005";
+                //                    sdkuserInfo.password = "Vconf2015!";
+                //                }
+                //                //TODO TEST
                 LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
                 mVoipLogic.login(sdkuserInfo, null, null);
                 break;
@@ -84,12 +84,12 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
-//                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
-//                accountEditTv.requestFocus();
+                //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
+                //                accountEditTv.requestFocus();
                 registerLayout.setFocusable(true);
                 registerLayout.requestFocus();
                 registingDialog.dismiss();
-//                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
+                //                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
                 FailResponse response = (FailResponse) msg.obj;
                 showUpdateDialog(response.getMsg());
                 logining = false;
@@ -154,7 +154,6 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         loginLogic.tvLogin(loginInfo);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -168,13 +167,13 @@ public class RegisterActivity extends BasicActivity implements View.OnClickListe
         }
     }
 
-//    private void showUpdateDialog() {
-//        UpdateDialog.show(this);
-////        finish();
-//    }
+    //    private void showUpdateDialog() {
+    //        UpdateDialog.show(this);
+    ////        finish();
+    //    }
 
     private void showUpdateDialog(String text) {
         UpdateDialog.show(this, text);
-//        finish();
+        //        finish();
     }
 }

@@ -14,7 +14,8 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.stickylistview.StickyList
 /**
  * Created by Administrator on 2017/4/24 0024.
  */
-public class SelectContactAndBindActivityTest extends ActivityUnitTestCase<SelectContactAndBindActivity> {
+public class SelectContactAndBindActivityTest extends
+        ActivityUnitTestCase<SelectContactAndBindActivity> {
     private SelectContactAndBindActivity mActivity;
 
     private StickyListHeadersListView contactListView;
@@ -33,7 +34,8 @@ public class SelectContactAndBindActivityTest extends ActivityUnitTestCase<Selec
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), SelectContactAndBindActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                SelectContactAndBindActivity.class);
         startActivity(intent, null, null);
 
         mActivity = getActivity();
@@ -42,8 +44,8 @@ public class SelectContactAndBindActivityTest extends ActivityUnitTestCase<Selec
         contactListView = (StickyListHeadersListView) mActivity.findViewById(R.id.list);
 
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) getInstrumentation().getTargetContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getInstrumentation().getTargetContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         contactListView.addHeaderView(searchLayout);
         // 设置搜索显示的文字

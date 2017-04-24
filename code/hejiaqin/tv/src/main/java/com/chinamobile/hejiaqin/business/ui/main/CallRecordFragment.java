@@ -1,6 +1,5 @@
 package com.chinamobile.hejiaqin.business.ui.main;
 
-
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
@@ -114,28 +113,34 @@ public class CallRecordFragment extends BasicFragment {
         delRecordLayout = view.findViewById(R.id.del_record_layout);
         recordCancelLayout = view.findViewById(R.id.record_cancel_layout);
 
-        mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic, new CallRecordAdapter.OnClickListen() {
-            public void onClick(CallRecord info,int position) {
-                deleteLayout.requestFocus();
-                VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic, mContactsLogic,false);
-            }
+        mCallRecordAdapter = new CallRecordAdapter(getContext(), mContactsLogic,
+                new CallRecordAdapter.OnClickListen() {
+                    public void onClick(CallRecord info, int position) {
+                        deleteLayout.requestFocus();
+                        VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic,
+                                mContactsLogic, false);
+                    }
 
-            @Override
-            public void onLongClick(int position) {
-                CallRecordFragment.this.selection = position;
-                showMoreView();
-                moreView.findViewById(R.id.record_detail).requestFocus();
-            }
-        });
+                    @Override
+                    public void onLongClick(int position) {
+                        CallRecordFragment.this.selection = position;
+                        showMoreView();
+                        moreView.findViewById(R.id.record_detail).requestFocus();
+                    }
+                });
         recordDetail.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 deleteLayout.requestFocus();
                 dismissMoreView();
                 if (mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo() != null) {
-                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getContactsInfo(),true);
+                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(
+                            mCallRecordAdapter.getData(CallRecordFragment.this.selection)
+                                    .getContactsInfo(), true);
                     FragmentMgr.getInstance().showRecentFragment(fragment);
                 } else {
-                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(mCallRecordAdapter.getData(CallRecordFragment.this.selection).getPeerNumber(),true);
+                    ContactInfoFragment fragment = ContactInfoFragment.newInstance(
+                            mCallRecordAdapter.getData(CallRecordFragment.this.selection)
+                                    .getPeerNumber(), true);
                     FragmentMgr.getInstance().showRecentFragment(fragment);
                 }
             }
@@ -144,7 +149,8 @@ public class CallRecordFragment extends BasicFragment {
             public void onClick(View v) {
                 deleteLayout.requestFocus();
                 dismissMoreView();
-                mVoipLogic.delCallRecord(new String[]{mCallRecordAdapter.getData(CallRecordFragment.this.selection).getId()});
+                mVoipLogic.delCallRecord(new String[] { mCallRecordAdapter.getData(
+                        CallRecordFragment.this.selection).getId() });
             }
         });
         recordCancelLayout.setOnClickListener(new View.OnClickListener() {
@@ -173,9 +179,8 @@ public class CallRecordFragment extends BasicFragment {
         callRecordListView.setItemsCanFocus(true);
         callRecordListView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
-//        FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
+        //        FocusManager.getInstance().addFocusViewInLeftFrag("0", deleteLayout);
     }
-
 
     @Override
     protected void initLogics() {
@@ -231,8 +236,7 @@ public class CallRecordFragment extends BasicFragment {
         });
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         return deleteLayout;
     }
 }

@@ -20,18 +20,20 @@ import java.util.List;
 /**
  * Created by on 2016/7/20.
  */
-public class DialContactAdapter extends RecyclerView.Adapter  {
+public class DialContactAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private List<ContactsInfo> mData ;
+    private List<ContactsInfo> mData;
 
     public DialContactAdapter(Context context) {
         this.mContext = context;
         mData = new ArrayList<ContactsInfo>();
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holer = null;
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_dial_contact, parent, false);
+        View view = LayoutInflater.from(mContext)
+                .inflate(R.layout.item_dial_contact, parent, false);
         holer = new HolderView(view);
         return holer;
     }
@@ -47,20 +49,22 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
                 public void onClick(View v) {
                     int position = (int) v.getTag();
                     Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, mData.get(position));
+                    intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY,
+                            mData.get(position));
                     mContext.startActivity(intent);
                 }
             });
             tHolder.contactNameTv.setText(info.getName());
-            tHolder.contactNumberTv.setText(StringUtil.isNullOrEmpty(info.getPhone())?"":info.getPhone());
+            tHolder.contactNumberTv.setText(StringUtil.isNullOrEmpty(info.getPhone()) ? "" : info
+                    .getPhone());
         }
     }
 
     /***/
     public void refreshData(List<ContactsInfo> data) {
-        if (data != null)  {
+        if (data != null) {
             mData = data;
-        }else{
+        } else {
             mData.clear();
         }
         notifyDataSetChanged();
@@ -73,6 +77,7 @@ public class DialContactAdapter extends RecyclerView.Adapter  {
         }
         return mData.size();
     }
+
     /***/
     public class HolderView extends RecyclerView.ViewHolder {
 

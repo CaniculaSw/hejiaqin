@@ -9,18 +9,21 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="55dp">
+
         <LinearLayout
             android:id="@+id/call_record_type_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/call_record_type_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="14dp"
-                android:src="@mipmap/icon_missed_call"/>
+                android:src="@mipmap/icon_missed_call" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/call_record_content_layout"
             android:orientation="vertical"
@@ -28,6 +31,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1">
+
             <TextView
                 android:id="@+id/call_record_name_tv"
                 android:layout_width="wrap_content"
@@ -35,7 +39,8 @@
                 android:layout_marginLeft="14dp"
                 android:textSize="13sp"
                 android:text="张晓晓"
-                android:color="@color/call_record_name_color"/>
+                android:color="@color/call_record_name_color" />
+
             <TextView
                 android:id="@+id/call_record_number_tv"
                 android:layout_width="wrap_content"
@@ -44,13 +49,15 @@
                 android:layout_marginLeft="14dp"
                 android:textSize="12sp"
                 android:text="13456789012"
-                android:color="@color/call_record_name_color"/>
+                android:color="@color/call_record_name_color" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/call_record_time_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/call_record_time_tv"
                 android:layout_width="wrap_content"
@@ -58,8 +65,9 @@
                 android:layout_gravity="center"
                 android:text="15:38"
                 android:textSize="12sp"
-                android:textColor="@color/call_record_time_color"/>
+                android:textColor="@color/call_record_time_color" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/call_record_arrow_layout"
             android:layout_width="wrap_content"
@@ -67,6 +75,7 @@
             android:layout_alignParentRight="true"
             android:paddingRight="16dp"
             android:paddingLeft="14dp">
+
             <ImageView
                 android:id="@+id/call_record_arrow_iv"
                 android:layout_width="20dp"
@@ -80,5 +89,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:gravity="bottom"
-        android:background="@color/item_call_record_line_color"/>
+        android:background="@color/item_call_record_line_color" />
 </LinearLayout>

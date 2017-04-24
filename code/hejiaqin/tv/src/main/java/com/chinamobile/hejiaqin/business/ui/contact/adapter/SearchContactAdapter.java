@@ -57,7 +57,7 @@ public class SearchContactAdapter extends BaseAdapter {
             holder.text = (TextView) convertView.findViewById(R.id.contact_name_text);
             holder.image = (CircleImageView) convertView.findViewById(R.id.contact_photo_img);
             holder.layoutView = convertView.findViewById(R.id.contact_info_layout);
-//            holder.convertView = convertView;
+            //            holder.convertView = convertView;
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -71,22 +71,20 @@ public class SearchContactAdapter extends BaseAdapter {
         final ContactsInfo contactsInfo = contactsInfoList.get(position);
         holder.text.setText(contactsInfo.getName());
 
-
-        Picasso.with(mContext.getApplicationContext())
-                .load(contactsInfo.getPhotoSm())
+        Picasso.with(mContext.getApplicationContext()).load(contactsInfo.getPhotoSm())
                 .placeholder(R.drawable.contact_photo_default)
                 .error(R.drawable.contact_photo_default).into(holder.image);
 
         holder.layoutView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(mContext, ContactInfoActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
-//                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                //                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                //                Bundle bundle = new Bundle();
+                //                bundle.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
+                //                intent.putExtras(bundle);
+                //                mContext.startActivity(intent);
 
-                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo,false);
+                ContactInfoFragment fragment = ContactInfoFragment.newInstance(contactsInfo, false);
                 FragmentMgr.getInstance().showContactFragment(fragment);
             }
         });
@@ -100,10 +98,10 @@ public class SearchContactAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-   static class ViewHolder {
+    static class ViewHolder {
         TextView text;
         CircleImageView image;
         View layoutView;
-//        View convertView;
+        //        View convertView;
     }
 }

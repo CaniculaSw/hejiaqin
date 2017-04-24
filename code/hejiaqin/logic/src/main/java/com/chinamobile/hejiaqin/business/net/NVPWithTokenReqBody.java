@@ -13,22 +13,22 @@ import java.util.List;
  */
 public class NVPWithTokenReqBody extends ReqToken implements ReqBody {
     private List<String> list = null;
+
     /***/
-    public void add(String name,String value)
-    {
-        if(TextUtils.isEmpty(name) || value ==null)
-        {
+    public void add(String name, String value) {
+        if (TextUtils.isEmpty(name) || value == null) {
             return;
         }
-        list.add(new BasicNameValuePair(name,value).toString());
+        list.add(new BasicNameValuePair(name, value).toString());
     }
 
-    public NVPWithTokenReqBody(){
+    public NVPWithTokenReqBody() {
         list = new ArrayList<String>();
     }
+
     @Override
     public String toBody() {
-        add("token",getToken());
-        return StringUtil.listToString(list,"&");
+        add("token", getToken());
+        return StringUtil.listToString(list, "&");
     }
 }

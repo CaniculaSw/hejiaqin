@@ -28,5 +28,4 @@ public class EditContactDialog extends Dialog {
         cancelLayout = (LinearLayout) findViewById(R.id.cancel_layout);
     }
 
-
 }

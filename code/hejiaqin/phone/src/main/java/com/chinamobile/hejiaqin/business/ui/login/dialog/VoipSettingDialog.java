@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+
 /***/
 public class VoipSettingDialog extends Dialog {
 
@@ -22,6 +23,7 @@ public class VoipSettingDialog extends Dialog {
     public VoipSettingDialog(Context context, int theme) {
         super(context, theme);
     }
+
     /***/
     public static class Builder {
         private Context context;
@@ -46,10 +48,10 @@ public class VoipSettingDialog extends Dialog {
         private String userName;
         private String password;
         private int icon;
-//        private String message;
+        //        private String message;
         private boolean flag;
         private String positiveButtonText;
-//        private View contentView;
+        //        private View contentView;
         private OnClickListener positiveButtonClickListener;
         private String voipUserName;
         private String voipPassword;
@@ -59,7 +61,7 @@ public class VoipSettingDialog extends Dialog {
         }
 
         public Builder setMessage(String message) {
-//            this.message = message;
+            //            this.message = message;
             return this;
         }
 
@@ -69,10 +71,9 @@ public class VoipSettingDialog extends Dialog {
          * @return
          */
         public Builder setMessage(int message) {
-//            this.message = (String) context.getText(message);
+            //            this.message = (String) context.getText(message);
             return this;
         }
-
 
         /**
          * Set the Dialog title from resource
@@ -108,7 +109,7 @@ public class VoipSettingDialog extends Dialog {
         }
 
         public Builder setContentView(View v) {
-//            this.contentView = v;
+            //            this.contentView = v;
             return this;
         }
 
@@ -128,23 +129,19 @@ public class VoipSettingDialog extends Dialog {
          * @param positiveButtonText
          * @return
          */
-        public Builder setPositiveButton(int positiveButtonText,
-                                         OnClickListener listener) {
-            this.positiveButtonText = (String) context
-                    .getText(positiveButtonText);
+        public Builder setPositiveButton(int positiveButtonText, OnClickListener listener) {
+            this.positiveButtonText = (String) context.getText(positiveButtonText);
             this.positiveButtonClickListener = listener;
             return this;
         }
 
-        public Builder setPositiveButton(String positiveButtonText,
-                                         OnClickListener listener) {
+        public Builder setPositiveButton(String positiveButtonText, OnClickListener listener) {
             this.positiveButtonText = positiveButtonText;
             this.positiveButtonClickListener = listener;
             return this;
         }
 
-        public Builder setDefaultInfo(String voipUserName,
-                                         String voipPassword) {
+        public Builder setDefaultInfo(String voipUserName, String voipPassword) {
             this.voipUserName = voipUserName;
             this.voipPassword = voipPassword;
             return this;
@@ -156,6 +153,7 @@ public class VoipSettingDialog extends Dialog {
             dialog.show();
             return dialog;
         }
+
         /***/
         public VoipSettingDialog create() {
             LayoutInflater inflater = (LayoutInflater) context
@@ -186,18 +184,19 @@ public class VoipSettingDialog extends Dialog {
             EditText userET = (EditText) layout.findViewById(R.id.voip_user_name);
             EditText passwordET = (EditText) layout.findViewById(R.id.voip_password);
             userET.setText(voipUserName != null ? String.valueOf(voipUserName) : "");
-            passwordET.setText(voipPassword!=null? String.valueOf(voipPassword) : "");
+            passwordET.setText(voipPassword != null ? String.valueOf(voipPassword) : "");
 
             // set the confirm button
             if (positiveButtonText != null) {
-                ((Button) layout.findViewById(R.id.positiveButton))
-                        .setText(positiveButtonText);
+                ((Button) layout.findViewById(R.id.positiveButton)).setText(positiveButtonText);
                 if (positiveButtonClickListener != null) {
                     ((Button) layout.findViewById(R.id.positiveButton))
                             .setOnClickListener(new View.OnClickListener() {
                                 public void onClick(View v) {
-                                    EditText userET = (EditText) layout.findViewById(R.id.voip_user_name);
-                                    EditText passwordET = (EditText) layout.findViewById(R.id.voip_password);
+                                    EditText userET = (EditText) layout
+                                            .findViewById(R.id.voip_user_name);
+                                    EditText passwordET = (EditText) layout
+                                            .findViewById(R.id.voip_password);
                                     setUserName(userET.getText().toString());
                                     setPassword(passwordET.getText().toString());
                                     positiveButtonClickListener.onClick(dialog,
@@ -207,14 +206,12 @@ public class VoipSettingDialog extends Dialog {
                 }
             } else {
                 // if no confirm button just set the visibility to GONE
-                layout.findViewById(R.id.positiveButton).setVisibility(
-                        View.GONE);
+                layout.findViewById(R.id.positiveButton).setVisibility(View.GONE);
             }
 
             dialog.setContentView(layout);
             return dialog;
         }
-
 
     }
 

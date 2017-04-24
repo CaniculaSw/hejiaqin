@@ -18,7 +18,6 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
-
 import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.utils.CommonUtils;
@@ -55,6 +54,7 @@ public class PhotoManage {
         mPhotoManage.mContext = context;
         return mPhotoManage;
     }
+
     /***/
     public void removeContext() {
         mPhotoManage.mContext = null;
@@ -75,7 +75,8 @@ public class PhotoManage {
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
             String imgPath = Environment.getExternalStorageDirectory()
-                    + BussinessConstants.Setting.APP_SAVE_PATH + System.currentTimeMillis() + ".jpg";
+                    + BussinessConstants.Setting.APP_SAVE_PATH + System.currentTimeMillis()
+                    + ".jpg";
             CommonUtils.saveBitmap(imgPath, photo);
 
             if (mListener != null) {
@@ -125,8 +126,8 @@ public class PhotoManage {
             intent.setDataAndType(uri, "image/*");
         }
 
-//        Intent intent = new Intent("com.android.camera.action.CROP");
-//        intent.setDataAndType(uri, "image/*");
+        //        Intent intent = new Intent("com.android.camera.action.CROP");
+        //        intent.setDataAndType(uri, "image/*");
         // 设置裁剪
         intent.putExtra("crop", "true");
         // aspectX aspectY 是宽高的比例
@@ -181,9 +182,7 @@ public class PhotoManage {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{
-                        split[1]
-                };
+                final String[] selectionArgs = new String[] { split[1] };
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
@@ -210,9 +209,7 @@ public class PhotoManage {
 
         Cursor cursor = null;
         final String column = "_data";
-        final String[] projection = {
-                column
-        };
+        final String[] projection = { column };
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
@@ -228,7 +225,6 @@ public class PhotoManage {
         }
         return null;
     }
-
 
     /**
      * @param uri The Uri to check.
@@ -269,4 +265,3 @@ public class PhotoManage {
     }
 
 }
-

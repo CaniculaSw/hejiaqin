@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Created by eshaohu on 16/6/6.
  */
@@ -58,7 +57,8 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.GET_APP_CONTACTS_SUCCESS_MSG_ID:
                 List<ContactsInfo> contactsInfoList = (List<ContactsInfo>) msg.obj;
-                searchText.setText(String.format(this.getString(R.string.contact_search_hint_text), contactsInfoList.size()));
+                searchText.setText(String.format(this.getString(R.string.contact_search_hint_text),
+                        contactsInfoList.size()));
                 adapter.setData(contactsInfoList);
                 break;
             case BussinessConstants.SettingMsgID.CONTACT_CHECKED_STATED_CHANGED:
@@ -96,11 +96,10 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_close);
         mHeaderView.rightBtn.setImageResource(R.mipmap.title_icon_check_nor);
 
-
         mContactListView = (StickyListHeadersListView) findViewById(R.id.list);
         // 添加搜索框
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         searchLayout = inflater.inflate(R.layout.layout_contact_search_view, null);
         mContactListView.addHeaderView(searchLayout);
         searchText = (TextView) searchLayout.findViewById(R.id.contact_search_text);
@@ -114,7 +113,6 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         mContactListView.setAdapter(adapter);
         mSelectCount = (TextView) findViewById(R.id.more_chosen);
         mSelectAll = (TextView) findViewById(R.id.more_select_all);
-
 
     }
 
@@ -166,8 +164,8 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
 
     private void enterSearchView() {
         Intent intent = new Intent(mContext, MoreSearchAndSendContactActivity.class);
-        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                ContactSearchActivity.Constant.CONTACT_TYPE_APP);
         intent.putExtra("selected", (Serializable) adapter.getSelectedSet());
         startActivityForResult(intent, BussinessConstants.Setting.SEND_CONTACT_SEARCH);
     }
@@ -194,16 +192,16 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         mContactListView.addHeaderView(progressLayout);
         progressTips.setText(getResources().getText(R.string.sending_contact));
         LogUtil.d(TAG, "TvAccount: " + tvAccount);
-//        //TODO:使用临时代码
-//        if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
-//            tvAccount = "2886544004";
-//        }else{
-//            tvAccount = "2886544005";
-//        }
+        //        //TODO:使用临时代码
+        //        if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
+        //            tvAccount = "2886544004";
+        //        }else{
+        //            tvAccount = "2886544005";
+        //        }
         settingLogic.sendContact(tvAccount, CaaSUtil.OpCode.SEND_CONTACT, getParam(contacts));
-//        mHeaderView.rightBtn.setClickable(true);
-//        mContactListView.removeHeaderView(progressLayout);
-//        mContactListView.addHeaderView(searchLayout);
+        //        mHeaderView.rightBtn.setClickable(true);
+        //        mContactListView.removeHeaderView(progressLayout);
+        //        mContactListView.addHeaderView(searchLayout);
 
     }
 
@@ -238,7 +236,8 @@ public class SelectableContactActivity extends BasicActivity implements View.OnC
         if (isSuccessfull) {
             adapter.selectAll(false);
         } else {
-            Toast.makeText(mContext, getText(R.string.sending_contact_failed), Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, getText(R.string.sending_contact_failed), Toast.LENGTH_LONG)
+                    .show();
         }
     }
 }

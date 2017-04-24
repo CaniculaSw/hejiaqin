@@ -23,8 +23,7 @@ public class DelCallRecordDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popwindow_del_call_record);
         delLayout = (LinearLayout) findViewById(R.id.del_call_record_layout);
-        cancelLayout = (LinearLayout)findViewById(R.id.cancel_layout);
+        cancelLayout = (LinearLayout) findViewById(R.id.cancel_layout);
     }
-
 
 }

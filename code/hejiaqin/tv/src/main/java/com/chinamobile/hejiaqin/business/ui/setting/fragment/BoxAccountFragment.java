@@ -104,10 +104,8 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
     }
 
     private void createQRCode(String url, int size, final ImageView view) {
-        QRCodeEncoder.encodeQRCode(url,
-                DisplayUtils.dp2px(getActivity(), size),
-                Color.parseColor("#000000"),
-                Color.parseColor("#878ea3"),
+        QRCodeEncoder.encodeQRCode(url, DisplayUtils.dp2px(getActivity(), size),
+                Color.parseColor("#000000"), Color.parseColor("#878ea3"),
                 new QRCodeEncoder.Delegate() {
                     @Override
                     public void onEncodeQRCodeSuccess(Bitmap qrCode) {
@@ -134,15 +132,15 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
             boxAccount.setText(CommonUtils.formatTvNum(userInfo.getTvAccount()));
             String tvAccount = userInfo.getSdkAccount();
             //TODO:使用临时代码
-//            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
-//                tvAccount = "2886544004";
-//            }else{
-//                tvAccount = "2886544005";
-//            }
+            //            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
+            //                tvAccount = "2886544004";
+            //            }else{
+            //                tvAccount = "2886544005";
+            //            }
             LogUtil.d(TAG, "sdk account: " + tvAccount);
             createQRCode(tvAccount, 1400, qrCode);
         }
-//        createQRCode("13776570335", 1400, qrCode);
+        //        createQRCode("13776570335", 1400, qrCode);
     }
 
     @Override

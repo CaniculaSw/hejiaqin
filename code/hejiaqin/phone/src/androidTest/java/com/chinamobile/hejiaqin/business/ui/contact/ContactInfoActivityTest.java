@@ -2,7 +2,6 @@ package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.ActivityUnitTestCase;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,10 +53,10 @@ public class ContactInfoActivityTest extends ActivityUnitTestCase<ContactInfoAct
         numberInfo.setType(1);
         contactsInfo.addNumber(numberInfo);
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), ContactInfoActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                ContactInfoActivity.class);
         intent.putExtra(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
         startActivity(intent, null, null);
-
 
         mActivity = getActivity();
         assertNotNull(mActivity);

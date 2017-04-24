@@ -67,13 +67,13 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
         //如果上次计数还没有结束，则重新进入页面后继续
-//        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
-//            sendVerifyCodeTv.setEnabled(false);
-//            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
-//            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
-//            countDownTimer.start();
-//            continueCountDown = true;
-//        }
+        //        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
+        //            sendVerifyCodeTv.setEnabled(false);
+        //            sendVerifyCodeTv.setText(MyCountDownTimer.getMyMillisUntilFinished() / 1000 + getResources().getString(R.string.resend_verify_code_unit));
+        //            countDownTimer = new VerifyCodeCountDownTimer(MyCountDownTimer.getMyMillisUntilFinished());
+        //            countDownTimer.start();
+        //            continueCountDown = true;
+        //        }
     }
 
     @Override
@@ -207,7 +207,8 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
     }
 
     private void displayErrorInfo(String errorText) {
-        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog, errorText);
+        final DisplayErrorDialog dialog = new DisplayErrorDialog(this, R.style.CalendarDialog,
+                errorText);
         Window window = dialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -218,7 +219,6 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         dialog.show();
     }
 
-
     private void hideErrorInfo(View view) {
 
     }
@@ -226,7 +226,6 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
     private void displayRequestErrorInfo(int stringId, boolean isGet) {
 
     }
-
 
     /**
      * 获取验证码计时器
@@ -244,7 +243,10 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
         public void onTick(long millisUntilFinished) {
             super.onTick(millisUntilFinished);
             sendVerifyCodeTv.setEnabled(false);
-            sendVerifyCodeTv.setText(millisUntilFinished / 1000 + ResetPasswordFirstStepActivity.this.getResources().getString(R.string.resend_verify_code_unit));
+            sendVerifyCodeTv.setText(millisUntilFinished
+                    / 1000
+                    + ResetPasswordFirstStepActivity.this.getResources().getString(
+                            R.string.resend_verify_code_unit));
         }
 
         @Override
@@ -290,7 +292,8 @@ public class ResetPasswordFirstStepActivity extends BasicActivity implements Vie
                     sendVerifyCodeTv.setText(R.string.send_verify_code);
                 }
                 PasswordInfo passwordInfo = (PasswordInfo) msg.obj;
-                Intent intent = new Intent(ResetPasswordFirstStepActivity.this, ResetPasswordSecondStepActivity.class);
+                Intent intent = new Intent(ResetPasswordFirstStepActivity.this,
+                        ResetPasswordSecondStepActivity.class);
                 intent.putExtra(BussinessConstants.Login.PASSWORD_INFO_KEY, passwordInfo);
                 startActivity(intent);
                 break;

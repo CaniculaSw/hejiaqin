@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 /***/
 public class ContactInfoFragment extends BasicFragment implements View.OnClickListener {
     private static final String TAG = "ContactInfoFragment";
@@ -53,7 +54,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     private LinearLayout mDialInfoLayout;
 
-
     private ContactsInfo mContactsInfo;
     private List<DialInfoGroup> mDialInfoGroupList = new ArrayList<>();
     private boolean isStranger = false;
@@ -62,8 +62,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private IVoipLogic voipLogic;
     private String mCallRecordNumber;
     private boolean mIsFromRecent;
+
     /***/
-    public static ContactInfoFragment newInstance(String contactNumber,boolean isFromRecent) {
+    public static ContactInfoFragment newInstance(String contactNumber, boolean isFromRecent) {
         ContactInfoFragment fragment = new ContactInfoFragment();
         Bundle args = new Bundle();
         args.putString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY, contactNumber);
@@ -71,8 +72,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         fragment.setArguments(args);
         return fragment;
     }
+
     /***/
-    public static ContactInfoFragment newInstance(ContactsInfo contactsInfo,boolean isFromRecent) {
+    public static ContactInfoFragment newInstance(ContactsInfo contactsInfo, boolean isFromRecent) {
         ContactInfoFragment fragment = new ContactInfoFragment();
         Bundle args = new Bundle();
         args.putSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY, contactsInfo);
@@ -90,19 +92,18 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     protected void handleLogicMsg(Message msg) {
         switch (msg.what) {
             case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID:
-                LogUtil.d(TAG,"ADD_APP_CONTACTS_SUCCESS_MSG_ID");
+                LogUtil.d(TAG, "ADD_APP_CONTACTS_SUCCESS_MSG_ID");
                 refreshContact();
-//                showToast(R.string.contact_info_add_contact_success_toast);
+                //                showToast(R.string.contact_info_add_contact_success_toast);
                 break;
-//            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
-//                showToast(R.string.contact_info_add_contact_failed_toast);
-//                break;
+            //            case BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID:
+            //                showToast(R.string.contact_info_add_contact_failed_toast);
+            //                break;
             case BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID:
                 showToast(R.string.contact_info_del_contact_success_toast);
-                if(mIsFromRecent)
-                {
+                if (mIsFromRecent) {
                     FragmentMgr.getInstance().finishRecentFragment(this);
-                }else {
+                } else {
                     FragmentMgr.getInstance().finishContactFragment(this);
                 }
                 break;
@@ -110,23 +111,24 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 showToast(R.string.contact_info_del_contact_failed_toast);
                 break;
             case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID:
-//                showToast(R.string.contact_info_edit_contact_success_toast);
+                //                showToast(R.string.contact_info_edit_contact_success_toast);
                 ContactsInfo newContactsInfo = (ContactsInfo) msg.obj;
                 if (null == newContactsInfo) {
                     return;
                 }
-                if(newContactsInfo.getNumberLst().size()==0 || mContactsInfo.getNumberLst().size() == 0)
-                {
+                if (newContactsInfo.getNumberLst().size() == 0
+                        || mContactsInfo.getNumberLst().size() == 0) {
                     return;
                 }
-                if(newContactsInfo.getNumberLst().get(0).getNumberNoCountryCode().equals(mContactsInfo.getNumberLst().get(0).getNumberNoCountryCode())) {
+                if (newContactsInfo.getNumberLst().get(0).getNumberNoCountryCode()
+                        .equals(mContactsInfo.getNumberLst().get(0).getNumberNoCountryCode())) {
                     this.mContactsInfo = newContactsInfo;
                     showViews();
                 }
                 break;
-//            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
-//                showToast(R.string.contact_info_edit_contact_failed_toast);
-//                break;
+            //            case BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID:
+            //                showToast(R.string.contact_info_edit_contact_failed_toast);
+            //                break;
             case BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID:
                 showDialData(null);
                 break;
@@ -144,12 +146,10 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         }
     }
 
-    private void refreshContact()
-    {
+    private void refreshContact() {
         //遍历本地联系人
         boolean isMatch = false;
-        if(this.mContactsInfo.getNumberLst().size() ==0 )
-        {
+        if (this.mContactsInfo.getNumberLst().size() == 0) {
             return;
         }
         String phoneNumber = this.mContactsInfo.getNumberLst().get(0).getNumberNoCountryCode();
@@ -161,9 +161,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             if (contactsInfo.getNumberLst() != null) {
                 for (NumberInfo numberInfo : contactsInfo.getNumberLst()) {
                     if (phoneNumber.equals(numberInfo.getNumberNoCountryCode())) {
-                        LogUtil.d(TAG,"isMatch");
+                        LogUtil.d(TAG, "isMatch");
                         this.mContactsInfo = contactsInfo;
-                        isStranger =false;
+                        isStranger = false;
                         isMatch = true;
                     }
                 }
@@ -185,8 +185,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
 
     @Override
     protected void initView(View view) {
-        inflater = (LayoutInflater) getContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 联系人姓名
         mContactNameText = (TextView) view.findViewById(R.id.contact_name_text);
@@ -194,11 +193,10 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         // 联系人头像
         mContactHeadImg = (CircleImageView) view.findViewById(R.id.contact_head_img);
 
-
         mDialCallLayout = view.findViewById(R.id.dial_call_layout);
         mDialVideoAppLayout = view.findViewById(R.id.dial_video_app_layout);
         mDialVideoVolteLayout = view.findViewById(R.id.dial_video_volte_layout);
-        mMoreLayout =  view.findViewById(R.id.dial_more_layout);
+        mMoreLayout = view.findViewById(R.id.dial_more_layout);
 
         mDialCallLayout.setOnClickListener(this);
         mDialVideoAppLayout.setOnClickListener(this);
@@ -225,13 +223,12 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
         if (null != numberInfoList && !numberInfoList.isEmpty()) {
             NumberInfo numberInfo = numberInfoList.get(0);
-            if(StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode()))
-            {
+            if (StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode())) {
                 FocusManager.getInstance().requestFocus(mDialVideoAppLayout);
-            }else {
+            } else {
                 FocusManager.getInstance().requestFocus(mDialCallLayout);
             }
-        }else {
+        } else {
             FocusManager.getInstance().requestFocus(mDialCallLayout);
         }
     }
@@ -242,12 +239,14 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         if (null == argBundle) {
             return;
         }
-        mContactsInfo = (ContactsInfo) argBundle.getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
+        mContactsInfo = (ContactsInfo) argBundle
+                .getSerializable(BussinessConstants.Contact.INTENT_CONTACTSINFO_KEY);
         mIsFromRecent = argBundle.getBoolean(BussinessConstants.Contact.INTENT_FROM_RECENT_KEY);
 
         if (mContactsInfo == null) {
             //通话记录传入的号码
-            mCallRecordNumber = argBundle.getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
+            mCallRecordNumber = argBundle
+                    .getString(BussinessConstants.Contact.INTENT_CONTACT_NUMBER_KEY);
             isStranger = true;
             mContactsInfo = new ContactsInfo();
             NumberInfo numberInfo = new NumberInfo();
@@ -265,8 +264,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
         if (null != numberInfoList && !numberInfoList.isEmpty()) {
             NumberInfo numberInfo = numberInfoList.get(0);
-            if(StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode()))
-            {
+            if (StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode())) {
                 mDialCallLayout.setVisibility(View.GONE);
                 mDialVideoAppLayout.setVisibility(View.VISIBLE);
                 mDialVideoVolteLayout.setVisibility(View.VISIBLE);
@@ -283,14 +281,13 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         }
 
         if (!StringUtil.isNullOrEmpty(mContactsInfo.getPhotoSm())) {
-            Picasso.with(getContext())
-                    .load(mContactsInfo.getPhotoSm())
+            Picasso.with(getContext()).load(mContactsInfo.getPhotoSm())
                     .placeholder(R.drawable.contact_photo_default)
                     .error(R.drawable.contact_photo_default).into(mContactHeadImg);
         }
 
         contactsLogic.queryContactCallRecords(mContactsInfo);
-//        setDialInfo(genDialInfoGroup());
+        //        setDialInfo(genDialInfoGroup());
         refreshView();
     }
 
@@ -322,10 +319,9 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             case R.id.right_btn:
                 break;
             case R.id.back_iv:
-                if(mIsFromRecent)
-                {
+                if (mIsFromRecent) {
                     FragmentMgr.getInstance().finishRecentFragment(this);
-                }else {
+                } else {
                     FragmentMgr.getInstance().finishContactFragment(this);
                 }
                 break;
@@ -377,11 +373,11 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     }
 
     private void doEditContact() {
-        ContactEditFragment fragment = ContactEditFragment.newInstance(mContactsInfo,mIsFromRecent);
-        if(mIsFromRecent)
-        {
+        ContactEditFragment fragment = ContactEditFragment
+                .newInstance(mContactsInfo, mIsFromRecent);
+        if (mIsFromRecent) {
             FragmentMgr.getInstance().showRecentFragment(fragment);
-        }else {
+        } else {
             FragmentMgr.getInstance().showContactFragment(fragment);
         }
         dismissMoreView();
@@ -393,16 +389,15 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     }
 
     private void doAddContact() {
-        ContactEditFragment fragment = ContactEditFragment.newInstance(mCallRecordNumber,false,mIsFromRecent);
-        if(mIsFromRecent)
-        {
+        ContactEditFragment fragment = ContactEditFragment.newInstance(mCallRecordNumber, false,
+                mIsFromRecent);
+        if (mIsFromRecent) {
             FragmentMgr.getInstance().showRecentFragment(fragment);
-        }else {
+        } else {
             FragmentMgr.getInstance().showContactFragment(fragment);
         }
         dismissMoreView();
     }
-
 
     private void startVideoCall(boolean isAPP) {
         List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
@@ -416,16 +411,14 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             return;
         }
 
-
         NumberInfo numberInfo = numberInfoList.get(0);
         VideoOutDialog.show(getContext(), numberInfo.getNumber(), voipLogic, contactsLogic, isAPP);
 
     }
 
-
     private void showDialNumberDialog(boolean isAPP) {
-        final DialNumberDialog dialNumberDialog = new DialNumberDialog(getContext(), R.style.CalendarDialog
-                , mContactsInfo, voipLogic, contactsLogic,isAPP);
+        final DialNumberDialog dialNumberDialog = new DialNumberDialog(getContext(),
+                R.style.CalendarDialog, mContactsInfo, voipLogic, contactsLogic, isAPP);
         Window window = dialNumberDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -435,7 +428,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         window.setAttributes(params);
         dialNumberDialog.setCancelable(true);
         dialNumberDialog.show();
-
 
         dialNumberDialog.cancelLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,6 +440,7 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     public void setContactsInfo(ContactsInfo contactsInfo) {
         mContactsInfo = contactsInfo;
     }
+
     /***/
     public void refreshView() {
         if (null == mDialInfoGroupList) {
@@ -464,7 +457,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
             for (DialInfo dialInfo : dialInfoGroup.getDialInfoList()) {
                 View dialInfoView = inflater.inflate(R.layout.layout_contact_dial_info_view, null);
 
-                ImageView dialTypeImage = (ImageView) dialInfoView.findViewById(R.id.dial_type_icon);
+                ImageView dialTypeImage = (ImageView) dialInfoView
+                        .findViewById(R.id.dial_type_icon);
                 dialTypeImage.setImageResource(getIconResIdByDialType(dialInfo.getType()));
 
                 TextView dialTypeText = (TextView) dialInfoView.findViewById(R.id.dial_type_text);
@@ -473,7 +467,8 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
                 TextView dialTimeText = (TextView) dialInfoView.findViewById(R.id.dial_time_text);
                 dialTimeText.setText(dialInfo.getDialTime());
 
-                TextView dialDurationText = (TextView) dialInfoView.findViewById(R.id.dial_duration_text);
+                TextView dialDurationText = (TextView) dialInfoView
+                        .findViewById(R.id.dial_duration_text);
                 dialDurationText.setText(dialInfo.getDialDuration());
                 mDialInfoLayout.addView(dialInfoView);
             }
@@ -542,7 +537,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
     private List<DialInfoGroup> genDialInfoGroup() {
         List<DialInfoGroup> dialInfoGroupList = new ArrayList<>();
 
-
         DialInfoGroup group1 = new DialInfoGroup();
         group1.setGroupName("今天");
         group1.setDialInfoList(genDialInfoList());
@@ -552,7 +546,6 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         group2.setGroupName("周一");
         group2.setDialInfoList(genDialInfoList());
         dialInfoGroupList.add(group2);
-
 
         DialInfoGroup group3 = new DialInfoGroup();
         group3.setGroupName("周日");
@@ -607,18 +600,16 @@ public class ContactInfoFragment extends BasicFragment implements View.OnClickLi
         return dialInfoList;
     }
 
-    public View getFirstFouseView()
-    {
+    public View getFirstFouseView() {
         List<NumberInfo> numberInfoList = mContactsInfo.getNumberLst();
         if (null != numberInfoList && !numberInfoList.isEmpty()) {
             NumberInfo numberInfo = numberInfoList.get(0);
-            if(StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode()))
-            {
-               return mDialVideoAppLayout;
-            }else {
+            if (StringUtil.isMobileNO(numberInfo.getNumberNoCountryCode())) {
+                return mDialVideoAppLayout;
+            } else {
                 return mDialCallLayout;
             }
-        }else {
+        } else {
             return mDialCallLayout;
         }
     }

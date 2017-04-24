@@ -62,7 +62,8 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
     @Override
     protected void initLogics() {
         super.initLogics();
-        settingLogic = (SettingLogic) getLogicBuilder().getLogicByInterfaceClass(ISettingLogic.class);
+        settingLogic = (SettingLogic) getLogicBuilder().getLogicByInterfaceClass(
+                ISettingLogic.class);
     }
 
     @Override
@@ -92,7 +93,6 @@ public class CheckMicStatusFragment extends BasicFragment implements View.OnClic
         normalLayout.setVisibility(View.VISIBLE);
         resultLayout.setVisibility(View.GONE);
     }
-
 
     @Override
     protected void initData() {

@@ -27,7 +27,8 @@ public class SelectableContactActivityTest extends ActivityUnitTestCase<Selectab
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), SelectableContactActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                SelectableContactActivity.class);
         intent.putExtra("tvAccount", "123456");
         intent.putExtra("tvName", "aaaaa");
         startActivity(intent, null, null);

@@ -29,7 +29,8 @@ public class RegisterFirstStepActivityTest extends ActivityUnitTestCase<Register
     protected void setUp() throws Exception {
         super.setUp();
 
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), RegisterFirstStepActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                RegisterFirstStepActivity.class);
         startActivity(intent, null, null);
 
         mActivity = getActivity();

@@ -55,19 +55,21 @@ public class MoreSearchAndSendContactActivity extends BasicActivity implements V
         searchCancel = findViewById(R.id.search_cancel);
 
         contactsListView = (ListView) findViewById(R.id.list);
-        View headView = getLayoutInflater().inflate(R.layout.layout_contact_search_contact_head_view, null);
+        View headView = getLayoutInflater().inflate(
+                R.layout.layout_contact_search_contact_head_view, null);
         contactsListView.addHeaderView(headView);
 
-        adapter = new SelectContactAdapter(this,getHandler());
+        adapter = new SelectContactAdapter(this, getHandler());
         contactsListView.setAdapter(adapter);
     }
 
     @Override
     protected void initDate() {
-        contactType = getIntent().getIntExtra(MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
-        if (getIntent().getSerializableExtra("selected") != null){
-            this.srcSelectedSet.addAll((Set<String>)getIntent().getSerializableExtra("selected"));
+        contactType = getIntent().getIntExtra(
+                MoreContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                MoreContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        if (getIntent().getSerializableExtra("selected") != null) {
+            this.srcSelectedSet.addAll((Set<String>) getIntent().getSerializableExtra("selected"));
             adapter.setTheSelectedSet(this.srcSelectedSet);
         }
     }
@@ -109,7 +111,7 @@ public class MoreSearchAndSendContactActivity extends BasicActivity implements V
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra("selected", (Serializable) adapter.getSelectedSet());
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_OK, intent);
                 doBack();
             }
         });
@@ -150,18 +152,18 @@ public class MoreSearchAndSendContactActivity extends BasicActivity implements V
         contactsLogic.searchLocalContactLst(input, TAG);
     }
 
-
     public void setData(List<ContactsInfo> contactsInfoList) {
         List<ContactsInfo> tmpContactsInfoList = new ArrayList<>();
         if (null != contactsInfoList) {
             tmpContactsInfoList.addAll(contactsInfoList);
         }
-        adapter.setData(tmpContactsInfoList,false);
+        adapter.setData(tmpContactsInfoList, false);
     }
 
     private boolean isAppContact() {
         return contactType == Constant.CONTACT_TYPE_APP;
     }
+
     /***/
     public static final class Constant {
         public static final String INTENT_DATA_CONTACT_TYPE = "intent_data_contact_type";

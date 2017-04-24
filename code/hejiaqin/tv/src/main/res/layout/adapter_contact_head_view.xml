@@ -27,6 +27,6 @@
         android:id="@+id/divider"
         android:layout_width="482dp"
         android:layout_height="10dp"
-        android:layout_below="@+id/contact_head_layout"/>
+        android:layout_below="@+id/contact_head_layout" />
 
 </RelativeLayout>

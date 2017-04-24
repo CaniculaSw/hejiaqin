@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
+
 /***/
 public class MyDatePicker extends FrameLayout {
 
@@ -77,7 +78,6 @@ public class MyDatePicker extends FrameLayout {
         super(context, attrs, defStyleAttr);
         mDelegate = createSpinnerUIDelegate(context, attrs, defStyleAttr, 0);
     }
-
 
     private DatePickerDelegate createSpinnerUIDelegate(Context context, AttributeSet attrs,
                                                        int defStyleAttr, int defStyleRes) {
@@ -512,8 +512,7 @@ public class MyDatePicker extends FrameLayout {
             setCurrentLocale(Locale.getDefault());
 
             boolean spinnersShown = DEFAULT_SPINNERS_SHOWN;
-            int startYear =
-                    DEFAULT_START_YEAR;
+            int startYear = DEFAULT_START_YEAR;
             int endYear = DEFAULT_END_YEAR;
             int layoutResourceId = R.layout.hejiaqin_date_picker_legacy;
 
@@ -572,13 +571,13 @@ public class MyDatePicker extends FrameLayout {
             // day
             mDaySpinner = (NumberPicker) mDelegator.findViewById(R.id.day);
             NumberPicker.Formatter formatter = getTwoDigitFormatter();
-            if(formatter!=null) {
+            if (formatter != null) {
                 mDaySpinner.setFormatter(formatter);
             }
             mDaySpinner.setOnLongPressUpdateInterval(100);
             mDaySpinner.setOnValueChangedListener(onChangeListener);
-//            mDaySpinnerInput = (EditText) mDaySpinner.findViewById(R.id.numberpicker_input);
-            mDaySpinnerInput=(EditText) getNumberpickerInput(mDaySpinner);
+            //            mDaySpinnerInput = (EditText) mDaySpinner.findViewById(R.id.numberpicker_input);
+            mDaySpinnerInput = (EditText) getNumberpickerInput(mDaySpinner);
 
             // month
             mMonthSpinner = (NumberPicker) mDelegator.findViewById(R.id.month);
@@ -587,15 +586,15 @@ public class MyDatePicker extends FrameLayout {
             mMonthSpinner.setDisplayedValues(mShortMonths);
             mMonthSpinner.setOnLongPressUpdateInterval(200);
             mMonthSpinner.setOnValueChangedListener(onChangeListener);
-//            mMonthSpinnerInput = (EditText) mMonthSpinner.findViewById(R.id.numberpicker_input);
-            mMonthSpinnerInput=(EditText) getNumberpickerInput(mMonthSpinner);
+            //            mMonthSpinnerInput = (EditText) mMonthSpinner.findViewById(R.id.numberpicker_input);
+            mMonthSpinnerInput = (EditText) getNumberpickerInput(mMonthSpinner);
 
             // year
             mYearSpinner = (NumberPicker) mDelegator.findViewById(R.id.year);
             mYearSpinner.setOnLongPressUpdateInterval(100);
             mYearSpinner.setOnValueChangedListener(onChangeListener);
-//            mYearSpinnerInput = (EditText) mYearSpinner.findViewById(R.id.numberpicker_input);
-            mYearSpinnerInput=(EditText) getNumberpickerInput(mYearSpinner);
+            //            mYearSpinnerInput = (EditText) mYearSpinner.findViewById(R.id.numberpicker_input);
+            mYearSpinnerInput = (EditText) getNumberpickerInput(mYearSpinner);
 
             // show only what the user required but make sure we
             // show something and the spinners have higher priority
@@ -613,8 +612,8 @@ public class MyDatePicker extends FrameLayout {
 
             // initialize to current date
             mCurrentDate.setTimeInMillis(System.currentTimeMillis());
-            init(mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH), mCurrentDate
-                    .get(Calendar.DAY_OF_MONTH), null);
+            init(mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH),
+                    mCurrentDate.get(Calendar.DAY_OF_MONTH), null);
 
             // re-order the number spinners to match the current date format
             reorderSpinners();
@@ -855,7 +854,7 @@ public class MyDatePicker extends FrameLayout {
             mSpinners.removeAllViews();
             // We use numeric spinners for year and day, but textual months. Ask icu4c what
             // order the user's locale uses for that combination. http://b/7207103.
-            char[] order = new char[]{'y', 'M', 'd'};
+            char[] order = new char[] { 'y', 'M', 'd' };
             final int spinnerCount = order.length;
             for (int i = 0; i < spinnerCount; i++) {
                 switch (order[i]) {
@@ -895,8 +894,8 @@ public class MyDatePicker extends FrameLayout {
 
         private boolean isNewDate(int year, int month, int dayOfMonth) {
             return (mCurrentDate.get(Calendar.YEAR) != year
-                    || mCurrentDate.get(Calendar.MONTH) != dayOfMonth
-                    || mCurrentDate.get(Calendar.DAY_OF_MONTH) != month);
+                    || mCurrentDate.get(Calendar.MONTH) != dayOfMonth || mCurrentDate
+                        .get(Calendar.DAY_OF_MONTH) != month);
         }
 
         private void setDate(int year, int month, int dayOfMonth) {
@@ -964,7 +963,6 @@ public class MyDatePicker extends FrameLayout {
             mCalendarView.setDate(mCurrentDate.getTimeInMillis(), false, false);
         }
 
-
         /**
          * Notifies the listener, if such, for a change in the selected date.
          */
@@ -990,27 +988,27 @@ public class MyDatePicker extends FrameLayout {
             } else {
                 imeOptions = EditorInfo.IME_ACTION_DONE;
             }
-//            TextView input = (TextView) spinner.findViewById(R.id.numberpicker_input);
+            //            TextView input = (TextView) spinner.findViewById(R.id.numberpicker_input);
             TextView input = getNumberpickerInput(spinner);
             input.setImeOptions(imeOptions);
         }
 
         private void setContentDescriptions() {
-//            // Day
-//            trySetContentDescription(mDaySpinner, R.id.increment,
-//                    R.string.date_picker_increment_day_button);
-//            trySetContentDescription(mDaySpinner, R.id.decrement,
-//                    R.string.date_picker_decrement_day_button);
-//            // Month
-//            trySetContentDescription(mMonthSpinner, R.id.increment,
-//                    R.string.date_picker_increment_month_button);
-//            trySetContentDescription(mMonthSpinner, R.id.decrement,
-//                    R.string.date_picker_decrement_month_button);
-//            // Year
-//            trySetContentDescription(mYearSpinner, R.id.increment,
-//                    R.string.date_picker_increment_year_button);
-//            trySetContentDescription(mYearSpinner, R.id.decrement,
-//                    R.string.date_picker_decrement_year_button);
+            //            // Day
+            //            trySetContentDescription(mDaySpinner, R.id.increment,
+            //                    R.string.date_picker_increment_day_button);
+            //            trySetContentDescription(mDaySpinner, R.id.decrement,
+            //                    R.string.date_picker_decrement_day_button);
+            //            // Month
+            //            trySetContentDescription(mMonthSpinner, R.id.increment,
+            //                    R.string.date_picker_increment_month_button);
+            //            trySetContentDescription(mMonthSpinner, R.id.decrement,
+            //                    R.string.date_picker_decrement_month_button);
+            //            // Year
+            //            trySetContentDescription(mYearSpinner, R.id.increment,
+            //                    R.string.date_picker_increment_year_button);
+            //            trySetContentDescription(mYearSpinner, R.id.decrement,
+            //                    R.string.date_picker_decrement_year_button);
         }
 
         private void trySetContentDescription(View root, int viewId, int contDescResId) {
@@ -1027,13 +1025,12 @@ public class MyDatePicker extends FrameLayout {
             // be shown, otherwise the user chose another means of changing the
             // value and having the IME up makes no sense.
             //TODO:
-//            InputMethodManager inputMethodManager = InputMethodManager.peekInstance();
-            InputMethodManager inputMethodManager =null;
+            //            InputMethodManager inputMethodManager = InputMethodManager.peekInstance();
+            InputMethodManager inputMethodManager = null;
             try {
-                Method method =InputMethodManager.class.getMethod("peekInstance");
-                inputMethodManager = (InputMethodManager)method.invoke(InputMethodManager.class);
-            }catch (Exception ex)
-            {
+                Method method = InputMethodManager.class.getMethod("peekInstance");
+                inputMethodManager = (InputMethodManager) method.invoke(InputMethodManager.class);
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
             if (inputMethodManager != null) {
@@ -1049,11 +1046,12 @@ public class MyDatePicker extends FrameLayout {
                 }
             }
         }
+
         private EditText getNumberpickerInput(NumberPicker picker) {
             for (int j = 0; j < picker.getChildCount(); j++) {
                 View view = picker.getChildAt(j);
                 if (view instanceof EditText) {
-                    return (EditText)view;
+                    return (EditText) view;
                 }
             }
             return null;
@@ -1068,8 +1066,7 @@ public class MyDatePicker extends FrameLayout {
                         return (NumberPicker.Formatter) pf.get(NumberPicker.class);
                     }
                 }
-            }
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
             return null;
@@ -1082,7 +1079,8 @@ public class MyDatePicker extends FrameLayout {
                 if (pf.getName().equals("mSelectionDivider")) {
                     pf.setAccessible(true);
                     try {
-                        pf.set(numberPicker, new ColorDrawable(numberPicker.getResources().getColor(R.color.maincolor)));
+                        pf.set(numberPicker, new ColorDrawable(numberPicker.getResources()
+                                .getColor(R.color.maincolor)));
                     } catch (IllegalArgumentException e) {
                         e.printStackTrace();
                     } catch (Resources.NotFoundException e) {
@@ -1096,8 +1094,6 @@ public class MyDatePicker extends FrameLayout {
             }
         }
     }
-
-
 
     /**
      * Class for managing state storing/restoring.

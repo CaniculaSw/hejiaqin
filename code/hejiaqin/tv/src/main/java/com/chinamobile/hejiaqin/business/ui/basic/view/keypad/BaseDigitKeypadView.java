@@ -16,100 +16,98 @@ import com.chinamobile.hejiaqin.tv.R;
  * 数字键盘界面
  * @author z00166692
  */
-public abstract class BaseDigitKeypadView extends LinearLayout
-{
+public abstract class BaseDigitKeypadView extends LinearLayout {
     /**
      * 按鍵音播放延迟时间
      */
     private static final int TONE_LENGTH = 150;
-    
+
     /**
      * key 1
      */
     public LinearLayout btnOne;
-    
+
     /**
      * key 2
      */
     public LinearLayout btnTwo;
-    
+
     /**
      * key 3
      */
     public LinearLayout btnThree;
-    
+
     /**
      * key 4
      */
     public LinearLayout btnFour;
-    
+
     /**
      * key 5
      */
     public LinearLayout btnFive;
-    
+
     /**
      * key 6
      */
     public LinearLayout btnSix;
-    
+
     /**
      * key 7
      */
     public LinearLayout btnSeven;
-    
+
     /**
      * key8
      */
     public LinearLayout btnEight;
-    
+
     /**
      * key 9
      */
     public LinearLayout btnNine;
-    
+
     /**
      * key *
      */
     public LinearLayout btnAsterisk;
-    
+
     /**
      * key 0
      */
     public LinearLayout btnZero;
-    
+
     /**
      * key #
      */
     public LinearLayout btnDot;
-    
+
     /**
      * context
      */
     private Context context;
-    
+
     /**
      * 按键响应接口
      */
     private DigitKeyPressEvent mKeyPressEvent;
-    
+
     /**
      * 按键音播放
      */
     private ToneGenerator mToneGenerator;
-    
+
     /**
      * 监视器对象锁
      */
     private Object mToneGeneratorLock = new Object();
-    
+
     /**
      * DigitKeypadLinearLayout
      * @param context context
      * @param attrs attrs
      */
-    public BaseDigitKeypadView(Context context, AttributeSet attrs)
-    {
+    public BaseDigitKeypadView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         // 初始化界面控件
@@ -119,13 +117,13 @@ public abstract class BaseDigitKeypadView extends LinearLayout
         // 初始化按键音播放控件
         initTone();
     }
-    
+
     /**
      * 初始化控件
      * @param context context
      */
     protected abstract void initView(Context context);
-    
+
     //    {
     //        layoutShowDial = (LinearLayout) LayoutInflater.from(context)
     //                .inflate(R.layout.linearlayout_digit_keypad, null);
@@ -147,8 +145,7 @@ public abstract class BaseDigitKeypadView extends LinearLayout
     /**
      * 设置按钮点击事件
      */
-    private void setBtnClickListener()
-    {
+    private void setBtnClickListener() {
         // 拨号盘中按键的点击事件
         ButtonOnclick buttonOnclick = new ButtonOnclick();
         btnOne.setOnClickListener(buttonOnclick);
@@ -163,118 +160,97 @@ public abstract class BaseDigitKeypadView extends LinearLayout
         btnAsterisk.setOnClickListener(buttonOnclick);
         btnZero.setOnClickListener(buttonOnclick);
         btnDot.setOnClickListener(buttonOnclick);
-        
-//        btnZero.setOnLongClickListener(new OnLongClickListener()
-//        {
-//            @Override
-//            public boolean onLongClick(View v)
-//            {
-//                // 系统“触感反馈”未开启
-//                if (Settings.System.getInt(context.getContentResolver(),
-//                    Settings.System.HAPTIC_FEEDBACK_ENABLED,
-//                    1) == 1)
-//                {
-//                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-//                }
-//                playTone(ToneGenerator.TONE_DTMF_0);
-//                // 长按0键,输入+号
-//                mKeyPressEvent.onKeyPressed(KeyEvent.KEYCODE_PLUS, "+");
-//
-//                return true;
-//            }
-//        });
+
+        //        btnZero.setOnLongClickListener(new OnLongClickListener()
+        //        {
+        //            @Override
+        //            public boolean onLongClick(View v)
+        //            {
+        //                // 系统“触感反馈”未开启
+        //                if (Settings.System.getInt(context.getContentResolver(),
+        //                    Settings.System.HAPTIC_FEEDBACK_ENABLED,
+        //                    1) == 1)
+        //                {
+        //                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        //                }
+        //                playTone(ToneGenerator.TONE_DTMF_0);
+        //                // 长按0键,输入+号
+        //                mKeyPressEvent.onKeyPressed(KeyEvent.KEYCODE_PLUS, "+");
+        //
+        //                return true;
+        //            }
+        //        });
     }
+
     /***/
-    public void playTone(int tone)
-    {
+    public void playTone(int tone) {
         // 系统“按键操作音”未开启
         if (Settings.System.getInt(context.getContentResolver(),
-            Settings.System.DTMF_TONE_WHEN_DIALING,
-            1) == 0)
-        {
+                Settings.System.DTMF_TONE_WHEN_DIALING, 1) == 0) {
             return;
         }
-        
-        AudioManager audioManager =
-            (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         int ringerMode = audioManager.getRingerMode();
         if ((ringerMode == AudioManager.RINGER_MODE_SILENT)
-            || (ringerMode == AudioManager.RINGER_MODE_VIBRATE))
-        {
+                || (ringerMode == AudioManager.RINGER_MODE_VIBRATE)) {
             //静音或震动时不发出按键声音
             return;
         }
-        
-        synchronized (mToneGeneratorLock)
-        {
-            if (mToneGenerator == null)
-            {
+
+        synchronized (mToneGeneratorLock) {
+            if (mToneGenerator == null) {
                 return;
             }
             // 播放按键音
             mToneGenerator.startTone(tone, TONE_LENGTH);
         }
     }
-    
+
     /**
      * 初始化按键音数据
      */
-    private void initTone()
-    {
-        if(isInEditMode())
-        {
+    private void initTone() {
+        if (isInEditMode()) {
             return;
         }
-        synchronized (mToneGeneratorLock)
-        {
-            if (mToneGenerator == null)
-            {
-                try
-                {
-                    mToneGenerator =
-                        new ToneGenerator(AudioManager.STREAM_SYSTEM, 60);
-                }
-                catch (RuntimeException e)
-                {
+        synchronized (mToneGeneratorLock) {
+            if (mToneGenerator == null) {
+                try {
+                    mToneGenerator = new ToneGenerator(AudioManager.STREAM_SYSTEM, 60);
+                } catch (RuntimeException e) {
                     mToneGenerator = null;
                 }
             }
         }
     }
-    
+
     /**
      * 设置点击事件
      * @param event 事件
      */
-    public void setDigitKeyPressEvent(DigitKeyPressEvent event)
-    {
-        if (event != null)
-        {
+    public void setDigitKeyPressEvent(DigitKeyPressEvent event) {
+        if (event != null) {
             mKeyPressEvent = event;
         }
     }
-    
+
     /**
      * 按钮点击
      * @author z00166692
      */
-    class ButtonOnclick implements OnClickListener
-    {
+    class ButtonOnclick implements OnClickListener {
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             int keyCode = -1;
             String keyStr = null;
             // 系统“触感反馈”未开启
             if (Settings.System.getInt(context.getContentResolver(),
-                Settings.System.HAPTIC_FEEDBACK_ENABLED,
-                1) == 1)
-            {
+                    Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) == 1) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
-            
-            switch (v.getId())
-            {
+
+            switch (v.getId()) {
                 case R.id.key_one:
                     playTone(ToneGenerator.TONE_DTMF_1);
                     keyCode = KeyEvent.KEYCODE_1;
@@ -340,29 +316,26 @@ public abstract class BaseDigitKeypadView extends LinearLayout
                 default:
                     break;
             }
-            
-            if (keyCode > -1)
-            {
+
+            if (keyCode > -1) {
                 keyDown(keyCode, keyStr);
             }
         }
-        
+
     }
+
     /***/
-    public void keyDown(int keyCode,String keyStr)
-    {
-         if(mKeyPressEvent!=null)
-         {
-             mKeyPressEvent.onKeyPressed(keyCode, keyStr);
-         }
+    public void keyDown(int keyCode, String keyStr) {
+        if (mKeyPressEvent != null) {
+            mKeyPressEvent.onKeyPressed(keyCode, keyStr);
+        }
     }
-    
+
     /**
      * 按键点击接口
      * @author z00166692
      */
-    public interface DigitKeyPressEvent
-    {
+    public interface DigitKeyPressEvent {
         /**
          * 数字键被按下事件
          * @param keyCode 按键号码
@@ -370,5 +343,5 @@ public abstract class BaseDigitKeypadView extends LinearLayout
          */
         void onKeyPressed(int keyCode, String keyStr);
     }
-    
+
 }

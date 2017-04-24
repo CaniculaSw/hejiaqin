@@ -25,11 +25,11 @@ public class ContactSearchActivityTest extends ActivityUnitTestCase<ContactSearc
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), ContactSearchActivity.class);
-        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE
-                , ContactSearchActivity.Constant.CONTACT_TYPE_APP);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                ContactSearchActivity.class);
+        intent.putExtra(ContactSearchActivity.Constant.INTENT_DATA_CONTACT_TYPE,
+                ContactSearchActivity.Constant.CONTACT_TYPE_APP);
         startActivity(intent, null, null);
-
 
         mActivity = getActivity();
         assertNotNull(mActivity);

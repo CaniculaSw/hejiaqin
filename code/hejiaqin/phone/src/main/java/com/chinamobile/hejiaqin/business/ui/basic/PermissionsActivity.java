@@ -17,7 +17,6 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.view.CustomDialog;
 import com.customer.framework.utils.PermissionsChecker;
 
-
 /**
  * desc:
  * version 001
@@ -26,14 +25,14 @@ import com.customer.framework.utils.PermissionsChecker;
  */
 public class PermissionsActivity extends Activity {
 
-
     private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
     private boolean isRequireCheck; // 是否需要系统权限检测
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent() == null || !getIntent().hasExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS)) {
+        if (getIntent() == null
+                || !getIntent().hasExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS)) {
             finish();
         }
         setContentView(R.layout.activity_permissions);
@@ -57,12 +56,14 @@ public class PermissionsActivity extends Activity {
 
     // 返回传递的权限参数
     private String[] getPermissions() {
-        return getIntent().getStringArrayExtra(BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS);
+        return getIntent().getStringArrayExtra(
+                BussinessConstants.CommonInfo.INTENT_EXTRA_PERMISSIONS);
     }
 
     // 请求权限兼容低版本
     private void requestPermissions(String... permissions) {
-        ActivityCompat.requestPermissions(this, permissions, BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, permissions,
+                BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE);
     }
 
     // 全部权限均已获取
@@ -71,13 +72,14 @@ public class PermissionsActivity extends Activity {
         finish();
     }
 
-
     /**
      * 用户权限处理, * 如果全部获取, 则直接过. * 如果权限缺失, 则提示Dialog. * * @param requestCode 请求码 * @param permissions 权限 * @param grantResults 结果
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE && hasAllPermissionsGranted(grantResults)) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == BussinessConstants.ActivityRequestCode.PERMISSIONS_REQUEST_CODE
+                && hasAllPermissionsGranted(grantResults)) {
             isRequireCheck = true;
             allPermissionsGranted();
         } else {
@@ -86,7 +88,7 @@ public class PermissionsActivity extends Activity {
         }
     }
 
-// 含有全部的权限
+    // 含有全部的权限
 
     private boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
         for (int grantResult : grantResults) {
@@ -104,12 +106,13 @@ public class PermissionsActivity extends Activity {
         builder.setTitle(R.string.permission_help_title);
         builder.setMessage(R.string.permission_necessary_help_content);
         int negativeStr = R.string.permission_cancel;
-        builder.setPositiveButton(R.string.permission_settings, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startAppSettings();
-            }
-        });
+        builder.setPositiveButton(R.string.permission_settings,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startAppSettings();
+                    }
+                });
         builder.setNegativeButton(negativeStr, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

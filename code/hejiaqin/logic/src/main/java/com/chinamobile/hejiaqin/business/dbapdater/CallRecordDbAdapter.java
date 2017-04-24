@@ -53,10 +53,14 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         }
         List<DbOperation> operationList = new ArrayList<DbOperation>();
         for (int i = 0; i < ids.length; i++) {
-            operationList.add(DbOperation.newDelete(DatabaseInfo.CallRecord.TABLE_NAME).withSelection(DatabaseInfo.CallRecord.TABLE_ID + " = ? ", new String[]{ids[i]}).build());
+            operationList.add(DbOperation
+                    .newDelete(DatabaseInfo.CallRecord.TABLE_NAME)
+                    .withSelection(DatabaseInfo.CallRecord.TABLE_ID + " = ? ",
+                            new String[] { ids[i] }).build());
         }
         super.applyBatch(operationList);
     }
+
     /***/
     public List<CallRecord> queryWithNumbers(String[] numbers) {
         if (numbers == null || numbers.length == 0) {
@@ -70,7 +74,8 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
             } else {
                 for (int i = 0; i < numbers.length; i++) {
                     if (i == 0) {
-                        selection = " where " + DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER + " in ( ? ";
+                        selection = " where " + DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER
+                                + " in ( ? ";
                     } else if (i == numbers.length - 1) {
                         selection = selection + " , ? ) ";
                     } else {
@@ -79,13 +84,15 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
                 }
             }
         }
-        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection + " order by " + DatabaseInfo.CallRecord.BEGIN_TIME + " desc ";
+        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection
+                + " order by " + DatabaseInfo.CallRecord.BEGIN_TIME + " desc ";
         Cursor cursor = super.rawQuery(sql, numbers);
         while (cursor.moveToNext()) {
             list.add(parseValuesToBean(cursor));
         }
         return list;
     }
+
     /***/
     public void deleteByNumbers(String[] numbers) {
         String selection = "";
@@ -106,6 +113,7 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         }
         super.delete(DatabaseInfo.CallRecord.TABLE_NAME, selection, numbers);
     }
+
     /***/
     public List<CallRecord> queryWithName() {
         List<CallRecord> list = new ArrayList<CallRecord>();
@@ -169,7 +177,8 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         while (cursor.moveToNext()) {
             callRecord = parseValuesToBean(cursor);
             if (!callRecord.getRecordId().equals(callRecordId)) {
-                contactId = cursor.getString(cursor.getColumnIndex(DatabaseInfo.ContactsInfo.CONTACT_ID));
+                contactId = cursor.getString(cursor
+                        .getColumnIndex(DatabaseInfo.ContactsInfo.CONTACT_ID));
                 if (!StringUtil.isNullOrEmpty(contactId)) {
                     contactBean = new ContactBean();
                     contactBean.setContactId(contactId);
@@ -200,8 +209,9 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
             return list;
         }
         String selection = " where " + DatabaseInfo.CallRecord.PEER_NUMBER + " like ? ";
-        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection + " order by " + DatabaseInfo.CallRecord.BEGIN_TIME + " desc ";
-        Cursor cursor = super.rawQuery(sql, new String[]{"%"+ input + "%"});
+        String sql = "select * from " + DatabaseInfo.CallRecord.TABLE_NAME + selection
+                + " order by " + DatabaseInfo.CallRecord.BEGIN_TIME + " desc ";
+        Cursor cursor = super.rawQuery(sql, new String[] { "%" + input + "%" });
         CallRecord info;
         while (cursor.moveToNext()) {
             info = parseValuesToBean(cursor);
@@ -247,7 +257,8 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
             sql.append(LIMIT_CNT - 1);
             sql.append(" ) ");
             operationList.add(DbOperation.newExecSql(sql.toString()).build());
-            operationList.add(DbOperation.newInsert(DatabaseInfo.CallRecord.TABLE_NAME).withValues(parseBeanToValues(callRecord)).build());
+            operationList.add(DbOperation.newInsert(DatabaseInfo.CallRecord.TABLE_NAME)
+                    .withValues(parseBeanToValues(callRecord)).build());
             super.applyBatch(operationList);
         }
         super.insert(DatabaseInfo.CallRecord.TABLE_NAME, parseBeanToValues(callRecord));
@@ -258,7 +269,8 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
      * @param contentValues
      */
     public void updateByRecordId(String recordId, ContentValues contentValues) {
-        super.update(DatabaseInfo.CallRecord.TABLE_NAME, contentValues, DatabaseInfo.CallRecord.RECORD_ID + " = ?", new String[]{recordId});
+        super.update(DatabaseInfo.CallRecord.TABLE_NAME, contentValues,
+                DatabaseInfo.CallRecord.RECORD_ID + " = ?", new String[] { recordId });
     }
 
     /**
@@ -266,7 +278,8 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
      * @param contentValues
      */
     public void updateById(String id, ContentValues contentValues) {
-        super.update(DatabaseInfo.CallRecord.TABLE_NAME, contentValues, DatabaseInfo.CallRecord.TABLE_ID + " = ?", new String[]{id});
+        super.update(DatabaseInfo.CallRecord.TABLE_NAME, contentValues,
+                DatabaseInfo.CallRecord.TABLE_ID + " = ?", new String[] { id });
     }
 
     /**
@@ -280,7 +293,8 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseInfo.CallRecord.RECORD_ID, callRecord.getRecordId());
         contentValues.put(DatabaseInfo.CallRecord.PEER_NUMBER, callRecord.getPeerNumber());
-        contentValues.put(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER, callRecord.getNoCountryNumber());
+        contentValues.put(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER,
+                callRecord.getNoCountryNumber());
         contentValues.put(DatabaseInfo.CallRecord.BEGIN_TIME, callRecord.getBeginTime());
         contentValues.put(DatabaseInfo.CallRecord.DURATION, callRecord.getDuration());
         contentValues.put(DatabaseInfo.CallRecord.TYPE, callRecord.getType());
@@ -291,11 +305,16 @@ public class CallRecordDbAdapter extends BaseDbAdapter {
     private CallRecord parseValuesToBean(Cursor cursor) {
         CallRecord callRecord = new CallRecord();
         callRecord.setId(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.TABLE_ID)));
-        callRecord.setRecordId(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.RECORD_ID)));
-        callRecord.setPeerNumber(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.PEER_NUMBER)));
-        callRecord.setNoCountryNumber(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER)));
-        callRecord.setBeginTime(cursor.getString(cursor.getColumnIndex(DatabaseInfo.CallRecord.BEGIN_TIME)));
-        callRecord.setDuration(cursor.getInt(cursor.getColumnIndex(DatabaseInfo.CallRecord.DURATION)));
+        callRecord.setRecordId(cursor.getString(cursor
+                .getColumnIndex(DatabaseInfo.CallRecord.RECORD_ID)));
+        callRecord.setPeerNumber(cursor.getString(cursor
+                .getColumnIndex(DatabaseInfo.CallRecord.PEER_NUMBER)));
+        callRecord.setNoCountryNumber(cursor.getString(cursor
+                .getColumnIndex(DatabaseInfo.CallRecord.NO_COUNTRY_NUMBER)));
+        callRecord.setBeginTime(cursor.getString(cursor
+                .getColumnIndex(DatabaseInfo.CallRecord.BEGIN_TIME)));
+        callRecord.setDuration(cursor.getInt(cursor
+                .getColumnIndex(DatabaseInfo.CallRecord.DURATION)));
         callRecord.setType(cursor.getInt(cursor.getColumnIndex(DatabaseInfo.CallRecord.TYPE)));
         callRecord.setRead(cursor.getInt(cursor.getColumnIndex(DatabaseInfo.CallRecord.READ)));
         return callRecord;

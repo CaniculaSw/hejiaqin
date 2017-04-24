@@ -6,7 +6,6 @@ import android.test.ActivityUnitTestCase;
 import android.view.View;
 
 import com.chinamobile.hejiaqin.R;
-import com.chinamobile.hejiaqin.business.ui.login.LoginActivity;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
