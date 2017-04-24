@@ -33,8 +33,8 @@ public class StringUtil {
      * SQL注入关键字序列
      */
     private static final String[] SQL_INJECTION_STRS = { "'", "and", "exec", "insert", "select",
-            "delete", "update", "count", "*", "%", "chr", "mid", "master", "truncate", "char",
-            "declare", ";", "or", "-", "+", "," };
+                                                         "delete", "update", "count", "*", "%", "chr", "mid", "master", "truncate", "char",
+                                                         "declare", ";", "or", "-", "+", "," };
 
     /**
      * 判断是否为null或空值
@@ -130,17 +130,11 @@ public class StringUtil {
             // 单个字符是数字
             if (password.codePointAt(i) >= 48 && password.codePointAt(i) <= 57) {
                 num = true;
-            }
-            // 单个字符是小写字母
-            else if (password.codePointAt(i) >= 97 && password.codePointAt(i) <= 122) {
+            } else if (password.codePointAt(i) >= 97 && password.codePointAt(i) <= 122) {// 单个字符是小写字母
                 lowerCase = true;
-            }
-            // 单个字符是大写字母
-            else if (password.codePointAt(i) >= 65 && password.codePointAt(i) <= 90) {
+            } else if (password.codePointAt(i) >= 65 && password.codePointAt(i) <= 90) {// 单个字符是大写字母
                 upperCase = true;
-            }
-            // 特殊字符
-            else {
+            } else {// 特殊字符
                 other = true;
             }
         }
@@ -162,17 +156,11 @@ public class StringUtil {
         // 数字、大写字母、小写字母只有一个，密码强度低（只有一种特殊字符也是密码强度低）
         if (threeMode == 1 && !other || fourMode == 1) {
             return 1;
-        }
-        // 四种格式有其中两个，密码强度中
-        else if (fourMode == 2) {
+        } else if (fourMode == 2) {// 四种格式有其中两个，密码强度中
             return 2;
-        }
-        // 四种格式有三个或者四个，密码强度高
-        else if (fourMode >= 3) {
+        } else if (fourMode >= 3) {// 四种格式有三个或者四个，密码强度高
             return 3;
-        }
-        // 正常情况下不会出现该判断
-        else {
+        } else {// 正常情况下不会出现该判断
             return 3;
         }
     }
@@ -228,13 +216,9 @@ public class StringUtil {
         // 数字、大写字母、小写字母只有一个且无特殊字符，密码强度低
         if (threeMode == 1 && !other) {
             return 1;
-        }
-        // 四种格式有其中两个，密码强度中
-        else if (fourMode == 2) {
+        } else if (fourMode == 2) {// 四种格式有其中两个，密码强度中
             return 2;
-        }
-        // 四种格式有三个或者四个，密码强度高
-        else if (fourMode >= 3) {
+        } else if (fourMode >= 3) {// 四种格式有三个或者四个，密码强度高
             return 3;
         }
         // 正常情况下不会出现该判断
@@ -254,12 +238,12 @@ public class StringUtil {
 
     /**
      * 判断一个字符串是否可能是SQL注入<BR>
-     *
+     * 原 maybeSqlInjection
      * @param str 被检测的字符串
      * @return true:可能是SQL注入 false:安全
+     *
      */
-    public static boolean checkSQLInjection(String str) // 原 maybeSqlInjection
-    {
+    public static boolean checkSQLInjection(String str) {
         if (isNullOrEmpty(str)) {
             return false;
         }

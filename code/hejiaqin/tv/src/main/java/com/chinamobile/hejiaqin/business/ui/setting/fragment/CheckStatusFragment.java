@@ -32,7 +32,7 @@ public class CheckStatusFragment extends BasicFragment {
     protected void initView(View view) {
         normalLayout = (LinearLayout) view.findViewById(R.id.check_status_normal_ll);
         abnormalLayout = (LinearLayout) view.findViewById(R.id.check_status_abnormal_ll);
-        //TODO: 根据摄像头检测结果决定显示那个Layout
+        //根据摄像头检测结果决定显示那个Layout
         setStatusLayout(CallApi.getCameraCount() > 0 ? true : false);
     }
 

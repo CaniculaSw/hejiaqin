@@ -77,27 +77,8 @@ public class MainActivity extends BasicActivity {
                     autoLogin();
                 }
                 break;
-            //TODO:TEST
-            //            case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-            //                jumpToRegisterActivity();
-            //                break;
-            //            case BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED:
-            //                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext()) && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals("unknown")) {
-            //                    jumpToLoginActivity();
-            //                } else {
-            //                    autoLogin();
-            //                }
-            //                break;
-            //TODO:TEST
-
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-                //                jumpToMainFragmentActivity();
                 UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-                //                if (!StringUtil.isNullOrEmpty(voipUserName) && !StringUtil.isNullOrEmpty(voipPassword)){
-                //                    LogUtil.i(tag,"Update the voip setting");
-                //                    userInfo.setSdkAccount(voipUserName);
-                //                    userInfo.setSdkPassword(voipPassword);
-                //                }
                 com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                 sdkuserInfo.countryCode = "";
                 sdkuserInfo.username = userInfo.getSdkAccount();

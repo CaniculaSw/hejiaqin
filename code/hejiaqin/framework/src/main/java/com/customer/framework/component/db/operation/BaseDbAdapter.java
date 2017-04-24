@@ -72,9 +72,7 @@ public abstract class BaseDbAdapter {
             } finally {
                 db.endTransaction();
             }
-        }
-        // 有批处理在执行时不需要另外开启事物
-        else {
+        } else {// 有批处理在执行时不需要另外开启事物
             count = db.update(table, values, selection, selectionArgs);
         }
 
@@ -103,9 +101,7 @@ public abstract class BaseDbAdapter {
             } finally {
                 db.endTransaction();
             }
-        }
-        // 有批处理在执行时不需要另外开启事物
-        else {
+        } else {// 有批处理在执行时不需要另外开启事物
             count = db.delete(table, selection, selectionArgs);
         }
         return count;

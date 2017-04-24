@@ -36,7 +36,7 @@ public class LogUtil {
      */
     public static final int ERROR = 6;
     static final String[] PERMISSIONS = new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE };
+                                                       Manifest.permission.READ_EXTERNAL_STORAGE };
     private static Context mContext;
 
     /**

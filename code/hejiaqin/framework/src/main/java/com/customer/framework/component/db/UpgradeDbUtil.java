@@ -102,9 +102,7 @@ public class UpgradeDbUtil {
             if (version.equals(oldVersion)) {
                 isSuccess = true;
                 LogUtil.i(TAG, "数据库版本一致或者当前的数据库存版本号比之前的低不需要升级");
-            }
-            // ***END***  [修改数据库存的版本号比对] zhouxin 2012-9-6 modify
-            else {
+            } else {// ***END***  [修改数据库存的版本号比对] zhouxin 2012-9-6 modify
                 String snsDataXml;
                 try {
                     LogUtil.i(TAG, "数据库升级开始时间:" + System.currentTimeMillis());

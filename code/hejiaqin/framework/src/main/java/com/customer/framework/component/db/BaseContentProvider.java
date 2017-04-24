@@ -225,9 +225,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
             }
 
             onEndTransaction();
-        }
-        // 有批处理在执行时不需要另外开启事物
-        else {
+        } else {// 有批处理在执行时不需要另外开启事物
             count = updateInTransaction(uri, values, selection, selectionArgs);
             // 操作成功标记有数据改动
             if (count > 0) {
@@ -268,9 +266,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
             }
 
             onEndTransaction();
-        }
-        // 有批处理在执行时不需要另外开启事物
-        else {
+        } else {// 有批处理在执行时不需要另外开启事物
             count = deleteInTransaction(uri, selection, selectionArgs);
             // 操作成功标记有数据改动
             if (count > 0) {

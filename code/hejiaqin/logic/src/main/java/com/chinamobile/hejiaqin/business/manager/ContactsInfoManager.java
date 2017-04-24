@@ -37,9 +37,9 @@ public class ContactsInfoManager {
         ContactList contactList = new ContactList();
         ContentResolver cr = context.getContentResolver();
         String[] str = { ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.TYPE };
+                         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                         ContactsContract.CommonDataKinds.Phone.NUMBER,
+                         ContactsContract.CommonDataKinds.Phone.TYPE };
         Cursor cur = null;
         try {
             cur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, str, null, null,

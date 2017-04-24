@@ -30,7 +30,6 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //        versionInfo = (VersionInfo) StorageMgr.getInstance().getSharedPStorage(getApplicationContext()).getObject(BussinessConstants.Setting.VERSION_INFO_KEY);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

@@ -131,12 +131,6 @@ public class BoxAccountFragment extends BasicFragment implements View.OnClickLis
         if (userInfo != null) {
             boxAccount.setText(CommonUtils.formatTvNum(userInfo.getTvAccount()));
             String tvAccount = userInfo.getSdkAccount();
-            //TODO:使用临时代码
-            //            if(Integer.parseInt(tvAccount.substring(tvAccount.length() - 1)) % 2 == 0) {
-            //                tvAccount = "2886544004";
-            //            }else{
-            //                tvAccount = "2886544005";
-            //            }
             LogUtil.d(TAG, "sdk account: " + tvAccount);
             createQRCode(tvAccount, 1400, qrCode);
         }

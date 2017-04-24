@@ -65,14 +65,10 @@ public class ImageUtil {
         if (srcWidth > (destWidth / destHeight) * srcHeight) {
             tmpWidth = (destWidth / destHeight) * srcHeight;
             tmpHeight = srcHeight;
-        }
-        // 原图的宽度小于高度(换算成比例后)
-        else if (srcWidth < (destWidth / destHeight) * srcHeight) {
+        } else if (srcWidth < (destWidth / destHeight) * srcHeight) {// 原图的宽度小于高度(换算成比例后)
             tmpWidth = srcWidth;
             tmpHeight = (destHeight / destWidth) * srcWidth;
-        }
-        // 原图的宽度等于高度(换算成比例后)
-        else {
+        } else {// 原图的宽度等于高度(换算成比例后)
             tmpWidth = srcWidth;
             tmpHeight = srcHeight;
         }

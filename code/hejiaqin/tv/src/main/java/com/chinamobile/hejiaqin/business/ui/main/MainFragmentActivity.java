@@ -256,9 +256,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
                 //if (nextFocuse != null && nextFocuse.focusSearch(View.FOCUS_LEFT) != null) {
                 if (nextLeftFocuse != null && !isViewInMenus(nextLeftFocuse.getId())) {
                     nextLeftFocuse.requestFocus();
-                }
-                //else if (FragmentMgr.getInstance().isParentFragmentShowingOfCurrentIndex(mCurrentIndex)) {
-                else {
+                } else {
                     FocusManager.getInstance().requestFocus(mMenuViews[mCurrentIndex]);
                 }
                 return true;

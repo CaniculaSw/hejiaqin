@@ -196,14 +196,10 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 numberText.setText(inputNumber);
                 numberText.setSelection(numberText.getEditableText().length());
                 oldNumber = inputNumber;
-            }
-            // 纯添加联系人
-            else {
+            } else {// 纯添加联系人
                 isFromDialPage = false;
             }
-        }
-        // 编辑联系人
-        else {
+        } else {// 编辑联系人
             oldName = editContactsInfo.getName();
             nameText.setText(oldName);
             nameText.setSelection(nameText.getEditableText().length());
@@ -278,9 +274,7 @@ public class ContactEditFragment extends BasicFragment implements View.OnClickLi
                 return;
             }
             contactsLogic.addAppContact(newName, newNumber, newPhotoName);
-        }
-        // 更新联系人
-        else {
+        } else {// 更新联系人
             boolean isNameValidAndChanged = !StringUtil.isNullOrEmpty(newName)
                     && !newName.equals(oldName);
             boolean isNumberValidAndChanged = !StringUtil.isNullOrEmpty(newNumber)

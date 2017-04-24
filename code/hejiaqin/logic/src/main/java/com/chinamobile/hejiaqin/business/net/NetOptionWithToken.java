@@ -45,7 +45,7 @@ public abstract class NetOptionWithToken extends NetOption {
      * @param httpCallback 回调对象
      */
     private synchronized void sendWithToken(final INetCallBack httpCallback) {
-        //TODO:如果没有即将超期并且没有正在发送刷新TOKEN请求，直接发送网络请求
+        //如果没有即将超期并且没有正在发送刷新TOKEN请求，直接发送网络请求
         if (needRefresh()) {
             if (!isRefreshTokening) {
                 isRefreshTokening = true;

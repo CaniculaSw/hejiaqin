@@ -17,7 +17,7 @@ import com.chinamobile.hejiaqin.R;
  */
 public class SideBarView extends View {
     private String[] data = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-            "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#" };
+                              "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#" };
     private int selectPos = -1;
 
     private static final int DEFAULT_NORMAL_COLOR = Color.TRANSPARENT;

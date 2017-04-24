@@ -183,7 +183,7 @@ public class StickyNavLayout extends LinearLayout {
                     }
                     //				else if (mInnerScrollView instanceof RecyclerView) {
                     //					RecyclerView rv = (RecyclerView) mInnerScrollView;
-                    //					if (!isTopHidden || (!android.support.v4.view.ViewCompat.canScrollVertically(rv, -1) && isTopHidden && dy > 0)) {
+                    //if (!isTopHidden || (!android.support.v4.view.ViewCompat.canScrollVertically(rv, -1) && isTopHidden && dy > 0)) {
                     //						initVelocityTrackerIfNotExists();
                     //						mVelocityTracker.addMovement(ev);
                     //						mLastY = y;

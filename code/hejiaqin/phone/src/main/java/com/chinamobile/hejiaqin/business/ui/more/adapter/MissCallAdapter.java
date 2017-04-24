@@ -76,7 +76,9 @@ public class MissCallAdapter extends BaseAdapter implements ListAdapter {
         mViewHolder.setText(
                 R.id.more_miss_call_item_text,
                 Html.fromHtml("<font color='#44C8FF'> (" + msg.getPeerInfo().getName() + ") "
-                        + msg.getPeerInfo().getNumber() + "</font>"));//Html.fromHtml("<font color='#44C8FF'>("+msg.getPeerInfo().getName()+") "+msg.getPeerInfo().getNumber() +"</font>"));
+                        + msg.getPeerInfo().getNumber()
+                        + "</font>"));
+        //Html.fromHtml("<font color='#44C8FF'>("+msg.getPeerInfo().getName()+") "+msg.getPeerInfo().getNumber() +"</font>"));
         mViewHolder.setText(R.id.more_miss_call_date,
                 formatTimeString(DateTimeUtil.getDateString(new Date(msg.getLastCallTimeLong()))));
 

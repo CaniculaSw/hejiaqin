@@ -1024,7 +1024,7 @@ public class MyDatePicker extends FrameLayout {
             // changed the value via the IME and there is a next input the IME will
             // be shown, otherwise the user chose another means of changing the
             // value and having the IME up makes no sense.
-            //TODO:
+            //
             //            InputMethodManager inputMethodManager = InputMethodManager.peekInstance();
             InputMethodManager inputMethodManager = null;
             try {

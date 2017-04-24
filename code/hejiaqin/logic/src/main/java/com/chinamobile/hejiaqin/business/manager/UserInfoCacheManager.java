@@ -164,7 +164,7 @@ public class UserInfoCacheManager {
     }
 
     public static boolean isBindedApp(Context context, String num) {
-        //TODO:因为服务器不OK，暂时返回true
+        //因为服务器不OK，暂时返回true
         return true;
         //        UserList userList = getUserList(context, BussinessConstants.Setting.BINDED_APP_KEY);
         //        if (userList == null) {
@@ -275,8 +275,8 @@ public class UserInfoCacheManager {
     /***/
     public static void clearUserInfo(Context context) {
         String[] keys = new String[] { BussinessConstants.Login.USER_INFO_KEY,
-                BussinessConstants.Login.TOKEN_DATE, BussinessConstants.Setting.BINDED_DEVICE_KEY,
-                BussinessConstants.Setting.BINDED_DEVICE_KEY };
+                                       BussinessConstants.Login.TOKEN_DATE, BussinessConstants.Setting.BINDED_DEVICE_KEY,
+                                       BussinessConstants.Setting.BINDED_DEVICE_KEY };
         StorageMgr.getInstance().getMemStorage().remove(keys);
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }
@@ -312,7 +312,7 @@ public class UserInfoCacheManager {
     }
 
     //    public static void clearSTBConfig(Context context) {
-    //        StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.TV_USERID_KEY, BussinessConstants.Login.TV_TOKEN_KEY});
+    //  StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.TV_USERID_KEY, BussinessConstants.Login.TV_TOKEN_KEY});
     //    }
     /***/
     public static void clearVoipLogined(Context context) {
