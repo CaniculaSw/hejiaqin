@@ -17,12 +17,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-
 /**
  * Created by Administrator on 2016/3/3.
  */
 public class DbInfoHandler extends DefaultHandler {
-//    private String strXmlTag = null;
+    //    private String strXmlTag = null;
 
     private DatabaseInfo databaseInfo;
 
@@ -33,6 +32,7 @@ public class DbInfoHandler extends DefaultHandler {
     private DatabaseInfo.Table table;
 
     private DatabaseInfo.Field field;
+
     /***/
     public void doParse(DatabaseInfo inDatabaseInfo, String inStrToParse)
             throws ParserConfigurationException, SAXException, IOException {
@@ -84,7 +84,7 @@ public class DbInfoHandler extends DefaultHandler {
      */
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
             throws SAXException {
-//        strXmlTag = localName;
+        //        strXmlTag = localName;
         if ("table".equals(localName)) {
             table = new DatabaseInfo.Table();
             tableList.add(table);
@@ -111,7 +111,7 @@ public class DbInfoHandler extends DefaultHandler {
      * @throws SAXException XML异常
      */
     public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-//        strXmlTag = null;
+        //        strXmlTag = null;
     }
 
     /**
@@ -124,23 +124,23 @@ public class DbInfoHandler extends DefaultHandler {
      * @see DefaultHandler#characters(char[], int, int)
      */
     public void characters(char[] ch, int start, int length) {
-//        if (strXmlTag != null) {
-//            String data = new String(ch, start, length);
-//            LogUtil.i("DbInfoHandler", "characters is: " + data);
-//
-//            if (strXmlTag.equals("version")) {
-//                this.databaseInfo.setVersion(data);
-//            } else if (strXmlTag.equals("database")) {
-//                this.databaseInfo.setName(data);
-//            } else if (strXmlTag.equals("table")) {
-//                this.table.setName(data);
-//            } else if (strXmlTag.equals("field")) {
-//                this.field.setName(data);
-//            } else if (strXmlTag.equals("type")) {
-//                this.field.setType(data);
-//            } else if (strXmlTag.equals("obligatory")) {
-//                this.field.setObligatory(data);
-//            }
-//        }
+        //        if (strXmlTag != null) {
+        //            String data = new String(ch, start, length);
+        //            LogUtil.i("DbInfoHandler", "characters is: " + data);
+        //
+        //            if (strXmlTag.equals("version")) {
+        //                this.databaseInfo.setVersion(data);
+        //            } else if (strXmlTag.equals("database")) {
+        //                this.databaseInfo.setName(data);
+        //            } else if (strXmlTag.equals("table")) {
+        //                this.table.setName(data);
+        //            } else if (strXmlTag.equals("field")) {
+        //                this.field.setName(data);
+        //            } else if (strXmlTag.equals("type")) {
+        //                this.field.setType(data);
+        //            } else if (strXmlTag.equals("obligatory")) {
+        //                this.field.setObligatory(data);
+        //            }
+        //        }
     }
 }

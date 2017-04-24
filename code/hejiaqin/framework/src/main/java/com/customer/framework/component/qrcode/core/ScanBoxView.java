@@ -18,6 +18,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.customer.framework.R;
+
 /***/
 public class ScanBoxView extends View {
     private static int mMoveStepDistance;
@@ -67,6 +68,7 @@ public class ScanBoxView extends View {
 
         mMoveStepDistance = DisplayUtils.dp2px(context, 2);
     }
+
     /***/
     public void initCustomAttrs(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.QRCodeView);
@@ -97,9 +99,11 @@ public class ScanBoxView extends View {
         } else if (attr == R.styleable.QRCodeView_qrcv_scanLineColor) {
             mScanLineColor = typedArray.getColor(attr, mScanLineColor);
         } else if (attr == R.styleable.QRCodeView_qrcv_scanLineHorizontalMargin) {
-            mScanLineHorizontalMargin = typedArray.getDimensionPixelSize(attr, mScanLineHorizontalMargin);
+            mScanLineHorizontalMargin = typedArray.getDimensionPixelSize(attr,
+                    mScanLineHorizontalMargin);
         } else if (attr == R.styleable.QRCodeView_qrcv_isShowDefaultScanLineDrawable) {
-            mIsShowDefaultScanLineDrawable = typedArray.getBoolean(attr, mIsShowDefaultScanLineDrawable);
+            mIsShowDefaultScanLineDrawable = typedArray.getBoolean(attr,
+                    mIsShowDefaultScanLineDrawable);
         } else if (attr == R.styleable.QRCodeView_qrcv_customScanLineDrawable) {
             mCustomScanLineDrawable = typedArray.getDrawable(attr);
         } else if (attr == R.styleable.QRCodeView_qrcv_borderSize) {
@@ -113,7 +117,8 @@ public class ScanBoxView extends View {
 
     private void afterInitCustomAttrs() {
         if (mIsShowDefaultScanLineDrawable) {
-            Bitmap defaultScanLineBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.qrcode_default_scan_line);
+            Bitmap defaultScanLineBitmap = BitmapFactory.decodeResource(getResources(),
+                    R.mipmap.qrcode_default_scan_line);
             mScanLineBitmap = makeTintBitmap(defaultScanLineBitmap, mScanLineColor);
         }
         if (mCustomScanLineDrawable != null) {
@@ -123,6 +128,7 @@ public class ScanBoxView extends View {
         mAnimDelayTime = (int) ((1.0f * mAnimTime * mMoveStepDistance) / mRectWidth);
         mHalfCornerSize = 1.0f * mCornerSize / 2;
     }
+
     /***/
     public static Bitmap makeTintBitmap(Bitmap src, int tintColor) {
         Bitmap result = Bitmap.createBitmap(src.getWidth(), src.getHeight(), src.getConfig());
@@ -169,7 +175,8 @@ public class ScanBoxView extends View {
             mPaint.setColor(mMaskColor);
             canvas.drawRect(0, 0, width, mFramingRect.top, mPaint);
             canvas.drawRect(0, mFramingRect.top, mFramingRect.left, mFramingRect.bottom + 1, mPaint);
-            canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width, mFramingRect.bottom + 1, mPaint);
+            canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width,
+                    mFramingRect.bottom + 1, mPaint);
             canvas.drawRect(0, mFramingRect.bottom + 1, width, height, mPaint);
         }
     }
@@ -198,15 +205,27 @@ public class ScanBoxView extends View {
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setColor(mCornerColor);
             mPaint.setStrokeWidth(mCornerSize);
-            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.top, mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.top, mPaint);
-            canvas.drawLine(mFramingRect.left, mFramingRect.top - mHalfCornerSize, mFramingRect.left, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
-            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.top, mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.top, mPaint);
-            canvas.drawLine(mFramingRect.right, mFramingRect.top - mHalfCornerSize, mFramingRect.right, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.top,
+                    mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.top, mPaint);
+            canvas.drawLine(mFramingRect.left, mFramingRect.top - mHalfCornerSize,
+                    mFramingRect.left, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.top,
+                    mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.top, mPaint);
+            canvas.drawLine(mFramingRect.right, mFramingRect.top - mHalfCornerSize,
+                    mFramingRect.right, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
 
-            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.bottom, mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.bottom, mPaint);
-            canvas.drawLine(mFramingRect.left, mFramingRect.bottom + mHalfCornerSize, mFramingRect.left, mFramingRect.bottom + mHalfCornerSize - mCornerLength, mPaint);
-            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.bottom, mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.bottom, mPaint);
-            canvas.drawLine(mFramingRect.right, mFramingRect.bottom + mHalfCornerSize, mFramingRect.right, mFramingRect.bottom + mHalfCornerSize - mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.bottom,
+                    mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.bottom,
+                    mPaint);
+            canvas.drawLine(mFramingRect.left, mFramingRect.bottom + mHalfCornerSize,
+                    mFramingRect.left, mFramingRect.bottom + mHalfCornerSize - mCornerLength,
+                    mPaint);
+            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.bottom,
+                    mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.bottom,
+                    mPaint);
+            canvas.drawLine(mFramingRect.right, mFramingRect.bottom + mHalfCornerSize,
+                    mFramingRect.right, mFramingRect.bottom + mHalfCornerSize - mCornerLength,
+                    mPaint);
         }
     }
 
@@ -219,9 +238,13 @@ public class ScanBoxView extends View {
         if (mScanLineBitmap == null) {
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(mScanLineColor);
-            canvas.drawRect(mFramingRect.left + mHalfCornerSize + mScanLineHorizontalMargin, mScanLineTop, mFramingRect.right - mHalfCornerSize - mScanLineHorizontalMargin, mScanLineTop + mScanLineSize, mPaint);
+            canvas.drawRect(mFramingRect.left + mHalfCornerSize + mScanLineHorizontalMargin,
+                    mScanLineTop, mFramingRect.right - mHalfCornerSize - mScanLineHorizontalMargin,
+                    mScanLineTop + mScanLineSize, mPaint);
         } else {
-            RectF lineRect = new RectF(mFramingRect.left + mHalfCornerSize + mScanLineHorizontalMargin, mScanLineTop, mFramingRect.right - mHalfCornerSize - mScanLineHorizontalMargin, mScanLineTop + mScanLineBitmap.getHeight());
+            RectF lineRect = new RectF(mFramingRect.left + mHalfCornerSize
+                    + mScanLineHorizontalMargin, mScanLineTop, mFramingRect.right - mHalfCornerSize
+                    - mScanLineHorizontalMargin, mScanLineTop + mScanLineBitmap.getHeight());
             canvas.drawBitmap(mScanLineBitmap, null, lineRect, mPaint);
         }
     }
@@ -236,11 +259,13 @@ public class ScanBoxView extends View {
         if (mScanLineBitmap != null) {
             scanLineHeight = mScanLineBitmap.getHeight();
         }
-        if (mScanLineTop < mFramingRect.top + mHalfCornerSize || mScanLineTop + scanLineHeight > mFramingRect.bottom - mHalfCornerSize) {
+        if (mScanLineTop < mFramingRect.top + mHalfCornerSize
+                || mScanLineTop + scanLineHeight > mFramingRect.bottom - mHalfCornerSize) {
             mMoveStepDistance = -mMoveStepDistance;
         }
 
-        postInvalidateDelayed(mAnimDelayTime, mFramingRect.left, mFramingRect.top, mFramingRect.right, mFramingRect.bottom);
+        postInvalidateDelayed(mAnimDelayTime, mFramingRect.left, mFramingRect.top,
+                mFramingRect.right, mFramingRect.bottom);
     }
 
     @Override
@@ -248,7 +273,8 @@ public class ScanBoxView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         Point screenResolution = DisplayUtils.getScreenResolution(getContext());
         int leftOffset = (screenResolution.x - mRectWidth) / 2;
-        mFramingRect = new Rect(leftOffset, mTopOffset, leftOffset + mRectWidth, mTopOffset + mRectWidth);
+        mFramingRect = new Rect(leftOffset, mTopOffset, leftOffset + mRectWidth, mTopOffset
+                + mRectWidth);
         mScanLineTop = mTopOffset + mHalfCornerSize + 0.5f;
     }
 

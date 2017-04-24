@@ -1,7 +1,7 @@
 package com.customer.framework.component.net.message;
 
-import com.customer.framework.component.net.util.LangUtils;
 import com.customer.framework.component.net.NameValuePair;
+import com.customer.framework.component.net.util.LangUtils;
 
 import java.io.Serializable;
 
@@ -13,7 +13,6 @@ import java.io.Serializable;
  * Created: 2016/4/8.
  */
 public class BasicNameValuePair implements NameValuePair, Cloneable, Serializable {
-
 
     private static final long serialVersionUID = 2193590362947124341L;
 
@@ -64,8 +63,7 @@ public class BasicNameValuePair implements NameValuePair, Cloneable, Serializabl
         }
         if (object instanceof NameValuePair) {
             final BasicNameValuePair that = (BasicNameValuePair) object;
-            return this.name.equals(that.name)
-                    && LangUtils.equals(this.value, that.value);
+            return this.name.equals(that.name) && LangUtils.equals(this.value, that.value);
         }
         return false;
     }
@@ -83,7 +81,7 @@ public class BasicNameValuePair implements NameValuePair, Cloneable, Serializabl
         return super.clone();
     }
 
-    private  <T> T notNull(final T argument, final String name) {
+    private <T> T notNull(final T argument, final String name) {
         if (argument == null) {
             throw new IllegalArgumentException(name + " may not be null");
         }

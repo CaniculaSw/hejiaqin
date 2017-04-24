@@ -14,10 +14,10 @@ import android.net.Uri;
 import com.customer.framework.utils.LogUtil;
 
 import java.util.ArrayList;
+
 /***/
 public abstract class BaseContentProvider extends ContentProvider implements
-        SQLiteTransactionListener
-{
+        SQLiteTransactionListener {
     /**
      * 打印log信息时传入的标志
      */
@@ -49,8 +49,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
      * @see ContentProvider#onCreate()
      */
     @Override
-    public boolean onCreate()
-    {
+    public boolean onCreate() {
         LogUtil.d(TAG, "BaseContentProvider create");
         Context context = getContext();
         mOpenHelper = getDatabaseHelper(context);
@@ -106,13 +105,11 @@ public abstract class BaseContentProvider extends ContentProvider implements
      * 返回一个SQLiteOpenHelper
      * @return SQLiteOpenHelper对象
      */
-    protected SQLiteOpenHelper getDatabaseHelper()
-    {
+    protected SQLiteOpenHelper getDatabaseHelper() {
         return mOpenHelper;
     }
 
-    protected void setDatabaseHelper(SQLiteOpenHelper openHelper)
-    {
+    protected void setDatabaseHelper(SQLiteOpenHelper openHelper) {
         mOpenHelper = openHelper;
     }
 
@@ -121,8 +118,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
      *
      * @return 是否在执行批处理
      */
-    private boolean applyingBatch()
-    {
+    private boolean applyingBatch() {
         return mApplyingBatch.get() != null && mApplyingBatch.get();
     }
 
@@ -139,34 +135,25 @@ public abstract class BaseContentProvider extends ContentProvider implements
      * @see ContentProvider#insert(Uri, ContentValues)
      */
     @Override
-    public Uri insert(Uri uri, ContentValues values)
-    {
+    public Uri insert(Uri uri, ContentValues values) {
         Uri result = null;
-        if (!applyingBatch())
-        {
+        if (!applyingBatch()) {
             mDb = mOpenHelper.getWritableDatabase();
             mDb.beginTransactionWithListener(this);
-            try
-            {
+            try {
                 result = insertInTransaction(uri, values);
                 // 操作成功标记有数据改动
-                if (result != null)
-                {
+                if (result != null) {
                     mNotifyChange = true;
                     mDb.setTransactionSuccessful();
                 }
-            }
-            finally
-            {
+            } finally {
                 mDb.endTransaction();
             }
             onEndTransaction();
-        }
-        else
-        {
+        } else {
             result = insertInTransaction(uri, values);
-            if (result != null)
-            {
+            if (result != null) {
                 mNotifyChange = true;
             }
         }
@@ -183,28 +170,22 @@ public abstract class BaseContentProvider extends ContentProvider implements
      * @see ContentProvider#bulkInsert(Uri, ContentValues[])
      */
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values)
-    {
+    public int bulkInsert(Uri uri, ContentValues[] values) {
         int numValues = values.length;
         mDb = mOpenHelper.getWritableDatabase();
         mDb.beginTransactionWithListener(this);
-        try
-        {
-            for (int i = 0; i < numValues; i++)
-            {
+        try {
+            for (int i = 0; i < numValues; i++) {
                 Uri result = insertInTransaction(uri, values[i]);
                 // 操作成功标记有数据改动
-                if (result != null)
-                {
+                if (result != null) {
                     mNotifyChange = true;
                 }
                 // 每插入一条记录都尝试一次让行
                 mDb.yieldIfContendedSafely();
             }
             mDb.setTransactionSuccessful();
-        }
-        finally
-        {
+        } finally {
             mDb.endTransaction();
         }
 
@@ -225,39 +206,31 @@ public abstract class BaseContentProvider extends ContentProvider implements
      * #update(android.net.Uri, android.content.ContentValues, java.lang.String, java.lang.String[])
      */
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
-    {
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int count = 0;
         boolean applyingBatch = applyingBatch();
         // 没有批处理执行时开始一个事物
-        if (!applyingBatch)
-        {
+        if (!applyingBatch) {
             mDb = mOpenHelper.getWritableDatabase();
             mDb.beginTransactionWithListener(this);
-            try
-            {
+            try {
                 count = updateInTransaction(uri, values, selection, selectionArgs);
                 // 操作成功标记有数据改动
-                if (count > 0)
-                {
+                if (count > 0) {
                     mNotifyChange = true;
                 }
                 mDb.setTransactionSuccessful();
-            }
-            finally
-            {
+            } finally {
                 mDb.endTransaction();
             }
 
             onEndTransaction();
         }
         // 有批处理在执行时不需要另外开启事物
-        else
-        {
+        else {
             count = updateInTransaction(uri, values, selection, selectionArgs);
             // 操作成功标记有数据改动
-            if (count > 0)
-            {
+            if (count > 0) {
                 mNotifyChange = true;
             }
         }
@@ -276,39 +249,31 @@ public abstract class BaseContentProvider extends ContentProvider implements
      * @see ContentProvider#delete(Uri, String, String[])
      */
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs)
-    {
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
         int count = 0;
         boolean applyingBatch = applyingBatch();
         // 没有批处理执行时开始一个事物
-        if (!applyingBatch)
-        {
+        if (!applyingBatch) {
             mDb = mOpenHelper.getWritableDatabase();
             mDb.beginTransactionWithListener(this);
-            try
-            {
+            try {
                 count = deleteInTransaction(uri, selection, selectionArgs);
                 // 操作成功标记有数据改动
-                if (count > 0)
-                {
+                if (count > 0) {
                     mNotifyChange = true;
                 }
                 mDb.setTransactionSuccessful();
-            }
-            finally
-            {
+            } finally {
                 mDb.endTransaction();
             }
 
             onEndTransaction();
         }
         // 有批处理在执行时不需要另外开启事物
-        else
-        {
+        else {
             count = deleteInTransaction(uri, selection, selectionArgs);
             // 操作成功标记有数据改动
-            if (count > 0)
-            {
+            if (count > 0) {
                 mNotifyChange = true;
             }
         }
@@ -326,26 +291,21 @@ public abstract class BaseContentProvider extends ContentProvider implements
      */
     @Override
     public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations)
-            throws OperationApplicationException
-    {
+            throws OperationApplicationException {
         mDb = mOpenHelper.getWritableDatabase();
         mDb.beginTransactionWithListener(this);
-        try
-        {
+        try {
             // 标记当前线程为正在执行批量处理
             mApplyingBatch.set(true);
             final int numOperations = operations.size();
             final ContentProviderResult[] results = new ContentProviderResult[numOperations];
-            for (int i = 0; i < numOperations; i++)
-            {
+            for (int i = 0; i < numOperations; i++) {
                 final ContentProviderOperation operation = operations.get(i);
                 results[i] = operation.apply(this, results, i);
             }
             mDb.setTransactionSuccessful();
             return results;
-        }
-        finally
-        {
+        } finally {
             // 标记当前线程不在执行批量处理
             mApplyingBatch.set(false);
             mDb.endTransaction();
@@ -358,8 +318,7 @@ public abstract class BaseContentProvider extends ContentProvider implements
      *
      * @see SQLiteTransactionListener#onBegin()
      */
-    public void onBegin()
-    {
+    public void onBegin() {
         onBeginTransaction();
     }
 
@@ -368,36 +327,31 @@ public abstract class BaseContentProvider extends ContentProvider implements
      *
      * @see SQLiteTransactionListener#onCommit()
      */
-    public void onCommit()
-    {
+    public void onCommit() {
         beforeTransactionCommit();
     }
+
     /***/
-    public void onRollback()
-    {
+    public void onRollback() {
     }
 
     /**
      * 事物开始时的操作
      */
-    protected void onBeginTransaction()
-    {
+    protected void onBeginTransaction() {
     }
 
     /**
      * 事物执行成功是的操作
      */
-    protected void beforeTransactionCommit()
-    {
+    protected void beforeTransactionCommit() {
     }
 
     /**
      * 事物执行结束后的操作
      */
-    protected void onEndTransaction()
-    {
-        if (mNotifyChange)
-        {
+    protected void onEndTransaction() {
+        if (mNotifyChange) {
             mNotifyChange = false;
             notifyChange();
         }

@@ -103,9 +103,7 @@ public class HanziToPinyin {
                 if (spaceIndex != -1 && commIndex != -1) {
                     tempStr = tempStr.substring(spaceIndex + 1, commIndex);
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
             sb.append(tempStr);
@@ -175,8 +173,7 @@ public class HanziToPinyin {
      * @return true: 是中文 ; false: 不是中文
      */
     private static boolean isChinese(char c) {
-        if (c == '\u3007' || (c >= '\u4E00' && c <= '\u9FA5')
-                || (c >= '\uF900' && c <= '\uFA2D')) {
+        if (c == '\u3007' || (c >= '\u4E00' && c <= '\u9FA5') || (c >= '\uF900' && c <= '\uFA2D')) {
             return true;
         }
         return false;

@@ -2,9 +2,9 @@ package com.customer.framework.component.storage.impl;
 
 import android.content.SharedPreferences;
 
-import com.customer.framework.utils.LogUtil;
 import com.customer.framework.component.storage.ISharedPStorage;
 import com.customer.framework.utils.FileUtil;
+import com.customer.framework.utils.LogUtil;
 import com.customer.framework.utils.StringUtil;
 
 import java.io.ByteArrayInputStream;
@@ -106,7 +106,6 @@ public abstract class AbsSharedPStorage implements ISharedPStorage {
             valueStr = StringUtil.bytes2Hex(bos.toByteArray());
         }
         save(key, valueStr);
-
 
     }
 

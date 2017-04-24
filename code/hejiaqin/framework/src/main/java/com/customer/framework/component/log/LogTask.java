@@ -18,8 +18,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author ssw
  * @version [Platform v1.0, 2015-7-21]
  */
-public class LogTask
-{
+public class LogTask {
     /**
      * SD卡可存储的最小空间要求：50M
      */
@@ -43,8 +42,7 @@ public class LogTask
     /**
      * 消息队列
      */
-    private final BlockingQueue<String> queue =
-            new LinkedBlockingQueue<String>();
+    private final BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 
     /**
      * 标记当前打印任务是否启动
@@ -68,8 +66,7 @@ public class LogTask
      * @param fileAmount 文件数量限制
      * @param maxSize    文件大小限制
      */
-    public LogTask(String filePath, int fileAmount, long maxSize)
-    {
+    public LogTask(String filePath, int fileAmount, long maxSize) {
         this.logWriter = new LogWriter(new File(filePath), fileAmount, maxSize);
     }
 
@@ -78,15 +75,11 @@ public class LogTask
      *
      * @param logType 打印任务类型
      */
-    public synchronized void start(String logType)
-    {
-        if (null == logWorkerThread)
-        {
-            logWorkerThread =
-                    new Thread(new LogRunnable(), "Log Task Thread - " + logType);
+    public synchronized void start(String logType) {
+        if (null == logWorkerThread) {
+            logWorkerThread = new Thread(new LogRunnable(), "Log Task Thread - " + logType);
         }
-        if (started || !logWriter.initialize())
-        {
+        if (started || !logWriter.initialize()) {
             return;
         }
         Log.v(TAG, "Log Task instance is starting ...");
@@ -98,12 +91,10 @@ public class LogTask
     /**
      * 停止打印任务
      */
-    public synchronized void stop()
-    {
+    public synchronized void stop() {
         Log.v(TAG, "Log Task instance is stopping...");
         started = false;
-        if (null != logWorkerThread)
-        {
+        if (null != logWorkerThread) {
             logWorkerThread.interrupt();
             logWorkerThread = null;
         }
@@ -119,44 +110,30 @@ public class LogTask
      * @author 盛兴亚
      * @version [RCS Client V100R001C03, 2012-2-15]
      */
-    private final class LogRunnable implements Runnable
-    {
-        public LogRunnable()
-        {
+    private final class LogRunnable implements Runnable {
+        public LogRunnable() {
         }
 
-        private void dealMsg()
-        throws InterruptedException
-        {
+        private void dealMsg() throws InterruptedException {
             String msg;
-            while (started && !Thread.currentThread().isInterrupted())
-            {
+            while (started && !Thread.currentThread().isInterrupted()) {
                 msg = queue.take();
-                synchronized (logWriter)
-                {
-                    if (isExternalMemoryAvailable(MIX_SIZE))
-                    {
+                synchronized (logWriter) {
+                    if (isExternalMemoryAvailable(MIX_SIZE)) {
                         //判断当前的打印文件是否存在
-                        if (!logWriter.isCurrentExist())
-                        {
+                        if (!logWriter.isCurrentExist()) {
                             Log.i(TAG, "LogWriter initialize");
-                            if (!logWriter.initialize())
-                            {
+                            if (!logWriter.initialize()) {
                                 continue;
                             }
-                        }
-                        else if (!logWriter.isCurrentAvailable())
-                        {
+                        } else if (!logWriter.isCurrentAvailable()) {
                             Log.i(TAG, "current is reCreateWriter...");
-                            if (!logWriter.reCreateWriter())
-                            {
+                            if (!logWriter.reCreateWriter()) {
                                 continue;
                             }
                         }
                         logWriter.println(msg);
-                    }
-                    else
-                    {
+                    } else {
                         logWriter.deleteTheEarliest();
                         Log.e(TAG, "can't log into sdcard.");
                     }
@@ -164,25 +141,16 @@ public class LogTask
             }
         }
 
-        public void run()
-        {
-            try
-            {
+        public void run() {
+            try {
                 dealMsg();
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 Log.e(TAG, Thread.currentThread().toString(), e);
-            }
-            catch (RuntimeException e)
-            {
+            } catch (RuntimeException e) {
                 Log.e(TAG, Thread.currentThread().toString(), e);
-                logWorkerThread =
-                        new Thread(new LogRunnable(), "Log Task Thread");
+                logWorkerThread = new Thread(new LogRunnable(), "Log Task Thread");
 
-            }
-            finally
-            {
+            } finally {
                 Log.v(TAG, "Log Task Thread is terminated.");
                 started = false;
             }
@@ -195,29 +163,22 @@ public class LogTask
      * @param size 最小空间大小要求
      * @return 返回值
      */
-    private static boolean isExternalMemoryAvailable(long size)
-    {
+    private static boolean isExternalMemoryAvailable(long size) {
         //规格要求：
         //无存储卡，不记录日志
         //存储卡剩余空间《 50M，不记录日志。
         //存储卡剩余空间>=50M，日志文件总占用空间不超过4M。
-        if (printCount > 0 && printCount < PRINT_COUNT)
-        {
+        if (printCount > 0 && printCount < PRINT_COUNT) {
             //打印PRINT_COUNT次数之内，不去检查空间满足情况
             printCount++;
             return true;
-        }
-        else
-        {
+        } else {
             long availableMemory = getAvailableExternalMemorySize();
-            if (size > availableMemory)
-            {
+            if (size > availableMemory) {
                 //表明已经存在存储外设空间
                 printCount = 0;
                 return false;
-            }
-            else
-            {
+            } else {
                 //满足存储设备的空间需要，开始循环
                 printCount = 1;
                 return true;
@@ -228,18 +189,14 @@ public class LogTask
     /**
      * 获取设备可用的存储空间大小
      */
-    private static long getAvailableExternalMemorySize()
-    {
-        if (externalMemoryAvailable())
-        {
+    private static long getAvailableExternalMemorySize() {
+        if (externalMemoryAvailable()) {
             File path = Environment.getExternalStorageDirectory();
             StatFs stat = new StatFs(path.getPath());
             long blockSize = stat.getBlockSize();
             long availableBlocks = stat.getAvailableBlocks();
             return availableBlocks * blockSize;
-        }
-        else
-        {
+        } else {
             return -1;
         }
     }
@@ -247,10 +204,8 @@ public class LogTask
     /**
      * 获取设备是否存在外设存储卡
      */
-    private static boolean externalMemoryAvailable()
-    {
-        return Environment.getExternalStorageState()
-                .equals(Environment.MEDIA_MOUNTED);
+    private static boolean externalMemoryAvailable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
@@ -258,8 +213,7 @@ public class LogTask
      *
      * @return 返回值
      */
-    public boolean isStarted()
-    {
+    public boolean isStarted() {
         return started;
     }
 
@@ -275,11 +229,8 @@ public class LogTask
      * @param lineNumber 代码行数
      * @param type       日志分类
      */
-    public void write(
-            String level, String tag, String msg, long id,
-            String methodName, String fileName, int lineNumber, String type
-    )
-    {
+    public void write(String level, String tag, String msg, long id, String methodName,
+                      String fileName, int lineNumber, String type) {
         StringBuilder sbr = new StringBuilder();
         //时间
         addCurrentTime(sbr);
@@ -288,11 +239,7 @@ public class LogTask
         sbr.append(" [").append(level).append(']');
 
         //进程和线程
-        sbr.append(" [")
-                .append(android.os.Process.myPid())
-                .append("|")
-                .append(id)
-                .append(']');
+        sbr.append(" [").append(android.os.Process.myPid()).append("|").append(id).append(']');
 
         //        sbr.append(" [")
         //                .append(fileName)
@@ -300,15 +247,10 @@ public class LogTask
         //                .append(lineNumber)
         //                .append(']');
         //类名方法名
-        sbr.append(" [")
-                .append(fileName)
-                .append("|")
-                .append(methodName)
-                .append(']');
+        sbr.append(" [").append(fileName).append("|").append(methodName).append(']');
 
         //消息非空的时候输入
-        if (msg != null && ! "".equals(msg))
-        {
+        if (msg != null && !"".equals(msg)) {
             sbr.append("  ").append(tag).append(": ").append(msg);
         }
         write(sbr.toString());
@@ -319,16 +261,11 @@ public class LogTask
      *
      * @param msg 打印信息
      */
-    public void write(String msg)
-    {
-        if (started)
-        {
-            try
-            {
+    public void write(String msg) {
+        if (started) {
+            try {
                 queue.put(msg);
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 Log.e("LogCache", "", e);
             }
         }
@@ -340,14 +277,13 @@ public class LogTask
      * @param sbr StringBuilder待添加
      * @return 添加过后的StringBuilder
      */
-    private StringBuilder addCurrentTime(StringBuilder sbr)
-    {
-        if (null == sbr)
-        {
+    private StringBuilder addCurrentTime(StringBuilder sbr) {
+        if (null == sbr) {
             return null;
         }
         //添加时间,格式:YYYY-MM-DD HH-MM-SS.mmm
-        sbr.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(new Date()));
+        sbr.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+                .format(new Date()));
         return sbr;
     }
 }

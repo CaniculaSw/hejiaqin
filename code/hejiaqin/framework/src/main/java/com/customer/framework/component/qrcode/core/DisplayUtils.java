@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
+
 /***/
 public class DisplayUtils {
 
@@ -19,8 +20,10 @@ public class DisplayUtils {
         }
         return screenResolution;
     }
+
     /***/
     public static int dp2px(Context context, float dpValue) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context
+                .getResources().getDisplayMetrics());
     }
 }

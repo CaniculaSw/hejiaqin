@@ -28,7 +28,8 @@ import java.util.Map;
  * 描述:解析二维码图片
  */
 public class QRCodeDecoder {
-    public static final Map<DecodeHintType, Object> HINTS = new EnumMap<DecodeHintType, Object>(DecodeHintType.class);
+    public static final Map<DecodeHintType, Object> HINTS = new EnumMap<DecodeHintType, Object>(
+            DecodeHintType.class);
 
     private final static String TAG = "QRCodeDecoder";
 
@@ -76,11 +77,13 @@ public class QRCodeDecoder {
             @Override
             protected String doInBackground(Void... params) {
                 try {
-                    Result result = new MultiFormatReader().decode(new BinaryBitmap(new HybridBinarizer(source)), HINTS);
+                    Result result = new MultiFormatReader().decode(new BinaryBitmap(
+                            new HybridBinarizer(source)), HINTS);
                     return result.getText();
                 } catch (Exception e) {
                     try {
-                        Result result = new MultiFormatReader().decode(new BinaryBitmap(new GlobalHistogramBinarizer(source)), HINTS);
+                        Result result = new MultiFormatReader().decode(new BinaryBitmap(
+                                new GlobalHistogramBinarizer(source)), HINTS);
                         return result.getText();
                     } catch (Exception eInGlobal) {
                         return null;

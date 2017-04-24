@@ -6,8 +6,7 @@ import android.graphics.Matrix;
 /**
  * Created by yupeng on 4/6/16.
  */
-public class ImageUtil
-{
+public class ImageUtil {
     private static final String TAG = "ImageUtil";
 
     /**
@@ -18,15 +17,12 @@ public class ImageUtil
      *                  小于1表示缩小;等于1表示不变;大于1表示放大
      * @return 缩放后的图片
      */
-    public static Bitmap zoom(Bitmap srcBitmap, double scale)
-    {
-        if (null == srcBitmap)
-        {
+    public static Bitmap zoom(Bitmap srcBitmap, double scale) {
+        if (null == srcBitmap) {
             return null;
         }
 
-        if (scale == 1.0)
-        {
+        if (scale == 1.0) {
             return srcBitmap;
         }
 
@@ -36,12 +32,10 @@ public class ImageUtil
         Matrix scaleMatrix = new Matrix();
         scaleMatrix.postScale(scaleWidth, scaleHeight);
 
-        try
-        {
-            return Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), scaleMatrix, true);
-        }
-        catch (OutOfMemoryError e)
-        {
+        try {
+            return Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(),
+                    srcBitmap.getHeight(), scaleMatrix, true);
+        } catch (OutOfMemoryError e) {
             LogUtil.w(TAG, "zoom image failed, Out of memory error.", e);
             return srcBitmap;
         }
@@ -56,10 +50,8 @@ public class ImageUtil
      * @param destHeight 目标图片的高度
      * @return 裁剪后的图片
      */
-    public static Bitmap crop(Bitmap srcBitmap, float destWidth, float destHeight)
-    {
-        if (null == srcBitmap)
-        {
+    public static Bitmap crop(Bitmap srcBitmap, float destWidth, float destHeight) {
+        if (null == srcBitmap) {
             return null;
         }
 
@@ -70,41 +62,34 @@ public class ImageUtil
         float tmpWidth;
         float tmpHeight;
         // 原图的宽度大于高度(换算成比例后)
-        if (srcWidth > (destWidth / destHeight) * srcHeight)
-        {
+        if (srcWidth > (destWidth / destHeight) * srcHeight) {
             tmpWidth = (destWidth / destHeight) * srcHeight;
             tmpHeight = srcHeight;
         }
         // 原图的宽度小于高度(换算成比例后)
-        else if (srcWidth < (destWidth / destHeight) * srcHeight)
-        {
+        else if (srcWidth < (destWidth / destHeight) * srcHeight) {
             tmpWidth = srcWidth;
             tmpHeight = (destHeight / destWidth) * srcWidth;
         }
         // 原图的宽度等于高度(换算成比例后)
-        else
-        {
+        else {
             tmpWidth = srcWidth;
             tmpHeight = srcHeight;
         }
 
         Bitmap tmpBitmap = null;
-        try
-        {
+        try {
             // 裁剪出中间部分
-            tmpBitmap = Bitmap.createBitmap(srcBitmap, (int) ((srcWidth - tmpWidth) / 2), (int) ((srcHeight - tmpHeight) / 2), (int) tmpWidth, (int) tmpHeight, null, false);
+            tmpBitmap = Bitmap.createBitmap(srcBitmap, (int) ((srcWidth - tmpWidth) / 2),
+                    (int) ((srcHeight - tmpHeight) / 2), (int) tmpWidth, (int) tmpHeight, null,
+                    false);
             // 缩放得到最终图
             return zoom(tmpBitmap, tmpWidth / srcWidth);
-        }
-        catch (OutOfMemoryError e)
-        {
+        } catch (OutOfMemoryError e) {
             LogUtil.w(TAG, "crop image failed, Out of memory error.", e);
             return srcBitmap;
-        }
-        finally
-        {
-            if (null != tmpBitmap && !tmpBitmap.isRecycled())
-            {
+        } finally {
+            if (null != tmpBitmap && !tmpBitmap.isRecycled()) {
                 tmpBitmap.recycle();
             }
         }

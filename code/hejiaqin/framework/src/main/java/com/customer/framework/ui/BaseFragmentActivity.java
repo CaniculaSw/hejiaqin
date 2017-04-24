@@ -27,20 +27,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /***/
-public abstract class BaseFragmentActivity extends FragmentActivity
-{
+public abstract class BaseFragmentActivity extends FragmentActivity {
 
     protected String tagString = this.getClass().getSimpleName();
 
     /**
      * 该activity持有的handler类
      */
-    private Handler mHandler = new Handler()
-    {
-        public void handleMessage(Message msg)
-        {
-            if (mHandler != null)
-            {
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (mHandler != null) {
                 BaseFragmentActivity.this.handleStateMessage(msg);
             }
         }
@@ -51,24 +47,19 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      */
     private final Set<ILogic> mLogicSet = new HashSet<ILogic>();
 
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         LogUtil.d(tagString, "onCreate");
         super.onCreate(savedInstanceState);
-        if (!isInit())
-        {
+        if (!isInit()) {
             setLogicBuilder(createLogicBuilder(this.getApplicationContext()));
             initSystem(getApplicationContext());
         }
         if (isHandlerToAllLogic()) {
             BuilderImp.getInstance().addHandlerToAllLogics(getHandler());
         }
-        try
-        {
+        try {
             initLogics();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e(tagString, "Init logics failed :" + e.getMessage(), e);
         }
     }
@@ -83,8 +74,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //回收是不保存fragments
-        if(outState!=null)
-        {
+        if (outState != null) {
             final String FRAGMENTS_TAG = "android:support:fragments";
             outState.remove(FRAGMENTS_TAG);
         }
@@ -100,8 +90,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @return 返回handler对象
      */
-    protected final Handler getHandler()
-    {
+    protected final Handler getHandler() {
         return mHandler;
     }
 
@@ -110,10 +99,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @param what 消息标识
      */
-    protected final void sendEmptyMessage(int what)
-    {
-        if (mHandler != null)
-        {
+    protected final void sendEmptyMessage(int what) {
+        if (mHandler != null) {
             mHandler.sendEmptyMessage(what);
         }
     }
@@ -124,10 +111,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * @param what        消息标识
      * @param delayMillis 延迟时间
      */
-    protected final void sendEmptyMessageDelayed(int what, long delayMillis)
-    {
-        if (mHandler != null)
-        {
+    protected final void sendEmptyMessageDelayed(int what, long delayMillis) {
+        if (mHandler != null) {
             mHandler.sendEmptyMessageDelayed(what, delayMillis);
         }
     }
@@ -137,10 +122,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @param runnable Runnable
      */
-    protected final void postRunnable(Runnable runnable)
-    {
-        if (mHandler != null)
-        {
+    protected final void postRunnable(Runnable runnable) {
+        if (mHandler != null) {
             mHandler.post(runnable);
         }
     }
@@ -150,10 +133,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @param msg 消息对象
      */
-    protected final void sendMessage(Message msg)
-    {
-        if (mHandler != null)
-        {
+    protected final void sendMessage(Message msg) {
+        if (mHandler != null) {
             mHandler.sendMessage(msg);
         }
     }
@@ -164,10 +145,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * @param msg         消息对象
      * @param delayMillis 延迟时间
      */
-    protected final void sendMessageDelayed(Message msg, long delayMillis)
-    {
-        if (mHandler != null)
-        {
+    protected final void sendMessageDelayed(Message msg, long delayMillis) {
+        if (mHandler != null) {
             mHandler.sendMessageDelayed(msg, delayMillis);
         }
     }
@@ -178,8 +157,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @return 是否加载了mLogicBuilder
      */
-    protected final boolean isInit()
-    {
+    protected final boolean isInit() {
         return BuilderImp.getInstance() != null;
     }
 
@@ -204,8 +182,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @return 返回LogicBuilder对象
      */
-    public static ILBuilder getLogicBuilder()
-    {
+    public static ILBuilder getLogicBuilder() {
         return BuilderImp.getInstance();
     }
 
@@ -221,18 +198,15 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      * @param interfaceClass 接口类型
      * @return logic对象
      */
-    protected final ILogic getLogicByInterfaceClass(Class<?> interfaceClass)
-    {
-        ILogic logic =
-                BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
+    protected final ILogic getLogicByInterfaceClass(Class<?> interfaceClass) {
+        ILogic logic = BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
         if (!isHandlerToAllLogic() && null != logic && !mLogicSet.contains(logic)) {
             logic.addHandler(getHandler());
             mLogicSet.add(logic);
         }
-        if (logic == null)
-        {
-            Log.e(tagString, "Not found logic by interface class (" + interfaceClass
-                    + ")", new Throwable());
+        if (logic == null) {
+            Log.e(tagString, "Not found logic by interface class (" + interfaceClass + ")",
+                    new Throwable());
             return null;
         }
         return logic;
@@ -243,8 +217,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @param logicBuilder logic建造管理类
      */
-    protected static final void setLogicBuilder(BuilderImp logicBuilder)
-    {
+    protected static final void setLogicBuilder(BuilderImp logicBuilder) {
         BuilderImp.setInstance(logicBuilder);
     }
 
@@ -254,36 +227,28 @@ public abstract class BaseFragmentActivity extends FragmentActivity
      *
      * @param msg Message对象
      */
-    protected void handleStateMessage(Message msg)
-    {
+    protected void handleStateMessage(Message msg) {
 
     }
+
     /***/
-    public void finish()
-    {
+    public void finish() {
         removeHandler();
         super.finish();
     }
 
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         removeHandler();
         super.onDestroy();
     }
 
-    private void removeHandler()
-    {
-        if (this.mHandler != null)
-        {
-            if (!isHandlerToAllLogic() && mLogicSet.size() > 0)
-            {
-                for (ILogic logic : mLogicSet)
-                {
+    private void removeHandler() {
+        if (this.mHandler != null) {
+            if (!isHandlerToAllLogic() && mLogicSet.size() > 0) {
+                for (ILogic logic : mLogicSet) {
                     logic.removeHandler(this.mHandler);
                 }
-            }
-            else if (BuilderImp.getInstance() != null)
-            {
+            } else if (BuilderImp.getInstance() != null) {
                 BuilderImp.getInstance().removeHandlerToAllLogics(this.mHandler);
             }
             this.mHandler = null;

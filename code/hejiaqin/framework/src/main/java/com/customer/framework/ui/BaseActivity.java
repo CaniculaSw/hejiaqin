@@ -208,15 +208,14 @@ public abstract class BaseActivity extends Activity {
      * @return logic对象
      */
     protected final ILogic getLogicByInterfaceClass(Class<?> interfaceClass) {
-        ILogic logic =
-                BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
+        ILogic logic = BuilderImp.getInstance().getLogicByInterfaceClass(interfaceClass);
         if (!isHandlerToAllLogic() && null != logic && !mLogicSet.contains(logic)) {
             logic.addHandler(getHandler());
             mLogicSet.add(logic);
         }
         if (logic == null) {
-            Log.e(tag, "Not found logic by interface class (" + interfaceClass
-                    + ")", new Throwable());
+            Log.e(tag, "Not found logic by interface class (" + interfaceClass + ")",
+                    new Throwable());
             return null;
         }
         return logic;
@@ -230,6 +229,7 @@ public abstract class BaseActivity extends Activity {
      */
     protected void handleStateMessage(Message msg) {
     }
+
     /***/
     public void finish() {
         removeHandler();

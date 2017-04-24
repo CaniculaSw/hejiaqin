@@ -107,7 +107,6 @@ public final class AES {
         return null;
     }
 
-
     /**
      * 将二进制转换成16进制
      *

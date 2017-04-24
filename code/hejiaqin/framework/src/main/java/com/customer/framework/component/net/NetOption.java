@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-
 /**
  * Http通道接入的基础类，需要继承并实现相关接口
  * 子类至少需要实现getUrl()和getBody()两个方法
@@ -174,7 +173,9 @@ public abstract class NetOption {
         String data = response.getData();
         if (data != null) {
             // JSON
-            if (response.getResponseContentType() != null && response.getResponseContentType() == NetRequest.ContentType.JSON && !isNeedByte()) {
+            if (response.getResponseContentType() != null
+                    && response.getResponseContentType() == NetRequest.ContentType.JSON
+                    && !isNeedByte()) {
                 LogUtil.d(TAG, "Parser the result code with JSON format.");
                 try {
                     JSONObject rootJsonObj = new JSONObject(data);

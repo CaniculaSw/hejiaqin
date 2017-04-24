@@ -1,19 +1,17 @@
 package com.customer.framework.component.net;
 
-
 import com.customer.framework.component.net.message.BasicNameValuePair;
 import com.customer.framework.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /***/
-public class NetRequest
-{
+public class NetRequest {
     /**
      * 请求方法的定义
      */
-    public enum RequestMethod
-    {
+    public enum RequestMethod {
         /**
          * get请求
          */
@@ -38,8 +36,7 @@ public class NetRequest
     /**
      * 请求体类型的定义
      */
-    public enum ContentType
-    {
+    public enum ContentType {
         XML,
         JSON,
         FORM_URLENCODED,
@@ -117,8 +114,7 @@ public class NetRequest
      *
      * @return 返回请求的URL
      */
-    public String getUrl()
-    {
+    public String getUrl() {
         return url;
     }
 
@@ -127,8 +123,7 @@ public class NetRequest
      *
      * @param url 请求的URL
      */
-    public void setUrl(String url)
-    {
+    public void setUrl(String url) {
         this.url = StringUtil.fixUrlSprit(url);
     }
 
@@ -137,8 +132,7 @@ public class NetRequest
      *
      * @return 请求体
      */
-    public String getBody()
-    {
+    public String getBody() {
         return body;
     }
 
@@ -147,8 +141,7 @@ public class NetRequest
      *
      * @param body 请求体
      */
-    public void setBody(String body)
-    {
+    public void setBody(String body) {
         this.body = body;
     }
 
@@ -157,8 +150,7 @@ public class NetRequest
      *
      * @return 请求方法
      */
-    public RequestMethod getRequestMethod()
-    {
+    public RequestMethod getRequestMethod() {
         return requestMethod;
     }
 
@@ -167,8 +159,7 @@ public class NetRequest
      *
      * @param requestMethod 请求方法
      */
-    public void setRequestMethod(RequestMethod requestMethod)
-    {
+    public void setRequestMethod(RequestMethod requestMethod) {
         this.requestMethod = requestMethod;
     }
 
@@ -177,8 +168,7 @@ public class NetRequest
      *
      * @return 请求的消息类型
      */
-    public ContentType getContentType()
-    {
+    public ContentType getContentType() {
         return contentType;
     }
 
@@ -187,8 +177,7 @@ public class NetRequest
      *
      * @param contentType 请求的消息类型
      */
-    public void setContentType(ContentType contentType)
-    {
+    public void setContentType(ContentType contentType) {
         this.contentType = contentType;
     }
 
@@ -197,8 +186,7 @@ public class NetRequest
      *
      * @return 请求的property
      */
-    public List<NameValuePair> getRequestProperties()
-    {
+    public List<NameValuePair> getRequestProperties() {
         return requestProperties;
     }
 
@@ -207,8 +195,7 @@ public class NetRequest
      *
      * @param requestProperties 请求的property
      */
-    public void setRequestProperties(List<NameValuePair> requestProperties)
-    {
+    public void setRequestProperties(List<NameValuePair> requestProperties) {
         this.requestProperties = requestProperties;
     }
 
@@ -218,14 +205,11 @@ public class NetRequest
      * @param key   请求的property的key值
      * @param value 请求的property的value值
      */
-    public void addRequestProperty(String key, String value)
-    {
-        if (requestProperties == null)
-        {
+    public void addRequestProperty(String key, String value) {
+        if (requestProperties == null) {
             requestProperties = new ArrayList<NameValuePair>();
         }
-        if (key != null && value != null)
-        {
+        if (key != null && value != null) {
             requestProperties.add(new BasicNameValuePair(key, value));
         }
     }
@@ -235,8 +219,7 @@ public class NetRequest
      *
      * @return boolean值
      */
-    public boolean isNeedByte()
-    {
+    public boolean isNeedByte() {
         return needByte;
     }
 
@@ -245,8 +228,7 @@ public class NetRequest
      *
      * @param needByte 是否的boolean值
      */
-    public void setNeedByte(boolean needByte)
-    {
+    public void setNeedByte(boolean needByte) {
         this.needByte = needByte;
     }
 
@@ -255,8 +237,7 @@ public class NetRequest
      *
      * @return 是否需要GZip
      */
-    public boolean isGZip()
-    {
+    public boolean isGZip() {
         return gZip;
     }
 
@@ -265,8 +246,7 @@ public class NetRequest
      *
      * @param gzip 是否需要GZip值
      */
-    public void setGZip(boolean gzip)
-    {
+    public void setGZip(boolean gzip) {
         this.gZip = gzip;
     }
 
@@ -275,8 +255,7 @@ public class NetRequest
      *
      * @return 请求ID
      */
-    public String getRequestID()
-    {
+    public String getRequestID() {
         return requestID;
     }
 
@@ -285,8 +264,7 @@ public class NetRequest
      *
      * @param requestID 请求ID
      */
-    public void setRequestID(String requestID)
-    {
+    public void setRequestID(String requestID) {
         this.requestID = requestID;
     }
 
@@ -295,8 +273,7 @@ public class NetRequest
      *
      * @return 请求超时时间
      */
-    public int getConnectionTimeOut()
-    {
+    public int getConnectionTimeOut() {
         return connectionTimeOut;
     }
 
@@ -305,8 +282,7 @@ public class NetRequest
      *
      * @param connectionTimeOut 请求超时时间
      */
-    public void setConnectionTimeOut(int connectionTimeOut)
-    {
+    public void setConnectionTimeOut(int connectionTimeOut) {
         this.connectionTimeOut = connectionTimeOut;
     }
 
@@ -315,8 +291,7 @@ public class NetRequest
      *
      * @return 请求读取数据超时时间
      */
-    public int getReadTOut()
-    {
+    public int getReadTOut() {
         return readTimeOut;
     }
 
@@ -325,8 +300,7 @@ public class NetRequest
      *
      * @param timeOut 请求读取数据超时时间
      */
-    public void setReadTOut(int timeOut)
-    {
+    public void setReadTOut(int timeOut) {
         this.readTimeOut = timeOut;
     }
 
@@ -335,8 +309,7 @@ public class NetRequest
      *
      * @return 是否信任
      */
-    public boolean isTrustAll()
-    {
+    public boolean isTrustAll() {
         return isTrustAll;
     }
 
@@ -345,8 +318,7 @@ public class NetRequest
      *
      * @param istrustAll 是否信任主机
      */
-    public void setTrustAll(boolean istrustAll)
-    {
+    public void setTrustAll(boolean istrustAll) {
         this.isTrustAll = istrustAll;
     }
 

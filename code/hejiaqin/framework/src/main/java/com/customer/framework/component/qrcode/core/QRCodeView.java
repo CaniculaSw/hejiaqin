@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+
 /***/
-public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCallback, ProcessDataTask.Delegate {
+public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCallback,
+        ProcessDataTask.Delegate {
     protected Camera mCamera;
     protected CameraPreview mPreview;
     protected ScanBoxView mScanBoxView;
@@ -186,6 +188,7 @@ public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCa
             }
         }
     };
+
     /***/
     public interface Delegate {
         /**

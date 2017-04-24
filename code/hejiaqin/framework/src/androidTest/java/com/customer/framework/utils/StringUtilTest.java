@@ -39,9 +39,8 @@ public class StringUtilTest extends TestCase {
         assertEquals("ccc", contentList.get(2));
     }
 
-
     public void testArrayToString() throws Exception {
-        String arrayStr = StringUtil.arrayToString(new String[]{"aaa", "bbb", "ccc"}, "+");
+        String arrayStr = StringUtil.arrayToString(new String[] { "aaa", "bbb", "ccc" }, "+");
         assertNotNull(arrayStr);
         assertEquals(arrayStr, "aaa+bbb+ccc");
     }

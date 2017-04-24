@@ -20,7 +20,8 @@ import java.util.Map;
  * 描述:创建二维码图片
  */
 public class QRCodeEncoder {
-    public static final Map<EncodeHintType, Object> HINTS = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+    public static final Map<EncodeHintType, Object> HINTS = new EnumMap<EncodeHintType, Object>(
+            EncodeHintType.class);
 
     static {
         HINTS.put(EncodeHintType.CHARACTER_SET, "utf-8");
@@ -49,7 +50,8 @@ public class QRCodeEncoder {
      * @param color    二维码图片的颜色
      * @param delegate 创建二维码图片的代理
      */
-    public static void encodeQRCode(final String content, final int size, final int color, final int backgroundColor, final Delegate delegate) {
+    public static void encodeQRCode(final String content, final int size, final int color,
+                                    final int backgroundColor, final Delegate delegate) {
         encodeQRCode(content, size, color, backgroundColor, null, delegate);
     }
 
@@ -62,12 +64,15 @@ public class QRCodeEncoder {
      * @param logo     二维码图片的logo
      * @param delegate 创建二维码图片的代理
      */
-    public static void encodeQRCode(final String content, final int size, final int color, final int backgroundColor, final Bitmap logo, final Delegate delegate) {
+    public static void encodeQRCode(final String content, final int size, final int color,
+                                    final int backgroundColor, final Bitmap logo,
+                                    final Delegate delegate) {
         new AsyncTask<Void, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(Void... params) {
                 try {
-                    BitMatrix matrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, size, size, HINTS);
+                    BitMatrix matrix = new MultiFormatWriter().encode(content,
+                            BarcodeFormat.QR_CODE, size, size, HINTS);
                     int[] pixels = new int[size * size];
                     for (int y = 0; y < size; y++) {
                         for (int x = 0; x < size; x++) {
@@ -130,6 +135,7 @@ public class QRCodeEncoder {
         }
         return bitmap;
     }
+
     /***/
     public interface Delegate {
         /**

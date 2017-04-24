@@ -46,33 +46,65 @@ public final class FileUtil {
 
     private static final long DEFAULT_MINUM_SDCARD_SIZE = 5;
 
-    private static final String[][] MIME_MAPTABLE = {{".3gp", "video/3gpp"},
-            {".apk", "application/vnd.android.package-archive"}, {".asf", "video/video/x-ms-asf"},
-            {".avi", "video/x-msvideo"}, {".bin", "application/octet-stream"}, {".bmp", "image/bmp"},
-            {".c", "text/plain"}, {".class", "application/octet-stream"}, {".conf", "text/plain"},
-            {".cpp", "text/plain"}, {".doc", "application/msword"},
-            {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
-            {".xls", "application/vnd.ms-excel"},
-            {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
-            {".exe", "application/octet-stream"}, {".gif", "image/gif"}, {".gtar", "application/x-gtar"},
-            {".gz", "application/x-gzip"}, {".h", "text/plain"}, {".htm", "text/plain"}, {".html", "text/html"},
-            {".jar", "application/java-archive"}, {".java", "text/plain"}, {".jpeg", "image/jpeg"},
-            {".jpg", "image/jpeg"}, {".js", "application/x-javascript"}, {".log", "text/plain"},
-            {".m3u", "audio/x-mpegurl"}, {".m4a", "audio/mp4a-latm"}, {".m4b", "audio/mp4a-latm"},
-            {".m4p", "audio/mp4a-latm"}, {".m4u", "video/vnd.mpegurl"}, {".m4v", "video/x-m4v"},
-            {".mov", "video/quicktime"}, {".mp2", "audio/x-mpeg"}, {".mp3", "audio/x-mpeg"},
-            {".mp4", "video/mp4"}, {".mpc", "application/vnd.mpohun.certificate"}, {".mpe", "video/mpeg"},
-            {".mpeg", "video/mpeg"}, {".mpg", "video/mpeg"}, {".mpg4", "video/mp4"}, {".mpga", "audio/mpeg"},
-            {".msg", "application/vnd.ms-outlook"}, {".ogg", "audio/ogg"}, {".pdf", "application/pdf"},
-            {".png", "image/pnd"}, {".pps", "application/vnd.ms-powerpoint"},
-            {".ppt", "application/vnd.ms-powerpoint"},
-            {".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
-            {".prop", "text/plain"}, {".rc", "text/plain"}, {".rmvb", "audio/x-pn-realaudio"},
-            {".rtf", "application/rtf"}, {".sh", "text/plain"}, {".tar", "application/x-tar"},
-            {".tgz", "application/x-compressed"}, {".txt", "text/plain"}, {".wav", "audio/x-wav"},
-            {".wma", "audio/x-ms-wma"}, {".wmv", "audio/x-ms-wmv"}, {".wps", "application/vnd.ms-works"},
-            {".xml", "text/plain"}, {".z", "application/x-compress"}, {".zip", "application/x-zip-compressed"},
-            {"", "*/*"}};
+    private static final String[][] MIME_MAPTABLE = {
+            { ".3gp", "video/3gpp" },
+            { ".apk", "application/vnd.android.package-archive" },
+            { ".asf", "video/video/x-ms-asf" },
+            { ".avi", "video/x-msvideo" },
+            { ".bin", "application/octet-stream" },
+            { ".bmp", "image/bmp" },
+            { ".c", "text/plain" },
+            { ".class", "application/octet-stream" },
+            { ".conf", "text/plain" },
+            { ".cpp", "text/plain" },
+            { ".doc", "application/msword" },
+            { ".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+            { ".xls", "application/vnd.ms-excel" },
+            { ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+            { ".exe", "application/octet-stream" },
+            { ".gif", "image/gif" },
+            { ".gtar", "application/x-gtar" },
+            { ".gz", "application/x-gzip" },
+            { ".h", "text/plain" },
+            { ".htm", "text/plain" },
+            { ".html", "text/html" },
+            { ".jar", "application/java-archive" },
+            { ".java", "text/plain" },
+            { ".jpeg", "image/jpeg" },
+            { ".jpg", "image/jpeg" },
+            { ".js", "application/x-javascript" },
+            { ".log", "text/plain" },
+            { ".m3u", "audio/x-mpegurl" },
+            { ".m4a", "audio/mp4a-latm" },
+            { ".m4b", "audio/mp4a-latm" },
+            { ".m4p", "audio/mp4a-latm" },
+            { ".m4u", "video/vnd.mpegurl" },
+            { ".m4v", "video/x-m4v" },
+            { ".mov", "video/quicktime" },
+            { ".mp2", "audio/x-mpeg" },
+            { ".mp3", "audio/x-mpeg" },
+            { ".mp4", "video/mp4" },
+            { ".mpc", "application/vnd.mpohun.certificate" },
+            { ".mpe", "video/mpeg" },
+            { ".mpeg", "video/mpeg" },
+            { ".mpg", "video/mpeg" },
+            { ".mpg4", "video/mp4" },
+            { ".mpga", "audio/mpeg" },
+            { ".msg", "application/vnd.ms-outlook" },
+            { ".ogg", "audio/ogg" },
+            { ".pdf", "application/pdf" },
+            { ".png", "image/pnd" },
+            { ".pps", "application/vnd.ms-powerpoint" },
+            { ".ppt", "application/vnd.ms-powerpoint" },
+            { ".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
+            { ".prop", "text/plain" }, { ".rc", "text/plain" },
+            { ".rmvb", "audio/x-pn-realaudio" }, { ".rtf", "application/rtf" },
+            { ".sh", "text/plain" }, { ".tar", "application/x-tar" },
+            { ".tgz", "application/x-compressed" }, { ".txt", "text/plain" },
+            { ".wav", "audio/x-wav" }, { ".wma", "audio/x-ms-wma" }, { ".wmv", "audio/x-ms-wmv" },
+            { ".wps", "application/vnd.ms-works" }, { ".xml", "text/plain" },
+            { ".z", "application/x-compress" }, { ".zip", "application/x-zip-compressed" },
+            { "", "*/*" } };
 
     private static boolean copyStream(InputStream in, OutputStream out) {
         try {
@@ -92,6 +124,7 @@ public final class FileUtil {
         }
         return false;
     }
+
     /***/
     public static boolean fileCopy(String srcFilePath, String dstFilePath) {
         if (srcFilePath == null || dstFilePath == null) {
@@ -102,6 +135,7 @@ public final class FileUtil {
         File destFile = new File(dstFilePath);
         return fileCopy(originFile, destFile);
     }
+
     /***/
     public static boolean fileCopy(int rid, Context context, String destFileName) {
         if (context == null || TextUtils.isEmpty(destFileName)) {
@@ -117,6 +151,7 @@ public final class FileUtil {
 
         return false;
     }
+
     /***/
     public static boolean fileCopy(File srcFile, File destFile) {
         if (srcFile == null || destFile == null) {
@@ -145,6 +180,7 @@ public final class FileUtil {
         }
         return false;
     }
+
     /***/
     public static boolean moveFile(File origin, File dest) {
         if (origin == null || dest == null) {
@@ -173,6 +209,7 @@ public final class FileUtil {
         }
         return isSuc;
     }
+
     /***/
     public static boolean deleteFile(String path) {
         if (path == null || path.trim().length() < 1) {
@@ -180,6 +217,7 @@ public final class FileUtil {
         }
         return deleteFile(new File(path));
     }
+
     /***/
     public static boolean deleteFile(File file) {
         try {
@@ -196,6 +234,7 @@ public final class FileUtil {
             return false;
         }
     }
+
     /***/
     public static void deleteAllFile(String folderFullPath) {
         if (folderFullPath == null || folderFullPath.trim().length() == 0) {
@@ -230,6 +269,7 @@ public final class FileUtil {
         File file = getFileByPath(filePath);
         return file == null ? false : file.exists();
     }
+
     /***/
     public static File createFile(String filePath) throws IOException {
         File file = getFileByPath(filePath);
@@ -353,19 +393,19 @@ public final class FileUtil {
         }
     }
 
-//    public static String getFileNameWithSuffix(String fileFullPath) {
-//        String fileName;
-//        if (fileFullPath == null || fileFullPath.trim().length() < 1) {
-//            fileName = null;
-//        }
-//        try {
-//            File file = new File(fileFullPath);
-//            fileName = file.getName();
-//        } catch (Exception e) {
-//            fileName = null;
-//        }
-//        return fileName;
-//    }
+    //    public static String getFileNameWithSuffix(String fileFullPath) {
+    //        String fileName;
+    //        if (fileFullPath == null || fileFullPath.trim().length() < 1) {
+    //            fileName = null;
+    //        }
+    //        try {
+    //            File file = new File(fileFullPath);
+    //            fileName = file.getName();
+    //        } catch (Exception e) {
+    //            fileName = null;
+    //        }
+    //        return fileName;
+    //    }
 
     public static long getFileSize(String fileFullPath) {
         if (fileFullPath == null || fileFullPath.trim().length() < 1) {
@@ -383,6 +423,7 @@ public final class FileUtil {
         long fileLength = getFileSize(fileFullPath);
         return convertFileSize(fileLength);
     }
+
     /***/
     public static String convertFileSize(long size) {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
@@ -398,6 +439,7 @@ public final class FileUtil {
             return "0B";
         }
     }
+
     /***/
     public static byte[] fileToByte(String fileName) {
         try {
@@ -405,12 +447,14 @@ public final class FileUtil {
         } catch (IOException e) {
             LogUtil.e(TAG, "fileToByte error", e);
         }
-        return new byte[]{};
+        return new byte[] {};
     }
+
     /***/
     public static byte[] fileToByte(File file) throws IOException {
         return fileToByte(file, DEFAULT_READ_FILE_BUFFER_SIZE);
     }
+
     /***/
     public static byte[] fileToByte(File file, int bufferLen) {
         InputStream in = null;
@@ -481,6 +525,7 @@ public final class FileUtil {
         }
         return file;
     }
+
     /***/
     public static void closeStream(Closeable beCloseStream) {
         if (beCloseStream != null) {
@@ -521,8 +566,8 @@ public final class FileUtil {
         if (TextUtils.isEmpty(fileExt)) {
             return false;
         }
-        if ("png".equals(fileExt) || "gif".equals(fileExt) || "jpg".equals(fileExt) || "bmp".equals(fileExt)
-                || "jpeg".equals(fileExt)) {
+        if ("png".equals(fileExt) || "gif".equals(fileExt) || "jpg".equals(fileExt)
+                || "bmp".equals(fileExt) || "jpeg".equals(fileExt)) {
             return true;
         }
         return false;
@@ -544,6 +589,7 @@ public final class FileUtil {
             return "";
         }
     }
+
     /***/
     public Object unserialize(String filePath) {
         Object obj = new Object();
@@ -564,6 +610,7 @@ public final class FileUtil {
         }
         return obj;
     }
+
     /***/
     public void serialize(Object obj, String filePath) {
         FileOutputStream fos = null;
@@ -609,6 +656,7 @@ public final class FileUtil {
         File file = new File(fullPath);
         return file.getParent();
     }
+
     /***/
     public static String appendPath(String path, String name) {
         if (TextUtils.isEmpty(path)) {
@@ -617,9 +665,10 @@ public final class FileUtil {
             return path + File.separator + name;
         }
     }
+
     /***/
     public static boolean changeFileMode(String filePath, String mode) {
-        String[] command = {"chmod", mode, filePath};
+        String[] command = { "chmod", mode, filePath };
         ProcessBuilder builder = new ProcessBuilder(command);
         try {
             builder.start();
@@ -629,10 +678,12 @@ public final class FileUtil {
         }
         return false;
     }
+
     /***/
     public static boolean sdcardHasEnoughStorage() {
         return sdcardHasEnoughStorage(DEFAULT_MINUM_SDCARD_SIZE);
     }
+
     /***/
     public static boolean sdcardHasEnoughStorage(long minSize) {
         if (isExternalStorageMounted()) {
@@ -649,9 +700,11 @@ public final class FileUtil {
         }
         return false;
     }
+
     /***/
     public static boolean makeDirInAppDir(Context context, String dir) {
-        File f = context.getDir(dir, Context.MODE_PRIVATE | Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
+        File f = context.getDir(dir, Context.MODE_PRIVATE | Context.MODE_WORLD_READABLE
+                | Context.MODE_WORLD_WRITEABLE);
         if (f.exists() || f.mkdirs()) {
             return changeFileMode(f.getAbsolutePath(), "777");
         }

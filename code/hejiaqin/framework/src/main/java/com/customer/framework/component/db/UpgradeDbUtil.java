@@ -81,9 +81,11 @@ public class UpgradeDbUtil {
         String oldVersion = null;
         String oldDesc = null;
         String oldId = null;
-        Cursor cursor = db.query(DatabaseInfo.GlobalDbVer.TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor cursor = db.query(DatabaseInfo.GlobalDbVer.TABLE_NAME, null, null, null, null, null,
+                null, null);
         if (cursor != null) {
-            oldVersion = cursor.getString(cursor.getColumnIndex(DatabaseInfo.GlobalDbVer.TABLE_DB_VER));
+            oldVersion = cursor.getString(cursor
+                    .getColumnIndex(DatabaseInfo.GlobalDbVer.TABLE_DB_VER));
             oldDesc = cursor.getString(cursor.getColumnIndex(DatabaseInfo.GlobalDbVer.TABLE_DESC));
             oldId = cursor.getString(cursor.getColumnIndex(DatabaseInfo.GlobalDbVer.TABLE_ID));
             cursor.close();
@@ -113,7 +115,9 @@ public class UpgradeDbUtil {
                     DatabaseInfo oldinfo = new DatabaseInfo();
                     handler.doParse(oldinfo, oldDesc);
                     compareDbInfo(oldinfo, info, db);
-                    db.update(DatabaseInfo.GlobalDbVer.TABLE_NAME, setValues(version, dbxml), DatabaseInfo.GlobalDbVer.TABLE_ID + "=?", new String[]{String.valueOf(oldId)});
+                    db.update(DatabaseInfo.GlobalDbVer.TABLE_NAME, setValues(version, dbxml),
+                            DatabaseInfo.GlobalDbVer.TABLE_ID + "=?",
+                            new String[] { String.valueOf(oldId) });
                     isSuccess = true;
                     LogUtil.i(TAG, "数据库升级结束时间:" + System.currentTimeMillis());
                 } catch (Exception ex) {
@@ -125,7 +129,6 @@ public class UpgradeDbUtil {
         }
         return isSuccess;
     }
-
 
     /**
      * [用于添加表信息]<BR>
@@ -285,7 +288,6 @@ public class UpgradeDbUtil {
         }
         Log.e(TAG, "比对完后对新增字段结束时间：" + System.currentTimeMillis());
     }
-
 
     /**
      * 封装全局数据库版本对象

@@ -12,6 +12,7 @@ import android.content.Context;
 public class SharePStorageById extends AbsSharedPStorage {
 
     public SharePStorageById(Context context, String id) {
-        super.sharedPreferencesCache = context.getSharedPreferences("storage_private_" + id, Context.MODE_PRIVATE);
+        super.sharedPreferencesCache = context.getSharedPreferences("storage_private_" + id,
+                Context.MODE_PRIVATE);
     }
 }

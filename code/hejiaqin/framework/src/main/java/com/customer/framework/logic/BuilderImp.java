@@ -81,8 +81,7 @@ public abstract class BuilderImp implements ILBuilder {
                 && isInterface(logicClass, ILogic.class.getName())) {
             mLogicCache.put(interfaceName, logic);
         } else {
-            Log.w(TAG, "Register logic(" + logicClass.getName()
-                    + ") failed.", new Throwable());
+            Log.w(TAG, "Register logic(" + logicClass.getName() + ") failed.", new Throwable());
         }
     }
 

@@ -79,8 +79,7 @@ public class MemStorage implements IMemStorage {
     }
 
     @Override
-    public void save(Map<String, Object>  map)
-    {
+    public void save(Map<String, Object> map) {
         if (null == map) {
             return;
         }
@@ -238,7 +237,6 @@ public class MemStorage implements IMemStorage {
         return Long.MIN_VALUE;
     }
 
-
     @Override
     public Object getObject(String key) {
         if (null == key) {
@@ -253,7 +251,7 @@ public class MemStorage implements IMemStorage {
     @Override
     public void remove(String[] key) {
         synchronized (memCache) {
-            for(int i =0;i<key.length;i++ ) {
+            for (int i = 0; i < key.length; i++) {
                 if (memCache.containsKey(key[i])) {
                     memCache.remove(key[i]);
                 }

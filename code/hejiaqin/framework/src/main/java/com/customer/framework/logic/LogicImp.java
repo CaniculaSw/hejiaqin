@@ -17,9 +17,9 @@ import android.os.Message;
 
 import java.util.List;
 import java.util.Vector;
+
 /***/
-public abstract class LogicImp implements ILogic
-{
+public abstract class LogicImp implements ILogic {
     /**
      * 日志标记
      */
@@ -43,8 +43,7 @@ public abstract class LogicImp implements ILogic
      *
      * @param context 系统的context对象
      */
-    public void init(Context context)
-    {
+    public void init(Context context) {
         this.mContext = context;
     }
 
@@ -54,8 +53,7 @@ public abstract class LogicImp implements ILogic
      *
      * @param handler UI传入的handler对象
      */
-    public final void addHandler(Handler handler)
-    {
+    public final void addHandler(Handler handler) {
         mHandlerList.add(handler);
     }
 
@@ -65,11 +63,9 @@ public abstract class LogicImp implements ILogic
      *
      * @param handler UI传入的handler对象
      */
-    public final void removeHandler(Handler handler)
-    {
+    public final void removeHandler(Handler handler) {
         mHandlerList.remove(handler);
     }
-
 
     /**
      * 发送消息给UI
@@ -78,18 +74,12 @@ public abstract class LogicImp implements ILogic
      * @param what 返回的消息标识
      * @param obj  返回的消息数据对象
      */
-    public void sendMessage(int what, Object obj)
-    {
-        synchronized (mHandlerList)
-        {
-            for (Handler handler : mHandlerList)
-            {
-                if (obj == null)
-                {
+    public void sendMessage(int what, Object obj) {
+        synchronized (mHandlerList) {
+            for (Handler handler : mHandlerList) {
+                if (obj == null) {
                     handler.sendEmptyMessage(what);
-                }
-                else
-                {
+                } else {
                     Message message = new Message();
                     message.what = what;
                     message.obj = obj;
@@ -105,12 +95,9 @@ public abstract class LogicImp implements ILogic
      *
      * @param what 返回的消息标识
      */
-    public void sendEmptyMessage(int what)
-    {
-        synchronized (mHandlerList)
-        {
-            for (Handler handler : mHandlerList)
-            {
+    public void sendEmptyMessage(int what) {
+        synchronized (mHandlerList) {
+            for (Handler handler : mHandlerList) {
                 handler.sendEmptyMessage(what);
             }
         }
@@ -123,10 +110,8 @@ public abstract class LogicImp implements ILogic
      * @param what        返回的消息标识
      * @param delayMillis 延迟时间，单位秒
      */
-    public void sendEmptyMessageDelayed(int what, long delayMillis)
-    {
-        if (!mHandler.hasMessages(what))
-        {
+    public void sendEmptyMessageDelayed(int what, long delayMillis) {
+        if (!mHandler.hasMessages(what)) {
             mHandler.sendEmptyMessageDelayed(what, delayMillis);
         }
 
@@ -140,10 +125,8 @@ public abstract class LogicImp implements ILogic
      * @param obj         返回的消息数据对象
      * @param delayMillis 延迟时间，单位秒
      */
-    public void sendMessageDelayed(int what, Object obj, long delayMillis)
-    {
-        if (!mHandler.hasMessages(what))
-        {
+    public void sendMessageDelayed(int what, Object obj, long delayMillis) {
+        if (!mHandler.hasMessages(what)) {
             Message msg = new Message();
             msg.what = what;
             msg.obj = obj;
@@ -151,22 +134,14 @@ public abstract class LogicImp implements ILogic
         }
     }
 
-    private class MyHander extends Handler
-    {
-        public void handleMessage(Message msg)
-        {
-            synchronized (mHandlerList)
-            {
-                for (Handler handler : mHandlerList)
-                {
-                    if (!handler.hasMessages(msg.what))
-                    {
-                        if (msg.obj == null)
-                        {
+    private class MyHander extends Handler {
+        public void handleMessage(Message msg) {
+            synchronized (mHandlerList) {
+                for (Handler handler : mHandlerList) {
+                    if (!handler.hasMessages(msg.what)) {
+                        if (msg.obj == null) {
                             handler.sendEmptyMessage(msg.what);
-                        }
-                        else
-                        {
+                        } else {
                             Message message = new Message();
                             message.what = msg.what;
                             message.obj = msg.obj;
@@ -183,8 +158,7 @@ public abstract class LogicImp implements ILogic
      *
      * @return Context
      */
-    public Context getContext()
-    {
+    public Context getContext() {
         return this.mContext;
     }
 }

@@ -32,8 +32,8 @@ public class AdapterViewHolder {
     }
 
     /***/
-    public static AdapterViewHolder get(Context context, View convertView, ViewGroup parent, int layoutId,
-                                        int position) {
+    public static AdapterViewHolder get(Context context, View convertView, ViewGroup parent,
+                                        int layoutId, int position) {
         if (convertView == null) {
             return new AdapterViewHolder(context, parent, layoutId, position);
         }
@@ -194,8 +194,8 @@ public class AdapterViewHolder {
     /***/
     public int getPosition() {
         if (position == -1) {
-            throw new IllegalStateException(
-                    "Use BaseAdapterHelper constructor " + "with position if you need to retrieve the position");
+            throw new IllegalStateException("Use BaseAdapterHelper constructor "
+                    + "with position if you need to retrieve the position");
         }
         return position;
     }

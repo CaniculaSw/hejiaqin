@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public final class SHA256 {
     private static final String TAG = "SHA256";
+
     /***/
     public byte[] encrypt(byte[] input) {
         if (null == input) {
@@ -28,6 +29,7 @@ public final class SHA256 {
         }
         return null;
     }
+
     /***/
     public String encrypt2Str(byte[] input) {
         byte[] output = encrypt(input);
@@ -36,10 +38,12 @@ public final class SHA256 {
         }
         return new String(output);
     }
+
     /***/
     public String encrypt2Hex(byte[] input) {
         return StringUtil.bytes2Hex(encrypt(input));
     }
+
     /***/
     public String encrypt2Base64(byte[] input) {
         return Base64.encode(input);

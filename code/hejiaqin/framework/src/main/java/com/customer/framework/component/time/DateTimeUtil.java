@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /***/
 public class DateTimeUtil {
     private static final String TAG = "TimeUtil";
@@ -34,7 +35,8 @@ public class DateTimeUtil {
 
     public static String getDDMMYYHHMMString(String time) {
         try {
-            return new SimpleDateFormat("dd/MM/yy HH:mm").format(new SimpleDateFormat("yyyyMMddHHmmss").parse(time));
+            return new SimpleDateFormat("dd/MM/yy HH:mm").format(new SimpleDateFormat(
+                    "yyyyMMddHHmmss").parse(time));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -43,8 +45,8 @@ public class DateTimeUtil {
 
     public static String getStandardDateString(String time) {
         try {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .format(new SimpleDateFormat("yyyyMMddHHmmss").parse(time));
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat(
+                    "yyyyMMddHHmmss").parse(time));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -208,6 +210,7 @@ public class DateTimeUtil {
         return null == date ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                 : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
+
     /***/
     public static Date parseSTANDARDFormatToDate(String timeString) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timeString);
@@ -277,8 +280,8 @@ public class DateTimeUtil {
         if (TextUtils.isEmpty(timeString)) {
             return timeShowString;
         }
-        timeShowString = DateFormat
-                .format("dd'/'MM'/'yyyy kk':'mm'", DateTimeUtil.getYYYYMMDDTHHMMSStoLocalTime(timeString)).toString();
+        timeShowString = DateFormat.format("dd'/'MM'/'yyyy kk':'mm'",
+                DateTimeUtil.getYYYYMMDDTHHMMSStoLocalTime(timeString)).toString();
         return timeShowString;
     }
 
@@ -287,6 +290,7 @@ public class DateTimeUtil {
         float timeZone = (float) ((offset * 1.0f) / (1000 * 60 * 60));
         return Float.toString(timeZone);
     }
+
     /***/
     public static long parseUTCToLong(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
@@ -304,6 +308,7 @@ public class DateTimeUtil {
         }
         return time;
     }
+
     /***/
     public static Date parseUTCTDate(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
@@ -318,6 +323,7 @@ public class DateTimeUtil {
         }
         return null;
     }
+
     /***/
     public static Date parseYYYYMMDDSSToDate(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
@@ -333,6 +339,7 @@ public class DateTimeUtil {
 
         return null;
     }
+
     /***/
     public static Date parseSyncUTVToDate(String strDate) {
         if (strDate == null || strDate.trim().length() == 0) {
@@ -348,6 +355,7 @@ public class DateTimeUtil {
 
         return null;
     }
+
     /***/
     public static String changeEmailTimeToUtC(String dateStr) throws ParseException {
         if (dateStr == null || dateStr.length() < "yyyy-MM-ddTHH:mm:ss".length()) {
@@ -394,10 +402,12 @@ public class DateTimeUtil {
         String time = formatter.format(cal.getTime());
         return time;
     }
+
     /***/
     public static Long changeMinToMillSecond(String min) {
         return Long.parseLong(min) * 60 * 1000;
     }
+
     /***/
     public static Long changeSecondToMillSecond(String second) {
         return Long.parseLong(second) * 1000;
@@ -429,7 +439,6 @@ public class DateTimeUtil {
         Date todayDate = ca.getTime();
         return setEndDate(todayDate);
     }
-
 
     private static long setStartDate(Date date) {
         date.setHours(0);
@@ -506,6 +515,7 @@ public class DateTimeUtil {
         SimpleDateFormat simpleFormat = new SimpleDateFormat(format);
         return simpleFormat.format(new Date());
     }
+
     /***/
     public static String parseDate2Str(Date date, String format) {
         if (null == date) {
@@ -514,6 +524,7 @@ public class DateTimeUtil {
         SimpleDateFormat df = new SimpleDateFormat(format);
         return df.format(date);
     }
+
     /***/
     public static Date parseStr2Date(String tempDate, String format) {
         SimpleDateFormat df = new SimpleDateFormat(format);
@@ -526,6 +537,7 @@ public class DateTimeUtil {
         }
         return date;
     }
+
     /***/
     public static String formatDateStr(String time, SimpleDateFormat in, SimpleDateFormat out) {
         if (time == null || in == null | out == null) {
@@ -538,6 +550,7 @@ public class DateTimeUtil {
         }
         return time;
     }
+
     /***/
     public static String formatDateObject(Date date, SimpleDateFormat out) {
         if (date == null || out == null) {
@@ -545,6 +558,7 @@ public class DateTimeUtil {
         }
         return out.format(date);
     }
+
     /***/
     public static Date parseDateString(String time, SimpleDateFormat in) {
         if (time == null || in == null) {
@@ -582,7 +596,8 @@ public class DateTimeUtil {
         try {
             longTime = df.parse(strTime).getTime();
         } catch (Exception e) {
-            LogUtil.e(TAG, "getLongTime, Exception occurs strTime:" + strTime + ", timePattern:" + timePattern);
+            LogUtil.e(TAG, "getLongTime, Exception occurs strTime:" + strTime + ", timePattern:"
+                    + timePattern);
         }
         return longTime;
     }

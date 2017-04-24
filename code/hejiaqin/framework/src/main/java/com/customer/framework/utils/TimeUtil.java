@@ -13,7 +13,7 @@ public class TimeUtil {
         String timeStr = null;
         int minute = 0;
         int second = 0;
-        if (time <= 0){
+        if (time <= 0) {
             return "00:00";
         } else {
             minute = time / 60;
@@ -22,6 +22,7 @@ public class TimeUtil {
         }
         return timeStr;
     }
+
     /***/
     public static String unitFormat(int i) {
         String retStr = null;
@@ -32,6 +33,7 @@ public class TimeUtil {
         }
         return retStr;
     }
+
     /***/
     public static String disToTime(int time) {
         String timeStr = "";
@@ -42,15 +44,16 @@ public class TimeUtil {
         } else {
             minute = time / 60;
             second = time % 60;
-            if(minute>0) {
-                timeStr = minute+"\'";
+            if (minute > 0) {
+                timeStr = minute + "\'";
             }
-            if(second>0) {
+            if (second > 0) {
                 timeStr = timeStr + second + "\"";
             }
         }
         return timeStr;
     }
+
     /***/
     public static String disToTimeWithLanuage(int time) {
         String timeStr = "";
@@ -61,14 +64,14 @@ public class TimeUtil {
         } else {
             minute = time / 60;
             second = time % 60;
-            if(minute>0) {
-                if(second>0) {
+            if (minute > 0) {
+                if (second > 0) {
                     timeStr = minute + "分";
-                }else {
+                } else {
                     timeStr = minute + "分钟";
                 }
             }
-            if(second>0) {
+            if (second > 0) {
                 timeStr = timeStr + second + "秒";
             }
         }

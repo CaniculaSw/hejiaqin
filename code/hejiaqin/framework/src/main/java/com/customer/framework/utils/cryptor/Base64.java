@@ -11,6 +11,7 @@ public final class Base64 {
         }
         return android.util.Base64.encodeToString(input, android.util.Base64.DEFAULT);
     }
+
     /***/
 
     public static byte[] decode(String input) {

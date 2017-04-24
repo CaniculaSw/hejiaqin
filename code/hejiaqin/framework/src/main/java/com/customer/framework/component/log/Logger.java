@@ -13,8 +13,7 @@ import java.util.Map;
  * @author ssw
  * @version [Platform v1.0, 2015-7-21]
  */
-public class Logger
-{
+public class Logger {
 
     /**
      * 本地日志打印优先级; 调用系统 Log.v.
@@ -60,14 +59,12 @@ public class Logger
      * 日志打印的目录管理Map
      * 默认基础打印和VOIP打印   初始化路径
      */
-    private static Map<String, String> logDirMap =
-            new HashMap<String, String>()
-            {
-                {
-                    put(LOG_TYPE_COMMON, Environment.getExternalStorageDirectory()
-                            .getPath() + "/hejiaqin/log/common/");
-                }
-            };
+    private static Map<String, String> logDirMap = new HashMap<String, String>() {
+        {
+            put(LOG_TYPE_COMMON, Environment.getExternalStorageDirectory().getPath()
+                    + "/hejiaqin/log/common/");
+        }
+    };
 
     /**
      * 增加操作 解决Map结构的多线程冲突问题
@@ -92,15 +89,13 @@ public class Logger
     /**
      * 日志打印的任务对象管理
      */
-    private static Map<String, LogTask> logTaskMap =
-            new HashMap<String, LogTask>();
+    private static Map<String, LogTask> logTaskMap = new HashMap<String, LogTask>();
 
     /**
      * 普通打印文件路径，可以调用方法进行设置
      */
-    private static String logCommonDir =
-            Environment.getExternalStorageDirectory().getPath()
-                    + "/log/common/";
+    private static String logCommonDir = Environment.getExternalStorageDirectory().getPath()
+            + "/log/common/";
 
     /**
      * 日志打印开关
@@ -125,8 +120,7 @@ public class Logger
     /**
      * 默认构造函数
      */
-    private Logger()
-    {
+    private Logger() {
     }
 
     /**
@@ -134,8 +128,7 @@ public class Logger
      *
      * @param commonDir 全路径名称
      */
-    public static void setLogCommonDir(String commonDir)
-    {
+    public static void setLogCommonDir(String commonDir) {
         logCommonDir = commonDir;
         opLogDirMap(LOG_TYPE_COMMON, commonDir, MOD_OPERATION);
     }
@@ -146,14 +139,10 @@ public class Logger
      * @param logTypeName 增加的打印类型
      * @param logSavaPath 增加打印类型的存储路径
      */
-    public static void addLogType(String logTypeName, String logSavaPath)
-    {
-        if (logDirMap != null && logDirMap.containsKey(logTypeName))
-        {
+    public static void addLogType(String logTypeName, String logSavaPath) {
+        if (logDirMap != null && logDirMap.containsKey(logTypeName)) {
             opLogDirMap(logTypeName, logSavaPath, MOD_OPERATION);
-        }
-        else if (logDirMap != null && !logDirMap.containsKey(logTypeName))
-        {
+        } else if (logDirMap != null && !logDirMap.containsKey(logTypeName)) {
             opLogDirMap(logTypeName, logSavaPath, ADD_OPERATION);
         }
     }
@@ -165,35 +154,26 @@ public class Logger
      * @param dir     打印类型对应的存储路径
      * @param type    操作类型
      */
-    private static synchronized void opLogDirMap(
-            String logType, String dir,
-            int type
-    )
-    {
-        switch (type)
-        {
+    private static synchronized void opLogDirMap(String logType, String dir, int type) {
+        switch (type) {
             case ADD_OPERATION:
-                if (logDirMap != null)
-                {
+                if (logDirMap != null) {
                     logDirMap.put(logType, dir);
                 }
                 break;
             case DEL_OPERATION:
-                if (logDirMap != null)
-                {
+                if (logDirMap != null) {
                     logDirMap.remove(logType);
                 }
                 break;
             case MOD_OPERATION:
-                if (logDirMap != null)
-                {
+                if (logDirMap != null) {
                     logDirMap.remove(logType);
                     logDirMap.put(logType, dir);
                 }
                 break;
             case CLE_OPERATION:
-                if (logDirMap != null)
-                {
+                if (logDirMap != null) {
                     logDirMap.clear();
                 }
                 break;
@@ -209,35 +189,26 @@ public class Logger
      * @param task    打印类型对应的任务
      * @param type    操作类型
      */
-    private static synchronized void opLogTaskMap(
-            String logType, LogTask task,
-            int type
-    )
-    {
-        switch (type)
-        {
+    private static synchronized void opLogTaskMap(String logType, LogTask task, int type) {
+        switch (type) {
             case ADD_OPERATION:
-                if (logTaskMap != null)
-                {
+                if (logTaskMap != null) {
                     logTaskMap.put(logType, task);
                 }
                 break;
             case DEL_OPERATION:
-                if (logTaskMap != null)
-                {
+                if (logTaskMap != null) {
                     logTaskMap.remove(logType);
                 }
                 break;
             case MOD_OPERATION:
-                if (logTaskMap != null)
-                {
+                if (logTaskMap != null) {
                     logTaskMap.remove(logType);
                     logTaskMap.put(logType, task);
                 }
                 break;
             case CLE_OPERATION:
-                if (logTaskMap != null)
-                {
+                if (logTaskMap != null) {
                     logTaskMap.clear();
                 }
                 break;
@@ -253,8 +224,7 @@ public class Logger
      * @param msg 打印信息
      * @return 返回
      */
-    public static int v(String tag, String msg)
-    {
+    public static int v(String tag, String msg) {
         return v(tag, msg, LOG_TYPE_COMMON);
     }
 
@@ -266,8 +236,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int v(String tag, String msg, String logType)
-    {
+    public static int v(String tag, String msg, String logType) {
         return println(VERBOSE, tag, msg, logType);
     }
 
@@ -279,8 +248,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int v(String tag, String msg, Throwable tr)
-    {
+    public static int v(String tag, String msg, Throwable tr) {
         return v(tag, msg, tr, LOG_TYPE_COMMON);
     }
 
@@ -291,8 +259,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int v(String tag, Throwable tr)
-    {
+    public static int v(String tag, Throwable tr) {
         return println(VERBOSE, tag, getStackTraceString(tr), LOG_TYPE_COMMON);
     }
 
@@ -305,12 +272,8 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int v(String tag, String msg, Throwable tr, String logType)
-    {
-        return println(VERBOSE,
-                tag,
-                msg + '\n' + getStackTraceString(tr),
-                logType);
+    public static int v(String tag, String msg, Throwable tr, String logType) {
+        return println(VERBOSE, tag, msg + '\n' + getStackTraceString(tr), logType);
     }
 
     /**
@@ -320,8 +283,7 @@ public class Logger
      * @param msg 打印信息
      * @return 返回
      */
-    public static int d(String tag, String msg)
-    {
+    public static int d(String tag, String msg) {
         return d(tag, msg, LOG_TYPE_COMMON);
     }
 
@@ -334,11 +296,7 @@ public class Logger
      * @param desc       描述信息
      * @return 返回
      */
-    public static int d(
-            String moduleName, String flowName, String className,
-            String desc
-    )
-    {
+    public static int d(String moduleName, String flowName, String className, String desc) {
         StringBuilder msg = new StringBuilder("|");
         msg.append(moduleName).append("|");
         msg.append(flowName).append("|");
@@ -355,8 +313,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int d(String tag, String msg, String logType)
-    {
+    public static int d(String tag, String msg, String logType) {
         return println(DEBUG, tag, msg, logType);
     }
 
@@ -368,8 +325,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int d(String tag, String msg, Throwable tr)
-    {
+    public static int d(String tag, String msg, Throwable tr) {
         return d(tag, msg, tr, LOG_TYPE_COMMON);
     }
 
@@ -380,8 +336,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int d(String tag, Throwable tr)
-    {
+    public static int d(String tag, Throwable tr) {
         return println(DEBUG, tag, getStackTraceString(tr), LOG_TYPE_COMMON);
     }
 
@@ -394,12 +349,8 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int d(String tag, String msg, Throwable tr, String logType)
-    {
-        return println(DEBUG,
-                tag,
-                msg + '\n' + getStackTraceString(tr),
-                logType);
+    public static int d(String tag, String msg, Throwable tr, String logType) {
+        return println(DEBUG, tag, msg + '\n' + getStackTraceString(tr), logType);
     }
 
     /**
@@ -409,8 +360,7 @@ public class Logger
      * @param msg 打印信息
      * @return 返回
      */
-    public static int i(String tag, String msg)
-    {
+    public static int i(String tag, String msg) {
         return i(tag, msg, LOG_TYPE_COMMON);
     }
 
@@ -422,8 +372,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int i(String tag, String msg, String logType)
-    {
+    public static int i(String tag, String msg, String logType) {
         return println(INFO, tag, msg, logType);
     }
 
@@ -435,8 +384,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int i(String tag, String msg, Throwable tr)
-    {
+    public static int i(String tag, String msg, Throwable tr) {
         return i(tag, msg, tr, LOG_TYPE_COMMON);
     }
 
@@ -447,8 +395,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int i(String tag, Throwable tr)
-    {
+    public static int i(String tag, Throwable tr) {
         return println(INFO, tag, getStackTraceString(tr), LOG_TYPE_COMMON);
     }
 
@@ -461,8 +408,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int i(String tag, String msg, Throwable tr, String logType)
-    {
+    public static int i(String tag, String msg, Throwable tr, String logType) {
         return println(INFO, tag, msg + '\n' + getStackTraceString(tr), logType);
     }
 
@@ -473,8 +419,7 @@ public class Logger
      * @param msg 打印信息
      * @return 返回
      */
-    public static int w(String tag, String msg)
-    {
+    public static int w(String tag, String msg) {
         return w(tag, msg, LOG_TYPE_COMMON);
     }
 
@@ -486,8 +431,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int w(String tag, String msg, String logType)
-    {
+    public static int w(String tag, String msg, String logType) {
         return println(WARN, tag, msg, logType);
     }
 
@@ -499,8 +443,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int w(String tag, String msg, Throwable tr)
-    {
+    public static int w(String tag, String msg, Throwable tr) {
         return w(tag, msg, tr, LOG_TYPE_COMMON);
     }
 
@@ -511,8 +454,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int w(String tag, Throwable tr)
-    {
+    public static int w(String tag, Throwable tr) {
         return println(WARN, tag, getStackTraceString(tr), LOG_TYPE_COMMON);
     }
 
@@ -525,8 +467,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int w(String tag, String msg, Throwable tr, String logType)
-    {
+    public static int w(String tag, String msg, Throwable tr, String logType) {
         return println(WARN, tag, msg + '\n' + getStackTraceString(tr), logType);
     }
 
@@ -537,8 +478,7 @@ public class Logger
      * @param msg 打印信息
      * @return 返回
      */
-    public static int e(String tag, String msg)
-    {
+    public static int e(String tag, String msg) {
         return e(tag, msg, LOG_TYPE_COMMON);
     }
 
@@ -550,8 +490,7 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int e(String tag, String msg, String logType)
-    {
+    public static int e(String tag, String msg, String logType) {
         return println(ERROR, tag, msg, logType);
     }
 
@@ -563,8 +502,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int e(String tag, String msg, Throwable tr)
-    {
+    public static int e(String tag, String msg, Throwable tr) {
         return e(tag, msg, tr, LOG_TYPE_COMMON);
     }
 
@@ -575,8 +513,7 @@ public class Logger
      * @param tr  异常堆栈
      * @return 返回
      */
-    public static int e(String tag, Throwable tr)
-    {
+    public static int e(String tag, Throwable tr) {
         return println(ERROR, tag, getStackTraceString(tr), LOG_TYPE_COMMON);
     }
 
@@ -589,12 +526,8 @@ public class Logger
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      * @return 返回
      */
-    public static int e(String tag, String msg, Throwable tr, String logType)
-    {
-        return println(ERROR,
-                tag,
-                msg + '\n' + getStackTraceString(tr),
-                logType);
+    public static int e(String tag, String msg, Throwable tr, String logType) {
+        return println(ERROR, tag, msg + '\n' + getStackTraceString(tr), logType);
     }
 
     /**
@@ -603,8 +536,7 @@ public class Logger
      * @param tr 异常
      * @return
      */
-    private static String getStackTraceString(Throwable tr)
-    {
+    private static String getStackTraceString(Throwable tr) {
         return android.util.Log.getStackTraceString(tr);
     }
 
@@ -617,24 +549,15 @@ public class Logger
      * @param logType 打印类型
      * @return 返回
      */
-    private static synchronized int println(
-            int level, String tag, String msg,
-            String logType
-    )
-    {
+    private static synchronized int println(int level, String tag, String msg, String logType) {
         int result = 0;
-        if (!isLoggable(level))
-        {
+        if (!isLoggable(level)) {
             return result;
-        }
-        else if (isLoggable(level) && isLogCatable())
-        {
+        } else if (isLoggable(level) && isLogCatable()) {
             result = android.util.Log.println(level, tag, msg);
         }
 
-        if (!Environment.getExternalStorageState()
-                .equals(Environment.MEDIA_MOUNTED))
-        {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             android.util.Log.e(TAG, "SD Card is unavailable.");
             return result;
         }
@@ -642,57 +565,39 @@ public class Logger
         LogTask task;
         String logTypePath;
 
-        if (logType != null)
-        {
+        if (logType != null) {
             //检查当前打印类型是否已配置路径
             logTypePath = logDirMap.get(logType);
-        }
-        else
-        {
+        } else {
             logTypePath = null;
         }
 
-        if (logTypePath != null)
-        {
+        if (logTypePath != null) {
             task = logTaskMap.get(logType);
-            if (task == null)
-            {
+            if (task == null) {
                 task = new LogTask(logTypePath, fileAmount, fileMaxSize);
                 opLogTaskMap(logType, task, ADD_OPERATION);
             }
-        }
-        else
-        {
+        } else {
             //传入的打印类型没有配置过，则当成普通打印进行
             task = logTaskMap.get(LOG_TYPE_COMMON);
-            if (task == null)
-            {
+            if (task == null) {
                 task = new LogTask(logCommonDir, fileAmount, fileMaxSize);
                 opLogTaskMap(LOG_TYPE_COMMON, task, ADD_OPERATION);
             }
         }
 
-        if (!task.isStarted())
-        {
+        if (!task.isStarted()) {
             task.start(logType);
         }
 
-        if (isLoggable(level))
-        {
+        if (isLoggable(level)) {
             long id = Thread.currentThread().getId();
-            StackTraceElement element =
-                    Thread.currentThread().getStackTrace()[5];
+            StackTraceElement element = Thread.currentThread().getStackTrace()[5];
             String methodName = element.getMethodName();
             int lineNumber = element.getLineNumber();
             String fileName = element.getFileName();
-            task.write(levelString(level),
-                    tag,
-                    msg,
-                    id,
-                    methodName,
-                    fileName,
-                    lineNumber,
-                    logType);
+            task.write(levelString(level), tag, msg, id, methodName, fileName, lineNumber, logType);
         }
         return result;
     }
@@ -703,8 +608,7 @@ public class Logger
      * @param level 打印优先级
      * @return
      */
-    private static boolean isLoggable(int level)
-    {
+    private static boolean isLoggable(int level) {
         return (level >= currentLevel) && isLoggerable;
     }
 
@@ -713,8 +617,7 @@ public class Logger
      *
      * @return 返回是否进行logcat打印
      */
-    private static boolean isLogCatable()
-    {
+    private static boolean isLogCatable() {
         return isLogCatable;
     }
 
@@ -724,10 +627,8 @@ public class Logger
      * @param level 优先级
      * @return 返回字符串
      */
-    private static String levelString(int level)
-    {
-        switch (level)
-        {
+    private static String levelString(int level) {
+        switch (level) {
             case Logger.VERBOSE:
                 return "Ver";
             case Logger.DEBUG:
@@ -748,12 +649,10 @@ public class Logger
      *
      * @param logType 指定打印类型  内部默认支持（LOG_TYPE_COMMON、LOG_TYPE_VOIP）
      */
-    public static void stopLog(String logType)
-    {
+    public static void stopLog(String logType) {
         i(TAG, "logger stopLog logType = " + logType);
         LogTask task = logTaskMap.get(logType);
-        if (task != null)
-        {
+        if (task != null) {
             task.stop();
         }
         opLogTaskMap(logType, task, DEL_OPERATION);
@@ -762,12 +661,10 @@ public class Logger
     /**
      * 停止所有打印任务
      */
-    public static void stopLog()
-    {
+    public static void stopLog() {
         i(TAG, "logger stopLog");
         Iterator it = logTaskMap.entrySet().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Object value = entry.getValue();
             LogTask task = (LogTask) value;
@@ -781,8 +678,7 @@ public class Logger
      *
      * @param fileamount 文件数 当前默认 5个
      */
-    public static void setFileAmount(int fileamount)
-    {
+    public static void setFileAmount(int fileamount) {
         fileAmount = fileamount;
     }
 
@@ -791,8 +687,7 @@ public class Logger
      *
      * @param fileMaxsize 文件大小 当前默认1024*1024
      */
-    public static void setFileMaxSize(long fileMaxsize)
-    {
+    public static void setFileMaxSize(long fileMaxsize) {
         fileMaxSize = fileMaxsize;
     }
 
@@ -801,8 +696,7 @@ public class Logger
      *
      * @param isLogable 开关值
      */
-    public static void setLogable(boolean isLogable)
-    {
+    public static void setLogable(boolean isLogable) {
         Logger.isLoggerable = isLogable;
     }
 
@@ -816,18 +710,12 @@ public class Logger
      *              WARN = 4;
      *              ERROR = 5;
      */
-    public static void setLogLevel(int level)
-    {
-        if (level > ERROR)
-        {
+    public static void setLogLevel(int level) {
+        if (level > ERROR) {
             currentLevel = ERROR;
-        }
-        else if (level < VERBOSE)
-        {
+        } else if (level < VERBOSE) {
             currentLevel = VERBOSE;
-        }
-        else
-        {
+        } else {
             currentLevel = level;
         }
     }
@@ -837,8 +725,7 @@ public class Logger
      *
      * @param isLogcatable logcat打印标记
      */
-    public static void setLogCatable(boolean isLogcatable)
-    {
+    public static void setLogCatable(boolean isLogcatable) {
         isLogCatable = isLogcatable;
     }
 }

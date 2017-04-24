@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database version="1.00.000" name="hejiaqin" dataPath="db">
-	<table name="DBVer">
-		<field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT" />
-		<field name="dbVer" type="TEXT" obligatory="" />
-		<field name="desc" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
-	</table>
+    <table name="DBVer">
+        <field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT" />
+        <field name="dbVer" type="TEXT" obligatory="" />
+        <field name="desc" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+    </table>
 
-	<!-- 用户配置表 -->
-	<table name="UserConfig">
-		<field name="key" type="TEXT" obligatory="PRIMARY KEY NOT NULL DEFAULT ''" />
-		<field name="value" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
-	</table>
+    <!-- 用户配置表 -->
+    <table name="UserConfig">
+        <field name="key" type="TEXT" obligatory="PRIMARY KEY NOT NULL DEFAULT ''" />
+        <field name="value" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+    </table>
 
-	<!-- 通话记录表结构 -->
-	<table name="CallRecord">
-		<field name="_ID" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
-		<field name="recordId" type="TEXT" obligatory=" NOT NULL" />
-		<field name="peerNumber" type="TEXT" obligatory="NOT NULL" />
-		<field name="noCountryNumber" type="TEXT" obligatory="NOT NULL" />
-		<field name="beginTime" type="TEXT" obligatory="" />
-		<field name="duration" type="INTEGER" obligatory="DEFAULT 0" />
-		<field name="type" type="INTEGER" obligatory="" />
-		<field name="read" type="INTEGER" obligatory="DEFAULT 1" />
-	</table>
+    <!-- 通话记录表结构 -->
+    <table name="CallRecord">
+        <field name="_ID" type="INTEGER" obligatory=" PRIMARY KEY AUTOINCREMENT" />
+        <field name="recordId" type="TEXT" obligatory=" NOT NULL" />
+        <field name="peerNumber" type="TEXT" obligatory="NOT NULL" />
+        <field name="noCountryNumber" type="TEXT" obligatory="NOT NULL" />
+        <field name="beginTime" type="TEXT" obligatory="" />
+        <field name="duration" type="INTEGER" obligatory="DEFAULT 0" />
+        <field name="type" type="INTEGER" obligatory="" />
+        <field name="read" type="INTEGER" obligatory="DEFAULT 1" />
+    </table>
 
-	<!-- 联系人基本信息表 -->
-	<table name="ContactsInfo">
-		<field name="_ID" type="INTEGER" obligatory=" NOT NULL DEFAULT -1" />
-		<field name="contactId" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
-		<field name="name" type="TEXT" obligatory="" />
-		<field name="contact_mode" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
-		<field name="name_in_pinyin" type="TEXT" obligatory="" />
-		<field name="number" type="TEXT" obligatory="" />
-		<field name="number_no_country_code" type="TEXT" obligatory="" />
-		<field name="number_type" type="TEXT" obligatory="" />
-		<field name="number_desc" type="TEXT" obligatory="" />
-		<field name="photo_lg" type="TEXT" obligatory="" />
-		<field name="photo_sm" type="TEXT" obligatory="" />
-	</table>
+    <!-- 联系人基本信息表 -->
+    <table name="ContactsInfo">
+        <field name="_ID" type="INTEGER" obligatory=" NOT NULL DEFAULT -1" />
+        <field name="contactId" type="TEXT" obligatory="PRIMARY KEY NOT NULL" />
+        <field name="name" type="TEXT" obligatory="" />
+        <field name="contact_mode" type="TEXT" obligatory=" NOT NULL DEFAULT ''" />
+        <field name="name_in_pinyin" type="TEXT" obligatory="" />
+        <field name="number" type="TEXT" obligatory="" />
+        <field name="number_no_country_code" type="TEXT" obligatory="" />
+        <field name="number_type" type="TEXT" obligatory="" />
+        <field name="number_desc" type="TEXT" obligatory="" />
+        <field name="photo_lg" type="TEXT" obligatory="" />
+        <field name="photo_sm" type="TEXT" obligatory="" />
+    </table>
 
-	<table name="SystemMessage">
-		<field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT"/>
-		<field name="title" type="TEXT" obligatory="NOT NULL"/>
-		<field name="content" type="TEXT" obligatory=""/>
-		<field name="time" type="TEXT" obligatory="NOT NULL"/>
-	</table>
+    <table name="SystemMessage">
+        <field name="_ID" type="INTEGER" obligatory="PRIMARY KEY AUTOINCREMENT" />
+        <field name="title" type="TEXT" obligatory="NOT NULL" />
+        <field name="content" type="TEXT" obligatory="" />
+        <field name="time" type="TEXT" obligatory="NOT NULL" />
+    </table>
 </database>

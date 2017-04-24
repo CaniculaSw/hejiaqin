@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /***/
 public class StringUtil {
     /**
@@ -21,8 +22,7 @@ public class StringUtil {
     /**
      * 行分隔符
      */
-    public static final String LINE_SEPARATOR =
-            System.getProperty("line.separator");
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
      * 打印标示
@@ -32,10 +32,9 @@ public class StringUtil {
     /**
      * SQL注入关键字序列
      */
-    private static final String[] SQL_INJECTION_STRS = {"'", "and", "exec",
-            "insert", "select", "delete", "update", "count", "*", "%", "chr",
-            "mid", "master", "truncate", "char", "declare", ";", "or", "-", "+",
-            ","};
+    private static final String[] SQL_INJECTION_STRS = { "'", "and", "exec", "insert", "select",
+            "delete", "update", "count", "*", "%", "chr", "mid", "master", "truncate", "char",
+            "declare", ";", "or", "-", "+", "," };
 
     /**
      * 判断是否为null或空值
@@ -107,8 +106,8 @@ public class StringUtil {
             return "";
         }
         StringBuffer stringBuffer = new StringBuffer(url);
-        for (int i = stringBuffer.indexOf("//", stringBuffer.indexOf("//") + 2); i != -1; i =
-                stringBuffer.indexOf("//", i + 1)) {
+        for (int i = stringBuffer.indexOf("//", stringBuffer.indexOf("//") + 2); i != -1; i = stringBuffer
+                .indexOf("//", i + 1)) {
             stringBuffer.deleteCharAt(i);
         }
         return stringBuffer.toString();
@@ -133,13 +132,11 @@ public class StringUtil {
                 num = true;
             }
             // 单个字符是小写字母
-            else if (password.codePointAt(i) >= 97
-                    && password.codePointAt(i) <= 122) {
+            else if (password.codePointAt(i) >= 97 && password.codePointAt(i) <= 122) {
                 lowerCase = true;
             }
             // 单个字符是大写字母
-            else if (password.codePointAt(i) >= 65
-                    && password.codePointAt(i) <= 90) {
+            else if (password.codePointAt(i) >= 65 && password.codePointAt(i) <= 90) {
                 upperCase = true;
             }
             // 特殊字符
@@ -179,7 +176,6 @@ public class StringUtil {
             return 3;
         }
     }
-
 
     /**
      * 将字符串数组转化为字符串，默认以","分隔
@@ -316,16 +312,10 @@ public class StringUtil {
      * @return 处理后的字符串
      */
     public static String parseUrlParam(String param) {
-        return param.replaceAll("%", "%25")
-                .replaceAll("\\+", "%2B")
-                .replaceAll("\\?", "%3F")
-                .replaceAll(" ", "%20")
-                .replaceAll("#", "%23")
-                .replaceAll("/", "%2F")
-                .replaceAll("&", "%26")
-                .replaceAll("=", "%3D");
+        return param.replaceAll("%", "%25").replaceAll("\\+", "%2B").replaceAll("\\?", "%3F")
+                .replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("/", "%2F")
+                .replaceAll("&", "%26").replaceAll("=", "%3D");
     }
-
 
     /**
      * 基于Base64编码后的字符串构建文件名
@@ -341,6 +331,7 @@ public class StringUtil {
         }
         return base64Str.replace('+', '_').replace('/', '-');
     }
+
     /***/
     public static String bytes2Hex(byte[] input) {
         StringBuilder stringBuilder = new StringBuilder("");
@@ -357,6 +348,7 @@ public class StringUtil {
         }
         return stringBuilder.toString();
     }
+
     /***/
     public static byte[] hex2Bytes(String input) {
         if (input == null || "".equals(input)) {
@@ -378,7 +370,8 @@ public class StringUtil {
     }
 
     public static String getRandomString(int length) {
-        StringBuffer buffer = new StringBuffer("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        StringBuffer buffer = new StringBuffer(
+                "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
         StringBuffer sb = new StringBuffer();
         Random random = new Random();
         int range = buffer.length();
@@ -389,7 +382,8 @@ public class StringUtil {
     }
 
     public static boolean isMobileNO(String paramString) {
-        return Pattern.compile("^((13[0-9])|(17[0-9])|(14[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$").matcher(paramString).matches();
+        return Pattern.compile("^((13[0-9])|(17[0-9])|(14[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$")
+                .matcher(paramString).matches();
     }
 
     public static boolean isVerifyCode(String paramString) {
@@ -398,7 +392,10 @@ public class StringUtil {
 
     public static boolean isPassword(String paramString) {
 
-        return Pattern.compile("^(?=.*?[^\\\\s])[!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~A-Za-z0-9]{6,32}$").matcher(paramString).matches();
+        return Pattern
+                .compile(
+                        "^(?=.*?[^\\\\s])[!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~A-Za-z0-9]{6,32}$")
+                .matcher(paramString).matches();
     }
 
     /**
@@ -414,15 +411,13 @@ public class StringUtil {
         for (int i = 0, len = chars.length; i < len; i++) {
             String curChar = String.valueOf(chars[i]);
             // 获取字符对应的拼音
-            String pinyin =
-                    HanziToPinyin.getInstance(context).hanziToPinyin(curChar);
+            String pinyin = HanziToPinyin.getInstance(context).hanziToPinyin(curChar);
             if (pinyin.length() > 0) {
                 fullPinyinLetters.append(pinyin);
             }
         }
         return fullPinyinLetters.toString().toUpperCase();
     }
-
 
     /**
      * 汉字转为拼音
@@ -439,8 +434,7 @@ public class StringUtil {
         for (int i = 0, len = chars.length; i < len; i++) {
             String curChar = String.valueOf(chars[i]);
             // 获取字符对应的拼音
-            String pinyin =
-                    HanziToPinyin.getInstance(context).hanziToPinyin(curChar);
+            String pinyin = HanziToPinyin.getInstance(context).hanziToPinyin(curChar);
             if (pinyin.length() > 0) {
                 fullPinyinLetters.append(pinyin);
                 headCharLetters.append(pinyin.charAt(0));

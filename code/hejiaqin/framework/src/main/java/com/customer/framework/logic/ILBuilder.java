@@ -19,8 +19,7 @@ import android.os.Handler;
  * author:
  * Created: 2016/4/8.
  */
-public interface ILBuilder
-{
+public interface ILBuilder {
     /**
      * 根据logic接口类返回logic对象<BR>
      * 如果缓存没有则返回null。

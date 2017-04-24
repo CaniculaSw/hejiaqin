@@ -3,9 +3,9 @@ package com.customer.framework.component.db;
 import android.content.Context;
 import android.database.Cursor;
 
-import java.io.InputStream;
-
 import com.customer.framework.utils.LogUtil;
+
+import java.io.InputStream;
 
 /**
  * 读取数据库表结构文件
@@ -13,8 +13,7 @@ import com.customer.framework.utils.LogUtil;
  * author:
  * Created: 2016/4/8.
  */
-public class DBUtils
-{
+public class DBUtils {
 
     private static final String TAG = "DBUtils";
 
@@ -23,8 +22,7 @@ public class DBUtils
      *
      * @param e 异常
      */
-    public static void printException(Exception e)
-    {
+    public static void printException(Exception e) {
         LogUtil.e(TAG, "DatabaseException: ", e);
     }
 
@@ -33,10 +31,8 @@ public class DBUtils
      *
      * @param cursor 要关闭的游标对象
      */
-    public static void closeCursor(Cursor cursor)
-    {
-        if (cursor != null)
-        {
+    public static void closeCursor(Cursor cursor) {
+        if (cursor != null) {
             cursor.close();
         }
     }
@@ -54,12 +50,10 @@ public class DBUtils
      * @param context  当前操 作的上下文卦象
      * @return xml文件描述
      */
-    public static String getFromAssets(String fileName, Context context)
-    {
+    public static String getFromAssets(String fileName, Context context) {
         String result = "";
         InputStream inputStream = null;
-        try
-        {
+        try {
             inputStream = context.getResources().getAssets().open(fileName);
             // 获取文件的字节数
             int lenght = inputStream.available();
@@ -68,22 +62,14 @@ public class DBUtils
             // 将文件中的数据读到byte数组中
             inputStream.read(buffer);
             result = new String(buffer, 0, buffer.length, ENCODING);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                if (inputStream != null)
-                {
+        } finally {
+            try {
+                if (inputStream != null) {
                     inputStream.close();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 printException(ex);
             }
         }

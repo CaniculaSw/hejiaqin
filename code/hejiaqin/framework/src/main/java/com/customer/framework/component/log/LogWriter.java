@@ -22,8 +22,7 @@ import java.util.Locale;
  * @author ssw
  * @version [Platform v1.0, 2015-7-21]
  */
-public class LogWriter
-{
+public class LogWriter {
     /**
      * 日志文件名后缀
      */
@@ -37,12 +36,9 @@ public class LogWriter
     /**
      * 打印文件的文件名排序
      */
-    private final Comparator<File> c = new Comparator<File>()
-    {
-        public int compare(File f1, File f2)
-        {
-            return String.CASE_INSENSITIVE_ORDER.compare(f1.getName(),
-                    f2.getName());
+    private final Comparator<File> c = new Comparator<File>() {
+        public int compare(File f1, File f2) {
+            return String.CASE_INSENSITIVE_ORDER.compare(f1.getName(), f2.getName());
         }
     };
 
@@ -78,13 +74,11 @@ public class LogWriter
      * @param fileAmount 文件数量限制
      * @param maxSize    文件大小限制
      */
-    public LogWriter(File directory, int fileAmount, long maxSize)
-    {
+    public LogWriter(File directory, int fileAmount, long maxSize) {
         currentDirectory = directory;
         this.fileAmount = fileAmount <= 0 ? this.fileAmount : fileAmount;
         this.maxSize = (maxSize <= 0) ? this.maxSize : maxSize;
-        fileFormat =
-                new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+        fileFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
         initialize();
     }
 
@@ -93,10 +87,8 @@ public class LogWriter
      *
      * @return 返回
      */
-    public synchronized boolean initialize()
-    {
-        if (!currentDirectory.exists())
-        {
+    public synchronized boolean initialize() {
+        if (!currentDirectory.exists()) {
             boolean isMkdirsSucc = currentDirectory.mkdirs();
         }
         createWriter();
@@ -106,29 +98,21 @@ public class LogWriter
     /**
      * 创建打印对象
      */
-    public void createWriter()
-    {
-        try
-        {
-            File newFile =
-                    new File(currentDirectory, fileFormat.format(new Date())
-                            + LOG_EXTENSIONS);
+    public void createWriter() {
+        try {
+            File newFile = new File(currentDirectory, fileFormat.format(new Date())
+                    + LOG_EXTENSIONS);
 
-            if (!newFile.exists())
-            {
+            if (!newFile.exists()) {
                 boolean isCreateSucc = newFile.createNewFile();
             }
 
             ArrayList<File> historyLogs = getHistoryLogs();
-            for (File file : historyLogs)
-            {
-                if (file.length() < maxSize)
-                {
+            for (File file : historyLogs) {
+                if (file.length() < maxSize) {
                     current = file;
-                    if (!newFile.equals(file))
-                    {
-                        if (newFile.delete())
-                        {
+                    if (!newFile.equals(file)) {
+                        if (newFile.delete()) {
                             historyLogs.remove(newFile);
                         }
                     }
@@ -140,26 +124,17 @@ public class LogWriter
             //打印开始日志
             printBegin();
             int size;
-            while ((size = historyLogs.size()) > fileAmount)
-            {
+            while ((size = historyLogs.size()) > fileAmount) {
                 if (!historyLogs.get(size - 1).equals(current)
-                        && historyLogs.get(size - 1).delete())
-                {
+                        && historyLogs.get(size - 1).delete()) {
                     historyLogs.remove(size - 1);
-                }
-                else if (!historyLogs.get(0).equals(current)
-                        && historyLogs.get(0).delete())
-                {
+                } else if (!historyLogs.get(0).equals(current) && historyLogs.get(0).delete()) {
                     historyLogs.remove(0);
-                }
-                else
-                {
+                } else {
                     break;
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e("LogWriter", "print log to file failed", e);
         }
     }
@@ -169,22 +144,16 @@ public class LogWriter
      *
      * @return
      */
-    private ArrayList<File> getHistoryLogs()
-    {
+    private ArrayList<File> getHistoryLogs() {
         ArrayList<File> historyLogs;
-        File[] fs = currentDirectory.listFiles(new FilenameFilter()
-        {
-            public boolean accept(File dir, String filename)
-            {
+        File[] fs = currentDirectory.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String filename) {
                 return filename.contains(LOG_EXTENSIONS);
             }
         });
-        if (fs != null && fs.length != 0)
-        {
+        if (fs != null && fs.length != 0) {
             historyLogs = new ArrayList<File>(Arrays.asList(fs));
-        }
-        else
-        {
+        } else {
             historyLogs = new ArrayList<File>();
         }
         Collections.sort(historyLogs, c);
@@ -195,8 +164,7 @@ public class LogWriter
     /**
      * 打开始日志
      */
-    private void printBegin()
-    {
+    private void printBegin() {
         StringBuilder sbr = new StringBuilder();
 
         //输入起始内容
@@ -212,14 +180,10 @@ public class LogWriter
      *
      * @param msg 需要打印的信息
      */
-    public void println(String msg)
-    {
-        if (null == writer)
-        {
+    public void println(String msg) {
+        if (null == writer) {
             initialize();
-        }
-        else
-        {
+        } else {
             writer.println(msg);
         }
     }
@@ -230,24 +194,21 @@ public class LogWriter
      * @param sbr StringBuilder待添加
      * @return 添加过后的StringBuilder
      */
-    private StringBuilder addCurrentTime(StringBuilder sbr)
-    {
-        if (null == sbr)
-        {
+    private StringBuilder addCurrentTime(StringBuilder sbr) {
+        if (null == sbr) {
             return null;
         }
         //添加时间,格式:YYYY-MM-DD HH-MM-SS.mmm
-        sbr.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(System.currentTimeMillis()));
+        sbr.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+                .format(System.currentTimeMillis()));
         return sbr;
     }
 
     /**
      * 关闭打印写对象
      */
-    public synchronized void close()
-    {
-        if (null != writer)
-        {
+    public synchronized void close() {
+        if (null != writer) {
             writer.close();
         }
     }
@@ -257,8 +218,7 @@ public class LogWriter
      *
      * @return 返回值
      */
-    public boolean isCurrentExist()
-    {
+    public boolean isCurrentExist() {
         return null != current && current.exists();
     }
 
@@ -267,8 +227,7 @@ public class LogWriter
      *
      * @return 文件是否未达到最大容量
      */
-    public boolean isCurrentAvailable()
-    {
+    public boolean isCurrentAvailable() {
         return null != current && current.length() < maxSize;
     }
 
@@ -277,8 +236,7 @@ public class LogWriter
      *
      * @return 新建结果
      */
-    public boolean reCreateWriter()
-    {
+    public boolean reCreateWriter() {
         writer.close();
         writer = null;
         createWriter();
@@ -290,12 +248,9 @@ public class LogWriter
      *
      * @return 返回值
      */
-    public boolean deleteTheEarliest()
-    {
-        for (File file : getHistoryLogs())
-        {
-            if (!file.equals(current) && file.delete())
-            {
+    public boolean deleteTheEarliest() {
+        for (File file : getHistoryLogs()) {
+            if (!file.equals(current) && file.delete()) {
                 return true;
             }
         }

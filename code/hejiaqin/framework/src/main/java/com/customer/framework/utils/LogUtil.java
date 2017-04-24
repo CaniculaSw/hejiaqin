@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.customer.framework.component.log.Logger;
 
-
 /**
  * desc:
  * version 001
@@ -36,10 +35,8 @@ public class LogUtil {
      * 本地日志打印优先级; 调用系统 Log.e.
      */
     public static final int ERROR = 6;
-    static final String[] PERMISSIONS = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
+    static final String[] PERMISSIONS = new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE };
     private static Context mContext;
 
     /**
@@ -118,7 +115,6 @@ public class LogUtil {
             }
         }
     }
-
 
     /**
      * VERBOSE优先级别打印日志, 默认是正常打印类型的日志

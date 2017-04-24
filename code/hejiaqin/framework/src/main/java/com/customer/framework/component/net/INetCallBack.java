@@ -1,8 +1,7 @@
 package com.customer.framework.component.net;
 
 /***/
-public interface INetCallBack
-{
+public interface INetCallBack {
     /**
      * UI请求数据后回调函数<BR>
      *

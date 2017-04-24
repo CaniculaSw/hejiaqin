@@ -18,7 +18,6 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super.setUp();
     }
 
-
     @SmallTest
     public void testPreconditions() {
         Context appContext = getSystemContext();

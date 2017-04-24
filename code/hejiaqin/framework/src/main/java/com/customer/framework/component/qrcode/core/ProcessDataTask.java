@@ -2,8 +2,9 @@ package com.customer.framework.component.qrcode.core;
 
 import android.hardware.Camera;
 import android.os.AsyncTask;
+
 /***/
-public class ProcessDataTask extends AsyncTask<Void,Void,String> {
+public class ProcessDataTask extends AsyncTask<Void, Void, String> {
     private Camera mCamera;
     private byte[] mData;
     private Delegate mDelegate;
@@ -33,6 +34,7 @@ public class ProcessDataTask extends AsyncTask<Void,Void,String> {
 
         return mDelegate.processData(rotatedData, width, height);
     }
+
     /***/
     public interface Delegate {
         /***/

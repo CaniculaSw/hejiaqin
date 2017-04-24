@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
 /***/
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = CameraPreview.class.getSimpleName();
@@ -29,6 +30,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCameraConfigurationManager.initFromCameraParameters(mCamera);
         }
     }
+
     /***/
     public void initCameraPreview() {
         if (mCamera != null) {
@@ -60,6 +62,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mSurfaceCreated = false;
         stopCameraPreview();
     }
+
     /***/
     public void showCameraPreview() {
         if (mCamera != null) {
@@ -77,6 +80,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
         }
     }
+
     /***/
     public void stopCameraPreview() {
         if (mCamera != null) {
@@ -90,12 +94,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
         }
     }
+
     /***/
     public void openFlashlight() {
         if (flashLightAvaliable()) {
             mCameraConfigurationManager.openFlashlight(mCamera);
         }
     }
+
     /***/
     public void closeFlashlight() {
         if (flashLightAvaliable()) {
@@ -104,7 +110,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private boolean flashLightAvaliable() {
-        return mCamera != null && mPreviewing && mSurfaceCreated && getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        return mCamera != null
+                && mPreviewing
+                && mSurfaceCreated
+                && getContext().getPackageManager().hasSystemFeature(
+                        PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     private Runnable doAutoFocus = new Runnable() {

@@ -61,9 +61,11 @@ final class CameraConfigurationManager {
         String flashMode;
         /** 是否支持闪光灯 */
         if (newSetting) {
-            flashMode = findSettableValue(parameters.getSupportedFlashModes(), Camera.Parameters.FLASH_MODE_TORCH, Camera.Parameters.FLASH_MODE_ON);
+            flashMode = findSettableValue(parameters.getSupportedFlashModes(),
+                    Camera.Parameters.FLASH_MODE_TORCH, Camera.Parameters.FLASH_MODE_ON);
         } else {
-            flashMode = findSettableValue(parameters.getSupportedFlashModes(), Camera.Parameters.FLASH_MODE_OFF);
+            flashMode = findSettableValue(parameters.getSupportedFlashModes(),
+                    Camera.Parameters.FLASH_MODE_OFF);
         }
         if (flashMode != null) {
             parameters.setFlashMode(flashMode);
@@ -71,7 +73,8 @@ final class CameraConfigurationManager {
         camera.setParameters(parameters);
     }
 
-    private static String findSettableValue(Collection<String> supportedValues, String... desiredValues) {
+    private static String findSettableValue(Collection<String> supportedValues,
+                                            String... desiredValues) {
         String result = null;
         if (supportedValues != null) {
             for (String desiredValue : desiredValues) {
@@ -129,12 +132,14 @@ final class CameraConfigurationManager {
             cameraResolution = findBestPreviewSizeValue(previewSizeValueString, screenResolution);
         }
         if (cameraResolution == null) {
-            cameraResolution = new Point((screenResolution.x >> 3) << 3, (screenResolution.y >> 3) << 3);
+            cameraResolution = new Point((screenResolution.x >> 3) << 3,
+                    (screenResolution.y >> 3) << 3);
         }
         return cameraResolution;
     }
 
-    private static Point findBestPreviewSizeValue(CharSequence previewSizeValueString, Point screenResolution) {
+    private static Point findBestPreviewSizeValue(CharSequence previewSizeValueString,
+                                                  Point screenResolution) {
         int bestX = 0;
         int bestY = 0;
         int diff = Integer.MAX_VALUE;
@@ -185,14 +190,12 @@ final class CameraConfigurationManager {
                 return tenDesiredZoom;
             }
             int tenValue = (int) (10.0 * value);
-            if (Math.abs(tenDesiredZoom - value) < Math.abs(tenDesiredZoom
-                    - tenBestValue)) {
+            if (Math.abs(tenDesiredZoom - value) < Math.abs(tenDesiredZoom - tenBestValue)) {
                 tenBestValue = tenValue;
             }
         }
         return tenBestValue;
     }
-
 
     private void setZoom(Camera.Parameters parameters) {
         String zoomSupportedString = parameters.get("zoom-supported");

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+
 import com.customer.framework.utils.LogUtil;
+
 /***/
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -73,7 +75,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param userId  用户ID
      */
     private DatabaseHelper(Context context, String userId) {
-        super(context, DATABASE_NAME_STR + "_" + userId + DATABASE_NAME_SUFFIX, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME_STR + "_" + userId + DATABASE_NAME_SUFFIX, null,
+                DATABASE_VERSION);
         if (Build.VERSION.SDK_INT >= 11) {
             getWritableDatabase().enableWriteAheadLogging();
         }

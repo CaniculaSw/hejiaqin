@@ -10,6 +10,7 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
+
 /***/
 public class ZXingView extends QRCodeView {
     private MultiFormatReader mMultiFormatReader;
@@ -34,14 +35,16 @@ public class ZXingView extends QRCodeView {
         Result rawResult = null;
 
         try {
-            PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
-            rawResult = mMultiFormatReader.decodeWithState(new BinaryBitmap(new HybridBinarizer(source)));
+            PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(data, width, height, 0,
+                    0, width, height, false);
+            rawResult = mMultiFormatReader.decodeWithState(new BinaryBitmap(new HybridBinarizer(
+                    source)));
         } catch (Exception e) {
-//            try {
-//                PlanarYUVLuminanceSource source2 = new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
-//                rawResult = mMultiFormatReader.decodeWithState(new BinaryBitmap(new GlobalHistogramBinarizer(source2)));
-//            }catch (Exception e1){}
-            LogUtil.i("ZxinView","Unable to decode the qr code");
+            //            try {
+            //                PlanarYUVLuminanceSource source2 = new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+            //                rawResult = mMultiFormatReader.decodeWithState(new BinaryBitmap(new GlobalHistogramBinarizer(source2)));
+            //            }catch (Exception e1){}
+            LogUtil.i("ZxinView", "Unable to decode the qr code");
         } finally {
             mMultiFormatReader.reset();
         }

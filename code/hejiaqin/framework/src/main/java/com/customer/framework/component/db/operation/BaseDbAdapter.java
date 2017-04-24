@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.List;
+
 /***/
 public abstract class BaseDbAdapter {
     private static final int SLEEP_AFTER_YIELD_DELAY = 2000;
@@ -138,8 +139,9 @@ public abstract class BaseDbAdapter {
         return db.rawQuery(sql, selectionArgs);
     }
 
-    protected Cursor query(String table, String[] columns, String selection, String[] selectionArgs,
-                           String groupBy, String having, String orderBy, String limit) {
+    protected Cursor query(String table, String[] columns, String selection,
+                           String[] selectionArgs, String groupBy, String having, String orderBy,
+                           String limit) {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
     }

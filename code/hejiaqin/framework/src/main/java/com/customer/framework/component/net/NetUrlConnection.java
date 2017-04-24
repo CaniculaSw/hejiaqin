@@ -1,6 +1,5 @@
 package com.customer.framework.component.net;
 
-
 import com.customer.framework.component.net.NetRequest.RequestMethod;
 import com.customer.framework.component.net.NetResponse.ResponseCode;
 import com.customer.framework.utils.FileUtil;
@@ -133,7 +132,12 @@ public class NetUrlConnection {
             if (httpConn != null) {
                 try {
                     int responseCode = initResponseCode(response, httpConn);
-                    if (HttpURLConnection.HTTP_UNAUTHORIZED == responseCode || HttpURLConnection.HTTP_FORBIDDEN == responseCode || HttpURLConnection.HTTP_BAD_REQUEST == responseCode || HttpURLConnection.HTTP_NOT_FOUND == responseCode || HttpURLConnection.HTTP_CONFLICT == responseCode || HttpURLConnection.HTTP_INTERNAL_ERROR == responseCode) {
+                    if (HttpURLConnection.HTTP_UNAUTHORIZED == responseCode
+                            || HttpURLConnection.HTTP_FORBIDDEN == responseCode
+                            || HttpURLConnection.HTTP_BAD_REQUEST == responseCode
+                            || HttpURLConnection.HTTP_NOT_FOUND == responseCode
+                            || HttpURLConnection.HTTP_CONFLICT == responseCode
+                            || HttpURLConnection.HTTP_INTERNAL_ERROR == responseCode) {
                         setResponseData(request, response, httpConn, true);
                     }
                     LogUtil.i(TAG, "IOException getrespCode:" + responseCode);
@@ -186,7 +190,7 @@ public class NetUrlConnection {
 
         HttpURLConnection httpConn = null;
 
-//        System.setProperty("http.keepAlive", "false");
+        //        System.setProperty("http.keepAlive", "false");
         GZIPOutputStream gzos = null;
         DataOutputStream os = null;
         try {
@@ -218,10 +222,11 @@ public class NetUrlConnection {
                         File file = FileUtil.getFileByPath(map[1]);
                         StringBuffer sb = new StringBuffer();
                         sb.append(TWO_HYPHENS + BOUNDARY + LINE_FEED);
-                        sb.append("Content-Disposition: form-data; name=\"" + map[0] + "\"; filename=\"" + file.getName() + LINE_FEED);
-//                        os.writeBytes("Content-Type: " +  FileUtil.getMIMEType(file.getName()) + LINE_FEED);
+                        sb.append("Content-Disposition: form-data; name=\"" + map[0]
+                                + "\"; filename=\"" + file.getName() + LINE_FEED);
+                        //                        os.writeBytes("Content-Type: " +  FileUtil.getMIMEType(file.getName()) + LINE_FEED);
                         sb.append("Content-Type: application/octet-stream" + LINE_FEED);
-//                        os.writeBytes("Content-Transfer-Encoding: binary" + LINE_FEED);
+                        //                        os.writeBytes("Content-Transfer-Encoding: binary" + LINE_FEED);
                         sb.append(LINE_FEED);
                         os.write(sb.toString().getBytes("UTF-8"));
                         int count = 0;
@@ -256,7 +261,8 @@ public class NetUrlConnection {
                     } else {
                         StringBuffer sb = new StringBuffer();
                         sb.append(TWO_HYPHENS + BOUNDARY + LINE_FEED);
-                        sb.append("Content-Disposition: form-data; name=\"" + map[0] + "\"" + LINE_FEED);
+                        sb.append("Content-Disposition: form-data; name=\"" + map[0] + "\""
+                                + LINE_FEED);
                         sb.append(LINE_FEED);
                         sb.append(map[1] + LINE_FEED);
                         os.write(sb.toString().getBytes("UTF-8"));
@@ -297,7 +303,12 @@ public class NetUrlConnection {
             if (httpConn != null) {
                 try {
                     int responseCode = initResponseCode(response, httpConn);
-                    if (HttpURLConnection.HTTP_UNAUTHORIZED == responseCode || HttpURLConnection.HTTP_FORBIDDEN == responseCode || HttpURLConnection.HTTP_BAD_REQUEST == responseCode || HttpURLConnection.HTTP_NOT_FOUND == responseCode || HttpURLConnection.HTTP_CONFLICT == responseCode || HttpURLConnection.HTTP_INTERNAL_ERROR == responseCode) {
+                    if (HttpURLConnection.HTTP_UNAUTHORIZED == responseCode
+                            || HttpURLConnection.HTTP_FORBIDDEN == responseCode
+                            || HttpURLConnection.HTTP_BAD_REQUEST == responseCode
+                            || HttpURLConnection.HTTP_NOT_FOUND == responseCode
+                            || HttpURLConnection.HTTP_CONFLICT == responseCode
+                            || HttpURLConnection.HTTP_INTERNAL_ERROR == responseCode) {
                         setResponseData(request, response, httpConn, true);
                     }
                     LogUtil.i(TAG, "IOException getrespCode:" + responseCode);
@@ -334,7 +345,6 @@ public class NetUrlConnection {
         LogUtil.i(TAG, "Response Code :  " + response.getResponseCode());
         return response;
     }
-
 
     /**
      * 读取http响应的数据
@@ -480,7 +490,8 @@ public class NetUrlConnection {
         } else if (request.getContentType() == NetRequest.ContentType.JSON) {
             httpConn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
         } else if (request.getContentType() == NetRequest.ContentType.FORM_URLENCODED) {
-            httpConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+            httpConn.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded;charset=UTF-8");
         } else if (request.getContentType() == NetRequest.ContentType.FORM_DATA) {
             httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
 
@@ -549,9 +560,9 @@ public class NetUrlConnection {
      * 信任所有主机-对于任何证书都不做检查
      */
     private static void trustAllHosts() {
-        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
             public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[]{};
+                return new X509Certificate[] {};
             }
 
             public void checkClientTrusted(X509Certificate[] chain, String authType)
@@ -561,7 +572,7 @@ public class NetUrlConnection {
             public void checkServerTrusted(X509Certificate[] chain, String authType)
                     throws CertificateException {
             }
-        }};
+        } };
         try {
             SSLContext sc = SSLContext.getInstance("TLS");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());

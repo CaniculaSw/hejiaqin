@@ -20,8 +20,7 @@ import android.os.Handler;
  * author:
  * Created: 2016/4/8.
  */
-public interface ILogic
-{
+public interface ILogic {
     /**
      * 初始化方法<BR>
      * 在被系统管理的logic在注册到LogicBuilder中后立即被调用的初始化方法。
