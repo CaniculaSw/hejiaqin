@@ -39,8 +39,6 @@ public class ContactInfoActivityTest extends ActivityUnitTestCase<ContactInfoAct
 
     public ContactInfoActivityTest() {
         super(ContactInfoActivity.class);
-
-
     }
 
     @Override
@@ -94,9 +92,4 @@ public class ContactInfoActivityTest extends ActivityUnitTestCase<ContactInfoAct
         assertNotNull(mViewPager);
         assertNotNull(dialImg);
     }
-
-    public void testInitData() {
-        assertNotNull(dialImg);
-    }
-
 }
