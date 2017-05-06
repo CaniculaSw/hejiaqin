@@ -2,22 +2,15 @@ package com.chinamobile.hejiaqin.business.net.contacts;
 
 import android.test.AndroidTestCase;
 
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.TestConfig;
-import com.chinamobile.hejiaqin.business.dbapdater.ContactsDbAdapter;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactList;
-import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.req.AddContactReq;
 import com.chinamobile.hejiaqin.business.model.contacts.req.SimpleContactInfo;
-import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.chinamobile.hejiaqin.business.net.login.LoginHttpManager;
-import com.customer.framework.component.log.Logger;
 import com.customer.framework.component.net.NetResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
