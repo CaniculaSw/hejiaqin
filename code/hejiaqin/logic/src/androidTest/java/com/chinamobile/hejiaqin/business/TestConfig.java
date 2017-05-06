@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business;
 
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
+import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 
 /**
  * Created by Administrator on 2017/4/25 0025.
@@ -20,6 +21,17 @@ public class TestConfig {
         loginInfo.setPhone("13512341234");
         loginInfo.setPassword("123456");
         return loginInfo;
+    }
+
+    public TvLoginInfo getTvLoginInfo() {
+        TvLoginInfo tvLoginInfo = new TvLoginInfo();
+        tvLoginInfo.setTvId("");
+        tvLoginInfo.setTvToken("");
+        return tvLoginInfo;
+    }
+
+    public String getVerifyCode() {
+        return "123456";
     }
 
 }
