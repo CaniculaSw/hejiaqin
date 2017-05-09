@@ -800,9 +800,11 @@ public class VideoCallActivity extends BasicActivity implements View.OnClickList
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 if (remoteVideoView != null) {
                     mLargeVideoLayout.addView(remoteVideoView, layoutParams);
+                    remoteVideoView.setZOrderOnTop(false);
                 }
                 if (localVideoView != null) {
                     mSmallVideoLayout.addView(localVideoView, layoutParams);
+                    localVideoView.setZOrderOnTop(true);
                 }
             }
         }
