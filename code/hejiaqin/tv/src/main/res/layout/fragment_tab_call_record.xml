@@ -97,7 +97,7 @@
                 android:background="@drawable/contact_list_item_bg"
                 android:focusable="false"
                 android:gravity="center"
-                android:text="详情"
+                android:text="@string/record_detail"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -118,10 +118,10 @@
                 android:layout_width="202dp"
                 android:layout_height="63dp"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/contact_list_item_bg"
+                android:focusable="false"
                 android:gravity="center"
-                android:text="删除"
+                android:text="@string/record_delete"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -142,11 +142,10 @@
                 android:layout_width="202dp"
                 android:layout_height="63dp"
                 android:layout_centerInParent="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/contact_list_item_bg"
+                android:focusable="false"
                 android:gravity="center"
-                android:text="取消"
+                android:text="@string/record_cancel"
                 android:textColor="@color/contact_list_username_text_color"
                 android:textSize="18sp" />
         </RelativeLayout>

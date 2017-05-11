@@ -17,11 +17,14 @@ import com.chinamobile.hejiaqin.business.model.dial.CallRecord;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.DelCallRecordConfirmDialog;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoChooseDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactInfoFragment;
 import com.chinamobile.hejiaqin.business.ui.main.adapter.CallRecordAdapter;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.utils.StringUtil;
 
 import java.util.List;
 
@@ -117,8 +120,13 @@ public class CallRecordFragment extends BasicFragment {
                 new CallRecordAdapter.OnClickListen() {
                     public void onClick(CallRecord info, int position) {
                         deleteLayout.requestFocus();
-                        VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic,
-                                mContactsLogic, false);
+                        if (StringUtil.isMobileNO(CommonUtils.getPhoneNumber(info.getPeerNumber()))) {
+                            VideoChooseDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic,
+                                    mContactsLogic);
+                        } else {
+                            VideoOutDialog.show(getActivity(), info.getPeerNumber(), mVoipLogic,
+                                    mContactsLogic, false);
+                        }
                     }
 
                     @Override

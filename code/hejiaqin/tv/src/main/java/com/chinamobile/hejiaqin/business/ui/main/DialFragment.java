@@ -13,13 +13,16 @@ import com.chinamobile.hejiaqin.business.logic.contacts.IContactsLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicFragment;
 import com.chinamobile.hejiaqin.business.ui.basic.FragmentMgr;
+import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoChooseDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.VideoOutDialog;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.BaseDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DialDigitKeypadView;
 import com.chinamobile.hejiaqin.business.ui.basic.view.keypad.DigitsEditText;
 import com.chinamobile.hejiaqin.business.ui.contact.fragment.ContactEditFragment;
+import com.chinamobile.hejiaqin.business.utils.CommonUtils;
 import com.chinamobile.hejiaqin.tv.R;
+import com.customer.framework.utils.StringUtil;
 
 /**
  * Created by eshaohu on 16/5/22.
@@ -218,8 +221,14 @@ public class DialFragment extends BasicFragment implements View.OnClickListener 
                 break;
             case R.id.dial_video_layout:
                 if (inputNumber.length() > 0) {
-                    VideoOutDialog.show(getActivity(), inputNumber.getText().toString(),
-                            mVoipLogic, mContactsLogic, false);
+                    if (StringUtil.isMobileNO(CommonUtils.getPhoneNumber(inputNumber.getText()
+                            .toString()))) {
+                        VideoChooseDialog.show(getActivity(), inputNumber.getText().toString(),
+                                mVoipLogic, mContactsLogic);
+                    } else {
+                        VideoOutDialog.show(getActivity(), inputNumber.getText().toString(),
+                                mVoipLogic, mContactsLogic, false);
+                    }
                     inputNumber.setText("");
                 }
                 break;

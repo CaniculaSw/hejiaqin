@@ -139,6 +139,9 @@
     <string name="del_record_dialog_content">确认清除全部通话记录</string>
     <string name="del_record_dialog_agree">确定</string>
     <string name="del_record_dialog_denied">取消</string>
+    <string name="record_detail">详情</string>
+    <string name="record_delete">删除</string>
+    <string name="record_cancel">取消</string>
 
     <!-- 拨号 -->
     <string name="dial_title">拨号键盘</string>
@@ -160,6 +163,9 @@
     <string name="nurse_call_hangup">挂断看护</string>
     <string name="nurse_calling">看护中...</string>
     <string name="nurse_call_back">返回</string>
+    <string name="video_choose_app">拨打APP</string>
+    <string name="video_choose_volte">拨打Volte</string>
+    <string name="video_choose_cancel">取消</string>
 
     <!-- 更多 -->
     <!-- TV-->
