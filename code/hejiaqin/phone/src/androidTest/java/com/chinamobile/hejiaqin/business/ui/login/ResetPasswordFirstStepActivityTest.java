@@ -1,12 +1,16 @@
 package com.chinamobile.hejiaqin.business.ui.login;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.FailResponse;
+import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 
 /**
@@ -44,11 +48,41 @@ public class ResetPasswordFirstStepActivityTest extends
         nextActionBtn = (Button) mActivity.findViewById(R.id.next_action_button);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(mHeaderView);
         assertNotNull(accountEditTx);
         assertNotNull(verifyCodeEditTx);
         assertNotNull(sendVerifyCodeTv);
         assertNotNull(nextActionBtn);
+    }
+
+    public void testOnClick() {
+        mHeaderView.backImageView.performClick();
+    }
+
+    public void testHandleStateMessage() {
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_SUCCESS_MSG_ID));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.LoginMsgID.RESET_GET_VERIFY_CDOE_NET_ERROR_MSG_ID));
+        PasswordInfo passwordInfo = new PasswordInfo();
+        passwordInfo.setPassword("123456");
+        passwordInfo.setResetToken("123456");
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_SUCCESS_MSG_ID, passwordInfo));
+
+        FailResponse failResponse = new FailResponse();
+        failResponse.setCode("123");
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.LoginMsgID.RESET_CHECK_VERIFY_CDOE_FAIL_MSG_ID, failResponse));
+
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

@@ -185,7 +185,7 @@ public class ContactInfoActivity extends BasicFragmentActivity implements View.O
 
     }
 
-    private List<DialInfoGroup> genDialInfoGroup() {
+    protected List<DialInfoGroup> genDialInfoGroup() {
         List<DialInfoGroup> dialInfoGroupList = new ArrayList<>();
 
         DialInfoGroup group1 = new DialInfoGroup();

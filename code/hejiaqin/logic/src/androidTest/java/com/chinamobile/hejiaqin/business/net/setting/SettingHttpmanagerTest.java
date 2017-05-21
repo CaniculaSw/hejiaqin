@@ -29,20 +29,19 @@ public class SettingHttpmanagerTest extends AndroidTestCase {
         new SettingHttpmanager(getContext()).checkVersion(null, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                VersionInfo info = (VersionInfo) obj;
-                assertNotNull(info);
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("check version failed: " + code + ", " + desc, false);
+                assertTrue("check version failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("check version failed, network error " + errorCode, false);
+                assertTrue("check version failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -55,22 +54,19 @@ public class SettingHttpmanagerTest extends AndroidTestCase {
         new SettingHttpmanager(getContext()).getDeviceList(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                UserList userList = new UserList();
-                userList.setUsers((List<UserInfo>) obj);
-                assertNotNull(userList);
-                assertNotNull(userList.getUsers());
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("get device list failed: " + code + ", " + desc, false);
+                assertTrue("get device list failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("get device list failed, network error " + errorCode, false);
+                assertTrue("get device list failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -83,22 +79,19 @@ public class SettingHttpmanagerTest extends AndroidTestCase {
         new SettingHttpmanager(getContext()).getBindList(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                UserList userList = new UserList();
-                userList.setUsers((List<UserInfo>) obj);
-                assertNotNull(userList);
-                assertNotNull(userList.getUsers());
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("get bind list failed: " + code + ", " + desc, false);
+                assertTrue("get bind list failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("get bind list failed, network error " + errorCode, false);
+                assertTrue("get bind list failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -113,18 +106,19 @@ public class SettingHttpmanagerTest extends AndroidTestCase {
         new SettingHttpmanager(getContext()).saveBindRequest(null, req, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("save bind list failed: " + code + ", " + desc, false);
+                assertTrue("save bind list failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("save bind list failed, network error " + errorCode, false);
+                assertTrue("save bind list failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -138,18 +132,19 @@ public class SettingHttpmanagerTest extends AndroidTestCase {
         new SettingHttpmanager(getContext()).testAdapt(null, req, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("test adapt list failed: " + code + ", " + desc, false);
+                assertTrue("test adapt list failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("test adapt list failed, network error " + errorCode, false);
+                assertTrue("test adapt list failed, network error " + errorCode, true);
                 cancelWait();
             }
         });

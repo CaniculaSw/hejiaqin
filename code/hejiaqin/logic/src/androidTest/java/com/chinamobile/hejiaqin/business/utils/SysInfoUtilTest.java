@@ -27,7 +27,7 @@ public class SysInfoUtilTest extends AndroidTestCase {
 
     public void testGetOsRelease() throws Exception {
         String release = android.os.Build.VERSION.RELEASE;
-        assertEquals(release, SysInfoUtil.getModel());
+        assertEquals(release, SysInfoUtil.getOsRelease());
     }
 
     public void testGetVersionCode() throws Exception {

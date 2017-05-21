@@ -1,12 +1,19 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.view.View;
 import android.widget.EditText;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.SearchResultContacts;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
@@ -37,9 +44,16 @@ public class InputInfoActivityTest extends ActivityUnitTestCase<InputInfoActivit
         cancel = mActivity.findViewById(R.id.delete);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(titleLayout);
         assertNotNull(input);
         assertNotNull(cancel);
     }
+
+    public void testOnClick() {
+        titleLayout.rightBtn.performClick();
+        titleLayout.backImageView.performClick();
+        cancel.performClick();
+    }
+
 }

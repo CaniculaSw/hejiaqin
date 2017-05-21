@@ -56,7 +56,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
     /***/
     public List<SystemMessage> queryAll() {
         List<SystemMessage> systemMessagesList = new ArrayList<SystemMessage>();
-        String[] columns = { "_ID", "title", "time" };
+        String[] columns = {"_ID", "title", "time"};
         Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns, null, null, null,
                 null, DatabaseInfo.SystemMessage.TIME + " desc", null);
         if (null == cursor) {
@@ -80,8 +80,8 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
     /***/
     public SystemMessage querySystemMessageByID(String id) {
         SystemMessage systemMessage = new SystemMessage();
-        String[] columns = { "title", "time", "content" };
-        String[] selectionArgs = { id };
+        String[] columns = {"title", "time", "content"};
+        String[] selectionArgs = {id};
         Cursor cursor = query(DatabaseInfo.SystemMessage.TABLE_NAME, columns, "_ID=?",
                 selectionArgs, null, null, null, null);
         if (null == cursor) {
@@ -109,7 +109,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
                     .add(DbOperation
                             .newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
                             .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ",
-                                    new String[] { id }).build());
+                                    new String[]{id}).build());
         }
         super.applyBatch(operationList);
     }
@@ -121,7 +121,14 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         }
         List<DbOperation> operationList = new ArrayList<DbOperation>();
         operationList.add(DbOperation.newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
-                .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ", new String[] { id })
+                .withSelection(DatabaseInfo.SystemMessage.TABLE_ID + "=? ", new String[]{id})
+                .build());
+        super.applyBatch(operationList);
+    }
+
+    public void deleteAll() {
+        List<DbOperation> operationList = new ArrayList<DbOperation>();
+        operationList.add(DbOperation.newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)
                 .build());
         super.applyBatch(operationList);
     }

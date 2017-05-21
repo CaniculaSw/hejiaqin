@@ -1,11 +1,17 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
@@ -35,8 +41,26 @@ public class ShowContractActivityTest extends ActivityUnitTestCase<ShowContractA
         mContractContentTv = (TextView) mActivity.findViewById(R.id.contract_content);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(mHeadView);
         assertNotNull(mContractContentTv);
+    }
+
+    public void testOnClick() {
+        mHeadView.backImageView.performClick();
+    }
+
+    public void testHandleStateMessage() {
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

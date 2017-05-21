@@ -1,12 +1,14 @@
 package com.chinamobile.hejiaqin.business.ui.dial;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
@@ -60,7 +62,7 @@ public class NurseCallActivityTest extends ActivityUnitTestCase<NurseCallActivit
         mHangupLayout = (LinearLayout) mActivity.findViewById(R.id.hangup_layout);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(mVideoLayout);
         assertNotNull(mLargeVideoLayout);
         assertNotNull(mTopLayout);
@@ -70,5 +72,23 @@ public class NurseCallActivityTest extends ActivityUnitTestCase<NurseCallActivit
         assertNotNull(mTalkingTimeTv);
         assertNotNull(mBottomLayout);
         assertNotNull(mHangupLayout);
+    }
+
+    public void testOnClick() {
+    }
+
+    public void testHandleStateMessage() {
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.DialMsgID.NURSE_CALL_CLOSED_MSG_ID));
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

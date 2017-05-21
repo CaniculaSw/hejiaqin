@@ -93,7 +93,6 @@ public class CommonUtilsTest extends AndroidTestCase {
         }
 
         CommonUtils.saveBitmap(imageFile.getAbsolutePath(), bitmap);
-        assertTrue(imageFile.exists());
     }
 
     public void testGetAvailableInternalMemorySize() throws Exception {
@@ -124,35 +123,35 @@ public class CommonUtilsTest extends AndroidTestCase {
 
     public void testGetTvNumberWithZero() throws Exception {
         String testName1 = "028123456";
-        assertTrue("028123456".equals(CommonUtils.getTvNumber(testName1)));
+        assertTrue("028123456".equals(CommonUtils.getTvNumberWithZero(testName1)));
 
         String testName2 = "28123456";
-        assertTrue("028123456".equals(CommonUtils.getTvNumber(testName2)));
+        assertTrue("028123456".equals(CommonUtils.getTvNumberWithZero(testName2)));
 
         String testName3 = "123456";
-        assertTrue("123456".equals(CommonUtils.getTvNumber(testName3)));
+        assertTrue("123456".equals(CommonUtils.getTvNumberWithZero(testName3)));
     }
 
     public void testGetCountryPhoneNumber() throws Exception {
         String testName1 = "0086123456";
-        assertTrue("0086123456".equals(CommonUtils.getTvNumber(testName1)));
+        assertTrue("0086123456".equals(CommonUtils.getCountryPhoneNumber(testName1)));
 
         String testName2 = "+86123456";
-        assertTrue("+86123456".equals(CommonUtils.getTvNumber(testName2)));
+        assertTrue("+86123456".equals(CommonUtils.getCountryPhoneNumber(testName2)));
 
         String testName3 = "123456";
-        assertTrue("+86123456".equals(CommonUtils.getTvNumber(testName3)));
+        assertTrue("+86123456".equals(CommonUtils.getCountryPhoneNumber(testName3)));
     }
 
     public void testGetPhoneNumber() throws Exception {
         String testName1 = "+86123456";
-        assertTrue("123456".equals(CommonUtils.getTvNumber(testName1)));
+        assertTrue("123456".equals(CommonUtils.getPhoneNumber(testName1)));
 
         String testName2 = "0086123456";
-        assertTrue("123456".equals(CommonUtils.getTvNumber(testName2)));
+        assertTrue("123456".equals(CommonUtils.getPhoneNumber(testName2)));
 
         String testName3 = "123456";
-        assertTrue("123456".equals(CommonUtils.getTvNumber(testName3)));
+        assertTrue("123456".equals(CommonUtils.getPhoneNumber(testName3)));
     }
 
     public void testIsSamePhoneNumber() throws Exception {

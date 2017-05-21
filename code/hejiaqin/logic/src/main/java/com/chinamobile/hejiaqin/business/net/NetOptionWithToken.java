@@ -96,7 +96,7 @@ public abstract class NetOptionWithToken extends NetOption {
                 String unique = UUID.randomUUID().toString();
                 properties.add(new BasicNameValuePair(
                         BussinessConstants.HttpHeaderInfo.HEADER_TOKENID, AES.encrypt(
-                                info.getToken(), unique.substring(0, 8))));
+                        info.getToken(), unique.substring(0, 8))));
                 properties.add(new BasicNameValuePair(
                         BussinessConstants.HttpHeaderInfo.HEADER_UNIQ, unique));
             }
@@ -139,6 +139,8 @@ public abstract class NetOptionWithToken extends NetOption {
             expire = sdf.parse(tokenExpire).getTime() - tokenDate;
         } catch (ParseException e) {
             LogUtil.e(TAG, e);
+        } catch (Exception e) {
+
         }
         //永不过期
         if (expire == -1) {

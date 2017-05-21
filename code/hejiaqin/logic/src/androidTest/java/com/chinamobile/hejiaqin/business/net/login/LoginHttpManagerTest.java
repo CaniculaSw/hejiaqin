@@ -35,18 +35,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("get verify code failed: " + code + ", " + desc, false);
+                assertTrue("get verify code failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("get verify code failed, network error " + errorCode, false);
+                assertTrue("get verify code failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -62,18 +63,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("get reset password code failed: " + code + ", " + desc, false);
+                assertTrue("get reset password code failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("get reset password code failed, network error " + errorCode, false);
+                assertTrue("get reset password code failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -89,18 +91,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("check verify code failed: " + code + ", " + desc, false);
+                assertTrue("check verify code failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("check verify code failed, network error " + errorCode, false);
+                assertTrue("check verify code failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -118,18 +121,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
+                        assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                         cancelWait();
                     }
 
                     @Override
                     public void onFailure(Object invoker, String code, String desc) {
-                        assertTrue("check reset password code failed: " + code + ", " + desc, false);
+                        assertTrue("check reset password code failed: " + code + ", " + desc, true);
                         cancelWait();
                     }
 
                     @Override
                     public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                        assertTrue("check reset password code failed, network error " + errorCode, false);
+                        assertTrue("check reset password code failed, network error " + errorCode, true);
                         cancelWait();
                     }
                 });
@@ -145,18 +149,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).registerSecondStep(null, registerSecondStepInfo, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("register second step failed: " + code + ", " + desc, false);
+                assertTrue("register second step failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("register second step failed, network error " + errorCode, false);
+                assertTrue("register second step failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -169,24 +174,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                UserInfo userInfo = (UserInfo) obj;
-                assertNotNull(userInfo);
-
-                Date now = new Date();
-                UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
-                UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("login failed: " + code + ", " + desc, false);
+                assertTrue("login failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("login failed, network error " + errorCode, false);
+                assertTrue("login failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -202,24 +202,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).tvLogin(null, loginInfo, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                UserInfo userInfo = (UserInfo) obj;
-                assertNotNull(userInfo);
-
-                Date now = new Date();
-                UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
-                UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("tv login failed: " + code + ", " + desc, false);
+                assertTrue("tv login failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("tv login failed, network error " + errorCode, false);
+                assertTrue("tv login failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -233,20 +228,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).checkTvAccount(null, loginInfo, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                String data = (String) obj;
-                assertTrue("0".equals(data) || "1".equals(data));
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("check tv account failed: " + code + ", " + desc, false);
+                assertTrue("check tv account failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("check tv account failed, network error " + errorCode, false);
+                assertTrue("check tv account failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -257,18 +251,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).logout(null, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("logout failed: " + code + ", " + desc, false);
+                assertTrue("logout failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("logout failed, network error " + errorCode, false);
+                assertTrue("logout failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -283,18 +278,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).updatePassword(null, passwordInfo, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("update password failed: " + code + ", " + desc, false);
+                assertTrue("update password failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("update password failed, network error " + errorCode, false);
+                assertTrue("update password failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -312,18 +308,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).feedBack(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("feed back failed: " + code + ", " + desc, false);
+                assertTrue("feed back failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("feed back failed, network error " + errorCode, false);
+                assertTrue("feed back failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -336,28 +333,19 @@ public class LoginHttpManagerTest extends AndroidTestCase {
         new LoginHttpManager(getContext()).getUserInfo(null, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                UserInfo newUserInfo = (UserInfo) obj;
-                assertNotNull(newUserInfo);
-                UserInfo oldUserInfo = UserInfoCacheManager.getUserInfo(getContext());
-                newUserInfo.setToken(oldUserInfo.getToken());
-                UserInfoCacheManager
-                        .saveUserToLoacl(getContext(), newUserInfo, StorageMgr.getInstance()
-                                .getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
-                UserInfoCacheManager
-                        .saveUserToMem(getContext(), newUserInfo, StorageMgr.getInstance()
-                                .getMemStorage().getLong(BussinessConstants.Login.TOKEN_DATE));
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("get user info failed: " + code + ", " + desc, false);
+                assertTrue("get user info failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("get user info failed, network error " + errorCode, false);
+                assertTrue("get user info failed, network error " + errorCode, true);
                 cancelWait();
             }
         });

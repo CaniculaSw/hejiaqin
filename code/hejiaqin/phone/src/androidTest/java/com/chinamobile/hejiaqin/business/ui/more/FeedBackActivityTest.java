@@ -1,12 +1,14 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 
 /**
@@ -40,10 +42,30 @@ public class FeedBackActivityTest extends ActivityUnitTestCase<FeedBackActivity>
         submitBtn = (Button) mActivity.findViewById(R.id.feedback_submit_btn);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(headerView);
         assertNotNull(feedBackContentEt);
         assertNotNull(wordCountTv);
         assertNotNull(submitBtn);
+    }
+
+    public void testOnClick() {
+        headerView.backImageView.performClick();
+        submitBtn.performClick();
+    }
+
+    public void testHandleStateMessage() {
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.SEND_FEED_BACK_SUCCESS));
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

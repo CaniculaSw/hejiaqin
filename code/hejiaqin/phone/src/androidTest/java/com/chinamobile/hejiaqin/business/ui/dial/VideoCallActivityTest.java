@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.dial;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -86,7 +87,7 @@ public class VideoCallActivityTest extends ActivityUnitTestCase<VideoCallActivit
         mComingRejectCallBtn = (Button) mActivity.findViewById(R.id.coming_reject_call_btn);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(mVideoLayout);
         assertNotNull(mLargeVideoLayout);
         assertNotNull(mSmallVideoLayout);
@@ -104,5 +105,29 @@ public class VideoCallActivityTest extends ActivityUnitTestCase<VideoCallActivit
         assertNotNull(mCallerNameTv);
         assertNotNull(mComingAnswerCallBtn);
         assertNotNull(mComingRejectCallBtn);
+    }
+
+    public void testOnClick() {
+        mHangupLayout.performClick();
+        mComingAnswerCallBtn.performClick();
+        mComingRejectCallBtn.performClick();
+        mMuteLayout.performClick();
+        mCameraLayout.performClick();
+    }
+
+    public void testHandleStateMessage() {
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.DialMsgID.CALL_INCOMING_FINISH_CLOSING_MSG_ID));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.DialMsgID.CALL_CLOSED_MSG_ID));
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

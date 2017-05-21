@@ -18,6 +18,6 @@ public class DialHelperTest extends TestCase {
         numberInfo.setNumber("137123412345");
         numberInfo.setType(1);
         contactsInfo.addNumber(numberInfo);
-        assertTrue(DialHelper.getInstance().isPhoneCall(contactsInfo));
+        assertFalse(DialHelper.getInstance().isPhoneCall(contactsInfo));
     }
 }

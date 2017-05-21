@@ -30,6 +30,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testDelById() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);
@@ -58,6 +59,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testQueryWithNumbers() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);
@@ -80,6 +82,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testDeleteByNumbers() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);
@@ -106,6 +109,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testQueryWithName() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String peerName = "abc";
@@ -130,6 +134,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testSearchNumbers() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String peerName = "abc";
@@ -155,6 +160,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
 
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);
@@ -178,6 +184,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testUpdateByRecordId() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);
@@ -210,6 +217,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testUpdateById() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);
@@ -242,6 +250,7 @@ public class CallRecordDbAdapterTest extends AndroidTestCase {
     public void testDelAll() throws Exception {
         CallRecordDbAdapter dbAdapter = CallRecordDbAdapter.getInstance(getContext(), UserInfoCacheManager.getUserId(getContext()));
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         String calleeNumber = "13810001000";
         String noCountryNumber = CommonUtils.getPhoneNumber(calleeNumber);

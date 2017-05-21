@@ -24,6 +24,7 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
     public void testAdd() throws Exception {
         SystemMessageDbAdapter dbAdapter = SystemMessageDbAdapter.getInstance(getContext(), userID);
         assertNotNull(dbAdapter);
+        dbAdapter.deleteAll();
 
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setTitle("XXX");
@@ -39,6 +40,7 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
     public void testQueryAll() throws Exception {
         SystemMessageDbAdapter dbAdapter = SystemMessageDbAdapter.getInstance(getContext(), userID);
         assertNotNull(dbAdapter);
+        dbAdapter.deleteAll();
 
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setTitle("XXX");
@@ -54,6 +56,7 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
     public void testQuerySystemMessageByID() throws Exception {
         SystemMessageDbAdapter dbAdapter = SystemMessageDbAdapter.getInstance(getContext(), userID);
         assertNotNull(dbAdapter);
+        dbAdapter.deleteAll();
 
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setTitle("XXX");
@@ -62,7 +65,10 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
         systemMessage.setContent("hello world.");
         dbAdapter.add(systemMessage);
 
-        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID("001");
+        List<SystemMessage> systemMessageList = dbAdapter.queryAll();
+        assertNotNull(systemMessageList);
+        String id = systemMessageList.get(0).getId();
+        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID(id);
         assertNotNull(newSystemMessage);
         assertEquals(newSystemMessage.getTitle(), "XXX");
     }
@@ -70,6 +76,7 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
     public void testDeleteSystemMessageByIDs() throws Exception {
         SystemMessageDbAdapter dbAdapter = SystemMessageDbAdapter.getInstance(getContext(), userID);
         assertNotNull(dbAdapter);
+        dbAdapter.deleteAll();
 
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setTitle("XXX");
@@ -78,7 +85,10 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
         systemMessage.setContent("hello world.");
         dbAdapter.add(systemMessage);
 
-        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID("001");
+        List<SystemMessage> systemMessageList = dbAdapter.queryAll();
+        assertNotNull(systemMessageList);
+        String id = systemMessageList.get(0).getId();
+        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID(id);
         assertNotNull(newSystemMessage);
         assertEquals(newSystemMessage.getTitle(), "XXX");
 
@@ -89,6 +99,7 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
     public void testDeleteSystemMessageByID() throws Exception {
         SystemMessageDbAdapter dbAdapter = SystemMessageDbAdapter.getInstance(getContext(), userID);
         assertNotNull(dbAdapter);
+        dbAdapter.deleteAll();
 
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setTitle("XXX");
@@ -97,11 +108,37 @@ public class SystemMessageDbAdapterTest extends AndroidTestCase {
         systemMessage.setContent("hello world.");
         dbAdapter.add(systemMessage);
 
-        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID("001");
+        List<SystemMessage> systemMessageList = dbAdapter.queryAll();
+        assertNotNull(systemMessageList);
+        String id = systemMessageList.get(0).getId();
+        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID(id);
         assertNotNull(newSystemMessage);
         assertEquals(newSystemMessage.getTitle(), "XXX");
 
         dbAdapter.deleteSystemMessageByID("001");
+        assertNotSame("XXX", dbAdapter.querySystemMessageByID("001").getTitle());
+    }
+
+    public void testDeleteAll() throws Exception {
+        SystemMessageDbAdapter dbAdapter = SystemMessageDbAdapter.getInstance(getContext(), userID);
+        assertNotNull(dbAdapter);
+        dbAdapter.deleteAll();
+
+        SystemMessage systemMessage = new SystemMessage();
+        systemMessage.setTitle("XXX");
+        systemMessage.setTime("12:23:22");
+        systemMessage.setId("001");
+        systemMessage.setContent("hello world.");
+        dbAdapter.add(systemMessage);
+
+        List<SystemMessage> systemMessageList = dbAdapter.queryAll();
+        assertNotNull(systemMessageList);
+        String id = systemMessageList.get(0).getId();
+        SystemMessage newSystemMessage = dbAdapter.querySystemMessageByID(id);
+        assertNotNull(newSystemMessage);
+        assertEquals(newSystemMessage.getTitle(), "XXX");
+
+        dbAdapter.deleteAll();
         assertNotSame("XXX", dbAdapter.querySystemMessageByID("001").getTitle());
     }
 

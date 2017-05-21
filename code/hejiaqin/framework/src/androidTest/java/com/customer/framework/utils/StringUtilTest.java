@@ -23,9 +23,9 @@ public class StringUtilTest extends TestCase {
     }
 
     public void testEqualsIgnoreCase() throws Exception {
-        assertTrue(StringUtil.equals("abc", "abc"));
-        assertTrue(!StringUtil.equals("abc", "aaa"));
-        assertTrue(StringUtil.equals("abc", "Abc"));
+        assertTrue(StringUtil.equalsIgnoreCase("abc", "abc"));
+        assertTrue(!StringUtil.equalsIgnoreCase("abc", "aaa"));
+        assertTrue(StringUtil.equalsIgnoreCase("abc", "Abc"));
     }
 
     public void testSplitStringToList() throws Exception {

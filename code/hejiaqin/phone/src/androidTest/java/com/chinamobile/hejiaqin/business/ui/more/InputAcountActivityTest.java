@@ -1,12 +1,14 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 
 /**
@@ -43,11 +45,38 @@ public class InputAcountActivityTest extends ActivityUnitTestCase<InputAcountAct
         progressTip = (TextView) mActivity.findViewById(R.id.progress_text);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(mHeaderView);
         assertNotNull(mName);
         assertNotNull(mNumber);
         assertNotNull(progressLayout);
         assertNotNull(progressTip);
+    }
+
+    public void testOnClick() {
+        mHeaderView.backImageView.performClick();
+        mHeaderView.rightBtn.performClick();
+    }
+
+    public void testHandleStateMessage() {
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.STATUS_DELIVERY_OK));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.STATUS_DISPLAY_OK));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.STATUS_SEND_FAILED));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.STATUS_UNDELIVERED));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.BIND_SUCCESS));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.BIND_DENIED));
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.SENDING_BIND_REQUEST));
+
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

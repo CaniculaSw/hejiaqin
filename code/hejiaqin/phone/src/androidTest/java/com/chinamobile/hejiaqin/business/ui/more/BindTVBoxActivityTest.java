@@ -1,12 +1,18 @@
 package com.chinamobile.hejiaqin.business.ui.more;
 
 import android.content.Intent;
+import android.os.Message;
 import android.test.ActivityUnitTestCase;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.chinamobile.hejiaqin.R;
+import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/24 0024.
@@ -37,9 +43,36 @@ public class BindTVBoxActivityTest extends ActivityUnitTestCase<BindTVBoxActivit
         mBindedTVList = (ListView) mActivity.findViewById(R.id.binded_tv_list);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(mHeaderView);
         assertNotNull(mBindTVBtn);
         assertNotNull(mBindedTVList);
+    }
+
+    public void testOnClick() {
+        mHeaderView.backImageView.performClick();
+    }
+
+    public void testHandleStateMessage() {
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL));
+
+        List<UserInfo> bindedList = new ArrayList<>();
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.GET_DEVICE_LIST_SUCCESSFUL, bindedList));
+
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.SettingMsgID.BIND_SUCCESS));
+
+
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

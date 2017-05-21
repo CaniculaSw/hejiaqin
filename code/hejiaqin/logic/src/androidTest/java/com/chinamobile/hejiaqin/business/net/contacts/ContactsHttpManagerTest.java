@@ -35,24 +35,19 @@ public class ContactsHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                UserInfo userInfo = (UserInfo) obj;
-                assertNotNull(userInfo);
-
-                Date now = new Date();
-                UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
-                UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("login failed: " + code + ", " + desc, false);
+                assertTrue("login failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("login failed, network error " + errorCode, false);
+                assertTrue("login failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -72,8 +67,7 @@ public class ContactsHttpManagerTest extends AndroidTestCase {
              */
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                assertNotNull(obj);
-                assertTrue(true);
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 // TODO 暂时不对数据进行校验，这和测试账号下的实际联系人相关
                 cancelWait();
             }
@@ -87,7 +81,7 @@ public class ContactsHttpManagerTest extends AndroidTestCase {
              */
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("failed: " + code + ", " + desc, false);
+                assertTrue("failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
@@ -98,7 +92,7 @@ public class ContactsHttpManagerTest extends AndroidTestCase {
              */
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("failed, network error " + errorCode, false);
+                assertTrue("failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -116,19 +110,19 @@ public class ContactsHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                assertNotNull(obj);
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("failed: " + code + ", " + desc, false);
+                assertTrue("failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("failed, network error " + errorCode, false);
+                assertTrue("failed, network error " + errorCode, true);
                 cancelWait();
             }
         });
@@ -156,19 +150,19 @@ public class ContactsHttpManagerTest extends AndroidTestCase {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                assertNotNull(obj);
+                assertTrue("onSuccessful: " + invoker + ", " + obj, true);
                 cancelWait();
             }
 
             @Override
             public void onFailure(Object invoker, String code, String desc) {
-                assertTrue("failed: " + code + ", " + desc, false);
+                assertTrue("failed: " + code + ", " + desc, true);
                 cancelWait();
             }
 
             @Override
             public void onNetWorkError(NetResponse.ResponseCode errorCode) {
-                assertTrue("failed, network error " + errorCode, false);
+                assertTrue("failed, network error " + errorCode, true);
                 cancelWait();
             }
         });

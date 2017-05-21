@@ -1,6 +1,7 @@
 package com.chinamobile.hejiaqin.business.ui.contact;
 
 import android.content.Intent;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.test.ActivityUnitTestCase;
 import android.view.View;
@@ -11,7 +12,10 @@ import com.chinamobile.hejiaqin.R;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.model.dial.DialInfoGroup;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -76,7 +80,7 @@ public class ContactInfoActivityTest extends ActivityUnitTestCase<ContactInfoAct
         dialImg = (ImageView) mActivity.findViewById(R.id.dial_img);
     }
 
-    public void testPreconditons() {
+    public void testInitView() {
         assertNotNull(titleLayout);
         assertNotNull(mContactNameText);
         assertNotNull(mContactHeadImg);
@@ -90,5 +94,44 @@ public class ContactInfoActivityTest extends ActivityUnitTestCase<ContactInfoAct
         assertNotNull(mDialInfoUnSelected);
         assertNotNull(mViewPager);
         assertNotNull(dialImg);
+    }
+
+
+    public void testOnClick(){
+        mContactInfoLay.performClick();
+        mDialInfoLay.performClick();
+        dialImg.performClick();
+        titleLayout.backImageView.performClick();
+    }
+    public void testHandleStateMessage() {
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_SUCCESS_MSG_ID));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.ADD_APP_CONTACTS_FAILED_MSG_ID));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_SUCCESS_MSG_ID));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.DEL_APP_CONTACTS_FAILED_MSG_ID));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_SUCCESS_MSG_ID));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.EDIT_APP_CONTACTS_FAILED_MSG_ID));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.DEL_CALL_RECORDS_SUCCESS_MSG_ID));
+
+        List<DialInfoGroup> dialInfoGroupList = mActivity.genDialInfoGroup();
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.ContactMsgID.GET_CALL_RECORDS_SUCCESS_MSG_ID, dialInfoGroupList));
+
+        mActivity.handleStateMessage(generateMessage(BussinessConstants.DialMsgID.CALL_RECORD_REFRESH_MSG_ID));
+    }
+
+    private Message generateMessage(int what) {
+        return generateMessage(what, null);
+    }
+
+    private Message generateMessage(int what, Object obj) {
+        Message message = Message.obtain();
+        message.what = what;
+        message.obj = obj;
+        return message;
     }
 }

@@ -26,6 +26,7 @@ public class ContactsDbAdapterTest extends AndroidTestCase {
         ContactsDbAdapter dbAdapter = ContactsDbAdapter.getInstance(getContext(),
                 userId);
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         ContactsInfo contactsInfo = new ContactsInfo();
@@ -45,6 +46,7 @@ public class ContactsDbAdapterTest extends AndroidTestCase {
         ContactsDbAdapter dbAdapter = ContactsDbAdapter.getInstance(getContext(),
                 userId);
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         ContactsInfo contactsInfo = new ContactsInfo();
@@ -62,7 +64,7 @@ public class ContactsDbAdapterTest extends AndroidTestCase {
         assertFalse(contactsInfoList.isEmpty());
 
         ContactsInfo newContactInfo = contactsInfoList.get(0);
-        assertEquals(newContactInfo.getName(), "aaa");
+        assertEquals(newContactInfo.getName(), "abc");
 
         contactsInfo.setName("bbb");
         dbAdapter.update(contactsInfo);
@@ -79,6 +81,7 @@ public class ContactsDbAdapterTest extends AndroidTestCase {
         ContactsDbAdapter dbAdapter = ContactsDbAdapter.getInstance(getContext(),
                 userId);
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         ContactsInfo contactsInfo = new ContactsInfo();
@@ -98,6 +101,7 @@ public class ContactsDbAdapterTest extends AndroidTestCase {
         ContactsDbAdapter dbAdapter = ContactsDbAdapter.getInstance(getContext(),
                 userId);
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         ContactsInfo contactsInfo = new ContactsInfo();
@@ -120,6 +124,7 @@ public class ContactsDbAdapterTest extends AndroidTestCase {
         ContactsDbAdapter dbAdapter = ContactsDbAdapter.getInstance(getContext(),
                 userId);
         assertNotNull(dbAdapter);
+        dbAdapter.delAll();
 
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         ContactsInfo contactsInfo = new ContactsInfo();

@@ -53,7 +53,7 @@ public class SysMessageDetailActivity extends BasicActivity implements View.OnCl
         try {
             mDateTv.setText(DateTimeUtil.parseDate2Str(
                     DateTimeUtil.parseSTANDARDFormatToDate(systemMessage.getTime()), "yyyy/MM/dd"));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             LogUtil.e("SysMessageDetailActivity", e);
         }
         mBodyTv.setText(systemMessage.getContent());
