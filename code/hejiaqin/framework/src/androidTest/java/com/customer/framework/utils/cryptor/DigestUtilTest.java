@@ -23,5 +23,11 @@ public class DigestUtilTest extends TestCase {
 
         assertEquals(encrypt1, encrypt2);
         assertNotSame(encrypt1, encrypt3);
+
+        assertNotNull(DigestUtil.encryptSHA(content1));
+        String hex = DigestUtil.asHex(new byte[]{1, 2, 3});
+        assertNotNull(DigestUtil.asBin(hex));
+        assertNotNull(DigestUtil.getHmacMd5Str(content1, "12345678"));
+        assertFalse(DigestUtil.isMatchByLivebosMD5(content1, "12345678", "12345678"));
     }
 }

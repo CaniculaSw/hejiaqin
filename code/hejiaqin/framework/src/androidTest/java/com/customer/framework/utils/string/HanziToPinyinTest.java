@@ -27,5 +27,8 @@ public class HanziToPinyinTest extends AndroidTestCase {
         assertEquals("diaochan", hanziToPinyin.hanziToPinyin("貂蝉"));
 
         assertEquals("zhangfei", hanziToPinyin.hanziToPinyin("张飞"));
+
+        assertNotNull(hanziToPinyin.hanziHeadToPinyin("你好"));
+        assertNotNull(hanziToPinyin.hanziToPinyin('你'));
     }
 }

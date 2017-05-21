@@ -38,6 +38,8 @@ public class ImageUtil {
         } catch (OutOfMemoryError e) {
             LogUtil.w(TAG, "zoom image failed, Out of memory error.", e);
             return srcBitmap;
+        } catch (Exception e) {
+            return srcBitmap;
         }
     }
 
@@ -83,6 +85,8 @@ public class ImageUtil {
             return zoom(tmpBitmap, tmpWidth / srcWidth);
         } catch (OutOfMemoryError e) {
             LogUtil.w(TAG, "crop image failed, Out of memory error.", e);
+            return srcBitmap;
+        } catch (Exception e) {
             return srcBitmap;
         } finally {
             if (null != tmpBitmap && !tmpBitmap.isRecycled()) {
