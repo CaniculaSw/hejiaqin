@@ -126,6 +126,7 @@ public class SystemMessageDbAdapter extends BaseDbAdapter {
         super.applyBatch(operationList);
     }
 
+    /***/
     public void deleteAll() {
         List<DbOperation> operationList = new ArrayList<DbOperation>();
         operationList.add(DbOperation.newDelete(DatabaseInfo.SystemMessage.TABLE_NAME)

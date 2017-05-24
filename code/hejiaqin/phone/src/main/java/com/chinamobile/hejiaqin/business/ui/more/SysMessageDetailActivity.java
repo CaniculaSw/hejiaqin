@@ -13,7 +13,6 @@ import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
 import com.customer.framework.component.time.DateTimeUtil;
 import com.customer.framework.utils.LogUtil;
 
-import java.text.ParseException;
 
 /**
  * Created by eshaohu on 16/5/28.
