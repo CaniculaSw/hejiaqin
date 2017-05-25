@@ -120,11 +120,18 @@ public class MainFragmentActivity extends BasicFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mVoipLogic.setNeedShowManFragment(false);
         if (mVoipLogic.isNeedVoipLogin()) {
             LogUtil.d(tagString, "autoLogin");
             mVoipLogic.setNotNeedVoipLogin();
             mVoipLogic.autoLogin();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mVoipLogic.setNeedShowManFragment(true);
     }
 
     @Override
@@ -241,8 +248,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             exitTime = System.currentTimeMillis();
             return;
         }
-        mVoipLogic.logout();
-        super.onBackPressed();
+        super.moveTaskToBack(true);
     }
 
     @Override

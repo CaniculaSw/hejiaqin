@@ -58,4 +58,6 @@ public interface IVoipLogic {
 
     /***/
     public boolean isNeedVoipLogin();
+
+    public void setNeedShowManFragment(boolean flag);
 }

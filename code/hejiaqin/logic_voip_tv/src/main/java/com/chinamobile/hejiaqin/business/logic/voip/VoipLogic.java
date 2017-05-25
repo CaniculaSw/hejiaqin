@@ -56,11 +56,19 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     private boolean isNeedVoipLogin = true;
 
+    private boolean isNeedShowMainFragment = true;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BussinessConstants.DialMsgID.CALL_INCOMING_MSG_ID:
+                    if(isNeedShowMainFragment) {
+                        Intent mainFragmentIntent = new Intent();
+                        mainFragmentIntent.setAction(BussinessConstants.Dial.TV_MAIN_FRAGMENT);
+                        mainFragmentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getContext().startActivity(mainFragmentIntent);
+                    }
                     Intent inComingIntent = new Intent();
                     inComingIntent.setAction(BussinessConstants.Dial.TV_CALL_ACTION);
                     inComingIntent.putExtra(BussinessConstants.Dial.INTENT_INCOMING_SESSION_ID,
@@ -522,5 +530,9 @@ public class VoipLogic extends LogicImp implements IVoipLogic {
 
     public boolean isNeedVoipLogin() {
         return this.isNeedVoipLogin;
+    }
+
+    public void setNeedShowManFragment(boolean flag) {
+        this.isNeedShowMainFragment = flag;
     }
 }

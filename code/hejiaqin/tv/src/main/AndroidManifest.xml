@@ -130,7 +130,12 @@
             android:name="com.chinamobile.hejiaqin.business.ui.main.MainFragmentActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.hejiaqin.tv.mainfragment" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.chinamobile.hejiaqin.business.ui.contact.ContactInfoActivity"
             android:screenOrientation="landscape" />
