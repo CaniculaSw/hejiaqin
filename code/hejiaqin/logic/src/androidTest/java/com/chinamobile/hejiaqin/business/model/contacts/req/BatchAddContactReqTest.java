@@ -8,14 +8,19 @@ import junit.framework.TestCase;
 public class BatchAddContactReqTest extends TestCase {
 
     public void testToBody() throws Exception {
-
+        BatchAddContactReq batchAddContactReq = new BatchAddContactReq();
+        assertNotNull(batchAddContactReq.toBody());
     }
 
     public void testGetContactJson() throws Exception {
-
+        BatchAddContactReq batchAddContactReq = new BatchAddContactReq();
+        batchAddContactReq.setContactJson("123");
+        assertNotNull(batchAddContactReq.getContactJson());
     }
 
     public void testSetContactJson() throws Exception {
-
+        BatchAddContactReq batchAddContactReq = new BatchAddContactReq();
+        batchAddContactReq.setContactJson("123");
+        assertNotNull(batchAddContactReq.getContactJson());
     }
 }
