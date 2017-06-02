@@ -110,7 +110,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 request.setPhone(number);
                 request.setFile(photoFullPath);
 
-                new ContactsHttpManager(getContext()).add(null, request, new IHttpCallBack() {
+                new ContactsHttpManager(getContext()).add(invoker, request, new IHttpCallBack() {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
@@ -195,7 +195,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
                 reqBody.add("contactJson", contactJson);
 
-                new ContactsHttpManager(getContext()).batchAdd(null, reqBody, new IHttpCallBack() {
+                new ContactsHttpManager(getContext()).batchAdd(invoker, reqBody, new IHttpCallBack() {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
@@ -252,7 +252,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 request.setContactId(contactId);
                 request.setFile(photoFullPath);
 
-                new ContactsHttpManager(getContext()).update(null, request, new IHttpCallBack() {
+                new ContactsHttpManager(getContext()).update(invoker, request, new IHttpCallBack() {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
@@ -301,7 +301,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
                 NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
                 reqBody.add("contactId", contactId);
 
-                new ContactsHttpManager(getContext()).delete(null, reqBody, new IHttpCallBack() {
+                new ContactsHttpManager(getContext()).delete(invoker, reqBody, new IHttpCallBack() {
 
                     @Override
                     public void onSuccessful(Object invoker, Object obj) {
@@ -366,7 +366,7 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
     private void fetchAppContactsFromServer() {
         NVPWithTokenReqBody reqBody = new NVPWithTokenReqBody();
 
-        new ContactsHttpManager(getContext()).list(null, reqBody, new IHttpCallBack() {
+        new ContactsHttpManager(getContext()).list(invoker, reqBody, new IHttpCallBack() {
             /**
              * 网络请求成功响应
              *
@@ -539,5 +539,10 @@ public class ContactsLogic extends LogicImp implements IContactsLogic {
         }
         //MAP 是无顺序的，所以不能使用map进行递归转换list
         return dialInfoGroupList;
+    }
+
+    private Object invoker;
+    public void setInvoker(Object invoker){
+        this.invoker = invoker;
     }
 }

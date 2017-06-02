@@ -6,6 +6,8 @@ import android.os.Message;
 import android.test.AndroidTestCase;
 
 import com.chinamobile.hejiaqin.business.logic.contacts.ContactsLogic;
+import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
+import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
@@ -15,6 +17,7 @@ import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
+import com.customer.framework.component.net.NetInvoker;
 
 import junit.framework.TestCase;
 
@@ -43,11 +46,37 @@ public class LoginLogicTest extends AndroidTestCase {
     }
 
     public void testGetVerifyCode() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.getVerifyCode("123456");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.getVerifyCode("123456");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.getVerifyCode("123456");
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.getVerifyCode("123456");
         syncWait();
     }
 
     public void testGetResetPasswordCode() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.getResetPasswordCode("123456");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.getResetPasswordCode("123456");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.getResetPasswordCode("123456");
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.getResetPasswordCode("123456");
         syncWait();
     }
@@ -56,6 +85,20 @@ public class LoginLogicTest extends AndroidTestCase {
         VerifyInfo verifyInfo = new VerifyInfo();
         verifyInfo.setVerifyCode("123456");
         verifyInfo.setPhone("123456");
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.checkVerifyCode(verifyInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.checkVerifyCode(verifyInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.checkVerifyCode(verifyInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.checkVerifyCode(verifyInfo);
         syncWait();
     }
@@ -64,6 +107,20 @@ public class LoginLogicTest extends AndroidTestCase {
         VerifyInfo verifyInfo = new VerifyInfo();
         verifyInfo.setVerifyCode("123456");
         verifyInfo.setPhone("123456");
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.checkResetPasswordCode(verifyInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.checkResetPasswordCode(verifyInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.checkResetPasswordCode(verifyInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.checkResetPasswordCode(verifyInfo);
         syncWait();
     }
@@ -73,6 +130,19 @@ public class LoginLogicTest extends AndroidTestCase {
         registerSecondStepInfo.setPhone("123456");
         registerSecondStepInfo.setPwd("123456");
         registerSecondStepInfo.setCode("123456");
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.registerSecondStep(registerSecondStepInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.registerSecondStep(registerSecondStepInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.registerSecondStep(registerSecondStepInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.registerSecondStep(registerSecondStepInfo);
         syncWait();
     }
@@ -81,6 +151,21 @@ public class LoginLogicTest extends AndroidTestCase {
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setPhone("123456");
         loginInfo.setPassword("123456");
+
+        UserInfo userInfo = new UserInfo();
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(userInfo));
+        contactsLogic.login(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.login(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.login(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.login(loginInfo);
         syncWait();
     }
@@ -89,6 +174,21 @@ public class LoginLogicTest extends AndroidTestCase {
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId("123456");
         loginInfo.setTvToken("123456");
+
+        UserInfo userInfo = new UserInfo();
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(userInfo));
+        contactsLogic.tvLogin(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.tvLogin(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.tvLogin(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.tvLogin(loginInfo);
         syncWait();
     }
@@ -97,11 +197,42 @@ public class LoginLogicTest extends AndroidTestCase {
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId("123456");
         loginInfo.setTvToken("123456");
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj("0"));
+        contactsLogic.checkTvAccount(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj("1"));
+        contactsLogic.checkTvAccount(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj("2"));
+        contactsLogic.checkTvAccount(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.checkTvAccount(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.checkTvAccount(loginInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.checkTvAccount(loginInfo);
         syncWait();
     }
 
     public void testLogout() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.logout();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.logout();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.logout();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.logout();
     }
 
@@ -127,6 +258,23 @@ public class LoginLogicTest extends AndroidTestCase {
 
     public void testGetUserInfo() throws Exception {
         NVPWithTokenReqBody nvpWithTokenReqBody = new NVPWithTokenReqBody();
+
+        UserInfo userInfo = new UserInfo();
+        UserInfoCacheManager.saveUserToMem(getContext(), userInfo, 100);
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(userInfo));
+        contactsLogic.getUserInfo(nvpWithTokenReqBody);
+        syncWait();
+        UserInfoCacheManager.clearUserInfo(getContext());
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.getUserInfo(nvpWithTokenReqBody);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.getUserInfo(nvpWithTokenReqBody);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.getUserInfo(nvpWithTokenReqBody);
         syncWait();
     }
@@ -135,6 +283,20 @@ public class LoginLogicTest extends AndroidTestCase {
         PasswordInfo passwordInfo = new PasswordInfo();
         passwordInfo.setPassword("123456");
         passwordInfo.setResetToken("123456");
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.updatePassword(passwordInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.updatePassword(passwordInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.updatePassword(passwordInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.updatePassword(passwordInfo);
         syncWait();
     }
@@ -150,6 +312,23 @@ public class LoginLogicTest extends AndroidTestCase {
     public void testUpdatePhoto() throws Exception {
         UpdatePhotoReq updatePhotoReq = new UpdatePhotoReq();
         updatePhotoReq.setFile("123");
+
+        UserInfo userInfo = new UserInfo();
+        UserInfoCacheManager.saveUserToMem(getContext(), userInfo, 100);
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(userInfo));
+        contactsLogic.updatePhoto(updatePhotoReq);
+        syncWait();
+        UserInfoCacheManager.clearUserInfo(getContext());
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.updatePhoto(updatePhotoReq);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.updatePhoto(updatePhotoReq);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.updatePhoto(updatePhotoReq);
         syncWait();
     }
@@ -157,7 +336,21 @@ public class LoginLogicTest extends AndroidTestCase {
     public void testFeedBack() throws Exception {
         FeedBackReq feedBackReq = new FeedBackReq();
         feedBackReq.setContent("123456778");
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
         contactsLogic.feedBack(feedBackReq);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.feedBack(feedBackReq);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.feedBack(feedBackReq);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
+        contactsLogic.feedBack(feedBackReq);
+        syncWait();
     }
 
     private void syncWait() {

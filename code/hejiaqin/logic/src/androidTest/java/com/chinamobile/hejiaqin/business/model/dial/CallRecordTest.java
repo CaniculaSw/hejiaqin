@@ -125,7 +125,7 @@ public class CallRecordTest extends TestCase {
     public void testGetBeginDay() throws Exception {
         CallRecord callRecord = new CallRecord();
         callRecord.setBeginTime("20110606060606");
-        assertNotNull(callRecord.getBeginHour());
+        assertNotNull(callRecord.getBeginDay());
     }
 
     public void testGetBeginTime() throws Exception {
@@ -180,6 +180,8 @@ public class CallRecordTest extends TestCase {
         CallRecord callRecord = new CallRecord();
         callRecord.setRead(BussinessConstants.DictInfo.YES);
         assertTrue(callRecord.isReaded());
+        callRecord.setRead(BussinessConstants.DictInfo.NO);
+        assertFalse(callRecord.isReaded());
     }
 
     public void testGetRecordSearchUnit() throws Exception {

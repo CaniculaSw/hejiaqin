@@ -2,10 +2,7 @@ package com.chinamobile.hejiaqin.business.net.login;
 
 import android.test.AndroidTestCase;
 
-import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.TestConfig;
-import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
-import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.PasswordInfo;
@@ -16,9 +13,6 @@ import com.chinamobile.hejiaqin.business.net.IHttpCallBack;
 import com.chinamobile.hejiaqin.business.net.NVPReqBody;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.customer.framework.component.net.NetResponse;
-import com.customer.framework.component.storage.StorageMgr;
-
-import java.util.Date;
 
 /**
  * Created by Administrator on 2017/4/25 0025.
@@ -52,6 +46,8 @@ public class LoginHttpManagerTest extends AndroidTestCase {
             }
         });
         syncWait();
+
+
     }
 
     public void testGetResetPasswordCode() throws Exception {

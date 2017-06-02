@@ -7,6 +7,8 @@ import android.test.AndroidTestCase;
 
 import com.chinamobile.hejiaqin.business.model.contacts.ContactsInfo;
 import com.chinamobile.hejiaqin.business.model.contacts.NumberInfo;
+import com.chinamobile.hejiaqin.business.model.contacts.rsp.ContactBean;
+import com.customer.framework.component.net.NetInvoker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,30 @@ public class ContactsLogicTest extends AndroidTestCase {
     }
 
     public void testFetchAppContactLst() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.fetchAppContactLst();
+        syncWait();
+
+        List<ContactBean> contactBeanList = new ArrayList<>();
+        ContactBean contactBean = new ContactBean();
+        contactBean.setPhotoSm("123");
+        contactBean.setName("123");
+        contactBean.setPhone("2");
+        contactBean.setContactId("123");
+        contactBeanList.add(contactBean);
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(contactBeanList));
+        contactsLogic.fetchAppContactLst();
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.fetchAppContactLst();
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.fetchAppContactLst();
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.fetchAppContactLst();
         syncWait();
     }
@@ -69,11 +95,57 @@ public class ContactsLogicTest extends AndroidTestCase {
         contactsInfo.addNumber(numberInfo);
         contactsInfo.setName("abc");
 
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.addAppContact(contactsInfo);
+        syncWait();
+
+        List<ContactBean> contactBeanList = new ArrayList<>();
+        ContactBean contactBean = new ContactBean();
+        contactBean.setPhotoSm("123");
+        contactBean.setName("123");
+        contactBean.setPhone("2");
+        contactBean.setContactId("123");
+        contactBeanList.add(contactBean);
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(contactBeanList));
+        contactsLogic.addAppContact(contactsInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.addAppContact(contactsInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.addAppContact(contactsInfo);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.addAppContact(contactsInfo);
         syncWait();
     }
 
     public void testAddAppContact1() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.addAppContact("abc", "123456", "123");
+        syncWait();
+
+        ContactBean contactBean = new ContactBean();
+        contactBean.setPhotoSm("123");
+        contactBean.setName("123");
+        contactBean.setPhone("2");
+        contactBean.setContactId("123");
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(contactBean));
+        contactsLogic.addAppContact("abc", "123456", "123");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.addAppContact("abc", "123456", "123");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.addAppContact("abc", "123456", "123");
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.addAppContact("abc", "123456", "123");
         syncWait();
     }
@@ -88,16 +160,75 @@ public class ContactsLogicTest extends AndroidTestCase {
         List<ContactsInfo> contactsInfoList = new ArrayList<>();
         contactsInfoList.add(contactsInfo);
 
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.batchAddAppContacts(contactsInfoList);
+        syncWait();
+
+        List<ContactBean> contactBeanList = new ArrayList<>();
+        ContactBean contactBean = new ContactBean();
+        contactBean.setPhotoSm("123");
+        contactBean.setName("123");
+        contactBean.setPhone("2");
+        contactBean.setContactId("123");
+        contactBeanList.add(contactBean);
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(contactBeanList));
+        contactsLogic.batchAddAppContacts(contactsInfoList);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.batchAddAppContacts(contactsInfoList);
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.batchAddAppContacts(contactsInfoList);
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.batchAddAppContacts(contactsInfoList);
         syncWait();
     }
 
     public void testUpdateAppContact() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.updateAppContact("123", "abc", "123456", "123");
+        syncWait();
+
+        ContactBean contactBean = new ContactBean();
+        contactBean.setPhotoSm("123");
+        contactBean.setName("123");
+        contactBean.setPhone("2");
+        contactBean.setContactId("123");
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(contactBean));
+        contactsLogic.updateAppContact("123", "abc", "123456", "123");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.updateAppContact("123", "abc", "123456", "123");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.updateAppContact("123", "abc", "123456", "123");
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.updateAppContact("123", "abc", "123456", "123");
         syncWait();
     }
 
     public void testDeleteAppContact() throws Exception {
+        contactsLogic.setInvoker(NetInvoker.buildInvoker1());
+        contactsLogic.deleteAppContact("123");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker2());
+        contactsLogic.deleteAppContact("123");
+        syncWait();
+
+        contactsLogic.setInvoker(NetInvoker.buildInvoker3());
+        contactsLogic.deleteAppContact("123");
+        syncWait();
+
+        contactsLogic.setInvoker(null);
         contactsLogic.deleteAppContact("123");
         syncWait();
     }

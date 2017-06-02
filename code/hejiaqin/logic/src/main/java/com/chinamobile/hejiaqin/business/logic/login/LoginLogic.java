@@ -42,7 +42,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     public void getVerifyCode(String phone) {
         final NVPReqBody reqBody = new NVPReqBody();
         reqBody.add("phone", phone);
-        new LoginHttpManager(getContext()).getVerifyCode(null, reqBody, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).getVerifyCode(invoker, reqBody, new IHttpCallBack() {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
@@ -76,7 +76,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     public void getResetPasswordCode(String phone) {
         NVPReqBody reqBody = new NVPReqBody();
         reqBody.add("phone", phone);
-        new LoginHttpManager(getContext()).getResetPasswordCode(null, reqBody, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).getResetPasswordCode(invoker, reqBody, new IHttpCallBack() {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
@@ -109,7 +109,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void checkVerifyCode(VerifyInfo verifyInfo) {
-        new LoginHttpManager(getContext()).checkVerifyCode(null, verifyInfo, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).checkVerifyCode(invoker, verifyInfo, new IHttpCallBack() {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
@@ -139,7 +139,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void checkResetPasswordCode(VerifyInfo verifyInfo) {
-        new LoginHttpManager(getContext()).checkResetPasswordCode(null, verifyInfo,
+        new LoginHttpManager(getContext()).checkResetPasswordCode(invoker, verifyInfo,
                 new IHttpCallBack() {
 
                     @Override
@@ -173,7 +173,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void registerSecondStep(RegisterSecondStepInfo info) {
-        new LoginHttpManager(getContext()).registerSecondStep(null, info, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).registerSecondStep(invoker, info, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 LoginLogic.this
@@ -202,7 +202,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void login(LoginInfo info) {
-        new LoginHttpManager(getContext()).login(null, info, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).login(invoker, info, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
@@ -237,7 +237,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void tvLogin(TvLoginInfo info) {
-        new LoginHttpManager(getContext()).tvLogin(null, info, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).tvLogin(invoker, info, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
@@ -272,7 +272,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void checkTvAccount(TvLoginInfo info) {
-        new LoginHttpManager(getContext()).checkTvAccount(null, info, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).checkTvAccount(invoker, info, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 String data = (String) obj;
@@ -314,7 +314,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void logout() {
-        new LoginHttpManager(getContext()).logout(null, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).logout(invoker, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
 
@@ -440,7 +440,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void getUserInfo(NVPWithTokenReqBody reqBody) {
-        new LoginHttpManager(getContext()).getUserInfo(null, reqBody, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).getUserInfo(invoker, reqBody, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo newUserInfo = (UserInfo) obj;
@@ -478,7 +478,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void updatePassword(PasswordInfo pwdInfo) {
-        new LoginHttpManager(getContext()).updatePassword(null, pwdInfo, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).updatePassword(invoker, pwdInfo, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 LoginLogic.this
@@ -527,7 +527,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void updatePhoto(UpdatePhotoReq updatePhoto) {
-        new LoginHttpManager(getContext()).updatePhoto(null, updatePhoto, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).updatePhoto(invoker, updatePhoto, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
@@ -567,7 +567,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
     @Override
     public void feedBack(FeedBackReq feedBackReq) {
-        new LoginHttpManager(getContext()).feedBack(null, feedBackReq, new IHttpCallBack() {
+        new LoginHttpManager(getContext()).feedBack(invoker, feedBackReq, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
                 LoginLogic.this
@@ -594,5 +594,10 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             return true;
         }
         return false;
+    }
+
+    private Object invoker;
+    public void setInvoker(Object invoker){
+        this.invoker = invoker;
     }
 }
