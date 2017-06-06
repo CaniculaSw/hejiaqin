@@ -4,7 +4,9 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-
+/**
+ *
+ */
 public class Beauty {
     private String name;
     private String age;
@@ -21,7 +23,9 @@ public class Beauty {
     public Films getFilms() {
         return films;
     }
-
+    /**
+     *
+     */
     public void parseXml(XmlPullParser localKXmlParser, String parentName)
             throws XmlPullParserException, IOException {
         boolean flag = true;
@@ -46,6 +50,8 @@ public class Beauty {
                         flag = false;
                         continue;
                     }
+                    break;
+                default:
                     break;
             }
             eventType = localKXmlParser.next();

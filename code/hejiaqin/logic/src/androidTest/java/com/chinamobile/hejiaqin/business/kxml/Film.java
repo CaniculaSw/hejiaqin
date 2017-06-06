@@ -4,14 +4,18 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-
+/**
+ *
+ */
 public class Film {
     private String name;
 
     public String getName() {
         return name;
     }
-
+    /**
+     *
+     */
     public void parseXml(XmlPullParser localKXmlParser, String parentName)
             throws XmlPullParserException, IOException {
         boolean flag = true;
@@ -31,6 +35,8 @@ public class Film {
                         flag = false;
                         continue;
                     }
+                    break;
+                default:
                     break;
             }
             eventType = localKXmlParser.next();

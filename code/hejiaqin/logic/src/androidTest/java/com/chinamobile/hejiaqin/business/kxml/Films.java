@@ -6,7 +6,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *
+ */
 public class Films {
 
     private List<Film> filmList;
@@ -14,7 +16,9 @@ public class Films {
     public List<Film> getFilmList() {
         return filmList;
     }
-
+    /**
+     *
+     */
     public void parseXml(XmlPullParser localKXmlParser, String parentName)
             throws XmlPullParserException, IOException {
         boolean flag = true;
@@ -40,6 +44,8 @@ public class Films {
                         flag = false;
                         continue;
                     }
+                    break;
+                default:
                     break;
             }
             eventType = localKXmlParser.next();

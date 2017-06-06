@@ -275,7 +275,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID:
                 response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")) {
+                if ("1".equals(response.getCode())) {
                     displayErrorInfo(response.getMsg());
                 }
                 if (countDownTimer != null) {
@@ -301,7 +301,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
                 break;
             case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_FAIL_MSG_ID:
                 response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")) {
+                if ("1".equals(response.getCode())) {
                     displayErrorInfo(response.getMsg());
                 }
                 break;

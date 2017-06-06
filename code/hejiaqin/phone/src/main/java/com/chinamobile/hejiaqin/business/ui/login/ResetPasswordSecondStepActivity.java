@@ -144,7 +144,7 @@ public class ResetPasswordSecondStepActivity extends BasicActivity implements Vi
                 break;
             case BussinessConstants.LoginMsgID.UPDATE_PWD_FAIL_MSG_ID:
                 FailResponse response = (FailResponse) msg.obj;
-                if (response.getCode().equals("1")) {
+                if ("1".equals(response.getCode())) {
                     displayErrorInfo(response.getMsg());
                 }
                 break;

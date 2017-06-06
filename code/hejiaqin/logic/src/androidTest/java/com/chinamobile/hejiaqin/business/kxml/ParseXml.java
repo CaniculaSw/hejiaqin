@@ -9,7 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
+/**
+ *
+ */
 public class ParseXml {
 
     public Beauties beauties;
@@ -26,7 +28,9 @@ public class ParseXml {
         }
 
     }
-
+    /**
+     *
+     */
     public void parseXml(InputStream paramInputStream) {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -43,6 +47,7 @@ public class ParseXml {
                             beauties = new Beauties();
                             beauties.parseXml(localKXmlParser, elemName);
                         }
+                        break;
                     default:
                         break;
                 }

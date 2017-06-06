@@ -56,7 +56,7 @@ public abstract class NetOptionWithToken extends NetOption {
                         isRefreshTokening = false;
                         UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage()
                                 .getObject(BussinessConstants.Login.USER_INFO_KEY);
-                        if (response.getResultCode().equals("0") && info != null) {
+                        if ("0".equals(response.getResultCode()) && info != null) {
                             UserInfo newInfo = (UserInfo) response.getObj(); //gson.fromJson(rootJsonObj.get("data").toString(),UserInfo.class);
                             info.setToken(newInfo.getToken());
                             info.setTokenExpire(newInfo.getTokenExpire());

@@ -73,8 +73,7 @@ public class TVApplication extends HeApplication implements Thread.UncaughtExcep
                 case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
                     Const.setLoginStatus(Const.LOGINSTATUS.LOGINING);
                     if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
-                            && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals(
-                            "unknown")) {
+                            && !"unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
                     } else {
                         autoLogin();
                     }

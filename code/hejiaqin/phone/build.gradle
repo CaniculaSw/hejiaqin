@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
 
 jacoco{
     toolVersion = "0.7.1.201405082137"
@@ -54,4 +55,31 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.kyleduo.switchbutton:library:1.4.0'
     compile project(':logic_voip')
+}
+checkstyle {
+    toolVersion="6.8"
+}
+
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    ignoreFailures = true
+    configFile file("../../../findbugs_setting/checkstyle.xml")
+    source '../phone/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    source '../logic_voip/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    source '../logic/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    source '../framework/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    classpath = files()
 }

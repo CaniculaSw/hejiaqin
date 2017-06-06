@@ -65,8 +65,7 @@ public class MainActivity extends BasicActivity {
                 break;
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
                 if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
-                        && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals(
-                        "unknown")) {
+                        && ! "unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
                     jumpToLoginActivity();
                 }
                 break;

@@ -37,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /***/
 public class MyDatePicker extends FrameLayout {
@@ -134,7 +133,6 @@ public class MyDatePicker extends FrameLayout {
     /**
      * Gets the minimal date supported by this {@link DatePicker} in
      * milliseconds since January 1, 1970 00:00:00 in
-     * {@link TimeZone#getDefault()} time zone.
      * <p/>
      * Note: The default minimal date is 01/01/1900.
      * <p/>
@@ -148,7 +146,6 @@ public class MyDatePicker extends FrameLayout {
     /**
      * Sets the minimal date supported by this {@link NumberPicker} in
      * milliseconds since January 1, 1970 00:00:00 in
-     * {@link TimeZone#getDefault()} time zone.
      *
      * @param minDate The minimal supported date.
      */
@@ -159,7 +156,6 @@ public class MyDatePicker extends FrameLayout {
     /**
      * Gets the maximal date supported by this {@link DatePicker} in
      * milliseconds since January 1, 1970 00:00:00 in
-     * {@link TimeZone#getDefault()} time zone.
      * <p/>
      * Note: The default maximal date is 12/31/2100.
      * <p/>
@@ -173,7 +169,6 @@ public class MyDatePicker extends FrameLayout {
     /**
      * Sets the maximal date supported by this {@link DatePicker} in
      * milliseconds since January 1, 1970 00:00:00 in
-     * {@link TimeZone#getDefault()} time zone.
      *
      * @param maxDate The maximal supported date.
      */
@@ -1061,7 +1056,7 @@ public class MyDatePicker extends FrameLayout {
             try {
                 Field[] pickerFields = NumberPicker.class.getDeclaredFields();
                 for (Field pf : pickerFields) {
-                    if (pf.getName().equals("sTwoDigitFormatter")) {
+                    if ("sTwoDigitFormatter".equals(pf.getName())) {
                         pf.setAccessible(true);
                         return (NumberPicker.Formatter) pf.get(NumberPicker.class);
                     }
@@ -1076,7 +1071,7 @@ public class MyDatePicker extends FrameLayout {
 
             Field[] pickerFields = NumberPicker.class.getDeclaredFields();
             for (Field pf : pickerFields) {
-                if (pf.getName().equals("mSelectionDivider")) {
+                if ("mSelectionDivider".equals(pf.getName())) {
                     pf.setAccessible(true);
                     try {
                         pf.set(numberPicker, new ColorDrawable(numberPicker.getResources()

@@ -8,13 +8,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
-import android.widget.ListAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A {@link ListAdapter} which wraps a {@link StickyListHeadersAdapter} and
  * automatically handles wrapping the result of
  * {@link StickyListHeadersAdapter#getView(int, View, ViewGroup)}
  * and

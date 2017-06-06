@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'checkstyle'
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
@@ -47,4 +47,31 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.kyleduo.switchbutton:library:1.4.0'
     compile project(':logic_voip_tv')
+}
+checkstyle {
+    toolVersion="6.8"
+}
+
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    ignoreFailures = true
+    configFile file("../../../findbugs_setting/checkstyle.xml")
+    source '../tv/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    source '../logic_voip_tv/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    source '../logic/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    source '../framework/src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/*Test*.java'
+    classpath = files()
 }

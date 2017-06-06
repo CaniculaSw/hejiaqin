@@ -6,7 +6,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *
+ */
 public class Beauties {
     private String count;
     private List<Beauty> beautyList;
@@ -18,7 +20,9 @@ public class Beauties {
     public String getCount() {
         return count;
     }
-
+    /**
+     *
+     */
     public void parseXml(XmlPullParser localKXmlParser, String parentName)
             throws XmlPullParserException, IOException {
         boolean flag = true;
@@ -44,6 +48,8 @@ public class Beauties {
                         flag = false;
                         continue;
                     }
+                    break;
+                default:
                     break;
             }
             eventType = localKXmlParser.next();

@@ -72,7 +72,7 @@ public class NetUrlConnection {
         try {
             LogUtil.i(TAG, "request url : " + request.getUrl());
             URL url = new URL(request.getUrl());
-            if (!url.getProtocol().toLowerCase().equals("https")) {
+            if (!"https".equals(url.getProtocol().toLowerCase())) {
                 httpConn = (HttpURLConnection) url.openConnection();
             } else {
                 httpConn = getHttpsConn(url, request);
@@ -196,7 +196,7 @@ public class NetUrlConnection {
         try {
             LogUtil.i(TAG, "request url : " + request.getUrl());
             URL url = new URL(request.getUrl());
-            if (!url.getProtocol().toLowerCase().equals("https")) {
+            if (!"https".equals(url.getProtocol().toLowerCase())) {
                 httpConn = (HttpURLConnection) url.openConnection();
             } else {
                 httpConn = getHttpsConn(url, request);
@@ -218,7 +218,7 @@ public class NetUrlConnection {
                 for (String body : bodyParameter) {
                     String[] map = body.split("=");
                     LogUtil.i(TAG, "Handle body parameter: " + map[0] + "= " + map[1]);
-                    if (map[0].equals("file")) {
+                    if ("file".equals(map[0])) {
                         File file = FileUtil.getFileByPath(map[1]);
                         StringBuffer sb = new StringBuffer();
                         sb.append(TWO_HYPHENS + BOUNDARY + LINE_FEED);
