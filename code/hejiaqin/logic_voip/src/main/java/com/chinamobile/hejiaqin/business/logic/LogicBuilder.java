@@ -45,7 +45,8 @@ public class LogicBuilder extends BuilderImp {
     @Override
     protected void init(Context context) {
         //注册LoginLogic
-        super.registerLogic(ILoginLogic.class, new LoginLogic());
+        LoginLogic loginLogic = LoginLogic.getInstance(context);
+        super.registerLogic(ILoginLogic.class, loginLogic);
         SettingLogic settingLogic = SettingLogic.getInstance(context);
         super.registerLogic(ISettingLogic.class, settingLogic);
         super.registerLogic(IContactsLogic.class, new ContactsLogic());

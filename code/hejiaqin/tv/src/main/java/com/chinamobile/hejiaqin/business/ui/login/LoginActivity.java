@@ -16,7 +16,6 @@ import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
-import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.RegistingDialog;
@@ -79,13 +78,13 @@ public class LoginActivity extends BasicActivity implements View.OnClickListener
         super.handleStateMessage(msg);
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-                UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-                com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
-                sdkuserInfo.countryCode = "";
-                sdkuserInfo.username = userInfo.getSdkAccount();
-                sdkuserInfo.password = userInfo.getSdkPassword();
-                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
-                mVoipLogic.login(sdkuserInfo, null, null);
+//                UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
+//                com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
+//                sdkuserInfo.countryCode = "";
+//                sdkuserInfo.username = userInfo.getSdkAccount();
+//                sdkuserInfo.password = userInfo.getSdkPassword();
+//                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
+//                mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 logining = true;

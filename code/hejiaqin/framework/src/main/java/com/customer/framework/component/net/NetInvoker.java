@@ -8,21 +8,30 @@ public class NetInvoker {
     private int result;
     private Object resultObj;
 
-
+    /***
+     *
+     * @return
+     */
     public static NetInvoker buildInvoker1() {
         NetInvoker netInvoker = new NetInvoker();
         netInvoker.isUnitTest = true;
         netInvoker.result = RESULT_SUCCESS;
         return netInvoker;
     }
-
+    /***
+     *
+     * @return
+     */
     public static NetInvoker buildInvoker2() {
         NetInvoker netInvoker = new NetInvoker();
         netInvoker.isUnitTest = true;
         netInvoker.result = RESULT_FAILED;
         return netInvoker;
     }
-
+    /***
+     *
+     * @return
+     */
     public static NetInvoker buildInvoker3() {
         NetInvoker netInvoker = new NetInvoker();
         netInvoker.isUnitTest = true;

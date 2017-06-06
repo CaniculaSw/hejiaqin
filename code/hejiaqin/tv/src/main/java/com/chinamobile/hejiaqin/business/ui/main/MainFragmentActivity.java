@@ -248,6 +248,7 @@ public class MainFragmentActivity extends BasicFragmentActivity {
             exitTime = System.currentTimeMillis();
             return;
         }
+
         super.moveTaskToBack(true);
     }
 

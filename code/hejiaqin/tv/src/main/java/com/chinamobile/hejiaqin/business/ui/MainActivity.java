@@ -11,13 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.Const;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.logic.setting.ISettingLogic;
 import com.chinamobile.hejiaqin.business.logic.voip.IVoipLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
-import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
 import com.chinamobile.hejiaqin.business.ui.basic.dialog.UpdateDialog;
@@ -55,11 +55,6 @@ public class MainActivity extends BasicActivity {
                 }
                 break;
             case BussinessConstants.SettingMsgID.TEST_ADAPT_PASS:
-                //检查是否开户
-                TvLoginInfo tvLoginInfo = new TvLoginInfo();
-                tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-                tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(this));
-                loginLogic.checkTvAccount(tvLoginInfo);
                 break;
             case BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR:
                 progressBar.setVisibility(View.INVISIBLE);
@@ -71,34 +66,20 @@ public class MainActivity extends BasicActivity {
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
                 if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
                         && !UserInfoCacheManager.getTvAccount(getApplicationContext()).equals(
-                                "unknown")) {
+                        "unknown")) {
                     jumpToLoginActivity();
-                } else {
-                    autoLogin();
                 }
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
-                UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
-                com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
-                sdkuserInfo.countryCode = "";
-                sdkuserInfo.username = userInfo.getSdkAccount();
-                sdkuserInfo.password = userInfo.getSdkPassword();
-                LogUtil.i(tag, "SDK username: " + sdkuserInfo.username);
-                mVoipLogic.login(sdkuserInfo, null, null);
                 break;
             case BussinessConstants.DialMsgID.VOIP_REGISTER_CONNECTED_MSG_ID:
                 logining = true;
-                UserInfoCacheManager.clearTvIsLogout(getApplicationContext());
                 Intent intent = new Intent(MainActivity.this, MainFragmentActivity.class);
                 mVoipLogic.setNotNeedVoipLogin();
                 this.startActivity(intent);
                 this.finishAllActivity(MainFragmentActivity.class.getName());
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_FAIL_MSG_ID:
-                //                displayErrorInfo(getString(R.string.prompt_wrong_password_or_phone_no));
-                //                accountEditTv.requestFocus();
-                //                showToast(R.string.voip_register_fail, Toast.LENGTH_LONG, null);
-
                 if (msg.obj != null) {
                     FailResponse response = (FailResponse) msg.obj;
                     if (!StringUtil.isNullOrEmpty(response.getMsg())) {
@@ -126,7 +107,6 @@ public class MainActivity extends BasicActivity {
                 if (logining) {
                     showToast(R.string.voip_register_fail, Toast.LENGTH_SHORT, null);
                     ThreadPoolUtil.execute(new ThreadTask() {
-
                         @Override
                         public void run() {
                             LogApi.copyLastLog();
@@ -143,8 +123,12 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSTBConfig();
-        settingLogic.testAdapt();
+        if (Const.getLoginStatus() == Const.LOGINSTATUS.LOGIN_FAILED) {
+            getSTBConfig();
+            settingLogic.testAdapt();
+        } else if (Const.getLoginStatus() == Const.LOGINSTATUS.LOGINED) {
+            jumpToMainFragmentActivity();
+        }
     }
 
     @Override
@@ -217,7 +201,7 @@ public class MainActivity extends BasicActivity {
         if (cursor != null && cursor.moveToNext()) {
             if (StringUtil.isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserId")))
                     || StringUtil
-                            .isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
+                    .isNullOrEmpty(cursor.getString(cursor.getColumnIndex("UserToken")))) {
                 progressBar.setVisibility(View.INVISIBLE);
                 showUpdateDialog(getString(R.string.exception_tips));
                 if (!cursor.isClosed()) {

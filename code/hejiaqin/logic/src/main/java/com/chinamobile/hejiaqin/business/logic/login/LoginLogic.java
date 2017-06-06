@@ -1,5 +1,7 @@
 package com.chinamobile.hejiaqin.business.logic.login;
 
+import android.content.Context;
+
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
@@ -37,6 +39,24 @@ import java.util.Date;
  */
 public class LoginLogic extends LogicImp implements ILoginLogic {
     private static final String TAG = "LoginLogic";
+    private static LoginLogic instance;
+
+    /**
+     * 获取单例对象
+     *
+     * @param context 系统的context对象
+     * @return LogicBuilder对象
+     */
+    public synchronized static LoginLogic getInstance(Context context) {
+        if (instance == null) {
+            instance = new LoginLogic(context);
+        }
+        return instance;
+    }
+
+    private LoginLogic(Context context) {
+        init(context.getApplicationContext());
+    }
 
     @Override
     public void getVerifyCode(String phone) {

@@ -22,8 +22,28 @@ public class Const {
 
     private static int deviceType = TYPE_OTHER;
 
-    /** 热插拔广播*/
+    /**
+     * 热插拔广播
+     */
     public static final String ACTION_USB_CAMERA_PLUG_IN_OUT = "android.hardware.usb.action.USB_CAMERA_PLUG_IN_OUT";
-    /** A40获取热插拔状态*/
+    /**
+     * A40获取热插拔状态
+     */
     public static final String USB_CAMERA_STATE = "UsbCameraState";
+    private static LOGINSTATUS loginStatus;
+
+    public synchronized static LOGINSTATUS getLoginStatus() {
+        return loginStatus;
+    }
+
+    public synchronized static void setLoginStatus(LOGINSTATUS status) {
+        loginStatus = status;
+    }
+
+    public enum LOGINSTATUS {
+        LOGOUTED,
+        LOGINING,
+        LOGINED,
+        LOGIN_FAILED
+    }
 }

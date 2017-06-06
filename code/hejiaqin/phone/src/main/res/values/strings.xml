@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">和家亲</string>
+    <string name="app_name">视频通话</string>
     <string name="network_error_tip">请检查你的网络连接</string>
     <string name="last_page">最后一页</string>
     <string name="permission_help_title">帮助</string>
