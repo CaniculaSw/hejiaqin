@@ -56,7 +56,7 @@ check.dependsOn 'checkstyle'
 
 task checkstyle(type: Checkstyle) {
     ignoreFailures = true
-    configFile file("../../../findbugs_setting/checkstyle.xml")
+    configFile file("checkstyle.xml")
     source '../tv/src'
     include '**/*.java'
     exclude '**/gen/**'
