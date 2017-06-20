@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">视频通话</string>
+    <string name="app_name">和家亲</string>
     <string name="network_error_tip">请检查你的网络连接</string>
     <string name="last_page">最后一页</string>
     <string name="permission_help_title">帮助</string>
@@ -10,7 +10,7 @@
 
     <string name="resend_verify_code">获取验证码</string>
 
-    <string name="get_verify_code_success">验证码已发送</string>
+    <string name="get_verify_code_success">短信已发送，请回复短信确认开通哦</string>
     <string name="verify_code_null">验证码不能为空</string>
     <string name="nick_name_null">昵称不能为空</string>
     <string name="has_registered">该手机号码已注册</string>

@@ -7,6 +7,7 @@ import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
+import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
@@ -66,8 +67,17 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
 
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                LoginLogic.this
-                        .sendEmptyMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID);
+                RespondInfo info = (RespondInfo) obj;
+                if ("0".equals(info.getCode())) {
+                    LoginLogic.this
+                            .sendEmptyMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID);
+                }else {
+                    FailResponse response = new FailResponse();
+                    response.setCode(info.getCode());
+                    response.setMsg(info.getMsg());
+                    LoginLogic.this.sendMessage(
+                            BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, response);
+                }
             }
 
             @Override

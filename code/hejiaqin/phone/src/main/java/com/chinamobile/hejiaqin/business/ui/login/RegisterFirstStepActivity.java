@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.hejiaqin.R;
@@ -19,10 +18,9 @@ import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.logic.login.ILoginLogic;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
 import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
-import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
 import com.chinamobile.hejiaqin.business.ui.basic.BasicActivity;
-import com.chinamobile.hejiaqin.business.ui.basic.MyCountDownTimer;
 import com.chinamobile.hejiaqin.business.ui.basic.view.HeaderView;
+import com.chinamobile.hejiaqin.business.ui.basic.view.MyToast;
 import com.chinamobile.hejiaqin.business.ui.login.dialog.DisplayErrorDialog;
 import com.customer.framework.utils.StringUtil;
 
@@ -33,19 +31,19 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
 
     private EditText accountEditTx;
 
-    private EditText verifyCodeEditTx;
-
-    private TextView sendVerifyCodeTv;
+    //    private EditText verifyCodeEditTx;
+//
+//    private TextView sendVerifyCodeTv;
     private Button nextActionBtn;
 
     private HeaderView mHeaderView;
 
     private ILoginLogic loginLogic;
 
-    private VerifyCodeCountDownTimer countDownTimer;
-
-    private boolean getVerifyRequestFailed;
-    private boolean checkVerifyRequestFailed;
+    //    private VerifyCodeCountDownTimer countDownTimer;
+//
+//    private boolean getVerifyRequestFailed;
+//    private boolean checkVerifyRequestFailed;
     private boolean continueCountDown;
 
     @Override
@@ -65,8 +63,8 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
         mHeaderView.backImageView.setImageResource(R.mipmap.title_icon_back_nor);
 
         accountEditTx = (EditText) findViewById(R.id.phone_no_et);
-        verifyCodeEditTx = (EditText) findViewById(R.id.verify_code_et);
-        sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
+//        verifyCodeEditTx = (EditText) findViewById(R.id.verify_code_et);
+//        sendVerifyCodeTv = (TextView) findViewById(R.id.get_verify_code);
         nextActionBtn = (Button) findViewById(R.id.next_action_button);
         //如果上次计数还没有结束，则重新进入页面后继续
         //        if (MyCountDownTimer.getMyMillisUntilFinished() != 0) {
@@ -85,7 +83,7 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
 
     @Override
     protected void initListener() {
-        sendVerifyCodeTv.setOnClickListener(this);
+//        sendVerifyCodeTv.setOnClickListener(this);
         nextActionBtn.setOnClickListener(this);
         mHeaderView.backImageView.setOnClickListener(this);
         accountEditTx.addTextChangedListener(new TextWatcher() {
@@ -106,32 +104,32 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
             }
         });
 
-        verifyCodeEditTx.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                hideErrorInfo(verifyCodeEditTx);
-            }
-        });
+//        verifyCodeEditTx.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                hideErrorInfo(verifyCodeEditTx);
+//            }
+//        });
 
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.get_verify_code:
-                sendVerifyCodeToPhone();
-                break;
+//            case R.id.get_verify_code:
+//                sendVerifyCodeToPhone();
+//                break;
             case R.id.next_action_button:
                 next();
                 break;
@@ -144,32 +142,32 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
     }
 
     //发送验证码
-    private void sendVerifyCodeToPhone() {
-        String userAccountId = accountEditTx.getText().toString();
+//    private void sendVerifyCodeToPhone() {
+//        String userAccountId = accountEditTx.getText().toString();
+//
+//        if (TextUtils.isEmpty(userAccountId)) {
+//            displayErrorInfo(getString(R.string.prompt_phone_no));
+//            accountEditTx.requestFocus();
+//            return;
+//        }
+//
+//        if (!StringUtil.isMobileNO(userAccountId)) {
+//            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
+//            accountEditTx.requestFocus();
+//            return;
+//        }
+//
+//        loginLogic.getVerifyCode(userAccountId);
+//    }
 
-        if (TextUtils.isEmpty(userAccountId)) {
-            displayErrorInfo(getString(R.string.prompt_phone_no));
-            accountEditTx.requestFocus();
-            return;
-        }
-
-        if (!StringUtil.isMobileNO(userAccountId)) {
-            displayErrorInfo(getString(R.string.prompt_wrong_phone_no));
-            accountEditTx.requestFocus();
-            return;
-        }
-
-        loginLogic.getVerifyCode(userAccountId);
-    }
-
-    private void startTimer(VerifyCodeCountDownTimer timer) {
-        //重新开始计时
-        if (timer == null || continueCountDown) {
-            timer = new VerifyCodeCountDownTimer(MyCountDownTimer.MILL_IS_INFUTURE);
-            continueCountDown = false;
-        }
-        timer.start();
-    }
+//    private void startTimer(VerifyCodeCountDownTimer timer) {
+//        //重新开始计时
+//        if (timer == null || continueCountDown) {
+//            timer = new VerifyCodeCountDownTimer(MyCountDownTimer.MILL_IS_INFUTURE);
+//            continueCountDown = false;
+//        }
+//        timer.start();
+//    }
 
     //校验验证码
     private void next() {
@@ -187,23 +185,24 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
             accountEditTx.requestFocus();
             return;
         }
-        String verifyCode = verifyCodeEditTx.getText().toString();
-        if (TextUtils.isEmpty(verifyCode)) {
-            displayErrorInfo(getString(R.string.prompt_verify_code));
-            verifyCodeEditTx.requestFocus();
-            return;
-        }
-
-        if (!StringUtil.isVerifyCode(verifyCode)) {
-            displayErrorInfo(getString(R.string.prompt_wrong_verify_code_format));
-            verifyCodeEditTx.requestFocus();
-            return;
-        }
-        VerifyInfo info = new VerifyInfo();
-        info.setPhone(userAccountId);
-        info.setVerifyCode(verifyCode);
-        hideErrorInfo(null);
-        loginLogic.checkVerifyCode(info);
+//        String verifyCode = verifyCodeEditTx.getText().toString();
+//        if (TextUtils.isEmpty(verifyCode)) {
+//            displayErrorInfo(getString(R.string.prompt_verify_code));
+//            verifyCodeEditTx.requestFocus();
+//            return;
+//        }
+//
+//        if (!StringUtil.isVerifyCode(verifyCode)) {
+//            displayErrorInfo(getString(R.string.prompt_wrong_verify_code_format));
+//            verifyCodeEditTx.requestFocus();
+//            return;
+//        }
+//        VerifyInfo info = new VerifyInfo();
+//        info.setPhone(userAccountId);
+//        info.setVerifyCode(verifyCode);
+//        hideErrorInfo(null);
+//        loginLogic.checkVerifyCode(info);
+        loginLogic.getVerifyCode(accountEditTx.getText().toString());
     }
 
     private void displayErrorInfo(String errorText) {
@@ -230,69 +229,70 @@ public class RegisterFirstStepActivity extends BasicActivity implements View.OnC
     /**
      * 获取验证码计时器
      */
-    private class VerifyCodeCountDownTimer extends MyCountDownTimer {
-
-        /**
-         * @param millisInFuture 总的时间
-         */
-        public VerifyCodeCountDownTimer(long millisInFuture) {
-            super(millisInFuture);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            super.onTick(millisUntilFinished);
-            sendVerifyCodeTv.setEnabled(false);
-            sendVerifyCodeTv.setText(millisUntilFinished
-                    / 1000
-                    + RegisterFirstStepActivity.this.getResources().getString(
-                            R.string.resend_verify_code_unit));
-        }
-
-        @Override
-        public void onFinish() {
-            super.onFinish();
-            sendVerifyCodeTv.setEnabled(true);
-            sendVerifyCodeTv.setText(R.string.resend_verify_code);
-        }
-    }
-
+//    private class VerifyCodeCountDownTimer extends MyCountDownTimer {
+//
+//        /**
+//         * @param millisInFuture 总的时间
+//         */
+//        public VerifyCodeCountDownTimer(long millisInFuture) {
+//            super(millisInFuture);
+//        }
+//
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//            super.onTick(millisUntilFinished);
+//            sendVerifyCodeTv.setEnabled(false);
+//            sendVerifyCodeTv.setText(millisUntilFinished
+//                    / 1000
+//                    + RegisterFirstStepActivity.this.getResources().getString(
+//                            R.string.resend_verify_code_unit));
+//        }
+//
+//        @Override
+//        public void onFinish() {
+//            super.onFinish();
+//            sendVerifyCodeTv.setEnabled(true);
+//            sendVerifyCodeTv.setText(R.string.resend_verify_code);
+//        }
+//    }
     @Override
     protected void handleStateMessage(Message msg) {
         super.handleStateMessage(msg);
         FailResponse response;
         switch (msg.what) {
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID:
-                super.showToast(R.string.get_verify_code_success, Toast.LENGTH_SHORT, null);
-                startTimer(countDownTimer);
+                MyToast.Position position = new MyToast.Position();
+                position.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+                super.showToast(R.string.get_verify_code_success, Toast.LENGTH_LONG, position);
+//                startTimer(countDownTimer);
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID:
-                if (countDownTimer != null) {
-                    countDownTimer.stop();
-                    sendVerifyCodeTv.setEnabled(true);
-                    sendVerifyCodeTv.setText(R.string.resend_verify_code);
-                }
+//                if (countDownTimer != null) {
+//                    countDownTimer.stop();
+//                    sendVerifyCodeTv.setEnabled(true);
+//                    sendVerifyCodeTv.setText(R.string.resend_verify_code);
+//                }
                 break;
             case BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID:
                 response = (FailResponse) msg.obj;
                 if ("1".equals(response.getCode())) {
                     displayErrorInfo(response.getMsg());
                 }
-                if (countDownTimer != null) {
-                    countDownTimer.stop();
-                    sendVerifyCodeTv.setEnabled(true);
-                    sendVerifyCodeTv.setText(R.string.resend_verify_code);
-                }
+//                if (countDownTimer != null) {
+//                    countDownTimer.stop();
+//                    sendVerifyCodeTv.setEnabled(true);
+//                    sendVerifyCodeTv.setText(R.string.resend_verify_code);
+//                }
                 break;
             case BussinessConstants.LoginMsgID.CHECK_VERIFY_CDOE_SUCCESS_MSG_ID:
-                if (countDownTimer != null) {
-                    countDownTimer.stop();
-                    sendVerifyCodeTv.setEnabled(true);
-                    sendVerifyCodeTv.setText(R.string.send_verify_code);
-                }
+//                if (countDownTimer != null) {
+//                    countDownTimer.stop();
+//                    sendVerifyCodeTv.setEnabled(true);
+//                    sendVerifyCodeTv.setText(R.string.send_verify_code);
+//                }
                 RegisterSecondStepInfo registerSecondStepInfo = new RegisterSecondStepInfo();
                 registerSecondStepInfo.setPhone(accountEditTx.getText().toString());
-                registerSecondStepInfo.setCode(verifyCodeEditTx.getText().toString());
+//                registerSecondStepInfo.setCode(verifyCodeEditTx.getText().toString());
                 Intent intent = new Intent(RegisterFirstStepActivity.this,
                         RegisterSecondStepActivity.class);
                 intent.putExtra(BussinessConstants.Login.REGISTER_SECOND_STEP_INFO_KEY,

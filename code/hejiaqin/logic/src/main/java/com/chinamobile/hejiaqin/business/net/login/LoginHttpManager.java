@@ -3,6 +3,7 @@ package com.chinamobile.hejiaqin.business.net.login;
 import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
 import com.chinamobile.hejiaqin.business.model.login.req.LoginInfo;
@@ -94,6 +95,7 @@ public class LoginHttpManager extends AbsHttpManager {
 
     private static final int CHECK_TV_ACCOUNT = ACTION_BASE + 15;
 
+    private static final int APP_REGIST_ACTION = ACTION_BASE + 16;
     /**
      * 请求action
      */
@@ -153,6 +155,9 @@ public class LoginHttpManager extends AbsHttpManager {
             case CHECK_TV_ACCOUNT:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkTvAccount";
                 break;
+            case APP_REGIST_ACTION:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/userv2/appRegist";
+                break;
             default:
                 break;
         }
@@ -180,6 +185,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case GET_USER_INFO_ACTION:
             case TV_LOGIN_ACTION:
             case CHECK_TV_ACCOUNT:
+            case APP_REGIST_ACTION:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -201,6 +207,7 @@ public class LoginHttpManager extends AbsHttpManager {
             case UPDATE_PWD_ACTION:
             case TV_LOGIN_ACTION:
             case CHECK_TV_ACCOUNT:
+            case APP_REGIST_ACTION:
                 flag = false;
                 break;
             default:
@@ -262,6 +269,17 @@ public class LoginHttpManager extends AbsHttpManager {
                     case GET_USER_INFO_ACTION:
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
+                    case APP_REGIST_ACTION:
+                        RespondInfo info = new RespondInfo();
+                        info.setData(data);
+                        if (rootJsonObj.has("msg")) {
+                            info.setMsg(rootJsonObj.get("msg").toString());
+                        }
+                        if (rootJsonObj.has("code")) {
+                            info.setCode(rootJsonObj.get("code").toString());
+                        }
+                        obj = info;
+                        break;
                     default:
                         break;
                 }
@@ -282,7 +300,7 @@ public class LoginHttpManager extends AbsHttpManager {
      */
     public void getVerifyCode(final Object invoker, final NVPReqBody phoneReqBody,
                               final IHttpCallBack callBack) {
-        this.mAction = GET_VERIFY_CODE_ACTION;
+        this.mAction = APP_REGIST_ACTION;
         this.mData = phoneReqBody;
         send(invoker, callBack);
     }
