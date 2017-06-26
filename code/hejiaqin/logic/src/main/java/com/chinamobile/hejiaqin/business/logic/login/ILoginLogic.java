@@ -45,6 +45,9 @@ public interface ILoginLogic {
      */
     void checkResetPasswordCode(VerifyInfo verifyInfo);
 
+    /***/
+    void tvRegist(String tvId);
+
     /**
      * 注册第二步
      *
@@ -79,6 +82,8 @@ public interface ILoginLogic {
 
     void getUserInfo(NVPWithTokenReqBody reqBody);
 
+    /***/
+    void getTvLoginCode(String tvId);
     /**
      * 修改密码
      */
@@ -105,4 +110,6 @@ public interface ILoginLogic {
     /***/
     LoginHistory getLoginHistory(String loginid);
 
+    /***/
+    void jumpToLoginActivity();
 }

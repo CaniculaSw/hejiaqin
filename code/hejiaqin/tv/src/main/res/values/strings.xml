@@ -18,9 +18,9 @@
     <string name="click_login">一键登录</string>
     <string name="account_info_title">您的机顶盒账号</string>
     <string name="resend_verify_code">获取验证码</string>
-
+    <string name="phone_num">已绑定宽带账号的手机号码</string>
     <string name="get_verify_code_success">验证码已发送</string>
-    <string name="verify_code_null">验证码不能为空</string>
+    <string name="verify_code_null">请输入验证码</string>
     <string name="nick_name_null">昵称不能为空</string>
     <string name="has_registered">该手机号码已注册</string>
     <string name="verify_other_error">验证码发送失败,请稍后重试</string>
@@ -30,7 +30,8 @@
     <string name="register_fail">注册失败</string>
     <string name="start_failed">登录失败</string>
     <string name="register_success">注册成功</string>
-
+    <string name="get_verify_code_first">尚未获取验证码</string>
+    <string name="message_send">短信已发送，请回复短信确认开户哦</string>
     <string name="service_contract_title">服务条款</string>
     <string name="service_contract_1">一旦您注册成为用户即表示您与XX达成协议，完全接受本服务条款项下的全部条款。对免责声明的解释、修改及更新权均属于XX网所有。</string>
     <string name="service_contract_2">1. 由于您将用户密码告知他人或与他人共享注册帐户，由此导致的任何个人信息的泄漏，或其他非因XX原因导致的个人信息的泄漏，XX不承担任何法律责任；</string>

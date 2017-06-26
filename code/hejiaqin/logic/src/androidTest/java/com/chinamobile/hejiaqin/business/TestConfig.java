@@ -26,7 +26,7 @@ public class TestConfig {
     public TvLoginInfo getTvLoginInfo() {
         TvLoginInfo tvLoginInfo = new TvLoginInfo();
         tvLoginInfo.setTvId("");
-        tvLoginInfo.setTvToken("");
+        tvLoginInfo.setCode("");
         return tvLoginInfo;
     }
 

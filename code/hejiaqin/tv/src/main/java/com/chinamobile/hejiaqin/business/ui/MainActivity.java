@@ -64,10 +64,10 @@ public class MainActivity extends BasicActivity {
                 jumpToRegisterActivity();
                 break;
             case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
-                        && ! "unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
-                    jumpToLoginActivity();
-                }
+//                if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
+//                        && ! "unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
+                jumpToLoginActivity();
+//                }
                 break;
             case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
                 break;
@@ -122,7 +122,7 @@ public class MainActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Const.getLoginStatus() == Const.LOGINSTATUS.LOGIN_FAILED) {
+        if (Const.getLoginStatus() == Const.LOGINSTATUS.LOGIN_FAILED || Const.getLoginStatus() == Const.LOGINSTATUS.LOGOUTED) {
             getSTBConfig();
             settingLogic.testAdapt();
         } else if (Const.getLoginStatus() == Const.LOGINSTATUS.LOGINED) {
@@ -160,7 +160,7 @@ public class MainActivity extends BasicActivity {
     private void autoLogin() {
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-        loginInfo.setTvToken(loginLogic.encryPassword(UserInfoCacheManager.getTvToken(this)));
+//        loginInfo.setTvToken(loginLogic.encryPassword(UserInfoCacheManager.getTvToken(this)));
         loginLogic.tvLogin(loginInfo);
     }
 

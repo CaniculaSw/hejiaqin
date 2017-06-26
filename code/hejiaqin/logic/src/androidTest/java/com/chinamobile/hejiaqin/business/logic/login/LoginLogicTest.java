@@ -5,7 +5,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.test.AndroidTestCase;
 
-import com.chinamobile.hejiaqin.business.logic.contacts.ContactsLogic;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
@@ -15,11 +14,8 @@ import com.chinamobile.hejiaqin.business.model.login.req.RegisterSecondStepInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.TvLoginInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.UpdatePhotoReq;
 import com.chinamobile.hejiaqin.business.model.login.req.VerifyInfo;
-import com.chinamobile.hejiaqin.business.model.more.VersionInfo;
 import com.chinamobile.hejiaqin.business.net.NVPWithTokenReqBody;
 import com.customer.framework.component.net.NetInvoker;
-
-import junit.framework.TestCase;
 
 /**
  * Created by Administrator on 2017/6/1 0001.
@@ -33,7 +29,7 @@ public class LoginLogicTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        contactsLogic = new LoginLogic();
+        contactsLogic = LoginLogic.getInstance(getContext());
         contactsLogic.init(getContext());
         handler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -173,7 +169,7 @@ public class LoginLogicTest extends AndroidTestCase {
     public void testTvLogin() throws Exception {
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId("123456");
-        loginInfo.setTvToken("123456");
+        loginInfo.setCode("123456");
 
         UserInfo userInfo = new UserInfo();
         contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj(userInfo));
@@ -196,7 +192,7 @@ public class LoginLogicTest extends AndroidTestCase {
     public void testCheckTvAccount() throws Exception {
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId("123456");
-        loginInfo.setTvToken("123456");
+        loginInfo.setCode("123456");
         contactsLogic.setInvoker(NetInvoker.buildInvoker1().setResultObj("0"));
         contactsLogic.checkTvAccount(loginInfo);
         syncWait();

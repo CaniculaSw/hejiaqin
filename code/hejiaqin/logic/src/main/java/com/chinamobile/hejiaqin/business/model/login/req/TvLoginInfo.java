@@ -8,14 +8,23 @@ import com.chinamobile.hejiaqin.business.net.ReqBody;
  */
 public class TvLoginInfo implements ReqBody {
     private String tvId;
-    private String tvToken;
+    private String code;
+//    private String tvToken;
 
-    public String getTvToken() {
-        return tvToken;
+//    public String getTvToken() {
+//        return tvToken;
+//    }
+//
+//    public void setTvToken(String tvToken) {
+//        this.tvToken = tvToken;
+//    }
+
+    public String getCode() {
+        return code;
     }
 
-    public void setTvToken(String tvToken) {
-        this.tvToken = tvToken;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTvId() {
@@ -30,7 +39,7 @@ public class TvLoginInfo implements ReqBody {
     public String toBody() {
         NVPReqBody reqBody = new NVPReqBody();
         reqBody.add("tvId", getTvId());
-        reqBody.add("tvToken", getTvToken());
+        reqBody.add("code", getCode());
         return reqBody.toBody();
     }
 }

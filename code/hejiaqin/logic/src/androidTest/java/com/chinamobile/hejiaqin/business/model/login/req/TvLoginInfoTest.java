@@ -9,14 +9,14 @@ public class TvLoginInfoTest extends TestCase {
 
     public void testGetTvToken() throws Exception {
         TvLoginInfo tvLoginInfo = new TvLoginInfo();
-        tvLoginInfo.setTvToken("123");
-        assertEquals("123", tvLoginInfo.getTvToken());
+        tvLoginInfo.setCode("123");
+        assertEquals("123", tvLoginInfo.getCode());
     }
 
     public void testSetTvToken() throws Exception {
         TvLoginInfo tvLoginInfo = new TvLoginInfo();
-        tvLoginInfo.setTvToken("123");
-        assertEquals("123", tvLoginInfo.getTvToken());
+        tvLoginInfo.setCode("123");
+        assertEquals("123", tvLoginInfo.getCode());
     }
 
     public void testGetTvId() throws Exception {
@@ -33,7 +33,7 @@ public class TvLoginInfoTest extends TestCase {
 
     public void testToBody() throws Exception {
         TvLoginInfo tvLoginInfo = new TvLoginInfo();
-        tvLoginInfo.setTvToken("123");
+        tvLoginInfo.setCode("123");
         tvLoginInfo.setTvId("123");
         assertNotNull(tvLoginInfo.toBody());
     }

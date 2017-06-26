@@ -57,12 +57,14 @@ public class UserInfoCacheManager {
     }
 
     /***/
-    public static void saveUserToLoacl(Context context, UserInfo info, long tokenDate) {
+    synchronized public static void saveUserToLoacl(Context context, UserInfo info, long tokenDate) {
         HashMap map = new HashMap();
         Gson gson = new Gson();
         map.put(BussinessConstants.Login.USER_INFO_KEY, gson.toJson(info));
-        map.put(BussinessConstants.Login.TOKEN_DATE, tokenDate);
-        StorageMgr.getInstance().getSharedPStorage(context).save(map);
+        StorageMgr.getInstance().getSharedPStorage(context.getApplicationContext()).save(map);
+        HashMap tokenDatemap = new HashMap();
+        tokenDatemap.put(BussinessConstants.Login.TOKEN_DATE, tokenDate);
+        StorageMgr.getInstance().getSharedPStorage(context.getApplicationContext()).save(tokenDatemap);
     }
 
     private static void saveUserSettingToLocal(Context context, TvSettingInfo setting) {
@@ -78,6 +80,7 @@ public class UserInfoCacheManager {
     //            StorageMgr.getInstance().getMemStorage().save(BussinessConstants.Setting.USER_SETTING_KEY, setting);
     //        }
     //    }
+
     /***/
     public static void updateUserSetting(Context context, TvSettingInfo newSettingInfo) {
         if (newSettingInfo != null) {
@@ -123,12 +126,31 @@ public class UserInfoCacheManager {
     }
 
     /***/
-    public static void saveTvAccountToLoacl(Context context, String account) {
+    synchronized public static void saveTvAccountToLoacl(Context context, String account) {
         if (!StringUtil.isNullOrEmpty(account)) {
             HashMap map = new HashMap();
             map.put(BussinessConstants.Login.TV_ACCOUNT_KEY, account);
             StorageMgr.getInstance().getSharedPStorage(context).save(map);
         }
+    }
+
+    /***/
+    public static void saveBindPhoneToLoacl(Context context, String phone) {
+        if (!StringUtil.isNullOrEmpty(phone)) {
+            HashMap map = new HashMap();
+            map.put(BussinessConstants.Login.PHONE_ACCOUNT_KEY, phone);
+            StorageMgr.getInstance().getSharedPStorage(context).save(map);
+        }
+    }
+
+    /***/
+    public static String getBindPhoneFromLoacl(Context context) {
+        String infoStr = StorageMgr.getInstance().getSharedPStorage(context)
+                .getString(BussinessConstants.Login.PHONE_ACCOUNT_KEY);
+        if (infoStr != null) {
+            return infoStr;
+        }
+        return null;
     }
 
     /***/
@@ -208,9 +230,10 @@ public class UserInfoCacheManager {
         return null;
     }
 
-    public static UserInfo getUserInfo(Context context) {
-        return (UserInfo) StorageMgr.getInstance().getMemStorage()
+    synchronized public static UserInfo getUserInfo(Context context) {
+        UserInfo info = (UserInfo) StorageMgr.getInstance().getMemStorage()
                 .getObject(BussinessConstants.Login.USER_INFO_KEY);
+        return info;
     }
 
     public static VersionInfo getVersionInfo(Context context) {
@@ -254,7 +277,7 @@ public class UserInfoCacheManager {
     }
 
     public static String getUserId(Context context) {
-        UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getMemStorage()
+        UserInfo userInfo = (UserInfo) StorageMgr.getInstance().getSharedPStorage(context)
                 .getObject(BussinessConstants.Login.USER_INFO_KEY);
         if (null == userInfo) {
             return "unknown";
@@ -274,9 +297,9 @@ public class UserInfoCacheManager {
 
     /***/
     public static void clearUserInfo(Context context) {
-        String[] keys = new String[] { BussinessConstants.Login.USER_INFO_KEY,
-                                       BussinessConstants.Login.TOKEN_DATE, BussinessConstants.Setting.BINDED_DEVICE_KEY,
-                                       BussinessConstants.Setting.BINDED_DEVICE_KEY };
+        String[] keys = new String[]{BussinessConstants.Login.USER_INFO_KEY,
+                                     BussinessConstants.Login.TOKEN_DATE, BussinessConstants.Setting.BINDED_DEVICE_KEY,
+                                     BussinessConstants.Setting.BINDED_DEVICE_KEY};
         StorageMgr.getInstance().getMemStorage().remove(keys);
         StorageMgr.getInstance().getSharedPStorage(context).remove(keys);
     }
@@ -284,7 +307,7 @@ public class UserInfoCacheManager {
     /***/
     public static void clearVersionInfo(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context)
-                .remove(new String[] { BussinessConstants.Setting.VERSION_INFO_KEY });
+                .remove(new String[]{BussinessConstants.Setting.VERSION_INFO_KEY});
         LogUtil.d("UserInfoCacheManager", "Version info is remove.");
     }
 
@@ -314,10 +337,11 @@ public class UserInfoCacheManager {
     //    public static void clearSTBConfig(Context context) {
     //  StorageMgr.getInstance().getSharedPStorage(context).remove(new String[]{BussinessConstants.Login.TV_USERID_KEY, BussinessConstants.Login.TV_TOKEN_KEY});
     //    }
+
     /***/
     public static void clearVoipLogined(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context)
-                .remove(new String[] { BussinessConstants.Login.VOIP_LOGINED_KEY });
+                .remove(new String[]{BussinessConstants.Login.VOIP_LOGINED_KEY});
     }
 
     public static boolean getVoipLogined(Context context) {
@@ -328,7 +352,7 @@ public class UserInfoCacheManager {
     /***/
     public static void clearTvIsLogout(Context context) {
         StorageMgr.getInstance().getSharedPStorage(context)
-                .remove(new String[] { BussinessConstants.Login.TV_IS_LOGOUT_KEY });
+                .remove(new String[]{BussinessConstants.Login.TV_IS_LOGOUT_KEY});
     }
 
     public static boolean getTvIsLogout(Context context) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.chinamobile.hejiaqin.business.BussinessConstants;
 import com.chinamobile.hejiaqin.business.manager.UserInfoCacheManager;
 import com.chinamobile.hejiaqin.business.model.FailResponse;
+import com.chinamobile.hejiaqin.business.model.login.CheckAccountRespond;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistory;
 import com.chinamobile.hejiaqin.business.model.login.LoginHistoryList;
 import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
@@ -71,7 +72,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                 if ("0".equals(info.getCode())) {
                     LoginLogic.this
                             .sendEmptyMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID);
-                }else {
+                } else {
                     FailResponse response = new FailResponse();
                     response.setCode(info.getCode());
                     response.setMsg(info.getMsg());
@@ -100,6 +101,50 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
                         BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_NET_ERROR_MSG_ID, errorCode);
             }
         });
+    }
+
+    @Override
+    public void getTvLoginCode(String tvId) {
+        final NVPReqBody reqBody = new NVPReqBody();
+        reqBody.add("tvId", tvId);
+        new LoginHttpManager(getContext()).getTvLoginCode(invoker, reqBody, new IHttpCallBack() {
+            @Override
+            public void onSuccessful(Object invoker, Object obj) {
+                RespondInfo info = (RespondInfo) obj;
+                if ("0".equals(info.getCode())) {
+                    LoginLogic.this
+                            .sendEmptyMessage(BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_SUCCESS_MSG_ID);
+                } else {
+                    FailResponse response = new FailResponse();
+                    response.setCode(info.getCode());
+                    response.setMsg(info.getMsg());
+                    LoginLogic.this.sendMessage(
+                            BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, response);
+                }
+            }
+
+            @Override
+            public void onFailure(Object invoker, String code, String desc) {
+                if (isCommonFailRes(code, desc)) {
+                    return;
+                }
+                FailResponse response = new FailResponse();
+                response.setCode(code);
+                response.setMsg(desc);
+                LoginLogic.this.sendMessage(
+                        BussinessConstants.LoginMsgID.GET_VERIFY_CDOE_FAIL_MSG_ID, response);
+            }
+
+            @Override
+            public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+
+            }
+        });
+    }
+
+    @Override
+    public void jumpToLoginActivity() {
+        sendEmptyMessageDelayed(BussinessConstants.LoginMsgID.JUMP_TO_LOGIN_ACTIVITY, 100);
     }
 
     @Override
@@ -272,12 +317,13 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
             public void onSuccessful(Object invoker, Object obj) {
                 UserInfo userInfo = (UserInfo) obj;
                 Date now = new Date();
+                UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
                 UserInfoCacheManager.saveUserToMem(getContext(), userInfo, now.getTime());
                 UserInfoCacheManager.saveTvAccountToLoacl(getContext(), userInfo.getTvAccount());
                 //                initCMIMSdk();
                 LoginLogic.this
                         .sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
-                UserInfoCacheManager.saveUserToLoacl(getContext(), userInfo, now.getTime());
+
             }
 
             @Override
@@ -305,9 +351,10 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         new LoginHttpManager(getContext()).checkTvAccount(invoker, info, new IHttpCallBack() {
             @Override
             public void onSuccessful(Object invoker, Object obj) {
-                String data = (String) obj;
-                LogUtil.d(TAG, "data is: " + data);
-                switch (data) {
+                CheckAccountRespond data = (CheckAccountRespond) obj;
+                LogUtil.d(TAG, "respond code is: " + data);
+                UserInfoCacheManager.saveBindPhoneToLoacl(getContext(), data.getPhone());
+                switch (data.getIsRegist()) {
                     case "0":
                         LoginLogic.this
                                 .sendEmptyMessage(BussinessConstants.LoginMsgID.TV_ACCOUNT_UNREGISTERED);
@@ -374,7 +421,7 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     }
 
     @Override
-    public void loadUserFromLocal() {
+    synchronized public void loadUserFromLocal() {
         String infoCache = StorageMgr.getInstance().getSharedPStorage(getContext())
                 .getString(BussinessConstants.Login.USER_INFO_KEY);
         UserInfo info = null;
@@ -618,6 +665,41 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
         });
     }
 
+    @Override
+    public void tvRegist(String tvId) {
+        NVPReqBody reqBody = new NVPReqBody();
+        reqBody.add("tvId", tvId);
+        new LoginHttpManager(getContext()).tvRegist(invoker, reqBody,
+                new IHttpCallBack() {
+                    @Override
+                    public void onSuccessful(Object invoker, Object obj) {
+                        LoginLogic.this
+                                .sendMessage(
+                                        BussinessConstants.LoginMsgID.TV_REGIST_OK,
+                                        obj);
+                    }
+
+                    @Override
+                    public void onFailure(Object invoker, String code, String desc) {
+                        if (isCommonFailRes(code, desc)) {
+                            return;
+                        }
+                        FailResponse response = new FailResponse();
+                        response.setCode(code);
+                        response.setMsg(desc);
+                        LoginLogic.this.sendMessage(
+                                BussinessConstants.LoginMsgID.TV_REGIST_FAILED,
+                                response);
+                    }
+
+                    @Override
+                    public void onNetWorkError(NetResponse.ResponseCode errorCode) {
+                        LoginLogic.this.sendMessage(
+                                BussinessConstants.CommonMsgId.NETWORK_ERROR_MSG_ID, errorCode);
+                    }
+                });
+    }
+
     private boolean isCommonFailRes(String code, String desc) {
         if ("-4".equals(code) || "-5".equals(code)) {
             LoginLogic.this.sendEmptyMessage(BussinessConstants.CommonMsgId.SERVER_SIDE_ERROR);
@@ -627,7 +709,8 @@ public class LoginLogic extends LogicImp implements ILoginLogic {
     }
 
     private Object invoker;
-    public void setInvoker(Object invoker){
+
+    public void setInvoker(Object invoker) {
         this.invoker = invoker;
     }
 }

@@ -60,7 +60,7 @@ public class TVApplication extends HeApplication implements Thread.UncaughtExcep
                     Const.setLoginStatus(Const.LOGINSTATUS.LOGINING);
                     TvLoginInfo tvLoginInfo = new TvLoginInfo();
                     tvLoginInfo.setTvId(UserInfoCacheManager.getTvUserID(getApplicationContext()));
-                    tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(getApplicationContext()));
+//                    tvLoginInfo.setTvToken(UserInfoCacheManager.getTvToken(getApplicationContext()));
                     loginLogic.checkTvAccount(tvLoginInfo);
                     break;
                 case BussinessConstants.SettingMsgID.TEST_ADAPT_ERROR:
@@ -71,15 +71,23 @@ public class TVApplication extends HeApplication implements Thread.UncaughtExcep
                     Const.setLoginStatus(Const.LOGINSTATUS.LOGIN_FAILED);
                     break;
                 case BussinessConstants.LoginMsgID.TV_ACCOUNT_REGISTERED:
-                    Const.setLoginStatus(Const.LOGINSTATUS.LOGINING);
-                    if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
-                            && !"unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
-                    } else {
-                        autoLogin();
-                    }
+                    Const.setLoginStatus(Const.LOGINSTATUS.LOGIN_FAILED);
+//                    Const.setLoginStatus(Const.LOGINSTATUS.LOGINING);
+//                    if (UserInfoCacheManager.getTvIsLogout(getApplicationContext())
+//                            && !"unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
+//                    } else {
+//                        autoLogin();
+//                    }
                     break;
                 case BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID:
                     UserInfo userInfo = UserInfoCacheManager.getUserInfo(getApplicationContext());
+                    if (userInfo == null) {
+                        UserInfoCacheManager.clearUserInfo(getApplicationContext());
+                        voipLogic.clearLogined();
+                        Const.setLoginStatus(Const.LOGINSTATUS.LOGOUTED);
+                        check();
+                        return;
+                    }
                     com.huawei.rcs.login.UserInfo sdkuserInfo = new com.huawei.rcs.login.UserInfo();
                     sdkuserInfo.countryCode = "";
                     sdkuserInfo.username = userInfo.getSdkAccount();
@@ -140,7 +148,7 @@ public class TVApplication extends HeApplication implements Thread.UncaughtExcep
     private void autoLogin() {
         TvLoginInfo loginInfo = new TvLoginInfo();
         loginInfo.setTvId(UserInfoCacheManager.getTvUserID(this));
-        loginInfo.setTvToken(loginLogic.encryPassword(UserInfoCacheManager.getTvToken(this)));
+//        loginInfo.setTvToken(loginLogic.encryPassword(UserInfoCacheManager.getTvToken(this)));
         Const.setLoginStatus(Const.LOGINSTATUS.LOGINING);
         loginLogic.tvLogin(loginInfo);
     }
@@ -163,8 +171,14 @@ public class TVApplication extends HeApplication implements Thread.UncaughtExcep
 
         BuilderImp.setInstance(LogicBuilder.getInstance(getApplicationContext()));
         LogicBuilder.getInstance(getApplicationContext()).addHandlerToAllLogics(mHandler);
-        check();
-        Const.setLoginStatus(Const.LOGINSTATUS.LOGOUTED);
+        loginLogic.loadUserFromLocal();
+        if ("unknown".equals(UserInfoCacheManager.getTvAccount(getApplicationContext()))) {
+//            check();
+            Const.setLoginStatus(Const.LOGINSTATUS.LOGOUTED);
+        } else {
+            Const.setLoginStatus(Const.LOGINSTATUS.LOGINING);
+            mHandler.sendEmptyMessage(BussinessConstants.LoginMsgID.LOGIN_SUCCESS_MSG_ID);
+        }
     }
 
     private void check() {

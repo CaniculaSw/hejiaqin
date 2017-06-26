@@ -3,6 +3,7 @@ package com.chinamobile.hejiaqin.business.net.login;
 import android.content.Context;
 
 import com.chinamobile.hejiaqin.business.BussinessConstants;
+import com.chinamobile.hejiaqin.business.model.login.CheckAccountRespond;
 import com.chinamobile.hejiaqin.business.model.login.RespondInfo;
 import com.chinamobile.hejiaqin.business.model.login.UserInfo;
 import com.chinamobile.hejiaqin.business.model.login.req.FeedBackReq;
@@ -96,6 +97,10 @@ public class LoginHttpManager extends AbsHttpManager {
     private static final int CHECK_TV_ACCOUNT = ACTION_BASE + 15;
 
     private static final int APP_REGIST_ACTION = ACTION_BASE + 16;
+
+    private static final int TV_REGIST = ACTION_BASE + 17;
+
+    private static final int TV_LOGIN_CODE = ACTION_BASE + 18;
     /**
      * 请求action
      */
@@ -150,13 +155,19 @@ public class LoginHttpManager extends AbsHttpManager {
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/info";
                 break;
             case TV_LOGIN_ACTION:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/tvLogin";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/userv2/tvLogin";
                 break;
             case CHECK_TV_ACCOUNT:
-                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/user/checkTvAccount";
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/userv2/checkTvAccount";
                 break;
             case APP_REGIST_ACTION:
                 url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/userv2/appRegist";
+                break;
+            case TV_REGIST:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/userv2/tvRegist";
+                break;
+            case TV_LOGIN_CODE:
+                url = BussinessConstants.ServerInfo.HTTP_ADDRESS + "/userv2/tvLoginCode";
                 break;
             default:
                 break;
@@ -186,6 +197,8 @@ public class LoginHttpManager extends AbsHttpManager {
             case TV_LOGIN_ACTION:
             case CHECK_TV_ACCOUNT:
             case APP_REGIST_ACTION:
+            case TV_REGIST:
+            case TV_LOGIN_CODE:
                 method = NetRequest.RequestMethod.POST;
                 break;
             default:
@@ -208,6 +221,8 @@ public class LoginHttpManager extends AbsHttpManager {
             case TV_LOGIN_ACTION:
             case CHECK_TV_ACCOUNT:
             case APP_REGIST_ACTION:
+            case TV_REGIST:
+            case TV_LOGIN_CODE:
                 flag = false;
                 break;
             default:
@@ -255,7 +270,7 @@ public class LoginHttpManager extends AbsHttpManager {
                         obj = gson.fromJson(data, UserInfo.class);
                         break;
                     case CHECK_TV_ACCOUNT:
-                        obj = data;
+                        obj = gson.fromJson(data, CheckAccountRespond.class);
                         break;
                     case LOGOUT_ACTION:
                         break;
@@ -279,6 +294,28 @@ public class LoginHttpManager extends AbsHttpManager {
                             info.setCode(rootJsonObj.get("code").toString());
                         }
                         obj = info;
+                        break;
+                    case TV_REGIST:
+                        RespondInfo registInfo = new RespondInfo();
+                        registInfo.setData(data);
+                        if (rootJsonObj.has("msg")) {
+                            registInfo.setMsg(rootJsonObj.get("msg").toString());
+                        }
+                        if (rootJsonObj.has("code")) {
+                            registInfo.setCode(rootJsonObj.get("code").toString());
+                        }
+                        obj = registInfo;
+                        break;
+                    case TV_LOGIN_CODE:
+                        RespondInfo loginCodeInfo = new RespondInfo();
+                        loginCodeInfo.setData(data);
+                        if (rootJsonObj.has("msg")) {
+                            loginCodeInfo.setMsg(rootJsonObj.get("msg").toString());
+                        }
+                        if (rootJsonObj.has("code")) {
+                            loginCodeInfo.setCode(rootJsonObj.get("code").toString());
+                        }
+                        obj = loginCodeInfo;
                         break;
                     default:
                         break;
@@ -379,6 +416,22 @@ public class LoginHttpManager extends AbsHttpManager {
                         final IHttpCallBack callBack) {
         this.mAction = TV_LOGIN_ACTION;
         this.mData = loginInfo;
+        send(invoker, callBack);
+    }
+
+    /***/
+    public void tvRegist(final Object invoker, final NVPReqBody tvId,
+                         final IHttpCallBack callBack) {
+        this.mAction = TV_REGIST;
+        this.mData = tvId;
+        send(invoker, callBack);
+    }
+
+    /***/
+    public void getTvLoginCode(final Object invoker, final NVPReqBody tvId,
+                               final IHttpCallBack callBack) {
+        this.mAction = TV_LOGIN_CODE;
+        this.mData = tvId;
         send(invoker, callBack);
     }
 
